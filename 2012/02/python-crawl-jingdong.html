@@ -1,0 +1,699 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Python抓取京东商城的所有笔记本电脑的参数 - My Octopress Blog</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="最近洪爷要写数据挖掘的论文需要些数据，于是俺又有机会做苦力了。昨天刚刚回到学校，晚上就帮洪爷写了个爬虫来爬数据京东商城的笔记本的参数。 为了快速完成，基本原理就是人工找到笔记本的页面。 然后他有22页（Page），编号规则如下： http://www.360buy.com/products/670 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cedricporter.github.com/2012/02/python-crawl-jingdong.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cedricporter.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Python抓取京东商城的所有笔记本电脑的参数</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-18T02:53:24+08:00" pubdate data-updated="true">2012-02-18</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>最近洪爷要写数据挖掘的论文需要些数据，于是俺又有机会做苦力了。昨天刚刚回到学校，晚上就帮洪爷写了个爬虫来爬数据京东商城的笔记本的参数。</p>
+
+<p>为了快速完成，基本原理就是人工找到笔记本的页面。</p>
+
+<p>然后他有22页（Page），编号规则如下：</p>
+
+<p>http://www.360buy.com/products/670-671-672-0-0-0-0-0-0-0-1-1-1.html</p>
+
+<p>http://www.360buy.com/products/670-671-672-0-0-0-0-0-0-0-1-1-%d.html</p>
+
+<p>http://www.360buy.com/products/670-671-672-0-0-0-0-0-0-0-1-1-22.html</p>
+
+<!-- more -->
+
+
+<p>我们可以先访问每一页，每一页有很多个笔记本，然后我们从中汲取出每个笔记本的页面的url，记录下每台笔记本的网页的url，然后在访问每一个笔记本的页面，从中取出笔记本的参数，OK，非常简单，打完收工。</p>
+
+<p>为了加速，我们采用多线程，一些工作线程访问Page，从中取出笔记本产品Product的url放到一个队列里。然后另一些工作线程从队列里取出笔记本的url，然后从中取出笔记本的参数。然后输出到文件中。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/02/QQ20120217184108.png"><img src="http://everet.org/wp-content/uploads/2012/02/QQ20120217184108_thumb.png" alt="QQ截图20120217184108" /></a></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+<span class='line-number'>175</span>
+<span class='line-number'>176</span>
+<span class='line-number'>177</span>
+<span class='line-number'>178</span>
+<span class='line-number'>179</span>
+<span class='line-number'>180</span>
+<span class='line-number'>181</span>
+<span class='line-number'>182</span>
+<span class='line-number'>183</span>
+<span class='line-number'>184</span>
+<span class='line-number'>185</span>
+<span class='line-number'>186</span>
+<span class='line-number'>187</span>
+<span class='line-number'>188</span>
+<span class='line-number'>189</span>
+<span class='line-number'>190</span>
+<span class='line-number'>191</span>
+<span class='line-number'>192</span>
+<span class='line-number'>193</span>
+<span class='line-number'>194</span>
+<span class='line-number'>195</span>
+<span class='line-number'>196</span>
+<span class='line-number'>197</span>
+<span class='line-number'>198</span>
+<span class='line-number'>199</span>
+<span class='line-number'>200</span>
+<span class='line-number'>201</span>
+<span class='line-number'>202</span>
+<span class='line-number'>203</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>点击下载源代码：[jindong](http://everet.org/wp-content/uploads/2012/02/jindong.rar)
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>&lt;div class='bogus-wrapper'>&lt;notextile>&lt;figure class='code'>&lt;figcaption>&lt;span>python  &lt;/span>&lt;/figcaption>
+</span><span class='line'> &lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>2&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>3&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>4&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>5&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>6&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>7&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>8&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>9&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>10&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>11&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>12&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>13&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>14&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>15&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>16&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>17&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>18&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>19&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>20&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>21&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>22&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>23&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>24&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>25&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>26&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>27&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>28&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>29&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>30&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>31&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>32&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>33&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>34&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>35&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>36&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>37&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>38&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>39&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>40&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>41&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>42&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>43&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>44&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>45&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>46&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>47&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>48&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>49&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>50&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>51&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>52&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>53&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>54&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>55&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>56&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>57&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>58&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>59&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>60&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>61&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>62&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>63&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>64&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>65&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>66&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>67&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>68&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>69&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>70&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>71&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>72&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>73&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>74&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>75&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>76&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>77&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>78&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>79&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>80&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>81&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>82&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>83&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>84&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>85&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>86&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>87&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>88&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>89&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>90&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>91&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>92&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>93&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>94&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>95&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>96&lt;/span>
+</span><span class='line'>&lt;span class='line-number'>97&lt;/span>
+</span><span class='line'>&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class='python'>&lt;span class='line'>&lt;span class="c">#!/usr/bin/env python&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="c"># author: Cedric Porter [ Stupid ET ]&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="c"># contact me: cedricporter@gmail.com&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="kn">from&lt;/span> &lt;span class="nn">urllib&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">urlopen&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="kn">import&lt;/span> &lt;span class="nn">threading&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="kn">import&lt;/span> &lt;span class="nn">re&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="kn">import&lt;/span> &lt;span class="nn">Queue&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="k">def&lt;/span> &lt;span class="nf">get_info&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">url&lt;/span>&lt;span class="p">):&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="sd">&#39;&#39;&#39;abstracts product info &#39;&#39;&#39;&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">re&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">compile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&#39;&lt;tr&gt;&lt;td .*?&gt;(.*?)&lt;/td&gt;&lt;td&gt;(.*?)&lt;/td&gt;&lt;/tr&gt;&#39;&lt;/span>&lt;span class="p">)&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="n">text&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">urlopen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">url&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">read&lt;/span>&lt;span class="p">()&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="n">info&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="k">for&lt;/span> &lt;span class="n">t&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">v&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">p&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">findall&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">text&lt;/span>&lt;span class="p">):&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">info&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">t&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">v&lt;/span>&lt;span class="p">))&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="k">return&lt;/span> &lt;span class="n">info&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="k">def&lt;/span> &lt;span class="nf">get_urls&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">page_url&lt;/span>&lt;span class="p">):&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="sd">&#39;&#39;&#39;gets product urls from a page&#39;&#39;&#39;&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">re&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">compile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">r&quot;&lt;div class=&#39;p-name&#39;&gt;&lt;a target=&#39;_blank&#39; href=&#39;(.*?)&#39;&gt;&quot;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">re&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">S&lt;/span>&lt;span class="p">)&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="n">text&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">urlopen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">page_url&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">read&lt;/span>&lt;span class="p">()&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="n">urls&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="k">for&lt;/span> &lt;span class="n">url&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">p&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">findall&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">text&lt;/span>&lt;span class="p">):&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">urls&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">url&lt;/span>&lt;span class="p">)&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="k">return&lt;/span> &lt;span class="n">urls&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="k">def&lt;/span> &lt;span class="nf">get_page_urls&lt;/span>&lt;span class="p">():&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="sd">&#39;&#39;&#39;creates urls of the pages&#39;&#39;&#39;&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="n">page_urls&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="k">for&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="nb">range&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">23&lt;/span>&lt;span class="p">):&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">page_urls&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&#39;http://www.360buy.com/products/670-671-672-0-0-0-0-0-0-0-1-1-&lt;/span>&lt;span class="si">%d&lt;/span>&lt;span class="s">.html&#39;&lt;/span>&lt;span class="o">%&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="k">return&lt;/span> &lt;span class="n">page_urls&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="k">def&lt;/span> &lt;span class="nf">product_worker&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">product_url_queue&lt;/span>&lt;span class="p">):&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="sd">&#39;&#39;&#39;thread of product worker, downloads product info&#39;&#39;&#39;&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="k">global&lt;/span> &lt;span class="n">g_mutex&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">g_c&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">g_done&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="k">while&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="n">g_done&lt;/span> &lt;span class="ow">or&lt;/span> &lt;span class="n">product_url_queue&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">qsize&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">&gt;&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">:&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">product_url_queue&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">()&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="k">try&lt;/span>&lt;span class="p">:&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>            &lt;span class="n">info&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">get_info&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">url&lt;/span>&lt;span class="p">)&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="k">except&lt;/span> &lt;span class="ne">Exception&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">e&lt;/span>&lt;span class="p">:&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>            &lt;span class="n">product_url_queue&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">put&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">url&lt;/span>&lt;span class="p">)&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>            &lt;span class="k">print&lt;/span> &lt;span class="n">e&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>            &lt;span class="k">continue&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">g_mutex&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">acquire&lt;/span>&lt;span class="p">()&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="k">print&lt;/span> &lt;span class="s">&#39;==&gt;&#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">g_c&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">g_c&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">1&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="k">for&lt;/span> &lt;span class="n">t&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">v&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">info&lt;/span>&lt;span class="p">:&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>            &lt;span class="n">f&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">write&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">t&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s">&#39;:::&#39;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">v&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s">&#39;&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s">&#39;&lt;/span>&lt;span class="p">)&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">f&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">write&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&#39;&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s">#####&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s">&#39;&lt;/span>&lt;span class="p">)&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">f&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">flush&lt;/span>&lt;span class="p">()&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">g_mutex&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">release&lt;/span>&lt;span class="p">()&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="k">def&lt;/span> &lt;span class="nf">page_urls_worker&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">product_url_queue&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">page_url&lt;/span>&lt;span class="p">):&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="sd">&#39;&#39;&#39;thread function of page urls worker, downloads page urls&#39;&#39;&#39;&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="k">for&lt;/span> &lt;span class="n">product_url&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">get_urls&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">page_url&lt;/span>&lt;span class="p">):&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">product_url_queue&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">put&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">product_url&lt;/span>&lt;span class="p">)&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="k">print&lt;/span> &lt;span class="s">&#39;.&#39;&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="n">f&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">open&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&#39;data.txt&#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&#39;w&#39;&lt;/span>&lt;span class="p">)&lt;/span>   &lt;span class="c"># output file&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="n">g_c&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>                     &lt;span class="c"># counter, for telling us the process&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="n">g_done&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="bp">False&lt;/span>              &lt;span class="c"># end flag&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="n">g_mutex&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">threading&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Lock&lt;/span>&lt;span class="p">()&lt;/span>  &lt;span class="c"># mutex&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="k">def&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">():&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="k">global&lt;/span> &lt;span class="n">g_done&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="n">threading_pool&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="n">q&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Queue&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Queue&lt;/span>&lt;span class="p">()&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="n">num_product_worker&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">50&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="k">for&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="nb">range&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">num_product_worker&lt;/span>&lt;span class="p">):&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">th&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">threading&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Thread&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">product_worker&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">args&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">q&lt;/span>&lt;span class="p">,))&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">threading_pool&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">th&lt;/span>&lt;span class="p">)&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">th&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">start&lt;/span>&lt;span class="p">()&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="n">page_urls_worker_pool&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="k">for&lt;/span> &lt;span class="n">page_url&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">get_page_urls&lt;/span>&lt;span class="p">():&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">pth&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">threading&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Thread&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">page_urls_worker&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">args&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">q&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">page_url&lt;/span>&lt;span class="p">))&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">pth&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">start&lt;/span>&lt;span class="p">()&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">page_urls_worker_pool&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">pth&lt;/span>&lt;span class="p">)&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="k">for&lt;/span> &lt;span class="n">th&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">page_urls_worker_pool&lt;/span>&lt;span class="p">:&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">threading&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Thread&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">join&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">th&lt;/span>&lt;span class="p">)&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="n">g_done&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="bp">True&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="k">for&lt;/span> &lt;span class="n">th&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">threading_pool&lt;/span>&lt;span class="p">:&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>        &lt;span class="n">threading&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Thread&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">join&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">th&lt;/span>&lt;span class="p">)&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>
+</span><span class='line'>&lt;/span>&lt;span class='line'>&lt;span class="k">if&lt;/span> &lt;span class="n">__name__&lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="s">&#39;__main__&#39;&lt;/span>&lt;span class="p">:&lt;/span>
+</span><span class='line'>&lt;/span>&lt;span class='line'>    &lt;span class="n">main&lt;/span>&lt;span class="p">()&lt;/span>
+</span><span class='line'>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>&lt;/notextile>&lt;/div>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>输出如下的文件：
+</span><span class='line'>[![](http://everet.org/wp-content/uploads/2012/02/QQ截图20120217192017.png)](http://everet.org/wp-content/uploads/2012/02/QQ截图20120217192017.png)</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stupid ET</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-18T02:53:24+08:00" pubdate data-updated="true">2012-02-18</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/我的代码/'>我的代码</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cedricporter.github.com/2012/02/python-crawl-jingdong.html" data-via="" data-counturl="http://cedricporter.github.com/2012/02/python-crawl-jingdong.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/02/burst-net-transfer.html" title="Previous Post: 两台Burst.Net主机传输文件真快">&laquo; 两台Burst.Net主机传输文件真快</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/02/the-http-status-code.html" title="Next Post: HTTP状态码">HTTP状态码 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cedricporter">@cedricporter</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cedricporter',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cedricporter.github.com/2012/02/python-crawl-jingdong.html';
+        var disqus_url = 'http://cedricporter.github.com/2012/02/python-crawl-jingdong.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Python的“黑暗魔法”，两行解一元一次方程 - My Octopress Blog</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="无意看到一个大神写的《Linear equations solver in 3 lines (Python recipe)》，Python解一元一次方程只需要三行就完成了，确实很强悍啊。 我们来围观一下： 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+说到底呢，这个段代码的关键是利用了复数 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cedricporter.github.com/2012/04/linear-equations-solvers-in-python.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cedricporter.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Python的“黑暗魔法”，两行解一元一次方程</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-25T04:06:02+08:00" pubdate data-updated="true">2012-04-25</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>无意看到一个大神写的《<a href="http://code.activestate.com/recipes/365013-linear-equations-solver-in-3-lines/">Linear equations solver in 3 lines (Python recipe)</a>》，Python解一元一次方程只需要三行就完成了，确实很强悍啊。</p>
+
+<p>我们来围观一下：
+<a href="http://everet.org/wp-content/uploads/2012/04/Screenshot-at-2012-04-24-195023.png"><img src="http://everet.org/wp-content/uploads/2012/04/Screenshot-at-2012-04-24-195023.png" alt="" /></a></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>说到底呢，这个段代码的关键是利用了复数。
+</span><span class='line'>第一步：
+</span><span class='line'>2 * x + 233 = x * 8 + 3
+</span><span class='line'>变成
+</span><span class='line'>2 * x + 233 -(x * 8 + 3)
+</span><span class='line'>然后把x变成虚数1j
+</span><span class='line'>然后变成
+</span><span class='line'>2 * 1j + 233 -(1j * 8 + 3)
+</span><span class='line'>通过eval算出结果为230-6j
+</span><span class='line'>因为我们知道这个表达式结果为0，而且j也相当于x。
+</span><span class='line'>所以问题变成了：230-6j=0，也就是230-6x=0。
+</span><span class='line'>最后x = - 230 / 6 = 38.33333333336。</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"></pre></td><td class='code'><pre><code class=''></code></pre></td></tr></table></div></figure>
+
+
+<p>这里的核心是用到了Python的黑暗魔法eval，eval的第一个参数是表达式，第二个参数是命名空间，也就是把 x = 1j 通过第二个参数把一些值放进去。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/04/Screenshot-at-2012-04-24-200440.png"><img src="http://everet.org/wp-content/uploads/2012/04/Screenshot-at-2012-04-24-200440.png" alt="" /></a></p>
+
+<p>神奇的求解函数：</p>
+
+<figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">s</span><span class="p">(</span><span class="n">eq</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="s">&#39;x&#39;</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">r</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">eq</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">,</span> <span class="s">&#39;-(&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="p">{</span><span class="n">var</span><span class="p">:</span><span class="mi">1j</span><span class="p">})</span>
+</span><span class='line'>    <span class="k">return</span> <span class="o">-</span><span class="n">r</span><span class="o">.</span><span class="n">real</span> <span class="o">/</span> <span class="n">r</span><span class="o">.</span><span class="n">imag</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stupid ET</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-25T04:06:02+08:00" pubdate data-updated="true">2012-04-25</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/技术类/'>技术类</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cedricporter.github.com/2012/04/linear-equations-solvers-in-python.html" data-via="" data-counturl="http://cedricporter.github.com/2012/04/linear-equations-solvers-in-python.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/04/ubuntu-screenshot.html" title="Previous Post: Ubuntu上的屏幕截图">&laquo; Ubuntu上的屏幕截图</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/04/mass-thoughts.html" title="Next Post: 临近大三结束的一些杂乱的思绪">临近大三结束的一些杂乱的思绪 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cedricporter">@cedricporter</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cedricporter',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cedricporter.github.com/2012/04/linear-equations-solvers-in-python.html';
+        var disqus_url = 'http://cedricporter.github.com/2012/04/linear-equations-solvers-in-python.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

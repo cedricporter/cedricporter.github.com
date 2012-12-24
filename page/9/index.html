@@ -1,0 +1,712 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My Octopress Blog</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="Gitweb是Git提供的一个基于web的版本查看工具，可以在网页浏览我们的版本库，挺像Google Code上面的网页浏览版本库。我们可以使用cgi方式，让gitweb运行在apache中，如果在nginx上，我们还需要一个包装才可以运行cgi。 使用Gitweb很方便，但是如果是一些私有的项目 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cedricporter.github.com/page/9/index.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cedricporter.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/01/gitweb-password.html">给Gitweb加上访问密码，保护我们的私有项目</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-30T00:35:19+08:00" pubdate data-updated="true">2012-01-30</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Gitweb是Git提供的一个基于web的版本查看工具，可以在网页浏览我们的版本库，挺像Google Code上面的网页浏览版本库。我们可以使用cgi方式，让gitweb运行在apache中，如果在nginx上，我们还需要一个包装才可以运行cgi。</p>
+
+<p>使用Gitweb很方便，但是如果是一些私有的项目，谁都可以访问想必大家都不能接受吧。</p>
+
+<p>所以我们可以通过apache或者nginx给虚拟主机增加一个密码。效果如：<a href="http://git.everet.org/">http://git.everet.org/</a></p>
+
+<p>我们首先用htpasswd生成密码：</p>
+
+<blockquote><p>htpasswd -cb 文件名 帐号 密码</p></blockquote>
+
+<p>htpasswd -b 其他帐号 密码</p>
+
+<p>-c代表创建一个新的，-b代表批处理。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/01/gitweb-password.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/01/imagination-factory.html">我们的图像处理 Imagination Factory</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-29T10:01:18+08:00" pubdate data-updated="true">2012-01-29</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Imagination Factory是一款轻巧美观的图像浏览和图像处理软件。这是我们大一时的C++大作业。写下来记录一下以前做了些什么。</p>
+
+<p>我们小组除了俺之外有陈可昕和康磊，两人都是天才少年。陈可昕同学巾帼不让须眉，交给她的几本数千页的WPF英文书籍她都很快就可以消化。康磊同学理科高人，复杂的数学问题他都可以轻松搞定然后去看动漫了，俺有幸可以与此神人同宿舍，只可惜神人已经转专业到了电信。</p>
+
+<p>Imagination Factory的界面采用C#编写，使用了WPF作为界面库。图像处理核心使用C++编写。</p>
+
+<p>项目已经开源，放到 <a href="http://code.google.com/p/imagination-factory/">http://code.google.com/p/imagination-factory/</a> ，有兴趣的同志们可以接着完善它吧。</p>
+
+<p>Imagination Factory运行时的截图：</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/01/imagination-factory.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/01/clover-progress.html">Clover进度</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-28T01:31:58+08:00" pubdate data-updated="true">2012-01-28</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>2012-3-30:</h3>
+
+<p>今天我们把视频提交了。也上传了一份。</p>
+
+<p><a href="http://v.youku.com/v_show/id_XMzc0MTAyMDg0.html">http://v.youku.com/v_show/id_XMzc0MTAyMDg0.html</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/01/clover-progress.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/01/tortoisegit-access-gitosis.html">TortoiseGit访问Gitosis搭建的版本库</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-27T23:30:39+08:00" pubdate data-updated="true">2012-01-27</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>首先，我们创建好公钥和密钥，如何创建可以参考 <a href="http://www.everet.org/2012/01/management-remote-host.html">http://www.everet.org/2012/01/management-remote-host.html</a> 。</p>
+
+<p>然后把公钥id_rsa.pub发给Git版本库的管理员。</p>
+
+<p>因为TortoiseGit使用ppk，所以我们需要用自己密钥重新创建一个ppk的密钥</p>
+
+<p><a href="http://www.everet.org/wp-content/uploads/2012/01/image6.png"><img src="http://www.everet.org/wp-content/uploads/2012/01/image_thumb6.png" alt="image" /></a></p>
+
+<p>我们首先打开 TortoiseGit 下的 puttygen，然后点击load，把自己密钥加载进来，我们之前创建的密钥，如果没做任何更改，则文件名为id_rsa。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/01/tortoisegit-access-gitosis.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/01/gitosis-in-ubuntu.html">Ubuntu使用Gitosis搭建Git服务器，Windows客户端支持中文</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-27T06:27:05+08:00" pubdate data-updated="true">2012-01-27</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>更详细的教程请见 《Pro Git》<a href="http://progit.org/book/zh/ch4-7.html">http://progit.org/book/zh/ch4-7.html</a>。</p>
+
+<h3>安装必备工具</h3>
+
+<p>apt-get install git gitweb gitosis</p>
+
+<p>用自己的公钥来初始化Gitosis</p>
+
+<p>root@everet:/var# sudo -H -u git gitosis-init &lt; /tmp/authorized_keys
+Initialized empty Git repository in /home/git/repositories/gitosis-admin.git/
+Reinitialized existing Git repository in /home/git/repositories/gitosis-admin.git/</p>
+
+<p>对该仓库中的<code>post-update</code> 脚本加上可执行权限</p>
+
+<p>root@everet:/home/git/repositories/gitosis-admin.git/hooks# chmod 755 post-update</p>
+
+<h3>克隆 Gitosis 的控制仓库</h3>
+
+<p>$ git clone git@everet.org:gitosis-admin.git</p>
+
+<p>这会得到一个名为 <code>gitosis-admin</code> 的工作目录，主要由两部分组成：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/01/gitosis-in-ubuntu.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/01/python-ogre-start.html">Python与OGRE之开篇</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-27T05:02:52+08:00" pubdate data-updated="true">2012-01-27</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>OGRE是什么？百度百科给的解释是：“OGRE（Object-Oriented Graphics Rendering Engine，即：面向对象图形渲染引擎）是一个用C++开发的面向场景、非常灵活的3D引擎，它旨在让开发人员更容易、更直接地利用硬件加速的3D图形系统开发应用。这个类库隐藏了底层系统库（如：Direct3D和OpenGL）的所有细节，提供了一个基于世界对象和其他直观类的接口。 译者注:ogre在英文中意为：食人魔鬼, 怪物, 象鬼的人，故其LOGO是一个怪物头。”</p>
+
+<p>Python是什么？“Python是一种面向对象、直译式计算机程序设计语言，由<a href="http://baike.baidu.com/view/2975166.htm">Guido van Rossum</a>于1989年底发明， 第一个公开发行版发行于1991年。Python语法简捷而清晰，具有丰富和强大的类库。它常被昵称为胶水语言，它能够很轻松的把用其他语言制作的各种模块（尤其是C/C++）轻松地联结在一起。常见的一种应用情形是，使用python快速生成程序的原型（有时甚至是程序的最终界面），然后对其中有特别要求的部分，用更合适的语言改写，比如3D游戏中的图形渲染模块，速度要求非常高，就可以用C++重写。”摘自百度百科。</p>
+
+<h2>Python+OGRE=？</h2>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/01/python-ogre-start.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/01/pil-brief-intro.html">Python进行图像处理——PIL简介</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-25T07:31:43+08:00" pubdate data-updated="true">2012-01-25</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>PIL中包括Image，ImageEnhance，ImageGrab等。</p>
+
+<h2>Image</h2>
+
+<p>Image模块仅用一个类来表示PIL中的图像，并提供了许多工厂函数，不同类型的图像可以使用统一的接口进行处理。</p>
+
+<p><a href="http://www.pythonware.com/library/pil/handbook/image.htm">http://www.pythonware.com/library/pil/handbook/image.htm</a></p>
+
+<h3>主要函数（可以顾名思义，这里主要有个提纲，方便记忆）有：</h3>
+
+<blockquote><p><strong>Image.new(mode, size)</strong> => image</p></blockquote>
+
+<p><strong>Image.new(mode, size, color)</strong> => image</p>
+
+<p><strong>Image.open(infile)</strong> => image</p>
+
+<p><strong>Image.open(infile, mode)</strong> => image</p>
+
+<p><strong>Image.blend(image1, image2, alpha)</strong> => image</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/01/pil-brief-intro.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/01/pil-start.html">Python进行图像处理——开篇</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-25T06:46:08+08:00" pubdate data-updated="true">2012-01-25</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Python是一个非常简洁优雅的语言，库非常的丰富。在图像处理方面，有个PIL（Python Imaging Library ），这个是一个应用上手非常简单的Python的图像处理库。</p>
+
+<p>PIL的下载地址可以在 <a href="http://pypi.python.org/pypi/PIL">http://pypi.python.org/pypi/PIL</a> 找到。</p>
+
+<p>手册在 <a href="http://www.pythonware.com/library/pil/handbook/index.htm">http://www.pythonware.com/library/pil/handbook/index.htm</a> ，这里有非常详细的教程。</p>
+
+<p>我们安装完PIL后，可以在Python交互解释器很中输入：  import Image</p>
+
+<p><a href="http://www.everet.org/wp-content/uploads/2012/01/image.png"><img src="http://www.everet.org/wp-content/uploads/2012/01/image_thumb.png" alt="image" /></a></p>
+
+<p>如果没有发生错误，这说明安装完成了。我们输入以下代码，将会打开一幅图像。</p>
+
+<figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">Image</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;yun.jpg&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">print</span> <span class="n">img</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%d</span><span class="s"> * </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">mode</span>
+</span><span class='line'><span class="n">new_img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+</span><span class='line'><span class="n">new_img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&quot;new_yun.jpg&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">new_img</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/01/pil-start.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/01/chopsticks.html">中国人使用筷子的十二种忌讳</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-25T04:43:00+08:00" pubdate data-updated="true">2012-01-25</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>好吧，最近又被人骂说我用筷子没文化没传统，于是记录一下用筷子有什么禁忌。学习一下中国的传统文化。</p>
+
+<blockquote><p>中国人使用筷子用餐是从远古流传下来的，古时又称其为“箸”，日常生活当中对筷子的运用是非常有讲究的。一般我们在使用筷子时，正确的使用方法讲究得是用右手执筷，大拇指和食指捏住筷子的上端，另外三个手指自然弯曲扶住筷子，并且筷子的两端一定要对齐。在 使用过程当中，用餐前筷子一定要整齐码放在饭碗的右侧，用餐后则一定要整齐的竖向码放在饭碗的正中。但这要绝对禁忌以下十二种筷子的使用方法。</p>
+
+<h3>1三长两短：</h3>
+
+<p>这意思就是说在用餐前或用餐过程当中，将筷子长短不齐的放在桌子上。这种做法 是大不吉利的，通常我们管它叫“三长两短”。其意思是代表“死亡”。因为中国人过去认为人死以后是要装进棺材的，在人装进去以后，还没有盖棺材盖的时候，棺材的组成部分是前后两块短木板，两旁加底部共三块长木板，五块木板合在一起做成的棺材正好是三长两短 ，所以说这是极为不吉利的事情。</p></blockquote>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/01/chopsticks.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/01/conflict-in-life.html">传统文化中最矛盾的两句话是什么？</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-25T04:32:45+08:00" pubdate data-updated="true">2012-01-25</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>有人说，最矛盾的两句话是：</p>
+
+<p>父债子偿。</p>
+
+<p>人死账消。</p>
+
+<p>有人说，</p>
+
+<p>三百六十行，行行出状元。</p>
+
+<p>  万般皆下品，惟有读书高！</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/01/conflict-in-life.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/10/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/8/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/cedricporter">@cedricporter</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cedricporter',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

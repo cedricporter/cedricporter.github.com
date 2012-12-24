@@ -6,10 +6,12 @@
 <head>
   <meta charset="utf-8">
   <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content=" Blog Archives Recent Posts ">
+  <meta name="description" content="为什么调试Nginx 为什么要调试Nginx，原因多种多样。如果阅读源码的话，开着进程单步走下去不失为一种很好的源码导读方式。 编译Nginx bash 1
+2
+3 ./configure --prefix=&quot;$HOME/my-nginx&quot; --with-debug make &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://cedricporter.github.com/">
+  <link rel="canonical" href="http://cedricporter.github.com/index.html">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -65,7 +67,518 @@
       <div class="blog-index">
   
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-24T07:41:00+08:00" pubdate data-updated="true">2012-12-24</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>为什么调试Nginx</h2>
+
+<p> 为什么要调试Nginx，原因多种多样。如果阅读源码的话，开着进程单步走下去不失为一种很好的源码导读方式。</p>
+
+<h2>编译Nginx</h2>
+
+<figure class='code'><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  ./configure --prefix<span class="o">=</span><span class="s2">&quot;$HOME/my-nginx&quot;</span> --with-debug
+</span><span class='line'>  make <span class="o">&amp;&amp;</span> make install
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  当然还要看一下，生成出来的的Makefile是不是有-O优化，如果有的话需要关闭优化，可以看一下根目录下的Makefile以及objs/Makefile。有的话记得需要改成-O0或者直接删掉就好了。</p>
+
+<pre><code>&lt;!-- more --&gt;  
+</code></pre>
+
+<h2>为调试配置Nginx</h2>
+
+<p> 然后在$HOME/my-nginx/conf下面就是我们的配置文件了，我们编辑nginx.conf，加上：</p>
+
+<figure class='code'><figcaption><span>nginx  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='nginx'><span class='line'>  <span class="k">error_log</span> <span class="s">/dev/stdout</span> <span class="s">debug</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">master_process</span> <span class="no">off</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">daemon</span> <span class="no">off</span><span class="p">;</span>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>   我们可以看到error_log /dev/stdout这样一句，这样可以将输出日志直接打印到标准输出，调试的时候可以实时看到输出。</p>
+
+<pre><code>![file:////home/cedricporter/Pictures/snapshot1-small.png](http://everet.org/wp-content/uploads/2012/12/wpid-snapshot1-small.png)
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-19T07:14:27+08:00" pubdate data-updated="true">2012-12-19</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>有博客，为什么还需要Wiki呢？</h2>
+
+<p>有博客，为什么还需要Wiki呢？对于这个问题，我也思考了许久。博客记录的东西很扁平，而且不太适宜记录一些零碎不完整的东西。如果别人订阅了你的博客，你的博客却经常发布一些不完整的内容，这样会严重影响别人的心情。所以我觉得博客适宜将一些比较完整的内容的写在里面。此外，平时在网上看到什么东西，虽然都可以收录到EverNote里面（EverNote里面有提供目录以及标签可以很好地进行分类），但是，EverNote的劣势在于，不方便将知识组织知识，将它们串联在一起。</p>
+
+<p>而在Wiki中知识是以词条形式，词条与词条间可以方便地建立关系。很容易组织成树状结构。</p>
+
+<p>此外，Wiki可以使用轻量标记语言编写，优点是纯文本，容易阅读和编辑，能够让我们的注意力集中于撰写内容而非形式。特别在Emacs或者Vim里面可以方便地半可视化地编写Wiki。我第一次尝试就对其爱不释手，终于可以从Wordpress，Word等SB的需要鼠标辅助编辑的编写过程中解脱了。</p>
+
+<p>于是我又开始物色Wiki，以前有用过PHP实现的Wiki，现在决定找一个Python实现的Wiki，很快就找到了<a href="http://i.everet.org/MoinMoin">MoinMoin</a>，它是一个由Python实现的<a href="http://zh.wikipedia.org/wiki/Wiki">Wiki</a>系统，文件存储，选一种自己喜欢的语言编写的Wiki系统，日后定制起来会方便一些。</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-04T03:39:17+08:00" pubdate data-updated="true">2012-12-04</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>两年多前买的摩托罗拉的里程碑1代，现在竟然已经无力支撑go桌面这样庞大的软件了。虽然我很喜欢go桌面，但是，现在手机已经无力承担如此重负。确实，什么样的基础就应该过什么样的生活，过高的追求只会让生活变得像一条狗一样，苟延残喘。 </div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/12/hardware-decide-the-software.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-30T18:35:31+08:00" pubdate data-updated="true">2012-11-30</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>刚刚切换到风云主机没一个月，而且还是年付的，没想到月底风云主机就倒闭了，A大也跑路了。在收到风云主机的邮件时，风云主机的官网vpswind.com也打不开了，邮件发了也没人回，付款看样子也讨不回来了。不过，好在A大在倒闭前的26号还发了邮件说要倒闭了，言下之意就是要我们自己备份好，然后自己卷卷铺盖走人，也给了几天时间备份数据。</p>
+
+<p>不得不说，风云主机的VPS性价比还是挺不错的，只是没有考虑到倒闭问题。所以，高性价比还是有风险的，而且一旦发生意外，那么所谓的高性价比马上就变得子虚乌有了。</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/11/vps-host-disappear.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-07T00:06:51+08:00" pubdate data-updated="true">2012-11-07</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>趁这段时间有空，换成Xen的VPS，系统装了Ubuntu 12.04。决定重新配置一下服务器，另外将Web Server从Apache换成Nginx。</p>
+
+<h2>目标</h2>
+
+<p>搭建一个前端为nginx支持多用户的php虚拟主机。每个站点可以跑在不同的权限的用户下，一个站点被黑的时候希望不要影响到另一个站点，或者一个同学也不要可以随意访问到别的同学的内容。</p>
+
+<h2>行动</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/11/multi-user-nginx-php-server.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/11/screen-on-ssh.html">Screen在ssh远程登录中的使用</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-01T09:29:12+08:00" pubdate data-updated="true">2012-11-01</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>11月了，没想到10月份竟然木有写博客。这几天在迁移服务器，时间不赶，就慢慢弄，顺便记录一下一些技巧。</p>
+
+<p>首先，远程ssh登录到服务器，可能中途会出现网络断掉或者超时，这时候ssh里面就打不了字了，就只能关闭再重新连接。如果我们用vim编辑一个文件到了一半的话，就会蛋疼地多了一个swp。那么如果我们希望在重新连接回去的时候，可以回到之前的工作状态，我们应该怎么办呢？答案是借助screen。</p>
+
+<p>对于screen的使用就不再罗嗦了。具体可以参看后面的参考资料中提供的链接。</p>
+
+<h2>一些技巧</h2>
+
+<p>下面可能会与诸位使用习惯有所冲突，请见谅。</p>
+
+<h3>把ctrl+a还给我</h3>
+
+<p>首先，screen的命令的前缀是ctrl+a，进入screen后，ctrl+a就成了命令前缀了。我经常使用ctrl+a跳到行首，ctrl+e跳到行尾，所以需要修改一下前缀，否则ctrl+a跳到行首这个习惯就得改了。我们在家目录下面创建一个文件<strong>～/.screenrc</strong>。然后在里面写上</p>
+
+<figure class='code'><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>escape ^Zz
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后就把前缀改成ctrl+z了，如果需要暂停程序的话，就用ctrl+z z来暂停。这样ctrl+a就回来了。</p>
+
+<h3>偷懒</h3>
+
+<p>每次打screen真麻烦，我们在<strong>～/.bashrc</strong>中加上</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/11/screen-on-ssh.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/09/chrome-ramdisk.html">[优化]将Chrome的数据放置到内存中去</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-11T17:52:46+08:00" pubdate data-updated="true">2012-09-11</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我现在使用的一台电脑的硬盘速度非常慢，Chrome有时也会对硬盘读写也会让机器发生顿卡，真是悲剧。所以我决定将Chrome经常读写的数据放置到内存中以提高响应速度。 Chrome的数据文件主要有用户配置文件以及磁盘缓存文件。在Ubuntu下就分别放置在~/.config/google-chrome以及~/.cache/google-chrome下面。 在Linux下，ramdisk直接就有了，直接拿来用就可以了，而在Windows下需要安装一些程序来创建ramdisk。我们来看看Linux下怎么做。 在Linux下，/dev/shm目录就是映射到了内存，所有写的东西都是直接写到了内存里面，不过这个目录不是持久的，断电就没了。</p>
+
+<h2>Hack</h2>
+
+<p>我们的想法是，开机的时候将Chrome的数据文件全部放到/dev/shm下面，然后中间所有的读写都是在/dev/shm里面完成，因为都是在内存里面完成，所以速度会非常快。</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/09/chrome-ramdisk.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/08/fix-gnome-settings-daemon-disk-io.html">解决Ubuntu下gnome-settings-daemon高磁盘IO的问题</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-31T18:51:34+08:00" pubdate data-updated="true">2012-08-31</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近在用Ubuntu的时候，总是发现用着用着整台电脑就卡死了，什么都动不了，然后硬盘灯一直处于常亮状态。几次艰难地打开shell，发现都是gnome-settings-daemon一直在读写硬盘。这个究竟是什么问题呢？</p>
+
+<p>strace一下，看看，这个进程在干啥。</p>
+
+<p>Liquid error: ClassNotFound: no lexer for alias &#8216;shell&#8217; found</p>
+
+<p>出来的结果就像刷屏一样，全部都是lstat的系统调用，读取的都是.thumbnails下面的图片。</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/08/fix-gnome-settings-daemon-disk-io.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/08/popo-linux.html">网易泡泡的Linux虚拟机宿主提示外挂</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-21T21:37:22+08:00" pubdate data-updated="true">2012-08-21</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在网易实习时，上班一定要开着泡泡，不过泡泡貌似在Linux会严重地水土不服，所以只能装一个虚拟机来解决这个问题。借助<a href="http://everet.org/2012/07/virtualbox-seamless.html">VirtualBox的无缝模式</a>，我们在一定程度上可以缓解这个问题。但是我平时会在多个虚拟桌面。如果恰巧不幸，我长时间没有切换到泡泡所在的虚拟桌面时，那就会有很长时间都不知道有新的泡泡消息。这个无论对人对己都有非常不好的影响。首先，别人无法在第一时间找到我，即便是我开着泡泡；第二，如果有重要通知，我却不幸地没有在泡泡的虚拟桌面时，那就大祸了。</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/08/popo-linux.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/08/profile-of-effectlab.html">对Python图像处理库EffectLab进行性能测试</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-15T01:49:37+08:00" pubdate data-updated="true">2012-08-15</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://everet.org/2012/07/effectlab.html">EffectLab</a>也是一个基于PIL的Python的图像库，目的是为了提供更多的特效处理以及更快的测试。</p>
+
+<p>目前EffectLab可以实现的特效可以围观之前的文章：<a href="http://everet.org/2012/07/effectlab.html">http://everet.org/2012/07/effectlab.html</a>。</p>
+
+<p>古人云：<em>选择了脚本语言</em>就要忍受其速度。</p>
+
+<p>但是，有时脚本语言的速度已经慢到了无法形容的地步时，我们就开始考虑性能优化了。</p>
+
+<h2>寻找性能热点</h2>
+
+<p>Python有一对很好的性能测试工具：cProfile与pstats。</p>
+
+<p>我们来选择一个波浪效果来做测试：</p>
+
+<figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&quot;RGB&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</span><span class='line'><span class="n">wave</span> <span class="o">=</span> <span class="n">GlobalWaveEffect</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+</span><span class='line'><span class="n">test</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&quot;test()&quot;</span><span class="p">,</span> <span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span><span class="o">.</span><span class="n">strip_dirs</span><span class="p">()</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="s">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们可以看到其输出：</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/08/profile-of-effectlab.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
   <div class="pagination">
+    
+      <a class="prev" href="/page/2/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -77,7 +590,56 @@
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
+      <li class="post">
+        <a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
+      </li>
+    
   </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/cedricporter">@cedricporter</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cedricporter',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 
@@ -91,12 +653,25 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2012 - Your Name -
+  Copyright &copy; 2012 - Stupid ET -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
 </footer>
   
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 

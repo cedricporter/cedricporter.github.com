@@ -1,0 +1,334 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>使用Git访问SVN - My Octopress Blog</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="想必大家都使用过Subversion吧，也想必大家都对SVN这种脱离了网络和服务器就寸步难行的工作方式嗤之以鼻吧。使用SVN我们看个log首要联网。 在服务器在因特网的情况下，网速让使用SVN变成一件十分蛋疼的事情。因为SVN事事都要联网，没有网络就无法工作，这个是集中式版本控制器十分大的缺陷。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cedricporter.github.com/2012/02/access-svn-with-git.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cedricporter.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">使用Git访问SVN</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-01T03:33:29+08:00" pubdate data-updated="true">2012-02-01</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>想必大家都使用过Subversion吧，也想必大家都对SVN这种脱离了网络和服务器就寸步难行的工作方式嗤之以鼻吧。使用SVN我们看个log首要联网。</p>
+
+<p>在服务器在因特网的情况下，网速让使用SVN变成一件十分蛋疼的事情。因为SVN事事都要联网，没有网络就无法工作，这个是集中式版本控制器十分大的缺陷。</p>
+
+<p>好在后来Linus在BitMover在收回开源社区的BitKeeper这款分布式版本控制器的授权后，开发了Git。这款Linus又一力作又再次改变了世界。</p>
+
+<p>Git有个很好的功能就是可以访问SVN服务器。这点也让我们这些SVN的使用者也稍稍改善了SVN的用户体验。</p>
+
+<p>Git可以将版本先提交（commit）到本地的分支，到时机成熟之时再一次推送（push）到远程服务器。而且查看历史也不需要联网了，因为Git默认会把整个SVN版本库都克隆下来。</p>
+
+<p>像我们使用Google Code来托管我们的开源代码时，我们可以在上面创建SVN的版本库，Git版本库貌似访问不了，没办法。</p>
+
+<p>Google Code对一个项目有4GB的空间，有wiki等等，还可以上传文件供用户下载，这个非常的好。</p>
+
+<p>例如，我的vim和emacs的配置我放到了 <a href="http://code.google.com/p/et-vim-setting/">http://code.google.com/p/et-vim-setting/</a></p>
+
+<p>我们可以使用如下命令克隆我们的Google Code上的项目。</p>
+
+<blockquote><p>git svn clone &#8211;username cedricporter@gmail.com -s <a href="https://et-vim-setting.googlecode.com/svn">https://et-vim-setting.googlecode.com/svn</a> vim_setting</p></blockquote>
+
+<!-- more -->
+
+
+<blockquote></blockquote>
+
+<p>我在用如下命令把我的Windows上的配置文件_vimrc提交到Google Code的SVN服务器上。</p>
+
+<blockquote><p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
+$ git status</p>
+
+<h1>On branch master</h1>
+
+<p>nothing to commit (working directory clean)</p>
+
+<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
+$ git add .</p>
+
+<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
+$ git status</p>
+
+<h1>On branch master</h1>
+
+<h1>Changes to be committed:</h1>
+
+<h1>(use &#8220;git reset HEAD <file>&#8230;&#8221; to unstage)</h1>
+
+<h1></h1>
+
+<h1>new file: _vimrc</h1>
+
+<p>#</p>
+
+<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
+$ git commit -am &#8216;add windows setting&#8217;       <br/>
+[master 6d6f696] add windows setting      <br/>
+1 files changed, 632 insertions(+), 0 deletions(-)      <br/>
+create mode 100755 _vimrc</p>
+
+<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
+$ git svn dcommit      <br/>
+Committing to <a href="https://et-vim-setting.googlecode.com/svn/trunk">https://et-vim-setting.googlecode.com/svn/trunk</a> &#8230;      <br/>
+Authentication realm: &lt;<a href="https://et-vim-setting.googlecode.com:443">https://et-vim-setting.googlecode.com:443</a>> Google Code Subversion Repository      <br/>
+Password for &#8216;Cedric Porter&#8217;:</p></blockquote>
+
+<p>更多的Git教程请查看《Pro Git》，在美国的Amazon有卖，电子版地址 <a href="http://progit.org/book/zh/">http://progit.org/book/zh/</a> ，他们的翻译也是使用Git管理。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stupid ET</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-01T03:33:29+08:00" pubdate data-updated="true">2012-02-01</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/技术类/'>技术类</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cedricporter.github.com/2012/02/access-svn-with-git.html" data-via="" data-counturl="http://cedricporter.github.com/2012/02/access-svn-with-git.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/01/reduce-spam-in-wordpress.html" title="Previous Post: 减少wordpress垃圾评论的方法">&laquo; 减少wordpress垃圾评论的方法</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/02/android-controls-computer.html" title="Next Post: 在Android管理远程主机">在Android管理远程主机 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cedricporter">@cedricporter</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cedricporter',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cedricporter.github.com/2012/02/access-svn-with-git.html';
+        var disqus_url = 'http://cedricporter.github.com/2012/02/access-svn-with-git.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,451 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>神奇的Python：解析OGRE配置文件 - My Octopress Blog</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="OGRE（Object-Oriented Graphics Rendering Engine，即：面向对象图形渲染引擎）是一个用C++开发的面向场景、非常灵活的3D引擎，它旨在让开发人员更容易、更直接地利用硬件加速的3D图形系统开发应用。这个类库隐藏了底层系统库（如：Direct3D和OpenGL &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cedricporter.github.com/2012/03/python-parse-ogre-configuration-file.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cedricporter.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">神奇的Python：解析OGRE配置文件</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-17T03:19:52+08:00" pubdate data-updated="true">2012-03-17</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><blockquote><p>OGRE（Object-Oriented Graphics Rendering Engine，即：面向对象图形渲染引擎）是一个用C++开发的面向场景、非常灵活的3D引擎，它旨在让开发人员更容易、更直接地利用硬件加速的3D图形系统开发应用。这个类库隐藏了底层系统库（如：Direct3D和OpenGL）的所有细节，提供了一个基于世界对象和其他直观类的接口。 译者注:ogre在英文中意为：食人魔鬼, 怪物, 象鬼的人，故其LOGO是一个怪物头。</p></blockquote>
+
+<p>以上引用自百度百科。</p>
+
+<p>OGRE的很多东西都通过配置文件来控制，这样会很灵活。</p>
+
+<p>配置文件的例子如下：</p>
+
+<blockquote><p>[Bootstrap]
+Zip=../media/packs/OgreCore.zip</p></blockquote>
+
+<h1>Resource locations to be added to the default path</h1>
+
+<p>[General]
+FileSystem=../media
+FileSystem=../media/fonts
+FileSystem=../media/sounds
+Zip=../media/packs/ogretestmap.zip
+Zip=../media/packs/skybox.zip</p>
+
+<h1>Zip=../media/packs/chiropteraDM.pk3</h1>
+
+<p>它分了section，在section下有许多配置语句，也就是一些赋值语句。</p>
+
+<p>其配置文件的文法类似如下：<!-- more --></p>
+
+<blockquote><p>file –> section+</p></blockquote>
+
+<p>section –> ‘[‘ identifier ‘]’body</p>
+
+<p>body –> statement</p>
+
+<p>statement –> assign_statement</p>
+
+<p>assign_statement –> identifer ‘=’value</p>
+
+<p>我们可以借助一个Python的SimpleParse模块进行分析。这是一款强大Python解析模块。</p>
+
+<p>可以围观上文<a href="http://everet.org/2012/03/the-format-grammer.html"> http://everet.org/2012/03/the-format-grammer.html</a></p>
+
+<p>以下是一个解析OGRE配置文件的Python代码。</p>
+
+<figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">declaration</span> <span class="o">=</span> <span class="s">r&#39;&#39;&#39;</span>
+</span><span class='line'><span class="s">file           :=  [ \t\n]*, section+</span>
+</span><span class='line'><span class="s">section        :=  &#39;[&#39;, section_name, &#39;]&#39;, ts,&#39;\n&#39;, body</span>
+</span><span class='line'><span class="s">section_name   :=  identifier</span>
+</span><span class='line'><span class="s">body           :=  statement*</span>
+</span><span class='line'><span class="s">statement      :=  (ts,&#39;#&#39;, -&#39;\n&#39;*,&#39;\n&#39;)/equality/nullline</span>
+</span><span class='line'><span class="s">nullline       :=  ts,&#39;\n&#39;</span>
+</span><span class='line'><span class="s">equality       :=  ts, item, ts, &#39;=&#39;, ts, value, ts, &#39;\n&#39;</span>
+</span><span class='line'><span class="s">item           := identifier</span>
+</span><span class='line'><span class="s">identifier     :=  [a-zA-Z], [a-zA-Z0-9_]*</span>
+</span><span class='line'><span class="s">value          :=  -&#39;\n&#39;*</span>
+</span><span class='line'><span class="s">ts             :=  [ \t]*</span>
+</span><span class='line'><span class="s">&#39;&#39;&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+</span><span class='line'><span class="s">[Bootstrap]</span>
+</span><span class='line'><span class="s">Zip=../media/packs/OgreCore.zip</span>
+</span><span class='line'>
+</span><span class='line'><span class="s"># Resource locations to be added to the default path</span>
+</span><span class='line'><span class="s">[General]</span>
+</span><span class='line'><span class="s">FileSystem=../media</span>
+</span><span class='line'><span class="s">FileSystem=../media/Audio</span>
+</span><span class='line'><span class="s">FileSystem=../media/sounds</span>
+</span><span class='line'><span class="s">FileSystem=../media/materials/programs</span>
+</span><span class='line'><span class="s">FileSystem=../media/materials/scripts</span>
+</span><span class='line'><span class="s">FileSystem=../media/materials/textures</span>
+</span><span class='line'><span class="s">FileSystem=../media/models</span>
+</span><span class='line'><span class="s">FileSystem=../media/overlays</span>
+</span><span class='line'><span class="s">Zip=../media/packs/ogretestmap.zip</span>
+</span><span class='line'><span class="s">#Zip=../media/packs/chiropteraDM.pk3</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&#39;&#39;&#39;</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">simpleparse.parser</span> <span class="kn">import</span> <span class="n">Parser</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">pprint</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">lastItem</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class='line'><span class="n">section_name</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">config_maker</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&#39;&#39;&#39;make the config tuple, and adds them to config&#39;&#39;&#39;</span>
+</span><span class='line'>    <span class="k">global</span> <span class="n">config</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">lastItem</span><span class="p">,</span> <span class="n">section_name</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;section_name&#39;</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">section_name</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;item&#39;</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">lastItem</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;value&#39;</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">config</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">lastItem</span><span class="p">,</span> <span class="n">text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]))</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">travel</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">root</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">tag</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">children</span> <span class="o">=</span> <span class="n">root</span>
+</span><span class='line'>    <span class="n">func</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">children</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span> <span class="n">travel</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span><span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="p">(</span> <span class="n">declaration</span><span class="p">,</span> <span class="s">&quot;file&quot;</span> <span class="p">)</span>
+</span><span class='line'>    <span class="n">success</span><span class="p">,</span> <span class="n">resultTrees</span><span class="p">,</span> <span class="n">nextChar</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">resultTrees</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">config</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>        <span class="n">travel</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">config_maker</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">output</span><span class="p">[</span><span class="n">section_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>输出如下的内容，我们就可以很方便地读取里面的内容了。
+<a href="http://everet.org/wp-content/uploads/2012/03/QQ%E6%88%AA%E5%9B%BE20120316192157.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ%E6%88%AA%E5%9B%BE20120316192157.png" alt="" /></a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stupid ET</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-17T03:19:52+08:00" pubdate data-updated="true">2012-03-17</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/我的代码/'>我的代码</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cedricporter.github.com/2012/03/python-parse-ogre-configuration-file.html" data-via="" data-counturl="http://cedricporter.github.com/2012/03/python-parse-ogre-configuration-file.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/03/the-format-grammer.html" title="Previous Post: 神奇的Python:格式化UltraDemo的文法">&laquo; 神奇的Python:格式化UltraDemo的文法</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/03/how-to-become-a-hacker.html" title="Next Post: [分享]How To Become A Hacker——如何成为黑客">[分享]How To Become A Hacker——如何成为黑客 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cedricporter">@cedricporter</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cedricporter',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cedricporter.github.com/2012/03/python-parse-ogre-configuration-file.html';
+        var disqus_url = 'http://cedricporter.github.com/2012/03/python-parse-ogre-configuration-file.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

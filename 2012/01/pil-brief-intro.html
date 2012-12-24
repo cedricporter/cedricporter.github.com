@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Python进行图像处理——PIL简介 - My Octopress Blog</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="PIL中包括Image，ImageEnhance，ImageGrab等。 Image Image模块仅用一个类来表示PIL中的图像，并提供了许多工厂函数，不同类型的图像可以使用统一的接口进行处理。 http://www.pythonware.com/library/pil/handbook/ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cedricporter.github.com/2012/01/pil-brief-intro.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cedricporter.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Python进行图像处理——PIL简介</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-25T07:31:43+08:00" pubdate data-updated="true">2012-01-25</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>PIL中包括Image，ImageEnhance，ImageGrab等。</p>
+
+<h2>Image</h2>
+
+<p>Image模块仅用一个类来表示PIL中的图像，并提供了许多工厂函数，不同类型的图像可以使用统一的接口进行处理。</p>
+
+<p><a href="http://www.pythonware.com/library/pil/handbook/image.htm">http://www.pythonware.com/library/pil/handbook/image.htm</a></p>
+
+<h3>主要函数（可以顾名思义，这里主要有个提纲，方便记忆）有：</h3>
+
+<blockquote><p><strong>Image.new(mode, size)</strong> => image</p></blockquote>
+
+<p><strong>Image.new(mode, size, color)</strong> => image</p>
+
+<p><strong>Image.open(infile)</strong> => image</p>
+
+<p><strong>Image.open(infile, mode)</strong> => image</p>
+
+<p><strong>Image.blend(image1, image2, alpha)</strong> => image<!-- more --></p>
+
+<p><strong>im.convert(mode)</strong> => image</p>
+
+<p><strong>im.convert(mode, matrix)</strong> => image</p>
+
+<p><strong>im.copy()</strong> => image</p>
+
+<p><strong>im.crop(box)</strong> => image</p>
+
+<p><strong>im.paste(image, box)</strong></p>
+
+<p><strong>im.paste(colour, box)</strong></p>
+
+<p><strong>im.paste(image, box, mask)</strong></p>
+
+<p><strong>im.paste(colour, box, mask)</strong></p>
+
+<p><strong>im.resize(size)</strong> => image</p>
+
+<p><strong>im.resize(size, filter)</strong> => image</p>
+
+<p><strong>im.save(outfile, <em>options&#8230;</em>)</strong></p>
+
+<p><strong>im.save(outfile, format, <em>options&#8230;</em>)</strong></p>
+
+<p><strong>im.seek(frame)</strong>   可用于gif</p>
+
+<p><strong>im.split()</strong> => sequence    RGB通道分离</p>
+
+<p><strong>im.transpose(method)</strong> => image</p>
+
+<h2>ImageEnhance</h2>
+
+<p>图像增强，锐化，对比度，亮度的处理。</p>
+
+<p><a href="http://www.pythonware.com/library/pil/handbook/imageenhance.htm">http://www.pythonware.com/library/pil/handbook/imageenhance.htm</a></p>
+
+<h2>ImageGrab</h2>
+
+<p>ImageGrab模块可以进行屏幕截图。也可以复制剪切板中的图像。不过手册说仅仅适用于Windows。</p>
+
+<p><a href="http://www.pythonware.com/library/pil/handbook/imagegrab.htm">http://www.pythonware.com/library/pil/handbook/imagegrab.htm</a></p>
+
+<blockquote><p><strong>ImageGrab.grab()</strong> => image</p></blockquote>
+
+<p><strong>ImageGrab.grab(bbox)</strong> => image</p>
+
+<p><strong>ImageGrab.grabclipboard()</strong> => image or list of strings or None</p>
+
+<h2>ImageDraw</h2>
+
+<p>可以画2D图。</p>
+
+<p><a href="http://www.pythonware.com/library/pil/handbook/imagedraw.htm">http://www.pythonware.com/library/pil/handbook/imagedraw.htm</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stupid ET</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-25T07:31:43+08:00" pubdate data-updated="true">2012-01-25</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/我的代码/'>我的代码</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cedricporter.github.com/2012/01/pil-brief-intro.html" data-via="" data-counturl="http://cedricporter.github.com/2012/01/pil-brief-intro.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/01/pil-start.html" title="Previous Post: Python进行图像处理——开篇">&laquo; Python进行图像处理——开篇</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/01/python-ogre-start.html" title="Next Post: Python与OGRE之开篇">Python与OGRE之开篇 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cedricporter">@cedricporter</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cedricporter',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cedricporter.github.com/2012/01/pil-brief-intro.html';
+        var disqus_url = 'http://cedricporter.github.com/2012/01/pil-brief-intro.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

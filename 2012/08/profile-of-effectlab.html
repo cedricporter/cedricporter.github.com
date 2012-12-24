@@ -1,0 +1,429 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>对Python图像处理库EffectLab进行性能测试 - My Octopress Blog</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="EffectLab也是一个基于PIL的Python的图像库，目的是为了提供更多的特效处理以及更快的测试。 目前EffectLab可以实现的特效可以围观之前的文章：http://everet.org/2012/07/effectlab.html。 古人云：选择了脚本语言就要忍受其速度。 但是， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cedricporter.github.com/2012/08/profile-of-effectlab.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cedricporter.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">对Python图像处理库EffectLab进行性能测试</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-15T01:49:37+08:00" pubdate data-updated="true">2012-08-15</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="http://everet.org/2012/07/effectlab.html">EffectLab</a>也是一个基于PIL的Python的图像库，目的是为了提供更多的特效处理以及更快的测试。</p>
+
+<p>目前EffectLab可以实现的特效可以围观之前的文章：<a href="http://everet.org/2012/07/effectlab.html">http://everet.org/2012/07/effectlab.html</a>。</p>
+
+<p>古人云：<em>选择了脚本语言</em>就要忍受其速度。</p>
+
+<p>但是，有时脚本语言的速度已经慢到了无法形容的地步时，我们就开始考虑性能优化了。</p>
+
+<h2>寻找性能热点</h2>
+
+<p>Python有一对很好的性能测试工具：cProfile与pstats。</p>
+
+<p>我们来选择一个波浪效果来做测试：</p>
+
+<figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&quot;RGB&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</span><span class='line'><span class="n">wave</span> <span class="o">=</span> <span class="n">GlobalWaveEffect</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+</span><span class='line'><span class="n">test</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&quot;test()&quot;</span><span class="p">,</span> <span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span><span class="o">.</span><span class="n">strip_dirs</span><span class="p">()</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="s">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们可以看到其输出：<!-- more --></p>
+
+<p>Liquid error: ClassNotFound: no lexer for alias &#8216;shell&#8217; found</p>
+
+<p>可以发现，运行时间最长的函数有<a href="https://github.com/cedricporter/EffectLab/blob/master/EffectLab/Effect.py#L92">第92行的filter</a>，以及<a href="https://github.com/cedricporter/EffectLab/blob/master/EffectLab/Effect.py#L304">第304行的transform</a>。我们可以查看第92行的函数filter，这个函数看上去非常的简短，主要做的是处理每一个像素以及有抗锯齿运算。</p>
+
+<figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
+</span><span class='line'>    <span class="n">new_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">Effect</span><span class="o">.</span><span class="n">empty_color</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">nband</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+</span><span class='line'>    <span class="n">antialias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">antialias</span>
+</span><span class='line'>    <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="k">else</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bottom</span><span class="p">):</span>
+</span><span class='line'>            <span class="n">found</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>            <span class="n">psum</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="n">nband</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="c"># anti-alias</span>
+</span><span class='line'>            <span class="k">for</span> <span class="n">ai</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">antialias</span><span class="p">):</span>
+</span><span class='line'>                <span class="n">_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">ai</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">antialias</span><span class="p">)</span>
+</span><span class='line'>                <span class="k">for</span> <span class="n">aj</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">antialias</span><span class="p">):</span>
+</span><span class='line'>                    <span class="n">_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">aj</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">antialias</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>                    <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="p">(</span><span class="n">_x</span><span class="p">,</span> <span class="n">_y</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>                    <span class="n">u</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">u</span><span class="p">))</span>
+</span><span class='line'>                    <span class="n">v</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+</span><span class='line'>                    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">u</span> <span class="o">&lt;</span> <span class="n">width</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">height</span><span class="p">):</span>
+</span><span class='line'>                        <span class="k">continue</span>
+</span><span class='line'>                    <span class="n">pt</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+</span><span class='line'>                    <span class="n">psum</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">psum</span><span class="p">,</span> <span class="n">pt</span><span class="p">)</span>
+</span><span class='line'>                    <span class="n">found</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">if</span> <span class="n">found</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>                <span class="n">psum</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">div</span><span class="p">,</span> <span class="n">psum</span><span class="p">,</span> <span class="p">(</span><span class="n">found</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">psum</span><span class="p">))</span>
+</span><span class='line'>                <span class="n">new_img</span><span class="o">.</span><span class="n">putpixel</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">psum</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">new_img</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以及transform函数：</p>
+
+<figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">delta_w</span><span class="p">,</span> <span class="n">delta_h</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">radian</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">xoffset</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="n">delta_w</span>
+</span><span class='line'>    <span class="n">offset</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radian</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="n">delta_h</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">offset</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>解决性能热点</h2>
+
+<p>嗯，这个看上去热点都是纯计算的代码，貌似已经没什么优化的空间了，这时怎么办呢？</p>
+
+<p>鉴于CPython可以非常容易的使用C/C++扩展模块，我们用C语言来实现里面这些纯计算的部分，看看性能有什么提升。</p>
+
+<p>我们用C来实现Filter函数。重新运行cProfile看看，</p>
+
+<p>Liquid error: ClassNotFound: no lexer for alias &#8216;shell&#8217; found</p>
+
+<p>此时热点函数已经被C语言的模块给替换了。</p>
+
+<p>我们用timeit模块统计一下运行时间，统计代码如下（其中test函数见上面，里面就是调用了波浪处理效果：</p>
+
+<figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">t</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="s">&#39;test()&#39;</span><span class="p">,</span> <span class="s">&#39;from __main__ import test&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">N</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'><span class="n">TIMES</span> <span class="o">=</span> <span class="mi">30</span>
+</span><span class='line'><span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">TIMES</span><span class="p">))</span> <span class="o">/</span> <span class="n">N</span> <span class="o">/</span> <span class="n">TIMES</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="s">&#39;ms&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>结果</h2>
+
+<p>我们来看看运行3轮，每轮运行30次，平均一次的时间是多少。
+Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
+
+<p>C版本平均一次时间为：<strong>1.91 ms</strong></p>
+
+<p>可见运行速度是原来的<strong>159倍</strong>。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stupid ET</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-15T01:49:37+08:00" pubdate data-updated="true">2012-08-15</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/我的代码/'>我的代码</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cedricporter.github.com/2012/08/profile-of-effectlab.html" data-via="" data-counturl="http://cedricporter.github.com/2012/08/profile-of-effectlab.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/08/ascii.html" title="Previous Post: ASCII码表">&laquo; ASCII码表</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/08/popo-linux.html" title="Next Post: 网易泡泡的Linux虚拟机宿主提示外挂">网易泡泡的Linux虚拟机宿主提示外挂 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cedricporter">@cedricporter</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cedricporter',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cedricporter.github.com/2012/08/profile-of-effectlab.html';
+        var disqus_url = 'http://cedricporter.github.com/2012/08/profile-of-effectlab.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

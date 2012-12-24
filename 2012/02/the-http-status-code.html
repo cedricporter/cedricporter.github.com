@@ -1,0 +1,461 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>HTTP状态码 - My Octopress Blog</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="发现到了现在，我还是除了一些基本的状态码之外， 其他状态码都不是很熟悉，于是找了些状态码过来记录一下，也当做备忘了。 下面的拿Vim把返回码处理成表格还加了颜色，哈哈，果然用Vim就是像刷屏一样。配合宏真是无敌了！ 100
+Continue 初始的请求已经接受，客户应当继续发送请求的其余部分 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cedricporter.github.com/2012/02/the-http-status-code.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cedricporter.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">HTTP状态码</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-19T00:44:30+08:00" pubdate data-updated="true">2012-02-19</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>发现到了现在，我还是除了一些基本的状态码之外， 其他状态码都不是很熟悉，于是找了些状态码过来记录一下，也当做备忘了。</p>
+
+<p>下面的拿Vim把返回码处理成表格还加了颜色，哈哈，果然用Vim就是像刷屏一样。配合宏真是无敌了！</p>
+
+<p><strong>100</strong>
+Continue</p>
+
+<p>初始的请求已经接受，客户应当继续发送请求的其余部分</p>
+
+<p><strong>101</strong>
+Switching Protocols</p>
+
+<p>服务器将遵从客户的请求转换到另外一种协议</p>
+
+<p><strong>200</strong>
+OK</p>
+
+<p>一切正常，对GET和POST请求的应答文档跟在后面</p>
+
+<p><strong>201</strong>
+Created</p>
+
+<p>服务器已经创建了文档，Location头给出了它的URL。</p>
+
+<p><strong>202</strong>
+Accepted</p>
+
+<p>已经接受请求，但处理尚未完成。</p>
+
+<!-- more -->
+
+
+<p><strong>203</strong>
+Non-Authoritative Information</p>
+
+<p>文档已经正常地返回，但一些应答头可能不正确，因为使用的是文档的拷贝</p>
+
+<p><strong>204</strong>
+No Content</p>
+
+<p>没有新文档，浏览器应该继续显示原来的文档。如果用户定期地刷新页面，而Servlet可以确定用户文档足够新，这个状态代码是很有用的</p>
+
+<p><strong>205</strong>
+Reset Content</p>
+
+<p>没有新的内容，但浏览器应该重置它所显示的内容。用来强制浏览器清除表单输入内容</p>
+
+<p><strong>206</strong>
+Partial Content</p>
+
+<p>客户发送了一个带有Range头的GET请求，服务器完成了它</p>
+
+<p><strong>300</strong>
+Multiple Choices</p>
+
+<p>客户请求的文档可以在多个位置找到，这些位置已经在返回的文档内列出。如果服务器要提出优先选择，则应该在Location应答头指明。</p>
+
+<p><strong>301</strong>
+Moved Permanently</p>
+
+<p>客户请求的文档在其他地方，新的URL在Location头中给出，浏览器应该自动地访问新的URL。</p>
+
+<p><strong>302</strong>
+Found</p>
+
+<p>类似于301，但新的URL应该被视为临时性的替代，而不是永久性的。</p>
+
+<p><strong>303</strong>
+See Other</p>
+
+<p>类似于301/302，不同之处在于，如果原来的请求是POST，Location头指定的重定向目标文档应该通过GET提取</p>
+
+<p><strong>304</strong>
+Not Modified</p>
+
+<p>客户端有缓冲的文档并发出了一个条件性的请求（一般是提供If-Modified-Since头表示客户只想比指定日期更新的文档）。<a href="http://xfeng.me/tags/%e6%9c%8d%e5%8a%a1%e5%99%a8/">服务器</a>告诉客户，原来缓冲的文档还可以继续使用。</p>
+
+<p><strong>305</strong>
+Use Proxy</p>
+
+<p>客户请求的文档应该通过Location头所指明的代理服务器提取</p>
+
+<p><strong>307</strong>
+Temporary Redirect</p>
+
+<p>和302（Found）相同。许多浏览器会错误地响应302应答进行重定向，即使原来的请求是 POST，即使它实际上只能在POST请求的应答是303时才能重定向。由于这个原因，HTTP 1.1新增了307，以便更加清除地区分几个状态代码： 当出现303应答时，浏览器可以跟随重定向的GET和POST请求；如果是307应答，则浏览器只能跟随对GET请求的重定向。</p>
+
+<p><strong>400</strong>
+Bad Request</p>
+
+<p>请求出现语法错误。</p>
+
+<p><strong>401</strong>
+Unauthorized</p>
+
+<p>客户试图未经授权访问受密码保护的页面。应答中会包含一个WWW-Authenticate头，浏览器据此显示用户名字/密码对话框，然后在填写合适的Authorization头后再次发出请求。</p>
+
+<p><strong>403</strong>
+Forbidden</p>
+
+<p>资源不可用。</p>
+
+<p><strong>404</strong>
+Not Found</p>
+
+<p>无法找到指定位置的资源</p>
+
+<p><strong>405</strong>
+Method Not Allowed</p>
+
+<p>请求方法（GET、POST、HEAD、Delete、PUT、TRACE等）对指定的资源不适用。</p>
+
+<p><strong>406</strong>
+Not Acceptable</p>
+
+<p>指定的资源已经找到，但它的MIME类型和客户在Accpet头中所指定的不兼容</p>
+
+<p><strong>407</strong>
+Proxy Authentication Required</p>
+
+<p>类似于401，表示客户必须先经过代理服务器的授权。</p>
+
+<p><strong>408</strong>
+Request Timeout</p>
+
+<p>在服务器许可的等待时间内，客户一直没有发出任何请求。客户可以在以后重复同一请求。</p>
+
+<p><strong>409</strong>
+Conflict</p>
+
+<p>通常和PUT请求有关。由于请求和资源的当前状态相冲突，因此请求不能成功。</p>
+
+<p><strong>410</strong>
+Gone</p>
+
+<p>所请求的文档已经不再可用，而且服务器不知道应该重定向到哪一个地址。它和404的不同在于，返回407表示文档永久地离开了指定的位置，而404表示由于未知的原因文档不可用。</p>
+
+<p><strong>411</strong>
+Length Required</p>
+
+<p>服务器不能处理请求，除非客户发送一个Content-Length头。</p>
+
+<p><strong>412</strong>
+Precondition Failed</p>
+
+<p>请求头中指定的一些前提条件失败</p>
+
+<p><strong>413</strong>
+Request Entity Too Large</p>
+
+<p>目标文档的大小超过服务器当前愿意处理的大小。如果服务器认为自己能够稍后再处理该请求，则应该提供一个Retry-After头</p>
+
+<p><strong>414</strong>
+Request URI Too Long</p>
+
+<p>URI太长</p>
+
+<p><strong>416</strong>
+Requested Range Not Satisfiable</p>
+
+<p>服务器不能满足客户在请求中指定的Range头</p>
+
+<p><strong>500</strong>
+Internal Server Error</p>
+
+<p>服务器遇到了意料不到的情况，不能完成客户的请求</p>
+
+<p><strong>501</strong>
+Not Implemented</p>
+
+<p>服务器不支持实现请求所需要的功能。例如，客户发出了一个服务器不支持的PUT请求</p>
+
+<p><strong>502</strong>
+Bad Gateway</p>
+
+<p>服务器作为网关或者代理时，为了完成请求访问下一个服务器，但该服务器返回了非法的应答</p>
+
+<p><strong>503</strong>
+Service Unavailable</p>
+
+<p>服务器由于维护或者负载过重未能应答。例如，Servlet可能在数据库连接池已满的情况下返回503。服务器返回503时可以提供一个Retry-After头</p>
+
+<p><strong>504</strong>
+Gateway Timeout</p>
+
+<p>由作为代理或网关的服务器使用，表示不能及时地从远程服务器获得应答</p>
+
+<p><strong>505</strong>
+HTTP Version Not Supported</p>
+
+<p>服务器不支持请求中所指明的HTTP版本</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stupid ET</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-19T00:44:30+08:00" pubdate data-updated="true">2012-02-19</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/技术类/'>技术类</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cedricporter.github.com/2012/02/the-http-status-code.html" data-via="" data-counturl="http://cedricporter.github.com/2012/02/the-http-status-code.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/02/python-crawl-jingdong.html" title="Previous Post: Python抓取京东商城的所有笔记本电脑的参数">&laquo; Python抓取京东商城的所有笔记本电脑的参数</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/02/intermediate-code-generation.html" title="Next Post: 编译原理知识回顾——中间代码生成">编译原理知识回顾——中间代码生成 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cedricporter">@cedricporter</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cedricporter',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cedricporter.github.com/2012/02/the-http-status-code.html';
+        var disqus_url = 'http://cedricporter.github.com/2012/02/the-http-status-code.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

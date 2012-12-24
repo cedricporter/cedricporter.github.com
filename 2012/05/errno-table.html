@@ -1,0 +1,539 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>errno表 - My Octopress Blog</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="1
+2
+3
+4
+5
+6
+7
+粘过来常常看下，以免忘了...
+#define EPERM 1 /* Not super-user */
+#define ENOENT 2 /* No such file or directory */
+#define ESRCH 3 /* No such &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cedricporter.github.com/2012/05/errno-table.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cedricporter.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Errno表</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-30T09:12:30+08:00" pubdate data-updated="true">2012-05-30</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content">
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>粘过来常常看下，以免忘了...
+</span><span class='line'>#define EPERM 1  /* Not super-user */
+</span><span class='line'>#define ENOENT 2 /* No such file or directory */
+</span><span class='line'>#define ESRCH 3  /* No such process */
+</span><span class='line'>#define EINTR 4  /* Interrupted system call */
+</span><span class='line'>#define EIO 5  /* I/O error */
+</span><span class='line'>#define ENXIO 6  /* No such device or address */</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#define E2BIG 7  /* Arg list too long */
+</span><span class='line'>#define ENOEXEC 8 /* Exec format error */
+</span><span class='line'>#define EBADF 9  /* Bad file number */
+</span><span class='line'>#define ECHILD 10 /* No children */
+</span><span class='line'>#define EAGAIN 11 /* No more processes */
+</span><span class='line'>#define ENOMEM 12 /* Not enough core */
+</span><span class='line'>#define EACCES 13 /* Permission denied */
+</span><span class='line'>#define EFAULT 14 /* Bad address */
+</span><span class='line'>#define ENOTBLK 15 /* Block device required */
+</span><span class='line'>#define EBUSY 16 /* Mount device busy */
+</span><span class='line'>#define EEXIST 17 /* File exists */
+</span><span class='line'>#define EXDEV 18 /* Cross-device link */
+</span><span class='line'>#define ENODEV 19 /* No such device */
+</span><span class='line'>#define ENOTDIR 20 /* Not a directory */
+</span><span class='line'>#define EISDIR 21 /* Is a directory */
+</span><span class='line'>#define EINVAL 22 /* Invalid argument */
+</span><span class='line'>#define ENFILE 23 /* Too many open files in system */
+</span><span class='line'>#define EMFILE 24 /* Too many open files */
+</span><span class='line'>#define ENOTTY 25 /* Not a typewriter */
+</span><span class='line'>#define ETXTBSY 26 /* Text file busy */
+</span><span class='line'>#define EFBIG 27 /* File too large */
+</span><span class='line'>#define ENOSPC 28 /* No space left on device */
+</span><span class='line'>#define ESPIPE 29 /* Illegal seek */
+</span><span class='line'>#define EROFS 30 /* Read only file system */
+</span><span class='line'>#define EMLINK 31 /* Too many links */
+</span><span class='line'>#define EPIPE 32 /* Broken pipe */
+</span><span class='line'>#define EDOM 33  /* Math arg out of domain of func */
+</span><span class='line'>#define ERANGE 34 /* Math result not representable */
+</span><span class='line'>#define ENOMSG 35 /* No message of desired type */
+</span><span class='line'>#define EIDRM 36 /* Identifier removed */
+</span><span class='line'>#define ECHRNG 37 /* Channel number out of range */
+</span><span class='line'>#define EL2NSYNC 38 /* Level 2 not synchronized */
+</span><span class='line'>#define EL3HLT 39 /* Level 3 halted */
+</span><span class='line'>#define EL3RST 40 /* Level 3 reset */
+</span><span class='line'>#define ELNRNG 41 /* Link number out of range */
+</span><span class='line'>#define EUNATCH 42 /* Protocol driver not attached */
+</span><span class='line'>#define ENOCSI 43 /* No CSI structure available */
+</span><span class='line'>#define EL2HLT 44 /* Level 2 halted */
+</span><span class='line'>#define EDEADLK 45 /* Deadlock condition */
+</span><span class='line'>#define ENOLCK 46 /* No record locks available */
+</span><span class='line'>#define EBADE 50 /* Invalid exchange */
+</span><span class='line'>#define EBADR 51 /* Invalid request descriptor */
+</span><span class='line'>#define EXFULL 52 /* Exchange full */
+</span><span class='line'>#define ENOANO 53 /* No anode */
+</span><span class='line'>#define EBADRQC 54 /* Invalid request code */
+</span><span class='line'>#define EBADSLT 55 /* Invalid slot */
+</span><span class='line'>#define EDEADLOCK 56 /* File locking deadlock error */
+</span><span class='line'>#define EBFONT 57 /* Bad font file fmt */
+</span><span class='line'>#define ENOSTR 60 /* Device not a stream */
+</span><span class='line'>#define ENODATA 61 /* No data (for no delay io) */
+</span><span class='line'>#define ETIME 62 /* Timer expired */
+</span><span class='line'>#define ENOSR 63 /* Out of streams resources */
+</span><span class='line'>#define ENONET 64 /* Machine is not on the network */
+</span><span class='line'>#define ENOPKG 65 /* Package not installed */
+</span><span class='line'>#define EREMOTE 66 /* The object is remote */
+</span><span class='line'>#define ENOLINK 67 /* The link has been severed */
+</span><span class='line'>#define EADV 68  /* Advertise error */
+</span><span class='line'>#define ESRMNT 69 /* Srmount error */
+</span><span class='line'>#define ECOMM 70 /* Communication error on send */
+</span><span class='line'>#define EPROTO 71 /* Protocol error */
+</span><span class='line'>#define EMULTIHOP 74 /* Multihop attempted */
+</span><span class='line'>#define ELBIN 75 /* Inode is remote (not really error) */
+</span><span class='line'>#define EDOTDOT 76 /* Cross mount point (not really error) */
+</span><span class='line'>#define EBADMSG 77 /* Trying to read unreadable message */
+</span><span class='line'>#define EFTYPE 79 /* Inappropriate file type or format */
+</span><span class='line'>#define ENOTUNIQ 80 /* Given log. name not unique */
+</span><span class='line'>#define EBADFD 81 /* f.d. invalid for this operation */
+</span><span class='line'>#define EREMCHG 82 /* Remote address changed */
+</span><span class='line'>#define ELIBACC 83 /* Can't access a needed shared lib */
+</span><span class='line'>#define ELIBBAD 84 /* Accessing a corrupted shared lib */
+</span><span class='line'>#define ELIBSCN 85 /* .lib section in a.out corrupted */
+</span><span class='line'>#define ELIBMAX 86 /* Attempting to link in too many libs */
+</span><span class='line'>#define ELIBEXEC 87 /* Attempting to exec a shared library */
+</span><span class='line'>#define ENOSYS 88 /* Function not implemented */
+</span><span class='line'>#define ENMFILE 89      /* No more files */
+</span><span class='line'>#define ENOTEMPTY 90 /* Directory not empty */
+</span><span class='line'>#define ENAMETOOLONG 91 /* File or path name too long */
+</span><span class='line'>#define ELOOP 92 /* Too many symbolic links */
+</span><span class='line'>#define EOPNOTSUPP 95 /* Operation not supported on transport endpoint */
+</span><span class='line'>#define EPFNOSUPPORT 96 /* Protocol family not supported */
+</span><span class='line'>#define ECONNRESET 104  /* Connection reset by peer */
+</span><span class='line'>#define ENOBUFS 105 /* No buffer space available */
+</span><span class='line'>#define EAFNOSUPPORT 106 /* Address family not supported by protocol family */
+</span><span class='line'>#define EPROTOTYPE 107 /* Protocol wrong type for socket */
+</span><span class='line'>#define ENOTSOCK 108 /* Socket operation on non-socket */
+</span><span class='line'>#define ENOPROTOOPT 109 /* Protocol not available */
+</span><span class='line'>#define ESHUTDOWN 110 /* Can't send after socket shutdown */
+</span><span class='line'>#define ECONNREFUSED 111 /* Connection refused */
+</span><span class='line'>#define EADDRINUSE 112  /* Address already in use */
+</span><span class='line'>#define ECONNABORTED 113 /* Connection aborted */
+</span><span class='line'>#define ENETUNREACH 114  /* Network is unreachable */
+</span><span class='line'>#define ENETDOWN 115  /* Network interface is not configured */
+</span><span class='line'>#define ETIMEDOUT 116  /* Connection timed out */
+</span><span class='line'>#define EHOSTDOWN 117  /* Host is down */
+</span><span class='line'>#define EHOSTUNREACH 118 /* Host is unreachable */
+</span><span class='line'>#define EINPROGRESS 119  /* Connection already in progress */
+</span><span class='line'>#define EALREADY 120  /* Socket already connected */
+</span><span class='line'>#define EDESTADDRREQ 121 /* Destination address required */
+</span><span class='line'>#define EMSGSIZE 122  /* Message too long */
+</span><span class='line'>#define EPROTONOSUPPORT 123 /* Unknown protocol */
+</span><span class='line'>#define ESOCKTNOSUPPORT 124 /* Socket type not supported */
+</span><span class='line'>#define EADDRNOTAVAIL 125 /* Address not available */
+</span><span class='line'>#define ENETRESET 126
+</span><span class='line'>#define EISCONN 127  /* Socket is already connected */
+</span><span class='line'>#define ENOTCONN 128  /* Socket is not connected */
+</span><span class='line'>#define ETOOMANYREFS 129
+</span><span class='line'>#define EPROCLIM 130
+</span><span class='line'>#define EUSERS 131
+</span><span class='line'>#define EDQUOT 132
+</span><span class='line'>#define ESTALE 133
+</span><span class='line'>#define ENOTSUP 134  /* Not supported */
+</span><span class='line'>#define ENOMEDIUM 135   /* No medium (in tape drive) */
+</span><span class='line'>#define ENOSHARE 136    /* No such host or network path */
+</span><span class='line'>#define ECASECLASH 137  /* Filename exists with different case */
+</span><span class='line'>#define EILSEQ 138
+</span><span class='line'>#define EOVERFLOW 139 /* Value too large for defined data type */</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stupid ET</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-30T09:12:30+08:00" pubdate data-updated="true">2012-05-30</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/技术类/'>技术类</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cedricporter.github.com/2012/05/errno-table.html" data-via="" data-counturl="http://cedricporter.github.com/2012/05/errno-table.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/05/quotation.html" title="Previous Post: 语录">&laquo; 语录</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/06/ubuntu-mysql-backup.html" title="Next Post: Ubuntu下自动异地备份数据库">Ubuntu下自动异地备份数据库 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cedricporter">@cedricporter</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cedricporter',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cedricporter.github.com/2012/05/errno-table.html';
+        var disqus_url = 'http://cedricporter.github.com/2012/05/errno-table.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

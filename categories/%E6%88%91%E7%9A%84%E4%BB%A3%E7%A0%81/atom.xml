@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 我的代码 | My Octopress Blog]]></title>
+  <link href="http://cedricporter.github.com/categories/%E6%88%91%E7%9A%84%E4%BB%A3%E7%A0%81/atom.xml" rel="self"/>
+  <link href="http://cedricporter.github.com/"/>
+  <updated>2012-12-25T01:57:42+08:00</updated>
+  <id>http://cedricporter.github.com/</id>
+  <author>
+    <name><![CDATA[Stupid ET]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[网易泡泡的Linux虚拟机宿主提示外挂]]></title>
+    <link href="http://cedricporter.github.com/2012/08/popo-linux.html"/>
+    <updated>2012-08-21T21:37:22+08:00</updated>
+    <id>http://cedricporter.github.com/2012/08/popo-linux</id>
+    <content type="html"><![CDATA[<p>在网易实习时，上班一定要开着泡泡，不过泡泡貌似在Linux会严重地水土不服，所以只能装一个虚拟机来解决这个问题。借助<a href="http://everet.org/2012/07/virtualbox-seamless.html">VirtualBox的无缝模式</a>，我们在一定程度上可以缓解这个问题。但是我平时会在多个虚拟桌面。如果恰巧不幸，我长时间没有切换到泡泡所在的虚拟桌面时，那就会有很长时间都不知道有新的泡泡消息。这个无论对人对己都有非常不好的影响。首先，别人无法在第一时间找到我，即便是我开着泡泡；第二，如果有重要通知，我却不幸地没有在泡泡的虚拟桌面时，那就大祸了。<!-- more --></p>
+
+<h2>Ubuntu的4个虚拟桌面</h2>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/08/2012-08-21-112057%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png"><img src="http://everet.org/wp-content/uploads/2012/08/2012-08-21-112057%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png" alt="" /></a></p>
+
+<p>那肿么办呢？</p>
+
+<p>我的想法是，如果虚拟机XP里面的泡泡有收到消息，那么外面的宿主Linux会弹出提示窗口告知我们有新的泡泡消息啦，赶紧冲过去围观吧。</p>
+
+<p>那么具体怎么做呢？</p>
+
+<p>嗯，我的想法是首先在虚拟机XP里面安插一个间谍，如果看到泡泡有新的消息到了，就通知虚拟机外面的Linux说有情报了。那怎么通知呢？我们可以通过HTTP协议来交流吧，这样比较简单，我们在Linux用tornado搭一个服务器，使用pynotify来进行弹窗通知。然后虚拟机XP里面有消息的话，就直接通过HTTP协议通知。好，那我们赶紧开工吧。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/08/tips.png"><img src="http://everet.org/wp-content/uploads/2012/08/tips.png" alt="" /></a></p>
+
+<p>啦啦啦啦啦，看上去可以工作。自从用了这个提示外挂，我再也不用每隔一会儿切换到虚拟机所在虚拟桌面去查看了，<sup>_<sup>，变相提高工作效率，减小了上下文切换的开销。</sup></sup></p>
+
+<p>目前我在Ubuntu与XP下使用，其他的还没试过，不过这个应该都是通用的。使用时先编辑一下windowsplugin.py里面的虚拟机宿主的IP，然后将windowsplugin.py放到Windows的启动项，将notify.py放到Linux的启动项即可。</p>
+
+<p>目前的版本是通过轮询监控泡泡的窗口，将来有空的话我会继续开发后续版本。后续版本将会进行DLL Hook，争取可以拿到新消息内容。加油～～</p>
+
+<h2>依赖包</h2>
+
+<p>在Linux宿主需要安装libnotify用户飘窗提示，在Windows需要安装win32gui，其中Win32 Python2.7的win32gui已经附在后面的下载地址里面了。</p>
+
+<p>多谢宇哥，我才发现原来在KDE下pynotify已经换了名字了。</p>
+
+<p>最后，是下载地址啦：<a href="https://github.com/cedricporter/popo-plugin/tags">https://github.com/cedricporter/popo-plugin/tags</a>。</p>
+
+<p>项目是开源的，有兴趣的同学来一起完善吧～～</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[对Python图像处理库EffectLab进行性能测试]]></title>
+    <link href="http://cedricporter.github.com/2012/08/profile-of-effectlab.html"/>
+    <updated>2012-08-15T01:49:37+08:00</updated>
+    <id>http://cedricporter.github.com/2012/08/profile-of-effectlab</id>
+    <content type="html"><![CDATA[<p><a href="http://everet.org/2012/07/effectlab.html">EffectLab</a>也是一个基于PIL的Python的图像库，目的是为了提供更多的特效处理以及更快的测试。</p>
+
+<p>目前EffectLab可以实现的特效可以围观之前的文章：<a href="http://everet.org/2012/07/effectlab.html">http://everet.org/2012/07/effectlab.html</a>。</p>
+
+<p>古人云：<em>选择了脚本语言</em>就要忍受其速度。</p>
+
+<p>但是，有时脚本语言的速度已经慢到了无法形容的地步时，我们就开始考虑性能优化了。</p>
+
+<h2>寻找性能热点</h2>
+
+<p>Python有一对很好的性能测试工具：cProfile与pstats。</p>
+
+<p>我们来选择一个波浪效果来做测试：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&quot;RGB&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</span><span class='line'><span class="n">wave</span> <span class="o">=</span> <span class="n">GlobalWaveEffect</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+</span><span class='line'><span class="n">test</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&quot;test()&quot;</span><span class="p">,</span> <span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span><span class="o">.</span><span class="n">strip_dirs</span><span class="p">()</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="s">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>我们可以看到其输出：<!-- more --></p>
+
+<p>Liquid error: ClassNotFound: no lexer for alias 'shell' found</p>
+
+<p>可以发现，运行时间最长的函数有<a href="https://github.com/cedricporter/EffectLab/blob/master/EffectLab/Effect.py#L92">第92行的filter</a>，以及<a href="https://github.com/cedricporter/EffectLab/blob/master/EffectLab/Effect.py#L304">第304行的transform</a>。我们可以查看第92行的函数filter，这个函数看上去非常的简短，主要做的是处理每一个像素以及有抗锯齿运算。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
+</span><span class='line'><span class="n">new_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">Effect</span><span class="o">.</span><span class="n">empty_color</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">nband</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+</span><span class='line'><span class="n">antialias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">antialias</span>
+</span><span class='line'><span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="k">else</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bottom</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">found</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="n">psum</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="n">nband</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c"># anti-alias</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">ai</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">antialias</span><span class="p">):</span>
+</span><span class='line'>            <span class="n">_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">ai</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">antialias</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">for</span> <span class="n">aj</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">antialias</span><span class="p">):</span>
+</span><span class='line'>                <span class="n">_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">aj</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">antialias</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="p">(</span><span class="n">_x</span><span class="p">,</span> <span class="n">_y</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">u</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">u</span><span class="p">))</span>
+</span><span class='line'>                <span class="n">v</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+</span><span class='line'>                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="n">u</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">width</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="n">v</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">height</span><span class="p">):</span>
+</span><span class='line'>                    <span class="k">continue</span>
+</span><span class='line'>                <span class="n">pt</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+</span><span class='line'>                <span class="n">psum</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">psum</span><span class="p">,</span> <span class="n">pt</span><span class="p">)</span>
+</span><span class='line'>                <span class="n">found</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="n">found</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">psum</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">div</span><span class="p">,</span> <span class="n">psum</span><span class="p">,</span> <span class="p">(</span><span class="n">found</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">psum</span><span class="p">))</span>
+</span><span class='line'>            <span class="n">new_img</span><span class="o">.</span><span class="n">putpixel</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">psum</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">return</span> <span class="n">new_img</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>以及transform函数：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">delta_w</span><span class="p">,</span> <span class="n">delta_h</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">radian</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">xoffset</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="n">delta_w</span>
+</span><span class='line'><span class="n">offset</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radian</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="n">delta_h</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">offset</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>解决性能热点</h2>
+
+<p>嗯，这个看上去热点都是纯计算的代码，貌似已经没什么优化的空间了，这时怎么办呢？</p>
+
+<p>鉴于CPython可以非常容易的使用C/C++扩展模块，我们用C语言来实现里面这些纯计算的部分，看看性能有什么提升。</p>
+
+<p>我们用C来实现Filter函数。重新运行cProfile看看，</p>
+
+<p>Liquid error: ClassNotFound: no lexer for alias 'shell' found</p>
+
+<p>此时热点函数已经被C语言的模块给替换了。</p>
+
+<p>我们用timeit模块统计一下运行时间，统计代码如下（其中test函数见上面，里面就是调用了波浪处理效果：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">t</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="s">&#39;test()&#39;</span><span class="p">,</span> <span class="s">&#39;from &lt;strong&gt;main&lt;/strong&gt; import test&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">N</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'><span class="n">TIMES</span> <span class="o">=</span> <span class="mi">30</span>
+</span><span class='line'><span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">TIMES</span><span class="p">))</span> <span class="o">/</span> <span class="n">N</span> <span class="o">/</span> <span class="n">TIMES</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="s">&#39;ms&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>结果</h2>
+
+<p>我们来看看运行3轮，每轮运行30次，平均一次的时间是多少。
+Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
+
+<p>C版本平均一次时间为：<strong>1.91 ms</strong></p>
+
+<p>可见运行速度是原来的<strong>159倍</strong>。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python图像处理特效库EffectLab]]></title>
+    <link href="http://cedricporter.github.com/2012/07/effectlab.html"/>
+    <updated>2012-07-16T01:10:04+08:00</updated>
+    <id>http://cedricporter.github.com/2012/07/effectlab</id>
+    <content type="html"><![CDATA[<p>EffectLab是使用Python编写的一个快速测试图像处理特效的实验库，EffectLab目前基于PIL。方便测试图像处理算法。</p>
+
+<p>EffectLab正在处于开发过程中（其实几天前才开始），日后会逐渐增加更多的特效。 目前特效处理用纯Python实现，这个运行速度十分地缓慢，所以后期会用C把部分特效重写。</p>
+
+<p>我本人挺喜欢做图像处理的，想将EffectLab作为我们在两年前编写的图像处理程序<a href="http://everet.org/2012/01/imagination-factory.html">Imagination Factory</a>的生命的延续。我想知道Photoshop里面的那些工具的究竟是怎么实现的，也非常感谢仔华给我一个与图像处理和安全相关的任务啊～因为目前做的一个东西的一部分需要进行些图像处理，于是决定将图像处理部分拆分出作为独立的图像特效库EffectLab来维护。</p>
+
+<p>目前特效都设计为过滤器，接受一张图像和输出一张图像。不同的过滤器可以组合在一起形成新的特效过滤器。Unix的管道过滤器的思想真是美好啊。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">new_effect</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">img</span><span class="p">:</span> <span class="n">effect_a</span><span class="p">(</span><span class="n">effect_b</span><span class="p">(</span><span class="n">effect_c</span><span class="p">(</span><span class="n">img</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>源码请见Github: <a href="https://github.com/cedricporter/EffectLab/downloads">https://github.com/cedricporter/EffectLab/downloads</a></p>
+
+<h2>目前实现的效果</h2>
+
+<p>左边为原图，右边为处理后的图片。</p>
+
+<h3>镜头变形效果[1]</h3>
+
+<p>首先将图像映射到长宽取值范围都为[-1, 1]，然后从<a href="http://zh.wikipedia.org/zh/%E7%AC%9B%E5%8D%A1%E5%84%BF%E5%9D%90%E6%A0%87%E7%B3%BB">笛卡尔坐标系</a>映射到<a href="http://zh.wikipedia.org/wiki/%E6%9E%81%E5%9D%90%E6%A0%87%E7%B3%BB">极坐标系</a>。然后我们就可以控制<img src="http://upload.wikimedia.org/wikipedia/zh/math/4/b/4/4b43b0aee35624cd95b910189b3dc231.png" alt="r" />（半径坐标）和<img src="http://upload.wikimedia.org/wikipedia/zh/math/5/0/d/50d91f80cbb8feda1d10e167107ad1ff.png" alt="\theta" />（角坐标、极角或<a href="http://zh.wikipedia.org/wiki/%E6%96%B9%E4%BD%8D%E8%A7%92">方位角</a>，有时也表示为<img src="http://upload.wikimedia.org/wikipedia/zh/math/7/f/2/7f20aa0b3691b496aec21cf356f63e04.png" alt="\phi" />或<img src="http://upload.wikimedia.org/wikipedia/zh/math/e/3/5/e358efa489f58062f10dd7316b65649e.png" alt="t" />）。</p>
+
+<p><strong>r = r ^ 2</strong></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">effect</span> <span class="o">=</span> <span class="n">RadianFormulaEffect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="p">(</span><span class="n">r</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">phi</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<!-- more -->
+
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/5.jpg"><img src="http://everet.org/wp-content/uploads/2012/07/5.jpg" alt="" /></a></p>
+
+<p><strong>r = sqrt(r)</strong></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">effect</span> <span class="o">=</span> <span class="n">RadianFormulaEffect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">phi</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/1.jpg"><img src="http://everet.org/wp-content/uploads/2012/07/1.jpg" alt="" /></a></p>
+
+<p><strong>x = math.sin(x * math.pi / 2)</strong>
+<strong>y = math.sin(y * math.pi / 2)</strong></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">effect</span> <span class="o">=</span> <span class="n">LensWarpEffect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">sin</span><span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/4.jpg"><img src="http://everet.org/wp-content/uploads/2012/07/4.jpg" alt="" /></a></p>
+
+<h3>局部变形效果（液化）[2]</h3>
+
+<p>这个是Photoshop里面的液化效果。就是将照片作为液体胶泥一样，然后可以任意推动来变形。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-163959.png"><img src="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-163959.png" alt="" /></a></p>
+
+<p>对于这个公式另开一片文章讲解。</p>
+
+<p>下图鼠标起点圆心为(130, 120)，鼠标终点为(130, 50)，圆半径为100.也就是向上拖动。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">effect</span> <span class="o">=</span> <span class="n">LocalWarpEffect</span><span class="p">((</span><span class="mi">130</span><span class="p">,</span> <span class="mi">120</span><span class="p">),</span> <span class="p">(</span><span class="mi">130</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/6.jpg"><img src="http://everet.org/wp-content/uploads/2012/07/6.jpg" alt="" /></a></p>
+
+<h2>参考资料</h2>
+
+<ol>
+<li><p><a href="http://paulbourke.net/miscellaneous/imagewarp/">Image warping / distortion</a></p></li>
+<li><p>Andreas Gustafsson, <strong>Interactive Image Warping</strong></p></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[谈谈Python函数的默认参数]]></title>
+    <link href="http://cedricporter.github.com/2012/06/python-function-default-parameter.html"/>
+    <updated>2012-06-14T05:10:31+08:00</updated>
+    <id>http://cedricporter.github.com/2012/06/python-function-default-parameter</id>
+    <content type="html"><![CDATA[<p>Python中很奇葩的一个地方是它的函数的默认参数的值，仅仅在def语句执行的时候计算一次。这会导致什么问题呢？</p>
+
+<h2>奇葩的例子</h2>
+
+<p>我们来看一个例子：<!-- more --></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">44</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">packitem</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">pkg</span> <span class="o">=</span> <span class="p">[]):</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="n">pkg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="k">return</span> <span class="n">pkg</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">45</span><span class="p">]:</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">46</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">46</span><span class="p">]:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">47</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">47</span><span class="p">]:</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">48</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">48</span><span class="p">]:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">49</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">49</span><span class="p">]:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>这个可以看到packitem的默认参数pkg=[]仅仅计算了一次。而之后的packitem函数调用时，pkg都指向了最初创建的那个列表。</p>
+
+<h2>为什么</h2>
+
+<p>为什么会这样呢？</p>
+
+<p>我们此时需要从Python编译出来的字节码中寻求答案。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">65</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="k">def</span> <span class="nf">packitem</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">pkg</span> <span class="o">=</span> <span class="p">[]):</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>                 <span class="n">pkg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>                 <span class="k">return</span> <span class="n">pkg</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="k">print</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="k">print</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="k">print</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">66</span><span class="p">]:</span> <span class="n">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">67</span><span class="p">]:</span> <span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
+</span><span class='line'>  <span class="mi">2</span>           <span class="mi">0</span> <span class="n">BUILD_LIST</span>               <span class="mi">0</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>          <span class="mi">3</span> <span class="n">LOAD_CONST</span>               <span class="mi">1</span> <span class="p">(</span><span class="n">code</span> <span class="nb">object</span><span class="p">)</span>
+</span><span class='line'>          <span class="mi">6</span> <span class="n">MAKE_FUNCTION</span>            <span class="mi">1</span>
+</span><span class='line'>          <span class="mi">9</span> <span class="n">STORE_FAST</span>               <span class="mi">0</span> <span class="p">(</span><span class="n">packitem</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="mi">5</span>          <span class="mi">12</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">packitem</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>         <span class="mi">15</span> <span class="n">LOAD_CONST</span>               <span class="mi">2</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>         <span class="mi">18</span> <span class="n">CALL_FUNCTION</span>            <span class="mi">1</span>
+</span><span class='line'>         <span class="mi">21</span> <span class="n">PRINT_ITEM</span>
+</span><span class='line'>         <span class="mi">22</span> <span class="n">PRINT_NEWLINE</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="mi">6</span>          <span class="mi">23</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">packitem</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>         <span class="mi">26</span> <span class="n">LOAD_CONST</span>               <span class="mi">3</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>         <span class="mi">29</span> <span class="n">CALL_FUNCTION</span>            <span class="mi">1</span>
+</span><span class='line'>         <span class="mi">32</span> <span class="n">PRINT_ITEM</span>
+</span><span class='line'>         <span class="mi">33</span> <span class="n">PRINT_NEWLINE</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="mi">7</span>          <span class="mi">34</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">packitem</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>         <span class="mi">37</span> <span class="n">LOAD_CONST</span>               <span class="mi">4</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>         <span class="mi">40</span> <span class="n">CALL_FUNCTION</span>            <span class="mi">1</span>
+</span><span class='line'>         <span class="mi">43</span> <span class="n">PRINT_ITEM</span>
+</span><span class='line'>         <span class="mi">44</span> <span class="n">PRINT_NEWLINE</span>
+</span><span class='line'>         <span class="mi">45</span> <span class="n">LOAD_CONST</span>               <span class="mi">0</span> <span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+</span><span class='line'>         <span class="mi">48</span> <span class="n">RETURN_VALUE</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>可以看出。packitem函数的默认参数pkg的值是在第一条字节码创建的。随后在MAKE_FUNCTION指令的时候一起和code object打包成一个函数对象，然后通过STORE_FAST 0存在了FAST表的第0位。</p>
+
+<p>后续的函数调用通过LOAD_FAST 0指令将packitem的函数对象取出，然后通过CALL_FUNCTION调用(对于CALL_FUNCTION，我们会在后续的文章进行探讨)。整个函数调用的过程并没有涉及到默认参数值的初始化。</p>
+
+<p>所以，可见，Python函数的默认参数的值仅在函数定义的时候计算，后续的函数调用时的默认参数都是引用最初创建的那个对象。</p>
+
+<h2>Hack It</h2>
+
+<p>既然Python没有在我们进行函数调用的时候帮我们重新创建的默认参数的值，那我们就自己动手，丰衣足食。</p>
+
+<p>第一种方案是是用不可变的默认值，例如None，然后在函数内部进行判断。此法略显麻烦。</p>
+
+<p>第二种方案是通过装饰器来解决这个问题。</p>
+
+<p>这段脚本是Sean Ross写的，非常感谢他。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">74</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">freshdefaults</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="n">fdefaults</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">func_defaults</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="k">def</span> <span class="nf">refresher</span><span class="p">(</span><span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>                 <span class="n">f</span><span class="o">.</span><span class="n">func_defaults</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">fdefaults</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>                 <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="k">return</span> <span class="n">refresher</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">75</span><span class="p">]:</span> <span class="nd">@freshdefaults</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span> <span class="k">def</span> <span class="nf">packitem</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">pkg</span> <span class="o">=</span> <span class="p">[]):</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="n">pkg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="k">return</span> <span class="n">pkg</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">76</span><span class="p">]:</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">77</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">77</span><span class="p">]:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">78</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">78</span><span class="p">]:</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">79</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">79</span><span class="p">]:</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">80</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">80</span><span class="p">]:</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>可以看到，packitem的输出符合我们的预期了。我们通过装饰器freshdefault，完成了对于默认参数的更新。packitem的pkg已经在每次调用的时候更新了。</p>
+
+<p>装饰器等价于</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">myfunc</span> <span class="o">=</span> <span class="n">wrapper</span><span class="p">(</span><span class="n">myfunc</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>在此例子中 ，等价于在后面加上了一句</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">packitem</span> <span class="o">=</span> <span class="n">freshdefault</span><span class="p">(</span><span class="n">packitem</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>参考</h2>
+
+<ol>
+<li><p>Python Cookbook</p></li>
+<li><p>Python源码剖析</p></li>
+</ol>
+
+
+<p>(全文完)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[查看Python字节码]]></title>
+    <link href="http://cedricporter.github.com/2012/06/python-byte-code.html"/>
+    <updated>2012-06-12T07:07:07+08:00</updated>
+    <id>http://cedricporter.github.com/2012/06/python-byte-code</id>
+    <content type="html"><![CDATA[<p>有时候我们想看一下Python翻译出来的字节码是怎样的，此时我们可以借助dis模块。</p>
+
+<p>我们在交互式环境iPython下，可以动态地获取我们刚刚创建的函数的字节码。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">dis</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">say_hello</span><span class="p">():</span>
+</span><span class='line'>   <span class="o">...</span><span class="p">:</span>     <span class="k">print</span> <span class="s">&#39;Hello, ET&#39;</span>
+</span><span class='line'>   <span class="o">...</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">say_hello</span><span class="p">)</span>
+</span><span class='line'>  <span class="mi">2</span>           <span class="mi">0</span> <span class="n">LOAD_CONST</span>               <span class="mi">1</span> <span class="p">(</span><span class="s">&#39;Hello, ET&#39;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>          <span class="mi">3</span> <span class="n">PRINT_ITEM</span>
+</span><span class='line'>          <span class="mi">4</span> <span class="n">PRINT_NEWLINE</span>
+</span><span class='line'>          <span class="mi">5</span> <span class="n">LOAD_CONST</span>               <span class="mi">0</span> <span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+</span><span class='line'>          <span class="mi">8</span> <span class="n">RETURN_VALUE</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">say_hello</span><span class="p">()</span>
+</span><span class='line'><span class="n">Hello</span><span class="p">,</span> <span class="n">ET</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>而对于文件的字节码，我们可以先读取然后编译。<!-- more --></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">s</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;test.py&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">co</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&#39;file test.py&#39;</span><span class="p">,</span> <span class="s">&#39;exec&#39;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">co</span><span class="p">)</span>
+</span><span class='line'>  <span class="mi">1</span>           <span class="mi">0</span> <span class="n">LOAD_CONST</span>               <span class="mi">0</span> <span class="p">(</span><span class="n">code</span> <span class="nb">object</span> <span class="n">say_hello</span> <span class="n">at</span> <span class="mh">0x29a2bb0</span><span class="p">,</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>                                         <span class="nb">file</span> <span class="s">&quot;file test.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>          <span class="mi">3</span> <span class="n">MAKE_FUNCTION</span>            <span class="mi">0</span>
+</span><span class='line'>          <span class="mi">6</span> <span class="n">STORE_NAME</span>               <span class="mi">0</span> <span class="p">(</span><span class="n">say_hello</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="mi">4</span>           <span class="mi">9</span> <span class="n">LOAD_NAME</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">say_hello</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>         <span class="mi">12</span> <span class="n">CALL_FUNCTION</span>            <span class="mi">0</span>
+</span><span class='line'>         <span class="mi">15</span> <span class="n">POP_TOP</span>
+</span><span class='line'>         <span class="mi">16</span> <span class="n">LOAD_CONST</span>               <span class="mi">1</span> <span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+</span><span class='line'>         <span class="mi">19</span> <span class="n">RETURN_VALUE</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>其中，dis的输出为：</p>
+
+<p>Liquid error: ClassNotFound: no lexer for alias 'txt' found</p>
+
+<p>对于dis模块的介绍，我们可以围观 <a href="http://docs.python.org/library/dis.html">http://docs.python.org/library/dis.html</a>。</p>
+
+<p>字节码的定义在opcode.h中。</p>
+
+<h2>参考：</h2>
+
+<ol>
+<li>《Python源码剖析》</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>

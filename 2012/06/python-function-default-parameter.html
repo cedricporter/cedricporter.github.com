@@ -1,0 +1,515 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>谈谈Python函数的默认参数 - My Octopress Blog</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="Python中很奇葩的一个地方是它的函数的默认参数的值，仅仅在def语句执行的时候计算一次。这会导致什么问题呢？ 奇葩的例子 我们来看一个例子： python 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+In [44]: def packitem(item &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cedricporter.github.com/2012/06/python-function-default-parameter.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cedricporter.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">谈谈Python函数的默认参数</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-14T05:10:31+08:00" pubdate data-updated="true">2012-06-14</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Python中很奇葩的一个地方是它的函数的默认参数的值，仅仅在def语句执行的时候计算一次。这会导致什么问题呢？</p>
+
+<h2>奇葩的例子</h2>
+
+<p>我们来看一个例子：<!-- more --></p>
+
+<figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">44</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">packitem</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">pkg</span> <span class="o">=</span> <span class="p">[]):</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="n">pkg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="k">return</span> <span class="n">pkg</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">45</span><span class="p">]:</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">46</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">46</span><span class="p">]:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">47</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">47</span><span class="p">]:</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">48</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">48</span><span class="p">]:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">49</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">49</span><span class="p">]:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个可以看到packitem的默认参数pkg=[]仅仅计算了一次。而之后的packitem函数调用时，pkg都指向了最初创建的那个列表。</p>
+
+<h2>为什么</h2>
+
+<p>为什么会这样呢？</p>
+
+<p>我们此时需要从Python编译出来的字节码中寻求答案。</p>
+
+<figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">65</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="k">def</span> <span class="nf">packitem</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">pkg</span> <span class="o">=</span> <span class="p">[]):</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>                 <span class="n">pkg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>                 <span class="k">return</span> <span class="n">pkg</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="k">print</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="k">print</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="k">print</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">66</span><span class="p">]:</span> <span class="n">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">67</span><span class="p">]:</span> <span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
+</span><span class='line'>  <span class="mi">2</span>           <span class="mi">0</span> <span class="n">BUILD_LIST</span>               <span class="mi">0</span>
+</span><span class='line'>              <span class="mi">3</span> <span class="n">LOAD_CONST</span>               <span class="mi">1</span> <span class="p">(</span><span class="n">code</span> <span class="nb">object</span><span class="p">)</span>
+</span><span class='line'>              <span class="mi">6</span> <span class="n">MAKE_FUNCTION</span>            <span class="mi">1</span>
+</span><span class='line'>              <span class="mi">9</span> <span class="n">STORE_FAST</span>               <span class="mi">0</span> <span class="p">(</span><span class="n">packitem</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="mi">5</span>          <span class="mi">12</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">packitem</span><span class="p">)</span>
+</span><span class='line'>             <span class="mi">15</span> <span class="n">LOAD_CONST</span>               <span class="mi">2</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>             <span class="mi">18</span> <span class="n">CALL_FUNCTION</span>            <span class="mi">1</span>
+</span><span class='line'>             <span class="mi">21</span> <span class="n">PRINT_ITEM</span>
+</span><span class='line'>             <span class="mi">22</span> <span class="n">PRINT_NEWLINE</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="mi">6</span>          <span class="mi">23</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">packitem</span><span class="p">)</span>
+</span><span class='line'>             <span class="mi">26</span> <span class="n">LOAD_CONST</span>               <span class="mi">3</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>             <span class="mi">29</span> <span class="n">CALL_FUNCTION</span>            <span class="mi">1</span>
+</span><span class='line'>             <span class="mi">32</span> <span class="n">PRINT_ITEM</span>
+</span><span class='line'>             <span class="mi">33</span> <span class="n">PRINT_NEWLINE</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="mi">7</span>          <span class="mi">34</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">packitem</span><span class="p">)</span>
+</span><span class='line'>             <span class="mi">37</span> <span class="n">LOAD_CONST</span>               <span class="mi">4</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>             <span class="mi">40</span> <span class="n">CALL_FUNCTION</span>            <span class="mi">1</span>
+</span><span class='line'>             <span class="mi">43</span> <span class="n">PRINT_ITEM</span>
+</span><span class='line'>             <span class="mi">44</span> <span class="n">PRINT_NEWLINE</span>
+</span><span class='line'>             <span class="mi">45</span> <span class="n">LOAD_CONST</span>               <span class="mi">0</span> <span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+</span><span class='line'>             <span class="mi">48</span> <span class="n">RETURN_VALUE</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以看出。packitem函数的默认参数pkg的值是在第一条字节码创建的。随后在MAKE_FUNCTION指令的时候一起和code object打包成一个函数对象，然后通过STORE_FAST 0存在了FAST表的第0位。</p>
+
+<p>后续的函数调用通过LOAD_FAST 0指令将packitem的函数对象取出，然后通过CALL_FUNCTION调用(对于CALL_FUNCTION，我们会在后续的文章进行探讨)。整个函数调用的过程并没有涉及到默认参数值的初始化。</p>
+
+<p>所以，可见，Python函数的默认参数的值仅在函数定义的时候计算，后续的函数调用时的默认参数都是引用最初创建的那个对象。</p>
+
+<h2>Hack It</h2>
+
+<p>既然Python没有在我们进行函数调用的时候帮我们重新创建的默认参数的值，那我们就自己动手，丰衣足食。</p>
+
+<p>第一种方案是是用不可变的默认值，例如None，然后在函数内部进行判断。此法略显麻烦。</p>
+
+<p>第二种方案是通过装饰器来解决这个问题。</p>
+
+<p>这段脚本是Sean Ross写的，非常感谢他。</p>
+
+<figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">74</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">freshdefaults</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="n">fdefaults</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">func_defaults</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="k">def</span> <span class="nf">refresher</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>                 <span class="n">f</span><span class="o">.</span><span class="n">func_defaults</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">fdefaults</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>                 <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="k">return</span> <span class="n">refresher</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">75</span><span class="p">]:</span> <span class="nd">@freshdefaults</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span> <span class="k">def</span> <span class="nf">packitem</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">pkg</span> <span class="o">=</span> <span class="p">[]):</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="n">pkg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">....</span><span class="p">:</span>         <span class="k">return</span> <span class="n">pkg</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">76</span><span class="p">]:</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">77</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">77</span><span class="p">]:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">78</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">78</span><span class="p">]:</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">79</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">79</span><span class="p">]:</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">80</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">80</span><span class="p">]:</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以看到，packitem的输出符合我们的预期了。我们通过装饰器freshdefault，完成了对于默认参数的更新。packitem的pkg已经在每次调用的时候更新了。</p>
+
+<p>装饰器等价于</p>
+
+<figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">myfunc</span> <span class="o">=</span> <span class="n">wrapper</span><span class="p">(</span><span class="n">myfunc</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在此例子中 ，等价于在后面加上了一句</p>
+
+<figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">packitem</span> <span class="o">=</span> <span class="n">freshdefault</span><span class="p">(</span><span class="n">packitem</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考</h2>
+
+<ol>
+<li><p>Python Cookbook</p></li>
+<li><p>Python源码剖析</p></li>
+</ol>
+
+
+<p>(全文完)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stupid ET</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-14T05:10:31+08:00" pubdate data-updated="true">2012-06-14</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/我的代码/'>我的代码</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cedricporter.github.com/2012/06/python-function-default-parameter.html" data-via="" data-counturl="http://cedricporter.github.com/2012/06/python-function-default-parameter.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/06/python-dot-product.html" title="Previous Post: Python计算点积">&laquo; Python计算点积</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/07/virtualbox-seamless.html" title="Next Post: VirtualBox的无缝模式">VirtualBox的无缝模式 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cedricporter">@cedricporter</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cedricporter',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cedricporter.github.com/2012/06/python-function-default-parameter.html';
+        var disqus_url = 'http://cedricporter.github.com/2012/06/python-function-default-parameter.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

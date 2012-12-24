@@ -1,0 +1,666 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>神奇的Python:格式化UltraDemo的文法 - My Octopress Blog</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="SimpleParse是一款非常简洁的Python解析模板，可以自己定义EBNF文法，然后SimpleParse会输出结构化的。 SimpleParse的介绍可以见，http://www.ibm.com/developerworks/cn/linux/sdk/python/charm-23/ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cedricporter.github.com/2012/03/the-format-grammer.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cedricporter.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">神奇的Python:格式化UltraDemo的文法</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-16T04:17:39+08:00" pubdate data-updated="true">2012-03-16</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>SimpleParse是一款非常简洁的Python解析模板，可以自己定义EBNF文法，然后SimpleParse会输出结构化的。</p>
+
+<p>SimpleParse的介绍可以见，<a href="http://www.ibm.com/developerworks/cn/linux/sdk/python/charm-23/index.html">http://www.ibm.com/developerworks/cn/linux/sdk/python/charm-23/index.html</a>，我也是从IBM的网站上看到这个神奇的模块的。</p>
+
+<p>我们有如下的UltraDemo的文法，这个是我们之前写在word文档里面的。</p>
+
+<p>他们很乱，于是我们要对其进行格式化。</p>
+
+<p>不幸的是，我们没有现成的工具可以格式化它，所以我们要自己定制一个小工具来完成我们的任务。</p>
+
+<p>此时我们可以借助SimpleParse。</p>
+
+<p>下面的原始的文法，很乱是不是：<!-- more --></p>
+
+<figure class='code'><figcaption><span>text  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Program           -&gt; external_declaration
+</span><span class='line'>external_declaration-&gt; Func_definitions | external_decl_stmt
+</span><span class='line'>Func_definitions   -&gt; {Func_definition}+
+</span><span class='line'>Func_definition    -&gt; type id “(“ param_type_list “)” block
+</span><span class='line'>external_decl_stmt -&gt; &lt;empty&gt; | type declarators “;”
+</span><span class='line'>Type           -&gt; int | float | double | char | long | ………….
+</span><span class='line'>Param_type_list    -&gt; type id {type_param}* | &lt;empty&gt;
+</span><span class='line'>Type_param         -&gt; “,” type id | &lt;empty&gt;
+</span><span class='line'>Block          -&gt; “{“ stmts “}”
+</span><span class='line'>Stmts        -&gt; decl_stmt | if_stmt | while_stmt | for_stmt | dowhile_stmt |                               switch_stmt | return_stmt | assign | &lt;empty&gt;
+</span><span class='line'>Decl_stmt     -&gt; &lt;empty&gt; | type declarators “;”
+</span><span class='line'>Declarators       -&gt; declarator { “,” declarator }
+</span><span class='line'>Declarator        -&gt; {Pointer}? id { arrayDeclarator}  ? assignForDecl
+</span><span class='line'>Pointer           -&gt; “*” {pointer}?
+</span><span class='line'>arrayDeclarator   -&gt; “[“ {const_expr}? “]” {arrayDeclarator}?
+</span><span class='line'>const_expr        -&gt; conditional_expr
+</span><span class='line'>conditional_expr  -&gt; logical_expr | logical_expr “?” expr : conditional_expr
+</span><span class='line'>assignForDecl     -&gt; &lt;empty&gt; | “=” expr
+</span><span class='line'>factor            -&gt; num | “(“ expr “)” | abstract_declarator
+</span><span class='line'>abstract_declarator-&gt; id | id “[“ expr “]” | id “(“ param_list “)” | id “-&gt;” abstract_declarator
+</span><span class='line'>| id “.” abstract_declarator
+</span><span class='line'>param_list        -&gt; &lt;empty&gt; | param { “,” param }*
+</span><span class='line'>param         -&gt; expr
+</span><span class='line'>if_stmt           -&gt; “if” “(“ expr “)” compound_stmt
+</span><span class='line'>compound_stmt -&gt; block | stmt
+</span><span class='line'>while_stmt        -&gt; “while” “(“ expr “)” compound_stmt
+</span><span class='line'>assign            -&gt; Declarator “=” expr
+</span><span class='line'>expr              -&gt; assignment_expr {“,” assignment_expr }+
+</span><span class='line'>assignment_expr   -&gt; conditional_expr | unary_expr assgnment_op assignment_expr
+</span><span class='line'>assgnment_op      -&gt; “=” | “+=” | …
+</span><span class='line'>unary_op          -&gt; “&amp;” | “+” | “*” | …
+</span><span class='line'>unary_expr        -&gt; postfix_expr | “++” unary_expr | “—“ unary_expr | unary_op cast_expr
+</span><span class='line'>cast_expr         -&gt; unary_expr | “(“ type_name “)” cast_expr
+</span><span class='line'>postfix_expr      -&gt; primary_expr { postfix_op }+
+</span><span class='line'>postfix_op        -&gt; “[“ expr “]” | “(“ assignment_expr “)” | “-&gt;” id | “.” Id | “++” | “—“
+</span><span class='line'>primary_expr      -&gt; id | constant | string | “(“ expr “)”
+</span><span class='line'>constant          -&gt; integer_const | char_const | floating_const | enum_const
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们将其格式化后得到：</p>
+
+<figure class='code'><figcaption><span>text  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Program               -&gt;  external_declaration
+</span><span class='line'>external_declaration  -&gt;  Func_definitions
+</span><span class='line'>                       | external_decl_stmt
+</span><span class='line'>Func_definitions      -&gt;  {Func_definition}+
+</span><span class='line'>Func_definition       -&gt;  type id “(“ param_type_list “)” block
+</span><span class='line'>external_decl_stmt    -&gt;  &lt;empty&gt;
+</span><span class='line'>                       | type declarators “;”
+</span><span class='line'>Type                  -&gt;  int
+</span><span class='line'>                       | float
+</span><span class='line'>                       | double
+</span><span class='line'>                       | char
+</span><span class='line'>                       | long
+</span><span class='line'>                       | ………….
+</span><span class='line'>Param_type_list       -&gt;  type id {type_param}*
+</span><span class='line'>                       | &lt;empty&gt;
+</span><span class='line'>Type_param            -&gt;  “,” type id
+</span><span class='line'>                       | &lt;empty&gt;
+</span><span class='line'>Block                 -&gt;  “{“ stmts “}”
+</span><span class='line'>Stmts                 -&gt;  decl_stmt
+</span><span class='line'>                       | if_stmt
+</span><span class='line'>                       | while_stmt
+</span><span class='line'>                       | for_stmt
+</span><span class='line'>                       | dowhile_stmt
+</span><span class='line'>                       | switch_stmt
+</span><span class='line'>                       | return_stmt
+</span><span class='line'>                       | assign
+</span><span class='line'>                       | &lt;empty&gt;
+</span><span class='line'>Decl_stmt             -&gt;  &lt;empty&gt;
+</span><span class='line'>                       | type declarators “;”
+</span><span class='line'>Declarators           -&gt;  declarator { “,” declarator }
+</span><span class='line'>Declarator            -&gt;  {Pointer}? id { arrayDeclarator} ? assignForDecl
+</span><span class='line'>Pointer               -&gt;  “*” {pointer}?
+</span><span class='line'>arrayDeclarator       -&gt;  “[“ {const_expr}? “]” {arrayDeclarator}?
+</span><span class='line'>const_expr            -&gt;  conditional_expr
+</span><span class='line'>conditional_expr      -&gt;  logical_expr
+</span><span class='line'>                       | logical_expr “?” expr : conditional_expr
+</span><span class='line'>assignForDecl         -&gt;  &lt;empty&gt;
+</span><span class='line'>                       | “=” expr
+</span><span class='line'>factor                -&gt;  num
+</span><span class='line'>                       | “(“ expr “)”
+</span><span class='line'>                       | abstract_declarator
+</span><span class='line'>abstract_declarator   -&gt;  id
+</span><span class='line'>                       | id “[“ expr “]”
+</span><span class='line'>                       | id “(“ param_list “)”
+</span><span class='line'>                       | id “-&gt;” abstract_declarator
+</span><span class='line'>                       | id “.” abstract_declarator
+</span><span class='line'>param_list            -&gt;  &lt;empty&gt;
+</span><span class='line'>                       | param { “,” param }*
+</span><span class='line'>param                 -&gt;  expr
+</span><span class='line'>if_stmt               -&gt;  “if” “(“ expr “)” compound_stmt
+</span><span class='line'>compound_stmt         -&gt;  block
+</span><span class='line'>                       | stmt
+</span><span class='line'>while_stmt            -&gt;  “while” “(“ expr “)” compound_stmt
+</span><span class='line'>assign                -&gt;  Declarator “=” expr
+</span><span class='line'>expr                  -&gt;  assignment_expr {“,” assignment_expr }+
+</span><span class='line'>assignment_expr       -&gt;  conditional_expr
+</span><span class='line'>                       | unary_expr assgnment_op assignment_expr
+</span><span class='line'>assgnment_op          -&gt;  “=”
+</span><span class='line'>                       | “+=”
+</span><span class='line'>                       | …
+</span><span class='line'>unary_op              -&gt;  “&amp;”
+</span><span class='line'>                       | “+”
+</span><span class='line'>                       | “*”
+</span><span class='line'>                       | …
+</span><span class='line'>unary_expr            -&gt;  postfix_expr
+</span><span class='line'>                       | “++” unary_expr
+</span><span class='line'>                       | “—“ unary_expr
+</span><span class='line'>                       | unary_op cast_expr
+</span><span class='line'>cast_expr             -&gt;  unary_expr
+</span><span class='line'>                       | “(“ type_name “)” cast_expr
+</span><span class='line'>postfix_expr          -&gt;  primary_expr { postfix_op }+
+</span><span class='line'>postfix_op            -&gt;  “[“ expr “]”
+</span><span class='line'>                       | “(“ assignment_expr “)”
+</span><span class='line'>                       | “-&gt;” id
+</span><span class='line'>                       | “.” Id
+</span><span class='line'>                       | “++”
+</span><span class='line'>                       | “—“
+</span><span class='line'>primary_expr          -&gt;  id
+</span><span class='line'>                       | constant
+</span><span class='line'>                       | string
+</span><span class='line'>                       | “(“ expr “)”
+</span><span class='line'>constant              -&gt;  integer_const
+</span><span class='line'>                       | char_const
+</span><span class='line'>                       | floating_const
+</span><span class='line'>                       | enum_const
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以下是格式化程序，其中定义了UltraDemo输出文法的EBNF的文法。嗯，对，就是文法的文法，哈哈。</p>
+
+<p>这个写得比较乱，昨晚才接触SimpleParse，还是有些不是很熟悉，有空看看更灵活的Spark。</p>
+
+<figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/env python</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">re</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">pprint</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">simpleparse.parser</span> <span class="kn">import</span> <span class="n">Parser</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">simpleparse</span> <span class="kn">import</span> <span class="n">dispatchprocessor</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">declaration</span> <span class="o">=</span> <span class="s">r&#39;&#39;&#39;</span>
+</span><span class='line'><span class="s">file            := [ \t\r\n]*, grammer+</span>
+</span><span class='line'><span class="s">grammer         := header, ts, &#39;-&gt;&#39;, ts, blocks</span>
+</span><span class='line'><span class="s">ts              := [ \t]*</span>
+</span><span class='line'><span class="s">header          := identifier</span>
+</span><span class='line'><span class="s">identifier      := [a-zA-Z_]+</span>
+</span><span class='line'><span class="s">blocks          := block, [\r\n]*, (ts, &quot;|&quot;, ts, block, [ \r\n]*)*</span>
+</span><span class='line'><span class="s">block           := -[|\r\n]+</span>
+</span><span class='line'><span class="s">&#39;&#39;&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">maxTagLen</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">counter</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&#39;&#39;&#39;Find the longest length of header&#39;&#39;&#39;</span>
+</span><span class='line'>    <span class="k">global</span> <span class="n">maxTagLen</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;header&#39;</span> <span class="ow">and</span> <span class="n">maxTagLen</span> <span class="o">&lt;</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">maxTagLen</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">isFisrtBlock</span> <span class="o">=</span> <span class="bp">True</span>
+</span><span class='line'><span class="n">offset</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">printer</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&#39;&#39;&#39;print the grammers&#39;&#39;&#39;</span>
+</span><span class='line'>    <span class="k">global</span> <span class="n">text</span><span class="p">,</span> <span class="n">isFisrtBlock</span><span class="p">,</span> <span class="n">maxTagLen</span><span class="p">,</span> <span class="n">offset</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;header&#39;</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">offset</span> <span class="o">=</span> <span class="n">maxTagLen</span> <span class="o">-</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">print</span> <span class="n">text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">],</span>
+</span><span class='line'>    <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;blocks&#39;</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">print</span> <span class="n">offset</span> <span class="o">*</span> <span class="s">&#39; &#39;</span><span class="p">,</span> <span class="s">&#39;-&gt;&#39;</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">isFisrtBlock</span> <span class="o">=</span> <span class="bp">True</span>
+</span><span class='line'>    <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;block&#39;</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;&#39;</span> <span class="k">if</span> <span class="n">isFisrtBlock</span> <span class="k">else</span> <span class="p">(</span><span class="n">maxTagLen</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="s">&#39; &#39;</span> <span class="o">+</span> <span class="s">&#39;| &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">])</span>
+</span><span class='line'>        <span class="n">isFisrtBlock</span> <span class="o">=</span> <span class="bp">False</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">travel</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">root</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">tag</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">children</span> <span class="o">=</span> <span class="n">root</span>
+</span><span class='line'>    <span class="n">func</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">children</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span> <span class="n">travel</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span><span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">inFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;2.txt&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">inFile</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+</span><span class='line'>        <span class="n">text</span> <span class="o">+=</span> <span class="n">line</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="p">(</span> <span class="n">declaration</span><span class="p">,</span> <span class="s">&quot;file&quot;</span> <span class="p">)</span>
+</span><span class='line'>    <span class="n">success</span><span class="p">,</span> <span class="n">resultTrees</span><span class="p">,</span> <span class="n">nextChar</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</span><span class='line'>    <span class="c">#pprint.pprint(resultTrees)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">resultTrees</span><span class="p">:</span> <span class="n">travel</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">counter</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">print</span> <span class="n">maxTagLen</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">resultTrees</span><span class="p">:</span> <span class="n">travel</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">printer</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stupid ET</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-16T04:17:39+08:00" pubdate data-updated="true">2012-03-16</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/我的代码/'>我的代码</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cedricporter.github.com/2012/03/the-format-grammer.html" data-via="" data-counturl="http://cedricporter.github.com/2012/03/the-format-grammer.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/03/clover-save-file.html" title="Previous Post: Clover折纸数据结构的文件保存">&laquo; Clover折纸数据结构的文件保存</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/03/python-parse-ogre-configuration-file.html" title="Next Post: 神奇的Python：解析OGRE配置文件">神奇的Python：解析OGRE配置文件 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cedricporter">@cedricporter</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cedricporter',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cedricporter.github.com/2012/03/the-format-grammer.html';
+        var disqus_url = 'http://cedricporter.github.com/2012/03/the-format-grammer.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

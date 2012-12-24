@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>screen在ssh远程登录中的使用 - My Octopress Blog</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="11月了，没想到10月份竟然木有写博客。这几天在迁移服务器，时间不赶，就慢慢弄，顺便记录一下一些技巧。 首先，远程ssh登录到服务器，可能中途会出现网络断掉或者超时，这时候ssh里面就打不了字了，就只能关闭再重新连接。如果我们用vim编辑一个文件到了一半的话，就会蛋疼地多了一个swp。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cedricporter.github.com/2012/11/screen-on-ssh.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cedricporter.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Screen在ssh远程登录中的使用</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-01T09:29:12+08:00" pubdate data-updated="true">2012-11-01</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>11月了，没想到10月份竟然木有写博客。这几天在迁移服务器，时间不赶，就慢慢弄，顺便记录一下一些技巧。</p>
+
+<p>首先，远程ssh登录到服务器，可能中途会出现网络断掉或者超时，这时候ssh里面就打不了字了，就只能关闭再重新连接。如果我们用vim编辑一个文件到了一半的话，就会蛋疼地多了一个swp。那么如果我们希望在重新连接回去的时候，可以回到之前的工作状态，我们应该怎么办呢？答案是借助screen。</p>
+
+<p>对于screen的使用就不再罗嗦了。具体可以参看后面的参考资料中提供的链接。</p>
+
+<h2>一些技巧</h2>
+
+<p>下面可能会与诸位使用习惯有所冲突，请见谅。</p>
+
+<h3>把ctrl+a还给我</h3>
+
+<p>首先，screen的命令的前缀是ctrl+a，进入screen后，ctrl+a就成了命令前缀了。我经常使用ctrl+a跳到行首，ctrl+e跳到行尾，所以需要修改一下前缀，否则ctrl+a跳到行首这个习惯就得改了。我们在家目录下面创建一个文件<strong>～/.screenrc</strong>。然后在里面写上</p>
+
+<figure class='code'><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>escape ^Zz
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后就把前缀改成ctrl+z了，如果需要暂停程序的话，就用ctrl+z z来暂停。这样ctrl+a就回来了。</p>
+
+<h3>偷懒</h3>
+
+<p>每次打screen真麻烦，我们在<strong>～/.bashrc</strong>中加上<!-- more --></p>
+
+<figure class='code'><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">alias </span><span class="nv">sc</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">scb</span><span class="o">=</span><span class="s1">&#39;screen -dr normaltask || screen -S normaltask&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>输入<strong>source ~/.bashrc</strong> 就可以用sc来代替screen了。</p>
+
+<p>为了解决断开连接恢复工作状态的问题，我们假定我们的一个窗口叫normaltask。</p>
+
+<p>然后每次登录的时候，输入 scb，就可以恢复到normaltask这个常用窗口之前的任务了。是不是很方便呢？</p>
+
+<h3>补全</h3>
+
+<p>在screen下面的补全很有问题，和bash有明显的区别，只能补全文件名，对于命令的参数的补全就无法补全了。因为screen默认貌似是使用未登录的shell。</p>
+
+<p>所以，我们在<strong>~/.screenrc</strong>加上一句：</p>
+
+<figure class='code'><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>shell -<span class="nv">$SHELL</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>就可以使用bash的补全了。</p>
+
+<h2>参考资料</h2>
+
+<ol>
+<li><p><a href="http://blog.longwin.com.tw/2005/11/screen_teach/">screen 教學</a></p></li>
+<li><p><a href="http://hi.baidu.com/willor/item/3b60db19132035fd65eabfab">screen命令</a></p></li>
+<li><p><a href="http://serverfault.com/questions/126009/how-do-i-ask-screen-to-behave-like-a-standard-bash-shell">How do I ask screen to behave like a standard bash shell?</a></p></li>
+</ol>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stupid ET</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-01T09:29:12+08:00" pubdate data-updated="true">2012-11-01</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linux/'>Linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cedricporter.github.com/2012/11/screen-on-ssh.html" data-via="" data-counturl="http://cedricporter.github.com/2012/11/screen-on-ssh.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/09/chrome-ramdisk.html" title="Previous Post: [优化]将Chrome的数据放置到内存中去">&laquo; [优化]将Chrome的数据放置到内存中去</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/11/multi-user-nginx-php-server.html" title="Next Post: 配置多用户的虚拟主机">配置多用户的虚拟主机 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cedricporter">@cedricporter</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cedricporter',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cedricporter.github.com/2012/11/screen-on-ssh.html';
+        var disqus_url = 'http://cedricporter.github.com/2012/11/screen-on-ssh.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>在Ubuntu下编译调试版的Python - My Octopress Blog</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="在Windows调试Python解释器还是非常方便的，因为有强大的VS。 不过在Linux下可能有点不那么顺畅。但是稍微设置一下还是可以很方便地调试的。我们来看看在Ubuntu下怎么做。 获取源码 在Ubuntu下获取Python2.7的源码非常方便，只需要使用apt-get就可以轻松取得。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cedricporter.github.com/2012/05/compile-debug-python-in-ubuntu.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cedricporter.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">在Ubuntu下编译调试版的Python</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-05T04:38:05+08:00" pubdate data-updated="true">2012-05-05</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>在Windows调试Python解释器还是非常方便的，因为有强大的VS。</p>
+
+<p>不过在Linux下可能有点不那么顺畅。但是稍微设置一下还是可以很方便地调试的。我们来看看在Ubuntu下怎么做。</p>
+
+<h2>获取源码</h2>
+
+<p>在Ubuntu下获取Python2.7的源码非常方便，只需要使用apt-get就可以轻松取得。在Shell下输入</p>
+
+<blockquote><p>apt-get source python2.7</p></blockquote>
+
+<p>即可以将Python的源码下载到当前目录。</p>
+
+<p>然后我们就可以得到一个tar.gz的压缩包。</p>
+
+<h2>编译</h2>
+
+<p>我们进入源码文件夹后输入</p>
+
+<blockquote><p>./configure</p></blockquote>
+
+<p>make</p>
+
+<p>然后就可以编译得到python。</p>
+
+<p>当然，此时的Python不是调试版的，如果要编译调试版的Python，就需要再做一些东西。首先我们可以Google一下怎么做，貌似很多都是引用了源码README的一段话：<!-- more --></p>
+
+<blockquote><p>command; e.g. &#8220;make OPT=-g&#8221; will build a debugging version of Python
+on most platforms. The default is OPT=-O; a value for OPT in the
+environment when the configure script is run overrides this default
+(likewise for CC; and the initial value for LIBS is used as the base
+set of libraries to link with).</p></blockquote>
+
+<p>好，我们现在使用</p>
+
+<p>make OPT=-g</p>
+
+<p>试试，嗯，确实用gdb可以调试了，不过单步的时候会在源码那里会一下在上一下在下地跳来跳去。而且查看变量值的时候很多变量显示的是<optimized out>。原因是编译的时候优化了。那优化选项什么时候被加进去了？</p>
+
+<p>我们来看看configure生成的Makefile中的一段。</p>
+
+<blockquote><h1>Compiler options</h1>
+
+<p>OPT= -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes
+BASECFLAGS= -fno-strict-aliasing
+CFLAGS= $(BASECFLAGS) -g -O2 $(OPT) $(EXTRA_CFLAGS)</p>
+
+<h1>Both CPPFLAGS and LDFLAGS need to contain the shell&#8217;s value for setup.py to</h1>
+
+<h1>be able to build extension modules using the directories specified in the</h1>
+
+<h1>environment variables</h1>
+
+<p>CPPFLAGS= -I. -IInclude -I$(srcdir)/Include</p></blockquote>
+
+<p>可以看到OPT的-O3已经被我们的OPT=-g参数覆盖掉了，不过还有一个-O2在CFLAGS那里。呃，原来源码的README还是不可靠的啊。</p>
+
+<p>我们现在来重新编译：</p>
+
+<blockquote><p>make clean</p></blockquote>
+
+<p>make -j4 OPT=-g CFLAGS=-g</p>
+
+<p>这样编译的时候gcc就不会优化代码了。我们单步的时候就不会跳来跳去，变量的值也不会出现<optimized out>。</p>
+
+<p>另外“-j4”选项是指开4个gcc编译，我是2核处理器，所以开4个gcc编译会快些。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/05/Screenshot-from-2012-05-04-202058.png"><img src="http://everet.org/wp-content/uploads/2012/05/Screenshot-from-2012-05-04-202058.png" alt="" /></a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stupid ET</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-05T04:38:05+08:00" pubdate data-updated="true">2012-05-05</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linux/'>Linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cedricporter.github.com/2012/05/compile-debug-python-in-ubuntu.html" data-via="" data-counturl="http://cedricporter.github.com/2012/05/compile-debug-python-in-ubuntu.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/05/cpp-python.html" title="Previous Post: C++与Python混合编程">&laquo; C++与Python混合编程</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/05/gfw.html" title="Next Post: 猜想祖国的伟大的围墙的原理">猜想祖国的伟大的围墙的原理 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/cedricporter">@cedricporter</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'cedricporter',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cedricporter.github.com/2012/05/compile-debug-python-in-ubuntu.html';
+        var disqus_url = 'http://cedricporter.github.com/2012/05/compile-debug-python-in-ubuntu.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
