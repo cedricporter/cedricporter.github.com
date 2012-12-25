@@ -2,7 +2,7 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://cedricporter.github.com
+url: http://everet.org
 title: EverET.org
 subtitle: Better to do something imperfectly than to do nothing flawlessly.
 author: Stupid ET
@@ -95,7 +95,7 @@ disqus_short_name: everet
 disqus_show_comment_count: false
 
 # Google Analytics
-google_analytics_tracking_id:
+google_analytics_tracking_id: UA-28529727-1
 
 # Facebook Like
 facebook_like: false
