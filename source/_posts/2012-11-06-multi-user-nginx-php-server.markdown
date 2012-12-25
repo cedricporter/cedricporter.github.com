@@ -104,7 +104,7 @@ server {
 
 对于Apache，WP Super Cache插件生成的.htaccess可以很好的工作。然而，对于nginx，我们需要手写配置，以将uri映射的静态文件上面。我们来看一下下面的配置，这个是[Rahul Bansal](http://rtcamp.com/author/rahul-bansal/)大牛的配置，我们拿来用一下。
 
-{% codeblock bash lang:bash %}
+{% codeblock nginx lang:nginx %}
 server {
     server_name user01.everet.org;
 
