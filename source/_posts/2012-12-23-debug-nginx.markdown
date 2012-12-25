@@ -35,7 +35,7 @@ tags:
 
   当然还要看一下，生成出来的的Makefile是不是有-O优化，如果有的话需要关闭优化，可以看一下根目录下的Makefile以及objs/Makefile。有的话记得需要改成-O0或者直接删掉就好了。 
 
-    <!-- more -->  
+<!-- more -->  
 
  
 
@@ -55,4 +55,4 @@ tags:
 {% endcodeblock %}
    我们可以看到error_log /dev/stdout这样一句，这样可以将输出日志直接打印到标准输出，调试的时候可以实时看到输出。 
 
-    ![file:////home/cedricporter/Pictures/snapshot1-small.png](http://everet.org/wp-content/uploads/2012/12/wpid-snapshot1-small.png)
+![](http://everet.org/wp-content/uploads/2012/12/wpid-snapshot1-small.png)
