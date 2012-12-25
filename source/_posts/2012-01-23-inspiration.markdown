@@ -24,7 +24,7 @@ I believe that having an idol is often VERY GOOD to the point where you take his
 
 <!-- more -->
 
-[![](http://www.everet.org/wp-content/uploads/2012/01/22_101101194832_1.jpg)](http://www.everet.org/wp-content/uploads/2012/01/22_101101194832_1.jpg)
+[![](http://everet.org/wp-content/uploads/2012/01/22_101101194832_1.jpg)](http://everet.org/wp-content/uploads/2012/01/22_101101194832_1.jpg)
 
 
 #### 2.Action is the real measure of intelligence.- Napoleon Hill

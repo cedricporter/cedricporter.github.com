@@ -14,11 +14,11 @@ tags:
 
 自从有[http://EverET.org/](http://EverET.org/)开始以来，我的留言板每天都有几十条来自世界各国的垃圾评论，好在装了Akismet，否则我的博客就就被垃圾评论塞满了。这些都是某些RP低的人用机器自动发的，毫无价值，有俄文，波兰文等等乱七八糟的语言。
 
-仔细看看，垃圾评论都集中到留言板。我的留言板的url曾经是 [http://www.everet.org/guestbook](http://www.everet.org/guestbook) ，然后我改成了 [http://www.everet.org/guestbooket](http://www.everet.org/guestbooket) 还是一样，发现原来用 [http://www.everet.org/guestbook](http://www.everet.org/guestbook) 也可以定向到 [http://www.everet.org/guestbooket](http://www.everet.org/guestbooket) ，所以改了等于没改。
+仔细看看，垃圾评论都集中到留言板。我的留言板的url曾经是 [http://everet.org/guestbook](http://everet.org/guestbook) ，然后我改成了 [http://everet.org/guestbooket](http://everet.org/guestbooket) 还是一样，发现原来用 [http://everet.org/guestbook](http://everet.org/guestbook) 也可以定向到 [http://everet.org/guestbooket](http://everet.org/guestbooket) ，所以改了等于没改。
 
 于是，我把它改成拼音的，改成 liuyan，果然就没有了垃圾评论。
 
-[http://www.everet.org/liuyana](http://www.everet.org/liuyana)
+[http://everet.org/liuyana](http://everet.org/liuyana)
 
 哈哈。估计垃圾评论的发送器也是用了Google Hack吧。
 

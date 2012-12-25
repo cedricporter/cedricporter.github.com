@@ -20,7 +20,7 @@ PIL的下载地址可以在 [http://pypi.python.org/pypi/PIL](http://pypi.python
 
 我们安装完PIL后，可以在Python交互解释器很中输入：  import Image
 
-[![image](http://www.everet.org/wp-content/uploads/2012/01/image_thumb.png)](http://www.everet.org/wp-content/uploads/2012/01/image.png)
+[![image](http://everet.org/wp-content/uploads/2012/01/image_thumb.png)](http://everet.org/wp-content/uploads/2012/01/image.png)
 
 如果没有发生错误，这说明安装完成了。我们输入以下代码，将会打开一幅图像。
 
@@ -48,8 +48,8 @@ new_img.show()
 
 图像旋转了45°，而且也打印了图像的信息。
 
-[![image](http://www.everet.org/wp-content/uploads/2012/01/image_thumb1.png)](http://www.everet.org/wp-content/uploads/2012/01/image1.png)
+[![image](http://everet.org/wp-content/uploads/2012/01/image_thumb1.png)](http://everet.org/wp-content/uploads/2012/01/image1.png)
 
 最后输出了文件：
 
-[![image](http://www.everet.org/wp-content/uploads/2012/01/image_thumb2.png)](http://www.everet.org/wp-content/uploads/2012/01/image2.png)
+[![image](http://everet.org/wp-content/uploads/2012/01/image_thumb2.png)](http://everet.org/wp-content/uploads/2012/01/image2.png)

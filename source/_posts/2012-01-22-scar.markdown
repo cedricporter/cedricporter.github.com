@@ -91,15 +91,15 @@ Scar，中文名：伤疤，是我们的**《计算机图形学》**和**《IT�
 
 游戏加载画面
 
-[![](http://www.everet.org/wp-content/uploads/2012/01/loading1-1024x575.jpg)](http://www.everet.org/wp-content/uploads/2012/01/loading1.jpg)
+[![](http://everet.org/wp-content/uploads/2012/01/loading1-1024x575.jpg)](http://everet.org/wp-content/uploads/2012/01/loading1.jpg)
 
 由空间站跃迁到战场的过程
 
-[![](http://www.everet.org/wp-content/uploads/2012/01/222.jpg)](http://www.everet.org/wp-content/uploads/2012/01/222.jpg)
+[![](http://everet.org/wp-content/uploads/2012/01/222.jpg)](http://everet.org/wp-content/uploads/2012/01/222.jpg)
 
 在星门战斗
 
-[![](http://www.everet.org/wp-content/uploads/2012/01/22.jpg)](http://www.everet.org/wp-content/uploads/2012/01/22.jpg)
+[![](http://everet.org/wp-content/uploads/2012/01/22.jpg)](http://everet.org/wp-content/uploads/2012/01/22.jpg)
 
 
 ## Scar所使用的技术
@@ -119,7 +119,7 @@ Scar，中文名：伤疤，是我们的**《计算机图形学》**和**《IT�
 
 我们的部分类的类图，点击看大图。分辨率为7771*1645，如果需要观看请下载到电脑上。
 
-[http://www.everet.org/wp-content/uploads/2012/01/类图.png](http://www.everet.org/wp-content/uploads/2012/01/类图.png)
+[http://everet.org/wp-content/uploads/2012/01/类图.png](http://everet.org/wp-content/uploads/2012/01/类图.png)
 
 
 ### 内存管理
@@ -176,7 +176,7 @@ private:
 
 在Irrlicht中，所有的在场景中出现的物体都是派生自ISceneNode，它提供了场景节点的一个基本抽象。所有的场景节点都是挂载在一个抽象的根节点Root上，如下图：
 
-[![](http://www.everet.org/wp-content/uploads/2012/01/QQ截图20120123160921.jpg)](http://www.everet.org/wp-content/uploads/2012/01/QQ截图20120123160921.jpg)
+[![](http://everet.org/wp-content/uploads/2012/01/QQ截图20120123160921.jpg)](http://everet.org/wp-content/uploads/2012/01/QQ截图20120123160921.jpg)
 
 在引用计数方面，父节点对子节点引用，子节点不对父节点引用，所以不存在环，就避免了循环引用。
 
@@ -239,16 +239,16 @@ private:
 
 
 	
-  * [9月15日-游戏背景及历史](http://www.everet.org/wp-content/uploads/2012/01/9月15日-游戏背景及历史.docx)
+  * [9月15日-游戏背景及历史](http://everet.org/wp-content/uploads/2012/01/9月15日-游戏背景及历史.docx)
 
 	
-  * [团队协议](http://www.everet.org/wp-content/uploads/2012/01/团队协议.docx)
+  * [团队协议](http://everet.org/wp-content/uploads/2012/01/团队协议.docx)
 
 	
-  * [范围声明](http://www.everet.org/wp-content/uploads/2012/01/范围声明.docx)
+  * [范围声明](http://everet.org/wp-content/uploads/2012/01/范围声明.docx)
 
 	
-  * [里程碑报告](http://www.everet.org/wp-content/uploads/2012/01/里程碑报告.doc)
+  * [里程碑报告](http://everet.org/wp-content/uploads/2012/01/里程碑报告.doc)
 
 
 更全文档请参见：[http://code.google.com/p/opengl-scut/](http://code.google.com/p/opengl-scut/)
@@ -274,7 +274,7 @@ IT项目管理中的三个重要的管理为范围管理，时间管理和成本
 何为项目成功？即满足范围、时间和成本这三个目标的同时还让了项目发起人满意。在《IT项目管理》一书中说道：在美国，拥有一个由人才组成的团队更重要，而在中国，搞好关系管理更重要。这可能就是中国特色的项目管理吧。
 
 
-[![](http://www.everet.org/wp-content/uploads/2012/01/图片2.png)](http://www.everet.org/wp-content/uploads/2012/01/图片2.png)
+[![](http://everet.org/wp-content/uploads/2012/01/图片2.png)](http://everet.org/wp-content/uploads/2012/01/图片2.png)
 
 
 一个项目开始时，要做些什么？
@@ -296,7 +296,7 @@ IT项目管理中的三个重要的管理为范围管理，时间管理和成本
 
 
 
-[![](http://www.everet.org/wp-content/uploads/2012/01/图片1-640x338.jpg)](http://www.everet.org/wp-content/uploads/2012/01/图片1.jpg)
+[![](http://everet.org/wp-content/uploads/2012/01/图片1-640x338.jpg)](http://everet.org/wp-content/uploads/2012/01/图片1.jpg)
 
 
 
@@ -309,7 +309,7 @@ IT项目管理中的三个重要的管理为范围管理，时间管理和成本
 9大知识领域：范围管理、时间管理、成本管理、质量管理、人力资源管理、沟通管理、风险管理、采购管理、项目集成管理；
 
 
-[![](http://www.everet.org/wp-content/uploads/2012/01/图片1-640x339.png)](http://www.everet.org/wp-content/uploads/2012/01/图片1.png)
+[![](http://everet.org/wp-content/uploads/2012/01/图片1-640x339.png)](http://everet.org/wp-content/uploads/2012/01/图片1.png)
 
 
 
@@ -319,7 +319,7 @@ IT项目管理中的三个重要的管理为范围管理，时间管理和成本
 
 
 
-[![](http://www.everet.org/wp-content/uploads/2012/01/图片2-640x323.jpg)](http://www.everet.org/wp-content/uploads/2012/01/图片2.jpg)
+[![](http://everet.org/wp-content/uploads/2012/01/图片2-640x323.jpg)](http://everet.org/wp-content/uploads/2012/01/图片2.jpg)
 
 
 最后的对于项目管理的看法纯属个人观点，存在诸多错漏，请指正。

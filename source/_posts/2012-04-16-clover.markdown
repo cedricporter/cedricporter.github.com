@@ -17,6 +17,6 @@ Clover —— Computer Simulation Origami，计算机模拟折纸。
 
 终于Clover成型了。开发也告一段落了。
 
-clover进度：[http://www.everet.org/2012/01/clover-progress.html](http://www.everet.org/2012/01/clover-progress.html)
+clover进度：[http://everet.org/2012/01/clover-progress.html](http://everet.org/2012/01/clover-progress.html)
 
 

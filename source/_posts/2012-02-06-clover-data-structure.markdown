@@ -11,11 +11,11 @@ tags:
 - Clover
 ---
 
-[![fig6](http://www.everet.org/wp-content/uploads/2012/02/fig6_thumb.gif)](http://www.everet.org/wp-content/uploads/2012/02/fig6.gif)
+[![fig6](http://everet.org/wp-content/uploads/2012/02/fig6_thumb.gif)](http://everet.org/wp-content/uploads/2012/02/fig6.gif)
 
 <!-- more -->
 
-[![fig7](http://www.everet.org/wp-content/uploads/2012/02/fig7_thumb.gif)](http://www.everet.org/wp-content/uploads/2012/02/fig7.gif)
+[![fig7](http://everet.org/wp-content/uploads/2012/02/fig7_thumb.gif)](http://everet.org/wp-content/uploads/2012/02/fig7.gif)
 
 论文：
 

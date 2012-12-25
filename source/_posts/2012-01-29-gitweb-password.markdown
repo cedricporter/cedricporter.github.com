@@ -29,7 +29,7 @@ htpasswd -b 其他帐号 密码
 -c代表创建一个新的，-b代表批处理。
 <!-- more -->
 
-我们可以在这里[htpasswd ](http://www.everet.org/wp-content/uploads/2012/01/htpasswd.rar)下载htpasswd.py，然后添加可执行权限，改名为htpasswd放到/usr/local/bin下，就可以在任意地方调用了。
+我们可以在这里[htpasswd ](http://everet.org/wp-content/uploads/2012/01/htpasswd.rar)下载htpasswd.py，然后添加可执行权限，改名为htpasswd放到/usr/local/bin下，就可以在任意地方调用了。
 
 
 > $ chmod +x htpasswd.py
@@ -117,7 +117,7 @@ fastcgi_param SERVER_NAME        $server_name;
 }
 
 
-下面附上大牛写的htpasswd。点击这里下载 [htpasswd ](http://www.everet.org/wp-content/uploads/2012/01/htpasswd.rar)
+下面附上大牛写的htpasswd。点击这里下载 [htpasswd ](http://everet.org/wp-content/uploads/2012/01/htpasswd.rar)
 
 
 {% codeblock python lang:python %}

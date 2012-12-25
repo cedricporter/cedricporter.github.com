@@ -24,17 +24,17 @@ Imagination Factory的界面采用C#编写，使用了WPF作为界面库。图�
 
 Imagination Factory运行时的截图：<!-- more -->
 
-[![QQ截图20120129010840](http://www.everet.org/wp-content/uploads/2012/01/QQ20120129010840_thumb.jpg)](http://www.everet.org/wp-content/uploads/2012/01/QQ20120129010840.jpg)
+[![QQ截图20120129010840](http://everet.org/wp-content/uploads/2012/01/QQ20120129010840_thumb.jpg)](http://everet.org/wp-content/uploads/2012/01/QQ20120129010840.jpg)
 
 很久以前我在C++大作业作品展中的PPT上的给的架构图：
 
 <!-- more -->
 
-[![image](http://www.everet.org/wp-content/uploads/2012/01/image_thumb15.png)](http://www.everet.org/wp-content/uploads/2012/01/image15.png)
+[![image](http://everet.org/wp-content/uploads/2012/01/image_thumb15.png)](http://everet.org/wp-content/uploads/2012/01/image15.png)
 
 大致思路：
 
-[![image](http://www.everet.org/wp-content/uploads/2012/01/image_thumb17.png)](http://www.everet.org/wp-content/uploads/2012/01/image17.png)
+[![image](http://everet.org/wp-content/uploads/2012/01/image_thumb17.png)](http://everet.org/wp-content/uploads/2012/01/image17.png)
 
 C++写的动态链接库导出了三个函数，分别用于获取图像，处理图像和保存图像，C#写的界面只是用于处理用户交互。然后把工作交给C++处理。现在看来有点类似MVC，虽然当时也没MVC这个概念，但是都是些很基本的分层的思想。在现在看来以前的设计水平确实挺低下的。
 

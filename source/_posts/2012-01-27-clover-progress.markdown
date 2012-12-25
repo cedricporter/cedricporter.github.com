@@ -283,7 +283,7 @@ RotateFaces(faces, edgeMiddle, 180)
 
 [![](http://everet.org/wp-content/uploads/2012/01/21.jpg)](http://everet.org/wp-content/uploads/2012/01/21.jpg)
 
-数据结构见：[http://www.everet.org/2012/02/clover-data-structure.html](http://www.everet.org/2012/02/clover-data-structure.html)
+数据结构见：[http://everet.org/2012/02/clover-data-structure.html](http://everet.org/2012/02/clover-data-structure.html)
 
 
 ### 2012-2-1:
@@ -336,7 +336,7 @@ RotateFaces(faces, edgeMiddle, 180)
 
 现在我已经弄好了六面体，并且把它摆在场景中央
 
-[![](http://www.everet.org/wp-content/uploads/2012/01/r_未命名-1.jpg)](http://www.everet.org/wp-content/uploads/2012/01/r_未命名-1.jpg)
+[![](http://everet.org/wp-content/uploads/2012/01/r_未命名-1.jpg)](http://everet.org/wp-content/uploads/2012/01/r_未命名-1.jpg)
 
 一切看起来正常，六面体的正面正对着我。
 
@@ -356,7 +356,7 @@ RotateFaces(faces, edgeMiddle, 180)
 
 我先试试看第一种方法……
 
-[![](http://www.everet.org/wp-content/uploads/2012/01/r_未命名-2.jpg)](http://www.everet.org/wp-content/uploads/2012/01/r_未命名-2.jpg)
+[![](http://everet.org/wp-content/uploads/2012/01/r_未命名-2.jpg)](http://everet.org/wp-content/uploads/2012/01/r_未命名-2.jpg)
 
 另外，Ogre管理资源的方法真的是非常的诡异，有空我要好好看看这篇东西[http://www.ogre3d.org/tikiwiki/Resources+and+ResourceManagers&structure=Tutorials](http://www.ogre3d.org/tikiwiki/Resources+and+ResourceManagers&structure=Tutorials)
 
@@ -376,7 +376,7 @@ RotateFaces(faces, edgeMiddle, 180)
 
 今天开了小组会议，会议中我们把Clover逻辑层面的数据结构给讨论了一下
 
-会议记录传送门：[http://www.everet.org/2012/01/clover-architecture-design-meeting.html](http://www.everet.org/2012/01/clover-architecture-design-meeting.html)
+会议记录传送门：[http://everet.org/2012/01/clover-architecture-design-meeting.html](http://everet.org/2012/01/clover-architecture-design-meeting.html)
 
 （密码什么的我会随便乱说么）
 
@@ -420,7 +420,7 @@ RotateFaces(faces, edgeMiddle, 180)
 
 4.研究下摄像机，因为摄像机有两种移动方式，一种是自己动，一种是跟着节点动
 
-亮哥工作日志的传送门：[http://www.everet.org/2012/01/clover-progress.html](http://www.everet.org/2012/01/clover-progress.html)
+亮哥工作日志的传送门：[http://everet.org/2012/01/clover-progress.html](http://everet.org/2012/01/clover-progress.html)
 
 
 
@@ -430,7 +430,7 @@ RotateFaces(faces, edgeMiddle, 180)
 
 
 
-> 架构设计会议记录：[http://www.everet.org/2012/01/clover-architecture-design-meeting.html](http://www.everet.org/2012/01/clover-architecture-design-meeting.html)
+> 架构设计会议记录：[http://everet.org/2012/01/clover-architecture-design-meeting.html](http://everet.org/2012/01/clover-architecture-design-meeting.html)
 
 选用Triangle List来画三角形，虽然比strip更耗空间，不过方便建模。一个三角形就是三个点，初步是按顺时针和逆时针把两个面画了。日后再改了，反面裁剪的开关我也没去找在哪里。
 
@@ -482,7 +482,7 @@ TODO：
 
 > 开工，预期使用Python编码，Git管理。<!-- more -->
 
-进度记录：[http://www.everet.org/2012/01/clover-progress.html](http://www.everet.org/2012/01/clover-progress.html)
+进度记录：[http://everet.org/2012/01/clover-progress.html](http://everet.org/2012/01/clover-progress.html)
 
 网页浏览版本库： [http://git.everet.org/](http://git.everet.org/)
 
@@ -595,7 +595,7 @@ TODO：
 > 
 
 > 
-> 这里是PythonOgre安装及使用的一些简单教程 [http://www.everet.org/2012/01/python-ogre-start.html](http://www.everet.org/2012/01/python-ogre-start.html)
+> 这里是PythonOgre安装及使用的一些简单教程 [http://everet.org/2012/01/python-ogre-start.html](http://everet.org/2012/01/python-ogre-start.html)
 > 
 > 
 

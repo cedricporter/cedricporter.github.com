@@ -18,7 +18,7 @@ tags:
 
 ConnectBot的主界面如下：
 
-[![screenshot-1328349833982](http://www.everet.org/wp-content/uploads/2012/02/screenshot-1328349833982_thumb.png)](http://www.everet.org/wp-content/uploads/2012/02/screenshot-1328349833982.png)
+[![screenshot-1328349833982](http://everet.org/wp-content/uploads/2012/02/screenshot-1328349833982_thumb.png)](http://everet.org/wp-content/uploads/2012/02/screenshot-1328349833982.png)
 
 我们可以把我们的密钥复制到SD卡根目录，然后在ConnectBot里面导入，然后点击密钥右边的那个锁的图标使其变为绿色就可以了。然后我们就可以无密码登录远程主机了。
 
@@ -26,8 +26,8 @@ ConnectBot的主界面如下：
 
 <!-- more -->
 
-[![screenshot-1328353692530](http://www.everet.org/wp-content/uploads/2012/02/screenshot-1328353692530_thumb.png)](http://www.everet.org/wp-content/uploads/2012/02/screenshot-1328353692530.png)
+[![screenshot-1328353692530](http://everet.org/wp-content/uploads/2012/02/screenshot-1328353692530_thumb.png)](http://everet.org/wp-content/uploads/2012/02/screenshot-1328353692530.png)
 
 ConnectBot的图标如右下角所示。
 
-[![screenshot-1328349820244](http://www.everet.org/wp-content/uploads/2012/02/screenshot-1328349820244_thumb.png)](http://www.everet.org/wp-content/uploads/2012/02/screenshot-1328349820244.png)
+[![screenshot-1328349820244](http://everet.org/wp-content/uploads/2012/02/screenshot-1328349820244_thumb.png)](http://everet.org/wp-content/uploads/2012/02/screenshot-1328349820244.png)

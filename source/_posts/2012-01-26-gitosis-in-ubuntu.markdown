@@ -90,8 +90,8 @@ $ git push
 
 然后再装TortoiseGit [http://code.google.com/p/tortoisegit/downloads/list](http://code.google.com/p/tortoisegit/downloads/list)，那么它会自动得到git的路径，否则，我们自己去TortoiseGit的设置中设置Git的路径。
 
-[![image](http://www.everet.org/wp-content/uploads/2012/01/image_thumb4.png)](http://www.everet.org/wp-content/uploads/2012/01/image4.png)
+[![image](http://everet.org/wp-content/uploads/2012/01/image_thumb4.png)](http://everet.org/wp-content/uploads/2012/01/image4.png)
 
 此时，除了我们在资源管理器无法直接看到用符号标记的修改的中文文件名的文件，我们只能在右键的”Check for modifications“查看正确的被修的文件，因为在资源管理器中的中文文件名的文件的标记的基本是错误的。
 
-[![image](http://www.everet.org/wp-content/uploads/2012/01/image_thumb5.png)](http://www.everet.org/wp-content/uploads/2012/01/image5.png)
+[![image](http://everet.org/wp-content/uploads/2012/01/image_thumb5.png)](http://everet.org/wp-content/uploads/2012/01/image5.png)

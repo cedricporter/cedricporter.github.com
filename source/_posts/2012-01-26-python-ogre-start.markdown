@@ -114,4 +114,4 @@ Plugin=Plugin_CgProgramManager.dll
 
 然后就OK了。
 
-[![image](http://www.everet.org/wp-content/uploads/2012/01/image_thumb3.png)](http://www.everet.org/wp-content/uploads/2012/01/image3.png)
+[![image](http://everet.org/wp-content/uploads/2012/01/image_thumb3.png)](http://everet.org/wp-content/uploads/2012/01/image3.png)
