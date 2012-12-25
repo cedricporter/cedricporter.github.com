@@ -4,7 +4,7 @@
   <title><![CDATA[EverET.org]]></title>
   <link href="http://everet.org/feed" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-26T03:07:19+08:00</updated>
+  <updated>2012-12-26T03:11:24+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -549,7 +549,7 @@
 
 <p>对于Apache，WP Super Cache插件生成的.htaccess可以很好的工作。然而，对于nginx，我们需要手写配置，以将uri映射的静态文件上面。我们来看一下下面的配置，这个是<a href="http://rtcamp.com/author/rahul-bansal/">Rahul Bansal</a>大牛的配置，我们拿来用一下。</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>nginx  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
@@ -602,58 +602,58 @@
 <span class="line-number">50</span>
 <span class="line-number">51</span>
 <span class="line-number">52</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">server <span class="o">{</span>
-</span><span class="line">    server_name user01.everet.org;
+</pre></td><td class="code"><pre><code class="nginx"><span class="line"><span class="k">server</span> <span class="p">{</span>
+</span><span class="line">    <span class="kn">server_name</span> <span class="s">user01.everet.org</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line">    access_log 	/var/log/nginx/user01.everet.org.access.log;
-</span><span class="line">    error_log 	/var/log/nginx/user01.everet.org.error.log;
+</span><span class="line">    <span class="kn">access_log</span> 	<span class="s">/var/log/nginx/user01.everet.org.access.log</span><span class="p">;</span>
+</span><span class="line">    <span class="kn">error_log</span> 	<span class="s">/var/log/nginx/user01.everet.org.error.log</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line">    root	/home/user01/www/;
-</span><span class="line">    index   index.php;
+</span><span class="line">    <span class="kn">root</span>	<span class="s">/home/user01/www/</span><span class="p">;</span>
+</span><span class="line">    <span class="kn">index</span>   <span class="s">index.php</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line">    <span class="nb">set</span> <span class="nv">$cache_uri</span> <span class="nv">$request_uri</span>;
+</span><span class="line">    <span class="kn">set</span> <span class="nv">$cache_uri</span> <span class="nv">$request_uri</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line">    <span class="k">if</span> <span class="o">(</span><span class="nv">$request_method</span> <span class="o">=</span> POST<span class="o">)</span> <span class="o">{</span>
-</span><span class="line">        <span class="nb">set</span> <span class="nv">$cache_uri</span> <span class="s2">&quot;null cache&quot;</span>;
-</span><span class="line">    <span class="o">}</span>
-</span><span class="line">    <span class="k">if</span> <span class="o">(</span><span class="nv">$query_string</span> !<span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">        <span class="nb">set</span> <span class="nv">$cache_uri</span> <span class="s2">&quot;null cache&quot;</span>;
-</span><span class="line">    <span class="o">}</span>
+</span><span class="line">    <span class="kn">if</span> <span class="s">(</span><span class="nv">$request_method</span> <span class="p">=</span> <span class="s">POST)</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">set</span> <span class="nv">$cache_uri</span> <span class="s">&quot;null</span> <span class="s">cache&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="kn">if</span> <span class="s">(</span><span class="nv">$query_string</span> <span class="s">!=</span> <span class="s">&quot;&quot;)</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">set</span> <span class="nv">$cache_uri</span> <span class="s">&quot;null</span> <span class="s">cache&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
 </span><span class="line">
-</span><span class="line">    <span class="k">if</span> <span class="o">(</span><span class="nv">$request_uri</span> ~* <span class="s2">&quot;(/wp-admin/|/xmlrpc.php|/wp-(app|cron|login|register|mail).php|wp-.*.php|/feed/|index.php|wp-comments-popup.php|wp-links-opml.php|wp-locations.php|sitemap(_index)?.xml|[a-z0-9_-]+-sitemap([0-9]+)?.xml)&quot;</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">        <span class="nb">set</span> <span class="nv">$cache_uri</span> <span class="s2">&quot;null cache&quot;</span>;
-</span><span class="line">    <span class="o">}</span>
+</span><span class="line">    <span class="kn">if</span> <span class="s">(</span><span class="nv">$request_uri</span> <span class="p">~</span><span class="sr">*</span> <span class="s">&quot;(/wp-admin/|/xmlrpc.php|/wp-(app|cron|login|register|mail).php|wp-.*.php|/feed/|index.php|wp-comments-popup.php|wp-links-opml.php|wp-locations.php|sitemap(_index)?.xml|[a-z0-9_-]+-sitemap([0-9]+)?.xml)&quot;)</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">set</span> <span class="nv">$cache_uri</span> <span class="s">&quot;null</span> <span class="s">cache&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
 </span><span class="line">
-</span><span class="line">    <span class="k">if</span> <span class="o">(</span><span class="nv">$http_cookie</span> ~* <span class="s2">&quot;comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_logged_in&quot;</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">        <span class="nb">set</span> <span class="nv">$cache_uri</span> <span class="s2">&quot;null cache&quot;</span>;
-</span><span class="line">    <span class="o">}</span>
+</span><span class="line">    <span class="kn">if</span> <span class="s">(</span><span class="nv">$http_cookie</span> <span class="p">~</span><span class="sr">*</span> <span class="s">&quot;comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_logged_in&quot;)</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">set</span> <span class="nv">$cache_uri</span> <span class="s">&quot;null</span> <span class="s">cache&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
 </span><span class="line">
-</span><span class="line">    location / <span class="o">{</span>
-</span><span class="line">        try_files /wp-content/cache/supercache/<span class="nv">$http_host</span>/<span class="nv">$cache_uri</span>/index.html <span class="nv">$uri</span> <span class="nv">$uri</span>/ /index.php;
-</span><span class="line">    <span class="o">}</span>
+</span><span class="line">    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">try_files</span> <span class="s">/wp-content/cache/supercache/</span><span class="nv">$http_host/$cache_uri/index.html</span> <span class="nv">$uri</span> <span class="nv">$uri/</span> <span class="s">/index.php</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
 </span><span class="line">
-</span><span class="line">    <span class="nv">location</span> <span class="o">=</span> /favicon.ico <span class="o">{</span>
-</span><span class="line">        log_not_found off;
-</span><span class="line">        access_log off;
-</span><span class="line">    <span class="o">}</span>
+</span><span class="line">    <span class="kn">location</span> <span class="p">=</span> <span class="s">/favicon.ico</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">log_not_found</span> <span class="no">off</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">access_log</span> <span class="no">off</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
 </span><span class="line">
-</span><span class="line">    <span class="nv">location</span> <span class="o">=</span> /robots.txt <span class="o">{</span>
-</span><span class="line">        log_not_found off;
-</span><span class="line">        access_log off;
-</span><span class="line">    <span class="o">}</span>
+</span><span class="line">    <span class="kn">location</span> <span class="p">=</span> <span class="s">/robots.txt</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">log_not_found</span> <span class="no">off</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">access_log</span> <span class="no">off</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
 </span><span class="line">
-</span><span class="line">    location ~ .php<span class="nv">$ </span><span class="o">{</span>
-</span><span class="line">        try_files <span class="nv">$uri</span> /index.php;
-</span><span class="line">        include fastcgi_params;
-</span><span class="line">        fastcgi_pass unix:/var/run/php5-fpm.user01.sock;
-</span><span class="line">    <span class="o">}</span>	
+</span><span class="line">    <span class="kn">location</span> <span class="p">~</span> <span class="sr">.php$</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="s">/index.php</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">include</span> <span class="s">fastcgi_params</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">fastcgi_pass</span> <span class="s">unix:/var/run/php5-fpm.user01.sock</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>	
 </span><span class="line">
-</span><span class="line">    location ~* .<span class="o">(</span>ogg|ogv|svg|svgz|oet|otf|woff|mp4|ttf|css|rss|atom|js|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|mp3|bmp|rtf<span class="o">)</span><span class="nv">$ </span><span class="o">{</span>
-</span><span class="line">        expires max;
-</span><span class="line">        log_not_found off;
-</span><span class="line">        access_log off;
-</span><span class="line">    <span class="o">}</span>
-</span><span class="line"><span class="o">}</span>
+</span><span class="line">    <span class="kn">location</span> <span class="p">~</span><span class="sr">*</span> <span class="s">.(ogg|ogv|svg|svgz|oet|otf|woff|mp4|ttf|css|rss|atom|js|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|mp3|bmp|rtf)</span>$ <span class="p">{</span>
+</span><span class="line">        <span class="kn">expires</span> <span class="s">max</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">log_not_found</span> <span class="no">off</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">access_log</span> <span class="no">off</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>我们来慢慢阅读一下这个配置。首先，<code>set $cache_uri $request_uri</code>就是将请求的uri保存到我们的变量<code>$cache_uri</code>中。然后，如果请求方法是POST（<code>$request_method = POST</code>）、包含请求字符串（<code>$query_string != ""</code>）、请求的uri包含一些特殊的php文件（<code>$request_url ~* "(/wp-admin/|.........</code>）或者登录过评论过（通过cookie判断，<code>$http_cookie ~* "comment_author|w............"</code>），就将<code>$cache_uri</code>设置为’null cache’，这样是让<code>$cache_uri</code>这个字符串变量变成一个无意义的字符串，以让后面拼接出来的路径无意义。</p>
