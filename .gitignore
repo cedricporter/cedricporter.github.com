@@ -13,4 +13,6 @@ vendor
 node_modules
 .preview-mode
 .directory
+*.~
 
+source/_includes/custom/asides/tags.html~

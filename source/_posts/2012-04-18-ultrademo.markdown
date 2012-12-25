@@ -10,7 +10,7 @@ categories:
 tags:
 - C++
 - UltraDemo
-- 数据结构
+- DataStructure
 ---
 
 传统数据结构教学中，老师站在讲台上讲课，放着PPT，而学生坐在下面神游。 原因何在？因为学生缺乏实践机会，所以注意力难以集中。

@@ -9,7 +9,7 @@ categories:
 - My Code
 tags:
 - Clover
-- 数据结构
+- DataStructure
 ---
 
 Clover的数据结构是由面层，边层和点层所组成。

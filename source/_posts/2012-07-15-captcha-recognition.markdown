@@ -10,7 +10,7 @@ categories:
 tags:
 - Captcha
 - Python
-- 图像处理
+- Image Processing
 ---
 
 对于验证码叙述，可以见上文[我们身边的验证码技术](http://everet.org/2012/07/captcha-around-us.html)。其中我们得知验证码识别流程如下图

@@ -9,7 +9,7 @@ categories:
 - My Code
 tags:
 - Python
-- 图像处理
+- Image Processing
 ---
 
 PIL中包括Image，ImageEnhance，ImageGrab等。

@@ -9,7 +9,7 @@ categories:
 - My Code
 tags:
 - Python
-- 图像处理
+- Image Processing
 ---
 
 Python是一个非常简洁优雅的语言，库非常的丰富。在图像处理方面，有个PIL（Python Imaging Library ），这个是一个应用上手非常简单的Python的图像处理库。

@@ -9,7 +9,7 @@ categories:
 - My Code
 tags:
 - Python
-- 图像处理
+- Image Processing
 ---
 
 今天小孟师兄要一张贴图做测试，屠文翔同学用Fireworks花了两分钟做了下面的一张图片。但是师兄说要一张颜色相隔的图片，于是Fireworks此时就显得有点力不从心了。于是此时Python就要上场啦。

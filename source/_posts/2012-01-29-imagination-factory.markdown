@@ -11,7 +11,7 @@ tags:
 - C++
 - Imagination Factory
 - WPF
-- 图像处理
+- Image Processing
 ---
 
 Imagination Factory是一款轻巧美观的图像浏览和图像处理软件。这是我们大一时的C++大作业。写下来记录一下以前做了些什么。

@@ -9,7 +9,7 @@ categories:
 - My Code
 tags:
 - Python
-- 图像处理
+- Image Processing
 ---
 
 字符画很好玩，我们来看看怎样将一张图片变成字符画。
