@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: Android | EverET.org]]></title>
+  <link href="http://cedricporter.github.com/tag/android/atom.xml" rel="self"/>
+  <link href="http://cedricporter.github.com/"/>
+  <updated>2012-12-25T17:02:31+08:00</updated>
+  <id>http://cedricporter.github.com/</id>
+  <author>
+    <name><![CDATA[Stupid ET]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[有什么样的硬件，用什么样的软件]]></title>
+    <link href="http://cedricporter.github.com/2012/12/hardware-decide-the-software.html"/>
+    <updated>2012-12-04T03:39:17+08:00</updated>
+    <id>http://cedricporter.github.com/2012/12/hardware-decide-the-software</id>
+    <content type="html"><![CDATA[<p>两年多前买的摩托罗拉的里程碑1代，现在竟然已经无力支撑go桌面这样庞大的软件了。虽然我很喜欢go桌面，但是，现在手机已经无力承担如此重负。确实，什么样的基础就应该过什么样的生活，过高的追求只会让生活变得像一条狗一样，苟延残喘。 <!-- more -->
+里程碑的硬件已经强过以前我家的电脑了，以前我的台式机只有650MHz的CPU，64M的内存，9GB的硬盘，但都可以轻松跑Win 2k，再跑个VC也绰绰有余。而现在的一台手机，CPU超频到了800MHz，内存256MB，跑一个桌面就卡到爆炸，其他东西就都不用用了。这个是为什么呢？果然，无论有多少硬件资源，都会被平庸的程序员挥霍干净。</p>
+
+<p>人们在拥有的时候永远不会懂得珍惜啊！ 现在的程序员能不能提高一下性能，节约一下资源的消耗啊？！
+手机卡到爆炸，于是乎重新刷了CyanogenMod在11月22日放出的的rom，我的桌面又从go桌面回到了ADW。虽然每次ADW都被我直接忽视而装上go，但这次，我决定用一下它。突然发现，速度有了质的飞跃。开完程序回到桌面发现桌面没有被kill掉，这是多么的让人欣慰啊。</p>
+
+<p>原来，不仅仅是我的手机硬件老了，而是，随着时间的流逝，我们索要的越来越多，最终，超出了大环境的承受能力了。有时候，只要降低一下自己的预期，生活就会很美好了。
+有什么样的能力，就应该过什么样的生活。当然，也可以提高自己的能力。不过现在也没有条件更换硬件，于是也只能有什么样的硬件，用什么样的软件。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[在Android管理远程主机]]></title>
+    <link href="http://cedricporter.github.com/2012/02/android-controls-computer.html"/>
+    <updated>2012-02-05T03:21:39+08:00</updated>
+    <id>http://cedricporter.github.com/2012/02/android-controls-computer</id>
+    <content type="html"><![CDATA[<p>在Android有许多ssh的工具，其中ConnectBot就是一款有趣方便的工具。</p>
+
+<p>我们可以使用它来远程管理我们的主机。</p>
+
+<p>ConnectBot的主界面如下：</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/02/screenshot-1328349833982.png"><img src="http://everet.org/wp-content/uploads/2012/02/screenshot-1328349833982_thumb.png" alt="screenshot-1328349833982" /></a></p>
+
+<p>我们可以把我们的密钥复制到SD卡根目录，然后在ConnectBot里面导入，然后点击密钥右边的那个锁的图标使其变为绿色就可以了。然后我们就可以无密码登录远程主机了。</p>
+
+<p>下图是我登录了远程主机的截图：</p>
+
+<!-- more -->
+
+
+<p><a href="http://everet.org/wp-content/uploads/2012/02/screenshot-1328353692530.png"><img src="http://everet.org/wp-content/uploads/2012/02/screenshot-1328353692530_thumb.png" alt="screenshot-1328353692530" /></a></p>
+
+<p>ConnectBot的图标如右下角所示。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/02/screenshot-1328349820244.png"><img src="http://everet.org/wp-content/uploads/2012/02/screenshot-1328349820244_thumb.png" alt="screenshot-1328349820244" /></a></p>
+]]></content>
+  </entry>
+  
+</feed>

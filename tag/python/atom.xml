@@ -1,0 +1,1386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: Python | EverET.org]]></title>
+  <link href="http://cedricporter.github.com/tag/python/atom.xml" rel="self"/>
+  <link href="http://cedricporter.github.com/"/>
+  <updated>2012-12-25T17:02:31+08:00</updated>
+  <id>http://cedricporter.github.com/</id>
+  <author>
+    <name><![CDATA[Stupid ET]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MoinMoin+Nginx+uWSGI搭建个人Wiki]]></title>
+    <link href="http://cedricporter.github.com/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html"/>
+    <updated>2012-12-19T07:14:27+08:00</updated>
+    <id>http://cedricporter.github.com/2012/12/moinmoin-as-kms-by-nginx-uwsgi</id>
+    <content type="html"><![CDATA[<h2>有博客，为什么还需要Wiki呢？</h2>
+
+<p>有博客，为什么还需要Wiki呢？对于这个问题，我也思考了许久。博客记录的东西很扁平，而且不太适宜记录一些零碎不完整的东西。如果别人订阅了你的博客，你的博客却经常发布一些不完整的内容，这样会严重影响别人的心情。所以我觉得博客适宜将一些比较完整的内容的写在里面。此外，平时在网上看到什么东西，虽然都可以收录到EverNote里面（EverNote里面有提供目录以及标签可以很好地进行分类），但是，EverNote的劣势在于，不方便将知识组织知识，将它们串联在一起。</p>
+
+<p>而在Wiki中知识是以词条形式，词条与词条间可以方便地建立关系。很容易组织成树状结构。</p>
+
+<p>此外，Wiki可以使用轻量标记语言编写，优点是纯文本，容易阅读和编辑，能够让我们的注意力集中于撰写内容而非形式。特别在Emacs或者Vim里面可以方便地半可视化地编写Wiki。我第一次尝试就对其爱不释手，终于可以从Wordpress，Word等SB的需要鼠标辅助编辑的编写过程中解脱了。</p>
+
+<p>于是我又开始物色Wiki，以前有用过PHP实现的Wiki，现在决定找一个Python实现的Wiki，很快就找到了<a href="http://i.everet.org/MoinMoin">MoinMoin</a>，它是一个由Python实现的<a href="http://zh.wikipedia.org/wiki/Wiki">Wiki</a>系统，文件存储，选一种自己喜欢的语言编写的Wiki系统，日后定制起来会方便一些。<!-- more --></p>
+
+<p>我的Wiki：<a href="http://i.everet.org/">http://i.everet.org</a></p>
+
+<p>这个Wiki是我前段时间在这个性能忒差的服务器上面搭建的，今天终于把配置过程写下来，希望能给有需要的同学多一份参考。</p>
+
+<p>前端依旧是Nginx，后端用uWSGI处理Python。Nginx可以很好的转发。</p>
+
+<h2>Nginx的配置</h2>
+
+<h3>Install</h3>
+
+<blockquote></blockquote>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>apt-get install python-software-properties&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>apt-add-repository ppa:nginx/stable&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>apt-get update&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>apt-get install nginx-full&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>我们在/etc/nginx/sites-available文件夹里面新建一个文件wiki.everet.org，然后链接到sites-enables。就可以运行nginx -t &amp;&amp; service nginx reload:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>nginx  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='nginx'><span class='line'><span class="k">server</span> <span class="p">{</span><span class="kn">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;pre&gt;&lt;code&gt;server_name</span> <span class="s">i.everet.org</span> <span class="s">wiki.everet.org</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">access_log</span>  <span class="s">/var/log/nginx/wiki.everet.org.access.log</span><span class="p">;</span>
+</span><span class='line'><span class="kn">error_log</span> <span class="s">/var/log/nginx/wiki.everet.org.error.org</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">include</span> <span class="s">uwsgi_params</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">uwsgi_pass</span> <span class="s">unix:///var/run/uwsgi_wiki.sock</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">uwsgi_param</span> <span class="s">UWSGI_PYHOME</span> <span class="s">/var/www/moinmoin/python-env/</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">uwsgi_param</span> <span class="s">UWSGI_CHDIR</span> <span class="s">/var/www/moinmoin/wiki/</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">uwsgi_param</span> <span class="s">UWSGI_SCRIPT</span> <span class="s">moin_wsgi</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">location</span> <span class="p">=</span> <span class="s">/google7a32e07f62c143af.html</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">rewrite</span> <span class="s">^/</span> <span class="s">/moin_static195/google7a32e07f62c143af.html</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">location</span> <span class="s">^~</span> <span class="s">/moin_static195/</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">alias</span> <span class="s">/var/www/moinmoin/python-env/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">add_header</span> <span class="s">Cache-Control</span> <span class="s">public</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">expires</span> <span class="s">1M</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="kn">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;</span><span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Python</h2>
+
+<p>在这里，我们需要借助一个程序virtualenv，它可以创建一个干净的Python运行环境。其实Python核心就是一个解释器，然后外加许多包，也就是所谓的“电池”。如果我们自己编译Python的话，可以选择生成一个静态链接的Python可执行文件，就可以拿着这个解释器文件走了。</p>
+
+<p>而virtualenv做的事情就是将Python解释器以及一些需要的包复制到我们指定的地方，已经创建一些方便设置环境变量的脚本。当我们有程序需要不同版本的模块或者某些不兼容的模块时，就可以借助于virtualenv。</p>
+
+<p>Virtualenv会生成一个包含Python可执行程序的目录，里面也会包含标准库。</p>
+
+<p>此外，我们需要运行bin目录下面的activate，它会修改当前的环境变量。</p>
+
+<p>activate这个脚本做的事情就是将新的Python可执行的路径加入到环境变量PATH最前面。然后清空PYTHONHOME这个环境变量。</p>
+
+<blockquote></blockquote>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>mkdir -p /var/www/moinmoin&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>virtualenv /var/www/moinmoin/python-env&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>. /var/www/moinmoin/python-env/bin/activate&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>运行完activate后，环境变量就改了，我们可以看到提示符已经改变了。然后我们进行后续工作。</p>
+
+<h2>MoinMoin</h2>
+
+<p>然后现在安装moinmoin</p>
+
+<blockquote></blockquote>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(python-env) # python setup.py install</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>然后将安装目录的wiki文件夹下面的data与uderlay目录复制出来，放到/var/www/moinmoin/wiki。然后将wiki/config目录下的wikiconfig.py以及wiki/server/moin.wsgi改名moin_wsgi.py复制到/var/www/moinmoin/wiki目录下面，然后/var/www/moinmoin/wiki目录结构如下：</p>
+
+<blockquote></blockquote>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>root@ubuntu:/var/www/moinmoin/wiki# tree -L 1
+</span><span class='line'>.
+</span><span class='line'>├── data
+</span><span class='line'>├── moin_wsgi.py
+</span><span class='line'>├── underlay
+</span><span class='line'>└── wikiconfig.py&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;p>2 directories, 2 files</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>然后将wiki目录修改属主为uwsgi。</p>
+
+<blockquote></blockquote>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>chown uwsgi:uwsgi /var/www/moinmoin/wiki -R&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>uWSGI</h2>
+
+<h3>Install</h3>
+
+<p>安装最新的lts版的uwsgi，不过在此之前，需要安装python-dev才能够正确编译。</p>
+
+<blockquote></blockquote>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>sudo apt-get install python-dev build-essential&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;p>(python-env) # pip install http://projects.unbit.it/downloads/uwsgi-lts.tar.gz</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>如果我们还在virtualenv的环境变量下，uwsgi会被安装到/var/www/moinmoin/python-env/bin下面，就一个文件uwsgi。</p>
+
+<h3>Autostart</h3>
+
+<p>我们现在来为uwsgi编写开机启动：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;/etc/init.d/uwsgi&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;#&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;daemon<span class="o">=</span>/var/www/moinmoin/python-env/bin/uwsgi
+</span><span class='line'><span class="nv">pid</span><span class="o">=</span>/var/run/uwsgi.pid
+</span><span class='line'><span class="nv">args</span><span class="o">=</span><span class="s2">&quot;-x /etc/uwsgi/uwsgi.xml&quot;</span>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;case <span class="s2">&quot;$1&quot;</span> in&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;start<span class="o">)</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Starting uwsgi&quot;</span>
+</span><span class='line'>    start-stop-daemon -p <span class="nv">$pid</span> --start --exec <span class="nv">$daemon</span> -- <span class="nv">$args</span>
+</span><span class='line'>    ;;
+</span><span class='line'>stop<span class="o">)</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Stopping script uwsgi&quot;</span>
+</span><span class='line'>    start-stop-daemon --signal INT -p <span class="nv">$pid</span> --stop <span class="nv">$daemon</span> -- <span class="nv">$args</span>
+</span><span class='line'>    ;;
+</span><span class='line'>restart<span class="o">)</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Restarting uwsgi&quot;</span>
+</span><span class='line'>    start-stop-daemon --signal INT -p <span class="nv">$pid</span> --stop <span class="nv">$daemon</span> -- <span class="nv">$args</span>
+</span><span class='line'>    sleep 2
+</span><span class='line'>    start-stop-daemon -p <span class="nv">$pid</span> --start --exec <span class="nv">$daemon</span> -- <span class="nv">$args</span>
+</span><span class='line'>    ;;
+</span><span class='line'>reload<span class="o">)</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Reloading conf&quot;</span>
+</span><span class='line'>    <span class="nb">kill</span> -HUP <span class="k">$(</span>cat <span class="nv">$pid</span><span class="k">)</span>
+</span><span class='line'>    ;;
+</span><span class='line'>*<span class="o">)</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Usage: /etc/init.d/uwsgi {start|stop|restart|reload}&quot;</span>
+</span><span class='line'>    <span class="nb">exit </span>1
+</span><span class='line'>    ;;
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;esac&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;exit 0
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>Config</h3>
+
+<p>/etc/uwsgi/uwsgi.xml内容如下：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>xml  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span>/var/run/uwsgi_wiki.sock
+</span><span class='line'>uwsgi
+</span><span class='line'>uwsgi
+</span><span class='line'>
+</span><span class='line'>128
+</span><span class='line'>/var/www/moinmoin/wiki/wikiconfig.py
+</span><span class='line'>
+</span><span class='line'>3
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>/var/run/uwsgi.pid
+</span><span class='line'>/var/log/uwsgi.log
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<ul>
+<li><p>其中reload-on-as是指内存消耗达到128就重新加载过进程。</p></li>
+<li><p>touch-reload是指wikiconfig.py被修改就重新加载进程。</p></li>
+<li><p>master-as-root是指master进程uid为root，这样才有足够权限在/var/run中创建socket。</p></li>
+</ul>
+
+
+<p>其他参数就没什么特别的了。</p>
+
+<h3>Add User</h3>
+
+<p>添加用户</p>
+
+<blockquote></blockquote>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>adduser --system --no-create-home --disabled-login --disabled-password --group uwsgi&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>touch /var/log/uwsgi.log&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>chown uwsgi:uwsgi /var/log/uwsgi.log&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>Run</h3>
+
+<p>加到开机启动，然后运行uwsgi服务。</p>
+
+<blockquote></blockquote>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>update-rc.d uwsgi defaults&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>service uwsgi start&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>扩展阅读</h2>
+
+<ul>
+<li><p><a href="http://uwsgi-docs.readthedocs.org/en/latest/Nginx.html#dynamic-apps">UWSGI_SCRIPT</a></p></li>
+<li><p><a href="https://uwsgi-docs.readthedocs.org/en/latest/Vars.html?highlight=%20UWSGI_CHDIR">uwsgi protocol magic variables</a></p></li>
+<li><p><a href="http://moinmo.in/EmacsForMoinMoin">Emacs的moinmoin-mode</a></p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[网易泡泡的Linux虚拟机宿主提示外挂]]></title>
+    <link href="http://cedricporter.github.com/2012/08/popo-linux.html"/>
+    <updated>2012-08-21T21:37:22+08:00</updated>
+    <id>http://cedricporter.github.com/2012/08/popo-linux</id>
+    <content type="html"><![CDATA[<p>在网易实习时，上班一定要开着泡泡，不过泡泡貌似在Linux会严重地水土不服，所以只能装一个虚拟机来解决这个问题。借助<a href="http://everet.org/2012/07/virtualbox-seamless.html">VirtualBox的无缝模式</a>，我们在一定程度上可以缓解这个问题。但是我平时会在多个虚拟桌面。如果恰巧不幸，我长时间没有切换到泡泡所在的虚拟桌面时，那就会有很长时间都不知道有新的泡泡消息。这个无论对人对己都有非常不好的影响。首先，别人无法在第一时间找到我，即便是我开着泡泡；第二，如果有重要通知，我却不幸地没有在泡泡的虚拟桌面时，那就大祸了。<!-- more --></p>
+
+<h2>Ubuntu的4个虚拟桌面</h2>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/08/2012-08-21-112057%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png"><img src="http://everet.org/wp-content/uploads/2012/08/2012-08-21-112057%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png" alt="" /></a></p>
+
+<p>那肿么办呢？</p>
+
+<p>我的想法是，如果虚拟机XP里面的泡泡有收到消息，那么外面的宿主Linux会弹出提示窗口告知我们有新的泡泡消息啦，赶紧冲过去围观吧。</p>
+
+<p>那么具体怎么做呢？</p>
+
+<p>嗯，我的想法是首先在虚拟机XP里面安插一个间谍，如果看到泡泡有新的消息到了，就通知虚拟机外面的Linux说有情报了。那怎么通知呢？我们可以通过HTTP协议来交流吧，这样比较简单，我们在Linux用tornado搭一个服务器，使用pynotify来进行弹窗通知。然后虚拟机XP里面有消息的话，就直接通过HTTP协议通知。好，那我们赶紧开工吧。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/08/tips.png"><img src="http://everet.org/wp-content/uploads/2012/08/tips.png" alt="" /></a></p>
+
+<p>啦啦啦啦啦，看上去可以工作。自从用了这个提示外挂，我再也不用每隔一会儿切换到虚拟机所在虚拟桌面去查看了，<sup>_<sup>，变相提高工作效率，减小了上下文切换的开销。</sup></sup></p>
+
+<p>目前我在Ubuntu与XP下使用，其他的还没试过，不过这个应该都是通用的。使用时先编辑一下windowsplugin.py里面的虚拟机宿主的IP，然后将windowsplugin.py放到Windows的启动项，将notify.py放到Linux的启动项即可。</p>
+
+<p>目前的版本是通过轮询监控泡泡的窗口，将来有空的话我会继续开发后续版本。后续版本将会进行DLL Hook，争取可以拿到新消息内容。加油～～</p>
+
+<h2>依赖包</h2>
+
+<p>在Linux宿主需要安装libnotify用户飘窗提示，在Windows需要安装win32gui，其中Win32 Python2.7的win32gui已经附在后面的下载地址里面了。</p>
+
+<p>多谢宇哥，我才发现原来在KDE下pynotify已经换了名字了。</p>
+
+<p>最后，是下载地址啦：<a href="https://github.com/cedricporter/popo-plugin/tags">https://github.com/cedricporter/popo-plugin/tags</a>。</p>
+
+<p>项目是开源的，有兴趣的同学来一起完善吧～～</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[对Python图像处理库EffectLab进行性能测试]]></title>
+    <link href="http://cedricporter.github.com/2012/08/profile-of-effectlab.html"/>
+    <updated>2012-08-15T01:49:37+08:00</updated>
+    <id>http://cedricporter.github.com/2012/08/profile-of-effectlab</id>
+    <content type="html"><![CDATA[<p><a href="http://everet.org/2012/07/effectlab.html">EffectLab</a>也是一个基于PIL的Python的图像库，目的是为了提供更多的特效处理以及更快的测试。</p>
+
+<p>目前EffectLab可以实现的特效可以围观之前的文章：<a href="http://everet.org/2012/07/effectlab.html">http://everet.org/2012/07/effectlab.html</a>。</p>
+
+<p>古人云：<em>选择了脚本语言</em>就要忍受其速度。</p>
+
+<p>但是，有时脚本语言的速度已经慢到了无法形容的地步时，我们就开始考虑性能优化了。</p>
+
+<h2>寻找性能热点</h2>
+
+<p>Python有一对很好的性能测试工具：cProfile与pstats。</p>
+
+<p>我们来选择一个波浪效果来做测试：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&quot;RGB&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</span><span class='line'><span class="n">wave</span> <span class="o">=</span> <span class="n">GlobalWaveEffect</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+</span><span class='line'><span class="n">test</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&quot;test()&quot;</span><span class="p">,</span> <span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span><span class="o">.</span><span class="n">strip_dirs</span><span class="p">()</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="s">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>我们可以看到其输出：<!-- more --></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>console  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="go">Tue Aug 14 17:21:10 2012    profile.data&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">&lt;pre&gt;&lt;code&gt;     417923 function calls (417922 primitive calls) in 0.434 seconds</span>
+</span><span class='line'><span class="go">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">&lt;p&gt;   Ordered by: internal time&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">&lt;p&gt;   ncalls  tottime  percall  cumtime  percall filename:lineno(function)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">&lt;pre&gt;&lt;code&gt;    1    0.150    0.150    0.434    0.434 Effect.py:92(filter)</span>
+</span><span class='line'><span class="go">80000    0.068    0.000    0.068    0.000 {round}</span>
+</span><span class='line'><span class="go">40000    0.051    0.000    0.063    0.000 Effect.py:304(transform)</span>
+</span><span class='line'><span class="go">41889    0.034    0.000    0.034    0.000 {map}</span>
+</span><span class='line'><span class="go">41890    0.029    0.000    0.042    0.000 Image.py:606(load)</span>
+</span><span class='line'><span class="go">40000    0.028    0.000    0.091    0.000 Effect.py:317()</span>
+</span><span class='line'><span class="go">33433    0.025    0.000    0.071    0.000 Image.py:946(getpixel)</span>
+</span><span class='line'><span class="go">41890    0.013    0.000    0.013    0.000 {built-in method pixel_access}</span>
+</span><span class='line'><span class="go">40000    0.012    0.000    0.012    0.000 {math.sin}</span>
+</span><span class='line'><span class="go">33433    0.011    0.000    0.011    0.000 {built-in method getpixel}</span>
+</span><span class='line'><span class="go"> 8457    0.008    0.000    0.019    0.000 Image.py:1260(putpixel)</span>
+</span><span class='line'><span class="go"> 8457    0.004    0.000    0.004    0.000 {built-in method putpixel}</span>
+</span><span class='line'><span class="go">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>可以发现，运行时间最长的函数有<a href="https://github.com/cedricporter/EffectLab/blob/master/EffectLab/Effect.py#L92">第92行的filter</a>，以及<a href="https://github.com/cedricporter/EffectLab/blob/master/EffectLab/Effect.py#L304">第304行的transform</a>。我们可以查看第92行的函数filter，这个函数看上去非常的简短，主要做的是处理每一个像素以及有抗锯齿运算。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
+</span><span class='line'><span class="n">new_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">Effect</span><span class="o">.</span><span class="n">empty_color</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">nband</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+</span><span class='line'><span class="n">antialias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">antialias</span>
+</span><span class='line'><span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="k">else</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bottom</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">found</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="n">psum</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="n">nband</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c"># anti-alias</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">ai</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">antialias</span><span class="p">):</span>
+</span><span class='line'>            <span class="n">_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">ai</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">antialias</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">for</span> <span class="n">aj</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">antialias</span><span class="p">):</span>
+</span><span class='line'>                <span class="n">_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">aj</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">antialias</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="p">(</span><span class="n">_x</span><span class="p">,</span> <span class="n">_y</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">u</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">u</span><span class="p">))</span>
+</span><span class='line'>                <span class="n">v</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+</span><span class='line'>                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="n">u</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">width</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="n">v</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">height</span><span class="p">):</span>
+</span><span class='line'>                    <span class="k">continue</span>
+</span><span class='line'>                <span class="n">pt</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+</span><span class='line'>                <span class="n">psum</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">psum</span><span class="p">,</span> <span class="n">pt</span><span class="p">)</span>
+</span><span class='line'>                <span class="n">found</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="n">found</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">psum</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">div</span><span class="p">,</span> <span class="n">psum</span><span class="p">,</span> <span class="p">(</span><span class="n">found</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">psum</span><span class="p">))</span>
+</span><span class='line'>            <span class="n">new_img</span><span class="o">.</span><span class="n">putpixel</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">psum</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">return</span> <span class="n">new_img</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>以及transform函数：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">delta_w</span><span class="p">,</span> <span class="n">delta_h</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">radian</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">xoffset</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="n">delta_w</span>
+</span><span class='line'><span class="n">offset</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radian</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="n">delta_h</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">offset</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>解决性能热点</h2>
+
+<p>嗯，这个看上去热点都是纯计算的代码，貌似已经没什么优化的空间了，这时怎么办呢？</p>
+
+<p>鉴于CPython可以非常容易的使用C/C++扩展模块，我们用C语言来实现里面这些纯计算的部分，看看性能有什么提升。</p>
+
+<p>我们用C来实现Filter函数。重新运行cProfile看看，</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>console  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="go">Tue Aug 14 17:38:56 2012    profile.data&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">&lt;pre&gt;&lt;code&gt;     12 function calls in 0.002 seconds</span>
+</span><span class='line'><span class="go">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">&lt;p&gt;   Ordered by: internal time&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">&lt;p&gt;   ncalls  tottime  percall  cumtime  percall filename:lineno(function)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">&lt;pre&gt;&lt;code&gt;    1    0.002    0.002    0.002    0.002 {EffectLab.EffectLabCore.wave_warp}</span>
+</span><span class='line'><span class="go">    1    0.000    0.000    0.000    0.000 {built-in method copy}</span>
+</span><span class='line'><span class="go">    1    0.000    0.000    0.000    0.000 Image.py:460(_new)</span>
+</span><span class='line'><span class="go">    1    0.000    0.000    0.000    0.000 Image.py:740(copy)</span>
+</span><span class='line'><span class="go">    1    0.000    0.000    0.002    0.002 Effect.py:310(filter)</span>
+</span><span class='line'><span class="go">    1    0.000    0.000    0.002    0.002 :1()</span>
+</span><span class='line'><span class="go">    1    0.000    0.000    0.000    0.000 Image.py:606(load)</span>
+</span><span class='line'><span class="go">    1    0.000    0.000    0.002    0.002 Effect.py:37(__call__)</span>
+</span><span class='line'><span class="go">    1    0.000    0.000    0.000    0.000 Image.py:449(__init__)</span>
+</span><span class='line'><span class="go">    1    0.000    0.000    0.000    0.000 {built-in method pixel_access}</span>
+</span><span class='line'><span class="go">    1    0.000    0.000    0.000    0.000 {method &#39;disable&#39; of &#39;_lsprof.Profiler&#39; objects}</span>
+</span><span class='line'><span class="go">    1    0.000    0.000    0.000    0.000 {method &#39;copy&#39; of &#39;dict&#39; objects}</span>
+</span><span class='line'><span class="go">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>此时热点函数已经被C语言的模块给替换了。</p>
+
+<p>我们用timeit模块统计一下运行时间，统计代码如下（其中test函数见上面，里面就是调用了波浪处理效果：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">t</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="s">&#39;test()&#39;</span><span class="p">,</span> <span class="s">&#39;from &lt;strong&gt;main&lt;/strong&gt; import test&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">N</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'><span class="n">TIMES</span> <span class="o">=</span> <span class="mi">30</span>
+</span><span class='line'><span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">TIMES</span><span class="p">))</span> <span class="o">/</span> <span class="n">N</span> <span class="o">/</span> <span class="n">TIMES</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="s">&#39;ms&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>结果</h2>
+
+<p>我们来看看运行3轮，每轮运行30次，平均一次的时间是多少。
+Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
+
+<p>C版本平均一次时间为：<strong>1.91 ms</strong></p>
+
+<p>可见运行速度是原来的<strong>159倍</strong>。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[走进Python: 为Python增加新语法]]></title>
+    <link href="http://cedricporter.github.com/2012/07/add-new-grammer-to-python.html"/>
+    <updated>2012-07-26T05:43:28+08:00</updated>
+    <id>http://cedricporter.github.com/2012/07/add-new-grammer-to-python</id>
+    <content type="html"><![CDATA[<p><strong>原文地址：</strong><a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/">http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/</a></p>
+
+<p><strong>译文地址：</strong><a href="http://everet.org/2012/07/add-new-grammer-to-python.html">http://everet.org/2012/07/add-new-grammer-to-python.html</a></p>
+
+<p><strong>译者：</strong><a href="http://EverET.org">Stupid ET</a></p>
+
+<p>翻译得比较仓储，里面会有些语句不通顺，请见谅，日后会慢慢重构。
+修改后的Python请见：<a href="https://github.com/cedricporter/python2.7-mod/tags">https://github.com/cedricporter/python2.7-mod/tags</a> ，在Ubuntu下可以正常编译。</p>
+
+<hr />
+
+<p>本文的目的是试图更好地理解Python的前端是如何工作的。如果我们仅仅是阅读文档和源代码，那么可能有点无聊，所以我将亲手实践：为Python添加一个until语句。</p>
+
+<p>这篇文章中的所有的编码,是针对最新的Py3k分支<a href="http://code.python.org/hg/branches/py3k/">Python Mercurial repository mirror</a>。</p>
+
+<h3>until语句</h3>
+
+<p>有些语言，像Ruby，拥有until语句，用来补充while语句 (until num == 0 等价与 while num != 0)。在Ruby总，我可以这样写：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">num</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'><span class="n">until</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span> <span class="n">do</span>
+</span><span class='line'>  <span class="n">puts</span> <span class="n">num</span>
+</span><span class='line'>  <span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span>
+</span><span class='line'><span class="n">end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>它会输出</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="mi">3</span>
+</span><span class='line'><span class="mi">2</span>
+</span><span class='line'><span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>所以,我想要添加一个类似的功能到Python。也就是说,能够写成这样:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">num</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'><span class="n">until</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>  <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<!-- more -->
+
+
+<h3>A language-advocacy digression（不知如何翻译）</h3>
+
+<p>本文并没有企图建议添加一个Until语句到Python。虽然我认为这样的语句会让一些代码清晰,而且这篇文章也展示了这是多么容易为Python添加这样的语句，但我非常尊重Python的简约主义的哲学。所以我在这里做的一切，仅仅是为了更能了解Python的内部工作原理。</p>
+
+<h3>修改语法</h3>
+
+<p>Python使用一个自定义解析器生成器pgen。这是一个LL(1)的解析器，用于将Python源代码转换成一个解析树。解析器生成器的输入文件  Grammar/Grammar <a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id4">[1]</a>。这是一个简单的文本文件，用于定义Python的语法。 我们对这个语法文件进行了两处修改。第一个是添加until语句的定义。我发现那里的while语句定义为(while_stmt),于是我们在下面补充until_stmt[2]:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">compound_stmt</span><span class="p">:</span> <span class="n">if_stmt</span> <span class="o">|</span> <span class="n">while_stmt</span> <span class="o">|</span> <span class="n">until_stmt</span> <span class="o">|</span> <span class="n">for_stmt</span> <span class="o">|</span> <span class="n">try_stmt</span> <span class="o">|</span> <span class="n">with_stmt</span> <span class="o">|</span> <span class="n">funcdef</span> <span class="o">|</span> <span class="n">classdef</span> <span class="o">|</span> <span class="n">decorated</span>
+</span><span class='line'><span class="n">if_stmt</span><span class="p">:</span> <span class="s">&#39;if&#39;</span> <span class="n">test</span> <span class="s">&#39;:&#39;</span> <span class="n">suite</span> <span class="p">(</span><span class="s">&#39;elif&#39;</span> <span class="n">test</span> <span class="s">&#39;:&#39;</span> <span class="n">suite</span><span class="p">)</span><span class="o">*</span> <span class="p">[</span><span class="s">&#39;else&#39;</span> <span class="s">&#39;:&#39;</span> <span class="n">suite</span><span class="p">]</span>
+</span><span class='line'><span class="n">while_stmt</span><span class="p">:</span> <span class="s">&#39;while&#39;</span> <span class="n">test</span> <span class="s">&#39;:&#39;</span> <span class="n">suite</span> <span class="p">[</span><span class="s">&#39;else&#39;</span> <span class="s">&#39;:&#39;</span> <span class="n">suite</span><span class="p">]</span>
+</span><span class='line'><span class="n">until_stmt</span><span class="p">:</span> <span class="s">&#39;until&#39;</span> <span class="n">test</span> <span class="s">&#39;:&#39;</span> <span class="n">suite</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>注意，我决定了从我定义的until语句中去掉else子句，只是为了让他们有点不同（因为，坦率地说，我不喜欢循环的else子句，认为它有悖于the Zen of Python）。
+第二个变化是修改规则compound_stmt，正如上面你所见到的那样，让它可以推导成until_stmt。我们把它放在while_stmt的右边。
+当您在修改完<strong>Grammar/Grammar</strong>后准备运行make时注意运行pgen程序运行时重新生成Include/graminit.h以及Python/graminit.c再重新编译。
+<strong>（译注：cedricporter@Stupid-ET:~/projects/python2.7-2.7.2/Parser$ ./pgen ../Grammar/Grammar graminit.h graminit.c）</strong></p>
+
+<h3>修改AST生成代码</h3>
+
+<p>在Python的解析器创建了一个解析树后,这棵树被转换成一个AST（译注：抽象语法树），因为AST让后续的编译流程更简单。</p>
+
+<p>所以,我们打开Parser/Python.asdl，它定义了结构的Python的抽象语法树，我们在那里为我们新增的until语句添加一个AST节点，又放在while的右后方:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">|</span> <span class="n">While</span><span class="p">(</span><span class="n">expr</span> <span class="n">test</span><span class="p">,</span> <span class="n">stmt</span><span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span> <span class="n">body</span><span class="p">,</span> <span class="n">stmt</span><span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span> <span class="n">orelse</span><span class="p">)</span>
+</span><span class='line'><span class="o">|</span> <span class="n">Until</span><span class="p">(</span><span class="n">expr</span> <span class="n">test</span><span class="p">,</span> <span class="n">stmt</span><span class="o">*</span> <span class="n">body</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>If you now run make, notice that before compiling a bunch of files, Parser/asdl_c.py is run to generate C code from the AST definition file. This (like Grammar/Grammar) is another example of the Python source-code using a mini-language (in other words, a DSL) to simplify programming. Also note that since Parser/asdl_c.py is a Python script, this is a kind of <a href="http://en.wikipedia.org/wiki/Bootstrapping_%28compilers%29">bootstrapping</a> – to build Python from scratch, Python already has to be available.
+如果你现在运行make,请注意在编译一堆文件之前, 运行Parser/asdl_c.py根据AST定义文件生成的C代码。这(如Grammar/Grammar)是另一个Python源代码使用迷你语言(换句话说,一个DSL)来简化编程的例子。还请注意,由于Parser/asdl_c.py是一个Python脚本,这是一种自举——从原型中构建Python。Python已经拥有自举的能力了。</p>
+
+<p>虽然<strong>Parser/asdl_c.py</strong>生成的代码管理着我们的新定义的AST节点(生成到文件<strong>Include/Python-ast.h</strong>和<strong>Python/Python-ast.c中</strong>)，我们仍然需要编写的代码,将一个相关的解析树节点转换成我们新定义的AST节点。</p>
+
+<p><strong>（译注：cedricporter@Stupid-ET:~/projects/python2.7-2.7.2/Parser$ ./asdl_c.py -h ../Include/ Python.asdl ）</strong></p>
+
+<p>这些工作在 <strong>Python/ast.c</strong>中完成。在那里,一个叫做 ast_for_stmt的函数将解析树节点转换为AST节点。我们再次在我们的老朋友while的引导下，进入处理compound_stmt的庞大的switch中，为until增加一个子块：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>c  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">case</span> <span class="n">while_stmt</span>:<span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="n">ast_for_while_stmt</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">ch</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">case</span> <span class="n">until_stmt</span>:<span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="n">ast_for_until_stmt</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">ch</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>现在我们要实现ast_for_until_stmt：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>c  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">static</span> <span class="n">stmt_ty</span>
+</span><span class='line'><span class="nf">ast_for_until_stmt</span><span class="p">(</span><span class="k">struct</span> <span class="n">compiling</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">c</span><span class="p">,</span> <span class="k">const</span> <span class="n">node</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="n">n</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="cm">/* until_stmt: &#39;until&#39; test &#39;:&#39; suite */</span>
+</span><span class='line'><span class="n">REQ</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">until_stmt</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">NCH</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">expr_ty</span> <span class="n">expression</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">asdl_seq</span> <span class="o">*</span><span class="n">suite_seq</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">expression</span> <span class="o">=</span> <span class="n">ast_for_expr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">CHILD</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">expression</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">suite_seq</span> <span class="o">=</span> <span class="n">ast_for_suite</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">CHILD</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">3</span><span class="p">));</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">suite_seq</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">Until</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">suite_seq</span><span class="p">,</span> <span class="n">LINENO</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">n</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">n_col_offset</span><span class="p">,</span> <span class="n">c</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">c_arena</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">PyErr_Format</span><span class="p">(</span><span class="n">PyExc_SystemError</span><span class="p">,</span>
+</span><span class='line'>             <span class="s">&quot;wrong number of tokens for &#39;until&#39; statement: %d&quot;</span><span class="p">,</span>
+</span><span class='line'>             <span class="n">NCH</span><span class="p">(</span><span class="n">n</span><span class="p">));</span>
+</span><span class='line'><span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>再一次,这是看起来像ast_for_while_stmt，不过不同的是，它不支持else子句。也正如预期的那样，在until语句的主体中使用其他AST创建函数像ast_for_expr对于条件表达式和 ast_for_suite来递归地创建AST。最后，一个until新节点被创建返回。</p>
+
+<p>注意,我们通过一些宏，像NCH和CHILD来访问解析树节点。这些都是值得我们去理解——他们的代码在<strong>Include/node.h</strong>.</p>
+
+<h3>题外话：AST组合</h3>
+
+<p>我选择创建一个新until类型的AST,但实际上这是没有必要的。虽然我能通过实现组合现有的AST节点来节省一些工作:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">until</span> <span class="n">condition</span><span class="p">:</span>
+</span><span class='line'>   <span class="c"># do stuff</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>功能上等价于:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">while</span> <span class="ow">not</span> <span class="n">condition</span><span class="p">:</span>
+</span><span class='line'>  <span class="c"># do stuff</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>与其在ast_until_stmt里面创建一个新的Until节点，我可以创建一个Not节点下面挂上While节点。因为AST解释器已经知道如何处理这些节点，所以下一步可以跳过了。</p>
+
+<h3>将AST变成字节码</h3>
+
+<p>The next step is compiling the AST into Python bytecode. The compilation has an intermediate result which is a CFG (Control Flow Graph), but since the same code handles it I will ignore this detail for now and leave it for another article.</p>
+
+<p>下一步是将AST解析成字节码。编译过程中有一个中间结果CFG(控制流图)，但由于有相同的代码处理它，所以我暂时先忽略这一细节，留到另一篇文章再讲解。</p>
+
+<p>下一步，们将看看Python/compile.c。在while的带领下，我们找到负责将语句编译成字节码的函数compiler_visit_stmt。在这里，我们为Until添加一个子句:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>c  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">case</span> <span class="n">While_kind</span>:<span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="n">compiler_while</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">case</span> <span class="n">Until_kind</span>:<span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="n">compiler_until</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>想必你也想知道Until_kind是什么，它是一个根据AST定义自动生成到Include/Python-ast.h的常量(实际上是一个_stmt_kind的枚举)。当然，我们调用的compiler_until还不存在。我等等就会实现它。</p>
+
+<p>如果你好奇的像我一样,你会注意到compiler_visit_stmt非常特别。再多的 grep平源树能揭示它叫。在这种情况下,只有一个选择仍然macro-fu - C。事实上,一个简短的调查使我们进入了 访问宏定义在 Python / compile.c:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>c  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">define</span> <span class="n">VISIT</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">TYPE</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span> <span class="p">{</span><span class="err">\</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">compiler_visit_</span> <span class="err">##</span> <span class="n">TYPE</span><span class="p">((</span><span class="n">C</span><span class="p">),</span> <span class="p">(</span><span class="n">V</span><span class="p">)))</span> \
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> \
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>在compiler_body中，它是用来调用compiler_visit_stmt的。</p>
+
+<p>正如之前说的那样，我们在这里给出compiler_until:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>c  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">static</span> <span class="kt">int</span>
+</span><span class='line'><span class="nf">compiler_until</span><span class="p">(</span><span class="k">struct</span> <span class="n">compiler</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="n">stmt_ty</span> <span class="n">s</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">basicblock</span> <span class="o">*</span><span class="n">loop</span><span class="p">,</span> <span class="o">*</span><span class="n">end</span><span class="p">,</span> <span class="o">*</span><span class="n">anchor</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">constant</span> <span class="o">=</span> <span class="n">expr_constant</span><span class="p">(</span><span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">Until</span><span class="p">.</span><span class="n">test</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">constant</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">loop</span> <span class="o">=</span> <span class="n">compiler_new_block</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+</span><span class='line'><span class="n">end</span> <span class="o">=</span> <span class="n">compiler_new_block</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">constant</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">anchor</span> <span class="o">=</span> <span class="n">compiler_new_block</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">anchor</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">loop</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="o">||</span> <span class="n">end</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ADDOP_JREL</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">SETUP_LOOP</span><span class="p">,</span> <span class="n">end</span><span class="p">);</span>
+</span><span class='line'><span class="n">compiler_use_next_block</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">loop</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">compiler_push_fblock</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">LOOP</span><span class="p">,</span> <span class="n">loop</span><span class="p">))</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">constant</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">VISIT</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">Until</span><span class="p">.</span><span class="n">test</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">ADDOP_JABS</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">POP_JUMP_IF_TRUE</span><span class="p">,</span> <span class="n">anchor</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">VISIT_SEQ</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">stmt</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">Until</span><span class="p">.</span><span class="n">body</span><span class="p">);</span>
+</span><span class='line'><span class="n">ADDOP_JABS</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">JUMP_ABSOLUTE</span><span class="p">,</span> <span class="n">loop</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">constant</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">compiler_use_next_block</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">anchor</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">ADDOP</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">POP_BLOCK</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">compiler_pop_fblock</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">LOOP</span><span class="p">,</span> <span class="n">loop</span><span class="p">);</span>
+</span><span class='line'><span class="n">compiler_use_next_block</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">end</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>我必须得承认，这些代码是在我没有深刻理解Python字节码的前提下编写的。就像接下来的文章那样，它仅仅是模仿它的亲戚函数compiler_while。我们通过仔细阅读，知道Python虚拟机是基于栈的，大致看了一下dis模块的文档，发现那里有<a href="http://docs.python.org/py3k/library/dis.html">一系列Python字节码的描述</a>.</p>
+
+<h3>嗯！我们完成了，不是吗？</h3>
+
+<p>在修改完后，我们运行make，然后我们运行我们新编译出来的Python来测试我们新增的until语句：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">blockquote</span><span class="o">&gt;&lt;</span><span class="n">blockquote</span><span class="o">&gt;&lt;</span><span class="n">blockquote</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">until</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'><span class="o">...</span>   <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span><span class='line'><span class="o">...</span>   <span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span>
+</span><span class='line'><span class="o">...</span>
+</span><span class='line'><span class="mi">3</span>
+</span><span class='line'><span class="mi">2</span>
+</span><span class='line'><span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></blockquote></blockquote></blockquote>
+
+<p>瞧！它能够工作！我们通过dis模块来看看新语句的字节码：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">dis</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">myfoo</span><span class="p">(</span><span class="n">num</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">until</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">myfoo</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Here’s the result:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="mi">4</span>           <span class="mi">0</span> <span class="n">SETUP_LOOP</span>              <span class="mi">36</span> <span class="p">(</span><span class="n">to</span> <span class="mi">39</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span>    <span class="mi">3</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span><span class='line'>        <span class="mi">6</span> <span class="n">LOAD_CONST</span>               <span class="mi">1</span> <span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>        <span class="mi">9</span> <span class="n">COMPARE_OP</span>               <span class="mi">2</span> <span class="p">(</span><span class="o">==</span><span class="p">)</span>
+</span><span class='line'>       <span class="mi">12</span> <span class="n">POP_JUMP_IF_TRUE</span>        <span class="mi">38</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="mi">5</span>          <span class="mi">15</span> <span class="n">LOAD_NAME</span>                <span class="mi">0</span> <span class="p">(</span><span class="k">print</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>       <span class="mi">18</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span><span class='line'>       <span class="mi">21</span> <span class="n">CALL_FUNCTION</span>            <span class="mi">1</span>
+</span><span class='line'>       <span class="mi">24</span> <span class="n">POP_TOP</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="mi">6</span>          <span class="mi">25</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">num</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>       <span class="mi">28</span> <span class="n">LOAD_CONST</span>               <span class="mi">2</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>       <span class="mi">31</span> <span class="n">INPLACE_SUBTRACT</span>
+</span><span class='line'>       <span class="mi">32</span> <span class="n">STORE_FAST</span>               <span class="mi">0</span> <span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span><span class='line'>       <span class="mi">35</span> <span class="n">JUMP_ABSOLUTE</span>            <span class="mi">3</span>
+</span><span class='line'>  <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span>   <span class="mi">38</span> <span class="n">POP_BLOCK</span>
+</span><span class='line'>  <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span>   <span class="mi">39</span> <span class="n">LOAD_CONST</span>               <span class="mi">0</span> <span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+</span><span class='line'>       <span class="mi">42</span> <span class="n">RETURN_VALUE</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>最有趣的是编号12的字节码：如果条件为真，我们跳转到循环的后面。这个符合until的语义。如果jump没有被执行，循环体就继续运行，直到它跳转到编号35的字节码。</p>
+
+<p>我对我的修改自我感觉良好，于是我继续测试这个函数（执行myfoo(3)），结果并不令人振奋：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+</span><span class='line'>  <span class="n">File</span> <span class="s">&quot;zy.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">9</span><span class="p">,</span> <span class="ow">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">myfoo</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="n">File</span> <span class="s">&quot;zy.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">5</span><span class="p">,</span> <span class="ow">in</span> <span class="n">myfoo</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="ne">SystemError</span><span class="p">:</span> <span class="n">no</span> <span class="nb">locals</span> <span class="n">when</span> <span class="n">loading</span> <span class="s">&#39;print&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>哇...这个真是悲剧。究竟哪里出错了？</p>
+
+<h3>丢失符号</h3>
+
+<p>在解析AST的时候，Python解析器执行的步骤之一是构建符号表。通过在PyAST_Compile里面调用PySymtable_Build（Python/symtable.c）来遍历AST。拥有每一个作用域的符号表有助于编译器找出一些关键的信息，就像哪些变量是全局的，哪些变量是局部的。</p>
+
+<p>我们需要修改Python/symtable.c下的symtable_visit_stmt来解决这个问题，我们添加一些处理until语句的代码，放在相似的while语句的代码后面 <a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id6">[3]</a>:：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>c  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">case</span> <span class="n">While_kind</span>:<span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">VISIT</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">While</span><span class="p">.</span><span class="n">test</span><span class="p">);</span>
+</span><span class='line'><span class="n">VISIT_SEQ</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">stmt</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">While</span><span class="p">.</span><span class="n">body</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">While</span><span class="p">.</span><span class="n">orelse</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">VISIT_SEQ</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">stmt</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">While</span><span class="p">.</span><span class="n">orelse</span><span class="p">);</span>
+</span><span class='line'><span class="k">break</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">case</span> <span class="n">Until_kind</span>:<span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">VISIT</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">Until</span><span class="p">.</span><span class="n">test</span><span class="p">);</span>
+</span><span class='line'><span class="n">VISIT_SEQ</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">stmt</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">Until</span><span class="p">.</span><span class="n">body</span><span class="p">);</span>
+</span><span class='line'><span class="k">break</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>现在，我们真的完成了。修改后的源码可以在myfoo(3)运行正常。</p>
+
+<h3>结论</h3>
+
+<p>在本文中，我展示了如何为Python增加一个新语句。尽管需要比较多处的修改Python编译器，但是这些修改并不难，因为我跟随着一个相似的语句来修改。</p>
+
+<p>Python编译器适宜隔非常复杂的程序，我不想自称专家。然而，我真的对Python内部实现相当感兴趣，特别是前端。因此，我发现这种练习是一个编译理论与实践的结合。它将作为后续文章的基础来更深层次地探究编译器。</p>
+
+<h3>参考</h3>
+
+<p>I used a few excellent references for the construction of this article. Here they are, in no particular order:</p>
+
+<ul>
+<li><p><a href="http://www.python.org/dev/peps/pep-0339/">PEP 339: Design of the CPython compiler</a> – probably the most important and comprehensive piece of <em>official</em> documentation for the Python compiler. Being very short, it painfully displays the scarcity of good documentation of the internals of Python.</p></li>
+<li><p>"Python Compiler Internals" – an article by Thomas Lee</p></li>
+<li><p>"Python: Design and Implementation" – a presentation by Guido van Rossum</p></li>
+<li><p>Python (2.5) Virtual Machine, A guided tour – a presentation by Peter Tröger</p></li>
+</ul>
+
+
+<p><img src="https://www.evernote.com/shard/s144/res/25bdd2c0-7952-4d98-8e91-46cd69bd606a.jpg" alt="http://eli.thegreenplace.net/wp-content/uploads/hline.jpg" /></p>
+
+<p><a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id1">[1]</a></p>
+
+<p>From here on, references to files in the Python source are given relatively to the root of the source tree, which is the directory where you run configure and make to build Python.</p>
+
+<p><a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id2">[2]</a></p>
+
+<p>This demonstrates a common technique I use when modifying source code I’m not familiar with: <em>work by similarity</em>. This principle won’t solve all your problems, but it can definitely ease the process. Since everything that has to be done forwhile also has to be done for until, it serves as a pretty good guideline.</p>
+
+<p><a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id3">[3]</a></p>
+
+<p>By the way, without this code there’s a compiler warning for Python/symtable.c. The compiler notices that theUntil_kind enumeration value isn’t handled in the switch statement of symtable_visit_stmt and complains. It’s always important to check for compiler warnings!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python验证码识别之预处理]]></title>
+    <link href="http://cedricporter.github.com/2012/07/captcha-recognition.html"/>
+    <updated>2012-07-16T03:52:14+08:00</updated>
+    <id>http://cedricporter.github.com/2012/07/captcha-recognition</id>
+    <content type="html"><![CDATA[<p>对于验证码叙述，可以见上文<a href="http://everet.org/2012/07/captcha-around-us.html">我们身边的验证码技术</a>。其中我们得知验证码识别流程如下图</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/2.png"><img src="http://everet.org/wp-content/uploads/2012/07/2.png" alt="" /></a></p>
+
+<p>第一个主要步骤是数据预处理。</p>
+
+<h2>例子</h2>
+
+<p>一般的国内的验证都比较喜欢加上噪点，再加上一些干扰线，来扰乱视线。但是这些噪声，对于计算机识别程序来说，基本上没起到什么干扰。</p>
+
+<p>我们来看看下面的验证码，这个是随机选择的15张验证码。左边为原图，右边的为处理过的图片。其中干扰线我们识别出来后用红色将其标记，噪点标红看不清楚我就直接去掉了。<!-- more --></p>
+
+<p>这样的验证码的大部分噪声非常轻易就可以去除。</p>
+
+<p>因此，对于验证码来说，噪点的存在是对于抵抗机器人是毫无意义的，此外，这种长干扰线也是没什么太大的意义的，因为预处理就可以很轻松清除，增加这个只是会让人跟难受。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/big.png"><img src="http://everet.org/wp-content/uploads/2012/07/big.png" alt="" /></a></p>
+
+<h2>移除噪点</h2>
+
+<p>首先我们来分析一下噪点由什么特性，噪点一般为孤立的点，最多也是会和其他的噪点粘在一起，所以总体来说，噪点相对于其他部分来说是孤立的小群体。</p>
+
+<p>那我们可以对每一个连接在一起的块进行着色，Flood Fill专门干这事的。然后对于字符的块，必然是非常的大，而噪点的块，必然是非常的小。所以我们就可以轻松区分字符和噪点了。</p>
+
+<h2>移除干扰线</h2>
+
+<p>干扰线相对于噪点来说，虽然复杂了一点，但是还是非常的简单。</p>
+
+<p>如何找到干扰线呢？干扰线的搜索问题是具有最优子结构的特性，于是这个问题我们可以用动态规划来解决[1]。</p>
+
+<p>我们可以建立一个打分表，每个像素有一个分数。</p>
+
+<p>动归的方程(如何画公式[2])为：</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-194236.png"><img src="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-194236.png" alt="" /></a></p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-194246.png"><img src="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-194246.png" alt="" /></a></p>
+
+<p>最后，评分最大的极有可能是干扰线。</p>
+
+<p>这个实现起来非常的简单，就不放代码了，以免引起不必要的事端。</p>
+
+<h2>参考资料</h2>
+
+<ol>
+<li><p>Ryan Fortune, Gary Luu, Peter McMahon, <strong>CS229 Project Report: Cracking CAPTCHAs</strong></p></li>
+<li><p>OpenOffice.org Formula How-To</p></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>

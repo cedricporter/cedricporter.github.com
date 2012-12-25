@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[EverET.org]]></title>
   <link href="http://cedricporter.github.com/atom.xml" rel="self"/>
   <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T01:57:42+08:00</updated>
+  <updated>2012-12-25T17:02:31+08:00</updated>
   <id>http://cedricporter.github.com/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[调试Nginx]]></title>
-    <link href="http://cedricporter.github.com/2012/12/e8b083e8af95nginx.html"/>
+    <link href="http://cedricporter.github.com/2012/12/debug-nginx.html"/>
     <updated>2012-12-24T07:41:00+08:00</updated>
-    <id>http://cedricporter.github.com/2012/12/e8b083e8af95nginx</id>
+    <id>http://cedricporter.github.com/2012/12/debug-nginx</id>
     <content type="html"><![CDATA[<h2>为什么调试Nginx</h2>
 
 <p> 为什么要调试Nginx，原因多种多样。如果阅读源码的话，开着进程单步走下去不失为一种很好的源码导读方式。</p>
@@ -845,7 +845,23 @@
 
 <p>strace一下，看看，这个进程在干啥。</p>
 
-<p>Liquid error: ClassNotFound: no lexer for alias &#8216;shell&#8217; found</p>
+<figure class='code'><figcaption><span>console  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">cedricporter@cedricporter-Lenovo:~/projects/CaptchaSystem$</span> sudo strace -p 2207
+</span><span class='line'><span class="go">[sudo] password for cedricporter: </span>
+</span><span class='line'><span class="go">Process 2207 attached - interrupt to quit</span>
+</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/b6c1d4f6fff0b536652c83081e5233e1.png&quot;, {st_mode=S_IFREG|0600, st_size=5398, ...}) = 0</span>
+</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/739ea0e4eabe22c5b551156fc3ff93da.png&quot;, {st_mode=S_IFREG|0600, st_size=6059, ...}) = 0</span>
+</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/2aac704bfd3d3a865f66e5c3ee2ba80a.png&quot;, {st_mode=S_IFREG|0600, st_size=6362, ...}) = 0</span>
+</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/5dbe53248aa8a41612137100a315e076.png&quot;, {st_mode=S_IFREG|0600, st_size=6260, ...}) = 0</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>出来的结果就像刷屏一样，全部都是lstat的系统调用，读取的都是.thumbnails下面的图片。<!-- more --></p>
 
@@ -945,7 +961,47 @@
 
 <p>我们可以看到其输出：<!-- more --></p>
 
-<p>Liquid error: ClassNotFound: no lexer for alias &#8216;shell&#8217; found</p>
+<figure class='code'><figcaption><span>console  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="go">Tue Aug 14 17:21:10 2012    profile.data</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">         417923 function calls (417922 primitive calls) in 0.434 seconds</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">   Ordered by: internal time</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span>
+</span><span class='line'><span class="go">        1    0.150    0.150    0.434    0.434 Effect.py:92(filter)</span>
+</span><span class='line'><span class="go">    80000    0.068    0.000    0.068    0.000 {round}</span>
+</span><span class='line'><span class="go">    40000    0.051    0.000    0.063    0.000 Effect.py:304(transform)</span>
+</span><span class='line'><span class="go">    41889    0.034    0.000    0.034    0.000 {map}</span>
+</span><span class='line'><span class="go">    41890    0.029    0.000    0.042    0.000 Image.py:606(load)</span>
+</span><span class='line'><span class="go">    40000    0.028    0.000    0.091    0.000 Effect.py:317()</span>
+</span><span class='line'><span class="go">    33433    0.025    0.000    0.071    0.000 Image.py:946(getpixel)</span>
+</span><span class='line'><span class="go">    41890    0.013    0.000    0.013    0.000 {built-in method pixel_access}</span>
+</span><span class='line'><span class="go">    40000    0.012    0.000    0.012    0.000 {math.sin}</span>
+</span><span class='line'><span class="go">    33433    0.011    0.000    0.011    0.000 {built-in method getpixel}</span>
+</span><span class='line'><span class="go">     8457    0.008    0.000    0.019    0.000 Image.py:1260(putpixel)</span>
+</span><span class='line'><span class="go">     8457    0.004    0.000    0.004    0.000 {built-in method putpixel}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>可以发现，运行时间最长的函数有<a href="https://github.com/cedricporter/EffectLab/blob/master/EffectLab/Effect.py#L92">第92行的filter</a>，以及<a href="https://github.com/cedricporter/EffectLab/blob/master/EffectLab/Effect.py#L304">第304行的transform</a>。我们可以查看第92行的函数filter，这个函数看上去非常的简短，主要做的是处理每一个像素以及有抗锯齿运算。</p>
 
@@ -1045,7 +1101,47 @@
 
 <p>我们用C来实现Filter函数。重新运行cProfile看看，</p>
 
-<p>Liquid error: ClassNotFound: no lexer for alias &#8216;shell&#8217; found</p>
+<figure class='code'><figcaption><span>console  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="go">Tue Aug 14 17:38:56 2012    profile.data</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">         12 function calls in 0.002 seconds</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">   Ordered by: internal time</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span>
+</span><span class='line'><span class="go">        1    0.002    0.002    0.002    0.002 {EffectLab.EffectLabCore.wave_warp}</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 {built-in method copy}</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:460(_new)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:740(copy)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.002    0.002 Effect.py:310(filter)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.002    0.002 :1()</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:606(load)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.002    0.002 Effect.py:37(__call__)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:449(__init__)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 {built-in method pixel_access}</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 {method &#39;disable&#39; of &#39;_lsprof.Profiler&#39; objects}</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 {method &#39;copy&#39; of &#39;dict&#39; objects}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>此时热点函数已经被C语言的模块给替换了。</p>
 

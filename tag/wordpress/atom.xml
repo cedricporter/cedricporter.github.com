@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: Wordpress | EverET.org]]></title>
+  <link href="http://cedricporter.github.com/tag/wordpress/atom.xml" rel="self"/>
+  <link href="http://cedricporter.github.com/"/>
+  <updated>2012-12-25T17:02:31+08:00</updated>
+  <id>http://cedricporter.github.com/</id>
+  <author>
+    <name><![CDATA[Stupid ET]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[配置多用户的虚拟主机]]></title>
+    <link href="http://cedricporter.github.com/2012/11/multi-user-nginx-php-server.html"/>
+    <updated>2012-11-07T00:06:51+08:00</updated>
+    <id>http://cedricporter.github.com/2012/11/multi-user-nginx-php-server</id>
+    <content type="html"><![CDATA[<p>趁这段时间有空，换成Xen的VPS，系统装了Ubuntu 12.04。决定重新配置一下服务器，另外将Web Server从Apache换成Nginx。</p>
+
+<h2>目标</h2>
+
+<p>搭建一个前端为nginx支持多用户的php虚拟主机。每个站点可以跑在不同的权限的用户下，一个站点被黑的时候希望不要影响到另一个站点，或者一个同学也不要可以随意访问到别的同学的内容。</p>
+
+<h2>行动<!-- more --></h2>
+
+<h3>预备</h3>
+
+<p>首先创建用户，例如user01。我们可以通过</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>adduser user01
+</span><span class='line'>mkdir ~user01/www
+</span><span class='line'>chown user01:www-data ~user01/www
+</span><span class='line'>chmod 750 ~user01/www
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>来添加用户，然后在<strong>~user01</strong>目录下面创建一个文件夹<strong>www</strong>，权限为750。group为www-data，这样，只有user01可以读写，www-data仅能读，其他人无权访问。</p>
+
+<h3>php</h3>
+
+<p>从php 5.3.5开始就直接内置支持fpm了，建议直接安装php 5.4。使用php-fpm（php Fastcgi Process Manager），目前这样的方式运行php性能貌似是最高的。</p>
+
+<p>php-fpm的配置放在/etc/php5/fpm/pool.d/下面，我们只需要以.conf结尾命名我们的配置文件就行了，具体可以参考默认的www.conf文件。例如下面文件<strong>user01.conf</strong></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>ini  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="k">[user01]</span>
+</span><span class='line'><span class="na">user</span> <span class="o">=</span> <span class="s">user01</span>
+</span><span class='line'><span class="na">group</span> <span class="o">=</span> <span class="s">user01</span>
+</span><span class='line'><span class="na">listen</span> <span class="o">=</span> <span class="s">/var/run/php5-fpm.user01.sock</span>
+</span><span class='line'><span class="na">pm</span> <span class="o">=</span> <span class="s">dynamic</span>
+</span><span class='line'><span class="na">pm.max_children</span> <span class="o">=</span> <span class="s">5</span>
+</span><span class='line'><span class="na">pm.start_servers</span> <span class="o">=</span> <span class="s">1</span>
+</span><span class='line'><span class="na">pm.min_spare_servers</span> <span class="o">=</span> <span class="s">1</span>
+</span><span class='line'><span class="na">pm.max_spare_servers</span> <span class="o">=</span> <span class="s">3</span>
+</span><span class='line'><span class="na">chdir</span> <span class="o">=</span> <span class="s">/</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>定义了php进程的权限为user01，监听文件为<strong>/var/run/php5-fpm.user01.sock</strong>。
+这里的定义实际上是指的是用<strong>/var/run/php5-fpm.user01.sock</strong>这个来处理php时的权限为<strong>user01</strong>。到此为止，php的配置就完成了。</p>
+
+<h3>nginx</h3>
+
+<p>我们nginx的权限为www-data，这样可以读～user01/www目录的内容，但是不能写。nginx的站点配置比较简单。我们来看一下可以工作的简单的配置：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;server_name user01.everet.org;
+</span><span class='line'>
+</span><span class='line'>access_log  /var/log/nginx/user01.everet.org.access.log;
+</span><span class='line'>error_log   /var/log/nginx/user01.everet.org.error.log;
+</span><span class='line'>
+</span><span class='line'>root    /home/user01/www/;
+</span><span class='line'>index   index.php;
+</span><span class='line'>
+</span><span class='line'>location / <span class="o">{</span>
+</span><span class='line'>    try_files <span class="nv">$uri</span> <span class="nv">$uri</span>/ /index.php?<span class="nv">$args</span>;
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>location ~ .php<span class="nv">$ </span><span class="o">{</span>
+</span><span class='line'>    include fastcgi_params;
+</span><span class='line'>    fastcgi_pass unix:/var/run/php5-fpm.user01.sock;
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;<span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>也就是当处理到.php结尾的uri时，传递到<strong>/var/run/php5-fpm.user01.sock</strong>这个unix套接字处理，此时的php脚本的权限为user01。如果配置得当，就不会影响到其他用户。</p>
+
+<h3>wordpress</h3>
+
+<p>我们用php的主要原因是wordpress，wordpress默认情况下非常臃肿，运行缓慢。因为页面基本只是在更新文章或者发表评论才会更新，所以平时不需要总是动态生成页面。对此，WP Super Cache插件可以很好地进行缓存。WP Super Cache有两种缓存模式一种是PHP缓存、另一种是mod_rewrite缓存（我们选择这个），mod_rewrite是生成静态的页面文件，然后通过.htaccess文件控制Apache来rewrite url。例如我们访问<a href="http://everet.org/2012/01/scar.html">http://everet.org/2012/01/scar.html</a>，其中uri为/2012/01/scar.html，进入到Apache通过rewrite后就变成了/wp-content/cache/supercache/everet.org/2012/01/scar.html/index.html，然后就可以读取静态文件返回给浏览器了。如果静态文件存在的话，就不需要经过php处理了，否则就调用php动态生成页面，同时插件还会生成那个页面的静态文件，下次就直接读取那个静态文件。</p>
+
+<p>对于Apache，WP Super Cache插件生成的.htaccess可以很好的工作。然而，对于nginx，我们需要手写配置，以将uri映射的静态文件上面。我们来看一下下面的配置，这个是<a href="http://rtcamp.com/author/rahul-bansal/">Rahul Bansal</a>大牛的配置，我们拿来用一下。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;server_name user01.everet.org;
+</span><span class='line'>
+</span><span class='line'>access_log  /var/log/nginx/user01.everet.org.access.log;
+</span><span class='line'>error_log   /var/log/nginx/user01.everet.org.error.log;
+</span><span class='line'>
+</span><span class='line'>root    /home/user01/www/;
+</span><span class='line'>index   index.php;
+</span><span class='line'>
+</span><span class='line'><span class="nb">set</span> <span class="nv">$cache_uri</span> <span class="nv">$request_uri</span>;
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">(</span><span class="nv">$request_method</span> <span class="o">=</span> POST<span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nb">set</span> <span class="nv">$cache_uri</span> <span class="s2">&quot;null cache&quot;</span>;
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="k">if</span> <span class="o">(</span><span class="nv">$query_string</span> !<span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nb">set</span> <span class="nv">$cache_uri</span> <span class="s2">&quot;null cache&quot;</span>;
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">(</span><span class="nv">$request_uri</span> ~* <span class="s2">&quot;(/wp-admin/|/xmlrpc.php|/wp-(app|cron|login|register|mail).php|wp-.*.php|/feed/|index.php|wp-comments-popup.php|wp-links-opml.php|wp-locations.php|sitemap(_index)?.xml|[a-z0-9_-]+-sitemap([0-9]+)?.xml)&quot;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nb">set</span> <span class="nv">$cache_uri</span> <span class="s2">&quot;null cache&quot;</span>;
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">(</span><span class="nv">$http_cookie</span> ~* <span class="s2">&quot;comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_logged_in&quot;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nb">set</span> <span class="nv">$cache_uri</span> <span class="s2">&quot;null cache&quot;</span>;
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>location / <span class="o">{</span>
+</span><span class='line'>    try_files /wp-content/cache/supercache/<span class="nv">$http_host</span>/<span class="nv">$cache_uri</span>/index.html <span class="nv">$uri</span> <span class="nv">$uri</span>/ /index.php;
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">location</span> <span class="o">=</span> /favicon.ico <span class="o">{</span>
+</span><span class='line'>    log_not_found off;
+</span><span class='line'>    access_log off;
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">location</span> <span class="o">=</span> /robots.txt <span class="o">{</span>
+</span><span class='line'>    log_not_found off;
+</span><span class='line'>    access_log off;
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>location ~ .php<span class="nv">$ </span><span class="o">{</span>
+</span><span class='line'>    try_files <span class="nv">$uri</span> /index.php;
+</span><span class='line'>    include fastcgi_params;
+</span><span class='line'>    fastcgi_pass unix:/var/run/php5-fpm.user01.sock;
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>location ~* .<span class="o">(</span>ogg|ogv|svg|svgz|oet|otf|woff|mp4|ttf|css|rss|atom|js|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|mp3|bmp|rtf<span class="o">)</span><span class="nv">$ </span><span class="o">{</span>
+</span><span class='line'>    expires max;
+</span><span class='line'>    log_not_found off;
+</span><span class='line'>    access_log off;
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;<span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>我们来慢慢阅读一下这个配置。首先，set $cache_uri $request_uri就是将请求的uri保存到我们的变量$cache_uri中。然后，如果请求方法是POST（$request_method = POST）、包含请求字符串（$query_string != ""）、请求的uri包含一些特殊的php文件（$request_url ~<em> "(/wp-admin/|.........）或者登录过评论过（通过cookie判断，$http_cookie ~</em> "comment_author|w............"），就将$cache_uri设置为'null cache'，这样是让$cache_uri这个字符串变量变成一个无意义的字符串，以让后面拼接出来的路径无意义。</p>
+
+<p>对于 <strong>try_files /wp-content/cache/supercache/$http_host/$cache_uri/index.html $uri $uri/ /index.php;</strong></p>
+
+<p>这个是依次尝试访问这些文件，成功就直接返回不再继续，如果都找不到就返回最后一个文件/index.php。我们还记得WP Super Cache生成的静态文件结构是/wp-content/cache/supercache/everet.org/2012/01/scar.html/index.html，也就是先尝试WP Super Cache生成的缓存，有就直接返回缓存。</p>
+
+<p>用ab测试了一下，对于缓存后的博客文章的RPS可以到900，还挺快的啊。</p>
+
+<p>另外，对于wordpress的wp-config.php文件，里面写有数据库的帐号和密码，所以我们需要将权限改为600，即只有user01自己能够读写，其他人无权访问。</p>
+
+<h2>参考资料</h2>
+
+<ul>
+<li><a href="http://rtcamp.com/tutorials/wordpress-nginx-wp-super-cache/">WordPress-Nginx + WP Super cache</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[探索wordpress验证码插件Clickcha]]></title>
+    <link href="http://cedricporter.github.com/2012/07/clickcha.html"/>
+    <updated>2012-07-16T20:42:02+08:00</updated>
+    <id>http://cedricporter.github.com/2012/07/clickcha</id>
+    <content type="html"><![CDATA[<p>Clickcha是一种新型的图像验证码，只需要用鼠标点击即可以通过验证，虽然对于专门的攻击，这种验证码没什么抵挡能力，但是它还是挺有趣。</p>
+
+<p>对于这种验证码的识别，可以用<a href="http://zh.wikipedia.org/wiki/%E9%9C%8D%E5%A4%AB%E5%8F%98%E6%8D%A2">霍夫变换</a>，就可以方便地找到最圆的圆，以及那些正方形。</p>
+
+<p>Clickcha有提供wordpress插件，很容易就可以和自己的wordpress整合在一起。<!-- more --></p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/challenge-1.png"><img src="http://everet.org/wp-content/uploads/2012/07/challenge-1.png" alt="" /></a></p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/challenge-2.png"><img src="http://everet.org/wp-content/uploads/2012/07/challenge-2.png" alt="" /></a></p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/challenge.png"><img src="http://everet.org/wp-content/uploads/2012/07/challenge.png" alt="" /></a></p>
+
+<p>我们从clickcha的源码中看看这个插件的工作原理。</p>
+
+<h2>生成验证码</h2>
+
+<p>首先，插件在comment_form过程下增加了钩子，这样就可以将自己的页面的代码插入到评论框下面。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>php  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">add_action(&#39;comment_form&#39;, &#39;clickcha_comment_form&#39;, 10);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>其中有一段js，用于验证码token和图片的获取。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>javascript  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">clickcha_token</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;clickchatoken&#39;</span><span class="p">).</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">token</span><span class="p">;</span>
+</span><span class='line'><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;clickcha&#39;</span><span class="p">).</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">&#39;http://api.clickcha.com/challenge?key=&amp;amp;token=&#39;</span> <span class="o">+</span> <span class="nx">token</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">clickcha_get_token</span><span class="p">()</span> <span class="p">{</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">e</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">&#39;http://api.clickcha.com/token?output=json&amp;amp;key=&amp;amp;rnd=&#39;</span> <span class="o">+</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">();</span>
+</span><span class='line'><span class="nx">e</span><span class="p">.</span><span class="nx">type</span><span class="o">=</span> <span class="s1">&#39;text/javascript&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span><span class='line'><span class="nx">clickcha_get_token</span><span class="p">();</span>
+</span><span class='line'><span class="c1">// Firefox&#39;s bfcache workaround</span>
+</span><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">onpageshow</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span><span class="k">if</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">persisted</span><span class="p">)</span> <span class="nx">clickcha_get_token</span><span class="p">();};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>在下面这段语句增加引用服务器生成的js。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>javascript  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;clickcha&#39;</span><span class="p">).</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">&#39;http://api.clickcha.com/challenge?key=&amp;amp;token=&#39;</span> <span class="o">+</span> <span class="nx">token</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>clickcha服务器生成的被引用的那段js里面的内容</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>javascript  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">clickcha_token</span><span class="p">(</span><span class="s1">&#39;ww6pGtBKXh_IdBDKVNHYVmeT3fTPDo8pwqCwpUqPIS-ZhYGKhc6SN9TdpZzudXujexPaKfarM57QoTPtd0AqOw&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>服务器clickcha服务器被引用的js里，调用了clickcha_token来设置表单中的token和验证码的图片。</p>
+
+<h2>验证</h2>
+
+<p>插件在评论预处理挂上处理钩子。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>php  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">add_action(&#39;preprocess_comment&#39;, &#39;clickcha_comment_post&#39;);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>然后在评论预处理过程向clickcha的服务器发送GET请求验证，如果服务器返回'PASSED'，那么通过验证，否则直接调用wp_die结束处理过程。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>php  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">$response=file_get_contents(&#39;http://api.clickcha.com/verify?key=&#39;.$public_key.&#39;&amp;amp;token=&#39;.$&lt;em&gt;POST[&#39;clickcha_token&#39;].&#39;&amp;amp;private_key=&#39;.$private_key.&#39;&amp;amp;x=&#39;.$&lt;/em&gt;POST[&#39;clickcha_x&#39;].&#39;&amp;amp;y=&#39;.$_POST[&#39;clickcha_y&#39;]);</span>
+</span><span class='line'><span class="x">$result = get_submatch(&#39;|(\w+)|&#39;, $response);</span>
+</span><span class='line'><span class="x">if(!empty($result)) {&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">&lt;pre&gt;&lt;code&gt;if($result!=&#39;PASSED&#39;) {</span>
+</span><span class='line'><span class="x">    wp_die(&quot;Clickcha verification failed ($result). Please go back and try again.&quot;);</span>
+</span><span class='line'><span class="x">}</span>
+</span><span class='line'><span class="x">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2> 演示</h2>
+
+<p>clickcha官方demo：<a href="http://clickcha.com/demo/">http://clickcha.com/demo/</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[从syntaxhighlighter evolved迁移至wp-syntax]]></title>
+    <link href="http://cedricporter.github.com/2012/06/database-migrate-from-syntaxhighlighter-evolved-to-wp-syntax.html"/>
+    <updated>2012-06-13T00:33:42+08:00</updated>
+    <id>http://cedricporter.github.com/2012/06/database-migrate-from-syntaxhighlighter-evolved-to-wp-syntax</id>
+    <content type="html"><![CDATA[<p>Syntaxhighlighter Evolved是一款Javascript的语法高亮插件，高亮是在用户的浏览器完成，这样可以减轻服务器的压力。而WP-Syntax恰恰相反，它是在服务器完成语法高亮。WP-Syntax比Syntaxhighlighter Evolved更有优势的地方是支持rss高亮，而且支持的语言众多，使用了GeSHi高亮引擎，可定制性相当强，至于高亮带来的压力，我们可以用缓存插件来解决。</p>
+
+<h4>Syntaxhighlighter Evolved Plugin Usage</h4>
+
+<p>Just wrap your code in <code>[language]</code>, such as <code>**[php]**code here**[/php]**</code> or <code>[css]code here[/css]</code>.</p>
+
+<h4>WP-Syntax Basic Usage</h4>
+
+<p>Wrap code blocks with<strong> <code>&lt;pre lang="LANGUAGE" line="1"&gt;</code> </strong>and <strong><code>&lt;/pre&gt;</code></strong></p>
+
+<p>我们很明显就可以看到两者之间的区别。Syntaxhighlighter Evolved用的是非常特殊的高亮标记<strong>[language]</strong>，如果我们直接卸载Syntaxhighlighter Evolved然后装上WP-Syntax就会导致Syntaxhighlighter Evolved的高亮标记直接输出，而且代码不会被高亮。</p>
+
+<p>我们必须将Syntaxhighlighter Evolved的高亮标记全部替换成WP-Syntax的高亮标记。</p>
+
+<p>对于这种这么繁琐的事情，我们就把它交给Python来完成吧。<!-- more --></p>
+
+<h3> 代码</h3>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="err">!</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">env</span> <span class="n">python</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">author</span><span class="p">:</span>  <span class="n">Hua</span> <span class="n">Liang</span> <span class="p">[</span> <span class="n">Stupid</span> <span class="n">ET</span> <span class="p">]</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">email</span><span class="p">:</span>   <span class="n">et</span><span class="nd">@everet.org</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">website</span><span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">EverET</span><span class="o">.</span><span class="n">org</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c">#&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">database</span> <span class="n">migrate</span> <span class="kn">from</span> <span class="nn">syntaxhighlighter</span> <span class="nn">evolved</span> <span class="nn">to</span> <span class="nn">wp</span><span class="err">-</span><span class="nn">syntax</span><span class="err">&lt;/</span><span class="nn">h1</span><span class="err">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">sys</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="n">pat</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">new_str</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">py</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pat</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">new_str</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</span><span class='line'><span class="k">return</span> <span class="n">sql</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">sql</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">sql</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;et.sql&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="p">[</span><span class="n">python</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="o">&lt;</span><span class="n">pre</span> <span class="n">lang</span><span class="o">=</span><span class="s">&quot;python&quot;</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[python.*?]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;python&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[/python]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[plain.*?]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;text&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[/plain]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[code.*?]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;text&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[/code]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;([c(\s.*?)?])&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;cpp&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[/c]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[shell.*?]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;bash&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[/shell]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[php.*?]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;php&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[/php]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[lisp.*?]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;lisp&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[/lisp]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[javascript.*?]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;javascript&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[/javascript]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[html.*?]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;html&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[/html]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[c++.*?]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;cpp&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[/c++]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[c#.*?]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;csharp&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[/c#]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">r&#39;&amp;lt;pre lang=\&quot;.*?\&quot;&gt;&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="k">print</span> <span class="n">s</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">r&#39;[/.*?]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="k">print</span> <span class="n">s</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">output</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;fix-et.sql&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">output</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+</span><span class='line'><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+</span><span class='line'><span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>最新源码：<a href="https://github.com/cedricporter/et-python/blob/master/migrate-db/migrant.py">https://github.com/cedricporter/et-python/blob/master/migrate-db/migrant.py</a></p>
+
+<h3>使用</h3>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysqldump -u root -p wordpress_db | ./migrant.py &gt; fix.sql
+</span><span class='line'>mysql -u root -p wordpress_db &amp;lt; fix.sql
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>整个过程就是</p>
+
+<ol>
+<li><p>使用mysqldump将数据库dump成文本</p></li>
+<li><p>通过我们的过滤器程序migrant.py将syntaxhighlighter evolved的高亮风格变成wp-syntax的高亮风格。</p></li>
+<li><p>导入回数据库。</p></li>
+</ol>
+
+
+<p>搞定!</p>
+
+<p>对于WP-Syntax的Python多行字符串高亮的bug解决请见：</p>
+
+<p><a href="http://everet.org/2012/06/fix-wp-syntax-python-string-bug.html">http://everet.org/2012/06/fix-wp-syntax-python-string-bug.html</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[修正WP-Syntax高亮Python字符串的bug]]></title>
+    <link href="http://cedricporter.github.com/2012/06/fix-wp-syntax-python-string-bug.html"/>
+    <updated>2012-06-12T05:33:17+08:00</updated>
+    <id>http://cedricporter.github.com/2012/06/fix-wp-syntax-python-string-bug</id>
+    <content type="html"><![CDATA[<p><strong>SyntaxHighlighter Evolved</strong>是wordpress的一个Javascript实现的代码高亮插件，可惜的我的vps网速非常慢，加载一个有代码的页面要等很久才会高亮，这让对读者是非常不友好的，而且不支持rss输出的高亮。于是我想把代码高亮放在服务器这边做好。虽然有人说WP-Syntax会造成服务器压力大，但是如果我们将文章页面都缓存了，那就不存在WP-Syntax高亮时造成的过多的压力。</p>
+
+<p>于是我准备切换到WP-Syntax阵营。不幸的是，我刚刚装上WP-Syntax这个插件，贴上的<a href="http://everet.org/2012/03/ftp-server.html">ftp.py</a>的Python代码，就发现语法高亮出错了！！</p>
+
+<p>我们可以用简单的代码再现一次这个bug。就是在多行'''注释时会出现这个bug。<!-- more --></p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/06/Screenshot-from-2012-06-11-211511.png"><img src="http://everet.org/wp-content/uploads/2012/06/Screenshot-from-2012-06-11-211511.png" alt="" /></a></p>
+
+<p>好，那我们现在看看如何解决这个bug。</p>
+
+<p>我发现问题处在<strong>wp-syntax/geshi/geshi/python.php</strong>这个文件里。</p>
+
+<p>问题出在设置Python字符串的标记时漏了'''，我们给他加上就好了。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>php  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">//&#39;QUOTEMARKS&#39; =&gt; array(&#39;&quot;&quot;&quot;&#39;, &#39;&quot;&#39;, &quot;&#39;&quot;),</span>
+</span><span class='line'><span class="x">&#39;QUOTEMARKS&#39; =&gt; array(&#39;&quot;&quot;&quot;&#39;, &#39;&quot;&#39;, &quot;&#39;&quot;, &quot;&#39;&#39;&#39;&quot;),</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>最后效果如下。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/06/Screenshot-from-2012-06-11-211937.png"><img src="http://everet.org/wp-content/uploads/2012/06/Screenshot-from-2012-06-11-211937.png" alt="" /></a></p>
+
+<p>最后向WP-Syntax的作者发了邮件，觉得老外真是负责任，很快就回了邮件。</p>
+
+<p>bug的确切地方是出在了插件使用的GESHI高亮库。不过我看了Python.php的最后一次更新是在08年，觉得还是向WP-Syntax作者报告比较靠谱，毕竟用户大都还是使用WP-Syntax而不是直接面向GESHI。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[减少wordpress垃圾评论的方法]]></title>
+    <link href="http://cedricporter.github.com/2012/01/reduce-spam-in-wordpress.html"/>
+    <updated>2012-01-31T19:21:43+08:00</updated>
+    <id>http://cedricporter.github.com/2012/01/reduce-spam-in-wordpress</id>
+    <content type="html"><![CDATA[<p>自从有<a href="http://EverET.org/">http://EverET.org/</a>开始以来，我的留言板每天都有几十条来自世界各国的垃圾评论，好在装了Akismet，否则我的博客就就被垃圾评论塞满了。这些都是某些RP低的人用机器自动发的，毫无价值，有俄文，波兰文等等乱七八糟的语言。</p>
+
+<p>仔细看看，垃圾评论都集中到留言板。我的留言板的url曾经是 <a href="http://everet.org/guestbook">http://everet.org/guestbook</a> ，然后我改成了 <a href="http://everet.org/guestbooket">http://everet.org/guestbooket</a> 还是一样，发现原来用 <a href="http://everet.org/guestbook">http://everet.org/guestbook</a> 也可以定向到 <a href="http://everet.org/guestbooket">http://everet.org/guestbooket</a> ，所以改了等于没改。</p>
+
+<p>于是，我把它改成拼音的，改成 liuyan，果然就没有了垃圾评论。</p>
+
+<p><a href="http://everet.org/liuyana">http://everet.org/liuyana</a></p>
+
+<p>哈哈。估计垃圾评论的发送器也是用了Google Hack吧。</p>
+
+<p>想起以前在用<a href="http://baike.baidu.com/view/535826.html?tp=6_11">NBSI</a>注入的时候，也是在里面打开Google页面，然后搜 inurl:asp?= 什么的，然后就让NBSI顺着搜索结果往下测试。</p>
+
+<p>对于垃圾评论发送器我们可以搜索 inurl:guestbook ，然后在搜索结果一部份中就是某些网站的留言板，就可以在那些页面发垃圾评论了。</p>
+]]></content>
+  </entry>
+  
+</feed>

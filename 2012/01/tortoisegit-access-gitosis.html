@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>TortoiseGit访问Gitosis搭建的版本库 - My Octopress Blog</title>
+  <title>TortoiseGit访问Gitosis搭建的版本库 - EverET.org</title>
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="首先，我们创建好公钥和密钥，如何创建可以参考 http://www.everet.org/2012/01/management-remote-host.html 。 然后把公钥id_rsa.pub发给Git版本库的管理员。 因为TortoiseGit使用ppk， &hellip;">
+  <meta name="description" content="首先，我们创建好公钥和密钥，如何创建可以参考 http://everet.org/2012/01/management-remote-host.html 。 然后把公钥id_rsa.pub发给Git版本库的管理员。 因为TortoiseGit使用ppk， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -24,7 +24,7 @@
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="EverET.org" type="application/atom+xml">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -35,9 +35,9 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">EverET.org</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>Better to do something imperfectly than to do nothing flawlessly.</h2>
   
 </hgroup>
 
@@ -56,7 +56,11 @@
   
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/my-works">Works</a></li>
+  <li><a href="http://414112390.qzone.qq.com/#!app=4" target="_blank">Albums</a></li>
+  <li><a href="/liuyana">Msg Board</a></li>
+  <li><a href="/about-me">About Me</a></li>
 </ul>
 
 </nav>
@@ -90,48 +94,48 @@
   </header>
 
 
-<div class="entry-content"><p>首先，我们创建好公钥和密钥，如何创建可以参考 <a href="http://www.everet.org/2012/01/management-remote-host.html">http://www.everet.org/2012/01/management-remote-host.html</a> 。</p>
+<div class="entry-content"><p>首先，我们创建好公钥和密钥，如何创建可以参考 <a href="http://everet.org/2012/01/management-remote-host.html">http://everet.org/2012/01/management-remote-host.html</a> 。</p>
 
 <p>然后把公钥id_rsa.pub发给Git版本库的管理员。</p>
 
 <p>因为TortoiseGit使用ppk，所以我们需要用自己密钥重新创建一个ppk的密钥</p>
 
-<p><a href="http://www.everet.org/wp-content/uploads/2012/01/image6.png"><img src="http://www.everet.org/wp-content/uploads/2012/01/image_thumb6.png" alt="image" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image6.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb6.png" alt="image" /></a></p>
 
 <p>我们首先打开 TortoiseGit 下的 puttygen，然后点击load，把自己密钥加载进来，我们之前创建的密钥，如果没做任何更改，则文件名为id_rsa。</p>
 
 <!-- more -->
 
 
-<p><a href="http://www.everet.org/wp-content/uploads/2012/01/image7.png"><img src="http://www.everet.org/wp-content/uploads/2012/01/image_thumb7.png" alt="image" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image7.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb7.png" alt="image" /></a></p>
 
 <p>然后选中我们的密钥id_rsa。</p>
 
-<p><a href="http://www.everet.org/wp-content/uploads/2012/01/image8.png"><img src="http://www.everet.org/wp-content/uploads/2012/01/image_thumb8.png" alt="image" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image8.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb8.png" alt="image" /></a></p>
 
 <p>然后就有</p>
 
-<p><a href="http://www.everet.org/wp-content/uploads/2012/01/image9.png"><img src="http://www.everet.org/wp-content/uploads/2012/01/image_thumb9.png" alt="image" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image9.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb9.png" alt="image" /></a></p>
 
 <p>然后我们保存新的ppk的密钥。</p>
 
-<p><a href="http://www.everet.org/wp-content/uploads/2012/01/image10.png"><img src="http://www.everet.org/wp-content/uploads/2012/01/image_thumb10.png" alt="image" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image10.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb10.png" alt="image" /></a></p>
 
 <p>接着，我们装载我们的密钥，我们打开Pageant。</p>
 
-<p><a href="http://www.everet.org/wp-content/uploads/2012/01/image11.png"><img src="http://www.everet.org/wp-content/uploads/2012/01/image_thumb11.png" alt="image" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image11.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb11.png" alt="image" /></a></p>
 
 <p>选择 Add Key。</p>
 
-<p><a href="http://www.everet.org/wp-content/uploads/2012/01/image12.png"><img src="http://www.everet.org/wp-content/uploads/2012/01/image_thumb12.png" alt="image" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image12.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb12.png" alt="image" /></a></p>
 
 <p>在弹出的浏览框中选择我们刚刚生成的ppk扩展名的密钥。</p>
 
-<p><a href="http://www.everet.org/wp-content/uploads/2012/01/image13.png"><img src="http://www.everet.org/wp-content/uploads/2012/01/image_thumb13.png" alt="image" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image13.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb13.png" alt="image" /></a></p>
 
 <p>然后就OK了。</p>
 
-<p><a href="http://www.everet.org/wp-content/uploads/2012/01/image14.png"><img src="http://www.everet.org/wp-content/uploads/2012/01/image_thumb14.png" alt="image" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image14.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb14.png" alt="image" /></a></p>
 
 <p>2012年2月26日补充：</p>
 
@@ -173,7 +177,7 @@
 
 <span class="categories">
   
-    <a class='category' href='/categories/技术类/'>技术类</a>
+    <a class='category' href='/category/it/'>IT</a>
   
 </span>
 
@@ -215,7 +219,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a>
+        <a href="/2012/12/debug-nginx.html">调试Nginx</a>
       </li>
     
       <li class="post">
@@ -236,34 +240,56 @@
     
   </ul>
 </section>
-
 <section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/cedricporter">@cedricporter</a> on GitHub
-  
-  <script type="text/javascript">
-    $.domReady(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
+  <h1>Tags</h1>
+  <ul class="tag-cloud">
+    <a style="font-size: 113%" href="/tag/android/">Android</a>
+<a style="font-size: 132%" href="/tag/apache/">Apache</a>
+<a style="font-size: 80%" href="/tag/boost/">Boost</a>
+<a style="font-size: 80%" href="/tag/bugzilla/">Bugzilla</a>
+<a style="font-size: 179%" href="/tag/c-/">C++</a>
+<a style="font-size: 132%" href="/tag/captcha/">Captcha</a>
+<a style="font-size: 165%" href="/tag/clover/">Clover</a>
+<a style="font-size: 113%" href="/tag/datastructure/">DataStructure</a>
+<a style="font-size: 80%" href="/tag/design/">Design</a>
+<a style="font-size: 113%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 80%" href="/tag/english/">English</a>
+<a style="font-size: 165%" href="/tag/git/">Git</a>
+<a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
+<a style="font-size: 113%" href="/tag/gitweb/">Gitweb</a>
+<a style="font-size: 179%" href="/tag/image-processing/">Image Processing</a>
+<a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
+<a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
+<a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
+<a style="font-size: 208%" href="/tag/linux/">Linux</a>
+<a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
+<a style="font-size: 132%" href="/tag/mysql/">Mysql</a>
+<a style="font-size: 146%" href="/tag/nginx/">Nginx</a>
+<a style="font-size: 156%" href="/tag/ogre/">OGRE</a>
+<a style="font-size: 132%" href="/tag/php/">PHP</a>
+<a style="font-size: 250%" href="/tag/python/">Python</a>
+<a style="font-size: 80%" href="/tag/qq/">QQ</a>
+<a style="font-size: 80%" href="/tag/svn/">SVN</a>
+<a style="font-size: 113%" href="/tag/scar/">Scar</a>
+<a style="font-size: 113%" href="/tag/tortoisegit/">TortoiseGit</a>
+<a style="font-size: 165%" href="/tag/ubuntu/">Ubuntu</a>
+<a style="font-size: 146%" href="/tag/ultrademo/">UltraDemo</a>
+<a style="font-size: 80%" href="/tag/vpn/">VPN</a>
+<a style="font-size: 113%" href="/tag/vim/">Vim</a>
+<a style="font-size: 113%" href="/tag/wpf/">WPF</a>
+<a style="font-size: 189%" href="/tag/web/">Web</a>
+<a style="font-size: 156%" href="/tag/wordpress/">Wordpress</a>
+<a style="font-size: 172%" href="/tag/compile/">compile</a>
+<a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
+<a style="font-size: 80%" href="/tag/ppp/">ppp</a>
+<a style="font-size: 80%" href="/tag/pptpd/">pptpd</a>
+<a style="font-size: 80%" href="/tag/rsync/">rsync</a>
+<a style="font-size: 80%" href="/tag/sendmail/">sendmail</a>
+<a style="font-size: 80%" href="/tag/ssh/">ssh</a>
+<a style="font-size: 80%" href="/tag/uwsgi/">uWSGI</a>
+<a style="font-size: 80%" href="/tag/virtual-memory/">virtual memory</a>
 
-        github.showRepos({
-            user: 'cedricporter',
-            count: 0,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
+  </ul>
 </section>
 
 

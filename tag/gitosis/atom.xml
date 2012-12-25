@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: Gitosis | EverET.org]]></title>
+  <link href="http://cedricporter.github.com/tag/gitosis/atom.xml" rel="self"/>
+  <link href="http://cedricporter.github.com/"/>
+  <updated>2012-12-25T17:02:31+08:00</updated>
+  <id>http://cedricporter.github.com/</id>
+  <author>
+    <name><![CDATA[Stupid ET]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ubuntu使用Gitosis搭建Git服务器，Windows客户端支持中文]]></title>
+    <link href="http://cedricporter.github.com/2012/01/gitosis-in-ubuntu.html"/>
+    <updated>2012-01-27T06:27:05+08:00</updated>
+    <id>http://cedricporter.github.com/2012/01/gitosis-in-ubuntu</id>
+    <content type="html"><![CDATA[<p>更详细的教程请见 《Pro Git》<a href="http://progit.org/book/zh/ch4-7.html">http://progit.org/book/zh/ch4-7.html</a>。</p>
+
+<h3>安装必备工具</h3>
+
+<p>apt-get install git gitweb gitosis</p>
+
+<p>用自己的公钥来初始化Gitosis</p>
+
+<p>root@everet:/var# sudo -H -u git gitosis-init &lt; /tmp/authorized_keys
+Initialized empty Git repository in /home/git/repositories/gitosis-admin.git/
+Reinitialized existing Git repository in /home/git/repositories/gitosis-admin.git/</p>
+
+<p>对该仓库中的<code>post-update</code> 脚本加上可执行权限</p>
+
+<p>root@everet:/home/git/repositories/gitosis-admin.git/hooks# chmod 755 post-update</p>
+
+<h3>克隆 Gitosis 的控制仓库</h3>
+
+<p>$ git clone git@everet.org:gitosis-admin.git</p>
+
+<p>这会得到一个名为 <code>gitosis-admin</code> 的工作目录，主要由两部分组成：</p>
+
+<!-- more -->
+
+
+<blockquote><p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/everet
+$ cd gitosis-admin/</p></blockquote>
+
+<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/everet/gitosis-admin
+$ find .
+./gitosis.conf
+./keydir
+./keydir/cedricporter@ET.pub</p>
+
+<p>如果我们要增加工程：clover，我们可以修改gitosis.conf</p>
+
+<blockquote><p>$ cat gitosis.conf
+[gitosis]</p></blockquote>
+
+<p>[group gitosis-admin]
+writable = gitosis-admin
+members = cedricporter@ET</p>
+
+<p>[group clover]
+writable = clover
+members = cedricporter@ET</p>
+
+<p>修改完后，提交并推送到服务器。</p>
+
+<blockquote><p>$ git commit -am 'add project clover'
+[master 3d0dd1b] add project clover
+Committer: U-CedricPorter-PC\Cedric Porter <Cedric Porter@CedricPorter-PC.(none)></p></blockquote>
+
+<p>$ git push</p>
+
+<h2>Windows客户端</h2>
+
+<p>如果我们使用cygwin的git，那么就不会存在任何任何中文乱码问题。</p>
+
+<p>如果我们使用TortoiseGit，我们可以安装一个utf-8的git，下载地址 <a href="http://tmurakam.org/git/">http://tmurakam.org/git/</a> 。</p>
+
+<p>然后再装TortoiseGit <a href="http://code.google.com/p/tortoisegit/downloads/list">http://code.google.com/p/tortoisegit/downloads/list</a>，那么它会自动得到git的路径，否则，我们自己去TortoiseGit的设置中设置Git的路径。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image4.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb4.png" alt="image" /></a></p>
+
+<p>此时，除了我们在资源管理器无法直接看到用符号标记的修改的中文文件名的文件，我们只能在右键的”Check for modifications“查看正确的被修的文件，因为在资源管理器中的中文文件名的文件的标记的基本是错误的。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image5.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb5.png" alt="image" /></a></p>
+]]></content>
+  </entry>
+  
+</feed>

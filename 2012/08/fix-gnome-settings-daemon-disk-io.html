@@ -5,11 +5,15 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>解决Ubuntu下gnome-settings-daemon高磁盘IO的问题 - My Octopress Blog</title>
+  <title>解决Ubuntu下gnome-settings-daemon高磁盘IO的问题 - EverET.org</title>
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="最近在用Ubuntu的时候，总是发现用着用着整台电脑就卡死了，什么都动不了，然后硬盘灯一直处于常亮状态。几次艰难地打开shell，发现都是gnome-settings-daemon一直在读写硬盘。这个究竟是什么问题呢？ strace一下，看看，这个进程在干啥。 Liquid error: &hellip;">
+  <meta name="description" content="最近在用Ubuntu的时候，总是发现用着用着整台电脑就卡死了，什么都动不了，然后硬盘灯一直处于常亮状态。几次艰难地打开shell，发现都是gnome-settings-daemon一直在读写硬盘。这个究竟是什么问题呢？ strace一下，看看，这个进程在干啥。 console 1
+2
+3
+4
+5 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -24,7 +28,7 @@
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="EverET.org" type="application/atom+xml">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -35,9 +39,9 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">EverET.org</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>Better to do something imperfectly than to do nothing flawlessly.</h2>
   
 </hgroup>
 
@@ -56,7 +60,11 @@
   
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/my-works">Works</a></li>
+  <li><a href="http://414112390.qzone.qq.com/#!app=4" target="_blank">Albums</a></li>
+  <li><a href="/liuyana">Msg Board</a></li>
+  <li><a href="/about-me">About Me</a></li>
 </ul>
 
 </nav>
@@ -94,7 +102,23 @@
 
 <p>strace一下，看看，这个进程在干啥。</p>
 
-<p>Liquid error: ClassNotFound: no lexer for alias &#8216;shell&#8217; found</p>
+<figure class='code'><figcaption><span>console  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">cedricporter@cedricporter-Lenovo:~/projects/CaptchaSystem$</span> sudo strace -p 2207
+</span><span class='line'><span class="go">[sudo] password for cedricporter: </span>
+</span><span class='line'><span class="go">Process 2207 attached - interrupt to quit</span>
+</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/b6c1d4f6fff0b536652c83081e5233e1.png&quot;, {st_mode=S_IFREG|0600, st_size=5398, ...}) = 0</span>
+</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/739ea0e4eabe22c5b551156fc3ff93da.png&quot;, {st_mode=S_IFREG|0600, st_size=6059, ...}) = 0</span>
+</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/2aac704bfd3d3a865f66e5c3ee2ba80a.png&quot;, {st_mode=S_IFREG|0600, st_size=6362, ...}) = 0</span>
+</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/5dbe53248aa8a41612137100a315e076.png&quot;, {st_mode=S_IFREG|0600, st_size=6260, ...}) = 0</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>出来的结果就像刷屏一样，全部都是lstat的系统调用，读取的都是.thumbnails下面的图片。<!-- more --></p>
 
@@ -140,7 +164,7 @@
 
 <span class="categories">
   
-    <a class='category' href='/categories/linux/'>Linux</a>
+    <a class='category' href='/category/linux/'>Linux</a>
   
 </span>
 
@@ -182,7 +206,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2012/12/e8b083e8af95nginx.html">调试Nginx</a>
+        <a href="/2012/12/debug-nginx.html">调试Nginx</a>
       </li>
     
       <li class="post">
@@ -203,34 +227,56 @@
     
   </ul>
 </section>
-
 <section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/cedricporter">@cedricporter</a> on GitHub
-  
-  <script type="text/javascript">
-    $.domReady(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
+  <h1>Tags</h1>
+  <ul class="tag-cloud">
+    <a style="font-size: 113%" href="/tag/android/">Android</a>
+<a style="font-size: 132%" href="/tag/apache/">Apache</a>
+<a style="font-size: 80%" href="/tag/boost/">Boost</a>
+<a style="font-size: 80%" href="/tag/bugzilla/">Bugzilla</a>
+<a style="font-size: 179%" href="/tag/c-/">C++</a>
+<a style="font-size: 132%" href="/tag/captcha/">Captcha</a>
+<a style="font-size: 165%" href="/tag/clover/">Clover</a>
+<a style="font-size: 113%" href="/tag/datastructure/">DataStructure</a>
+<a style="font-size: 80%" href="/tag/design/">Design</a>
+<a style="font-size: 113%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 80%" href="/tag/english/">English</a>
+<a style="font-size: 165%" href="/tag/git/">Git</a>
+<a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
+<a style="font-size: 113%" href="/tag/gitweb/">Gitweb</a>
+<a style="font-size: 179%" href="/tag/image-processing/">Image Processing</a>
+<a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
+<a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
+<a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
+<a style="font-size: 208%" href="/tag/linux/">Linux</a>
+<a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
+<a style="font-size: 132%" href="/tag/mysql/">Mysql</a>
+<a style="font-size: 146%" href="/tag/nginx/">Nginx</a>
+<a style="font-size: 156%" href="/tag/ogre/">OGRE</a>
+<a style="font-size: 132%" href="/tag/php/">PHP</a>
+<a style="font-size: 250%" href="/tag/python/">Python</a>
+<a style="font-size: 80%" href="/tag/qq/">QQ</a>
+<a style="font-size: 80%" href="/tag/svn/">SVN</a>
+<a style="font-size: 113%" href="/tag/scar/">Scar</a>
+<a style="font-size: 113%" href="/tag/tortoisegit/">TortoiseGit</a>
+<a style="font-size: 165%" href="/tag/ubuntu/">Ubuntu</a>
+<a style="font-size: 146%" href="/tag/ultrademo/">UltraDemo</a>
+<a style="font-size: 80%" href="/tag/vpn/">VPN</a>
+<a style="font-size: 113%" href="/tag/vim/">Vim</a>
+<a style="font-size: 113%" href="/tag/wpf/">WPF</a>
+<a style="font-size: 189%" href="/tag/web/">Web</a>
+<a style="font-size: 156%" href="/tag/wordpress/">Wordpress</a>
+<a style="font-size: 172%" href="/tag/compile/">compile</a>
+<a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
+<a style="font-size: 80%" href="/tag/ppp/">ppp</a>
+<a style="font-size: 80%" href="/tag/pptpd/">pptpd</a>
+<a style="font-size: 80%" href="/tag/rsync/">rsync</a>
+<a style="font-size: 80%" href="/tag/sendmail/">sendmail</a>
+<a style="font-size: 80%" href="/tag/ssh/">ssh</a>
+<a style="font-size: 80%" href="/tag/uwsgi/">uWSGI</a>
+<a style="font-size: 80%" href="/tag/virtual-memory/">virtual memory</a>
 
-        github.showRepos({
-            user: 'cedricporter',
-            count: 0,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
+  </ul>
 </section>
 
 
