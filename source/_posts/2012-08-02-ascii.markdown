@@ -1,0 +1,20 @@
+---
+comments: true
+date: 2012-08-02 22:57:07
+layout: post
+slug: ascii
+title: ASCII码表
+wordpress_id: 1349
+categories:
+- 技术类
+---
+
+最近经常用到ASCII码，所以弄一张表过来方便查找。
+
+<!-- more -->
+
+[![](http://everet.org/wp-content/uploads/2012/08/asciifull.gif)](http://everet.org/wp-content/uploads/2012/08/asciifull.gif)
+
+
+
+[![](http://everet.org/wp-content/uploads/2012/08/extend.gif)](http://everet.org/wp-content/uploads/2012/08/extend.gif)

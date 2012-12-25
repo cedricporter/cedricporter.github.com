@@ -1,0 +1,153 @@
+---
+comments: true
+date: 2012-03-22 01:54:56
+layout: post
+slug: ipc-pipe
+title: 进程间通信：管道pipe一个简单的例子
+wordpress_id: 797
+categories:
+- 我的代码
+tags:
+- Linux
+---
+
+管道是进程间通信的有力的武器.记得初中时在写Windows的后门的时候,也是开了一个匿名的管道和cmd进行交互.今天终于在Linux上写了下管道.
+
+在Linux下，两个程序之间传递数据的最简单的方法就是使用popen和pclose两个函数了。但它们都是需要启动一个shell。这个成本略高啊。
+
+于是我们可以使用底层的pipe函数。通过这个函数，我们在两个程序之间传递数据而不需要启动一个shell来解释请求的命令。
+
+原型是:
+
+
+> #include <unistd.h>
+
+int pipe(int file_descriptor[2]);
+
+
+参数是一个由两个整型的文件描述符组成的数组的指针。成功返回0，失败返回-1，并设置errno来表面失败的原因。
+
+两个文件描述符以特殊的方式连接起来。写到file_descriptor[1]的所有数据都可以从file_descriptor[0]中读回来。数据基于先进先出FIFO的原则。
+
+我们使用read和write来访问数据。
+
+管道有一些内置的缓冲区，它在write和read调用之间保存数据。
+
+<!-- more -->
+
+缓冲区满的时候，write可能会阻塞。
+
+当没有数据可读时，read通常会阻塞，也就是被操作系统挂起了。
+
+如果管道的另一端已经被关闭，也就是说没有进程打开这个管道冰箱它写入数据了，这时的对read的阻塞就是毫无意义了。于是对于对一个已经关闭写数据的管道做read调用将会返回0而不是阻塞。
+
+下面是一个例子：
+
+程序fork后多了一个子进程，此时管道的引用计数加1，所以我们要及时关闭不用的管道让引用计数及时的修正。
+
+引用计数是程序设计中非常重要的思想啊~~~
+
+
+{% codeblock cpp lang:cpp %}
+
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main(int argc, char *argv[])
+{
+     int data_processed;
+     int file_pipes[2];
+     char some_data[32];
+     char buffer[BUFSIZ + 1];
+     pid_t fork_result;
+     int counter = 30;
+
+     memset(buffer, 0, sizeof(buffer));
+
+     if (pipe(file_pipes) == 0)
+     {
+	  fork_result = fork();
+	  if (fork_result == -1)
+	  {
+	       fprintf(stderr, "Fork Failure");
+	       exit(EXIT_FAILURE);
+	  }
+	  if (fork_result == 0)
+	  {
+	       // child process
+	       close(file_pipes[1]);
+	       while (counter--)
+	       {
+		    data_processed = read(file_pipes[0], buffer, BUFSIZ);
+		    if (data_processed == 0)
+			 break;
+		    buffer[data_processed] = '\0';
+		    printf("%d - Read %d bytes: %s\n", counter, data_processed, buffer);
+	       }
+	       close(file_pipes[0]);
+	       printf("reader done\n");
+	  }
+	  else
+	  {
+	       // parent process
+	       close(file_pipes[0]);
+	       while (counter--)
+	       {
+		    sprintf(some_data, "[%d] ", counter);
+		    data_processed = write(file_pipes[1], some_data, strlen(some_data));
+		    if (data_processed == 0)
+			 break;
+		    printf("%d - Wrote %d bytes\n", counter, data_processed);
+	       }
+	       close(file_pipes[1]);
+	       printf("writer done\n");
+	  }
+	  exit(EXIT_SUCCESS);
+     }
+     exit(EXIT_FAILURE);
+}
+
+
+{% endcodeblock %}
+
+
+下面是在我的虚拟机的输出：（因为有两个屏幕，开个虚拟机让一个鼠标在两个系统两个屏幕间互相移动，这是相当的爽啊）
+
+
+> cedricporter-virtual-machine 1 # ./1
+29 - Wrote 5 bytes
+28 - Wrote 5 bytes
+27 - Wrote 5 bytes
+26 - Wrote 5 bytes
+25 - Wrote 5 bytes
+24 - Wrote 5 bytes
+23 - Wrote 5 bytes
+22 - Wrote 5 bytes
+21 - Wrote 5 bytes
+20 - Wrote 5 bytes
+19 - Wrote 5 bytes
+18 - Wrote 5 bytes
+29 - Read 60 bytes: [29] [28] [27] [26] [25] [24] [23] [22] [21] [20] [19] [18]
+17 - Wrote 5 bytes
+16 - Wrote 5 bytes
+15 - Wrote 5 bytes
+14 - Wrote 5 bytes
+13 - Wrote 5 bytes
+12 - Wrote 5 bytes
+11 - Wrote 5 bytes
+10 - Wrote 5 bytes
+9 - Wrote 4 bytes
+8 - Wrote 4 bytes
+7 - Wrote 4 bytes
+6 - Wrote 4 bytes
+5 - Wrote 4 bytes
+4 - Wrote 4 bytes
+3 - Wrote 4 bytes
+2 - Wrote 4 bytes
+1 - Wrote 4 bytes
+0 - Wrote 4 bytes
+writer done
+cedricporter-virtual-machine 1 # 28 - Read 80 bytes: [17] [16] [15] [14] [13] [12] [11] [10] [9] [8] [7] [6] [5] [4] [3] [2] [1] [0]
+reader done

@@ -1,0 +1,41 @@
+--- 
+categories: []
+comments: true
+layout: page
+published: true
+status: publish
+tags: []
+title: 关于我
+type: page
+---
+鄙人小菜，于华南理工大学主修软件工程，已在此度过3年多的人生。
+
+爱好探险，摄影，和计算机。喜欢实现自己的想法~
+
+喜欢C++和Python，可惜Python还处于菜鸟阶段。目前主要在学习Linux相关的知识，继续深入理解Python。
+
+对于摄影，大部分照片都置于我的QQ空间里，因已积累了多年照片与评论，遂不愿再换。
+<ul>
+<li><a href="https://github.com/cedricporter" target="_blank">我在github</a></li>
+	<li><a href="http://414112390.qzone.qq.com/#!app=4" target="_blank">我的相册</a></li>
+	<li><a href="http://everet.org/2012/05/favorite-books.html">我喜欢的那些书</a></li>
+	<li><a href="https://github.com/cedricporter/vim-emacs-setting" target="_blank">我的vim、emacs和vs的配置文件</a></li>
+</ul>
+<h3>联系我</h3>
+<div>
+<strong>Email:</strong>  <a href="mailto:et@everet.org">et@everet.org</a>
+</div>
+
+<hr>
+<h3>历史</h3>
+曾有两博客，不过更愿于把握自己博客所有数据，于是作罢。
+
+<strong>百度空间</strong> <a title="http://hi.baidu.com/stupidet" href="http://hi.baidu.com/stupidet" target="_blank">http://hi.baidu.com/stupidet/</a>
+
+百度空间因历史悠久，且文章大多是为备忘而转载，所以除了照片没有什么值得留恋。现在用EverNote保存网页，所以不再打理百度空间。
+
+<strong>CSDN博客</strong> <a href="http://blog.csdn.net/cedricporter">http://blog.csdn.net/cedricporter</a>
+
+因某些众所周知的原因，也不再去CSDN博客。
+
+ 

@@ -1,0 +1,171 @@
+---
+comments: true
+date: 2012-05-05 19:18:34
+layout: post
+slug: gfw
+title: 猜想祖国的伟大的围墙的原理
+wordpress_id: 999
+categories:
+- 技术类
+tags:
+- Web
+---
+
+## 防民之口，甚于防川。
+
+
+引用自百度百科的对于“防民之口，甚于防川”的启示：
+
+
+> 中国历史上有很多统治者荒淫无道，但他们又怕人民议论，就采取了压制社会言论的措施，以为可以高枕无忧、平安无事。实际上这是最愚蠢的作法，它不仅使下情无法上达，错误的政策得不到纠正，加剧社会矛盾。更可怕的在于虽然民众口上不说，但心里却充满了仇恨，只要社会矛盾到达临界点，大规模的暴乱必然爆发，给社会生产力造成极大破坏。正可谓“防民之口，甚于防川。”中国人是世界上最能忍受暴政的民族，但也是爆发起义最多的国家。
+
+
+无逻辑的舆论的控制，究竟会引发什么后果呢？或许多年后答案便自己浮现。
+
+暂且不谈论我们伟大的围墙的对于人民生活的影响，我们来看看它的技术方面的实现。<!-- more -->
+
+
+## 景德镇的国域网
+
+
+景德镇的国域网对外的出口线路不多，只要在这些出口处架设好强大的过滤器，便可以保障国民思想安全性。这样过滤不会太麻烦，因为出口就这么几个，派兵守住就好。
+
+在网络课上，刘孜文老师给我们讲了一个他的经历，[我](http://everet.org/2012/05/gfw.html)大致复述一下（语文很差，希望不会扭曲原意）：
+
+老师的一个同学在收到领导指示，要弄一个省级的防火墙，这样可以方便警察叔叔将一些骗子网站、黄色网站过滤掉。于是他的同学开始鸭梨巨大了，因为一个省的对外的线路有很多很多条，很难在每一条出口安上防火墙，因为线路太多了。
+
+这个例子说明，一个国家级的要比一个省级的围墙容易得多，原因是关口少，不像省与省之间的线路四通八达。
+
+那么我们知道了在国域网对外的出口处有各种Cisco等强大的怪兽守住，我们来探讨一下这些怪兽的机制。
+
+
+## 工作机制
+
+
+在普遍的看法，我们伟大的围墙工作机制主要包括IP黑名单、内容过滤和DNS劫持。
+
+
+### IP黑名单
+
+
+怪兽手里肯定把握着一份黑名单，上面写着Facebook、twitter、youtube等的ip地址，一旦发现镇民发往黑名单中地址的请求数据包，就直接无情地丢弃，当镇民等到花儿都谢了都没有收到服务器发回的包，他便生了一种叫超时的病而放弃了。
+
+温总理曾说过：中国财富再多，除以13亿人，就少得可怜了；中国问题再小，乘以13亿人，也就很大了。
+
+一个秒钟一个请求*13亿，就是一个很大的请求了。请问怪兽如何可以高速地在IP黑名单中查询这个ip在不在呢？
+
+对于ipv4，每个ip地址32位，可以看作32位无符号整形。也就是2^32个ip地址。黑名单应该也不小，怎么也有几千几万几十万吧。那么怪兽怎么处理呢？
+
+
+
+	
+  * 怪兽如果很2B的话，它会拿着收到数据包的ip一个一个地和黑名单中的ip比较，如果在黑名单里面就将其丢弃，不在那就放过它。这样怪兽花的时间是O(n)，n为黑名单的大小。
+
+	
+  * 怪兽智商稍微高一点的话，它会将黑名单中的排好序，然后使用伟大的二分查找法术，就可以花O(log(n))的时间判断那个ip在不在黑名单里面。
+
+	
+  * 怪事如果智商不错的话，它会构建一个4G个单位的哈希表blacklist，然后直接将ip作为索引，初始化哈希表blacklist，blacklist[ip] = 1, if ip in ip_blacklist，这样，在一个请求过来的时候，怪兽只需要花费O(1)的时间就可以知道ip在不在黑名单里面。
+
+
+对于一个4G个单位的ip黑名单hash table，我们可以一个bit来表示一个ip是不是属于特殊对待ip。于是我们的ip hash table大小为：
+
+
+> 4G bit = 4 / 8 G Byte = 0.5 GB = 512 MB
+
+
+怪兽只需要有512MB的空闲内存就可以构建这么一个hash表，然后无论是多线程模式的还是多进程模式的设计都可以共享这块放hash表的内存，中途如果有新增或者取消话都可以直接更新hash表，当然可能会因为有缓存而导致不一致，但是在这个大环境下也不一那么较真，让正确率100%，所以连锁都可以不用加，这样怪兽的负担会轻很多。不过bitmap在ipv6下是不那么实际的，因为使用内存会非常巨大，2^128bit，会消耗39614081257132168796771975168GB的内存来放bitmap。可能这也是怪兽没有对ipv6下手的原因。
+
+我们来看一段代码，描述了高效判断是否在黑名单的方法。
+
+
+{% codeblock cpp lang:cpp %}
+
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <arpa/inet.h>
+
+#define BITSPERWORD 32
+#define SHIFT 5			// 2 ^ 5 = 32
+#define MASK 0x1F		// 0x1F = (11111)b
+#define SET(a, i) ((a)[(i)>>SHIFT] |= (1<<((i) & MASK)))
+#define CLR(a, i) ((a)[(i)>>SHIFT] &= ~(1<<((i) & MASK)))
+#define TEST(a, i) ((a)[(i)>>SHIFT] & (1<<((i) & MASK)))
+
+inline void test_block(int* blacklist, char* ip)
+{
+     if (TEST(blacklist, inet_addr(ip)))
+	  printf("%s is blocked.\n", ip);
+     else
+	  printf("%s is pass.\n", ip);
+}
+
+int main(int argc, char *argv[])
+{
+     const unsigned long long N = 4294967295;
+     const unsigned int SIZE = N / BITSPERWORD + 1;
+     int* blacklist = (int*)malloc(SIZE * sizeof(int));
+
+     memset(blacklist, SIZE, 0xff);
+     SET(blacklist, inet_addr("243.185.187.39"));
+     SET(blacklist, inet_addr("8.8.4.4"));
+     SET(blacklist, inet_addr("202.84.125.66"));
+     SET(blacklist, inet_addr("222.221.31.55"));
+     SET(blacklist, inet_addr("183.182.44.111"));
+     SET(blacklist, inet_addr("255.255.255.156"));
+
+     test_block(blacklist, "8.8.4.4");
+     test_block(blacklist, "222.222.222.222");
+     test_block(blacklist, "202.84.125.66");
+     test_block(blacklist, "88.54.32.156");
+     test_block(blacklist, "255.255.255.156");
+
+     free(blacklist);
+     return 0;
+}
+
+{% endcodeblock %}
+
+
+当然可能还有更好的方法，请赐教～
+
+
+## 内容过滤
+
+
+曾经在一个人博客看到程序员的工作环境怎样为好，里面有一句让我影响无比深刻“[访问Google的服务没有障碍](http://timyang.net/misc/work-environment-productivity/)”。这个真滴非常重要呀，虽然现在Google的https可以用了，不过好慢好慢，受不了啊。
+
+像我们如果在Google搜索某些关键词后，我们从Google打开了某些网址后，不仅那些网站访问不了，而且Google就会被怪兽吃了。
+
+Google不作恶啊，为什么要对Google那么狠......
+
+例如我们在Google中搜索
+
+[![](http://everet.org/wp-content/uploads/2012/05/fq.png)](http://everet.org/wp-content/uploads/2012/05/fq.png)
+
+然后就会发现Google被吃了。
+
+怪兽做了什么？
+
+怪兽首先伪造Google的ip发了许多RST包给镇民的浏览器，然后怪兽也可能伪造镇民的ip发了很多RST给Google，挑拨离间，最后镇民和Google在经过一段努力后发现还是无法沟通就不再继续通信了。
+
+[![](http://everet.org/wp-content/uploads/2012/05/gfw.png)](http://everet.org/wp-content/uploads/2012/05/gfw.png)
+
+怪兽应该对http包进行了扫描，看看有没有什么敏感词，有的话就伪装成对方开始卑鄙地发送RST，来挑拨离间最终实现断开连接。
+
+
+## DNS劫持
+
+
+有一部分怪兽应该会专门负责污染国内DNS服务器的缓存，导致我们解析到了错误的ip。有一部分怪兽会篡改国外DNS发回的响应，导致镇民获得了错误的ip。
+
+
+## 结言
+
+
+防民之口，甚于防川。过度地压制景德镇的镇民似乎并不太好，希望未来的祖国会更加开放、更加发达。
+
+天朝威武～

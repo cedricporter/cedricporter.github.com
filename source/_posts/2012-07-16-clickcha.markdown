@@ -1,0 +1,145 @@
+---
+comments: true
+date: 2012-07-16 12:42:02
+layout: post
+slug: clickcha
+title: 探索wordpress验证码插件Clickcha
+wordpress_id: 1317
+categories:
+- 技术类
+tags:
+- Captcha
+- Wordpress
+---
+
+Clickcha是一种新型的图像验证码，只需要用鼠标点击即可以通过验证，虽然对于专门的攻击，这种验证码没什么抵挡能力，但是它还是挺有趣。
+
+
+
+
+对于这种验证码的识别，可以用[霍夫变换](http://zh.wikipedia.org/wiki/%E9%9C%8D%E5%A4%AB%E5%8F%98%E6%8D%A2)，就可以方便地找到最圆的圆，以及那些正方形。
+
+
+
+
+Clickcha有提供wordpress插件，很容易就可以和自己的wordpress整合在一起。<!-- more -->
+
+
+
+
+
+
+
+[![](http://everet.org/wp-content/uploads/2012/07/challenge-1.png)](http://everet.org/wp-content/uploads/2012/07/challenge-1.png)
+
+
+
+
+
+
+
+[![](http://everet.org/wp-content/uploads/2012/07/challenge-2.png)](http://everet.org/wp-content/uploads/2012/07/challenge-2.png)
+
+
+
+
+
+
+
+[![](http://everet.org/wp-content/uploads/2012/07/challenge.png)](http://everet.org/wp-content/uploads/2012/07/challenge.png)
+
+
+
+
+
+
+
+我们从clickcha的源码中看看这个插件的工作原理。
+
+
+
+
+## 生成验证码
+
+
+
+
+
+
+首先，插件在comment_form过程下增加了钩子，这样就可以将自己的页面的代码插入到评论框下面。
+
+{% codeblock php lang:php %}
+add_action('comment_form', 'clickcha_comment_form', 10);
+{% endcodeblock %}
+
+其中有一段js，用于验证码token和图片的获取。
+
+{% codeblock javascript lang:javascript %}
+function clickcha_token(token) {
+    document.getElementById('clickchatoken').value = token;
+    document.getElementById('clickcha').src = 'http://api.clickcha.com/challenge?key=&token=' + token;
+}
+function clickcha_get_token() {
+    var e = document.createElement('script');
+    e.src = 'http://api.clickcha.com/token?output=json&key=&rnd=' + Math.random();
+    e.type= 'text/javascript';
+    document.getElementsByTagName('head')[0].appendChild(e); 
+}
+clickcha_get_token();
+// Firefox's bfcache workaround
+window.onpageshow = function(e) {if(e.persisted) clickcha_get_token();};
+{% endcodeblock %}
+
+在下面这段语句增加引用服务器生成的js。
+
+{% codeblock javascript lang:javascript %}
+document.getElementById('clickcha').src = 'http://api.clickcha.com/challenge?key=&token=' + token;
+{% endcodeblock %}
+
+clickcha服务器生成的被引用的那段js里面的内容
+
+{% codeblock javascript lang:javascript %}
+clickcha_token('ww6pGtBKXh_IdBDKVNHYVmeT3fTPDo8pwqCwpUqPIS-ZhYGKhc6SN9TdpZzudXujexPaKfarM57QoTPtd0AqOw')
+{% endcodeblock %}
+
+服务器clickcha服务器被引用的js里，调用了clickcha_token来设置表单中的token和验证码的图片。
+
+
+
+
+
+
+
+
+
+## 验证
+
+
+插件在评论预处理挂上处理钩子。
+
+{% codeblock php lang:php %}
+add_action('preprocess_comment', 'clickcha_comment_post');
+{% endcodeblock %}
+
+然后在评论预处理过程向clickcha的服务器发送GET请求验证，如果服务器返回'PASSED'，那么通过验证，否则直接调用wp_die结束处理过程。
+
+{% codeblock php lang:php %}
+$response=file_get_contents('http://api.clickcha.com/verify?key='.$public_key.'&token='.$_POST['clickcha_token'].'&private_key='.$private_key.'&x='.$_POST['clickcha_x'].'&y='.$_POST['clickcha_y']);
+$result = get_submatch('|(\w+)|', $response);
+if(!empty($result)) {
+    if($result!='PASSED') {
+        wp_die("Clickcha verification failed ($result). Please go back and try again.");
+    }
+{% endcodeblock %}
+
+
+
+##  演示
+
+
+clickcha官方demo：[http://clickcha.com/demo/](http://clickcha.com/demo/)
+
+
+
+
+

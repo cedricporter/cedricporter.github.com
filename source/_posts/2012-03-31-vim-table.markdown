@@ -1,0 +1,20 @@
+---
+comments: true
+date: 2012-03-31 00:33:18
+layout: post
+slug: vim-table
+title: 又一个Vim速查表
+wordpress_id: 859
+categories:
+- 技术类
+tags:
+- Vim
+---
+
+图片非常的大，请耐心等候~~
+
+<!-- more -->
+
+[![](http://everet.org/wp-content/uploads/2012/03/vim-cheat-sheet-full.png)](http://everet.org/wp-content/uploads/2012/03/vim-cheat-sheet-full.png)
+
+[![](http://everet.org/wp-content/uploads/2012/03/vim-shortcuts.png)](http://everet.org/wp-content/uploads/2012/03/vim-shortcuts.png)

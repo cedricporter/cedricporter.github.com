@@ -1,0 +1,22 @@
+---
+comments: true
+date: 2012-04-16 00:09:48
+layout: post
+slug: clover
+title: Clover —— Computer Simulation Origami
+wordpress_id: 905
+categories:
+- 我的代码
+tags:
+- Clover
+---
+
+Clover —— Computer Simulation Origami，计算机模拟折纸。
+
+历经C++、Python加Ogre，最后变成C#加WPF。我们的代码被推翻了一次又一次....
+
+终于Clover成型了。开发也告一段落了。
+
+clover进度：[http://www.everet.org/2012/01/clover-progress.html](http://www.everet.org/2012/01/clover-progress.html)
+
+
