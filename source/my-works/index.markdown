@@ -1,0 +1,29 @@
+--- 
+categories: []
+comments: true
+layout: page
+published: true
+status: publish
+tags: []
+title: 作品
+type: page
+---
+<h3>我参与的作品</h3>
+<ul>
+<li><a href="http://everet.org/2012/01/scar.html">Scar</a></li>
+	<li><a href="http://everet.org/2012/03/ftp-server.html">FTP Server——ftp.py</a></li>
+	<li><a href="http://everet.org/2012/04/ultrademo.html">UltraDemo</a></li>
+	<li><a href="http://everet.org/2012/07/effectlab.html">Python图像处理特效库EffectLab</a></li>
+	<li><a href="http://everet.org/2012/01/imagination-factory.html">Imagination Factory</a></li>
+	<li><a href="http://everet.org/2012/04/clover.html">Clover - Computer Simulation Origami</a></li>
+	<li>众口味社交网站</li>
+	<li><a href="http://everet.org/2012/05/python-ascii-art.html">字符画生成器</a></li>
+	<li><a href="http://everet.org/2012/01/python-automatically-download-all-albums-of-all-your-friends.html">人人所有好友相册下载器</a></li>
+	<li>智能进化生态系统</li>
+	<li>FSM图形化编辑器</li>
+</ul>
+<h3>我的配置文件</h3>
+<ul>
+<li><a href="http://everet.org/2012/03/emacs.html">Emacs配置</a></li>
+	<li><a href="http://everet.org/2012/03/vim.html">Vim配置</a></li>
+</ul>
