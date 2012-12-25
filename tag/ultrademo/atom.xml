@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: UltraDemo | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/ultrademo/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/ultrademo/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[UltraDemo —— 数据结构实验平台]]></title>
-    <link href="http://cedricporter.github.com/2012/04/ultrademo.html"/>
+    <link href="http://everet.org/2012/04/ultrademo.html"/>
     <updated>2012-04-19T04:49:32+08:00</updated>
-    <id>http://cedricporter.github.com/2012/04/ultrademo</id>
+    <id>http://everet.org/2012/04/ultrademo</id>
     <content type="html"><![CDATA[<p>传统数据结构教学中，老师站在讲台上讲课，放着PPT，而学生坐在下面神游。 原因何在？因为学生缺乏实践机会，所以注意力难以集中。</p>
 
 <p>于是UltraDemo诞生了！ UltraDemo提供一个自己动手实践的平台，我们可以在UltraDemo中编程，并且可以对数据结构可视化。 这个是一个编程实践平台，可以在上面写代码，编译，执行，并且可以查看图形化的数据结构。UltraDemo支持单步执行，支持断点，支持查看当前作用域的变量，支持自动执行，支持自动执行速度选择，支持动画。</p>
@@ -390,9 +390,9 @@
   
   <entry>
     <title type="html"><![CDATA[神奇的Python:格式化UltraDemo的文法]]></title>
-    <link href="http://cedricporter.github.com/2012/03/the-format-grammer.html"/>
+    <link href="http://everet.org/2012/03/the-format-grammer.html"/>
     <updated>2012-03-16T04:17:39+08:00</updated>
-    <id>http://cedricporter.github.com/2012/03/the-format-grammer</id>
+    <id>http://everet.org/2012/03/the-format-grammer</id>
     <content type="html"><![CDATA[<p>SimpleParse是一款非常简洁的Python解析模板，可以自己定义EBNF文法，然后SimpleParse会输出结构化的。</p>
 
 <p>SimpleParse的介绍可以见，<a href="http://www.ibm.com/developerworks/cn/linux/sdk/python/charm-23/index.html">http://www.ibm.com/developerworks/cn/linux/sdk/python/charm-23/index.html</a>，我也是从IBM的网站上看到这个神奇的模块的。</p>
@@ -956,9 +956,9 @@
   
   <entry>
     <title type="html"><![CDATA[UltraDemo的界面用C#重写]]></title>
-    <link href="http://cedricporter.github.com/2012/02/ultrademo-interface-rewritten-in-c.html"/>
+    <link href="http://everet.org/2012/02/ultrademo-interface-rewritten-in-c.html"/>
     <updated>2012-02-27T23:07:15+08:00</updated>
-    <id>http://cedricporter.github.com/2012/02/ultrademo-interface-rewritten-in-c</id>
+    <id>http://everet.org/2012/02/ultrademo-interface-rewritten-in-c</id>
     <content type="html"><![CDATA[<p>UltraDemo是一款数据结构的实践与演示的平台，可以在上面编写类C的代码。</p>
 
 <p>通过UltraDemo，我们将可以以图形化的信息观察到我们写的数据结构的变化的过程。</p>
@@ -996,9 +996,9 @@
   
   <entry>
     <title type="html"><![CDATA[寒假计划]]></title>
-    <link href="http://cedricporter.github.com/2012/01/winter-plan.html"/>
+    <link href="http://everet.org/2012/01/winter-plan.html"/>
     <updated>2012-01-19T06:40:46+08:00</updated>
-    <id>http://cedricporter.github.com/2012/01/winter-plan</id>
+    <id>http://everet.org/2012/01/winter-plan</id>
     <content type="html"><![CDATA[<p>周六回到家，今天是周三了，天天坐在电脑前日子过得好快啊，还想出去走走的，家里的天气比广州不知好多少，好想出去闲逛去拍照啊~</p>
 
 <p>想想寒假有什么东西要做先~</p>

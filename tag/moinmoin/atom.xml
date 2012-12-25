@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: MoinMoin | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/moinmoin/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/moinmoin/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[MoinMoin+Nginx+uWSGI搭建个人Wiki]]></title>
-    <link href="http://cedricporter.github.com/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html"/>
+    <link href="http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html"/>
     <updated>2012-12-19T07:14:27+08:00</updated>
-    <id>http://cedricporter.github.com/2012/12/moinmoin-as-kms-by-nginx-uwsgi</id>
+    <id>http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi</id>
     <content type="html"><![CDATA[<h2>有博客，为什么还需要Wiki呢？</h2>
 
 <p>有博客，为什么还需要Wiki呢？对于这个问题，我也思考了许久。博客记录的东西很扁平，而且不太适宜记录一些零碎不完整的东西。如果别人订阅了你的博客，你的博客却经常发布一些不完整的内容，这样会严重影响别人的心情。所以我觉得博客适宜将一些比较完整的内容的写在里面。此外，平时在网上看到什么东西，虽然都可以收录到EverNote里面（EverNote里面有提供目录以及标签可以很好地进行分类），但是，EverNote的劣势在于，不方便将知识组织知识，将它们串联在一起。</p>

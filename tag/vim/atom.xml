@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Vim | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/vim/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/vim/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[又一个Vim速查表]]></title>
-    <link href="http://cedricporter.github.com/2012/03/vim-table.html"/>
+    <link href="http://everet.org/2012/03/vim-table.html"/>
     <updated>2012-03-31T08:33:18+08:00</updated>
-    <id>http://cedricporter.github.com/2012/03/vim-table</id>
+    <id>http://everet.org/2012/03/vim-table</id>
     <content type="html"><![CDATA[<p>图片非常的大，请耐心等候~~</p>
 
 <!-- more -->
@@ -31,9 +31,9 @@
   
   <entry>
     <title type="html"><![CDATA[我的Vim配置]]></title>
-    <link href="http://cedricporter.github.com/2012/03/vim.html"/>
+    <link href="http://everet.org/2012/03/vim.html"/>
     <updated>2012-03-26T03:11:01+08:00</updated>
-    <id>http://cedricporter.github.com/2012/03/vim</id>
+    <id>http://everet.org/2012/03/vim</id>
     <content type="html"><![CDATA[<p>我的Vim配置，参考了众多大牛的配置。这个配置我用了挺长的一段时间了，觉得用起来还算顺手。</p>
 
 <p>此配置过的Vim非常适合用来写Python、shell和一般的配置文件。</p>

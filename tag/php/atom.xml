@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: PHP | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/php/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/php/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[配置多用户的虚拟主机]]></title>
-    <link href="http://cedricporter.github.com/2012/11/multi-user-nginx-php-server.html"/>
+    <link href="http://everet.org/2012/11/multi-user-nginx-php-server.html"/>
     <updated>2012-11-07T00:06:51+08:00</updated>
-    <id>http://cedricporter.github.com/2012/11/multi-user-nginx-php-server</id>
+    <id>http://everet.org/2012/11/multi-user-nginx-php-server</id>
     <content type="html"><![CDATA[<p>趁这段时间有空，换成Xen的VPS，系统装了Ubuntu 12.04。决定重新配置一下服务器，另外将Web Server从Apache换成Nginx。</p>
 
 <h2>目标</h2>
@@ -266,9 +266,9 @@
   
   <entry>
     <title type="html"><![CDATA[修正WP-Syntax高亮Python字符串的bug]]></title>
-    <link href="http://cedricporter.github.com/2012/06/fix-wp-syntax-python-string-bug.html"/>
+    <link href="http://everet.org/2012/06/fix-wp-syntax-python-string-bug.html"/>
     <updated>2012-06-12T05:33:17+08:00</updated>
-    <id>http://cedricporter.github.com/2012/06/fix-wp-syntax-python-string-bug</id>
+    <id>http://everet.org/2012/06/fix-wp-syntax-python-string-bug</id>
     <content type="html"><![CDATA[<p><strong>SyntaxHighlighter Evolved</strong>是wordpress的一个Javascript实现的代码高亮插件，可惜的我的vps网速非常慢，加载一个有代码的页面要等很久才会高亮，这让对读者是非常不友好的，而且不支持rss输出的高亮。于是我想把代码高亮放在服务器这边做好。虽然有人说WP-Syntax会造成服务器压力大，但是如果我们将文章页面都缓存了，那就不存在WP-Syntax高亮时造成的过多的压力。</p>
 
 <p>于是我准备切换到WP-Syntax阵营。不幸的是，我刚刚装上WP-Syntax这个插件，贴上的<a href="http://everet.org/2012/03/ftp-server.html">ftp.py</a>的Python代码，就发现语法高亮出错了！！</p>
@@ -302,9 +302,9 @@
   
   <entry>
     <title type="html"><![CDATA[低内存VPS的配置]]></title>
-    <link href="http://cedricporter.github.com/2012/01/low-memory-vps-configuration.html"/>
+    <link href="http://everet.org/2012/01/low-memory-vps-configuration.html"/>
     <updated>2012-01-20T05:36:01+08:00</updated>
-    <id>http://cedricporter.github.com/2012/01/low-memory-vps-configuration</id>
+    <id>http://everet.org/2012/01/low-memory-vps-configuration</id>
     <content type="html"><![CDATA[<p>十几天前和隔壁宿舍的伟大的晓彬同学一起低价购置了一台二手电脑摆在宿舍做服务器，处理器虽然只有1.6Ghz，不过至少也有1G的内存可用。装了Ubuntu Server 11.10，机箱后面只是插了电源和网线，因为木有钱，所有就不买显示器，不过买了也占位置。另外，因为学校是华南地区教育网的接入点，所以我们每人端口都有一个公网的固定IP，这是做服务器的良好条件啊~这个真是太幸福啦~</p>
 
 <p>不过寒假回家了，宿舍的服务器总不能开着吧，到时把宿舍烧了就悲剧了:-( 。于是乎，还是租个虚拟服务器比较靠谱。</p>

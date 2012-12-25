@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: WPF | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/wpf/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/wpf/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[我们的图像处理 Imagination Factory]]></title>
-    <link href="http://cedricporter.github.com/2012/01/imagination-factory.html"/>
+    <link href="http://everet.org/2012/01/imagination-factory.html"/>
     <updated>2012-01-29T10:01:18+08:00</updated>
-    <id>http://cedricporter.github.com/2012/01/imagination-factory</id>
+    <id>http://everet.org/2012/01/imagination-factory</id>
     <content type="html"><![CDATA[<p>Imagination Factory是一款轻巧美观的图像浏览和图像处理软件。这是我们大一时的C++大作业。写下来记录一下以前做了些什么。</p>
 
 <p>我们小组除了俺之外有陈可昕和康磊，两人都是天才少年。陈可昕同学巾帼不让须眉，交给她的几本数千页的WPF英文书籍她都很快就可以消化。康磊同学理科高人，复杂的数学问题他都可以轻松搞定然后去看动漫了，俺有幸可以与此神人同宿舍，只可惜神人已经转专业到了电信。</p>
@@ -47,9 +47,9 @@
   
   <entry>
     <title type="html"><![CDATA[我们的游戏 Scar]]></title>
-    <link href="http://cedricporter.github.com/2012/01/scar.html"/>
+    <link href="http://everet.org/2012/01/scar.html"/>
     <updated>2012-01-22T08:24:18+08:00</updated>
-    <id>http://cedricporter.github.com/2012/01/scar</id>
+    <id>http://everet.org/2012/01/scar</id>
     <content type="html"><![CDATA[<p>Scar，中文名：伤疤，是我们的<strong>《计算机图形学》</strong>和<strong>《IT项目管理》</strong>的大作业。虽然不想做的很大，但是最后我们写了4万多行代码。发现也是挺大的。</p>
 
 <h2><strong>简介</strong></h2>

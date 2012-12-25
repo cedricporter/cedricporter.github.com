@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: compile | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/compile/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/compile/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[走进Python: 为Python增加新语法]]></title>
-    <link href="http://cedricporter.github.com/2012/07/add-new-grammer-to-python.html"/>
+    <link href="http://everet.org/2012/07/add-new-grammer-to-python.html"/>
     <updated>2012-07-26T05:43:28+08:00</updated>
-    <id>http://cedricporter.github.com/2012/07/add-new-grammer-to-python</id>
+    <id>http://everet.org/2012/07/add-new-grammer-to-python</id>
     <content type="html"><![CDATA[<p><strong>原文地址：</strong><a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/">http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/</a></p>
 
 <p><strong>译文地址：</strong><a href="http://everet.org/2012/07/add-new-grammer-to-python.html">http://everet.org/2012/07/add-new-grammer-to-python.html</a></p>
@@ -607,9 +607,9 @@
   
   <entry>
     <title type="html"><![CDATA[Python使用spark模块构造计算器]]></title>
-    <link href="http://cedricporter.github.com/2012/05/python-spark-calculator.html"/>
+    <link href="http://everet.org/2012/05/python-spark-calculator.html"/>
     <updated>2012-05-16T06:24:58+08:00</updated>
-    <id>http://cedricporter.github.com/2012/05/python-spark-calculator</id>
+    <id>http://everet.org/2012/05/python-spark-calculator</id>
     <content type="html"><![CDATA[<h2>Spark简介</h2>
 
 <p>Spark 解析器与 EBNF 语法有一些共同之处，但它将解析／处理过程分成了比传统的 EBNF 语法所允许的更小的组件。Spark 的优点在于，它对整个过程中每一步操作的控制都进行了微调，还提供了将定制代码插入到过程中的能力。</p>
@@ -883,9 +883,9 @@
   
   <entry>
     <title type="html"><![CDATA[用LL(1)递归下降语法器构造一个计算器]]></title>
-    <link href="http://cedricporter.github.com/2012/05/calculator-by-recursive-descent-parser.html"/>
+    <link href="http://everet.org/2012/05/calculator-by-recursive-descent-parser.html"/>
     <updated>2012-05-16T06:00:04+08:00</updated>
-    <id>http://cedricporter.github.com/2012/05/calculator-by-recursive-descent-parser</id>
+    <id>http://everet.org/2012/05/calculator-by-recursive-descent-parser</id>
     <content type="html"><![CDATA[<h2>LL(1)</h2>
 
 <p>何为LL(1)？通俗来说就是向前看一个词法单元的自顶向下解析器。两个L都代表left-to-right，第一个L表示解析器按“从左到右”的顺序解析输入内容；第二个L表示下降解析时也是按“从左到右”的顺序遍历子节点。而(1)表示它使用一个向前看 词法单元。</p>
@@ -1152,9 +1152,9 @@
   
   <entry>
     <title type="html"><![CDATA[构建LL(1)递归下降语法解析器]]></title>
-    <link href="http://cedricporter.github.com/2012/05/building-recursive-descent-parser.html"/>
+    <link href="http://everet.org/2012/05/building-recursive-descent-parser.html"/>
     <updated>2012-05-16T05:59:07+08:00</updated>
-    <id>http://cedricporter.github.com/2012/05/building-recursive-descent-parser</id>
+    <id>http://everet.org/2012/05/building-recursive-descent-parser</id>
     <content type="html"><![CDATA[<p>不管什么语言应用，识别语言这一步都很重要。</p>
 
 <p>在小学时，大家都学习过如何分辨句子中的不同语言成分，例如动词和名词等。识别计算机语言也是如此（我们称之为语法分析）。</p>
@@ -1227,9 +1227,9 @@ else «parse error »
   
   <entry>
     <title type="html"><![CDATA[Python文法]]></title>
-    <link href="http://cedricporter.github.com/2012/05/python-grammar.html"/>
+    <link href="http://everet.org/2012/05/python-grammar.html"/>
     <updated>2012-05-15T03:09:29+08:00</updated>
-    <id>http://cedricporter.github.com/2012/05/python-grammar</id>
+    <id>http://everet.org/2012/05/python-grammar</id>
     <content type="html"><![CDATA[<p>文法以一种简洁的形式描述着语言的语法。</p>
 
 <p>以下是Python的文法，摘自Python源码目录下的Grammar/Grammar。</p>

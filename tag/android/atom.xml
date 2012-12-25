@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Android | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/android/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/android/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[有什么样的硬件，用什么样的软件]]></title>
-    <link href="http://cedricporter.github.com/2012/12/hardware-decide-the-software.html"/>
+    <link href="http://everet.org/2012/12/hardware-decide-the-software.html"/>
     <updated>2012-12-04T03:39:17+08:00</updated>
-    <id>http://cedricporter.github.com/2012/12/hardware-decide-the-software</id>
+    <id>http://everet.org/2012/12/hardware-decide-the-software</id>
     <content type="html"><![CDATA[<p>两年多前买的摩托罗拉的里程碑1代，现在竟然已经无力支撑go桌面这样庞大的软件了。虽然我很喜欢go桌面，但是，现在手机已经无力承担如此重负。确实，什么样的基础就应该过什么样的生活，过高的追求只会让生活变得像一条狗一样，苟延残喘。 <!-- more -->
 里程碑的硬件已经强过以前我家的电脑了，以前我的台式机只有650MHz的CPU，64M的内存，9GB的硬盘，但都可以轻松跑Win 2k，再跑个VC也绰绰有余。而现在的一台手机，CPU超频到了800MHz，内存256MB，跑一个桌面就卡到爆炸，其他东西就都不用用了。这个是为什么呢？果然，无论有多少硬件资源，都会被平庸的程序员挥霍干净。</p>
 
@@ -31,9 +31,9 @@
   
   <entry>
     <title type="html"><![CDATA[在Android管理远程主机]]></title>
-    <link href="http://cedricporter.github.com/2012/02/android-controls-computer.html"/>
+    <link href="http://everet.org/2012/02/android-controls-computer.html"/>
     <updated>2012-02-05T03:21:39+08:00</updated>
-    <id>http://cedricporter.github.com/2012/02/android-controls-computer</id>
+    <id>http://everet.org/2012/02/android-controls-computer</id>
     <content type="html"><![CDATA[<p>在Android有许多ssh的工具，其中ConnectBot就是一款有趣方便的工具。</p>
 
 <p>我们可以使用它来远程管理我们的主机。</p>

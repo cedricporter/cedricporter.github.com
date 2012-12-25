@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Design | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/design/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/design/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[论程序之帮助文档]]></title>
-    <link href="http://cedricporter.github.com/2012/05/help.html"/>
+    <link href="http://everet.org/2012/05/help.html"/>
     <updated>2012-05-03T08:35:31+08:00</updated>
-    <id>http://cedricporter.github.com/2012/05/help</id>
+    <id>http://everet.org/2012/05/help</id>
     <content type="html"><![CDATA[<p>每个程序都拥有自己的生命，每个程序都应该拥有自己的帮助文档。一个好的帮助文档可以让一个程序的寿命延长。当然，有了一个好的帮助文档还不够，还需要友好快捷的帮助方式。</p>
 
 <h2>Shell</h2>

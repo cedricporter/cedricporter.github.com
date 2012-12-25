@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: OGRE | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/ogre/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/ogre/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[神奇的Python：解析OGRE配置文件]]></title>
-    <link href="http://cedricporter.github.com/2012/03/python-parse-ogre-configuration-file.html"/>
+    <link href="http://everet.org/2012/03/python-parse-ogre-configuration-file.html"/>
     <updated>2012-03-17T03:19:52+08:00</updated>
-    <id>http://cedricporter.github.com/2012/03/python-parse-ogre-configuration-file</id>
+    <id>http://everet.org/2012/03/python-parse-ogre-configuration-file</id>
     <content type="html"><![CDATA[<blockquote><p>OGRE（Object-Oriented Graphics Rendering Engine，即：面向对象图形渲染引擎）是一个用C++开发的面向场景、非常灵活的3D引擎，它旨在让开发人员更容易、更直接地利用硬件加速的3D图形系统开发应用。这个类库隐藏了底层系统库（如：Direct3D和OpenGL）的所有细节，提供了一个基于世界对象和其他直观类的接口。 译者注:ogre在英文中意为：食人魔鬼, 怪物, 象鬼的人，故其LOGO是一个怪物头。</p></blockquote>
 
 <p>以上引用自百度百科。</p>
@@ -228,9 +228,9 @@ Zip=../media/packs/skybox.zip</p>
   
   <entry>
     <title type="html"><![CDATA[Clover架构设计会议记录]]></title>
-    <link href="http://cedricporter.github.com/2012/01/clover-architecture-design-meeting.html"/>
+    <link href="http://everet.org/2012/01/clover-architecture-design-meeting.html"/>
     <updated>2012-01-31T00:23:14+08:00</updated>
-    <id>http://cedricporter.github.com/2012/01/clover-architecture-design-meeting</id>
+    <id>http://everet.org/2012/01/clover-architecture-design-meeting</id>
     <content type="html"><![CDATA[<p><strong>消息记录</strong></p>
 
 <p>消息分组:讨论组</p>
@@ -260,7 +260,7 @@ Zip=../media/packs/skybox.zip</p>
 <p>15:11:04</p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/01/EARXHLNMG6QY4MSIYYJ.png"><img src="http://everet.org/wp-content/uploads/2012/01/EARXHLNMG6QY4MSIYYJ_thumb.png" alt="EARXH%L@NMG6Q@Y4MSIY(YJ" /></a>15:11:04
-杨旭瑜<a href="&#109;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#x79;&#x61;&#110;&#103;&#120;&#x75;&#121;&#117;&#x5f;&#102;&#105;&#x73;&#104;&#64;&#x71;&#113;&#46;&#99;&#x6f;&#109;">&#121;&#x61;&#x6e;&#103;&#x78;&#x75;&#x79;&#117;&#x5f;&#x66;&#105;&#115;&#104;&#x40;&#113;&#113;&#46;&#99;&#111;&#x6d;</a>中止了语音通话。</p>
+杨旭瑜<a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#x79;&#97;&#x6e;&#103;&#x78;&#x75;&#x79;&#x75;&#x5f;&#102;&#x69;&#115;&#x68;&#64;&#x71;&#113;&#46;&#99;&#x6f;&#109;">&#x79;&#x61;&#x6e;&#103;&#120;&#x75;&#121;&#117;&#95;&#102;&#x69;&#x73;&#104;&#x40;&#x71;&#x71;&#46;&#x63;&#111;&#x6d;</a>中止了语音通话。</p>
 
 <p>XellOs</p>
 
@@ -1685,9 +1685,9 @@ XellOs(636202)中止了语音通话。</p>
   
   <entry>
     <title type="html"><![CDATA[Clover进度]]></title>
-    <link href="http://cedricporter.github.com/2012/01/clover-progress.html"/>
+    <link href="http://everet.org/2012/01/clover-progress.html"/>
     <updated>2012-01-28T01:31:58+08:00</updated>
-    <id>http://cedricporter.github.com/2012/01/clover-progress</id>
+    <id>http://everet.org/2012/01/clover-progress</id>
     <content type="html"><![CDATA[<h3>2012-3-30:</h3>
 
 <p>今天我们把视频提交了。也上传了一份。</p>
@@ -2161,9 +2161,9 @@ XellOs(636202)中止了语音通话。</p>
   
   <entry>
     <title type="html"><![CDATA[Python与OGRE之开篇]]></title>
-    <link href="http://cedricporter.github.com/2012/01/python-ogre-start.html"/>
+    <link href="http://everet.org/2012/01/python-ogre-start.html"/>
     <updated>2012-01-27T05:02:52+08:00</updated>
-    <id>http://cedricporter.github.com/2012/01/python-ogre-start</id>
+    <id>http://everet.org/2012/01/python-ogre-start</id>
     <content type="html"><![CDATA[<p>OGRE是什么？百度百科给的解释是：“OGRE（Object-Oriented Graphics Rendering Engine，即：面向对象图形渲染引擎）是一个用C++开发的面向场景、非常灵活的3D引擎，它旨在让开发人员更容易、更直接地利用硬件加速的3D图形系统开发应用。这个类库隐藏了底层系统库（如：Direct3D和OpenGL）的所有细节，提供了一个基于世界对象和其他直观类的接口。 译者注:ogre在英文中意为：食人魔鬼, 怪物, 象鬼的人，故其LOGO是一个怪物头。”</p>
 
 <p>Python是什么？“Python是一种面向对象、直译式计算机程序设计语言，由<a href="http://baike.baidu.com/view/2975166.htm">Guido van Rossum</a>于1989年底发明， 第一个公开发行版发行于1991年。Python语法简捷而清晰，具有丰富和强大的类库。它常被昵称为胶水语言，它能够很轻松的把用其他语言制作的各种模块（尤其是C/C++）轻松地联结在一起。常见的一种应用情形是，使用python快速生成程序的原型（有时甚至是程序的最终界面），然后对其中有特别要求的部分，用更合适的语言改写，比如3D游戏中的图形渲染模块，速度要求非常高，就可以用C++重写。”摘自百度百科。</p>
@@ -2291,9 +2291,9 @@ XellOs(636202)中止了语音通话。</p>
   
   <entry>
     <title type="html"><![CDATA[我们的游戏 Scar]]></title>
-    <link href="http://cedricporter.github.com/2012/01/scar.html"/>
+    <link href="http://everet.org/2012/01/scar.html"/>
     <updated>2012-01-22T08:24:18+08:00</updated>
-    <id>http://cedricporter.github.com/2012/01/scar</id>
+    <id>http://everet.org/2012/01/scar</id>
     <content type="html"><![CDATA[<p>Scar，中文名：伤疤，是我们的<strong>《计算机图形学》</strong>和<strong>《IT项目管理》</strong>的大作业。虽然不想做的很大，但是最后我们写了4万多行代码。发现也是挺大的。</p>
 
 <h2><strong>简介</strong></h2>

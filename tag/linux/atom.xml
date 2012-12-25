@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Linux | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/linux/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/linux/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[配置多用户的虚拟主机]]></title>
-    <link href="http://cedricporter.github.com/2012/11/multi-user-nginx-php-server.html"/>
+    <link href="http://everet.org/2012/11/multi-user-nginx-php-server.html"/>
     <updated>2012-11-07T00:06:51+08:00</updated>
-    <id>http://cedricporter.github.com/2012/11/multi-user-nginx-php-server</id>
+    <id>http://everet.org/2012/11/multi-user-nginx-php-server</id>
     <content type="html"><![CDATA[<p>趁这段时间有空，换成Xen的VPS，系统装了Ubuntu 12.04。决定重新配置一下服务器，另外将Web Server从Apache换成Nginx。</p>
 
 <h2>目标</h2>
@@ -266,9 +266,9 @@
   
   <entry>
     <title type="html"><![CDATA[screen在ssh远程登录中的使用]]></title>
-    <link href="http://cedricporter.github.com/2012/11/screen-on-ssh.html"/>
+    <link href="http://everet.org/2012/11/screen-on-ssh.html"/>
     <updated>2012-11-01T09:29:12+08:00</updated>
-    <id>http://cedricporter.github.com/2012/11/screen-on-ssh</id>
+    <id>http://everet.org/2012/11/screen-on-ssh</id>
     <content type="html"><![CDATA[<p>11月了，没想到10月份竟然木有写博客。这几天在迁移服务器，时间不赶，就慢慢弄，顺便记录一下一些技巧。</p>
 
 <p>首先，远程ssh登录到服务器，可能中途会出现网络断掉或者超时，这时候ssh里面就打不了字了，就只能关闭再重新连接。如果我们用vim编辑一个文件到了一半的话，就会蛋疼地多了一个swp。那么如果我们希望在重新连接回去的时候，可以回到之前的工作状态，我们应该怎么办呢？答案是借助screen。</p>
@@ -333,9 +333,9 @@
   
   <entry>
     <title type="html"><![CDATA[[优化]将Chrome的数据放置到内存中去]]></title>
-    <link href="http://cedricporter.github.com/2012/09/chrome-ramdisk.html"/>
+    <link href="http://everet.org/2012/09/chrome-ramdisk.html"/>
     <updated>2012-09-11T17:52:46+08:00</updated>
-    <id>http://cedricporter.github.com/2012/09/chrome-ramdisk</id>
+    <id>http://everet.org/2012/09/chrome-ramdisk</id>
     <content type="html"><![CDATA[<p>我现在使用的一台电脑的硬盘速度非常慢，Chrome有时也会对硬盘读写也会让机器发生顿卡，真是悲剧。所以我决定将Chrome经常读写的数据放置到内存中以提高响应速度。 Chrome的数据文件主要有用户配置文件以及磁盘缓存文件。在Ubuntu下就分别放置在~/.config/google-chrome以及~/.cache/google-chrome下面。 在Linux下，ramdisk直接就有了，直接拿来用就可以了，而在Windows下需要安装一些程序来创建ramdisk。我们来看看Linux下怎么做。 在Linux下，/dev/shm目录就是映射到了内存，所有写的东西都是直接写到了内存里面，不过这个目录不是持久的，断电就没了。</p>
 
 <h2>Hack</h2>
@@ -442,9 +442,9 @@
   
   <entry>
     <title type="html"><![CDATA[解决Ubuntu下gnome-settings-daemon高磁盘IO的问题]]></title>
-    <link href="http://cedricporter.github.com/2012/08/fix-gnome-settings-daemon-disk-io.html"/>
+    <link href="http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io.html"/>
     <updated>2012-08-31T18:51:34+08:00</updated>
-    <id>http://cedricporter.github.com/2012/08/fix-gnome-settings-daemon-disk-io</id>
+    <id>http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io</id>
     <content type="html"><![CDATA[<p>最近在用Ubuntu的时候，总是发现用着用着整台电脑就卡死了，什么都动不了，然后硬盘灯一直处于常亮状态。几次艰难地打开shell，发现都是gnome-settings-daemon一直在读写硬盘。这个究竟是什么问题呢？</p>
 
 <p>strace一下，看看，这个进程在干啥。</p>
@@ -488,9 +488,9 @@
   
   <entry>
     <title type="html"><![CDATA[网易泡泡的Linux虚拟机宿主提示外挂]]></title>
-    <link href="http://cedricporter.github.com/2012/08/popo-linux.html"/>
+    <link href="http://everet.org/2012/08/popo-linux.html"/>
     <updated>2012-08-21T21:37:22+08:00</updated>
-    <id>http://cedricporter.github.com/2012/08/popo-linux</id>
+    <id>http://everet.org/2012/08/popo-linux</id>
     <content type="html"><![CDATA[<p>在网易实习时，上班一定要开着泡泡，不过泡泡貌似在Linux会严重地水土不服，所以只能装一个虚拟机来解决这个问题。借助<a href="http://everet.org/2012/07/virtualbox-seamless.html">VirtualBox的无缝模式</a>，我们在一定程度上可以缓解这个问题。但是我平时会在多个虚拟桌面。如果恰巧不幸，我长时间没有切换到泡泡所在的虚拟桌面时，那就会有很长时间都不知道有新的泡泡消息。这个无论对人对己都有非常不好的影响。首先，别人无法在第一时间找到我，即便是我开着泡泡；第二，如果有重要通知，我却不幸地没有在泡泡的虚拟桌面时，那就大祸了。<!-- more --></p>
 
 <h2>Ubuntu的4个虚拟桌面</h2>

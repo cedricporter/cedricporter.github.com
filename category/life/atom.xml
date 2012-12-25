@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Life | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/category/life/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/category/life/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[有什么样的硬件，用什么样的软件]]></title>
-    <link href="http://cedricporter.github.com/2012/12/hardware-decide-the-software.html"/>
+    <link href="http://everet.org/2012/12/hardware-decide-the-software.html"/>
     <updated>2012-12-04T03:39:17+08:00</updated>
-    <id>http://cedricporter.github.com/2012/12/hardware-decide-the-software</id>
+    <id>http://everet.org/2012/12/hardware-decide-the-software</id>
     <content type="html"><![CDATA[<p>两年多前买的摩托罗拉的里程碑1代，现在竟然已经无力支撑go桌面这样庞大的软件了。虽然我很喜欢go桌面，但是，现在手机已经无力承担如此重负。确实，什么样的基础就应该过什么样的生活，过高的追求只会让生活变得像一条狗一样，苟延残喘。 <!-- more -->
 里程碑的硬件已经强过以前我家的电脑了，以前我的台式机只有650MHz的CPU，64M的内存，9GB的硬盘，但都可以轻松跑Win 2k，再跑个VC也绰绰有余。而现在的一台手机，CPU超频到了800MHz，内存256MB，跑一个桌面就卡到爆炸，其他东西就都不用用了。这个是为什么呢？果然，无论有多少硬件资源，都会被平庸的程序员挥霍干净。</p>
 
@@ -31,9 +31,9 @@
   
   <entry>
     <title type="html"><![CDATA[VPS主机商跑路了]]></title>
-    <link href="http://cedricporter.github.com/2012/11/vps-host-disappear.html"/>
+    <link href="http://everet.org/2012/11/vps-host-disappear.html"/>
     <updated>2012-11-30T18:35:31+08:00</updated>
-    <id>http://cedricporter.github.com/2012/11/vps-host-disappear</id>
+    <id>http://everet.org/2012/11/vps-host-disappear</id>
     <content type="html"><![CDATA[<p>刚刚切换到风云主机没一个月，而且还是年付的，没想到月底风云主机就倒闭了，A大也跑路了。在收到风云主机的邮件时，风云主机的官网vpswind.com也打不开了，邮件发了也没人回，付款看样子也讨不回来了。不过，好在A大在倒闭前的26号还发了邮件说要倒闭了，言下之意就是要我们自己备份好，然后自己卷卷铺盖走人，也给了几天时间备份数据。</p>
 
 <p>不得不说，风云主机的VPS性价比还是挺不错的，只是没有考虑到倒闭问题。所以，高性价比还是有风险的，而且一旦发生意外，那么所谓的高性价比马上就变得子虚乌有了。<!-- more --></p>
@@ -50,9 +50,9 @@
   
   <entry>
     <title type="html"><![CDATA[语录]]></title>
-    <link href="http://cedricporter.github.com/2012/05/quotation.html"/>
+    <link href="http://everet.org/2012/05/quotation.html"/>
     <updated>2012-05-21T21:42:12+08:00</updated>
-    <id>http://cedricporter.github.com/2012/05/quotation</id>
+    <id>http://everet.org/2012/05/quotation</id>
     <content type="html"><![CDATA[<p><strong>吾尝终日而思矣，不如须臾之所学也；吾尝跂而望矣，不如登高之博见也。登高而招，臂非加长也，而见者远；顺风而呼，声非加疾也，而闻者彰。假舆马者，非利足也，而致千里；假舟楫者，非能水也，而绝江河。君子生非异也，善假于物也。</strong></p>
 
 <p>---- 《劝学》</p>
@@ -172,9 +172,9 @@
   
   <entry>
     <title type="html"><![CDATA[我喜欢的那些书]]></title>
-    <link href="http://cedricporter.github.com/2012/05/favorite-books.html"/>
+    <link href="http://everet.org/2012/05/favorite-books.html"/>
     <updated>2012-05-10T07:40:15+08:00</updated>
-    <id>http://cedricporter.github.com/2012/05/favorite-books</id>
+    <id>http://everet.org/2012/05/favorite-books</id>
     <content type="html"><![CDATA[<h2>C/C++</h2>
 
 <p><strong>深度搜索C++对象模型</strong></p>
@@ -430,9 +430,9 @@
   
   <entry>
     <title type="html"><![CDATA[临近大三结束的一些杂乱的思绪]]></title>
-    <link href="http://cedricporter.github.com/2012/04/mass-thoughts.html"/>
+    <link href="http://everet.org/2012/04/mass-thoughts.html"/>
     <updated>2012-04-29T09:13:05+08:00</updated>
-    <id>http://cedricporter.github.com/2012/04/mass-thoughts</id>
+    <id>http://everet.org/2012/04/mass-thoughts</id>
     <content type="html"><![CDATA[<p>今天博客主页改版终于告一段落，突然发现很久没有更新博客的文章了，于是想写把一些凌乱的思绪记录到博客中。以前的很多想法都是用笔写下的，今天就当作例外吧。不过发现写在博客里可以搜索，写在本子里，只能人工翻阅查找，不过人工翻阅也会帮助回忆以前做了什么。</p>
 
 <p>我写的字很难看，于是想在写日记的时候练字，想起中小学时被老师逼着练字是一件很痛苦的事情，没想到到了大学，写字竟成了一种享受。</p>

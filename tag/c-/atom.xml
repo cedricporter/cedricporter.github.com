@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: C++ | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/c-/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/c-/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Python计算点积]]></title>
-    <link href="http://cedricporter.github.com/2012/06/python-dot-product.html"/>
+    <link href="http://everet.org/2012/06/python-dot-product.html"/>
     <updated>2012-06-13T22:55:56+08:00</updated>
-    <id>http://cedricporter.github.com/2012/06/python-dot-product</id>
+    <id>http://everet.org/2012/06/python-dot-product</id>
     <content type="html"><![CDATA[<p>想起我们在C++中，要实现一个点积，如果是固定维数的向量，我们或许会通过这么一个成员函数来实现</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>cpp  </span></figcaption>
@@ -90,9 +90,9 @@
   
   <entry>
     <title type="html"><![CDATA[errno表]]></title>
-    <link href="http://cedricporter.github.com/2012/05/errno-table.html"/>
+    <link href="http://everet.org/2012/05/errno-table.html"/>
     <updated>2012-05-30T09:12:30+08:00</updated>
-    <id>http://cedricporter.github.com/2012/05/errno-table</id>
+    <id>http://everet.org/2012/05/errno-table</id>
     <content type="html"><![CDATA[<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -602,9 +602,9 @@
   
   <entry>
     <title type="html"><![CDATA[判断两个有符号整数相加是否溢出]]></title>
-    <link href="http://cedricporter.github.com/2012/05/test-int-overflow.html"/>
+    <link href="http://everet.org/2012/05/test-int-overflow.html"/>
     <updated>2012-05-16T20:11:42+08:00</updated>
-    <id>http://cedricporter.github.com/2012/05/test-int-overflow</id>
+    <id>http://everet.org/2012/05/test-int-overflow</id>
     <content type="html"><![CDATA[<p>在Python，默认的整数是long型的，也就是机器字长，32位的最大有符号整数为0x7fffffff，64位最大有符号整数为0x7fffffffffffffff。</p>
 
 <p>而在Python，支持任意大整数的运算，也就是，当我们的long型整数（在Python对象中type为int）溢出的时候，Python会自动将其变成大整数（在Python对象中type为long），也就是和Java中的BigInteger一样，支持任意位数的整数计算，不过更加方便。</p>
@@ -718,9 +718,9 @@
   
   <entry>
     <title type="html"><![CDATA[C++与Python混合编程]]></title>
-    <link href="http://cedricporter.github.com/2012/05/cpp-python.html"/>
+    <link href="http://everet.org/2012/05/cpp-python.html"/>
     <updated>2012-05-04T05:21:46+08:00</updated>
-    <id>http://cedricporter.github.com/2012/05/cpp-python</id>
+    <id>http://everet.org/2012/05/cpp-python</id>
     <content type="html"><![CDATA[<p>混合语言策略可以汲取各语言之所长，让开发更加敏捷。混合语言策略在在应用得当时可以让程序更加优雅。</p>
 
 <p>在《Unix编程艺术》中，Raymond说道：</p>
@@ -1096,9 +1096,9 @@
   
   <entry>
     <title type="html"><![CDATA[UltraDemo —— 数据结构实验平台]]></title>
-    <link href="http://cedricporter.github.com/2012/04/ultrademo.html"/>
+    <link href="http://everet.org/2012/04/ultrademo.html"/>
     <updated>2012-04-19T04:49:32+08:00</updated>
-    <id>http://cedricporter.github.com/2012/04/ultrademo</id>
+    <id>http://everet.org/2012/04/ultrademo</id>
     <content type="html"><![CDATA[<p>传统数据结构教学中，老师站在讲台上讲课，放着PPT，而学生坐在下面神游。 原因何在？因为学生缺乏实践机会，所以注意力难以集中。</p>
 
 <p>于是UltraDemo诞生了！ UltraDemo提供一个自己动手实践的平台，我们可以在UltraDemo中编程，并且可以对数据结构可视化。 这个是一个编程实践平台，可以在上面写代码，编译，执行，并且可以查看图形化的数据结构。UltraDemo支持单步执行，支持断点，支持查看当前作用域的变量，支持自动执行，支持自动执行速度选择，支持动画。</p>

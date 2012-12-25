@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Git | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/git/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/git/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[服务器迁移告一段落]]></title>
-    <link href="http://cedricporter.github.com/2012/02/server-migration.html"/>
+    <link href="http://everet.org/2012/02/server-migration.html"/>
     <updated>2012-02-10T23:23:41+08:00</updated>
-    <id>http://cedricporter.github.com/2012/02/server-migration</id>
+    <id>http://everet.org/2012/02/server-migration</id>
     <content type="html"><![CDATA[<p>原来的主机是基于Xen的，价格非常的贵，于是现在换了基于OpenVZ的burst.net的主机，性能虽然可能比不上原来的，但是便宜了不少。内存从128MB换成了512MB，不过价格便宜了一半。感觉速度还是<strong>快</strong>了很多很多啊~而且还有原生的<strong>ipv6</strong>的支持，不再需要借助tunnelbreaker，真是校网的救星。</p>
 
 <p>不过想起昨天还真是悲剧，开通了10分钟84就将账号发给我，但是竟然没有ip地址，这真是奇葩啊。于是发了ticket就去闲逛了，我们比他们晚13个小时，他们上午8点上班，也就是我们的晚上9点。于是晚上9点多就有人回复解决了问题，把问题修复了，并且把ip重新发了。然后技术支持很好心的问了还有什么需要帮忙，然后就再顺便帮忙分配了一些ipv6的地址。</p>
@@ -105,9 +105,9 @@
   
   <entry>
     <title type="html"><![CDATA[使用Git访问SVN]]></title>
-    <link href="http://cedricporter.github.com/2012/02/access-svn-with-git.html"/>
+    <link href="http://everet.org/2012/02/access-svn-with-git.html"/>
     <updated>2012-02-01T03:33:29+08:00</updated>
-    <id>http://cedricporter.github.com/2012/02/access-svn-with-git</id>
+    <id>http://everet.org/2012/02/access-svn-with-git</id>
     <content type="html"><![CDATA[<p>想必大家都使用过Subversion吧，也想必大家都对SVN这种脱离了网络和服务器就寸步难行的工作方式嗤之以鼻吧。使用SVN我们看个log首要联网。</p>
 
 <p>在服务器在因特网的情况下，网速让使用SVN变成一件十分蛋疼的事情。因为SVN事事都要联网，没有网络就无法工作，这个是集中式版本控制器十分大的缺陷。</p>
@@ -178,9 +178,9 @@ Password for 'Cedric Porter':</p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[给Gitweb加上访问密码，保护我们的私有项目]]></title>
-    <link href="http://cedricporter.github.com/2012/01/gitweb-password.html"/>
+    <link href="http://everet.org/2012/01/gitweb-password.html"/>
     <updated>2012-01-30T00:35:19+08:00</updated>
-    <id>http://cedricporter.github.com/2012/01/gitweb-password</id>
+    <id>http://everet.org/2012/01/gitweb-password</id>
     <content type="html"><![CDATA[<p>Gitweb是Git提供的一个基于web的版本查看工具，可以在网页浏览我们的版本库，挺像Google Code上面的网页浏览版本库。我们可以使用cgi方式，让gitweb运行在apache中，如果在nginx上，我们还需要一个包装才可以运行cgi。</p>
 
 <p>使用Gitweb很方便，但是如果是一些私有的项目，谁都可以访问想必大家都不能接受吧。</p>
@@ -569,9 +569,9 @@ Password for 'Cedric Porter':</p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[TortoiseGit访问Gitosis搭建的版本库]]></title>
-    <link href="http://cedricporter.github.com/2012/01/tortoisegit-access-gitosis.html"/>
+    <link href="http://everet.org/2012/01/tortoisegit-access-gitosis.html"/>
     <updated>2012-01-27T23:30:39+08:00</updated>
-    <id>http://cedricporter.github.com/2012/01/tortoisegit-access-gitosis</id>
+    <id>http://everet.org/2012/01/tortoisegit-access-gitosis</id>
     <content type="html"><![CDATA[<p>首先，我们创建好公钥和密钥，如何创建可以参考 <a href="http://everet.org/2012/01/management-remote-host.html">http://everet.org/2012/01/management-remote-host.html</a> 。</p>
 
 <p>然后把公钥id_rsa.pub发给Git版本库的管理员。</p>
@@ -633,9 +633,9 @@ Password for 'Cedric Porter':</p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[Ubuntu使用Gitosis搭建Git服务器，Windows客户端支持中文]]></title>
-    <link href="http://cedricporter.github.com/2012/01/gitosis-in-ubuntu.html"/>
+    <link href="http://everet.org/2012/01/gitosis-in-ubuntu.html"/>
     <updated>2012-01-27T06:27:05+08:00</updated>
-    <id>http://cedricporter.github.com/2012/01/gitosis-in-ubuntu</id>
+    <id>http://everet.org/2012/01/gitosis-in-ubuntu</id>
     <content type="html"><![CDATA[<p>更详细的教程请见 《Pro Git》<a href="http://progit.org/book/zh/ch4-7.html">http://progit.org/book/zh/ch4-7.html</a>。</p>
 
 <h3>安装必备工具</h3>

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Apache | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/apache/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/apache/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[配置多用户的虚拟主机]]></title>
-    <link href="http://cedricporter.github.com/2012/11/multi-user-nginx-php-server.html"/>
+    <link href="http://everet.org/2012/11/multi-user-nginx-php-server.html"/>
     <updated>2012-11-07T00:06:51+08:00</updated>
-    <id>http://cedricporter.github.com/2012/11/multi-user-nginx-php-server</id>
+    <id>http://everet.org/2012/11/multi-user-nginx-php-server</id>
     <content type="html"><![CDATA[<p>趁这段时间有空，换成Xen的VPS，系统装了Ubuntu 12.04。决定重新配置一下服务器，另外将Web Server从Apache换成Nginx。</p>
 
 <h2>目标</h2>
@@ -266,9 +266,9 @@
   
   <entry>
     <title type="html"><![CDATA[服务器迁移告一段落]]></title>
-    <link href="http://cedricporter.github.com/2012/02/server-migration.html"/>
+    <link href="http://everet.org/2012/02/server-migration.html"/>
     <updated>2012-02-10T23:23:41+08:00</updated>
-    <id>http://cedricporter.github.com/2012/02/server-migration</id>
+    <id>http://everet.org/2012/02/server-migration</id>
     <content type="html"><![CDATA[<p>原来的主机是基于Xen的，价格非常的贵，于是现在换了基于OpenVZ的burst.net的主机，性能虽然可能比不上原来的，但是便宜了不少。内存从128MB换成了512MB，不过价格便宜了一半。感觉速度还是<strong>快</strong>了很多很多啊~而且还有原生的<strong>ipv6</strong>的支持，不再需要借助tunnelbreaker，真是校网的救星。</p>
 
 <p>不过想起昨天还真是悲剧，开通了10分钟84就将账号发给我，但是竟然没有ip地址，这真是奇葩啊。于是发了ticket就去闲逛了，我们比他们晚13个小时，他们上午8点上班，也就是我们的晚上9点。于是晚上9点多就有人回复解决了问题，把问题修复了，并且把ip重新发了。然后技术支持很好心的问了还有什么需要帮忙，然后就再顺便帮忙分配了一些ipv6的地址。</p>
@@ -356,9 +356,9 @@
   
   <entry>
     <title type="html"><![CDATA[低内存VPS的配置]]></title>
-    <link href="http://cedricporter.github.com/2012/01/low-memory-vps-configuration.html"/>
+    <link href="http://everet.org/2012/01/low-memory-vps-configuration.html"/>
     <updated>2012-01-20T05:36:01+08:00</updated>
-    <id>http://cedricporter.github.com/2012/01/low-memory-vps-configuration</id>
+    <id>http://everet.org/2012/01/low-memory-vps-configuration</id>
     <content type="html"><![CDATA[<p>十几天前和隔壁宿舍的伟大的晓彬同学一起低价购置了一台二手电脑摆在宿舍做服务器，处理器虽然只有1.6Ghz，不过至少也有1G的内存可用。装了Ubuntu Server 11.10，机箱后面只是插了电源和网线，因为木有钱，所有就不买显示器，不过买了也占位置。另外，因为学校是华南地区教育网的接入点，所以我们每人端口都有一个公网的固定IP，这是做服务器的良好条件啊~这个真是太幸福啦~</p>
 
 <p>不过寒假回家了，宿舍的服务器总不能开着吧，到时把宿舍烧了就悲剧了:-( 。于是乎，还是租个虚拟服务器比较靠谱。</p>

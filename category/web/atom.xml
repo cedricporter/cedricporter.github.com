@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Web | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/category/web/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/category/web/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[“反盗链”与反“反盗链”]]></title>
-    <link href="http://cedricporter.github.com/2012/04/anti-hotlink.html"/>
+    <link href="http://everet.org/2012/04/anti-hotlink.html"/>
     <updated>2012-04-11T10:19:17+08:00</updated>
-    <id>http://cedricporter.github.com/2012/04/anti-hotlink</id>
+    <id>http://everet.org/2012/04/anti-hotlink</id>
     <content type="html"><![CDATA[<p>现在很多大网站都有了图片反盗链，于是有时候在某些论坛或者博客就会遇到些“此图片仅限于…用户之间交流与沟通”的图片，这真是无法理喻。</p>
 
 <h2>反盗链</h2>
@@ -188,9 +188,9 @@ RewriteRule .*.(gif|jpg|jpeg|bmp|png)$ <a href="http://www.EverET.org/nohotlink.
   
   <entry>
     <title type="html"><![CDATA[我的FTP Server——ftp.py]]></title>
-    <link href="http://cedricporter.github.com/2012/03/ftp-server.html"/>
+    <link href="http://everet.org/2012/03/ftp-server.html"/>
     <updated>2012-03-24T10:35:06+08:00</updated>
-    <id>http://cedricporter.github.com/2012/03/ftp-server</id>
+    <id>http://everet.org/2012/03/ftp-server</id>
     <content type="html"><![CDATA[<p>在上文中，我们简要地学习了下FTP协议，链接 <a href="http://everet.org/2012/03/ftp-protocol.html">http://everet.org/2012/03/ftp-protocol.html</a>。</p>
 
 <p>有兴趣的同学们可以去围观下。</p>
@@ -1405,9 +1405,9 @@ RewriteRule .*.(gif|jpg|jpeg|bmp|png)$ <a href="http://www.EverET.org/nohotlink.
   
   <entry>
     <title type="html"><![CDATA[Python端口转发及重定向实现Eclipse的TCP/IP Monitor]]></title>
-    <link href="http://cedricporter.github.com/2012/03/python-forwarding-redirecting-tcp-monitor.html"/>
+    <link href="http://everet.org/2012/03/python-forwarding-redirecting-tcp-monitor.html"/>
     <updated>2012-03-23T22:41:54+08:00</updated>
-    <id>http://cedricporter.github.com/2012/03/python-forwarding-redirecting-tcp-monitor</id>
+    <id>http://everet.org/2012/03/python-forwarding-redirecting-tcp-monitor</id>
     <content type="html"><![CDATA[<p>记得在上个学期的时候选了徐扬老师的《Web服务与面向服务的体系结构》，讲了SOA之类的一堆东西。然后实验就是要4个下午做完IBM一个星期的培训课程……</p>
 
 <p>于是偶们便开始无脑地照着下面这本手册来狂做实验。记得要做10多个实验，算一下一个下午要做2-3个实验，所以当场做的话只能无脑操作鸟。不能不说是教育的悲哀啊。</p>
@@ -1606,9 +1606,9 @@ RewriteRule .*.(gif|jpg|jpeg|bmp|png)$ <a href="http://www.EverET.org/nohotlink.
   
   <entry>
     <title type="html"><![CDATA[Mission: FTP Protocol]]></title>
-    <link href="http://cedricporter.github.com/2012/03/ftp-protocol.html"/>
+    <link href="http://everet.org/2012/03/ftp-protocol.html"/>
     <updated>2012-03-18T08:54:17+08:00</updated>
-    <id>http://cedricporter.github.com/2012/03/ftp-protocol</id>
+    <id>http://everet.org/2012/03/ftp-protocol</id>
     <content type="html"><![CDATA[<p>FTP协议以前我用得挺少的，网络课上刘孜文老师曰FTP协议过时也就跳过了。不过现在FTP用得还是挺多的，所以决定围观下FTP。</p>
 
 <p>刘孜文老师的经典名言是：我所学到的东西都不是从课堂上得来的。这点我挺赞同的。</p>

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: DataStructure | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/datastructure/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/datastructure/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[UltraDemo —— 数据结构实验平台]]></title>
-    <link href="http://cedricporter.github.com/2012/04/ultrademo.html"/>
+    <link href="http://everet.org/2012/04/ultrademo.html"/>
     <updated>2012-04-19T04:49:32+08:00</updated>
-    <id>http://cedricporter.github.com/2012/04/ultrademo</id>
+    <id>http://everet.org/2012/04/ultrademo</id>
     <content type="html"><![CDATA[<p>传统数据结构教学中，老师站在讲台上讲课，放着PPT，而学生坐在下面神游。 原因何在？因为学生缺乏实践机会，所以注意力难以集中。</p>
 
 <p>于是UltraDemo诞生了！ UltraDemo提供一个自己动手实践的平台，我们可以在UltraDemo中编程，并且可以对数据结构可视化。 这个是一个编程实践平台，可以在上面写代码，编译，执行，并且可以查看图形化的数据结构。UltraDemo支持单步执行，支持断点，支持查看当前作用域的变量，支持自动执行，支持自动执行速度选择，支持动画。</p>
@@ -390,9 +390,9 @@
   
   <entry>
     <title type="html"><![CDATA[Clover折纸数据结构的文件保存]]></title>
-    <link href="http://cedricporter.github.com/2012/03/clover-save-file.html"/>
+    <link href="http://everet.org/2012/03/clover-save-file.html"/>
     <updated>2012-03-11T08:49:53+08:00</updated>
-    <id>http://cedricporter.github.com/2012/03/clover-save-file</id>
+    <id>http://everet.org/2012/03/clover-save-file</id>
     <content type="html"><![CDATA[<p>Clover的数据结构是由面层，边层和点层所组成。</p>
 
 <h2>面层</h2>

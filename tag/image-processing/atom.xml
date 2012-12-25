@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Image Processing | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/image-processing/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/image-processing/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[对Python图像处理库EffectLab进行性能测试]]></title>
-    <link href="http://cedricporter.github.com/2012/08/profile-of-effectlab.html"/>
+    <link href="http://everet.org/2012/08/profile-of-effectlab.html"/>
     <updated>2012-08-15T01:49:37+08:00</updated>
-    <id>http://cedricporter.github.com/2012/08/profile-of-effectlab</id>
+    <id>http://everet.org/2012/08/profile-of-effectlab</id>
     <content type="html"><![CDATA[<p><a href="http://everet.org/2012/07/effectlab.html">EffectLab</a>也是一个基于PIL的Python的图像库，目的是为了提供更多的特效处理以及更快的测试。</p>
 
 <p>目前EffectLab可以实现的特效可以围观之前的文章：<a href="http://everet.org/2012/07/effectlab.html">http://everet.org/2012/07/effectlab.html</a>。</p>
@@ -293,9 +293,9 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
   
   <entry>
     <title type="html"><![CDATA[Python验证码识别之预处理]]></title>
-    <link href="http://cedricporter.github.com/2012/07/captcha-recognition.html"/>
+    <link href="http://everet.org/2012/07/captcha-recognition.html"/>
     <updated>2012-07-16T03:52:14+08:00</updated>
-    <id>http://cedricporter.github.com/2012/07/captcha-recognition</id>
+    <id>http://everet.org/2012/07/captcha-recognition</id>
     <content type="html"><![CDATA[<p>对于验证码叙述，可以见上文<a href="http://everet.org/2012/07/captcha-around-us.html">我们身边的验证码技术</a>。其中我们得知验证码识别流程如下图</p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/07/2.png"><img src="http://everet.org/wp-content/uploads/2012/07/2.png" alt="" /></a></p>
@@ -350,9 +350,9 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
   
   <entry>
     <title type="html"><![CDATA[Python图像处理特效库EffectLab]]></title>
-    <link href="http://cedricporter.github.com/2012/07/effectlab.html"/>
+    <link href="http://everet.org/2012/07/effectlab.html"/>
     <updated>2012-07-16T01:10:04+08:00</updated>
-    <id>http://cedricporter.github.com/2012/07/effectlab</id>
+    <id>http://everet.org/2012/07/effectlab</id>
     <content type="html"><![CDATA[<p>EffectLab是使用Python编写的一个快速测试图像处理特效的实验库，EffectLab目前基于PIL。方便测试图像处理算法。</p>
 
 <p>EffectLab正在处于开发过程中（其实几天前才开始），日后会逐渐增加更多的特效。 目前特效处理用纯Python实现，这个运行速度十分地缓慢，所以后期会用C把部分特效重写。</p>
@@ -436,9 +436,9 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
   
   <entry>
     <title type="html"><![CDATA[Python根据图片生成字符画]]></title>
-    <link href="http://cedricporter.github.com/2012/05/python-ascii-art.html"/>
+    <link href="http://everet.org/2012/05/python-ascii-art.html"/>
     <updated>2012-05-07T04:50:19+08:00</updated>
-    <id>http://cedricporter.github.com/2012/05/python-ascii-art</id>
+    <id>http://everet.org/2012/05/python-ascii-art</id>
     <content type="html"><![CDATA[<p>字符画很好玩，我们来看看怎样将一张图片变成字符画。</p>
 
 <p>我们首先将图片变成黑白的，那么每个像素的取值范围为：0-255.</p>
@@ -629,9 +629,9 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
   
   <entry>
     <title type="html"><![CDATA[Python进行图像处理——生成交替颜色的格子图]]></title>
-    <link href="http://cedricporter.github.com/2012/03/python-image-cell.html"/>
+    <link href="http://everet.org/2012/03/python-image-cell.html"/>
     <updated>2012-03-22T03:46:24+08:00</updated>
-    <id>http://cedricporter.github.com/2012/03/python-image-cell</id>
+    <id>http://everet.org/2012/03/python-image-cell</id>
     <content type="html"><![CDATA[<p>今天小孟师兄要一张贴图做测试，屠文翔同学用Fireworks花了两分钟做了下面的一张图片。但是师兄说要一张颜色相隔的图片，于是Fireworks此时就显得有点力不从心了。于是此时Python就要上场啦。</p>
 
 <p>Fireworks生成的图：</p>

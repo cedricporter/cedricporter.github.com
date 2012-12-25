@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Clover | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/clover/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/clover/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Clover —— Computer Simulation Origami]]></title>
-    <link href="http://cedricporter.github.com/2012/04/clover.html"/>
+    <link href="http://everet.org/2012/04/clover.html"/>
     <updated>2012-04-16T08:09:48+08:00</updated>
-    <id>http://cedricporter.github.com/2012/04/clover</id>
+    <id>http://everet.org/2012/04/clover</id>
     <content type="html"><![CDATA[<p>Clover —— Computer Simulation Origami，计算机模拟折纸。</p>
 
 <p>历经C++、Python加Ogre，最后变成C#加WPF。我们的代码被推翻了一次又一次....</p>
@@ -30,9 +30,9 @@
   
   <entry>
     <title type="html"><![CDATA[Clover折纸数据结构的文件保存]]></title>
-    <link href="http://cedricporter.github.com/2012/03/clover-save-file.html"/>
+    <link href="http://everet.org/2012/03/clover-save-file.html"/>
     <updated>2012-03-11T08:49:53+08:00</updated>
-    <id>http://cedricporter.github.com/2012/03/clover-save-file</id>
+    <id>http://everet.org/2012/03/clover-save-file</id>
     <content type="html"><![CDATA[<p>Clover的数据结构是由面层，边层和点层所组成。</p>
 
 <h2>面层</h2>
@@ -112,9 +112,9 @@
   
   <entry>
     <title type="html"><![CDATA[Clover数据结构]]></title>
-    <link href="http://cedricporter.github.com/2012/02/clover-data-structure.html"/>
+    <link href="http://everet.org/2012/02/clover-data-structure.html"/>
     <updated>2012-02-07T05:09:44+08:00</updated>
-    <id>http://cedricporter.github.com/2012/02/clover-data-structure</id>
+    <id>http://everet.org/2012/02/clover-data-structure</id>
     <content type="html"><![CDATA[<p><a href="http://everet.org/wp-content/uploads/2012/02/fig6.gif"><img src="http://everet.org/wp-content/uploads/2012/02/fig6_thumb.gif" alt="fig6" /></a></p>
 
 <!-- more -->
@@ -130,9 +130,9 @@
   
   <entry>
     <title type="html"><![CDATA[Clover架构设计会议记录]]></title>
-    <link href="http://cedricporter.github.com/2012/01/clover-architecture-design-meeting.html"/>
+    <link href="http://everet.org/2012/01/clover-architecture-design-meeting.html"/>
     <updated>2012-01-31T00:23:14+08:00</updated>
-    <id>http://cedricporter.github.com/2012/01/clover-architecture-design-meeting</id>
+    <id>http://everet.org/2012/01/clover-architecture-design-meeting</id>
     <content type="html"><![CDATA[<p><strong>消息记录</strong></p>
 
 <p>消息分组:讨论组</p>
@@ -162,7 +162,7 @@
 <p>15:11:04</p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/01/EARXHLNMG6QY4MSIYYJ.png"><img src="http://everet.org/wp-content/uploads/2012/01/EARXHLNMG6QY4MSIYYJ_thumb.png" alt="EARXH%L@NMG6Q@Y4MSIY(YJ" /></a>15:11:04
-杨旭瑜<a href="&#x6d;&#97;&#105;&#108;&#116;&#x6f;&#58;&#121;&#97;&#x6e;&#103;&#x78;&#x75;&#121;&#117;&#95;&#x66;&#105;&#115;&#x68;&#64;&#x71;&#x71;&#x2e;&#x63;&#111;&#x6d;">&#x79;&#97;&#110;&#103;&#120;&#117;&#121;&#117;&#95;&#102;&#105;&#115;&#104;&#x40;&#113;&#x71;&#46;&#99;&#x6f;&#109;</a>中止了语音通话。</p>
+杨旭瑜<a href="&#x6d;&#x61;&#105;&#108;&#116;&#111;&#x3a;&#121;&#97;&#110;&#103;&#x78;&#117;&#121;&#117;&#x5f;&#x66;&#105;&#x73;&#104;&#x40;&#113;&#113;&#46;&#99;&#111;&#109;">&#x79;&#x61;&#x6e;&#103;&#120;&#117;&#121;&#x75;&#x5f;&#x66;&#105;&#x73;&#x68;&#x40;&#x71;&#113;&#x2e;&#99;&#x6f;&#109;</a>中止了语音通话。</p>
 
 <p>XellOs</p>
 
@@ -1587,9 +1587,9 @@ XellOs(636202)中止了语音通话。</p>
   
   <entry>
     <title type="html"><![CDATA[Clover进度]]></title>
-    <link href="http://cedricporter.github.com/2012/01/clover-progress.html"/>
+    <link href="http://everet.org/2012/01/clover-progress.html"/>
     <updated>2012-01-28T01:31:58+08:00</updated>
-    <id>http://cedricporter.github.com/2012/01/clover-progress</id>
+    <id>http://everet.org/2012/01/clover-progress</id>
     <content type="html"><![CDATA[<h3>2012-3-30:</h3>
 
 <p>今天我们把视频提交了。也上传了一份。</p>

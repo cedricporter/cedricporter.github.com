@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Captcha | EverET.org]]></title>
-  <link href="http://cedricporter.github.com/tag/captcha/atom.xml" rel="self"/>
-  <link href="http://cedricporter.github.com/"/>
-  <updated>2012-12-25T17:02:31+08:00</updated>
-  <id>http://cedricporter.github.com/</id>
+  <link href="http://everet.org/tag/captcha/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2012-12-25T18:21:10+08:00</updated>
+  <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[探索wordpress验证码插件Clickcha]]></title>
-    <link href="http://cedricporter.github.com/2012/07/clickcha.html"/>
+    <link href="http://everet.org/2012/07/clickcha.html"/>
     <updated>2012-07-16T20:42:02+08:00</updated>
-    <id>http://cedricporter.github.com/2012/07/clickcha</id>
+    <id>http://everet.org/2012/07/clickcha</id>
     <content type="html"><![CDATA[<p>Clickcha是一种新型的图像验证码，只需要用鼠标点击即可以通过验证，虽然对于专门的攻击，这种验证码没什么抵挡能力，但是它还是挺有趣。</p>
 
 <p>对于这种验证码的识别，可以用<a href="http://zh.wikipedia.org/wiki/%E9%9C%8D%E5%A4%AB%E5%8F%98%E6%8D%A2">霍夫变换</a>，就可以方便地找到最圆的圆，以及那些正方形。</p>
@@ -142,9 +142,9 @@
   
   <entry>
     <title type="html"><![CDATA[Python验证码识别之预处理]]></title>
-    <link href="http://cedricporter.github.com/2012/07/captcha-recognition.html"/>
+    <link href="http://everet.org/2012/07/captcha-recognition.html"/>
     <updated>2012-07-16T03:52:14+08:00</updated>
-    <id>http://cedricporter.github.com/2012/07/captcha-recognition</id>
+    <id>http://everet.org/2012/07/captcha-recognition</id>
     <content type="html"><![CDATA[<p>对于验证码叙述，可以见上文<a href="http://everet.org/2012/07/captcha-around-us.html">我们身边的验证码技术</a>。其中我们得知验证码识别流程如下图</p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/07/2.png"><img src="http://everet.org/wp-content/uploads/2012/07/2.png" alt="" /></a></p>
@@ -199,9 +199,9 @@
   
   <entry>
     <title type="html"><![CDATA[我们身边的验证码技术]]></title>
-    <link href="http://cedricporter.github.com/2012/07/captcha-around-us.html"/>
+    <link href="http://everet.org/2012/07/captcha-around-us.html"/>
     <updated>2012-07-09T06:47:01+08:00</updated>
-    <id>http://cedricporter.github.com/2012/07/captcha-around-us</id>
+    <id>http://everet.org/2012/07/captcha-around-us</id>
     <content type="html"><![CDATA[<p>验证码大家几乎经常都会碰到，不过很多时候，我们都仅仅只是输入完事，很少去思考验证码其背后的东西。验证码的英文名叫<strong>CAPTCHA</strong>，全称为<strong>Completely Automated Public Turing test to tell Computers and Humans Apart</strong>（<strong>全自动区分计算机和人类的图灵测试</strong>）。验证码提供一个区分人与机器的手段，主要目的是将机器人拒之门外。</p>
 
 <p>现在的各种网络服务已经成为我们生活的重要的组成部分，像各种社交网站，购物网站，网上银行，投票，论坛等服务，为我们的带来的极大的便利。然而，这些系统都在遭受着恶意程序的滥用。所以，验证码系统用于阻挡这些恶意程序。</p>
