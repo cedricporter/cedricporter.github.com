@@ -129,31 +129,12 @@
 
 <p>  当然还要看一下，生成出来的的Makefile是不是有-O优化，如果有的话需要关闭优化，可以看一下根目录下的Makefile以及objs/Makefile。有的话记得需要改成-O0或者直接删掉就好了。</p>
 
-<pre><code>&lt;!-- more --&gt;  
-</code></pre>
-
-<h2>为调试配置Nginx</h2>
-
-<p> 然后在$HOME/my-nginx/conf下面就是我们的配置文件了，我们编辑nginx.conf，加上：</p>
-
-<figure class='code'><figcaption><span>nginx  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='nginx'><span class='line'>  <span class="k">error_log</span> <span class="s">/dev/stdout</span> <span class="s">debug</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">master_process</span> <span class="no">off</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">daemon</span> <span class="no">off</span><span class="p">;</span>
-</span><span class='line'>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>   我们可以看到error_log /dev/stdout这样一句，这样可以将输出日志直接打印到标准输出，调试的时候可以实时看到输出。</p>
-
-<pre><code>![file:////home/cedricporter/Pictures/snapshot1-small.png](http://everet.org/wp-content/uploads/2012/12/wpid-snapshot1-small.png)
-</code></pre>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2012/12/debug-nginx.html">Read on &rarr;</a>
+    </footer>
   
 
 

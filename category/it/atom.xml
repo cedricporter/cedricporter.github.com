@@ -4,7 +4,7 @@
   <title><![CDATA[Category: IT | EverET.org]]></title>
   <link href="http://everet.org/category/it/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-25T18:21:10+08:00</updated>
+  <updated>2012-12-25T18:55:48+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -41,8 +41,10 @@
 
 <p>  当然还要看一下，生成出来的的Makefile是不是有-O优化，如果有的话需要关闭优化，可以看一下根目录下的Makefile以及objs/Makefile。有的话记得需要改成-O0或者直接删掉就好了。</p>
 
-<pre><code>&lt;!-- more --&gt;  
-</code></pre>
+<!-- more -->
+
+
+<p></p>
 
 <h2>为调试配置Nginx</h2>
 
@@ -65,8 +67,7 @@
 </span></code></pre></td></tr></table></div></figure></notextile></div>
    我们可以看到error_log /dev/stdout这样一句，这样可以将输出日志直接打印到标准输出，调试的时候可以实时看到输出。</p>
 
-<pre><code>![file:////home/cedricporter/Pictures/snapshot1-small.png](http://everet.org/wp-content/uploads/2012/12/wpid-snapshot1-small.png)
-</code></pre>
+<p><img src="http://everet.org/wp-content/uploads/2012/12/wpid-snapshot1-small.png" alt="" /></p>
 ]]></content>
   </entry>
   
