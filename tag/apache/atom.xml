@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Apache | EverET.org]]></title>
   <link href="http://everet.org/tag/apache/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-26T02:57:37+08:00</updated>
+  <updated>2012-12-26T03:07:19+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -79,7 +79,7 @@
 
 <p>我们nginx的权限为www-data，这样可以读～user01/www目录的内容，但是不能写。nginx的站点配置比较简单。我们来看一下可以工作的简单的配置：</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>nginx  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -97,23 +97,23 @@
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>
-</span><span class='line'>    server_name user01.everet.org;&lt;/p&gt;
+</pre></td><td class='code'><pre><code class='nginx'><span class='line'><span class="k">server</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">server_name</span> <span class="s">user01.everet.org</span><span class="p">;</span><span class="kn">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;access_log  /var/log/nginx/user01.everet.org.access.log;
-</span><span class='line'>error_log   /var/log/nginx/user01.everet.org.error.log;
+</span><span class='line'><span class="s">&lt;pre&gt;&lt;code&gt;access_log</span>  <span class="s">/var/log/nginx/user01.everet.org.access.log</span><span class="p">;</span>
+</span><span class='line'><span class="kn">error_log</span>   <span class="s">/var/log/nginx/user01.everet.org.error.log</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'>root    /home/user01/www/;
-</span><span class='line'>index   index.php;
+</span><span class='line'><span class="kn">root</span>    <span class="s">/home/user01/www/</span><span class="p">;</span>
+</span><span class='line'><span class="kn">index</span>   <span class="s">index.php</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'>location / <span class="o">{</span>
-</span><span class='line'>    try_files <span class="nv">$uri</span> <span class="nv">$uri</span>/ /index.php?<span class="nv">$args</span>;
-</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="nv">$uri/</span> <span class="s">/index.php?</span><span class="nv">$args</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>location ~ .php<span class="nv">$ </span><span class="o">{</span>
-</span><span class='line'>    include fastcgi_params;
-</span><span class='line'>    fastcgi_pass unix:/var/run/php5-fpm.user01.sock;
-</span><span class='line'><span class="o">}</span> <span class="o">}</span>
+</span><span class='line'><span class="kn">location</span> <span class="p">~</span> <span class="sr">.php$</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">include</span> <span class="s">fastcgi_params</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">fastcgi_pass</span> <span class="s">unix:/var/run/php5-fpm.user01.sock</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span> <span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </code></pre>
 
