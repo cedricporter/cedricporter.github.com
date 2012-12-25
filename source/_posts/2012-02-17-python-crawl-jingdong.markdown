@@ -32,8 +32,8 @@ http://www.360buy.com/products/670-671-672-0-0-0-0-0-0-0-1-1-22.html
 
 [![QQ截图20120217184108](http://everet.org/wp-content/uploads/2012/02/QQ20120217184108_thumb.png)](http://everet.org/wp-content/uploads/2012/02/QQ20120217184108.png)
 
-{% codeblock %}
 点击下载源代码：[jindong](http://everet.org/wp-content/uploads/2012/02/jindong.rar)
+
 
 {% codeblock python lang:python %}
 
@@ -140,5 +140,4 @@ if __name__=='__main__':
 
 输出如下的文件：
 [![](http://everet.org/wp-content/uploads/2012/02/QQ截图20120217192017.png)](http://everet.org/wp-content/uploads/2012/02/QQ截图20120217192017.png)
-{% endcodeblock %}
 

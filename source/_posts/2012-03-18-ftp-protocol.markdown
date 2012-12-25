@@ -419,15 +419,7 @@ Miscellaneous commands
 
 ### 参考文章：
 
-
-[http://www.w3.org/Protocols/rfc959/](http://www.w3.org/Protocols/rfc959)
-
-[http://vod.sjtu.edu.cn/help/Article_Show.asp?ArticleID=137](http://vod.sjtu.edu.cn/help/Article_Show.asp?ArticleID=137)
-
-[http://blog.miniasp.com/post/2008/06/29/FTP-Protocol-Definitive-Explanation.aspx](http://blog.miniasp.com/post/2008/06/29/FTP-Protocol-Definitive-Explanation.aspx)
-
-Images come from
-
-Computer Networking: A Top Down Approach, 4th edition.
-
-Jim Kurose, Keith Ross Addison-Wesley, July 2007.
+ * [http://www.w3.org/Protocols/rfc959/](http://www.w3.org/Protocols/rfc959)
+ * [http://vod.sjtu.edu.cn/help/Article_Show.asp?ArticleID=137](http://vod.sjtu.edu.cn/help/Article_Show.asp?ArticleID=137)
+ * [http://blog.miniasp.com/post/2008/06/29/FTP-Protocol-Definitive-Explanation.aspx](http://blog.miniasp.com/post/2008/06/29/FTP-Protocol-Definitive-Explanation.aspx)
+ * Images come from Computer Networking: A Top Down Approach, 4th edition. Jim Kurose, Keith Ross Addison-Wesley, July 2007.

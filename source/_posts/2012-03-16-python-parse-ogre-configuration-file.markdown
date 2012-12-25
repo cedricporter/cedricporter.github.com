@@ -21,8 +21,8 @@ OGRE的很多东西都通过配置文件来控制，这样会很灵活。
 
 配置文件的例子如下：
 
-
-> [Bootstrap]
+``` ini
+[Bootstrap]
 Zip=../media/packs/OgreCore.zip
 
 # Resource locations to be added to the default path
@@ -33,14 +33,14 @@ FileSystem=../media/sounds
 Zip=../media/packs/ogretestmap.zip
 Zip=../media/packs/skybox.zip
 #Zip=../media/packs/chiropteraDM.pk3
-
+```
 
 它分了section，在section下有许多配置语句，也就是一些赋值语句。
 
 其配置文件的文法类似如下：<!-- more -->
 
-
-> file –> section+
+```
+file –> section+
 
 section –> ‘[‘ identifier ‘]’body
 
@@ -49,7 +49,7 @@ body –> statement
 statement –> assign_statement
 
 assign_statement –> identifer ‘=’value
-
+```
 
 我们可以借助一个Python的SimpleParse模块进行分析。这是一款强大Python解析模块。
 

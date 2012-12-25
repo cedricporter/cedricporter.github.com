@@ -27,8 +27,8 @@ Image模块仅用一个类来表示PIL中的图像，并提供了许多工厂函
 
 
 
-
-> **Image.new(mode, size)** => image
+```
+**Image.new(mode, size)** => image
 
 **Image.new(mode, size, color)** => image
 
@@ -67,7 +67,7 @@ Image模块仅用一个类来表示PIL中的图像，并提供了许多工厂函
 **im.split()** => sequence    RGB通道分离
 
 **im.transpose(method)** => image
-
+```
 
 
 
@@ -88,13 +88,13 @@ ImageGrab模块可以进行屏幕截图。也可以复制剪切板中的图像�
 
 [http://www.pythonware.com/library/pil/handbook/imagegrab.htm](http://www.pythonware.com/library/pil/handbook/imagegrab.htm)
 
-
-> **ImageGrab.grab()** => image
+```
+**ImageGrab.grab()** => image
 
 **ImageGrab.grab(bbox)** => image
 
 **ImageGrab.grabclipboard()** => image or list of strings or None
-
+```
 
 
 

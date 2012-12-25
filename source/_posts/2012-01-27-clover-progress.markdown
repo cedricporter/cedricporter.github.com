@@ -232,10 +232,7 @@ RotateFaces(faces, edgeMiddle, 180)
 
 <!-- more -->
 
-{% codeblock %}
  [![](http://everet.org/wp-content/uploads/2012/01/QQ截图20120306141134.png)](http://everet.org/wp-content/uploads/2012/01/QQ截图20120306141134.png)
-{% endcodeblock %}
-
 
 
 ### 2012-3-5:

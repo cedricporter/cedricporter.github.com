@@ -20,39 +20,38 @@ Gitweb是Git提供的一个基于web的版本查看工具，可以在网页浏�
 
 我们首先用htpasswd生成密码：
 
-
-> htpasswd -cb 文件名 帐号 密码
+```
+htpasswd -cb 文件名 帐号 密码
 
 htpasswd -b 其他帐号 密码
 
-
 -c代表创建一个新的，-b代表批处理。
+```
+
 <!-- more -->
 
 我们可以在这里[htpasswd ](http://everet.org/wp-content/uploads/2012/01/htpasswd.rar)下载htpasswd.py，然后添加可执行权限，改名为htpasswd放到/usr/local/bin下，就可以在任意地方调用了。
 
 
-> $ chmod +x htpasswd.py
-
+``` console
+$ chmod +x htpasswd.py
 $ cp htpasswd.py /usr/local/bin/htpasswd
-
+```
 
 然后，我们可以
 
-
-> root@everet:~# htpasswd -cb gitweb username_et password
-
+``` console
+root@everet:~# htpasswd -cb gitweb username_et password
 root@everet:~# cat gitweb
-
 username_et:kPj.q84Ax1rrc
-
+```
 
 然后就在当前目录生成了一个gitweb的文件，里面就有帐号和密码，我们将其复制到某个地方，例如/etc/nginx/下。
 
 我们修改我们的配置
 
-
-> # gitweb
+``` nginx
+# gitweb
 
 server {
 
@@ -115,7 +114,7 @@ fastcgi_param SERVER_NAME        $server_name;
 }
 
 }
-
+```
 
 下面附上大牛写的htpasswd。点击这里下载 [htpasswd ](http://everet.org/wp-content/uploads/2012/01/htpasswd.rar)
 

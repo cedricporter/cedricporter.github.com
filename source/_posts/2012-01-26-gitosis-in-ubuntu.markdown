@@ -21,30 +21,32 @@ tags:
 ### 安装必备工具
 
 
-apt-get install git gitweb gitosis
+`apt-get install git gitweb gitosis`
 
 用自己的公钥来初始化Gitosis
 
+``` console
 root@everet:/var# sudo -H -u git gitosis-init < /tmp/authorized_keys
 Initialized empty Git repository in /home/git/repositories/gitosis-admin.git/
 Reinitialized existing Git repository in /home/git/repositories/gitosis-admin.git/
+```
 
 对该仓库中的`post-update` 脚本加上可执行权限
 
-root@everet:/home/git/repositories/gitosis-admin.git/hooks# chmod 755 post-update
+`root@everet:/home/git/repositories/gitosis-admin.git/hooks # chmod 755 post-update`
 
 
 ### 克隆 Gitosis 的控制仓库
 
 
-$ git clone git@everet.org:gitosis-admin.git
+`$ git clone git@everet.org:gitosis-admin.git`
 
 这会得到一个名为 `gitosis-admin` 的工作目录，主要由两部分组成：
 
 <!-- more -->
 
-
-> Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/everet
+``` console
+Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/everet
 $ cd gitosis-admin/
 
 Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/everet/gitosis-admin
@@ -52,12 +54,12 @@ $ find .
 ./gitosis.conf
 ./keydir
 ./keydir/cedricporter@ET.pub
-
+```
 
 如果我们要增加工程：clover，我们可以修改gitosis.conf
 
-
-> $ cat gitosis.conf
+``` console
+$ cat gitosis.conf
 [gitosis]
 
 [group gitosis-admin]
@@ -67,17 +69,17 @@ members = cedricporter@ET
 [group clover]
 writable = clover
 members = cedricporter@ET
-
+```
 
 修改完后，提交并推送到服务器。
 
-
-> $ git commit -am 'add project clover'
+``` console
+$ git commit -am 'add project clover'
 [master 3d0dd1b] add project clover
 Committer: U-CedricPorter-PC\Cedric Porter <Cedric Porter@CedricPorter-PC.(none)>
 
 $ git push
-
+```
 
 
 

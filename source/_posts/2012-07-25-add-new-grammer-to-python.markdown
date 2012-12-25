@@ -350,70 +350,18 @@ Python编译器适宜隔非常复杂的程序，我不想自称专家。然而�
 
 
 ### 参考
-
-
 I used a few excellent references for the construction of this article. Here they are, in no particular order:
-
-
-
 	
   * [PEP 339: Design of the CPython compiler](http://www.python.org/dev/peps/pep-0339/) – probably the most important and comprehensive piece of _official_ documentation for the Python compiler. Being very short, it painfully displays the scarcity of good documentation of the internals of Python.
-
-	
   * "Python Compiler Internals" – an article by Thomas Lee
-
-	
   * "Python: Design and Implementation" – a presentation by Guido van Rossum
-
-	
   * Python (2.5) Virtual Machine, A guided tour – a presentation by Peter Tröger
 
+[[1]](http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id1) From here on, references to files in the Python source are given relatively to the root of the source tree, which is the directory where you run configure and make to build Python.
 
-![http://eli.thegreenplace.net/wp-content/uploads/hline.jpg](https://www.evernote.com/shard/s144/res/25bdd2c0-7952-4d98-8e91-46cd69bd606a.jpg)
+[[2]](http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id2) This demonstrates a common technique I use when modifying source code I’m not familiar with: _work by similarity_. This principle won’t solve all your problems, but it can definitely ease the process. Since everything that has to be done forwhile also has to be done for until, it serves as a pretty good guideline.
 
-
-
-
-
-
-
-
-[[1]](http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id1)
-
-
-From here on, references to files in the Python source are given relatively to the root of the source tree, which is the directory where you run configure and make to build Python.
-
-
-
-
-
-
-
-
-
-
-
-
-[[2]](http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id2)
-
-
-This demonstrates a common technique I use when modifying source code I’m not familiar with: _work by similarity_. This principle won’t solve all your problems, but it can definitely ease the process. Since everything that has to be done forwhile also has to be done for until, it serves as a pretty good guideline.
-
-
-
-
-
-
-
-
-
-
-
-
-[[3]](http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id3)
-
-
-By the way, without this code there’s a compiler warning for Python/symtable.c. The compiler notices that theUntil_kind enumeration value isn’t handled in the switch statement of symtable_visit_stmt and complains. It’s always important to check for compiler warnings!
+[[3]](http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id3) By the way, without this code there’s a compiler warning for Python/symtable.c. The compiler notices that theUntil_kind enumeration value isn’t handled in the switch statement of symtable_visit_stmt and complains. It’s always important to check for compiler warnings!
 
 
 

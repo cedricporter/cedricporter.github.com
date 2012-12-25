@@ -18,13 +18,13 @@ Syntaxhighlighter Evolved是一款Javascript的语法高亮插件，高亮是在
 #### Syntaxhighlighter Evolved Plugin Usage
 
 
-Just wrap your code in `[language]`, such as `**[php]**code here**[/php]**` or `[css]code here[/css]`.
+Just wrap your code in `[language]`, such as `[php]code here[/php]**` or `[css]code here[/css]`.
 
 
 #### WP-Syntax Basic Usage
 
 
-Wrap code blocks with** `<pre lang="LANGUAGE" line="1">` **and **`</pre>`**
+Wrap code blocks with `<pre lang="LANGUAGE" line="1">` and `</pre>`
 
 我们很明显就可以看到两者之间的区别。Syntaxhighlighter Evolved用的是非常特殊的高亮标记**[language]**，如果我们直接卸载Syntaxhighlighter Evolved然后装上WP-Syntax就会导致Syntaxhighlighter Evolved的高亮标记直接输出，而且代码不会被高亮。
 
@@ -108,33 +108,18 @@ output.close()
 
 ### 使用
 
-
-
 {% codeblock bash lang:bash %}
 mysqldump -u root -p wordpress_db | ./migrant.py > fix.sql
 mysql -u root -p wordpress_db < fix.sql
 {% endcodeblock %}
 
 
-
 整个过程就是
-
-
-
-	
   1. 使用mysqldump将数据库dump成文本
-
-	
   2. 通过我们的过滤器程序migrant.py将syntaxhighlighter evolved的高亮风格变成wp-syntax的高亮风格。
-
-	
   3. 导入回数据库。
 
-
-
-
 搞定!
-
 
 对于WP-Syntax的Python多行字符串高亮的bug解决请见：
 

@@ -35,11 +35,10 @@ tags:
 
 我们进入源码文件夹后输入
 
-
-> ./configure
-
+```
+./configure
 make
-
+```
 
 然后就可以编译得到python。
 
@@ -55,14 +54,15 @@ set of libraries to link with).
 
 好，我们现在使用
 
-make OPT=-g
+`make OPT=-g`
 
 试试，嗯，确实用gdb可以调试了，不过单步的时候会在源码那里会一下在上一下在下地跳来跳去。而且查看变量值的时候很多变量显示的是<optimized out>。原因是编译的时候优化了。那优化选项什么时候被加进去了？
 
 我们来看看configure生成的Makefile中的一段。
 
 
-> # Compiler options
+```
+# Compiler options
 OPT= -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes
 BASECFLAGS= -fno-strict-aliasing
 CFLAGS= $(BASECFLAGS) -g -O2 $(OPT) $(EXTRA_CFLAGS)
@@ -70,19 +70,19 @@ CFLAGS= $(BASECFLAGS) -g -O2 $(OPT) $(EXTRA_CFLAGS)
 # be able to build extension modules using the directories specified in the
 # environment variables
 CPPFLAGS= -I. -IInclude -I$(srcdir)/Include
-
+```
 
 可以看到OPT的-O3已经被我们的OPT=-g参数覆盖掉了，不过还有一个-O2在CFLAGS那里。呃，原来源码的README还是不可靠的啊。
 
 我们现在来重新编译：
 
-
-> make clean
-
+{% codeblock console lang:console %}
+make clean
 make -j4 OPT=-g CFLAGS=-g
+{% endcodeblock %}
 
 
-这样编译的时候gcc就不会优化代码了。我们单步的时候就不会跳来跳去，变量的值也不会出现<optimized out>。
+这样编译的时候gcc就不会优化代码了。我们单步的时候就不会跳来跳去，变量的值也不会出现`<optimized out>`。
 
 另外“-j4”选项是指开4个gcc编译，我是2核处理器，所以开4个gcc编译会快些。
 

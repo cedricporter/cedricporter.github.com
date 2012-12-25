@@ -13,9 +13,5 @@ vendor
 node_modules
 .preview-mode
 .directory
-*.~
+*~
 
-source/_includes/custom/asides/tags.html~
-source/_includes/custom/asides/recent_comment.html~
-source/_includes/custom/asides/recent_comments.html~
-source/feed/index.html~

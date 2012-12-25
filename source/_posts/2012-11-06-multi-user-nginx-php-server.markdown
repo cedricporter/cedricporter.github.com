@@ -159,25 +159,18 @@ server {
 }
 {% endcodeblock %}
 
-我们来慢慢阅读一下这个配置。首先，set $cache_uri $request_uri就是将请求的uri保存到我们的变量$cache_uri中。然后，如果请求方法是POST（$request_method = POST）、包含请求字符串（$query_string != ""）、请求的uri包含一些特殊的php文件（$request_url ~* "(/wp-admin/|.........）或者登录过评论过（通过cookie判断，$http_cookie ~* "comment_author|w............"），就将$cache_uri设置为'null cache'，这样是让$cache_uri这个字符串变量变成一个无意义的字符串，以让后面拼接出来的路径无意义。
+我们来慢慢阅读一下这个配置。首先，`set $cache_uri $request_uri`就是将请求的uri保存到我们的变量`$cache_uri`中。然后，如果请求方法是POST（`$request_method = POST`）、包含请求字符串（`$query_string != ""`）、请求的uri包含一些特殊的php文件（`$request_url ~* "(/wp-admin/|.........`）或者登录过评论过（通过cookie判断，`$http_cookie ~* "comment_author|w............"`），就将`$cache_uri`设置为'null cache'，这样是让`$cache_uri`这个字符串变量变成一个无意义的字符串，以让后面拼接出来的路径无意义。
 
-对于 **try_files /wp-content/cache/supercache/$http_host/$cache_uri/index.html $uri $uri/ /index.php;**
+对于 `try_files /wp-content/cache/supercache/$http_host/$cache_uri/index.html $uri $uri/ /index.php;`
 
-这个是依次尝试访问这些文件，成功就直接返回不再继续，如果都找不到就返回最后一个文件/index.php。我们还记得WP Super Cache生成的静态文件结构是/wp-content/cache/supercache/everet.org/2012/01/scar.html/index.html，也就是先尝试WP Super Cache生成的缓存，有就直接返回缓存。
+这个是依次尝试访问这些文件，成功就直接返回不再继续，如果都找不到就返回最后一个文件/index.php。我们还记得WP Super Cache生成的静态文件结构是`/wp-content/cache/supercache/everet.org/2012/01/scar.html/index.html`，也就是先尝试WP Super Cache生成的缓存，有就直接返回缓存。
 
 用ab测试了一下，对于缓存后的博客文章的RPS可以到900，还挺快的啊。
 
 另外，对于wordpress的wp-config.php文件，里面写有数据库的帐号和密码，所以我们需要将权限改为600，即只有user01自己能够读写，其他人无权访问。
 
 
-
-
 ## 参考资料
-
-
-
-
-
 	
   * [WordPress-Nginx + WP Super cache](http://rtcamp.com/tutorials/wordpress-nginx-wp-super-cache/)
 

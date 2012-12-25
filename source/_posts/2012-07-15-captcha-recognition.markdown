@@ -22,7 +22,6 @@ tags:
 
 ## 例子
 
-
 一般的国内的验证都比较喜欢加上噪点，再加上一些干扰线，来扰乱视线。但是这些噪声，对于计算机识别程序来说，基本上没起到什么干扰。
 
 我们来看看下面的验证码，这个是随机选择的15张验证码。左边为原图，右边的为处理过的图片。其中干扰线我们识别出来后用红色将其标记，噪点标红看不清楚我就直接去掉了。<!-- more -->
@@ -47,11 +46,11 @@ tags:
 
 干扰线相对于噪点来说，虽然复杂了一点，但是还是非常的简单。
 
-如何找到干扰线呢？干扰线的搜索问题是具有最优子结构的特性，于是这个问题我们可以用动态规划来解决[1]。
+如何找到干扰线呢？干扰线的搜索问题是具有最优子结构的特性，于是这个问题我们可以用动态规划来解决[^1]。
 
 我们可以建立一个打分表，每个像素有一个分数。
 
-动归的方程(如何画公式[2])为：
+动归的方程(如何画公式[^2])为：
 
 [![](http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-194236.png)](http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-194236.png)
 
@@ -64,14 +63,8 @@ tags:
 
 ## 参考资料
 
-
-
-
-
+  [^1]: Ryan Fortune, Gary Luu, Peter McMahon, **CS229 Project Report: Cracking CAPTCHAs**
 	
-  1. Ryan Fortune, Gary Luu, Peter McMahon, **CS229 Project Report: Cracking CAPTCHAs**
-
-	
-  2. OpenOffice.org Formula How-To
+  [^2]: OpenOffice.org Formula How-To
 
 

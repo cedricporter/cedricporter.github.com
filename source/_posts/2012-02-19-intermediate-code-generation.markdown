@@ -37,52 +37,22 @@ tags:
 
 [![image](http://everet.org/wp-content/uploads/2012/02/image_thumb5.png)](http://everet.org/wp-content/uploads/2012/02/image5.png)
 
- 
 
 这些Token将作为编译过程中最基本的元素。
-
- 
-
-    
-
       
-标识符(identifier)
-       
-a, index
+标识符(identifier) a, index
+      
+左方括号(left bracket) [
           
-
+右方括号(right bracket) ] 
       
-左方括号(left bracket)
-       
-[
+等号(assignment) =
           
-
+加号(plus) + 
       
-右方括号(right bracket)
-       
-]
-          
-
-      
-等号(assignment)
-       
-=
-          
-
-      
-加号(plus)
-       
-+
-          
-
-      
-数字(number)
-       
-4, 2
-         
+数字(number) 4, 2
 
 当这些Token它们组合在一起，就成了句子。在这个时候，我们就可以进行语法分析了。
-
  
 
 我们可以将其组织成一棵抽象的语法树。根节点就是抽象的表达式，因为这个一句话就是一个表达式。然后可以分割为赋值表达式的3个元素，然后逐级分割，到了叶子就是基本的词法单元Token了。

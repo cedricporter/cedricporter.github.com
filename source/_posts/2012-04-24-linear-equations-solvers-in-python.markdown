@@ -33,10 +33,6 @@ tags:
 
 <!-- more -->
 
-{% codeblock %}
-
-{% endcodeblock %}
-
 这里的核心是用到了Python的黑暗魔法eval，eval的第一个参数是表达式，第二个参数是命名空间，也就是把 x = 1j 通过第二个参数把一些值放进去。
 
 [![](http://everet.org/wp-content/uploads/2012/04/Screenshot-at-2012-04-24-200440.png)](http://everet.org/wp-content/uploads/2012/04/Screenshot-at-2012-04-24-200440.png)

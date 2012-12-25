@@ -116,7 +116,7 @@ root@localhost:~#
 ### 断线，丢失之前的工作！？用screen解决ssh的断线重连问题
 
 
-# screen -ls
+`# screen -ls`
 
 可以查看现在有的screen，如果找不到命令可以使用apt-get install screen，更详细的说明请见IBM网站的教程
 
@@ -148,14 +148,14 @@ root@localhost:~#
 
 
 
-
-> [et_wordpress]
+``` ini
+[et_wordpress]
 path = /var/www/et
 secrets file = /etc/rsyncd.secrets
 read only = false
 uid = root
 gid = root
-
+```
 
 
 
@@ -171,20 +171,20 @@ gid = root
 把服务器的数据下载回来，我现在在Windows上，使用cygwin，例如，我把的我的wordpress的文件同步回来，可以使用下述命令：
 
 
-> rsync -vzrtopg --delete --progress   everet.org::et_wordpress   /cygdrive/h/Coding/everet/et
+`rsync -vzrtopg --delete --progress   everet.org::et_wordpress   /cygdrive/h/Coding/everet/et`
 
 
 当我在本地修改了文件，我可以把我的文件push到服务器上面：
 
 
-> rsync -vzrtopg --delete --progress  /cygdrive/h/Coding/everet/et/*   everet.org::et_wordpress
+`rsync -vzrtopg --delete --progress  /cygdrive/h/Coding/everet/et/*   everet.org::et_wordpress`
 
 
 每次都输入那么一长串命令很麻烦吧？我们可以参看上面的第二个标题的使用缩写命令来完成。
 
 
-> echo "rsync -vzrtopg --delete --progress   everet.org::et_wordpress   /cygdrive/h/Coding/everet/et" > /usr/bin/rcet
-echo "rsync -vzrtopg --delete --progress /cygdrive/h/Coding/everet/et/* everet.org::et_wordpress" > /usr/bin/rcet2
+`echo "rsync -vzrtopg --delete --progress   everet.org::et_wordpress   /cygdrive/h/Coding/everet/et" > /usr/bin/rcet`
+`echo "rsync -vzrtopg --delete --progress /cygdrive/h/Coding/everet/et/* everet.org::et_wordpress" > /usr/bin/rcet2`
 
 
 然后我们就可以使用 rcet 来下载服务器的数据，用 rcet2 来把本地的数据推送到服务器。
@@ -192,7 +192,7 @@ echo "rsync -vzrtopg --delete --progress /cygdrive/h/Coding/everet/et/* everet.o
 对于我在cygwin下，每次推送到服务器是文件的属主会发生变化，所以我们在推送完后还需要修改属主，这个在cygwin会出现，不知在纯Linux下会不会，不过应该不会滴。如果出现文件属主改变的问题我们可以在推送完后修改下文件属主。
 
 
-> ssh -l root everet.org "chown www-data:www-data -R /var/www/et"
+`ssh -l root everet.org "chown www-data:www-data -R /var/www/et"`
 
 
 
@@ -202,9 +202,9 @@ echo "rsync -vzrtopg --delete --progress /cygdrive/h/Coding/everet/et/* everet.o
 
 
 
-> rsync -vzrtopg --delete --progress /cygdrive/h/Coding/everet/et/* everet.org::et_wordpress
-ssh -l root everet.org "chown www-data:www-data -R /var/www/et"
-echo "Done."
+`rsync -vzrtopg --delete --progress /cygdrive/h/Coding/everet/et/* everet.org::et_wordpress`
+`ssh -l root everet.org "chown www-data:www-data -R /var/www/et"`
+`echo "Done."`
 
 
 我们就可以方便地推送数据了。

@@ -79,7 +79,7 @@ XellOs
 
 
 
-[![UARF0O4MI_$6HXMIHAA]{98](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA98_thumb.jpg)](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA98.jpg)
+![UARF0O4MI_$6HXMIHAA](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA98_thumb.jpg)
 
 
 
@@ -789,7 +789,7 @@ XellOs
 
 
 
-[![UARF0O4MI_$6HXMIHAA]{98](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA98_thumb2.jpg)](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA982.jpg)
+![UARF0O4MI_$6HXMIHAA](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA98_thumb2.jpg)
 
 
 
@@ -954,7 +954,7 @@ XellOs
 
 
 
-[![}4U8}`MOI7D)}P5`2$Q92TC](http://everet.org/wp-content/uploads/2012/01/4U8MOI7DP52Q92TC_thumb.gif)](http://everet.org/wp-content/uploads/2012/01/4U8MOI7DP52Q92TC.gif)
+![4U8MOI7DQ92TC](http://everet.org/wp-content/uploads/2012/01/4U8MOI7DP52Q92TC_thumb.gif)
 
 
 
@@ -1167,7 +1167,7 @@ XellOs
 
 
 
-[![{~NF`YZ@I7A9P9HQA0BK$SI](http://everet.org/wp-content/uploads/2012/01/NFYZI7A9P9HQA0BKSI_thumb.jpg)](http://everet.org/wp-content/uploads/2012/01/NFYZI7A9P9HQA0BKSI.jpg)
+![I](http://everet.org/wp-content/uploads/2012/01/NFYZI7A9P9HQA0BKSI_thumb.jpg)
 
 
 
@@ -1236,7 +1236,7 @@ XellOs
 
 
 
-[![XN9XY`3P2OI$AVBS4IKR8MW](http://everet.org/wp-content/uploads/2012/01/XN9XY3P2OIAVBS4IKR8MW_thumb.jpg)](http://everet.org/wp-content/uploads/2012/01/XN9XY3P2OIAVBS4IKR8MW.jpg)
+![X](http://everet.org/wp-content/uploads/2012/01/XN9XY3P2OIAVBS4IKR8MW_thumb.jpg)
 
 
 

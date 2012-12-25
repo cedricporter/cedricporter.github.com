@@ -65,8 +65,8 @@ Clover的数据结构是由面层，边层和点层所组成。
 
 
 
-
-> **Clover**                –> VertexLayer EdgeLayer FaceLayer ShadowSytem
+```
+**Clover**                –> VertexLayer EdgeLayer FaceLayer ShadowSytem
 
 **ShadowSysem**->TrunkName num SnapshotNode*
 
@@ -93,7 +93,7 @@ Clover的数据结构是由面层，边层和点层所组成。
 **face_id**         -> positive_number
 
 **edge_id**        -> positive_number
-
+```
 
 我使用自顶向下的语法分析方法，这样实现起来很快，也就是一大堆递归。
 

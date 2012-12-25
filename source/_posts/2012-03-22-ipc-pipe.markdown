@@ -19,11 +19,11 @@ tags:
 
 原型是:
 
-
-> #include <unistd.h>
+```
+#include <unistd.h>
 
 int pipe(int file_descriptor[2]);
-
+```
 
 参数是一个由两个整型的文件描述符组成的数组的指针。成功返回0，失败返回-1，并设置errno来表面失败的原因。
 
@@ -115,8 +115,8 @@ int main(int argc, char *argv[])
 
 下面是在我的虚拟机的输出：（因为有两个屏幕，开个虚拟机让一个鼠标在两个系统两个屏幕间互相移动，这是相当的爽啊）
 
-
-> cedricporter-virtual-machine 1 # ./1
+``` console
+cedricporter-virtual-machine 1 # ./1
 29 - Wrote 5 bytes
 28 - Wrote 5 bytes
 27 - Wrote 5 bytes
@@ -151,3 +151,4 @@ int main(int argc, char *argv[])
 writer done
 cedricporter-virtual-machine 1 # 28 - Read 80 bytes: [17] [16] [15] [14] [13] [12] [11] [10] [9] [8] [7] [6] [5] [4] [3] [2] [1] [0]
 reader done
+```

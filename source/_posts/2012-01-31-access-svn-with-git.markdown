@@ -50,35 +50,25 @@ Google Code对一个项目有4GB的空间，有wiki等等，还可以上传文�
 
  
 
->   
-> 
-> git svn clone --username cedricporter@gmail.com -s [https://et-vim-setting.googlecode.com/svn](https://et-vim-setting.googlecode.com/svn) vim_setting
+`git svn clone --username cedricporter@gmail.com -s https://et-vim-setting.googlecode.com/svn vim_setting`
 
 <!-- more -->
-
->   
 
  
 
 我在用如下命令把我的Windows上的配置文件_vimrc提交到Google Code的SVN服务器上。
 
  
-
->   
-> 
-> Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting       
+``` console
+Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting       
 $ git status         
 # On branch master        
 nothing to commit (working directory clean)
-> 
->    
-> 
-> Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting       
+
+Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting       
 $ git add .
-> 
->    
-> 
-> Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting       
+
+Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting       
 $ git status        
 # On branch master        
 # Changes to be committed:        
@@ -86,23 +76,19 @@ $ git status
 #        
 # new file: _vimrc        
 #
-> 
->    
-> 
-> Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting       
+
+Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting       
 $ git commit -am 'add windows setting'         
 [master 6d6f696] add windows setting        
 1 files changed, 632 insertions(+), 0 deletions(-)        
 create mode 100755 _vimrc
-> 
->    
-> 
-> Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting       
-$ git svn dcommit        
-Committing to [https://et-vim-setting.googlecode.com/svn/trunk](https://et-vim-setting.googlecode.com/svn/trunk) ...        
-Authentication realm: <[https://et-vim-setting.googlecode.com:443](https://et-vim-setting.googlecode.com:443)> Google Code Subversion Repository        
-Password for 'Cedric Porter':        
 
+Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting       
+$ git svn dcommit        
+Committing to https://et-vim-setting.googlecode.com/svn/trunk ...        
+Authentication realm: <https://et-vim-setting.googlecode.com:443> Google Code Subversion Repository        
+Password for 'Cedric Porter':        
+```
 
  
 
