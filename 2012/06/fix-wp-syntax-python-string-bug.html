@@ -111,7 +111,7 @@
 
 <p>于是我准备切换到WP-Syntax阵营。不幸的是，我刚刚装上WP-Syntax这个插件，贴上的<a href="http://everet.org/2012/03/ftp-server.html">ftp.py</a>的Python代码，就发现语法高亮出错了！！</p>
 
-<p>我们可以用简单的代码再现一次这个bug。就是在多行&#8221;&#8217;注释时会出现这个bug。<!-- more --></p>
+<p>我们可以用简单的代码再现一次这个bug。就是在多行’&#8217;’注释时会出现这个bug。<!-- more --></p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/06/Screenshot-from-2012-06-11-211511.png"><img src="http://everet.org/wp-content/uploads/2012/06/Screenshot-from-2012-06-11-211511.png" alt="" /></a></p>
 
@@ -119,15 +119,14 @@
 
 <p>我发现问题处在<strong>wp-syntax/geshi/geshi/python.php</strong>这个文件里。</p>
 
-<p>问题出在设置Python字符串的标记时漏了&#8221;&#8217;，我们给他加上就好了。</p>
+<p>问题出在设置Python字符串的标记时漏了’’‘，我们给他加上就好了。</p>
 
-<figure class='code'><figcaption><span>php  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">//&#39;QUOTEMARKS&#39; =&gt; array(&#39;&quot;&quot;&quot;&#39;, &#39;&quot;&#39;, &quot;&#39;&quot;),</span>
-</span><span class='line'><span class="x">&#39;QUOTEMARKS&#39; =&gt; array(&#39;&quot;&quot;&quot;&#39;, &#39;&quot;&#39;, &quot;&#39;&quot;, &quot;&#39;&#39;&#39;&quot;),</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>php  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="x">//&#39;QUOTEMARKS&#39; =&gt; array(&#39;&quot;&quot;&quot;&#39;, &#39;&quot;&#39;, &quot;&#39;&quot;),</span>
+</span><span class="line"><span class="x">&#39;QUOTEMARKS&#39; =&gt; array(&#39;&quot;&quot;&quot;&#39;, &#39;&quot;&#39;, &quot;&#39;&quot;, &quot;&#39;&#39;&#39;&quot;),</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>最后效果如下。</p>
 

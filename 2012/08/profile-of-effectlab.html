@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="EffectLab也是一个基于PIL的Python的图像库，目的是为了提供更多的特效处理以及更快的测试。 目前EffectLab可以实现的特效可以围观之前的文章：http://everet.org/2012/07/effectlab.html。 古人云：选择了脚本语言就要忍受其速度。 但是， &hellip;">
+  <meta name="description" content="EffectLab也是一个基于PIL的Python的图像库，目的是为了提供更多的特效处理以及更快的测试。 目前EffectLab可以实现的特效可以围观之前的文章：http://everet.org/2012/07/effectlab.html。 古人云：_选择了脚本语言_就要忍受其速度。 但是， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -111,169 +111,165 @@
 
 <p>目前EffectLab可以实现的特效可以围观之前的文章：<a href="http://everet.org/2012/07/effectlab.html">http://everet.org/2012/07/effectlab.html</a>。</p>
 
-<p>古人云：<em>选择了脚本语言</em>就要忍受其速度。</p>
+<p>古人云：_选择了脚本语言_就要忍受其速度。</p>
 
 <p>但是，有时脚本语言的速度已经慢到了无法形容的地步时，我们就开始考虑性能优化了。</p>
 
-<h2>寻找性能热点</h2>
+<h2 id="section">寻找性能热点</h2>
 
 <p>Python有一对很好的性能测试工具：cProfile与pstats。</p>
 
 <p>我们来选择一个波浪效果来做测试：</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&quot;RGB&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
-</span><span class='line'><span class="n">wave</span> <span class="o">=</span> <span class="n">GlobalWaveEffect</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
-</span><span class='line'><span class="n">test</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&quot;test()&quot;</span><span class="p">,</span> <span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="n">p</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="n">p</span><span class="o">.</span><span class="n">strip_dirs</span><span class="p">()</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="s">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&quot;RGB&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</span><span class="line"><span class="n">wave</span> <span class="o">=</span> <span class="n">GlobalWaveEffect</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+</span><span class="line"><span class="n">test</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&quot;test()&quot;</span><span class="p">,</span> <span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="n">p</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="n">p</span><span class="o">.</span><span class="n">strip_dirs</span><span class="p">()</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="s">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>我们可以看到其输出：<!-- more --></p>
 
-<figure class='code'><figcaption><span>console  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="go">Tue Aug 14 17:21:10 2012    profile.data</span>
-</span><span class='line'>
-</span><span class='line'><span class="go">         417923 function calls (417922 primitive calls) in 0.434 seconds</span>
-</span><span class='line'>
-</span><span class='line'><span class="go">   Ordered by: internal time</span>
-</span><span class='line'>
-</span><span class='line'><span class="go">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span>
-</span><span class='line'><span class="go">        1    0.150    0.150    0.434    0.434 Effect.py:92(filter)</span>
-</span><span class='line'><span class="go">    80000    0.068    0.000    0.068    0.000 {round}</span>
-</span><span class='line'><span class="go">    40000    0.051    0.000    0.063    0.000 Effect.py:304(transform)</span>
-</span><span class='line'><span class="go">    41889    0.034    0.000    0.034    0.000 {map}</span>
-</span><span class='line'><span class="go">    41890    0.029    0.000    0.042    0.000 Image.py:606(load)</span>
-</span><span class='line'><span class="go">    40000    0.028    0.000    0.091    0.000 Effect.py:317()</span>
-</span><span class='line'><span class="go">    33433    0.025    0.000    0.071    0.000 Image.py:946(getpixel)</span>
-</span><span class='line'><span class="go">    41890    0.013    0.000    0.013    0.000 {built-in method pixel_access}</span>
-</span><span class='line'><span class="go">    40000    0.012    0.000    0.012    0.000 {math.sin}</span>
-</span><span class='line'><span class="go">    33433    0.011    0.000    0.011    0.000 {built-in method getpixel}</span>
-</span><span class='line'><span class="go">     8457    0.008    0.000    0.019    0.000 Image.py:1260(putpixel)</span>
-</span><span class='line'><span class="go">     8457    0.004    0.000    0.004    0.000 {built-in method putpixel}</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>console  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="go">Tue Aug 14 17:21:10 2012    profile.data</span>
+</span><span class="line">
+</span><span class="line"><span class="go">         417923 function calls (417922 primitive calls) in 0.434 seconds</span>
+</span><span class="line">
+</span><span class="line"><span class="go">   Ordered by: internal time</span>
+</span><span class="line">
+</span><span class="line"><span class="go">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span>
+</span><span class="line"><span class="go">        1    0.150    0.150    0.434    0.434 Effect.py:92(filter)</span>
+</span><span class="line"><span class="go">    80000    0.068    0.000    0.068    0.000 {round}</span>
+</span><span class="line"><span class="go">    40000    0.051    0.000    0.063    0.000 Effect.py:304(transform)</span>
+</span><span class="line"><span class="go">    41889    0.034    0.000    0.034    0.000 {map}</span>
+</span><span class="line"><span class="go">    41890    0.029    0.000    0.042    0.000 Image.py:606(load)</span>
+</span><span class="line"><span class="go">    40000    0.028    0.000    0.091    0.000 Effect.py:317()</span>
+</span><span class="line"><span class="go">    33433    0.025    0.000    0.071    0.000 Image.py:946(getpixel)</span>
+</span><span class="line"><span class="go">    41890    0.013    0.000    0.013    0.000 {built-in method pixel_access}</span>
+</span><span class="line"><span class="go">    40000    0.012    0.000    0.012    0.000 {math.sin}</span>
+</span><span class="line"><span class="go">    33433    0.011    0.000    0.011    0.000 {built-in method getpixel}</span>
+</span><span class="line"><span class="go">     8457    0.008    0.000    0.019    0.000 Image.py:1260(putpixel)</span>
+</span><span class="line"><span class="go">     8457    0.004    0.000    0.004    0.000 {built-in method putpixel}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>可以发现，运行时间最长的函数有<a href="https://github.com/cedricporter/EffectLab/blob/master/EffectLab/Effect.py#L92">第92行的filter</a>，以及<a href="https://github.com/cedricporter/EffectLab/blob/master/EffectLab/Effect.py#L304">第304行的transform</a>。我们可以查看第92行的函数filter，这个函数看上去非常的简短，主要做的是处理每一个像素以及有抗锯齿运算。</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
-</span><span class='line'>    <span class="n">new_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">Effect</span><span class="o">.</span><span class="n">empty_color</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">nband</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
-</span><span class='line'>    <span class="n">antialias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">antialias</span>
-</span><span class='line'>    <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="k">else</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
-</span><span class='line'>        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bottom</span><span class="p">):</span>
-</span><span class='line'>            <span class="n">found</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>            <span class="n">psum</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="n">nband</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="c"># anti-alias</span>
-</span><span class='line'>            <span class="k">for</span> <span class="n">ai</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">antialias</span><span class="p">):</span>
-</span><span class='line'>                <span class="n">_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">ai</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">antialias</span><span class="p">)</span>
-</span><span class='line'>                <span class="k">for</span> <span class="n">aj</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">antialias</span><span class="p">):</span>
-</span><span class='line'>                    <span class="n">_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">aj</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">antialias</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>                    <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="p">(</span><span class="n">_x</span><span class="p">,</span> <span class="n">_y</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>                    <span class="n">u</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">u</span><span class="p">))</span>
-</span><span class='line'>                    <span class="n">v</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
-</span><span class='line'>                    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">u</span> <span class="o">&lt;</span> <span class="n">width</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">height</span><span class="p">):</span>
-</span><span class='line'>                        <span class="k">continue</span>
-</span><span class='line'>                    <span class="n">pt</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
-</span><span class='line'>                    <span class="n">psum</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">psum</span><span class="p">,</span> <span class="n">pt</span><span class="p">)</span>
-</span><span class='line'>                    <span class="n">found</span> <span class="o">+=</span> <span class="mi">1</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="k">if</span> <span class="n">found</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-</span><span class='line'>                <span class="n">psum</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">div</span><span class="p">,</span> <span class="n">psum</span><span class="p">,</span> <span class="p">(</span><span class="n">found</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">psum</span><span class="p">))</span>
-</span><span class='line'>                <span class="n">new_img</span><span class="o">.</span><span class="n">putpixel</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">psum</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="n">new_img</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+</span><span class="line">    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
+</span><span class="line">    <span class="n">new_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">Effect</span><span class="o">.</span><span class="n">empty_color</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">nband</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+</span><span class="line">    <span class="n">antialias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">antialias</span>
+</span><span class="line">    <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="k">else</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bottom</span><span class="p">):</span>
+</span><span class="line">            <span class="n">found</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line">            <span class="n">psum</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="n">nband</span>
+</span><span class="line">
+</span><span class="line">            <span class="c"># anti-alias</span>
+</span><span class="line">            <span class="k">for</span> <span class="n">ai</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">antialias</span><span class="p">):</span>
+</span><span class="line">                <span class="n">_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">ai</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">antialias</span><span class="p">)</span>
+</span><span class="line">                <span class="k">for</span> <span class="n">aj</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">antialias</span><span class="p">):</span>
+</span><span class="line">                    <span class="n">_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">aj</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">antialias</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">                    <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="p">(</span><span class="n">_x</span><span class="p">,</span> <span class="n">_y</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">                    <span class="n">u</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">u</span><span class="p">))</span>
+</span><span class="line">                    <span class="n">v</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+</span><span class="line">                    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">u</span> <span class="o">&lt;</span> <span class="n">width</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">height</span><span class="p">):</span>
+</span><span class="line">                        <span class="k">continue</span>
+</span><span class="line">                    <span class="n">pt</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+</span><span class="line">                    <span class="n">psum</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">psum</span><span class="p">,</span> <span class="n">pt</span><span class="p">)</span>
+</span><span class="line">                    <span class="n">found</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class="line">
+</span><span class="line">            <span class="k">if</span> <span class="n">found</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class="line">                <span class="n">psum</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">div</span><span class="p">,</span> <span class="n">psum</span><span class="p">,</span> <span class="p">(</span><span class="n">found</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">psum</span><span class="p">))</span>
+</span><span class="line">                <span class="n">new_img</span><span class="o">.</span><span class="n">putpixel</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">psum</span><span class="p">))</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="n">new_img</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>以及transform函数：</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">delta_w</span><span class="p">,</span> <span class="n">delta_h</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">radian</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">xoffset</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="n">delta_w</span>
-</span><span class='line'>    <span class="n">offset</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radian</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="n">delta_h</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">offset</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">delta_w</span><span class="p">,</span> <span class="n">delta_h</span><span class="p">):</span>
+</span><span class="line">    <span class="n">radian</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">xoffset</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="n">delta_w</span>
+</span><span class="line">    <span class="n">offset</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radian</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="n">delta_h</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">offset</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-
-<h2>解决性能热点</h2>
+<h2 id="section-1">解决性能热点</h2>
 
 <p>嗯，这个看上去热点都是纯计算的代码，貌似已经没什么优化的空间了，这时怎么办呢？</p>
 
@@ -281,65 +277,63 @@
 
 <p>我们用C来实现Filter函数。重新运行cProfile看看，</p>
 
-<figure class='code'><figcaption><span>console  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="go">Tue Aug 14 17:38:56 2012    profile.data</span>
-</span><span class='line'>
-</span><span class='line'><span class="go">         12 function calls in 0.002 seconds</span>
-</span><span class='line'>
-</span><span class='line'><span class="go">   Ordered by: internal time</span>
-</span><span class='line'>
-</span><span class='line'><span class="go">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span>
-</span><span class='line'><span class="go">        1    0.002    0.002    0.002    0.002 {EffectLab.EffectLabCore.wave_warp}</span>
-</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 {built-in method copy}</span>
-</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:460(_new)</span>
-</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:740(copy)</span>
-</span><span class='line'><span class="go">        1    0.000    0.000    0.002    0.002 Effect.py:310(filter)</span>
-</span><span class='line'><span class="go">        1    0.000    0.000    0.002    0.002 :1()</span>
-</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:606(load)</span>
-</span><span class='line'><span class="go">        1    0.000    0.000    0.002    0.002 Effect.py:37(__call__)</span>
-</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:449(__init__)</span>
-</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 {built-in method pixel_access}</span>
-</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 {method &#39;disable&#39; of &#39;_lsprof.Profiler&#39; objects}</span>
-</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 {method &#39;copy&#39; of &#39;dict&#39; objects}</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>console  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="go">Tue Aug 14 17:38:56 2012    profile.data</span>
+</span><span class="line">
+</span><span class="line"><span class="go">         12 function calls in 0.002 seconds</span>
+</span><span class="line">
+</span><span class="line"><span class="go">   Ordered by: internal time</span>
+</span><span class="line">
+</span><span class="line"><span class="go">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span>
+</span><span class="line"><span class="go">        1    0.002    0.002    0.002    0.002 {EffectLab.EffectLabCore.wave_warp}</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.000    0.000 {built-in method copy}</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:460(_new)</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:740(copy)</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.002    0.002 Effect.py:310(filter)</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.002    0.002 :1()</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:606(load)</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.002    0.002 Effect.py:37(__call__)</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:449(__init__)</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.000    0.000 {built-in method pixel_access}</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.000    0.000 {method &#39;disable&#39; of &#39;_lsprof.Profiler&#39; objects}</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.000    0.000 {method &#39;copy&#39; of &#39;dict&#39; objects}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>此时热点函数已经被C语言的模块给替换了。</p>
 
 <p>我们用timeit模块统计一下运行时间，统计代码如下（其中test函数见上面，里面就是调用了波浪处理效果：</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">t</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="s">&#39;test()&#39;</span><span class="p">,</span> <span class="s">&#39;from __main__ import test&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">N</span> <span class="o">=</span> <span class="mi">3</span>
-</span><span class='line'><span class="n">TIMES</span> <span class="o">=</span> <span class="mi">30</span>
-</span><span class='line'><span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">TIMES</span><span class="p">))</span> <span class="o">/</span> <span class="n">N</span> <span class="o">/</span> <span class="n">TIMES</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="s">&#39;ms&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">t</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="s">&#39;test()&#39;</span><span class="p">,</span> <span class="s">&#39;from __main__ import test&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">N</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class="line"><span class="n">TIMES</span> <span class="o">=</span> <span class="mi">30</span>
+</span><span class="line"><span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">TIMES</span><span class="p">))</span> <span class="o">/</span> <span class="n">N</span> <span class="o">/</span> <span class="n">TIMES</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="s">&#39;ms&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-
-<h2>结果</h2>
+<h2 id="section-2">结果</h2>
 
 <p>我们来看看运行3轮，每轮运行30次，平均一次的时间是多少。
 Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
@@ -347,6 +341,7 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 <p>C版本平均一次时间为：<strong>1.91 ms</strong></p>
 
 <p>可见运行速度是原来的<strong>159倍</strong>。</p>
+
 </div>
 
 

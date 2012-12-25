@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Image Processing | EverET.org]]></title>
   <link href="http://everet.org/tag/image-processing/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-25T23:07:51+08:00</updated>
+  <updated>2012-12-26T02:57:37+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -22,11 +22,11 @@
 
 <p>目前EffectLab可以实现的特效可以围观之前的文章：<a href="http://everet.org/2012/07/effectlab.html">http://everet.org/2012/07/effectlab.html</a>。</p>
 
-<p>古人云：<em>选择了脚本语言</em>就要忍受其速度。</p>
+<p>古人云：_选择了脚本语言_就要忍受其速度。</p>
 
 <p>但是，有时脚本语言的速度已经慢到了无法形容的地步时，我们就开始考虑性能优化了。</p>
 
-<h2>寻找性能热点</h2>
+<h2 id="section">寻找性能热点</h2>
 
 <p>Python有一对很好的性能测试工具：cProfile与pstats。</p>
 
@@ -40,13 +40,13 @@
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&quot;RGB&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="err">“</span><span class="n">RGB</span><span class="err">”</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
 </span><span class='line'><span class="n">wave</span> <span class="o">=</span> <span class="n">GlobalWaveEffect</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 </span><span class='line'><span class="n">test</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&quot;test()&quot;</span><span class="p">,</span> <span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="n">p</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="n">p</span><span class="o">.</span><span class="n">strip_dirs</span><span class="p">()</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="s">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="err">“</span><span class="n">test</span><span class="p">()</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">profile</span><span class="o">.</span><span class="n">data</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="err">“</span><span class="n">profile</span><span class="o">.</span><span class="n">data</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span><span class="o">.</span><span class="n">strip_dirs</span><span class="p">()</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="err">“</span><span class="n">time</span><span class="err">”</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>我们可以看到其输出：<!-- more --></p>
@@ -72,34 +72,26 @@
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
 <span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
 </pre></td><td class='code'><pre><code class='console'><span class='line'><span class="go">Tue Aug 14 17:21:10 2012    profile.data&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="go">&lt;pre&gt;&lt;code&gt;     417923 function calls (417922 primitive calls) in 0.434 seconds</span>
 </span><span class='line'><span class="go">&lt;/code&gt;&lt;/pre&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="go">&lt;p&gt;   Ordered by: internal time&lt;/p&gt;</span>
+</span><span class='line'><span class="go">&lt;p&gt;Ordered by: internal time&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="go">&lt;p&gt;   ncalls  tottime  percall  cumtime  percall filename:lineno(function)&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="go">&lt;pre&gt;&lt;code&gt;    1    0.150    0.150    0.434    0.434 Effect.py:92(filter)</span>
-</span><span class='line'><span class="go">80000    0.068    0.000    0.068    0.000 {round}</span>
-</span><span class='line'><span class="go">40000    0.051    0.000    0.063    0.000 Effect.py:304(transform)</span>
-</span><span class='line'><span class="go">41889    0.034    0.000    0.034    0.000 {map}</span>
-</span><span class='line'><span class="go">41890    0.029    0.000    0.042    0.000 Image.py:606(load)</span>
-</span><span class='line'><span class="go">40000    0.028    0.000    0.091    0.000 Effect.py:317()</span>
-</span><span class='line'><span class="go">33433    0.025    0.000    0.071    0.000 Image.py:946(getpixel)</span>
-</span><span class='line'><span class="go">41890    0.013    0.000    0.013    0.000 {built-in method pixel_access}</span>
-</span><span class='line'><span class="go">40000    0.012    0.000    0.012    0.000 {math.sin}</span>
-</span><span class='line'><span class="go">33433    0.011    0.000    0.011    0.000 {built-in method getpixel}</span>
-</span><span class='line'><span class="go"> 8457    0.008    0.000    0.019    0.000 Image.py:1260(putpixel)</span>
-</span><span class='line'><span class="go"> 8457    0.004    0.000    0.004    0.000 {built-in method putpixel}</span>
-</span><span class='line'><span class="go">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="go">&lt;p&gt;</span>
+</span><span class='line'><span class="go">&lt;p&gt;ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span>
+</span><span class='line'><span class="go">        1    0.150    0.150    0.434    0.434 Effect.py:92(filter)</span>
+</span><span class='line'><span class="go">    80000    0.068    0.000    0.068    0.000 {round}</span>
+</span><span class='line'><span class="go">    40000    0.051    0.000    0.063    0.000 Effect.py:304(transform)</span>
+</span><span class='line'><span class="go">    41889    0.034    0.000    0.034    0.000 {map}</span>
+</span><span class='line'><span class="go">    41890    0.029    0.000    0.042    0.000 Image.py:606(load)</span>
+</span><span class='line'><span class="go">    40000    0.028    0.000    0.091    0.000 Effect.py:317()</span>
+</span><span class='line'><span class="go">    33433    0.025    0.000    0.071    0.000 Image.py:946(getpixel)</span>
+</span><span class='line'><span class="go">    41890    0.013    0.000    0.013    0.000 {built-in method pixel_access}</span>
+</span><span class='line'><span class="go">    40000    0.012    0.000    0.012    0.000 {math.sin}</span>
+</span><span class='line'><span class="go">    33433    0.011    0.000    0.011    0.000 {built-in method getpixel}</span>
+</span><span class='line'><span class="go">     8457    0.008    0.000    0.019    0.000 Image.py:1260(putpixel)</span>
+</span><span class='line'><span class="go">     8457    0.004    0.000    0.004    0.000 {built-in method putpixel}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>可以发现，运行时间最长的函数有<a href="https://github.com/cedricporter/EffectLab/blob/master/EffectLab/Effect.py#L92">第92行的filter</a>，以及<a href="https://github.com/cedricporter/EffectLab/blob/master/EffectLab/Effect.py#L304">第304行的transform</a>。我们可以查看第92行的函数filter，这个函数看上去非常的简短，主要做的是处理每一个像素以及有抗锯齿运算。</p>
@@ -142,13 +134,11 @@
 <span class='line-number'>35</span>
 <span class='line-number'>36</span>
 <span class='line-number'>37</span>
-<span class='line-number'>38</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
+</span><span class='line'>    <span class="n">new_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">Effect</span><span class="o">.</span><span class="n">empty_color</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
-</span><span class='line'><span class="n">new_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">Effect</span><span class="o">.</span><span class="n">empty_color</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">nband</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">nband</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
 </span><span class='line'><span class="n">antialias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">antialias</span>
 </span><span class='line'><span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="k">else</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
 </span><span class='line'>
@@ -191,22 +181,15 @@
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">delta_w</span><span class="p">,</span> <span class="n">delta_h</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">delta_w</span><span class="p">,</span> <span class="n">delta_h</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">radian</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">xoffset</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="n">delta_w</span>
+</span><span class='line'>    <span class="n">offset</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radian</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="n">delta_h</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">radian</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">xoffset</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="n">delta_w</span>
-</span><span class='line'><span class="n">offset</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radian</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="n">delta_h</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">offset</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">offset</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</code></pre>
 
-<h2>解决性能热点</h2>
+<h2 id="section-1">解决性能热点</h2>
 
 <p>嗯，这个看上去热点都是纯计算的代码，貌似已经没什么优化的空间了，这时怎么办呢？</p>
 
@@ -235,34 +218,26 @@
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
 <span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
 </pre></td><td class='code'><pre><code class='console'><span class='line'><span class="go">Tue Aug 14 17:38:56 2012    profile.data&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="go">&lt;pre&gt;&lt;code&gt;     12 function calls in 0.002 seconds</span>
 </span><span class='line'><span class="go">&lt;/code&gt;&lt;/pre&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="go">&lt;p&gt;   Ordered by: internal time&lt;/p&gt;</span>
+</span><span class='line'><span class="go">&lt;p&gt;Ordered by: internal time&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="go">&lt;p&gt;   ncalls  tottime  percall  cumtime  percall filename:lineno(function)&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="go">&lt;pre&gt;&lt;code&gt;    1    0.002    0.002    0.002    0.002 {EffectLab.EffectLabCore.wave_warp}</span>
-</span><span class='line'><span class="go">    1    0.000    0.000    0.000    0.000 {built-in method copy}</span>
-</span><span class='line'><span class="go">    1    0.000    0.000    0.000    0.000 Image.py:460(_new)</span>
-</span><span class='line'><span class="go">    1    0.000    0.000    0.000    0.000 Image.py:740(copy)</span>
-</span><span class='line'><span class="go">    1    0.000    0.000    0.002    0.002 Effect.py:310(filter)</span>
-</span><span class='line'><span class="go">    1    0.000    0.000    0.002    0.002 :1()</span>
-</span><span class='line'><span class="go">    1    0.000    0.000    0.000    0.000 Image.py:606(load)</span>
-</span><span class='line'><span class="go">    1    0.000    0.000    0.002    0.002 Effect.py:37(__call__)</span>
-</span><span class='line'><span class="go">    1    0.000    0.000    0.000    0.000 Image.py:449(__init__)</span>
-</span><span class='line'><span class="go">    1    0.000    0.000    0.000    0.000 {built-in method pixel_access}</span>
-</span><span class='line'><span class="go">    1    0.000    0.000    0.000    0.000 {method &#39;disable&#39; of &#39;_lsprof.Profiler&#39; objects}</span>
-</span><span class='line'><span class="go">    1    0.000    0.000    0.000    0.000 {method &#39;copy&#39; of &#39;dict&#39; objects}</span>
-</span><span class='line'><span class="go">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="go">&lt;p&gt;</span>
+</span><span class='line'><span class="go">&lt;p&gt;ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span>
+</span><span class='line'><span class="go">        1    0.002    0.002    0.002    0.002 {EffectLab.EffectLabCore.wave_warp}</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 {built-in method copy}</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:460(_new)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:740(copy)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.002    0.002 Effect.py:310(filter)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.002    0.002 :1()</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:606(load)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.002    0.002 Effect.py:37(&lt;strong&gt;call&lt;/strong&gt;)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:449(&lt;strong&gt;init&lt;/strong&gt;)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 {built-in method pixel_access}</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 {method ‘disable’ of ‘_lsprof.Profiler’ objects}</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 {method ‘copy’ of ‘dict’ objects}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>此时热点函数已经被C语言的模块给替换了。</p>
@@ -274,13 +249,13 @@
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">t</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="s">&#39;test()&#39;</span><span class="p">,</span> <span class="s">&#39;from &lt;strong&gt;main&lt;/strong&gt; import test&#39;</span><span class="p">)</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">t</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="err">‘</span><span class="n">test</span><span class="p">()</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="kn">from</span> <span class="err">&lt;</span><span class="nn">strong</span><span class="err">&gt;</span><span class="nn">main</span><span class="err">&lt;/</span><span class="nn">strong</span><span class="err">&gt;</span> <span class="kn">import</span> <span class="n">test</span><span class="err">’</span><span class="p">)</span>
 </span><span class='line'><span class="n">N</span> <span class="o">=</span> <span class="mi">3</span>
 </span><span class='line'><span class="n">TIMES</span> <span class="o">=</span> <span class="mi">30</span>
-</span><span class='line'><span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">TIMES</span><span class="p">))</span> <span class="o">/</span> <span class="n">N</span> <span class="o">/</span> <span class="n">TIMES</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="s">&#39;ms&#39;</span>
+</span><span class='line'><span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">TIMES</span><span class="p">))</span> <span class="o">/</span> <span class="n">N</span> <span class="o">/</span> <span class="n">TIMES</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="err">‘</span><span class="n">ms</span><span class="err">’</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h2>结果</h2>
+<h2 id="section-2">结果</h2>
 
 <p>我们来看看运行3轮，每轮运行30次，平均一次的时间是多少。
 Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
@@ -288,6 +263,7 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 <p>C版本平均一次时间为：<strong>1.91 ms</strong></p>
 
 <p>可见运行速度是原来的<strong>159倍</strong>。</p>
+
 ]]></content>
   </entry>
   
@@ -302,7 +278,7 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 
 <p>第一个主要步骤是数据预处理。</p>
 
-<h2>例子</h2>
+<h2 id="section">例子</h2>
 
 <p>一般的国内的验证都比较喜欢加上噪点，再加上一些干扰线，来扰乱视线。但是这些噪声，对于计算机识别程序来说，基本上没起到什么干扰。</p>
 
@@ -314,21 +290,21 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/07/big.png"><img src="http://everet.org/wp-content/uploads/2012/07/big.png" alt="" /></a></p>
 
-<h2>移除噪点</h2>
+<h2 id="section-1">移除噪点</h2>
 
 <p>首先我们来分析一下噪点由什么特性，噪点一般为孤立的点，最多也是会和其他的噪点粘在一起，所以总体来说，噪点相对于其他部分来说是孤立的小群体。</p>
 
 <p>那我们可以对每一个连接在一起的块进行着色，Flood Fill专门干这事的。然后对于字符的块，必然是非常的大，而噪点的块，必然是非常的小。所以我们就可以轻松区分字符和噪点了。</p>
 
-<h2>移除干扰线</h2>
+<h2 id="section-2">移除干扰线</h2>
 
 <p>干扰线相对于噪点来说，虽然复杂了一点，但是还是非常的简单。</p>
 
-<p>如何找到干扰线呢？干扰线的搜索问题是具有最优子结构的特性，于是这个问题我们可以用动态规划来解决[1]。</p>
+<p>如何找到干扰线呢？干扰线的搜索问题是具有最优子结构的特性，于是这个问题我们可以用动态规划来解决<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>。</p>
 
 <p>我们可以建立一个打分表，每个像素有一个分数。</p>
 
-<p>动归的方程(如何画公式[2])为：</p>
+<p>动归的方程(如何画公式<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>)为：</p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-194236.png"><img src="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-194236.png" alt="" /></a></p>
 
@@ -338,13 +314,18 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 
 <p>这个实现起来非常的简单，就不放代码了，以免引起不必要的事端。</p>
 
-<h2>参考资料</h2>
+<h2 id="section-3">参考资料</h2>
 
-<ol>
-<li><p>Ryan Fortune, Gary Luu, Peter McMahon, <strong>CS229 Project Report: Cracking CAPTCHAs</strong></p></li>
-<li><p>OpenOffice.org Formula How-To</p></li>
-</ol>
-
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Ryan Fortune, Gary Luu, Peter McMahon, <strong>CS229 Project Report: Cracking CAPTCHAs</strong><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>OpenOffice.org Formula How-To<a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 ]]></content>
   </entry>
   
@@ -368,11 +349,11 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 
 <p>源码请见Github: <a href="https://github.com/cedricporter/EffectLab/downloads">https://github.com/cedricporter/EffectLab/downloads</a></p>
 
-<h2>目前实现的效果</h2>
+<h2 id="section">目前实现的效果</h2>
 
 <p>左边为原图，右边为处理后的图片。</p>
 
-<h3>镜头变形效果[1]</h3>
+<h3 id="section-1">镜头变形效果[1]</h3>
 
 <p>首先将图像映射到长宽取值范围都为[-1, 1]，然后从<a href="http://zh.wikipedia.org/zh/%E7%AC%9B%E5%8D%A1%E5%84%BF%E5%9D%90%E6%A0%87%E7%B3%BB">笛卡尔坐标系</a>映射到<a href="http://zh.wikipedia.org/wiki/%E6%9E%81%E5%9D%90%E6%A0%87%E7%B3%BB">极坐标系</a>。然后我们就可以控制<img src="http://upload.wikimedia.org/wikipedia/zh/math/4/b/4/4b43b0aee35624cd95b910189b3dc231.png" alt="r" />（半径坐标）和<img src="http://upload.wikimedia.org/wikipedia/zh/math/5/0/d/50d91f80cbb8feda1d10e167107ad1ff.png" alt="\theta" />（角坐标、极角或<a href="http://zh.wikipedia.org/wiki/%E6%96%B9%E4%BD%8D%E8%A7%92">方位角</a>，有时也表示为<img src="http://upload.wikimedia.org/wikipedia/zh/math/7/f/2/7f20aa0b3691b496aec21cf356f63e04.png" alt="\phi" />或<img src="http://upload.wikimedia.org/wikipedia/zh/math/e/3/5/e358efa489f58062f10dd7316b65649e.png" alt="t" />）。</p>
 
@@ -384,8 +365,6 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <!-- more -->
-
-
 <p><a href="http://everet.org/wp-content/uploads/2012/07/5.jpg"><img src="http://everet.org/wp-content/uploads/2012/07/5.jpg" alt="" /></a></p>
 
 <p><strong>r = sqrt(r)</strong></p>
@@ -407,7 +386,7 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/07/4.jpg"><img src="http://everet.org/wp-content/uploads/2012/07/4.jpg" alt="" /></a></p>
 
-<h3>局部变形效果（液化）[2]</h3>
+<h3 id="section-2">局部变形效果（液化）[2]</h3>
 
 <p>这个是Photoshop里面的液化效果。就是将照片作为液体胶泥一样，然后可以任意推动来变形。</p>
 
@@ -424,11 +403,15 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/07/6.jpg"><img src="http://everet.org/wp-content/uploads/2012/07/6.jpg" alt="" /></a></p>
 
-<h2>参考资料</h2>
+<h2 id="section-3">参考资料</h2>
 
 <ol>
-<li><p><a href="http://paulbourke.net/miscellaneous/imagewarp/">Image warping / distortion</a></p></li>
-<li><p>Andreas Gustafsson, <strong>Interactive Image Warping</strong></p></li>
+  <li>
+    <p><a href="http://paulbourke.net/miscellaneous/imagewarp/">Image warping / distortion</a></p>
+  </li>
+  <li>
+    <p>Andreas Gustafsson, <strong>Interactive Image Warping</strong></p>
+  </li>
 </ol>
 
 ]]></content>
@@ -445,7 +428,7 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 
 <p>然后我们将0-255映射到0-14的范围上，然后用如下字符代替：</p>
 
-<p>color = 'MNHQ$OC?7>!:-;.'</p>
+<p>color = ‘MNHQ$OC?7&gt;!:-;.’</p>
 
 <p>也就是像素为0的点用“M”表示，像素为14的点用“.”表示。</p>
 
@@ -517,35 +500,24 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 <span class='line-number'>61</span>
 <span class='line-number'>62</span>
 <span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
 </pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">Image</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;MNHQ$OC?7&gt;!:-;.&#39;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">color</span> <span class="o">=</span> <span class="err">‘</span><span class="n">MNHQ</span><span class="err">$</span><span class="n">OC</span><span class="err">?</span><span class="mi">7</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="err">!</span><span class="p">:</span><span class="o">-</span><span class="p">;</span><span class="o">.</span><span class="err">’</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">to_html</span><span class="p">(</span><span class="n">func</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">to_html</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">html_head</span> <span class="o">=</span> <span class="err">‘’’</span>
+</span><span class='line'>            <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">html</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span>
+</span><span class='line'>              <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">head</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span>
+</span><span class='line'>                <span class="o">&lt;</span><span class="n">style</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                  <span class="n">body</span> <span class="p">{</span><span class="n">font</span><span class="o">-</span><span class="n">family</span><span class="p">:</span><span class="n">Monospace</span><span class="p">;</span> <span class="n">font</span><span class="o">-</span><span class="n">size</span><span class="p">:</span><span class="mi">5</span><span class="n">px</span><span class="p">;}</span>
+</span><span class='line'>                <span class="o">&lt;/</span><span class="n">style</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">/</span><span class="n">head</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span>
+</span><span class='line'>            <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">body</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="err">‘’’</span>
+</span><span class='line'>    <span class="n">html_tail</span> <span class="o">=</span> <span class="err">‘</span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">/</span><span class="n">body</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">/</span><span class="n">html</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="err">’</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">html_head</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
-</span><span class='line'><span class="s">        &amp;lt;html&amp;gt;</span>
-</span><span class='line'><span class="s">          &amp;lt;head&amp;gt;</span>
-</span><span class='line'><span class="s">            &amp;lt;style type=&quot;text/css&quot;&amp;gt;</span>
-</span><span class='line'><span class="s">              body {font-family:Monospace; font-size:5px;}</span>
-</span><span class='line'><span class="s">            &amp;lt;/style&amp;gt;</span>
-</span><span class='line'><span class="s">          &amp;lt;/head&amp;gt;</span>
-</span><span class='line'><span class="s">        &amp;lt;body&amp;gt; &#39;&#39;&#39;</span>
-</span><span class='line'><span class="n">html_tail</span> <span class="o">=</span> <span class="s">&#39;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
 </span><span class='line'>    <span class="n">pic_str</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 </span><span class='line'>    <span class="n">pic_str</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="s">&#39; &amp;lt;br/&amp;gt;&#39;</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">pic_str</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">html_head</span> <span class="o">+</span> <span class="n">pic_str</span> <span class="o">+</span> <span class="n">html_tail</span>
@@ -554,23 +526,20 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="nd">@to_html</span>
-</span><span class='line'><span class="k">def</span> <span class="nf">make_char_img</span><span class="p">(</span><span class="n">img</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">make_char_img</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">pix</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">pic_str</span> <span class="o">=</span> <span class="err">‘’</span>
+</span><span class='line'>    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">width</span><span class="p">):</span>
+</span><span class='line'>            <span class="n">pic_str</span> <span class="o">+=</span> <span class="n">color</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">pix</span><span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">])</span> <span class="o">*</span> <span class="mi">14</span> <span class="o">/</span> <span class="mi">255</span><span class="p">]</span>
+</span><span class='line'>        <span class="n">pic_str</span> <span class="o">+=</span> <span class="err">‘</span>\<span class="n">n</span><span class="err">’</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">pic_str</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">pix</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-</span><span class='line'><span class="n">pic_str</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-</span><span class='line'><span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
-</span><span class='line'><span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">width</span><span class="p">):</span>
-</span><span class='line'>        <span class="n">pic_str</span> <span class="o">+=</span> <span class="n">color</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">pix</span><span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">])</span> <span class="o">*</span> <span class="mi">14</span> <span class="o">/</span> <span class="mi">255</span><span class="p">]</span>
-</span><span class='line'>    <span class="n">pic_str</span> <span class="o">+=</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
-</span><span class='line'><span class="k">return</span> <span class="n">pic_str</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">img_name</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img_name</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">img_name</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img_name</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
 </span><span class='line'><span class="n">m</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
 </span><span class='line'><span class="n">delta</span> <span class="o">=</span> <span class="n">m</span> <span class="o">/</span> <span class="mf">200.0</span>
 </span><span class='line'><span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">/</span> <span class="n">delta</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span> <span class="o">/</span> <span class="n">delta</span><span class="p">)</span>
@@ -580,35 +549,31 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 </span><span class='line'><span class="k">return</span> <span class="n">img</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">save_to_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">pic_str</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">save_to_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">pic_str</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">outfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="err">‘</span><span class="n">w</span><span class="err">’</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pic_str</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">outfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">outfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pic_str</span><span class="p">)</span>
-</span><span class='line'><span class="n">outfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span class='line'>    <span class="n">img</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="err">‘</span><span class="mf">6.j</span><span class="n">pg</span><span class="err">’</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">pic_str</span> <span class="o">=</span> <span class="n">make_char_img</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">save_to_file</span><span class="p">(</span><span class="err">‘</span><span class="n">char</span><span class="o">.</span><span class="n">html</span><span class="err">’</span><span class="p">,</span> <span class="n">pic_str</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">img</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="s">&#39;6.jpg&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">pic_str</span> <span class="o">=</span> <span class="n">make_char_img</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
-</span><span class='line'><span class="n">save_to_file</span><span class="p">(</span><span class="s">&#39;char.html&#39;</span><span class="p">,</span> <span class="n">pic_str</span><span class="p">)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">==</span> <span class="s">&#39;&lt;strong&gt;main&lt;/strong&gt;&#39;</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">main</span><span class="p">()</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">==</span> <span class="err">‘</span><span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">main</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span><span class="err">’</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">main</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>整个程序的核心都在下面两行，一个是字符的色阶表，一个是映射公式。</p>
 
-<blockquote></blockquote>
+<blockquote>
+
+</blockquote>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>color = 'MNHQ$OC?7>!:-;.'
+</pre></td><td class='code'><pre><code class=''><span class='line'>color = ‘MNHQ$OC?7&gt;!:-;.’
 </span><span class='line'>pic_str += color[int(pix[w, h]) * 14 / 255]</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>效果如下：</p>
@@ -642,7 +607,6 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 
 <!-- more -->
 
-
 <p><a href="http://everet.org/wp-content/uploads/2012/03/QQ20120321193734.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ20120321193734_thumb.png" alt="QQ截图20120321193734" /></a></p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
@@ -663,31 +627,27 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
 </pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">Image</span><span class="o">,</span> <span class="nn">ImageDraw</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;1.bmp&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="err">‘</span><span class="mf">1.</span><span class="n">bmp</span><span class="err">’</span><span class="p">)</span>
 </span><span class='line'><span class="n">draw</span> <span class="o">=</span> <span class="n">ImageDraw</span><span class="o">.</span><span class="n">Draw</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
 </span><span class='line'><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">52</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">52</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">51</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">count</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">draw</span><span class="o">.</span><span class="n">rectangle</span><span class="p">((</span><span class="n">i</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">j</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">10</span><span class="p">),</span><span class="n">fill</span><span class="o">=</span><span class="err">”</span><span class="c">#ff0000”)&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">51</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">count</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span class='line'>        <span class="n">draw</span><span class="o">.</span><span class="n">rectangle</span><span class="p">((</span><span class="n">i</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">j</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">10</span><span class="p">),</span><span class="n">fill</span><span class="o">=</span><span class="s">&quot;#ff0000&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">im</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;test.bmp&#39;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">im</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="err">‘</span><span class="n">test</span><span class="o">.</span><span class="n">bmp</span><span class="err">’</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>下面是师兄写的引擎写的地形贴上Python生成的大姨妈图：
-<a href="http://everet.org/wp-content/uploads/2012/03/QQ%E6%88%AA%E5%9B%BE20120321201014.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ%E6%88%AA%E5%9B%BE20120321201014.png" alt="" /></a></p>
+<a href="http://everet.org/wp-content/uploads/2012/03/QQ截图20120321201014.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ截图20120321201014.png" alt="" /></a></p>
 ]]></content>
   </entry>
   

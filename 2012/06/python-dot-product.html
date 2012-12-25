@@ -114,48 +114,45 @@ Point2d DotProduct(const Point2d&amp; rhs)
 
 <div class="entry-content"><p>想起我们在C++中，要实现一个点积，如果是固定维数的向量，我们或许会通过这么一个成员函数来实现</p>
 
-<figure class='code'><figcaption><span>cpp  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="n">Point2d</span> <span class="n">DotProduct</span><span class="p">(</span><span class="k">const</span> <span class="n">Point2d</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">Point2d</span><span class="p">(</span><span class="n">m_x</span> <span class="o">*</span> <span class="n">rhs</span><span class="p">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">m_y</span> <span class="o">*</span> <span class="n">rhs</span><span class="p">.</span><span class="n">y</span><span class="p">());</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>cpp  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="cpp"><span class="line"><span class="n">Point2d</span> <span class="n">DotProduct</span><span class="p">(</span><span class="k">const</span> <span class="n">Point2d</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">Point2d</span><span class="p">(</span><span class="n">m_x</span> <span class="o">*</span> <span class="n">rhs</span><span class="p">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">m_y</span> <span class="o">*</span> <span class="n">rhs</span><span class="p">.</span><span class="n">y</span><span class="p">());</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>对于非固定维数的向量，我们或许动用一个循环，然后又变成了一坨代码。</p>
 
 <p>当我们使用Python的时候，就会简单很多很多。<!-- more --></p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">6</span><span class="p">]:</span> <span class="n">dotproduct</span> <span class="o">=</span>
-</span><span class='line'>           <span class="k">lambda</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="n">dotproduct</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
-</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="mi">11</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">8</span><span class="p">]:</span> <span class="n">dotproduct</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
-</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">8</span><span class="p">]:</span> <span class="mi">54</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="n">dotproduct</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="mi">98</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">6</span><span class="p">]:</span> <span class="n">dotproduct</span> <span class="o">=</span>
+</span><span class="line">           <span class="k">lambda</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">))</span>
+</span><span class="line">
+</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="n">dotproduct</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+</span><span class="line"><span class="n">Out</span><span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="mi">11</span>
+</span><span class="line">
+</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">8</span><span class="p">]:</span> <span class="n">dotproduct</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+</span><span class="line"><span class="n">Out</span><span class="p">[</span><span class="mi">8</span><span class="p">]:</span> <span class="mi">54</span>
+</span><span class="line">
+</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="n">dotproduct</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+</span><span class="line"><span class="n">Out</span><span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="mi">98</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
 

@@ -115,23 +115,22 @@
 
 <p>strace一下，看看，这个进程在干啥。</p>
 
-<figure class='code'><figcaption><span>console  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">cedricporter@cedricporter-Lenovo:~/projects/CaptchaSystem$</span> sudo strace -p 2207
-</span><span class='line'><span class="go">[sudo] password for cedricporter: </span>
-</span><span class='line'><span class="go">Process 2207 attached - interrupt to quit</span>
-</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/b6c1d4f6fff0b536652c83081e5233e1.png&quot;, {st_mode=S_IFREG|0600, st_size=5398, ...}) = 0</span>
-</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/739ea0e4eabe22c5b551156fc3ff93da.png&quot;, {st_mode=S_IFREG|0600, st_size=6059, ...}) = 0</span>
-</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/2aac704bfd3d3a865f66e5c3ee2ba80a.png&quot;, {st_mode=S_IFREG|0600, st_size=6362, ...}) = 0</span>
-</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/5dbe53248aa8a41612137100a315e076.png&quot;, {st_mode=S_IFREG|0600, st_size=6260, ...}) = 0</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>console  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="gp">cedricporter@cedricporter-Lenovo:~/projects/CaptchaSystem$</span> sudo strace -p 2207
+</span><span class="line"><span class="go">[sudo] password for cedricporter: </span>
+</span><span class="line"><span class="go">Process 2207 attached - interrupt to quit</span>
+</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/b6c1d4f6fff0b536652c83081e5233e1.png&quot;, {st_mode=S_IFREG|0600, st_size=5398, ...}) = 0</span>
+</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/739ea0e4eabe22c5b551156fc3ff93da.png&quot;, {st_mode=S_IFREG|0600, st_size=6059, ...}) = 0</span>
+</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/2aac704bfd3d3a865f66e5c3ee2ba80a.png&quot;, {st_mode=S_IFREG|0600, st_size=6362, ...}) = 0</span>
+</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/5dbe53248aa8a41612137100a315e076.png&quot;, {st_mode=S_IFREG|0600, st_size=6260, ...}) = 0</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>出来的结果就像刷屏一样，全部都是lstat的系统调用，读取的都是.thumbnails下面的图片。<!-- more --></p>
 
@@ -141,7 +140,7 @@
 
 <p>于是我在非常卡的情况下，把.thumbnail目录删了，瞬间就不卡了。</p>
 
-<h2>Solution</h2>
+<h2 id="solution">Solution</h2>
 
 <p>既然这样，我也就不让它检查缓存了，到时塞爆硬盘我再手动删除缓存算了，不想经常电脑因为硬盘卡住完全动不了。</p>
 
@@ -150,6 +149,7 @@
 /desktop/gnome/thumbnail_cache/maximum_size</p>
 
 <p>然后就不会自动更新缓存了。 当然也可将这两个值设置小一点，就不会有那么多缓存要扫描了。</p>
+
 </div>
 
 
@@ -235,7 +235,7 @@
         </li>
     
         <li class="related">
-        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
+        <a href="/2012/01/gitweb-password.html">给Gitweb加上访问密码，保护我们的私有项目</a>
         </li>
     
     </ul>

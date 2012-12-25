@@ -117,7 +117,6 @@
 
 <!-- more -->
 
-
 <p>对于编译，第一步是词法分析。也就是分出一个个Token。</p>
 
 <p>例如，像一行赋值语句：a[index] = 4 + 2 ，我们可以将其拆成一个个基本元素，每种元素都有自己的类型。如下所示：</p>
@@ -126,29 +125,17 @@
 
 <p>这些Token将作为编译过程中最基本的元素。</p>
 
-<p>标识符(identifier)</p>
+<p>标识符(identifier) a, index</p>
 
-<p>a, index</p>
+<p>左方括号(left bracket) [</p>
 
-<p>左方括号(left bracket)</p>
+<p>右方括号(right bracket) ] </p>
 
-<p>[</p>
+<p>等号(assignment) =</p>
 
-<p>右方括号(right bracket)</p>
+<p>加号(plus) + </p>
 
-<p>]</p>
-
-<p>等号(assignment)</p>
-
-<p>=</p>
-
-<p>加号(plus)</p>
-
-<p>+</p>
-
-<p>数字(number)</p>
-
-<p>4, 2</p>
+<p>数字(number) 4, 2</p>
 
 <p>当这些Token它们组合在一起，就成了句子。在这个时候，我们就可以进行语法分析了。</p>
 

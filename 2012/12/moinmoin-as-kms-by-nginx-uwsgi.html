@@ -107,7 +107,7 @@
   </header>
 
 
-<div class="entry-content"><h2>有博客，为什么还需要Wiki呢？</h2>
+<div class="entry-content"><h2 id="wiki">有博客，为什么还需要Wiki呢？</h2>
 
 <p>有博客，为什么还需要Wiki呢？对于这个问题，我也思考了许久。博客记录的东西很扁平，而且不太适宜记录一些零碎不完整的东西。如果别人订阅了你的博客，你的博客却经常发布一些不完整的内容，这样会严重影响别人的心情。所以我觉得博客适宜将一些比较完整的内容的写在里面。此外，平时在网上看到什么东西，虽然都可以收录到EverNote里面（EverNote里面有提供目录以及标签可以很好地进行分类），但是，EverNote的劣势在于，不方便将知识组织知识，将它们串联在一起。</p>
 
@@ -123,77 +123,77 @@
 
 <p>前端依旧是Nginx，后端用uWSGI处理Python。Nginx可以很好的转发。</p>
 
-<h2>Nginx的配置</h2>
+<h2 id="nginx">Nginx的配置</h2>
 
-<h3>Install</h3>
+<h3 id="install">Install</h3>
 
-<blockquote></blockquote>
+<blockquote>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># apt-get install python-software-properties
-</span><span class='line'># apt-add-repository ppa:nginx/stable
-</span><span class='line'># apt-get update
-</span><span class='line'># apt-get install nginx-full</span></code></pre></td></tr></table></div></figure>
+</blockquote>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># apt-get install python-software-properties
+</span><span class="line"># apt-add-repository ppa:nginx/stable
+</span><span class="line"># apt-get update
+</span><span class="line"># apt-get install nginx-full</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>我们在/etc/nginx/sites-available文件夹里面新建一个文件wiki.everet.org，然后链接到sites-enables。就可以运行nginx -t &amp;&amp; service nginx reload:</p>
 
-<figure class='code'><figcaption><span>nginx  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='nginx'><span class='line'><span class="k">server</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kn">server_name</span> <span class="s">i.everet.org</span> <span class="s">wiki.everet.org</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kn">access_log</span>  <span class="s">/var/log/nginx/wiki.everet.org.access.log</span><span class="p">;</span>
-</span><span class='line'>    <span class="kn">error_log</span> <span class="s">/var/log/nginx/wiki.everet.org.error.org</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kn">include</span> <span class="s">uwsgi_params</span><span class="p">;</span>
-</span><span class='line'>        <span class="kn">uwsgi_pass</span> <span class="s">unix:///var/run/uwsgi_wiki.sock</span><span class="p">;</span>
-</span><span class='line'>        <span class="kn">uwsgi_param</span> <span class="s">UWSGI_PYHOME</span> <span class="s">/var/www/moinmoin/python-env/</span><span class="p">;</span>
-</span><span class='line'>        <span class="kn">uwsgi_param</span> <span class="s">UWSGI_CHDIR</span> <span class="s">/var/www/moinmoin/wiki/</span><span class="p">;</span>
-</span><span class='line'>        <span class="kn">uwsgi_param</span> <span class="s">UWSGI_SCRIPT</span> <span class="s">moin_wsgi</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kn">location</span> <span class="p">=</span> <span class="s">/google7a32e07f62c143af.html</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kn">rewrite</span> <span class="s">^/</span> <span class="s">/moin_static195/google7a32e07f62c143af.html</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kn">location</span> <span class="s">^~</span> <span class="s">/moin_static195/</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kn">alias</span> <span class="s">/var/www/moinmoin/python-env/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/</span><span class="p">;</span>
-</span><span class='line'>        <span class="kn">add_header</span> <span class="s">Cache-Control</span> <span class="s">public</span><span class="p">;</span>
-</span><span class='line'>        <span class="kn">expires</span> <span class="s">1M</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>nginx  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+</pre></td><td class="code"><pre><code class="nginx"><span class="line"><span class="k">server</span> <span class="p">{</span>
+</span><span class="line">    <span class="kn">server_name</span> <span class="s">i.everet.org</span> <span class="s">wiki.everet.org</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">access_log</span>  <span class="s">/var/log/nginx/wiki.everet.org.access.log</span><span class="p">;</span>
+</span><span class="line">    <span class="kn">error_log</span> <span class="s">/var/log/nginx/wiki.everet.org.error.org</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">include</span> <span class="s">uwsgi_params</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">uwsgi_pass</span> <span class="s">unix:///var/run/uwsgi_wiki.sock</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">uwsgi_param</span> <span class="s">UWSGI_PYHOME</span> <span class="s">/var/www/moinmoin/python-env/</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">uwsgi_param</span> <span class="s">UWSGI_CHDIR</span> <span class="s">/var/www/moinmoin/wiki/</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">uwsgi_param</span> <span class="s">UWSGI_SCRIPT</span> <span class="s">moin_wsgi</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">location</span> <span class="p">=</span> <span class="s">/google7a32e07f62c143af.html</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">rewrite</span> <span class="s">^/</span> <span class="s">/moin_static195/google7a32e07f62c143af.html</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">location</span> <span class="s">^~</span> <span class="s">/moin_static195/</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">alias</span> <span class="s">/var/www/moinmoin/python-env/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">add_header</span> <span class="s">Cache-Control</span> <span class="s">public</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">expires</span> <span class="s">1M</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-
-<h2>Python</h2>
+<h2 id="python">Python</h2>
 
 <p>在这里，我们需要借助一个程序virtualenv，它可以创建一个干净的Python运行环境。其实Python核心就是一个解释器，然后外加许多包，也就是所谓的“电池”。如果我们自己编译Python的话，可以选择生成一个静态链接的Python可执行文件，就可以拿着这个解释器文件走了。</p>
 
@@ -205,223 +205,239 @@
 
 <p>activate这个脚本做的事情就是将新的Python可执行的路径加入到环境变量PATH最前面。然后清空PYTHONHOME这个环境变量。</p>
 
-<blockquote></blockquote>
+<blockquote>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># mkdir -p /var/www/moinmoin
-</span><span class='line'># virtualenv /var/www/moinmoin/python-env
-</span><span class='line'># . /var/www/moinmoin/python-env/bin/activate</span></code></pre></td></tr></table></div></figure>
+</blockquote>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># mkdir -p /var/www/moinmoin
+</span><span class="line"># virtualenv /var/www/moinmoin/python-env
+</span><span class="line"># . /var/www/moinmoin/python-env/bin/activate</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>运行完activate后，环境变量就改了，我们可以看到提示符已经改变了。然后我们进行后续工作。</p>
 
-<h2>MoinMoin</h2>
+<h2 id="moinmoin">MoinMoin</h2>
 
 <p>然后现在安装moinmoin</p>
 
-<blockquote></blockquote>
+<blockquote>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>(python-env) # python setup.py install</span></code></pre></td></tr></table></div></figure>
+</blockquote>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">(python-env) # python setup.py install</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>然后将安装目录的wiki文件夹下面的data与uderlay目录复制出来，放到/var/www/moinmoin/wiki。然后将wiki/config目录下的wikiconfig.py以及wiki/server/moin.wsgi改名moin_wsgi.py复制到/var/www/moinmoin/wiki目录下面，然后/var/www/moinmoin/wiki目录结构如下：</p>
 
-<blockquote></blockquote>
+<blockquote>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>root@ubuntu:/var/www/moinmoin/wiki# tree -L 1
-</span><span class='line'>.
-</span><span class='line'>├── data
-</span><span class='line'>├── moin_wsgi.py
-</span><span class='line'>├── underlay
-</span><span class='line'>└── wikiconfig.py
-</span><span class='line'>
-</span><span class='line'>2 directories, 2 files</span></code></pre></td></tr></table></div></figure>
+</blockquote>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">root@ubuntu:/var/www/moinmoin/wiki# tree -L 1
+</span><span class="line">.
+</span><span class="line">├── data
+</span><span class="line">├── moin_wsgi.py
+</span><span class="line">├── underlay
+</span><span class="line">└── wikiconfig.py
+</span><span class="line">
+</span><span class="line">2 directories, 2 files</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>然后将wiki目录修改属主为uwsgi。</p>
 
-<blockquote></blockquote>
+<blockquote>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># chown uwsgi:uwsgi /var/www/moinmoin/wiki -R</span></code></pre></td></tr></table></div></figure>
+</blockquote>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># chown uwsgi:uwsgi /var/www/moinmoin/wiki -R</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<h2>uWSGI</h2>
+<h2 id="uwsgi">uWSGI</h2>
 
-<h3>Install</h3>
+<h3 id="install-1">Install</h3>
 
 <p>安装最新的lts版的uwsgi，不过在此之前，需要安装python-dev才能够正确编译。</p>
 
-<blockquote></blockquote>
+<blockquote>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># sudo apt-get install python-dev build-essential
-</span><span class='line'>(python-env) # pip install http://projects.unbit.it/downloads/uwsgi-lts.tar.gz</span></code></pre></td></tr></table></div></figure>
+</blockquote>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># sudo apt-get install python-dev build-essential
+</span><span class="line">(python-env) # pip install http://projects.unbit.it/downloads/uwsgi-lts.tar.gz</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>如果我们还在virtualenv的环境变量下，uwsgi会被安装到/var/www/moinmoin/python-env/bin下面，就一个文件uwsgi。</p>
 
-<h3>Autostart</h3>
+<h3 id="autostart">Autostart</h3>
 
 <p>我们现在来为uwsgi编写开机启动：</p>
 
-<figure class='code'><figcaption><span>bash  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># /etc/init.d/uwsgi</span>
-</span><span class='line'><span class="c">#</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">daemon</span><span class="o">=</span>/var/www/moinmoin/python-env/bin/uwsgi
-</span><span class='line'><span class="nv">pid</span><span class="o">=</span>/var/run/uwsgi.pid
-</span><span class='line'><span class="nv">args</span><span class="o">=</span><span class="s2">&quot;-x /etc/uwsgi/uwsgi.xml&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
-</span><span class='line'>    start<span class="o">)</span>
-</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;Starting uwsgi&quot;</span>
-</span><span class='line'>        start-stop-daemon -p <span class="nv">$pid</span> --start --exec <span class="nv">$daemon</span> -- <span class="nv">$args</span>
-</span><span class='line'>        ;;
-</span><span class='line'>    stop<span class="o">)</span>
-</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;Stopping script uwsgi&quot;</span>
-</span><span class='line'>        start-stop-daemon --signal INT -p <span class="nv">$pid</span> --stop <span class="nv">$daemon</span> -- <span class="nv">$args</span>
-</span><span class='line'>        ;;
-</span><span class='line'>    restart<span class="o">)</span>
-</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;Restarting uwsgi&quot;</span>
-</span><span class='line'>        start-stop-daemon --signal INT -p <span class="nv">$pid</span> --stop <span class="nv">$daemon</span> -- <span class="nv">$args</span>
-</span><span class='line'>        sleep 2
-</span><span class='line'>        start-stop-daemon -p <span class="nv">$pid</span> --start --exec <span class="nv">$daemon</span> -- <span class="nv">$args</span>
-</span><span class='line'>        ;;
-</span><span class='line'>    reload<span class="o">)</span>
-</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;Reloading conf&quot;</span>
-</span><span class='line'>        <span class="nb">kill</span> -HUP <span class="k">$(</span>cat <span class="nv">$pid</span><span class="k">)</span>
-</span><span class='line'>        ;;
-</span><span class='line'>    *<span class="o">)</span>
-</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;Usage: /etc/init.d/uwsgi {start|stop|restart|reload}&quot;</span>
-</span><span class='line'>        <span class="nb">exit </span>1
-</span><span class='line'>        ;;
-</span><span class='line'><span class="k">esac</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">exit </span>0
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c"># /etc/init.d/uwsgi</span>
+</span><span class="line"><span class="c">#</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">daemon</span><span class="o">=</span>/var/www/moinmoin/python-env/bin/uwsgi
+</span><span class="line"><span class="nv">pid</span><span class="o">=</span>/var/run/uwsgi.pid
+</span><span class="line"><span class="nv">args</span><span class="o">=</span><span class="s2">&quot;-x /etc/uwsgi/uwsgi.xml&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
+</span><span class="line">    start<span class="o">)</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;Starting uwsgi&quot;</span>
+</span><span class="line">        start-stop-daemon -p <span class="nv">$pid</span> --start --exec <span class="nv">$daemon</span> -- <span class="nv">$args</span>
+</span><span class="line">        ;;
+</span><span class="line">    stop<span class="o">)</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;Stopping script uwsgi&quot;</span>
+</span><span class="line">        start-stop-daemon --signal INT -p <span class="nv">$pid</span> --stop <span class="nv">$daemon</span> -- <span class="nv">$args</span>
+</span><span class="line">        ;;
+</span><span class="line">    restart<span class="o">)</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;Restarting uwsgi&quot;</span>
+</span><span class="line">        start-stop-daemon --signal INT -p <span class="nv">$pid</span> --stop <span class="nv">$daemon</span> -- <span class="nv">$args</span>
+</span><span class="line">        sleep 2
+</span><span class="line">        start-stop-daemon -p <span class="nv">$pid</span> --start --exec <span class="nv">$daemon</span> -- <span class="nv">$args</span>
+</span><span class="line">        ;;
+</span><span class="line">    reload<span class="o">)</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;Reloading conf&quot;</span>
+</span><span class="line">        <span class="nb">kill</span> -HUP <span class="k">$(</span>cat <span class="nv">$pid</span><span class="k">)</span>
+</span><span class="line">        ;;
+</span><span class="line">    *<span class="o">)</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;Usage: /etc/init.d/uwsgi {start|stop|restart|reload}&quot;</span>
+</span><span class="line">        <span class="nb">exit </span>1
+</span><span class="line">        ;;
+</span><span class="line"><span class="k">esac</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-
-<h3>Config</h3>
+<h3 id="config">Config</h3>
 
 <p>/etc/uwsgi/uwsgi.xml内容如下：</p>
 
-<figure class='code'><figcaption><span>xml  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'>    /var/run/uwsgi_wiki.sock
-</span><span class='line'>    uwsgi
-</span><span class='line'>    uwsgi
-</span><span class='line'>
-</span><span class='line'>    128
-</span><span class='line'>    /var/www/moinmoin/wiki/wikiconfig.py
-</span><span class='line'>
-</span><span class='line'>    3
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>    /var/run/uwsgi.pid
-</span><span class='line'>    /var/log/uwsgi.log
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>xml  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="xml"><span class="line">    /var/run/uwsgi_wiki.sock
+</span><span class="line">    uwsgi
+</span><span class="line">    uwsgi
+</span><span class="line">
+</span><span class="line">    128
+</span><span class="line">    /var/www/moinmoin/wiki/wikiconfig.py
+</span><span class="line">
+</span><span class="line">    3
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">    /var/run/uwsgi.pid
+</span><span class="line">    /var/log/uwsgi.log
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <ul>
-<li><p>其中reload-on-as是指内存消耗达到128就重新加载过进程。</p></li>
-<li><p>touch-reload是指wikiconfig.py被修改就重新加载进程。</p></li>
-<li><p>master-as-root是指master进程uid为root，这样才有足够权限在/var/run中创建socket。</p></li>
+  <li>
+    <p>其中reload-on-as是指内存消耗达到128就重新加载过进程。</p>
+  </li>
+  <li>
+    <p>touch-reload是指wikiconfig.py被修改就重新加载进程。</p>
+  </li>
+  <li>
+    <p>master-as-root是指master进程uid为root，这样才有足够权限在/var/run中创建socket。</p>
+  </li>
 </ul>
-
 
 <p>其他参数就没什么特别的了。</p>
 
-<h3>Add User</h3>
+<h3 id="add-user">Add User</h3>
 
 <p>添加用户</p>
 
-<blockquote></blockquote>
+<blockquote>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># adduser --system --no-create-home --disabled-login --disabled-password --group uwsgi
-</span><span class='line'># touch /var/log/uwsgi.log
-</span><span class='line'># chown uwsgi:uwsgi /var/log/uwsgi.log</span></code></pre></td></tr></table></div></figure>
+</blockquote>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># adduser --system --no-create-home --disabled-login --disabled-password --group uwsgi
+</span><span class="line"># touch /var/log/uwsgi.log
+</span><span class="line"># chown uwsgi:uwsgi /var/log/uwsgi.log</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<h3>Run</h3>
+<h3 id="run">Run</h3>
 
 <p>加到开机启动，然后运行uwsgi服务。</p>
 
-<blockquote></blockquote>
+<blockquote>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># update-rc.d uwsgi defaults
-</span><span class='line'># service uwsgi start</span></code></pre></td></tr></table></div></figure>
+</blockquote>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># update-rc.d uwsgi defaults
+</span><span class="line"># service uwsgi start</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<h2>扩展阅读</h2>
+<h2 id="section">扩展阅读</h2>
 
 <ul>
-<li><p><a href="http://uwsgi-docs.readthedocs.org/en/latest/Nginx.html#dynamic-apps">UWSGI_SCRIPT</a></p></li>
-<li><p><a href="https://uwsgi-docs.readthedocs.org/en/latest/Vars.html?highlight=%20UWSGI_CHDIR">uwsgi protocol magic variables</a></p></li>
-<li><p><a href="http://moinmo.in/EmacsForMoinMoin">Emacs的moinmoin-mode</a></p></li>
+  <li>
+    <p><a href="http://uwsgi-docs.readthedocs.org/en/latest/Nginx.html#dynamic-apps">UWSGI_SCRIPT</a></p>
+  </li>
+  <li>
+    <p><a href="https://uwsgi-docs.readthedocs.org/en/latest/Vars.html?highlight=%20UWSGI_CHDIR">uwsgi protocol magic variables</a></p>
+  </li>
+  <li>
+    <p><a href="http://moinmo.in/EmacsForMoinMoin">Emacs的moinmoin-mode</a></p>
+  </li>
 </ul>
 
 </div>

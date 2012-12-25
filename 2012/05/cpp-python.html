@@ -111,257 +111,260 @@
 
 <p>在《Unix编程艺术》中，Raymond说道：</p>
 
-<blockquote><p>混合语言是一种知识密集型（而不是编码密集型）的编程。要让它能够工作，我们不仅应该具备相当数量的多种语言应用知识，并且还需要具备能够判断这些语言在什么地方最适合、以及怎样把他们组合在一起的潜经验。</p></blockquote>
+<blockquote>
+  <p>混合语言是一种知识密集型（而不是编码密集型）的编程。要让它能够工作，我们不仅应该具备相当数量的多种语言应用知识，并且还需要具备能够判断这些语言在什么地方最适合、以及怎样把他们组合在一起的潜经验。</p>
+</blockquote>
 
 <p>在混合语言编程中，我们遇到的第一个问题是如何需要让他们可以互相调用。也就是像C++可以调用Python的函数、Python又可以调用C++的函数。</p>
 
 <p>对于C++和Python的混合编程主要有两种方式。</p>
 
 <ol>
-<li><p>将C++写的模块编译成动态链接库，然后由Python主程序使用。这种一般是单方向的使用。</p></li>
-<li><p>用C++主程序调用Python。然后Python中可以使用C++主程序的函数。</p></li>
+  <li>
+    <p>将C++写的模块编译成动态链接库，然后由Python主程序使用。这种一般是单方向的使用。</p>
+  </li>
+  <li>
+    <p>用C++主程序调用Python。然后Python中可以使用C++主程序的函数。</p>
+  </li>
 </ol>
-
 
 <p>对于第一种方式非常简单，我们在此就不讨论了。我们将着重讨论第二种方式。<!-- more --></p>
 
-<h2>Simple Exampe of Mixing C++ and Python Code</h2>
+<h2 id="simple-exampe-of-mixing-c-and-python-code">Simple Exampe of Mixing C++ and Python Code</h2>
 
 <p>我们举个例子。以下是C++主程序，做的事情是创建了一个空白的地图，然后加载Python模块构建地图。</p>
 
-<figure class='code'><figcaption><span>cpp  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="c1">// website: http://EverET.org</span>
-</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;boost/python.hpp&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">Map</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'><span class="k">public</span><span class="o">:</span>
-</span><span class='line'>    <span class="n">Map</span><span class="p">()</span> <span class="o">:</span> <span class="n">m_map</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="sc">&#39;.&#39;</span><span class="p">))</span>
-</span><span class='line'>    <span class="p">{}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kt">void</span> <span class="n">SetPixel</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">val</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>  <span class="n">m_map</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kt">void</span> <span class="n">Print</span><span class="p">()</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m_map</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">m_map</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">{</span>
-</span><span class='line'>      <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m_map</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">private</span><span class="o">:</span>
-</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">m_map</span><span class="p">;</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="n">InitPython</span><span class="p">()</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="n">Py_Initialize</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">Py_IsInitialized</span><span class="p">())</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>  <span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Get the instance of the map, Singleton Pattern</span>
-</span><span class='line'><span class="c1">// only one map instance exists</span>
-</span><span class='line'><span class="n">Map</span><span class="o">*</span> <span class="n">GetMapInstance</span><span class="p">()</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">static</span> <span class="n">Map</span><span class="o">*</span> <span class="n">the_map</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">the_map</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>  <span class="n">the_map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Map</span><span class="p">();</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">the_map</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// export c++ function and class to python</span>
-</span><span class='line'><span class="n">BOOST_PYTHON_MODULE</span><span class="p">(</span><span class="n">MyEngine</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="o">::</span><span class="n">python</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">def</span><span class="p">(</span><span class="s">&quot;GetMapInstance&quot;</span><span class="p">,</span> <span class="n">GetMapInstance</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">return_value_policy</span><span class="o">&lt;</span> <span class="n">reference_existing_object</span> <span class="o">&gt;</span><span class="p">());</span>
-</span><span class='line'>    <span class="n">class_</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Map&quot;</span><span class="p">,</span> <span class="s">&quot;Game Map&quot;</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;Print&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Map</span><span class="o">::</span><span class="n">Print</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;SetPixel&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Map</span><span class="o">::</span><span class="n">SetPixel</span><span class="p">,</span>
-</span><span class='line'>      <span class="p">(</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">),</span> <span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="s">&quot;val&quot;</span><span class="p">));</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">try</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>  <span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="o">::</span><span class="n">python</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">InitPython</span><span class="p">();</span>
-</span><span class='line'>  <span class="n">initMyEngine</span><span class="p">();</span> <span class="c1">// init MyEngine Module</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Add current path to sys.path. You have to</span>
-</span><span class='line'>  <span class="c1">// do this in linux. While in Windows,</span>
-</span><span class='line'>  <span class="c1">// current path is already in sys.path.</span>
-</span><span class='line'>  <span class="n">object</span> <span class="n">main_module</span> <span class="o">=</span> <span class="n">import</span><span class="p">(</span> <span class="s">&quot;__main__&quot;</span> <span class="p">);</span>
-</span><span class='line'>  <span class="n">object</span> <span class="n">main_namespace</span> <span class="o">=</span> <span class="n">main_module</span><span class="p">.</span><span class="n">attr</span><span class="p">(</span> <span class="s">&quot;__dict__&quot;</span> <span class="p">);</span>
-</span><span class='line'>  <span class="n">object</span> <span class="n">ignored</span> <span class="o">=</span> <span class="n">exec</span><span class="p">(</span>
-</span><span class='line'>      <span class="s">&quot;import sys</span><span class="se">\n</span><span class="s">&quot;</span>
-</span><span class='line'>      <span class="s">&quot;sys.path.append(&#39;.&#39;)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">main_namespace</span> <span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">Map</span><span class="o">*</span> <span class="n">map</span> <span class="o">=</span> <span class="n">GetMapInstance</span><span class="p">();</span>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Before python</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">map</span><span class="o">-&gt;</span><span class="n">Print</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// load python to design the map</span>
-</span><span class='line'>  <span class="n">object</span> <span class="n">mapMaker</span> <span class="o">=</span> <span class="n">import</span><span class="p">(</span><span class="s">&quot;mapmaker&quot;</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">object</span> <span class="n">makeMap</span> <span class="o">=</span> <span class="n">mapMaker</span><span class="p">.</span><span class="n">attr</span><span class="p">(</span><span class="s">&quot;make_map&quot;</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">makeMap</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">After python</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">map</span><span class="o">-&gt;</span><span class="n">Print</span><span class="p">();</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">catch</span> <span class="p">(...)</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>  <span class="n">PyErr_Print</span><span class="p">();</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>cpp  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+<span class="line-number">72</span>
+<span class="line-number">73</span>
+<span class="line-number">74</span>
+<span class="line-number">75</span>
+<span class="line-number">76</span>
+<span class="line-number">77</span>
+<span class="line-number">78</span>
+<span class="line-number">79</span>
+<span class="line-number">80</span>
+<span class="line-number">81</span>
+<span class="line-number">82</span>
+<span class="line-number">83</span>
+<span class="line-number">84</span>
+<span class="line-number">85</span>
+<span class="line-number">86</span>
+<span class="line-number">87</span>
+<span class="line-number">88</span>
+<span class="line-number">89</span>
+<span class="line-number">90</span>
+<span class="line-number">91</span>
+<span class="line-number">92</span>
+<span class="line-number">93</span>
+<span class="line-number">94</span>
+<span class="line-number">95</span>
+<span class="line-number">96</span>
+<span class="line-number">97</span>
+<span class="line-number">98</span>
+<span class="line-number">99</span>
+<span class="line-number">100</span>
+<span class="line-number">101</span>
+<span class="line-number">102</span>
+<span class="line-number">103</span>
+</pre></td><td class="code"><pre><code class="cpp"><span class="line"><span class="c1">// website: http://EverET.org</span>
+</span><span class="line"><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;vector&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;boost/python.hpp&gt;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">class</span> <span class="nc">Map</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line"><span class="k">public</span><span class="o">:</span>
+</span><span class="line">    <span class="n">Map</span><span class="p">()</span> <span class="o">:</span> <span class="n">m_map</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="sc">&#39;.&#39;</span><span class="p">))</span>
+</span><span class="line">    <span class="p">{}</span>
+</span><span class="line">
+</span><span class="line">    <span class="kt">void</span> <span class="n">SetPixel</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">val</span><span class="p">)</span>
+</span><span class="line">    <span class="p">{</span>
+</span><span class="line">	<span class="n">m_map</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="kt">void</span> <span class="n">Print</span><span class="p">()</span>
+</span><span class="line">    <span class="p">{</span>
+</span><span class="line">	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m_map</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+</span><span class="line">	<span class="p">{</span>
+</span><span class="line">	    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">m_map</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span>
+</span><span class="line">	    <span class="p">{</span>
+</span><span class="line">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m_map</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+</span><span class="line">	    <span class="p">}</span>
+</span><span class="line">	    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">private</span><span class="o">:</span>
+</span><span class="line">    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">m_map</span><span class="p">;</span>
+</span><span class="line"><span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">void</span> <span class="n">InitPython</span><span class="p">()</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="n">Py_Initialize</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">Py_IsInitialized</span><span class="p">())</span>
+</span><span class="line">    <span class="p">{</span>
+</span><span class="line">	<span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// Get the instance of the map, Singleton Pattern</span>
+</span><span class="line"><span class="c1">// only one map instance exists</span>
+</span><span class="line"><span class="n">Map</span><span class="o">*</span> <span class="n">GetMapInstance</span><span class="p">()</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="k">static</span> <span class="n">Map</span><span class="o">*</span> <span class="n">the_map</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">the_map</span><span class="p">)</span>
+</span><span class="line">    <span class="p">{</span>
+</span><span class="line">	<span class="n">the_map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Map</span><span class="p">();</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">the_map</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// export c++ function and class to python</span>
+</span><span class="line"><span class="n">BOOST_PYTHON_MODULE</span><span class="p">(</span><span class="n">MyEngine</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="o">::</span><span class="n">python</span><span class="p">;</span>
+</span><span class="line">    <span class="n">def</span><span class="p">(</span><span class="s">&quot;GetMapInstance&quot;</span><span class="p">,</span> <span class="n">GetMapInstance</span><span class="p">,</span>
+</span><span class="line">	<span class="n">return_value_policy</span><span class="o">&lt;</span> <span class="n">reference_existing_object</span> <span class="o">&gt;</span><span class="p">());</span>
+</span><span class="line">    <span class="n">class_</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Map&quot;</span><span class="p">,</span> <span class="s">&quot;Game Map&quot;</span><span class="p">)</span>
+</span><span class="line">    	<span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;Print&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Map</span><span class="o">::</span><span class="n">Print</span><span class="p">)</span>
+</span><span class="line">    	<span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;SetPixel&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Map</span><span class="o">::</span><span class="n">SetPixel</span><span class="p">,</span>
+</span><span class="line">	    <span class="p">(</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">),</span> <span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="s">&quot;val&quot;</span><span class="p">));</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="k">try</span>
+</span><span class="line">    <span class="p">{</span>
+</span><span class="line">	<span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="o">::</span><span class="n">python</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">	<span class="n">InitPython</span><span class="p">();</span>
+</span><span class="line">	<span class="n">initMyEngine</span><span class="p">();</span> <span class="c1">// init MyEngine Module</span>
+</span><span class="line">
+</span><span class="line">	<span class="c1">// Add current path to sys.path. You have to</span>
+</span><span class="line">	<span class="c1">// do this in linux. While in Windows,</span>
+</span><span class="line">	<span class="c1">// current path is already in sys.path.</span>
+</span><span class="line">	<span class="n">object</span> <span class="n">main_module</span> <span class="o">=</span> <span class="n">import</span><span class="p">(</span> <span class="s">&quot;__main__&quot;</span> <span class="p">);</span>
+</span><span class="line">	<span class="n">object</span> <span class="n">main_namespace</span> <span class="o">=</span> <span class="n">main_module</span><span class="p">.</span><span class="n">attr</span><span class="p">(</span> <span class="s">&quot;__dict__&quot;</span> <span class="p">);</span>
+</span><span class="line">	<span class="n">object</span> <span class="n">ignored</span> <span class="o">=</span> <span class="n">exec</span><span class="p">(</span>
+</span><span class="line">	    <span class="s">&quot;import sys</span><span class="se">\n</span><span class="s">&quot;</span>
+</span><span class="line">	    <span class="s">&quot;sys.path.append(&#39;.&#39;)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">main_namespace</span> <span class="p">);</span>
+</span><span class="line">
+</span><span class="line">	<span class="n">Map</span><span class="o">*</span> <span class="n">map</span> <span class="o">=</span> <span class="n">GetMapInstance</span><span class="p">();</span>
+</span><span class="line">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Before python</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class="line">	<span class="n">map</span><span class="o">-&gt;</span><span class="n">Print</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line">	<span class="c1">// load python to design the map</span>
+</span><span class="line">	<span class="n">object</span> <span class="n">mapMaker</span> <span class="o">=</span> <span class="n">import</span><span class="p">(</span><span class="s">&quot;mapmaker&quot;</span><span class="p">);</span>
+</span><span class="line">	<span class="n">object</span> <span class="n">makeMap</span> <span class="o">=</span> <span class="n">mapMaker</span><span class="p">.</span><span class="n">attr</span><span class="p">(</span><span class="s">&quot;make_map&quot;</span><span class="p">);</span>
+</span><span class="line">	<span class="n">makeMap</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">After python</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class="line">	<span class="n">map</span><span class="o">-&gt;</span><span class="n">Print</span><span class="p">();</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">catch</span> <span class="p">(...)</span>
+</span><span class="line">    <span class="p">{</span>
+</span><span class="line">	<span class="n">PyErr_Print</span><span class="p">();</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>Python写的地图生成程序：mapmaker.py。</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">MyEngine</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">random</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">make_map</span><span class="p">():</span>
-</span><span class='line'>    <span class="n">the_map</span> <span class="o">=</span> <span class="n">MyEngine</span><span class="o">.</span><span class="n">GetMapInstance</span><span class="p">()</span>
-</span><span class='line'>    <span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-</span><span class='line'>        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span> <span class="o">-</span> <span class="n">i</span><span class="p">,</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-</span><span class='line'>            <span class="n">the_map</span><span class="o">.</span><span class="n">SetPixel</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="nb">ord</span><span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">MyEngine</span>
+</span><span class="line"><span class="kn">import</span> <span class="nn">random</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">make_map</span><span class="p">():</span>
+</span><span class="line">    <span class="n">the_map</span> <span class="o">=</span> <span class="n">MyEngine</span><span class="o">.</span><span class="n">GetMapInstance</span><span class="p">()</span>
+</span><span class="line">    <span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span> <span class="o">-</span> <span class="n">i</span><span class="p">,</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+</span><span class="line">            <span class="n">the_map</span><span class="o">.</span><span class="n">SetPixel</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="nb">ord</span><span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>我们可以仔细看看C++和Python代码中被高亮的行（代码是js高亮的，如果还没高亮请稍等页面加载完成）。</p>
 
@@ -371,19 +374,22 @@
 
 <p>对于</p>
 
-<blockquote></blockquote>
+<blockquote>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>def("GetMapInstance", GetMapInstance,
-</span><span class='line'>  return_value_policy&lt; reference_existing_object >());</span></code></pre></td></tr></table></div></figure>
+</blockquote>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">def("GetMapInstance", GetMapInstance,
+</span><span class="line">	return_value_policy&lt; reference_existing_object &gt;());</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>中的return_value_policy&lt; reference_existing_object >()可以参考我以前写的：<a href="http://blog.csdn.net/cedricporter/article/details/6828322">http://blog.csdn.net/cedricporter/article/details/6828322</a></p>
+<p>中的return_value_policy&lt; reference_existing_object &gt;()可以参考我以前写的：<a href="http://blog.csdn.net/cedricporter/article/details/6828322">http://blog.csdn.net/cedricporter/article/details/6828322</a></p>
 
-<h2>编译：</h2>
+<h2 id="section">编译：</h2>
 
-<blockquote><p>g++ main.cpp -o map -I/usr/include/python2.7 -lboost_python -lpython2.7</p></blockquote>
+<blockquote>
+  <p>g++ main.cpp -o map -I/usr/include/python2.7 -lboost_python -lpython2.7</p>
+</blockquote>
 
 <p>在Windows上编译更容易，就不再罗嗦。</p>
 
@@ -391,25 +397,25 @@
 
 <p><a href="http://everet.org/wp-content/uploads/2012/05/Screenshot-from-2012-05-03-210111.png"><img src="http://everet.org/wp-content/uploads/2012/05/Screenshot-from-2012-05-03-210111.png" alt="" /></a></p>
 
-<h2>Example</h2>
+<h2 id="example">Example</h2>
 
 <p>对于用合适的语言来做合适的事情，会让开发效率和产品质量有所提高。例如，在Emacs里面，就可以是用lisp来控制emacs，AutoCAD中也可以是用脚本来绘图。这样的用户接口更加灵活。</p>
 
-<h2>Other</h2>
+<h2 id="other">Other</h2>
 
-<h3>Scar</h3>
+<h3 id="scar">Scar</h3>
 
 <p>对于Scar这款3D太空：<a href="http://everet.org/2012/01/scar.html">http://everet.org/2012/01/scar.html</a>，是用C++和Python混合编程。在Scar中的2D界面库，有C++写成的基本元件，例如容器和按钮。我们可以在Python中组装C++元件来装配游戏的2D界面，然后返回一棵树的根节点给C++。于是像Scar中的水平仪，提示面板，地图，血条等等都是在Python中组装好的。此外，我们还可以在Python中编写元件的事件处理函数。这样做的好处是，我们在修改界面的时候，不再需要重新编译程序，只要修改脚本就好。</p>
 
 <p>这样的开发会更加便捷而且应对变更的能力会更强。</p>
 
-<h3>ImaginationFactory</h3>
+<h3 id="imaginationfactory">ImaginationFactory</h3>
 
 <p>Imagination Factory是在大一的时候写的一个图像处理程序，<a href="http://everet.org/2012/01/imagination-factory.html">http://everet.org/2012/01/imagination-factory.html</a>。</p>
 
 <p>图像处理核心使用C++编写，界面使用C#/WPF编写。用WPF写界面即方便又便捷，可以轻松地实现很酷的效果。</p>
 
-<h3>Clover —— Computer Simulation Origami</h3>
+<h3 id="clover--computer-simulation-origami">Clover —— Computer Simulation Origami</h3>
 
 <p>Clover是一款计算机模拟折纸的程序，主要程序使用C#编写，内嵌Python解释器，可以用Python折纸。</p>
 </div>

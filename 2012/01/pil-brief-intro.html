@@ -109,73 +109,117 @@
 
 <div class="entry-content"><p>PIL中包括Image，ImageEnhance，ImageGrab等。</p>
 
-<h2>Image</h2>
+<h2 id="image">Image</h2>
 
 <p>Image模块仅用一个类来表示PIL中的图像，并提供了许多工厂函数，不同类型的图像可以使用统一的接口进行处理。</p>
 
 <p><a href="http://www.pythonware.com/library/pil/handbook/image.htm">http://www.pythonware.com/library/pil/handbook/image.htm</a></p>
 
-<h3>主要函数（可以顾名思义，这里主要有个提纲，方便记忆）有：</h3>
+<h3 id="section">主要函数（可以顾名思义，这里主要有个提纲，方便记忆）有：</h3>
 
-<blockquote><p><strong>Image.new(mode, size)</strong> => image</p></blockquote>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">**Image.new(mode, size)** =&gt; image
+</span><span class="line">
+</span><span class="line">**Image.new(mode, size, color)** =&gt; image
+</span><span class="line">
+</span><span class="line">**Image.open(infile)** =&gt; image
+</span><span class="line">
+</span><span class="line">**Image.open(infile, mode)** =&gt; image
+</span><span class="line">
+</span><span class="line">**Image.blend(image1, image2, alpha)** =&gt; image&lt;!-- more --&gt;
+</span><span class="line">
+</span><span class="line">**im.convert(mode)** =&gt; image
+</span><span class="line">
+</span><span class="line">**im.convert(mode, matrix)** =&gt; image
+</span><span class="line">
+</span><span class="line">**im.copy()** =&gt; image
+</span><span class="line">
+</span><span class="line">**im.crop(box)** =&gt; image
+</span><span class="line">
+</span><span class="line">**im.paste(image, box)**
+</span><span class="line">
+</span><span class="line">**im.paste(colour, box)**
+</span><span class="line">
+</span><span class="line">**im.paste(image, box, mask)**
+</span><span class="line">
+</span><span class="line">**im.paste(colour, box, mask)**
+</span><span class="line">
+</span><span class="line">**im.resize(size)** =&gt; image
+</span><span class="line">
+</span><span class="line">**im.resize(size, filter)** =&gt; image
+</span><span class="line">
+</span><span class="line">**im.save(outfile, _options..._)**
+</span><span class="line">
+</span><span class="line">**im.save(outfile, format, _options..._)**
+</span><span class="line">
+</span><span class="line">**im.seek(frame)**   可用于gif
+</span><span class="line">
+</span><span class="line">**im.split()** =&gt; sequence    RGB通道分离
+</span><span class="line">
+</span><span class="line">**im.transpose(method)** =&gt; image</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p><strong>Image.new(mode, size, color)</strong> => image</p>
-
-<p><strong>Image.open(infile)</strong> => image</p>
-
-<p><strong>Image.open(infile, mode)</strong> => image</p>
-
-<p><strong>Image.blend(image1, image2, alpha)</strong> => image<!-- more --></p>
-
-<p><strong>im.convert(mode)</strong> => image</p>
-
-<p><strong>im.convert(mode, matrix)</strong> => image</p>
-
-<p><strong>im.copy()</strong> => image</p>
-
-<p><strong>im.crop(box)</strong> => image</p>
-
-<p><strong>im.paste(image, box)</strong></p>
-
-<p><strong>im.paste(colour, box)</strong></p>
-
-<p><strong>im.paste(image, box, mask)</strong></p>
-
-<p><strong>im.paste(colour, box, mask)</strong></p>
-
-<p><strong>im.resize(size)</strong> => image</p>
-
-<p><strong>im.resize(size, filter)</strong> => image</p>
-
-<p><strong>im.save(outfile, <em>options&#8230;</em>)</strong></p>
-
-<p><strong>im.save(outfile, format, <em>options&#8230;</em>)</strong></p>
-
-<p><strong>im.seek(frame)</strong>   可用于gif</p>
-
-<p><strong>im.split()</strong> => sequence    RGB通道分离</p>
-
-<p><strong>im.transpose(method)</strong> => image</p>
-
-<h2>ImageEnhance</h2>
+<h2 id="imageenhance">ImageEnhance</h2>
 
 <p>图像增强，锐化，对比度，亮度的处理。</p>
 
 <p><a href="http://www.pythonware.com/library/pil/handbook/imageenhance.htm">http://www.pythonware.com/library/pil/handbook/imageenhance.htm</a></p>
 
-<h2>ImageGrab</h2>
+<h2 id="imagegrab">ImageGrab</h2>
 
 <p>ImageGrab模块可以进行屏幕截图。也可以复制剪切板中的图像。不过手册说仅仅适用于Windows。</p>
 
 <p><a href="http://www.pythonware.com/library/pil/handbook/imagegrab.htm">http://www.pythonware.com/library/pil/handbook/imagegrab.htm</a></p>
 
-<blockquote><p><strong>ImageGrab.grab()</strong> => image</p></blockquote>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">**ImageGrab.grab()** =&gt; image
+</span><span class="line">
+</span><span class="line">**ImageGrab.grab(bbox)** =&gt; image
+</span><span class="line">
+</span><span class="line">**ImageGrab.grabclipboard()** =&gt; image or list of strings or None</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p><strong>ImageGrab.grab(bbox)</strong> => image</p>
-
-<p><strong>ImageGrab.grabclipboard()</strong> => image or list of strings or None</p>
-
-<h2>ImageDraw</h2>
+<h2 id="imagedraw">ImageDraw</h2>
 
 <p>可以画2D图。</p>
 

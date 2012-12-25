@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Mysql | EverET.org]]></title>
   <link href="http://everet.org/tag/mysql/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-25T23:07:51+08:00</updated>
+  <updated>2012-12-26T02:57:37+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -26,15 +26,15 @@
 
 <p>嗯，我们可以用脚本将整个数据库dump下来变成文件，放在服务器上作为备份，这样的本地备份万一服务器的数据遭遇了不可恢复的灾难那就悲剧了。所以我们可以寻求异地备份，将备份放置到其他机器上面。</p>
 
-<h2>异地备份</h2>
+<h2 id="section">异地备份</h2>
 
-<h3>方法一<!-- more --></h3>
+<h3 id="more---">方法一<!-- more --></h3>
 
 <p>我们有空的时候，打开自己的电脑，然后从服务器上面将备份下载回自己的电脑保存。</p>
 
 <p>评论：这样的方法未免有点2B，而且效率实在太低。备份的版本还需要自己保存。真是麻烦。</p>
 
-<h3>方法二</h3>
+<h3 id="section-1">方法二</h3>
 
 <p>让服务器将数据库备份到其他服务器上面。</p>
 
@@ -44,11 +44,11 @@
 
 <p>像Gmail有10GB的空间，QQ邮箱更是无限容量，不够了可以免费扩容。于是乎，邮箱是个非常好的异地备份存放点。而且邮件本来就是一封一封的，我们可以方便地将不同时期的版本下回来比较。此外，我们还可以在邮箱设置收件规则，自动将我们的备份邮件标记为已读并放置到分类到备份文件夹中，这样就不会扰乱我们的正常邮件了。</p>
 
-<h2>实施</h2>
+<h2 id="section-2">实施</h2>
 
 <p>我们可以使用Python来把数据库dump下来，然后压缩，发送到自己的邮箱。然后周期性运行我们可以借助cron按照时间表来运行我们的备份任务。</p>
 
-<h3>cron</h3>
+<h3 id="cron">cron</h3>
 
 <p>首先我们看看如果配置cron运行我们的周期性备份。</p>
 
@@ -56,19 +56,25 @@
 
 <p>每个非注释行代表一个命令：</p>
 
-<blockquote><p><em>minute hour day month weekday username command</em></p></blockquote>
+<blockquote>
+  <p><em>minute hour day month weekday username command</em></p>
+</blockquote>
 
 <p>我们可以加入如下行，</p>
 
-<blockquote><p>30 4 * * 1,3,4 root /etc/apache2/db/backup.py</p></blockquote>
+<blockquote>
+  <p>30 4 * * 1,3,4 root /etc/apache2/db/backup.py</p>
+</blockquote>
 
 <p>意思是每周一三四凌晨4点30分运行我们的备份程序。</p>
 
 <p>修改完配置后我们重启一下cron。</p>
 
-<blockquote><p>service cron restart</p></blockquote>
+<blockquote>
+  <p>service cron restart</p>
+</blockquote>
 
-<h3>Python</h3>
+<h3 id="python">Python</h3>
 
 <p>下面的Python代码是备份整个数据库，然后将备份以附件形式发送到指定邮箱。</p>
 
@@ -132,24 +138,9 @@
 <span class='line-number'>55</span>
 <span class='line-number'>56</span>
 <span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="err">!</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">env</span> <span class="n">python</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">website</span><span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">EverET</span><span class="o">.</span><span class="n">org</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">smtplib</span><span class="o">,</span> <span class="nn">os</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/env python</span>
+</span><span class='line'><span class="c"># website: http://EverET.org</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">smtplib</span><span class="o">,</span> <span class="nn">os</span>
 </span><span class='line'><span class="kn">from</span> <span class="nn">email.MIMEMultipart</span> <span class="kn">import</span> <span class="n">MIMEMultipart</span>
 </span><span class='line'><span class="kn">from</span> <span class="nn">email.MIMEBase</span> <span class="kn">import</span> <span class="n">MIMEBase</span>
 </span><span class='line'><span class="kn">from</span> <span class="nn">email.MIMEText</span> <span class="kn">import</span> <span class="n">MIMEText</span>
@@ -157,13 +148,12 @@
 </span><span class='line'><span class="kn">from</span> <span class="nn">email</span> <span class="kn">import</span> <span class="n">Encoders</span>
 </span><span class='line'><span class="kn">import</span> <span class="nn">subprocess</span><span class="o">,</span> <span class="nn">time</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">send_mail</span><span class="p">(</span><span class="n">send_from</span><span class="p">,</span> <span class="n">send_to</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">send_mail</span><span class="p">(</span><span class="n">send_from</span><span class="p">,</span> <span class="n">send_to</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">files</span><span class="o">=</span><span class="p">[],</span> <span class="n">server</span><span class="o">=</span><span class="err">”</span><span class="n">localhost</span><span class="err">”</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">send_to</span><span class="p">)</span><span class="o">==</span><span class="nb">list</span>
+</span><span class='line'>    <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">files</span><span class="p">)</span><span class="o">==</span><span class="nb">list</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="n">files</span><span class="o">=</span><span class="p">[],</span> <span class="n">server</span><span class="o">=</span><span class="s">&quot;localhost&quot;</span><span class="p">):</span>
-</span><span class='line'><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">send_to</span><span class="p">)</span><span class="o">==</span><span class="nb">list</span>
-</span><span class='line'><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">files</span><span class="p">)</span><span class="o">==</span><span class="nb">list</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEMultipart</span><span class="p">()</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEMultipart</span><span class="p">()</span>
 </span><span class='line'><span class="n">msg</span><span class="p">[</span><span class="s">&#39;From&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">send_from</span>
 </span><span class='line'><span class="n">msg</span><span class="p">[</span><span class="s">&#39;To&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">COMMASPACE</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">send_to</span><span class="p">)</span>
 </span><span class='line'><span class="n">msg</span><span class="p">[</span><span class="s">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">formatdate</span><span class="p">(</span><span class="n">localtime</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -185,32 +175,26 @@
 </span><span class='line'><span class="n">smtp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">backup</span><span class="p">():</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">backup</span><span class="p">():</span>
+</span><span class='line'>    <span class="n">passwd</span><span class="o">=</span><span class="err">”</span><span class="n">your</span> <span class="n">password</span><span class="err">”</span>
+</span><span class='line'>    <span class="n">user</span><span class="o">=</span><span class="err">’</span><span class="n">root</span><span class="err">’</span>
+</span><span class='line'>    <span class="n">ret</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
+</span><span class='line'>            <span class="err">‘</span><span class="s">&#39;’mysqldump -u </span><span class="si">%s</span><span class="s"> -p”</span><span class="si">%s</span><span class="s">” –all-databases |</span>
+</span><span class='line'>            <span class="n">gzip</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">db</span><span class="o">/</span><span class="nb">all</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">gz</span><span class="err">’’’</span>
+</span><span class='line'>            <span class="o">%</span> <span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">passwd</span><span class="p">),</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">ret</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">passwd</span><span class="o">=</span><span class="s">&quot;your password&quot;</span>
-</span><span class='line'><span class="n">user</span><span class="o">=</span><span class="s">&#39;root&#39;</span>
-</span><span class='line'><span class="n">ret</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
-</span><span class='line'>        <span class="sd">&#39;&#39;&#39;mysqldump -u %s -p&quot;%s&quot; --all-databases |</span>
-</span><span class='line'><span class="sd">        gzip &amp;gt; /etc/apache2/db/all.sql.gz&#39;&#39;&#39;</span>
-</span><span class='line'>        <span class="o">%</span> <span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">passwd</span><span class="p">),</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</span><span class='line'><span class="k">return</span> <span class="n">ret</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">==</span> <span class="s">&#39;&lt;strong&gt;main&lt;/strong&gt;&#39;</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">if</span> <span class="n">backup</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">send_mail</span><span class="p">(</span>
-</span><span class='line'>        <span class="s">&#39;et@everet.org&#39;</span><span class="p">,</span>        <span class="c"># from mail</span>
-</span><span class='line'>        <span class="p">[</span><span class="s">&#39;your@mail.com&#39;</span><span class="p">],</span>   <span class="c"># to mail</span>
-</span><span class='line'>        <span class="s">&#39;all database backup&#39;</span><span class="p">,</span>
-</span><span class='line'>        <span class="s">&#39;backup time:</span><span class="si">%s</span><span class="s">&#39;</span>
-</span><span class='line'>        <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">()),</span> <span class="p">),</span>
-</span><span class='line'>        <span class="p">[</span><span class="s">&#39;/etc/apache2/db/all.sql.gz&#39;</span><span class="p">])</span>
-</span><span class='line'><span class="k">else</span><span class="p">:</span>
-</span><span class='line'>    <span class="k">print</span> <span class="s">&#39;error&#39;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">==</span> <span class="err">‘</span><span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">main</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span><span class="err">’</span><span class="p">:</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">backup</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">send_mail</span><span class="p">(</span>
+</span><span class='line'>            <span class="err">‘</span><span class="n">et</span><span class="nd">@everet.org</span><span class="err">’</span><span class="p">,</span>        <span class="c"># from mail</span>
+</span><span class='line'>            <span class="p">[</span><span class="err">‘</span><span class="n">your</span><span class="nd">@mail.com</span><span class="err">’</span><span class="p">],</span>   <span class="c"># to mail</span>
+</span><span class='line'>            <span class="err">‘</span><span class="nb">all</span> <span class="n">database</span> <span class="n">backup</span><span class="err">’</span><span class="p">,</span>
+</span><span class='line'>            <span class="err">‘</span><span class="n">backup</span> <span class="n">time</span><span class="p">:</span><span class="o">%</span><span class="n">s</span><span class="err">’</span>
+</span><span class='line'>            <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">()),</span> <span class="p">),</span>
+</span><span class='line'>            <span class="p">[</span><span class="err">‘</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">db</span><span class="o">/</span><span class="nb">all</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">gz</span><span class="err">’</span><span class="p">])</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">print</span> <span class="err">‘</span><span class="n">error</span><span class="err">’</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>因为我们数据库的密码是写在了脚本里面，所以我们需要修改权限，让仅自己可读，以提高安全性。</p>
@@ -219,6 +203,7 @@
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>chmod 700 backup.py
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
 ]]></content>
   </entry>
   
@@ -231,7 +216,10 @@
 
 <p>对于MySQL来说，其下可以有很多个数据库，可以使用</p>
 
-<blockquote><p>CREATE DATABASE database_name;</p></blockquote>
+<blockquote>
+
+  <p>CREATE DATABASE database_name;</p>
+</blockquote>
 
 <p>来建数据库。</p>
 
@@ -239,14 +227,16 @@
 
 <p>然后我们可以选择当前操作的数据库，然后在其下建表</p>
 
-<blockquote><p>CREATE TABLE table_name;</p></blockquote>
+<blockquote>
+
+  <p>CREATE TABLE table_name;</p>
+</blockquote>
 
 <p>举个例子，我们可以在MySQL下一些数据库：ET，LST，zhke，test。</p>
 
 <p>然后在数据库ET下有两张表User和Product。</p>
 
 <!-- more -->
-
 
 <p>在数据库zhke下有三张表User、Article和comment。</p>
 
@@ -267,11 +257,11 @@
 
 <p>好，现在回忆一下如何搭建这个网站。<!-- more --></p>
 
-<h2><strong>必要的话可以修改时区</strong></h2>
+<h2 id="section"><strong>必要的话可以修改时区</strong></h2>
 
 <p>cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</p>
 
-<h2><strong>内存小，增加虚拟内存</strong></h2>
+<h2 id="section-1"><strong>内存小，增加虚拟内存</strong></h2>
 
 <p>如何增加虚拟内存呢？这个在《鸟哥的Linux私房菜》里面说了有比较详细的说明，这里也简要提一下。</p>
 
@@ -308,7 +298,7 @@
 </span><span class='line'>&lt;p&gt;
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h2><strong>搭建VPN</strong></h2>
+<h2 id="vpn"><strong>搭建VPN</strong></h2>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -343,80 +333,48 @@
 <span class='line-number'>30</span>
 <span class='line-number'>31</span>
 <span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;h1&gt;!/bin/bash&lt;/h1&gt;
-</span><span class='line'>
+</span><span class='line'>&lt;h1 <span class="nv">id</span><span class="o">=</span><span class="s2">&quot;binbash&quot;</span>&gt;!/bin/bash&lt;/h1&gt;
 </span><span class='line'>&lt;p&gt;apt-get update
-</span><span class='line'>apt-get -y install ppp pptpd iptables&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;设置DNS&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;echo ms-dns 208.67.222.222 &gt;&gt; /etc/ppp/pptpd-options
-</span><span class='line'><span class="nb">echo </span>ms-dns 208.67.220.220 &gt;&gt; /etc/ppp/pptpd-options
-</span><span class='line'><span class="nb">echo </span>localip 192.168.99.1 &gt;&gt; /etc/pptpd.conf
-</span><span class='line'><span class="nb">echo </span>remoteip 192.168.99.9-99 &gt;&gt; /etc/pptpd.conf&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;设置防火墙&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;如果出现restorecon <span class="nb">command </span>not found，可以apt-get install policycoreutils&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;iptables -t nat -A POSTROUTING -s 192.168.99.0/24 -j MASQUERADE&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;加到rc.local让开机会重新设置过滤&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;sed -i <span class="s1">&#39;s/exit\ 0/#exit\ 0/&#39;</span> /etc/rc.local
+</span><span class='line'>apt-get -y install ppp pptpd iptables
+</span><span class='line'><span class="c"># 设置DNS</span>
+</span><span class='line'><span class="nb">echo </span>ms-dns 208.67.222.222 » /etc/ppp/pptpd-options
+</span><span class='line'><span class="nb">echo </span>ms-dns 208.67.220.220 » /etc/ppp/pptpd-options
+</span><span class='line'><span class="nb">echo </span>localip 192.168.99.1 » /etc/pptpd.conf
+</span><span class='line'><span class="nb">echo </span>remoteip 192.168.99.9-99 » /etc/pptpd.conf
+</span><span class='line'><span class="c"># 设置防火墙</span>
+</span><span class='line'><span class="c"># 如果出现restorecon command not found，可以apt-get install policycoreutils</span>
+</span><span class='line'>iptables -t nat -A POSTROUTING -s 192.168.99.0/24 -j MASQUERADE
+</span><span class='line'><span class="c"># 加到rc.local让开机会重新设置过滤</span>
+</span><span class='line'>sed -i ‘s/exit<span class="se">\ </span>0/#exit<span class="se">\ </span>0/’ /etc/rc.local
 </span><span class='line'><span class="nb">echo </span>iptables -t nat -A POSTROUTING -s 192.168.99.0/24 <span class="se">\</span>
-</span><span class='line'>-j MASQUERADE &gt;&gt; /etc/rc.local
-</span><span class='line'><span class="nb">echo exit </span>0 &gt;&gt; /etc/rc.local
-</span><span class='line'><span class="nb">echo </span>net.ipv4.ip_forward <span class="o">=</span> 1 &gt;&gt; /etc/sysctl.conf
-</span><span class='line'>sysctl -p&lt;/p&gt;
+</span><span class='line'>-j MASQUERADE » /etc/rc.local
+</span><span class='line'><span class="nb">echo exit </span>0 » /etc/rc.local
+</span><span class='line'><span class="nb">echo </span>net.ipv4.ip_forward <span class="o">=</span> 1 » /etc/sysctl.conf
+</span><span class='line'>sysctl -p
+</span><span class='line'><span class="c"># 添加用户test_user，密码test_password</span>
+</span><span class='line'><span class="c"># 格式</span>
+</span><span class='line'><span class="c">#  client        server     secret                IP addresses</span>
+</span><span class='line'><span class="nb">echo </span>test_user * test_password * » /etc/ppp/chap-secrets
+</span><span class='line'><span class="c"># 其中IP地址这一列，我们可以为特定用户手工指定特定IP。</span>
+</span><span class='line'><span class="c"># 如果没有指定，为”*“，那么PPTP VPN服务器从/etc/pptp.conf文件中</span>
+</span><span class='line'><span class="c"># 我们设定的remoteip中选择一个分配给客户端。&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;h1&gt;添加用户test_user，密码test_password&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;格式&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt; client        server     secret                IP addresses&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;echo test_user * test_password * &gt;&gt; /etc/ppp/chap-secrets&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;其中IP地址这一列，我们可以为特定用户手工指定特定IP。&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;如果没有指定，为<span class="s2">&quot;*&quot;</span>，那么PPTP VPN服务器从/etc/pptp.conf文件中&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;我们设定的remoteip中选择一个分配给客户端。&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;重启pptpd让设置生效&lt;/h1&gt;
-</span><span class='line'>
+</span><span class='line'>&lt;h1 <span class="nv">id</span><span class="o">=</span><span class="s2">&quot;pptpd&quot;</span>&gt;重启pptpd让设置生效&lt;/h1&gt;
 </span><span class='line'>&lt;p&gt;/etc/init.d/pptpd restart&lt;/p&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h2>搭建邮件服务器</h2>
+<h2 id="section-2">搭建邮件服务器</h2>
 
 <p>apt-get install sendmail, 然后就可以用sendmail somebody@qq.com发送邮件了，这里还没有讲述如何配置收件，不过发件可以了。收件配置稍后在补全。</p>
 
 <p>apt-get install postfix
 apt-get install mailutils</p>
 
-<h2><strong>配置Web服务器</strong></h2>
+<h2 id="web"><strong>配置Web服务器</strong></h2>
 
 <p>虽然我还是挺想用Apache的，不过太占资源了，所以还是用轻量级一点的nginx，日后有空再自己写个更简单轻量的。整体配置为 Linux + Nginx + PHP-fpm + Mysql，也是传说中的 LNMP。这个在Ubuntu 10.10上搭建还是灰常简单滴。</p>
 
@@ -447,7 +405,7 @@ apt-get install mailutils</p>
 </span><span class='line'>&lt;p&gt;
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>然后就可以用 service --status-all 查看所有的服务。
+<p>然后就可以用 service –status-all 查看所有的服务。
 我们可以用 vi /etc/php5/fpm/php.ini 修改php的配置。可以加上 cgi.fix_pathinfo=0 这句，因为可能会导致可以上传图片扩展名的php，然后可以通过路径访问执行php，如果出现这种情况那就悲剧了。
 好，现在我们开始配置nginx，我们可以 vi /etc/nginx/sites-available/default 编辑</p>
 
@@ -475,33 +433,27 @@ apt-get install mailutils</p>
 <span class='line-number'>21</span>
 <span class='line-number'>22</span>
 <span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
 </pre></td><td class='code'><pre><code class='text'><span class='line'>&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;p&gt;server {&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;listen   80; ## listen for ipv4
-</span><span class='line'>    listen   [::]:80 default ipv6only=on; ## listen for ipv6
-</span><span class='line'>    server_name  www.everet.org everet.org;
-</span><span class='line'>access_log  /var/log/nginx/et/localhost.access.log;
-</span><span class='line'>location / {
-</span><span class='line'>    if (!-f $request_filename){
-</span><span class='line'>        rewrite (.*) /index.php;
-</span><span class='line'>    }
-</span><span class='line'>    root   /var/www/et;
-</span><span class='line'>    index  index.php index.html index.htm;
-</span><span class='line'>}
-</span><span class='line'>location ~ \.php$ {
-</span><span class='line'>    fastcgi_pass   127.0.0.1:9000;
-</span><span class='line'>    fastcgi_index  index.php;
-</span><span class='line'>    fastcgi_param  SCRIPT_FILENAME  /var/www/et$fastcgi_script_name;
-</span><span class='line'>    include      fastcgi_params;
-</span><span class='line'>}
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;}&lt;/p&gt;
+</span><span class='line'>&lt;p&gt;server {
+</span><span class='line'>	listen   80; ## listen for ipv4
+</span><span class='line'>		listen   [::]:80 default ipv6only=on; ## listen for ipv6
+</span><span class='line'>		server_name  www.everet.org everet.org;
+</span><span class='line'>	access_log  /var/log/nginx/et/localhost.access.log;
+</span><span class='line'>	location / {
+</span><span class='line'>		if (!-f $request_filename){
+</span><span class='line'>			rewrite (.*) /index.php;
+</span><span class='line'>		}
+</span><span class='line'>		root   /var/www/et;
+</span><span class='line'>		index  index.php index.html index.htm;
+</span><span class='line'>	}
+</span><span class='line'>	location ~ .php$ {
+</span><span class='line'>		fastcgi_pass   127.0.0.1:9000;
+</span><span class='line'>		fastcgi_index  index.php;
+</span><span class='line'>		fastcgi_param  SCRIPT_FILENAME  /var/www/et$fastcgi_script_name;
+</span><span class='line'>		include		 fastcgi_params;
+</span><span class='line'>	}
+</span><span class='line'>}&lt;/p&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>

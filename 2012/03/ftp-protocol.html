@@ -117,7 +117,7 @@
 
 <p>课下的时间都花在Scar上，网络也没仔细研究过，悲剧了，现在开始要好好补下才行了。</p>
 
-<h2>以下的内容是关于FTP协议的。</h2>
+<h2 id="ftp">以下的内容是关于FTP协议的。</h2>
 
 <p>HTTP和FTP都是文件传输协议,他们都运行在TCP之上.</p>
 
@@ -129,8 +129,7 @@
 
 <!-- more -->
 
-
-<h3>FTP协议的控制连接和数据连接如下图。</h3>
+<h3 id="ftp-1">FTP协议的控制连接和数据连接如下图。</h3>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/03/image.png"><img src="http://everet.org/wp-content/uploads/2012/03/image_thumb.png" alt="image" /></a></p>
 
@@ -138,18 +137,20 @@
 
 <p><a href="http://everet.org/wp-content/uploads/2012/03/image1.png"><img src="http://everet.org/wp-content/uploads/2012/03/image_thumb1.png" alt="image" /></a></p>
 
-<h2>两种模式</h2>
+<h2 id="section">两种模式</h2>
 
 <p>FTP协议的数据传输存在两种模式：主动模式( Active mode ) 和被动模式( Passive mode ) 。这两种模式发起连接的方向截然相反，主动模式是从服务器端向客户端发起；被动模式是客户端向服务器端发起连接。</p>
 
 <p>如果采用被动模式，由于FTP服务器完全随机的选择一个端口，并告知客户，然后客户进行主动连接，这就意味着在服务器上，你要让所有的端口都允许动态入站连接才行，这样肯定不行，因为太危险了，等于打开了所有的端口连接。
 如果采用主动模式（PORT Mode)，FTP服务器选择好端口后，主动与客户进行连接，这时候不需要像PASV模式那样打开所有的动态入站连接，而且正好相反，我们需要打开所有的动态出站连接即可，安全性增加很多。联机模式</p>
 
-<h3>主动模式 ( Active mode )</h3>
+<h3 id="active-mode-">主动模式 ( Active mode )</h3>
 
 <p>FTP Client 跟 FTP Server 联机后，会主动利用 PORT 指令提出 DATA Channel 联机的要求，如下：</p>
 
-<blockquote><p>指令: PORT 10,18,53,171,17,114</p></blockquote>
+<blockquote>
+  <p>指令: PORT 10,18,53,171,17,114</p>
+</blockquote>
 
 <p>回应: 200 Port command successful.</p>
 
@@ -161,11 +162,13 @@
 
 <p>由此可知，如果 FTP Client 处于 NAT 的环境下的话，FTP Server 几乎无法正常的联机到 FTP Client 的主机，所以现在大部分的联机模式几乎都建议用户使用被动模式(Passive mode)。</p>
 
-<h3>被动模式 ( Passive mode )</h3>
+<h3 id="passive-mode-">被动模式 ( Passive mode )</h3>
 
 <p>FTP Client 跟 FTP Server 联机后，会主动利用 PASV 指令提出 DATA Channel 联机的要求，如下：</p>
 
-<blockquote><p>指令: PASV</p></blockquote>
+<blockquote>
+  <p>指令: PASV</p>
+</blockquote>
 
 <p>回应: 227 Entering Passive Mode (59,37,124,43,158,251)</p>
 
@@ -177,589 +180,580 @@
 
 <p>由此可知，使用被动模式(Passive mode)对 FTP Server 的系统管理员来说，可掌控的部分是比较多的，因为 FTP Server 无法决定用户是否可使用主动模式联机，但若改使用被动模式联机的话，就几乎能让所有人正常的使用 FTP 服务。</p>
 
-<h2>其他</h2>
+<h2 id="section-1">其他</h2>
 
 <p>FTP协议的命令和应答：<a href="http://www.w3.org/Protocols/rfc959/4_FileTransfer.html">http://www.w3.org/Protocols/rfc959/4_FileTransfer.html</a></p>
 
-<h3>FTP COMMANDS [FTP命令]</h3>
+<h3 id="ftp-commands-ftp">FTP COMMANDS [FTP命令]</h3>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>**USER** &lt;SP> &lt;username> &lt;CRLF>
-</span><span class='line'>**PASS** &lt;SP> &lt;password> &lt;CRLF>
-</span><span class='line'>**ACCT** &lt;SP> &lt;account-information> &lt;CRLF>
-</span><span class='line'>**CWD**  &lt;SP> &lt;pathname> &lt;CRLF>
-</span><span class='line'>**CDUP** &lt;CRLF>
-</span><span class='line'>**SMNT** &lt;SP> &lt;pathname> &lt;CRLF>
-</span><span class='line'>**QUIT** &lt;CRLF>
-</span><span class='line'>**REIN** &lt;CRLF>
-</span><span class='line'>**PORT** &lt;SP> &lt;host-port> &lt;CRLF>
-</span><span class='line'>**PASV** &lt;CRLF>
-</span><span class='line'>**TYPE** &lt;SP> &lt;type-code> &lt;CRLF>
-</span><span class='line'>**STRU** &lt;SP> &lt;structure-code> &lt;CRLF>
-</span><span class='line'>**MODE** &lt;SP> &lt;mode-code> &lt;CRLF>
-</span><span class='line'>**RETR** &lt;SP> &lt;pathname> &lt;CRLF>
-</span><span class='line'>**STOR** &lt;SP> &lt;pathname> &lt;CRLF>
-</span><span class='line'>**STOU** &lt;CRLF>
-</span><span class='line'>**APPE** &lt;SP> &lt;pathname> &lt;CRLF>
-</span><span class='line'>**ALLO** &lt;SP> &lt;decimal-integer>
-</span><span class='line'>    [&lt;SP> R &lt;SP> &lt;decimal-integer>] &lt;CRLF>
-</span><span class='line'>**REST** &lt;SP> &lt;marker> &lt;CRLF>
-</span><span class='line'>**RNFR** &lt;SP> &lt;pathname> &lt;CRLF>
-</span><span class='line'>**RNTO** &lt;SP> &lt;pathname> &lt;CRLF>
-</span><span class='line'>**ABOR** &lt;CRLF>
-</span><span class='line'>**DELE** &lt;SP> &lt;pathname> &lt;CRLF>
-</span><span class='line'>**RMD**  &lt;SP> &lt;pathname> &lt;CRLF>
-</span><span class='line'>**MKD**  &lt;SP> &lt;pathname> &lt;CRLF>
-</span><span class='line'>**PWD**  &lt;CRLF>
-</span><span class='line'>**LIST** [&lt;SP> &lt;pathname>] &lt;CRLF>
-</span><span class='line'>**NLST** [&lt;SP> &lt;pathname>] &lt;CRLF>
-</span><span class='line'>**SITE** &lt;SP> &lt;string> &lt;CRLF>
-</span><span class='line'>**SYST** &lt;CRLF>
-</span><span class='line'>**STAT** [&lt;SP> &lt;pathname>] &lt;CRLF>
-</span><span class='line'>**HELP** [&lt;SP> &lt;string>] &lt;CRLF>
-</span><span class='line'>**NOOP** &lt;CRLF></span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">**USER** &lt;SP&gt; &lt;username&gt; &lt;CRLF&gt;
+</span><span class="line">**PASS** &lt;SP&gt; &lt;password&gt; &lt;CRLF&gt;
+</span><span class="line">**ACCT** &lt;SP&gt; &lt;account-information&gt; &lt;CRLF&gt;
+</span><span class="line">**CWD**  &lt;SP&gt; &lt;pathname&gt; &lt;CRLF&gt;
+</span><span class="line">**CDUP** &lt;CRLF&gt;
+</span><span class="line">**SMNT** &lt;SP&gt; &lt;pathname&gt; &lt;CRLF&gt;
+</span><span class="line">**QUIT** &lt;CRLF&gt;
+</span><span class="line">**REIN** &lt;CRLF&gt;
+</span><span class="line">**PORT** &lt;SP&gt; &lt;host-port&gt; &lt;CRLF&gt;
+</span><span class="line">**PASV** &lt;CRLF&gt;
+</span><span class="line">**TYPE** &lt;SP&gt; &lt;type-code&gt; &lt;CRLF&gt;
+</span><span class="line">**STRU** &lt;SP&gt; &lt;structure-code&gt; &lt;CRLF&gt;
+</span><span class="line">**MODE** &lt;SP&gt; &lt;mode-code&gt; &lt;CRLF&gt;
+</span><span class="line">**RETR** &lt;SP&gt; &lt;pathname&gt; &lt;CRLF&gt;
+</span><span class="line">**STOR** &lt;SP&gt; &lt;pathname&gt; &lt;CRLF&gt;
+</span><span class="line">**STOU** &lt;CRLF&gt;
+</span><span class="line">**APPE** &lt;SP&gt; &lt;pathname&gt; &lt;CRLF&gt;
+</span><span class="line">**ALLO** &lt;SP&gt; &lt;decimal-integer&gt;
+</span><span class="line">    [&lt;SP&gt; R &lt;SP&gt; &lt;decimal-integer&gt;] &lt;CRLF&gt;
+</span><span class="line">**REST** &lt;SP&gt; &lt;marker&gt; &lt;CRLF&gt;
+</span><span class="line">**RNFR** &lt;SP&gt; &lt;pathname&gt; &lt;CRLF&gt;
+</span><span class="line">**RNTO** &lt;SP&gt; &lt;pathname&gt; &lt;CRLF&gt;
+</span><span class="line">**ABOR** &lt;CRLF&gt;
+</span><span class="line">**DELE** &lt;SP&gt; &lt;pathname&gt; &lt;CRLF&gt;
+</span><span class="line">**RMD**  &lt;SP&gt; &lt;pathname&gt; &lt;CRLF&gt;
+</span><span class="line">**MKD**  &lt;SP&gt; &lt;pathname&gt; &lt;CRLF&gt;
+</span><span class="line">**PWD**  &lt;CRLF&gt;
+</span><span class="line">**LIST** [&lt;SP&gt; &lt;pathname&gt;] &lt;CRLF&gt;
+</span><span class="line">**NLST** [&lt;SP&gt; &lt;pathname&gt;] &lt;CRLF&gt;
+</span><span class="line">**SITE** &lt;SP&gt; &lt;string&gt; &lt;CRLF&gt;
+</span><span class="line">**SYST** &lt;CRLF&gt;
+</span><span class="line">**STAT** [&lt;SP&gt; &lt;pathname&gt;] &lt;CRLF&gt;
+</span><span class="line">**HELP** [&lt;SP&gt; &lt;string&gt;] &lt;CRLF&gt;
+</span><span class="line">**NOOP** &lt;CRLF&gt;</span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<h3 id="reply-code-by-function-groups-">Reply Code By Function Groups [返回码]</h3>
 
-<h3>Reply Code By Function Groups [返回码]</h3>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">**110** Restart marker reply.
+</span><span class="line">    In this case, the text is exact and not left to the
+</span><span class="line">    particular implementation; it must read:
+</span><span class="line">         MARK yyyy = mmmm
+</span><span class="line">    Where yyyy is User-process data stream marker, and mmmm
+</span><span class="line">    server's equivalent marker (note the spaces between markers
+</span><span class="line">    and "=").
+</span><span class="line">**120** Service ready in nnn minutes.
+</span><span class="line">**125** Data connection already open; transfer starting.
+</span><span class="line">**150** File status okay; about to open data connection.
+</span><span class="line">**200** Command okay.
+</span><span class="line">**202** Command not implemented, superfluous at this site.
+</span><span class="line">**211** System status, or system help reply.
+</span><span class="line">**212** Directory status.
+</span><span class="line">**213** File status.
+</span><span class="line">**214** Help message.
+</span><span class="line">    On how to use the server or the meaning of a particular
+</span><span class="line">    non-standard command.  This reply is useful only to the
+</span><span class="line">    human user.
+</span><span class="line">**215** NAME system type.
+</span><span class="line">    Where NAME is an official system name from the list in the
+</span><span class="line">    Assigned Numbers document.
+</span><span class="line">**220** Service ready for new user.
+</span><span class="line">**221** Service closing control connection.
+</span><span class="line">    Logged out if appropriate.
+</span><span class="line">**225** Data connection open; no transfer in progress.
+</span><span class="line">**226** Closing data connection.
+</span><span class="line">    Requested file action successful (for example, file
+</span><span class="line">    transfer or file abort).
+</span><span class="line">**227** Entering Passive Mode (h1,h2,h3,h4,p1,p2).
+</span><span class="line">**230** User logged in, proceed.
+</span><span class="line">**250** Requested file action okay, completed.
+</span><span class="line">**257** "PATHNAME" created.
+</span><span class="line">
+</span><span class="line">**331** User name okay, need password.
+</span><span class="line">**332** Need account for login.
+</span><span class="line">**350** Requested file action pending further information.
+</span><span class="line">
+</span><span class="line">**421** Service not available, closing control connection.
+</span><span class="line">    This may be a reply to any command if the service knows it
+</span><span class="line">    must shut down.
+</span><span class="line">**425** Can't open data connection.
+</span><span class="line">**426** Connection closed; transfer aborted.
+</span><span class="line">**450** Requested file action not taken.
+</span><span class="line">    File unavailable (e.g., file busy).
+</span><span class="line">**451** Requested action aborted: local error in processing.
+</span><span class="line">**452** Requested action not taken.
+</span><span class="line">    Insufficient storage space in system.
+</span><span class="line">**500** Syntax error, command unrecognized.
+</span><span class="line">    This may include errors such as command line too long.
+</span><span class="line">**501** Syntax error in parameters or arguments.
+</span><span class="line">**502** Command not implemented.
+</span><span class="line">**503** Bad sequence of commands.
+</span><span class="line">**504** Command not implemented for that parameter.
+</span><span class="line">**530** Not logged in.
+</span><span class="line">**532** Need account for storing files.
+</span><span class="line">**550** Requested action not taken.
+</span><span class="line">    File unavailable (e.g., file not found, no access).
+</span><span class="line">**551** Requested action aborted: page type unknown.
+</span><span class="line">**552** Requested file action aborted.
+</span><span class="line">    Exceeded storage allocation (for current directory or
+</span><span class="line">    dataset).
+</span><span class="line">**553** Requested action not taken.
+</span><span class="line">    File name not allowed.</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>**110** Restart marker reply.
-</span><span class='line'>    In this case, the text is exact and not left to the
-</span><span class='line'>    particular implementation; it must read:
-</span><span class='line'>         MARK yyyy = mmmm
-</span><span class='line'>    Where yyyy is User-process data stream marker, and mmmm
-</span><span class='line'>    server's equivalent marker (note the spaces between markers
-</span><span class='line'>    and "=").
-</span><span class='line'>**120** Service ready in nnn minutes.
-</span><span class='line'>**125** Data connection already open; transfer starting.
-</span><span class='line'>**150** File status okay; about to open data connection.
-</span><span class='line'>**200** Command okay.
-</span><span class='line'>**202** Command not implemented, superfluous at this site.
-</span><span class='line'>**211** System status, or system help reply.
-</span><span class='line'>**212** Directory status.
-</span><span class='line'>**213** File status.
-</span><span class='line'>**214** Help message.
-</span><span class='line'>    On how to use the server or the meaning of a particular
-</span><span class='line'>    non-standard command.  This reply is useful only to the
-</span><span class='line'>    human user.
-</span><span class='line'>**215** NAME system type.
-</span><span class='line'>    Where NAME is an official system name from the list in the
-</span><span class='line'>    Assigned Numbers document.
-</span><span class='line'>**220** Service ready for new user.
-</span><span class='line'>**221** Service closing control connection.
-</span><span class='line'>    Logged out if appropriate.
-</span><span class='line'>**225** Data connection open; no transfer in progress.
-</span><span class='line'>**226** Closing data connection.
-</span><span class='line'>    Requested file action successful (for example, file
-</span><span class='line'>    transfer or file abort).
-</span><span class='line'>**227** Entering Passive Mode (h1,h2,h3,h4,p1,p2).
-</span><span class='line'>**230** User logged in, proceed.
-</span><span class='line'>**250** Requested file action okay, completed.
-</span><span class='line'>**257** "PATHNAME" created.
-</span><span class='line'>
-</span><span class='line'>**331** User name okay, need password.
-</span><span class='line'>**332** Need account for login.
-</span><span class='line'>**350** Requested file action pending further information.
-</span><span class='line'>
-</span><span class='line'>**421** Service not available, closing control connection.
-</span><span class='line'>    This may be a reply to any command if the service knows it
-</span><span class='line'>    must shut down.
-</span><span class='line'>**425** Can't open data connection.
-</span><span class='line'>**426** Connection closed; transfer aborted.
-</span><span class='line'>**450** Requested file action not taken.
-</span><span class='line'>    File unavailable (e.g., file busy).
-</span><span class='line'>**451** Requested action aborted: local error in processing.
-</span><span class='line'>**452** Requested action not taken.
-</span><span class='line'>    Insufficient storage space in system.
-</span><span class='line'>**500** Syntax error, command unrecognized.
-</span><span class='line'>    This may include errors such as command line too long.
-</span><span class='line'>**501** Syntax error in parameters or arguments.
-</span><span class='line'>**502** Command not implemented.
-</span><span class='line'>**503** Bad sequence of commands.
-</span><span class='line'>**504** Command not implemented for that parameter.
-</span><span class='line'>**530** Not logged in.
-</span><span class='line'>**532** Need account for storing files.
-</span><span class='line'>**550** Requested action not taken.
-</span><span class='line'>    File unavailable (e.g., file not found, no access).
-</span><span class='line'>**551** Requested action aborted: page type unknown.
-</span><span class='line'>**552** Requested file action aborted.
-</span><span class='line'>    Exceeded storage allocation (for current directory or
-</span><span class='line'>    dataset).
-</span><span class='line'>**553** Requested action not taken.
-</span><span class='line'>    File name not allowed.</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>文法</h3>
+<h3 id="section-2">文法</h3>
 
 <p>The syntax of the above argument fields (using BNF notation where applicable) is:</p>
 
-<figure class='code'><figcaption><span>php  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">&lt;username&gt; ::= &lt;string&gt;</span>
-</span><span class='line'><span class="x">&lt;password&gt; ::= &lt;string&gt;</span>
-</span><span class='line'><span class="x">&lt;account-information&gt; ::= &lt;string&gt;</span>
-</span><span class='line'><span class="x">&lt;string&gt; ::= &lt;char&gt; | &lt;char&gt;&lt;string&gt;</span>
-</span><span class='line'><span class="x">&lt;char&gt; ::= any of the 128 ASCII characters except &lt;CR&gt; and</span>
-</span><span class='line'><span class="x">&lt;LF&gt;</span>
-</span><span class='line'><span class="x">&lt;marker&gt; ::= &lt;pr-string&gt;</span>
-</span><span class='line'><span class="x">&lt;pr-string&gt; ::= &lt;pr-char&gt; | &lt;pr-char&gt;&lt;pr-string&gt;</span>
-</span><span class='line'><span class="x">&lt;pr-char&gt; ::= printable characters, any</span>
-</span><span class='line'><span class="x">              ASCII code 33 through 126</span>
-</span><span class='line'><span class="x">&lt;byte-size&gt; ::= &lt;number&gt;</span>
-</span><span class='line'><span class="x">&lt;host-port&gt; ::= &lt;host-number&gt;,&lt;port-number&gt;</span>
-</span><span class='line'><span class="x">&lt;host-number&gt; ::= &lt;number&gt;,&lt;number&gt;,&lt;number&gt;,&lt;number&gt;</span>
-</span><span class='line'><span class="x">&lt;port-number&gt; ::= &lt;number&gt;,&lt;number&gt;</span>
-</span><span class='line'><span class="x">&lt;number&gt; ::= any decimal integer 1 through 255</span>
-</span><span class='line'><span class="x">&lt;form-code&gt; ::= N | T | C</span>
-</span><span class='line'><span class="x">&lt;type-code&gt; ::= A [&lt;sp&gt; &lt;form-code&gt;]</span>
-</span><span class='line'><span class="x">              | E [&lt;sp&gt; &lt;form-code&gt;]</span>
-</span><span class='line'><span class="x">              | I</span>
-</span><span class='line'><span class="x">              | L &lt;sp&gt; &lt;byte-size&gt;</span>
-</span><span class='line'><span class="x">&lt;structure-code&gt; ::= F | R | P</span>
-</span><span class='line'><span class="x">&lt;mode-code&gt; ::= S | B | C</span>
-</span><span class='line'><span class="x">&lt;pathname&gt; ::= &lt;string&gt;</span>
-</span><span class='line'><span class="x">&lt;decimal-integer&gt; ::= any decimal integer</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>php  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="x">&lt;username&gt; ::= &lt;string&gt;</span>
+</span><span class="line"><span class="x">&lt;password&gt; ::= &lt;string&gt;</span>
+</span><span class="line"><span class="x">&lt;account-information&gt; ::= &lt;string&gt;</span>
+</span><span class="line"><span class="x">&lt;string&gt; ::= &lt;char&gt; | &lt;char&gt;&lt;string&gt;</span>
+</span><span class="line"><span class="x">&lt;char&gt; ::= any of the 128 ASCII characters except &lt;CR&gt; and</span>
+</span><span class="line"><span class="x">&lt;LF&gt;</span>
+</span><span class="line"><span class="x">&lt;marker&gt; ::= &lt;pr-string&gt;</span>
+</span><span class="line"><span class="x">&lt;pr-string&gt; ::= &lt;pr-char&gt; | &lt;pr-char&gt;&lt;pr-string&gt;</span>
+</span><span class="line"><span class="x">&lt;pr-char&gt; ::= printable characters, any</span>
+</span><span class="line"><span class="x">              ASCII code 33 through 126</span>
+</span><span class="line"><span class="x">&lt;byte-size&gt; ::= &lt;number&gt;</span>
+</span><span class="line"><span class="x">&lt;host-port&gt; ::= &lt;host-number&gt;,&lt;port-number&gt;</span>
+</span><span class="line"><span class="x">&lt;host-number&gt; ::= &lt;number&gt;,&lt;number&gt;,&lt;number&gt;,&lt;number&gt;</span>
+</span><span class="line"><span class="x">&lt;port-number&gt; ::= &lt;number&gt;,&lt;number&gt;</span>
+</span><span class="line"><span class="x">&lt;number&gt; ::= any decimal integer 1 through 255</span>
+</span><span class="line"><span class="x">&lt;form-code&gt; ::= N | T | C</span>
+</span><span class="line"><span class="x">&lt;type-code&gt; ::= A [&lt;sp&gt; &lt;form-code&gt;]</span>
+</span><span class="line"><span class="x">              | E [&lt;sp&gt; &lt;form-code&gt;]</span>
+</span><span class="line"><span class="x">              | I</span>
+</span><span class="line"><span class="x">              | L &lt;sp&gt; &lt;byte-size&gt;</span>
+</span><span class="line"><span class="x">&lt;structure-code&gt; ::= F | R | P</span>
+</span><span class="line"><span class="x">&lt;mode-code&gt; ::= S | B | C</span>
+</span><span class="line"><span class="x">&lt;pathname&gt; ::= &lt;string&gt;</span>
+</span><span class="line"><span class="x">&lt;decimal-integer&gt; ::= any decimal integer</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<h3 id="section-3">各种命令的各种返回码</h3>
 
-<h3>各种命令的各种返回码</h3>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+<span class="line-number">72</span>
+<span class="line-number">73</span>
+<span class="line-number">74</span>
+<span class="line-number">75</span>
+<span class="line-number">76</span>
+<span class="line-number">77</span>
+<span class="line-number">78</span>
+<span class="line-number">79</span>
+<span class="line-number">80</span>
+<span class="line-number">81</span>
+<span class="line-number">82</span>
+<span class="line-number">83</span>
+<span class="line-number">84</span>
+<span class="line-number">85</span>
+<span class="line-number">86</span>
+<span class="line-number">87</span>
+<span class="line-number">88</span>
+<span class="line-number">89</span>
+<span class="line-number">90</span>
+<span class="line-number">91</span>
+<span class="line-number">92</span>
+<span class="line-number">93</span>
+<span class="line-number">94</span>
+<span class="line-number">95</span>
+<span class="line-number">96</span>
+<span class="line-number">97</span>
+<span class="line-number">98</span>
+<span class="line-number">99</span>
+<span class="line-number">100</span>
+<span class="line-number">101</span>
+<span class="line-number">102</span>
+<span class="line-number">103</span>
+<span class="line-number">104</span>
+<span class="line-number">105</span>
+<span class="line-number">106</span>
+<span class="line-number">107</span>
+<span class="line-number">108</span>
+<span class="line-number">109</span>
+<span class="line-number">110</span>
+<span class="line-number">111</span>
+<span class="line-number">112</span>
+<span class="line-number">113</span>
+<span class="line-number">114</span>
+<span class="line-number">115</span>
+<span class="line-number">116</span>
+<span class="line-number">117</span>
+<span class="line-number">118</span>
+<span class="line-number">119</span>
+<span class="line-number">120</span>
+<span class="line-number">121</span>
+<span class="line-number">122</span>
+<span class="line-number">123</span>
+<span class="line-number">124</span>
+<span class="line-number">125</span>
+<span class="line-number">126</span>
+<span class="line-number">127</span>
+<span class="line-number">128</span>
+<span class="line-number">129</span>
+<span class="line-number">130</span>
+<span class="line-number">131</span>
+<span class="line-number">132</span>
+<span class="line-number">133</span>
+<span class="line-number">134</span>
+<span class="line-number">135</span>
+<span class="line-number">136</span>
+<span class="line-number">137</span>
+<span class="line-number">138</span>
+<span class="line-number">139</span>
+<span class="line-number">140</span>
+<span class="line-number">141</span>
+<span class="line-number">142</span>
+<span class="line-number">143</span>
+<span class="line-number">144</span>
+<span class="line-number">145</span>
+<span class="line-number">146</span>
+<span class="line-number">147</span>
+<span class="line-number">148</span>
+<span class="line-number">149</span>
+<span class="line-number">150</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">Connection</span> <span class="n">Establishment</span>
+</span><span class="line">   <span class="mi">120</span>
+</span><span class="line">      <span class="mi">220</span>
+</span><span class="line">   <span class="mi">220</span>
+</span><span class="line">   <span class="mi">421</span>
+</span><span class="line"><span class="n">Login</span>
+</span><span class="line">   <span class="n">USER</span>
+</span><span class="line">      <span class="mi">230</span>
+</span><span class="line">      <span class="mi">530</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">421</span>
+</span><span class="line">      <span class="mi">331</span><span class="p">,</span> <span class="mi">332</span>
+</span><span class="line">   <span class="n">PASS</span>
+</span><span class="line">      <span class="mi">230</span>
+</span><span class="line">      <span class="mi">202</span>
+</span><span class="line">      <span class="mi">530</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">503</span><span class="p">,</span> <span class="mi">421</span>
+</span><span class="line">      <span class="mi">332</span>
+</span><span class="line">   <span class="n">ACCT</span>
+</span><span class="line">      <span class="mi">230</span>
+</span><span class="line">      <span class="mi">202</span>
+</span><span class="line">      <span class="mi">530</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">503</span><span class="p">,</span> <span class="mi">421</span>
+</span><span class="line">   <span class="n">CWD</span>
+</span><span class="line">      <span class="mi">250</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span><span class="p">,</span> <span class="mi">550</span>
+</span><span class="line">   <span class="n">CDUP</span>
+</span><span class="line">      <span class="mi">200</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span><span class="p">,</span> <span class="mi">550</span>
+</span><span class="line">   <span class="n">SMNT</span>
+</span><span class="line">      <span class="mi">202</span><span class="p">,</span> <span class="mi">250</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span><span class="p">,</span> <span class="mi">550</span>
+</span><span class="line"><span class="n">Logout</span>
+</span><span class="line">   <span class="n">REIN</span>
+</span><span class="line">      <span class="mi">120</span>
+</span><span class="line">         <span class="mi">220</span>
+</span><span class="line">      <span class="mi">220</span>
+</span><span class="line">      <span class="mi">421</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">502</span>
+</span><span class="line">   <span class="n">QUIT</span>
+</span><span class="line">      <span class="mi">221</span>
+</span><span class="line">      <span class="mi">500</span>
+</span><span class="line">
+</span><span class="line"><span class="n">Transfer</span> <span class="n">parameters</span>
+</span><span class="line">   <span class="n">PORT</span>
+</span><span class="line">      <span class="mi">200</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">   <span class="n">PASV</span>
+</span><span class="line">      <span class="mi">227</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">   <span class="n">MODE</span>
+</span><span class="line">      <span class="mi">200</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">504</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">   <span class="n">TYPE</span>
+</span><span class="line">      <span class="mi">200</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">504</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">   <span class="n">STRU</span>
+</span><span class="line">      <span class="mi">200</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">504</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line"><span class="n">File</span> <span class="n">action</span> <span class="n">commands</span>
+</span><span class="line">   <span class="n">ALLO</span>
+</span><span class="line">      <span class="mi">200</span>
+</span><span class="line">      <span class="mi">202</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">504</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">   <span class="n">REST</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">      <span class="mi">350</span>
+</span><span class="line">   <span class="n">STOR</span>
+</span><span class="line">      <span class="mi">125</span><span class="p">,</span> <span class="mi">150</span>
+</span><span class="line">         <span class="p">(</span><span class="mi">110</span><span class="p">)</span>
+</span><span class="line">         <span class="mi">226</span><span class="p">,</span> <span class="mi">250</span>
+</span><span class="line">         <span class="mi">425</span><span class="p">,</span> <span class="mi">426</span><span class="p">,</span> <span class="mi">451</span><span class="p">,</span> <span class="mi">551</span><span class="p">,</span> <span class="mi">552</span>
+</span><span class="line">      <span class="mi">532</span><span class="p">,</span> <span class="mi">450</span><span class="p">,</span> <span class="mi">452</span><span class="p">,</span> <span class="mi">553</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">   <span class="n">STOU</span>
+</span><span class="line">      <span class="mi">125</span><span class="p">,</span> <span class="mi">150</span>
+</span><span class="line">         <span class="p">(</span><span class="mi">110</span><span class="p">)</span>
+</span><span class="line">         <span class="mi">226</span><span class="p">,</span> <span class="mi">250</span>
+</span><span class="line">         <span class="mi">425</span><span class="p">,</span> <span class="mi">426</span><span class="p">,</span> <span class="mi">451</span><span class="p">,</span> <span class="mi">551</span><span class="p">,</span> <span class="mi">552</span>
+</span><span class="line">      <span class="mi">532</span><span class="p">,</span> <span class="mi">450</span><span class="p">,</span> <span class="mi">452</span><span class="p">,</span> <span class="mi">553</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">   <span class="n">RETR</span>
+</span><span class="line">      <span class="mi">125</span><span class="p">,</span> <span class="mi">150</span>
+</span><span class="line">         <span class="p">(</span><span class="mi">110</span><span class="p">)</span>
+</span><span class="line">         <span class="mi">226</span><span class="p">,</span> <span class="mi">250</span>
+</span><span class="line">         <span class="mi">425</span><span class="p">,</span> <span class="mi">426</span><span class="p">,</span> <span class="mi">451</span>
+</span><span class="line">      <span class="mi">450</span><span class="p">,</span> <span class="mi">550</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">   <span class="n">LIST</span>
+</span><span class="line">      <span class="mi">125</span><span class="p">,</span> <span class="mi">150</span>
+</span><span class="line">         <span class="mi">226</span><span class="p">,</span> <span class="mi">250</span>
+</span><span class="line">         <span class="mi">425</span><span class="p">,</span> <span class="mi">426</span><span class="p">,</span> <span class="mi">451</span>
+</span><span class="line">      <span class="mi">450</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">   <span class="n">NLST</span>
+</span><span class="line">      <span class="mi">125</span><span class="p">,</span> <span class="mi">150</span>
+</span><span class="line">         <span class="mi">226</span><span class="p">,</span> <span class="mi">250</span>
+</span><span class="line">         <span class="mi">425</span><span class="p">,</span> <span class="mi">426</span><span class="p">,</span> <span class="mi">451</span>
+</span><span class="line">      <span class="mi">450</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">   <span class="n">APPE</span>
+</span><span class="line">      <span class="mi">125</span><span class="p">,</span> <span class="mi">150</span>
+</span><span class="line">         <span class="p">(</span><span class="mi">110</span><span class="p">)</span>
+</span><span class="line">         <span class="mi">226</span><span class="p">,</span> <span class="mi">250</span>
+</span><span class="line">         <span class="mi">425</span><span class="p">,</span> <span class="mi">426</span><span class="p">,</span> <span class="mi">451</span><span class="p">,</span> <span class="mi">551</span><span class="p">,</span> <span class="mi">552</span>
+</span><span class="line">      <span class="mi">532</span><span class="p">,</span> <span class="mi">450</span><span class="p">,</span> <span class="mi">550</span><span class="p">,</span> <span class="mi">452</span><span class="p">,</span> <span class="mi">553</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">   <span class="n">RNFR</span>
+</span><span class="line">      <span class="mi">450</span><span class="p">,</span> <span class="mi">550</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">      <span class="mi">350</span>
+</span><span class="line">   <span class="n">RNTO</span>
+</span><span class="line">      <span class="mi">250</span>
+</span><span class="line">      <span class="mi">532</span><span class="p">,</span> <span class="mi">553</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">503</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">   <span class="n">DELE</span>
+</span><span class="line">      <span class="mi">250</span>
+</span><span class="line">      <span class="mi">450</span><span class="p">,</span> <span class="mi">550</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">   <span class="n">RMD</span>
+</span><span class="line">      <span class="mi">250</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span><span class="p">,</span> <span class="mi">550</span>
+</span><span class="line">   <span class="n">MKD</span>
+</span><span class="line">      <span class="mi">257</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span><span class="p">,</span> <span class="mi">550</span>
+</span><span class="line">   <span class="n">PWD</span>
+</span><span class="line">      <span class="mi">257</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">550</span>
+</span><span class="line">   <span class="n">ABOR</span>
+</span><span class="line">      <span class="mi">225</span><span class="p">,</span> <span class="mi">226</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span>
+</span><span class="line">
+</span><span class="line"><span class="n">Informational</span> <span class="n">commands</span>
+</span><span class="line">   <span class="n">SYST</span>
+</span><span class="line">      <span class="mi">215</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span>
+</span><span class="line">   <span class="n">STAT</span>
+</span><span class="line">      <span class="mi">211</span><span class="p">,</span> <span class="mi">212</span><span class="p">,</span> <span class="mi">213</span>
+</span><span class="line">      <span class="mi">450</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">   <span class="n">HELP</span>
+</span><span class="line">      <span class="mi">211</span><span class="p">,</span> <span class="mi">214</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span>
+</span><span class="line"><span class="n">Miscellaneous</span> <span class="n">commands</span>
+</span><span class="line">   <span class="n">SITE</span>
+</span><span class="line">      <span class="mi">200</span>
+</span><span class="line">      <span class="mi">202</span>
+</span><span class="line">      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">530</span>
+</span><span class="line">   <span class="n">NOOP</span>
+</span><span class="line">      <span class="mi">200</span>
+</span><span class="line">      <span class="mi">500</span> <span class="mi">421</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-<span class='line-number'>116</span>
-<span class='line-number'>117</span>
-<span class='line-number'>118</span>
-<span class='line-number'>119</span>
-<span class='line-number'>120</span>
-<span class='line-number'>121</span>
-<span class='line-number'>122</span>
-<span class='line-number'>123</span>
-<span class='line-number'>124</span>
-<span class='line-number'>125</span>
-<span class='line-number'>126</span>
-<span class='line-number'>127</span>
-<span class='line-number'>128</span>
-<span class='line-number'>129</span>
-<span class='line-number'>130</span>
-<span class='line-number'>131</span>
-<span class='line-number'>132</span>
-<span class='line-number'>133</span>
-<span class='line-number'>134</span>
-<span class='line-number'>135</span>
-<span class='line-number'>136</span>
-<span class='line-number'>137</span>
-<span class='line-number'>138</span>
-<span class='line-number'>139</span>
-<span class='line-number'>140</span>
-<span class='line-number'>141</span>
-<span class='line-number'>142</span>
-<span class='line-number'>143</span>
-<span class='line-number'>144</span>
-<span class='line-number'>145</span>
-<span class='line-number'>146</span>
-<span class='line-number'>147</span>
-<span class='line-number'>148</span>
-<span class='line-number'>149</span>
-<span class='line-number'>150</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">Connection</span> <span class="n">Establishment</span>
-</span><span class='line'>   <span class="mi">120</span>
-</span><span class='line'>      <span class="mi">220</span>
-</span><span class='line'>   <span class="mi">220</span>
-</span><span class='line'>   <span class="mi">421</span>
-</span><span class='line'><span class="n">Login</span>
-</span><span class='line'>   <span class="n">USER</span>
-</span><span class='line'>      <span class="mi">230</span>
-</span><span class='line'>      <span class="mi">530</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">421</span>
-</span><span class='line'>      <span class="mi">331</span><span class="p">,</span> <span class="mi">332</span>
-</span><span class='line'>   <span class="n">PASS</span>
-</span><span class='line'>      <span class="mi">230</span>
-</span><span class='line'>      <span class="mi">202</span>
-</span><span class='line'>      <span class="mi">530</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">503</span><span class="p">,</span> <span class="mi">421</span>
-</span><span class='line'>      <span class="mi">332</span>
-</span><span class='line'>   <span class="n">ACCT</span>
-</span><span class='line'>      <span class="mi">230</span>
-</span><span class='line'>      <span class="mi">202</span>
-</span><span class='line'>      <span class="mi">530</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">503</span><span class="p">,</span> <span class="mi">421</span>
-</span><span class='line'>   <span class="n">CWD</span>
-</span><span class='line'>      <span class="mi">250</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span><span class="p">,</span> <span class="mi">550</span>
-</span><span class='line'>   <span class="n">CDUP</span>
-</span><span class='line'>      <span class="mi">200</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span><span class="p">,</span> <span class="mi">550</span>
-</span><span class='line'>   <span class="n">SMNT</span>
-</span><span class='line'>      <span class="mi">202</span><span class="p">,</span> <span class="mi">250</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span><span class="p">,</span> <span class="mi">550</span>
-</span><span class='line'><span class="n">Logout</span>
-</span><span class='line'>   <span class="n">REIN</span>
-</span><span class='line'>      <span class="mi">120</span>
-</span><span class='line'>         <span class="mi">220</span>
-</span><span class='line'>      <span class="mi">220</span>
-</span><span class='line'>      <span class="mi">421</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">502</span>
-</span><span class='line'>   <span class="n">QUIT</span>
-</span><span class='line'>      <span class="mi">221</span>
-</span><span class='line'>      <span class="mi">500</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">Transfer</span> <span class="n">parameters</span>
-</span><span class='line'>   <span class="n">PORT</span>
-</span><span class='line'>      <span class="mi">200</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>   <span class="n">PASV</span>
-</span><span class='line'>      <span class="mi">227</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>   <span class="n">MODE</span>
-</span><span class='line'>      <span class="mi">200</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">504</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>   <span class="n">TYPE</span>
-</span><span class='line'>      <span class="mi">200</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">504</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>   <span class="n">STRU</span>
-</span><span class='line'>      <span class="mi">200</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">504</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'><span class="n">File</span> <span class="n">action</span> <span class="n">commands</span>
-</span><span class='line'>   <span class="n">ALLO</span>
-</span><span class='line'>      <span class="mi">200</span>
-</span><span class='line'>      <span class="mi">202</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">504</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>   <span class="n">REST</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>      <span class="mi">350</span>
-</span><span class='line'>   <span class="n">STOR</span>
-</span><span class='line'>      <span class="mi">125</span><span class="p">,</span> <span class="mi">150</span>
-</span><span class='line'>         <span class="p">(</span><span class="mi">110</span><span class="p">)</span>
-</span><span class='line'>         <span class="mi">226</span><span class="p">,</span> <span class="mi">250</span>
-</span><span class='line'>         <span class="mi">425</span><span class="p">,</span> <span class="mi">426</span><span class="p">,</span> <span class="mi">451</span><span class="p">,</span> <span class="mi">551</span><span class="p">,</span> <span class="mi">552</span>
-</span><span class='line'>      <span class="mi">532</span><span class="p">,</span> <span class="mi">450</span><span class="p">,</span> <span class="mi">452</span><span class="p">,</span> <span class="mi">553</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>   <span class="n">STOU</span>
-</span><span class='line'>      <span class="mi">125</span><span class="p">,</span> <span class="mi">150</span>
-</span><span class='line'>         <span class="p">(</span><span class="mi">110</span><span class="p">)</span>
-</span><span class='line'>         <span class="mi">226</span><span class="p">,</span> <span class="mi">250</span>
-</span><span class='line'>         <span class="mi">425</span><span class="p">,</span> <span class="mi">426</span><span class="p">,</span> <span class="mi">451</span><span class="p">,</span> <span class="mi">551</span><span class="p">,</span> <span class="mi">552</span>
-</span><span class='line'>      <span class="mi">532</span><span class="p">,</span> <span class="mi">450</span><span class="p">,</span> <span class="mi">452</span><span class="p">,</span> <span class="mi">553</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>   <span class="n">RETR</span>
-</span><span class='line'>      <span class="mi">125</span><span class="p">,</span> <span class="mi">150</span>
-</span><span class='line'>         <span class="p">(</span><span class="mi">110</span><span class="p">)</span>
-</span><span class='line'>         <span class="mi">226</span><span class="p">,</span> <span class="mi">250</span>
-</span><span class='line'>         <span class="mi">425</span><span class="p">,</span> <span class="mi">426</span><span class="p">,</span> <span class="mi">451</span>
-</span><span class='line'>      <span class="mi">450</span><span class="p">,</span> <span class="mi">550</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>   <span class="n">LIST</span>
-</span><span class='line'>      <span class="mi">125</span><span class="p">,</span> <span class="mi">150</span>
-</span><span class='line'>         <span class="mi">226</span><span class="p">,</span> <span class="mi">250</span>
-</span><span class='line'>         <span class="mi">425</span><span class="p">,</span> <span class="mi">426</span><span class="p">,</span> <span class="mi">451</span>
-</span><span class='line'>      <span class="mi">450</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>   <span class="n">NLST</span>
-</span><span class='line'>      <span class="mi">125</span><span class="p">,</span> <span class="mi">150</span>
-</span><span class='line'>         <span class="mi">226</span><span class="p">,</span> <span class="mi">250</span>
-</span><span class='line'>         <span class="mi">425</span><span class="p">,</span> <span class="mi">426</span><span class="p">,</span> <span class="mi">451</span>
-</span><span class='line'>      <span class="mi">450</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>   <span class="n">APPE</span>
-</span><span class='line'>      <span class="mi">125</span><span class="p">,</span> <span class="mi">150</span>
-</span><span class='line'>         <span class="p">(</span><span class="mi">110</span><span class="p">)</span>
-</span><span class='line'>         <span class="mi">226</span><span class="p">,</span> <span class="mi">250</span>
-</span><span class='line'>         <span class="mi">425</span><span class="p">,</span> <span class="mi">426</span><span class="p">,</span> <span class="mi">451</span><span class="p">,</span> <span class="mi">551</span><span class="p">,</span> <span class="mi">552</span>
-</span><span class='line'>      <span class="mi">532</span><span class="p">,</span> <span class="mi">450</span><span class="p">,</span> <span class="mi">550</span><span class="p">,</span> <span class="mi">452</span><span class="p">,</span> <span class="mi">553</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>   <span class="n">RNFR</span>
-</span><span class='line'>      <span class="mi">450</span><span class="p">,</span> <span class="mi">550</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>      <span class="mi">350</span>
-</span><span class='line'>   <span class="n">RNTO</span>
-</span><span class='line'>      <span class="mi">250</span>
-</span><span class='line'>      <span class="mi">532</span><span class="p">,</span> <span class="mi">553</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">503</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>   <span class="n">DELE</span>
-</span><span class='line'>      <span class="mi">250</span>
-</span><span class='line'>      <span class="mi">450</span><span class="p">,</span> <span class="mi">550</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>   <span class="n">RMD</span>
-</span><span class='line'>      <span class="mi">250</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span><span class="p">,</span> <span class="mi">550</span>
-</span><span class='line'>   <span class="n">MKD</span>
-</span><span class='line'>      <span class="mi">257</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span><span class="p">,</span> <span class="mi">550</span>
-</span><span class='line'>   <span class="n">PWD</span>
-</span><span class='line'>      <span class="mi">257</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">550</span>
-</span><span class='line'>   <span class="n">ABOR</span>
-</span><span class='line'>      <span class="mi">225</span><span class="p">,</span> <span class="mi">226</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">Informational</span> <span class="n">commands</span>
-</span><span class='line'>   <span class="n">SYST</span>
-</span><span class='line'>      <span class="mi">215</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span>
-</span><span class='line'>   <span class="n">STAT</span>
-</span><span class='line'>      <span class="mi">211</span><span class="p">,</span> <span class="mi">212</span><span class="p">,</span> <span class="mi">213</span>
-</span><span class='line'>      <span class="mi">450</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>   <span class="n">HELP</span>
-</span><span class='line'>      <span class="mi">211</span><span class="p">,</span> <span class="mi">214</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">421</span>
-</span><span class='line'><span class="n">Miscellaneous</span> <span class="n">commands</span>
-</span><span class='line'>   <span class="n">SITE</span>
-</span><span class='line'>      <span class="mi">200</span>
-</span><span class='line'>      <span class="mi">202</span>
-</span><span class='line'>      <span class="mi">500</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="mi">530</span>
-</span><span class='line'>   <span class="n">NOOP</span>
-</span><span class='line'>      <span class="mi">200</span>
-</span><span class='line'>      <span class="mi">500</span> <span class="mi">421</span>
-</span></code></pre></td></tr></table></div></figure>
+<h3 id="section-4">参考文章：</h3>
 
-
-<h3>参考文章：</h3>
-
-<p><a href="http://www.w3.org/Protocols/rfc959">http://www.w3.org/Protocols/rfc959/</a></p>
-
-<p><a href="http://vod.sjtu.edu.cn/help/Article_Show.asp?ArticleID=137">http://vod.sjtu.edu.cn/help/Article_Show.asp?ArticleID=137</a></p>
-
-<p><a href="http://blog.miniasp.com/post/2008/06/29/FTP-Protocol-Definitive-Explanation.aspx">http://blog.miniasp.com/post/2008/06/29/FTP-Protocol-Definitive-Explanation.aspx</a></p>
-
-<p>Images come from</p>
-
-<p>Computer Networking: A Top Down Approach, 4th edition.</p>
-
-<p>Jim Kurose, Keith Ross Addison-Wesley, July 2007.</p>
+<ul>
+  <li><a href="http://www.w3.org/Protocols/rfc959">http://www.w3.org/Protocols/rfc959/</a></li>
+  <li><a href="http://vod.sjtu.edu.cn/help/Article_Show.asp?ArticleID=137">http://vod.sjtu.edu.cn/help/Article_Show.asp?ArticleID=137</a></li>
+  <li><a href="http://blog.miniasp.com/post/2008/06/29/FTP-Protocol-Definitive-Explanation.aspx">http://blog.miniasp.com/post/2008/06/29/FTP-Protocol-Definitive-Explanation.aspx</a></li>
+  <li>Images come from Computer Networking: A Top Down Approach, 4th edition. Jim Kurose, Keith Ross Addison-Wesley, July 2007.</li>
+</ul>
 </div>
 
 

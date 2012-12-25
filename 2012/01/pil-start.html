@@ -119,30 +119,26 @@
 
 <p>如果没有发生错误，这说明安装完成了。我们输入以下代码，将会打开一幅图像。</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">Image</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;yun.jpg&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="k">print</span> <span class="n">img</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%d</span><span class="s"> * </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">mode</span>
-</span><span class='line'><span class="n">new_img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
-</span><span class='line'><span class="n">new_img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&quot;new_yun.jpg&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="n">new_img</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">Image</span>
+</span><span class="line">
+</span><span class="line"><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;yun.jpg&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="k">print</span> <span class="n">img</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%d</span><span class="s"> * </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">mode</span>
+</span><span class="line"><span class="n">new_img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+</span><span class="line"><span class="n">new_img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&quot;new_yun.jpg&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="n">new_img</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <!-- more -->
 
-
-<h2><strong>可以看到如下效果：</strong></h2>
+<h2 id="section"><strong>可以看到如下效果：</strong></h2>
 
 <p>（我很喜欢Photoshop和ACDSee，所以还是经常在Windows上，辅以cygwin）</p>
 

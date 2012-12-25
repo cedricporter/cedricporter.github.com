@@ -9,7 +9,10 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="更详细的教程请见 《Pro Git》http://progit.org/book/zh/ch4-7.html。 安装必备工具 apt-get install git gitweb gitosis 用自己的公钥来初始化Gitosis root@everet:/var# sudo -H -u git &hellip;">
+  <meta name="description" content="更详细的教程请见 《Pro Git》http://progit.org/book/zh/ch4-7.html。 安装必备工具 apt-get install git gitweb gitosis 用自己的公钥来初始化Gitosis 1
+2
+3
+root@everet:/var# sudo -H - &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -109,60 +112,89 @@
 
 <div class="entry-content"><p>更详细的教程请见 《Pro Git》<a href="http://progit.org/book/zh/ch4-7.html">http://progit.org/book/zh/ch4-7.html</a>。</p>
 
-<h3>安装必备工具</h3>
+<h3 id="section">安装必备工具</h3>
 
-<p>apt-get install git gitweb gitosis</p>
+<p><code>apt-get install git gitweb gitosis</code></p>
 
 <p>用自己的公钥来初始化Gitosis</p>
 
-<p>root@everet:/var# sudo -H -u git gitosis-init &lt; /tmp/authorized_keys
-Initialized empty Git repository in /home/git/repositories/gitosis-admin.git/
-Reinitialized existing Git repository in /home/git/repositories/gitosis-admin.git/</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="gp">root@everet:/var#</span> sudo -H -u git gitosis-init &lt; /tmp/authorized_keys
+</span><span class="line"><span class="go">Initialized empty Git repository in /home/git/repositories/gitosis-admin.git/</span>
+</span><span class="line"><span class="go">Reinitialized existing Git repository in /home/git/repositories/gitosis-admin.git/</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>对该仓库中的<code>post-update</code> 脚本加上可执行权限</p>
 
-<p>root@everet:/home/git/repositories/gitosis-admin.git/hooks# chmod 755 post-update</p>
+<p><code>root@everet:/home/git/repositories/gitosis-admin.git/hooks # chmod 755 post-update</code></p>
 
-<h3>克隆 Gitosis 的控制仓库</h3>
+<h3 id="gitosis-">克隆 Gitosis 的控制仓库</h3>
 
-<p>$ git clone git@everet.org:gitosis-admin.git</p>
+<p><code>$ git clone git@everet.org:gitosis-admin.git</code></p>
 
 <p>这会得到一个名为 <code>gitosis-admin</code> 的工作目录，主要由两部分组成：</p>
 
 <!-- more -->
 
-
-<blockquote><p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/everet
-$ cd gitosis-admin/</p></blockquote>
-
-<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/everet/gitosis-admin
-$ find .
-./gitosis.conf
-./keydir
-./keydir/cedricporter@ET.pub</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="go">Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/everet</span>
+</span><span class="line"><span class="gp">$</span> <span class="nb">cd </span>gitosis-admin/
+</span><span class="line">
+</span><span class="line"><span class="go">Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/everet/gitosis-admin</span>
+</span><span class="line"><span class="gp">$</span> find .
+</span><span class="line"><span class="go">./gitosis.conf</span>
+</span><span class="line"><span class="go">./keydir</span>
+</span><span class="line"><span class="go">./keydir/cedricporter@ET.pub</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>如果我们要增加工程：clover，我们可以修改gitosis.conf</p>
 
-<blockquote><p>$ cat gitosis.conf
-[gitosis]</p></blockquote>
-
-<p>[group gitosis-admin]
-writable = gitosis-admin
-members = cedricporter@ET</p>
-
-<p>[group clover]
-writable = clover
-members = cedricporter@ET</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="gp">$</span> cat gitosis.conf
+</span><span class="line"><span class="go">[gitosis]</span>
+</span><span class="line">
+</span><span class="line"><span class="go">[group gitosis-admin]</span>
+</span><span class="line"><span class="go">writable = gitosis-admin</span>
+</span><span class="line"><span class="go">members = cedricporter@ET</span>
+</span><span class="line">
+</span><span class="line"><span class="go">[group clover]</span>
+</span><span class="line"><span class="go">writable = clover</span>
+</span><span class="line"><span class="go">members = cedricporter@ET</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>修改完后，提交并推送到服务器。</p>
 
-<blockquote><p>$ git commit -am &#8216;add project clover&#8217;
-[master 3d0dd1b] add project clover
-Committer: U-CedricPorter-PC\Cedric Porter <Cedric Porter@CedricPorter-PC.(none)></p></blockquote>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="gp">$</span> git commit -am <span class="s1">&#39;add project clover&#39;</span>
+</span><span class="line"><span class="go">[master 3d0dd1b] add project clover</span>
+</span><span class="line"><span class="go">Committer: U-CedricPorter-PC\Cedric Porter &lt;Cedric Porter@CedricPorter-PC.(none)&gt;</span>
+</span><span class="line">
+</span><span class="line"><span class="gp">$</span> git push
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>$ git push</p>
-
-<h2>Windows客户端</h2>
+<h2 id="windows">Windows客户端</h2>
 
 <p>如果我们使用cygwin的git，那么就不会存在任何任何中文乱码问题。</p>
 
@@ -260,7 +292,7 @@ Committer: U-CedricPorter-PC\Cedric Porter <Cedric Porter@CedricPorter-PC.(none)
         </li>
     
         <li class="related">
-        <a href="/2012/01/management-remote-host.html">管理远程主机的一些技巧分享</a>
+        <a href="/2012/01/gitweb-password.html">给Gitweb加上访问密码，保护我们的私有项目</a>
         </li>
     
     </ul>

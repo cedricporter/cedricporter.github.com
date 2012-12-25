@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Apache | EverET.org]]></title>
   <link href="http://everet.org/tag/apache/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-25T23:07:51+08:00</updated>
+  <updated>2012-12-26T02:57:37+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -20,13 +20,13 @@
     <id>http://everet.org/2012/11/multi-user-nginx-php-server</id>
     <content type="html"><![CDATA[<p>趁这段时间有空，换成Xen的VPS，系统装了Ubuntu 12.04。决定重新配置一下服务器，另外将Web Server从Apache换成Nginx。</p>
 
-<h2>目标</h2>
+<h2 id="section">目标</h2>
 
 <p>搭建一个前端为nginx支持多用户的php虚拟主机。每个站点可以跑在不同的权限的用户下，一个站点被黑的时候希望不要影响到另一个站点，或者一个同学也不要可以随意访问到别的同学的内容。</p>
 
-<h2>行动<!-- more --></h2>
+<h2 id="more---">行动<!-- more --></h2>
 
-<h3>预备</h3>
+<h3 id="section-1">预备</h3>
 
 <p>首先创建用户，例如user01。我们可以通过</p>
 
@@ -43,7 +43,7 @@
 
 <p>来添加用户，然后在<strong>~user01</strong>目录下面创建一个文件夹<strong>www</strong>，权限为750。group为www-data，这样，只有user01可以读写，www-data仅能读，其他人无权访问。</p>
 
-<h3>php</h3>
+<h3 id="php">php</h3>
 
 <p>从php 5.3.5开始就直接内置支持fpm了，建议直接安装php 5.4。使用php-fpm（php Fastcgi Process Manager），目前这样的方式运行php性能貌似是最高的。</p>
 
@@ -75,7 +75,7 @@
 <p>定义了php进程的权限为user01，监听文件为<strong>/var/run/php5-fpm.user01.sock</strong>。
 这里的定义实际上是指的是用<strong>/var/run/php5-fpm.user01.sock</strong>这个来处理php时的权限为<strong>user01</strong>。到此为止，php的配置就完成了。</p>
 
-<h3>nginx</h3>
+<h3 id="nginx">nginx</h3>
 
 <p>我们nginx的权限为www-data，这样可以读～user01/www目录的内容，但是不能写。nginx的站点配置比较简单。我们来看一下可以工作的简单的配置：</p>
 
@@ -97,15 +97,10 @@
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>&lt;/p&gt;
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>
+</span><span class='line'>    server_name user01.everet.org;&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;server_name user01.everet.org;
-</span><span class='line'>
-</span><span class='line'>access_log  /var/log/nginx/user01.everet.org.access.log;
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;access_log  /var/log/nginx/user01.everet.org.access.log;
 </span><span class='line'>error_log   /var/log/nginx/user01.everet.org.error.log;
 </span><span class='line'>
 </span><span class='line'>root    /home/user01/www/;
@@ -118,15 +113,13 @@
 </span><span class='line'>location ~ .php<span class="nv">$ </span><span class="o">{</span>
 </span><span class='line'>    include fastcgi_params;
 </span><span class='line'>    fastcgi_pass unix:/var/run/php5-fpm.user01.sock;
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;<span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'><span class="o">}</span> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</code></pre>
 
 <p>也就是当处理到.php结尾的uri时，传递到<strong>/var/run/php5-fpm.user01.sock</strong>这个unix套接字处理，此时的php脚本的权限为user01。如果配置得当，就不会影响到其他用户。</p>
 
-<h3>wordpress</h3>
+<h3 id="wordpress">wordpress</h3>
 
 <p>我们用php的主要原因是wordpress，wordpress默认情况下非常臃肿，运行缓慢。因为页面基本只是在更新文章或者发表评论才会更新，所以平时不需要总是动态生成页面。对此，WP Super Cache插件可以很好地进行缓存。WP Super Cache有两种缓存模式一种是PHP缓存、另一种是mod_rewrite缓存（我们选择这个），mod_rewrite是生成静态的页面文件，然后通过.htaccess文件控制Apache来rewrite url。例如我们访问<a href="http://everet.org/2012/01/scar.html">http://everet.org/2012/01/scar.html</a>，其中uri为/2012/01/scar.html，进入到Apache通过rewrite后就变成了/wp-content/cache/supercache/everet.org/2012/01/scar.html/index.html，然后就可以读取静态文件返回给浏览器了。如果静态文件存在的话，就不需要经过php处理了，否则就调用php动态生成页面，同时插件还会生成那个页面的静态文件，下次就直接读取那个静态文件。</p>
 
@@ -184,18 +177,13 @@
 <span class='line-number'>49</span>
 <span class='line-number'>50</span>
 <span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>&lt;/p&gt;
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>
+</span><span class='line'>    server_name user01.everet.org;&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;server_name user01.everet.org;
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;access_log 	/var/log/nginx/user01.everet.org.access.log;
+</span><span class='line'>error_log 	/var/log/nginx/user01.everet.org.error.log;
 </span><span class='line'>
-</span><span class='line'>access_log  /var/log/nginx/user01.everet.org.access.log;
-</span><span class='line'>error_log   /var/log/nginx/user01.everet.org.error.log;
-</span><span class='line'>
-</span><span class='line'>root    /home/user01/www/;
+</span><span class='line'>root	/home/user01/www/;
 </span><span class='line'>index   index.php;
 </span><span class='line'>
 </span><span class='line'><span class="nb">set</span> <span class="nv">$cache_uri</span> <span class="nv">$request_uri</span>;
@@ -233,32 +221,30 @@
 </span><span class='line'>    try_files <span class="nv">$uri</span> /index.php;
 </span><span class='line'>    include fastcgi_params;
 </span><span class='line'>    fastcgi_pass unix:/var/run/php5-fpm.user01.sock;
-</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">}</span>	
 </span><span class='line'>
 </span><span class='line'>location ~* .<span class="o">(</span>ogg|ogv|svg|svgz|oet|otf|woff|mp4|ttf|css|rss|atom|js|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|mp3|bmp|rtf<span class="o">)</span><span class="nv">$ </span><span class="o">{</span>
 </span><span class='line'>    expires max;
 </span><span class='line'>    log_not_found off;
 </span><span class='line'>    access_log off;
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;<span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'><span class="o">}</span> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</code></pre>
 
-<p>我们来慢慢阅读一下这个配置。首先，set $cache_uri $request_uri就是将请求的uri保存到我们的变量$cache_uri中。然后，如果请求方法是POST（$request_method = POST）、包含请求字符串（$query_string != ""）、请求的uri包含一些特殊的php文件（$request_url ~<em> "(/wp-admin/|.........）或者登录过评论过（通过cookie判断，$http_cookie ~</em> "comment_author|w............"），就将$cache_uri设置为'null cache'，这样是让$cache_uri这个字符串变量变成一个无意义的字符串，以让后面拼接出来的路径无意义。</p>
+<p>我们来慢慢阅读一下这个配置。首先，<code>set $cache_uri $request_uri</code>就是将请求的uri保存到我们的变量<code>$cache_uri</code>中。然后，如果请求方法是POST（<code>$request_method = POST</code>）、包含请求字符串（<code>$query_string != ""</code>）、请求的uri包含一些特殊的php文件（<code>$request_url ~* "(/wp-admin/|.........</code>）或者登录过评论过（通过cookie判断，<code>$http_cookie ~* "comment_author|w............"</code>），就将<code>$cache_uri</code>设置为’null cache’，这样是让<code>$cache_uri</code>这个字符串变量变成一个无意义的字符串，以让后面拼接出来的路径无意义。</p>
 
-<p>对于 <strong>try_files /wp-content/cache/supercache/$http_host/$cache_uri/index.html $uri $uri/ /index.php;</strong></p>
+<p>对于 <code>try_files /wp-content/cache/supercache/$http_host/$cache_uri/index.html $uri $uri/ /index.php;</code></p>
 
-<p>这个是依次尝试访问这些文件，成功就直接返回不再继续，如果都找不到就返回最后一个文件/index.php。我们还记得WP Super Cache生成的静态文件结构是/wp-content/cache/supercache/everet.org/2012/01/scar.html/index.html，也就是先尝试WP Super Cache生成的缓存，有就直接返回缓存。</p>
+<p>这个是依次尝试访问这些文件，成功就直接返回不再继续，如果都找不到就返回最后一个文件/index.php。我们还记得WP Super Cache生成的静态文件结构是<code>/wp-content/cache/supercache/everet.org/2012/01/scar.html/index.html</code>，也就是先尝试WP Super Cache生成的缓存，有就直接返回缓存。</p>
 
 <p>用ab测试了一下，对于缓存后的博客文章的RPS可以到900，还挺快的啊。</p>
 
 <p>另外，对于wordpress的wp-config.php文件，里面写有数据库的帐号和密码，所以我们需要将权限改为600，即只有user01自己能够读写，其他人无权访问。</p>
 
-<h2>参考资料</h2>
+<h2 id="section-2">参考资料</h2>
 
 <ul>
-<li><a href="http://rtcamp.com/tutorials/wordpress-nginx-wp-super-cache/">WordPress-Nginx + WP Super cache</a></li>
+  <li><a href="http://rtcamp.com/tutorials/wordpress-nginx-wp-super-cache/">WordPress-Nginx + WP Super cache</a></li>
 </ul>
 
 ]]></content>
@@ -269,89 +255,7 @@
     <link href="http://everet.org/2012/02/server-migration.html"/>
     <updated>2012-02-10T23:23:41+08:00</updated>
     <id>http://everet.org/2012/02/server-migration</id>
-    <content type="html"><![CDATA[<p>原来的主机是基于Xen的，价格非常的贵，于是现在换了基于OpenVZ的burst.net的主机，性能虽然可能比不上原来的，但是便宜了不少。内存从128MB换成了512MB，不过价格便宜了一半。感觉速度还是<strong>快</strong>了很多很多啊~而且还有原生的<strong>ipv6</strong>的支持，不再需要借助tunnelbreaker，真是校网的救星。</p>
-
-<p>不过想起昨天还真是悲剧，开通了10分钟84就将账号发给我，但是竟然没有ip地址，这真是奇葩啊。于是发了ticket就去闲逛了，我们比他们晚13个小时，他们上午8点上班，也就是我们的晚上9点。于是晚上9点多就有人回复解决了问题，把问题修复了，并且把ip重新发了。然后技术支持很好心的问了还有什么需要帮忙，然后就再顺便帮忙分配了一些ipv6的地址。</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/02/QQ%E6%88%AA%E5%9B%BE20120210155314.jpg"><img src="http://everet.org/wp-content/uploads/2012/02/QQ%E6%88%AA%E5%9B%BE20120210155314-640x578.jpg" alt="" /></a></p>
-
-<p>于是今天开工迁移了。这次将网站都迁移过去了，等过几天再把Git版本库也迁移过去。</p>
-
-<p>原来的主机用的是nginx（发音同 engine x），换到burst.net后默认就装了apache，于是就决定换回apache了，重新配置了下换成worker模式，感觉和nginx差不多吧。</p>
-
-<p>在如下python写的简单的压力测试下服务器基本也没什么压力。<!-- more --></p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="err">!</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">urlopen</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">threading</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">class</span> <span class="nc">Flood</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
-</span><span class='line'>        <span class="n">url</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://everet.org/2012/02/how-to-open-sack.html&#39;</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">print</span> <span class="n">url</span><span class="o">.</span><span class="n">getcode</span><span class="p">()</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">q</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span class='line'><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">t</span> <span class="o">=</span> <span class="n">Flood</span><span class="p">()</span>
-</span><span class='line'><span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</span><span class='line'><span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">i</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c">#&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/02/image.png"><img src="http://everet.org/wp-content/uploads/2012/02/image_thumb.png" alt="image" /></a></p>
-
-<p>现在服务器上挂了4个wordpress，也没什么压力。</p>
-
-<p>前几天在原来的服务器上用nginx+webpy写个几个查看信息的页面，webpy就占了60MB的内存，而且发了几百个并发就死了，这让我情何以堪。可能是我的配置有问题，不过内存还是比较无语的问题，所以还是找找更轻量级的实现了。</p>
-]]></content>
+    <content type="html"><![CDATA[Liquid error: undefined method `strip!' for nil:NilClass]]></content>
   </entry>
   
   <entry>
@@ -367,11 +271,11 @@
 
 <p>好，现在回忆一下如何搭建这个网站。<!-- more --></p>
 
-<h2><strong>必要的话可以修改时区</strong></h2>
+<h2 id="section"><strong>必要的话可以修改时区</strong></h2>
 
 <p>cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</p>
 
-<h2><strong>内存小，增加虚拟内存</strong></h2>
+<h2 id="section-1"><strong>内存小，增加虚拟内存</strong></h2>
 
 <p>如何增加虚拟内存呢？这个在《鸟哥的Linux私房菜》里面说了有比较详细的说明，这里也简要提一下。</p>
 
@@ -408,7 +312,7 @@
 </span><span class='line'>&lt;p&gt;
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h2><strong>搭建VPN</strong></h2>
+<h2 id="vpn"><strong>搭建VPN</strong></h2>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -443,80 +347,48 @@
 <span class='line-number'>30</span>
 <span class='line-number'>31</span>
 <span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;h1&gt;!/bin/bash&lt;/h1&gt;
-</span><span class='line'>
+</span><span class='line'>&lt;h1 <span class="nv">id</span><span class="o">=</span><span class="s2">&quot;binbash&quot;</span>&gt;!/bin/bash&lt;/h1&gt;
 </span><span class='line'>&lt;p&gt;apt-get update
-</span><span class='line'>apt-get -y install ppp pptpd iptables&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;设置DNS&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;echo ms-dns 208.67.222.222 &gt;&gt; /etc/ppp/pptpd-options
-</span><span class='line'><span class="nb">echo </span>ms-dns 208.67.220.220 &gt;&gt; /etc/ppp/pptpd-options
-</span><span class='line'><span class="nb">echo </span>localip 192.168.99.1 &gt;&gt; /etc/pptpd.conf
-</span><span class='line'><span class="nb">echo </span>remoteip 192.168.99.9-99 &gt;&gt; /etc/pptpd.conf&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;设置防火墙&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;如果出现restorecon <span class="nb">command </span>not found，可以apt-get install policycoreutils&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;iptables -t nat -A POSTROUTING -s 192.168.99.0/24 -j MASQUERADE&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;加到rc.local让开机会重新设置过滤&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;sed -i <span class="s1">&#39;s/exit\ 0/#exit\ 0/&#39;</span> /etc/rc.local
+</span><span class='line'>apt-get -y install ppp pptpd iptables
+</span><span class='line'><span class="c"># 设置DNS</span>
+</span><span class='line'><span class="nb">echo </span>ms-dns 208.67.222.222 » /etc/ppp/pptpd-options
+</span><span class='line'><span class="nb">echo </span>ms-dns 208.67.220.220 » /etc/ppp/pptpd-options
+</span><span class='line'><span class="nb">echo </span>localip 192.168.99.1 » /etc/pptpd.conf
+</span><span class='line'><span class="nb">echo </span>remoteip 192.168.99.9-99 » /etc/pptpd.conf
+</span><span class='line'><span class="c"># 设置防火墙</span>
+</span><span class='line'><span class="c"># 如果出现restorecon command not found，可以apt-get install policycoreutils</span>
+</span><span class='line'>iptables -t nat -A POSTROUTING -s 192.168.99.0/24 -j MASQUERADE
+</span><span class='line'><span class="c"># 加到rc.local让开机会重新设置过滤</span>
+</span><span class='line'>sed -i ‘s/exit<span class="se">\ </span>0/#exit<span class="se">\ </span>0/’ /etc/rc.local
 </span><span class='line'><span class="nb">echo </span>iptables -t nat -A POSTROUTING -s 192.168.99.0/24 <span class="se">\</span>
-</span><span class='line'>-j MASQUERADE &gt;&gt; /etc/rc.local
-</span><span class='line'><span class="nb">echo exit </span>0 &gt;&gt; /etc/rc.local
-</span><span class='line'><span class="nb">echo </span>net.ipv4.ip_forward <span class="o">=</span> 1 &gt;&gt; /etc/sysctl.conf
-</span><span class='line'>sysctl -p&lt;/p&gt;
+</span><span class='line'>-j MASQUERADE » /etc/rc.local
+</span><span class='line'><span class="nb">echo exit </span>0 » /etc/rc.local
+</span><span class='line'><span class="nb">echo </span>net.ipv4.ip_forward <span class="o">=</span> 1 » /etc/sysctl.conf
+</span><span class='line'>sysctl -p
+</span><span class='line'><span class="c"># 添加用户test_user，密码test_password</span>
+</span><span class='line'><span class="c"># 格式</span>
+</span><span class='line'><span class="c">#  client        server     secret                IP addresses</span>
+</span><span class='line'><span class="nb">echo </span>test_user * test_password * » /etc/ppp/chap-secrets
+</span><span class='line'><span class="c"># 其中IP地址这一列，我们可以为特定用户手工指定特定IP。</span>
+</span><span class='line'><span class="c"># 如果没有指定，为”*“，那么PPTP VPN服务器从/etc/pptp.conf文件中</span>
+</span><span class='line'><span class="c"># 我们设定的remoteip中选择一个分配给客户端。&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;h1&gt;添加用户test_user，密码test_password&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;格式&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt; client        server     secret                IP addresses&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;echo test_user * test_password * &gt;&gt; /etc/ppp/chap-secrets&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;其中IP地址这一列，我们可以为特定用户手工指定特定IP。&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;如果没有指定，为<span class="s2">&quot;*&quot;</span>，那么PPTP VPN服务器从/etc/pptp.conf文件中&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;我们设定的remoteip中选择一个分配给客户端。&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;重启pptpd让设置生效&lt;/h1&gt;
-</span><span class='line'>
+</span><span class='line'>&lt;h1 <span class="nv">id</span><span class="o">=</span><span class="s2">&quot;pptpd&quot;</span>&gt;重启pptpd让设置生效&lt;/h1&gt;
 </span><span class='line'>&lt;p&gt;/etc/init.d/pptpd restart&lt;/p&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h2>搭建邮件服务器</h2>
+<h2 id="section-2">搭建邮件服务器</h2>
 
 <p>apt-get install sendmail, 然后就可以用sendmail somebody@qq.com发送邮件了，这里还没有讲述如何配置收件，不过发件可以了。收件配置稍后在补全。</p>
 
 <p>apt-get install postfix
 apt-get install mailutils</p>
 
-<h2><strong>配置Web服务器</strong></h2>
+<h2 id="web"><strong>配置Web服务器</strong></h2>
 
 <p>虽然我还是挺想用Apache的，不过太占资源了，所以还是用轻量级一点的nginx，日后有空再自己写个更简单轻量的。整体配置为 Linux + Nginx + PHP-fpm + Mysql，也是传说中的 LNMP。这个在Ubuntu 10.10上搭建还是灰常简单滴。</p>
 
@@ -547,7 +419,7 @@ apt-get install mailutils</p>
 </span><span class='line'>&lt;p&gt;
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>然后就可以用 service --status-all 查看所有的服务。
+<p>然后就可以用 service –status-all 查看所有的服务。
 我们可以用 vi /etc/php5/fpm/php.ini 修改php的配置。可以加上 cgi.fix_pathinfo=0 这句，因为可能会导致可以上传图片扩展名的php，然后可以通过路径访问执行php，如果出现这种情况那就悲剧了。
 好，现在我们开始配置nginx，我们可以 vi /etc/nginx/sites-available/default 编辑</p>
 
@@ -575,33 +447,27 @@ apt-get install mailutils</p>
 <span class='line-number'>21</span>
 <span class='line-number'>22</span>
 <span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
 </pre></td><td class='code'><pre><code class='text'><span class='line'>&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;p&gt;server {&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;listen   80; ## listen for ipv4
-</span><span class='line'>    listen   [::]:80 default ipv6only=on; ## listen for ipv6
-</span><span class='line'>    server_name  www.everet.org everet.org;
-</span><span class='line'>access_log  /var/log/nginx/et/localhost.access.log;
-</span><span class='line'>location / {
-</span><span class='line'>    if (!-f $request_filename){
-</span><span class='line'>        rewrite (.*) /index.php;
-</span><span class='line'>    }
-</span><span class='line'>    root   /var/www/et;
-</span><span class='line'>    index  index.php index.html index.htm;
-</span><span class='line'>}
-</span><span class='line'>location ~ \.php$ {
-</span><span class='line'>    fastcgi_pass   127.0.0.1:9000;
-</span><span class='line'>    fastcgi_index  index.php;
-</span><span class='line'>    fastcgi_param  SCRIPT_FILENAME  /var/www/et$fastcgi_script_name;
-</span><span class='line'>    include      fastcgi_params;
-</span><span class='line'>}
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;}&lt;/p&gt;
+</span><span class='line'>&lt;p&gt;server {
+</span><span class='line'>	listen   80; ## listen for ipv4
+</span><span class='line'>		listen   [::]:80 default ipv6only=on; ## listen for ipv6
+</span><span class='line'>		server_name  www.everet.org everet.org;
+</span><span class='line'>	access_log  /var/log/nginx/et/localhost.access.log;
+</span><span class='line'>	location / {
+</span><span class='line'>		if (!-f $request_filename){
+</span><span class='line'>			rewrite (.*) /index.php;
+</span><span class='line'>		}
+</span><span class='line'>		root   /var/www/et;
+</span><span class='line'>		index  index.php index.html index.htm;
+</span><span class='line'>	}
+</span><span class='line'>	location ~ .php$ {
+</span><span class='line'>		fastcgi_pass   127.0.0.1:9000;
+</span><span class='line'>		fastcgi_index  index.php;
+</span><span class='line'>		fastcgi_param  SCRIPT_FILENAME  /var/www/et$fastcgi_script_name;
+</span><span class='line'>		include		 fastcgi_params;
+</span><span class='line'>	}
+</span><span class='line'>}&lt;/p&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>

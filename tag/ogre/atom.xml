@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: OGRE | EverET.org]]></title>
   <link href="http://everet.org/tag/ogre/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-25T23:07:51+08:00</updated>
+  <updated>2012-12-26T02:57:37+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -18,7 +18,9 @@
     <link href="http://everet.org/2012/03/python-parse-ogre-configuration-file.html"/>
     <updated>2012-03-17T03:19:52+08:00</updated>
     <id>http://everet.org/2012/03/python-parse-ogre-configuration-file</id>
-    <content type="html"><![CDATA[<blockquote><p>OGRE（Object-Oriented Graphics Rendering Engine，即：面向对象图形渲染引擎）是一个用C++开发的面向场景、非常灵活的3D引擎，它旨在让开发人员更容易、更直接地利用硬件加速的3D图形系统开发应用。这个类库隐藏了底层系统库（如：Direct3D和OpenGL）的所有细节，提供了一个基于世界对象和其他直观类的接口。 译者注:ogre在英文中意为：食人魔鬼, 怪物, 象鬼的人，故其LOGO是一个怪物头。</p></blockquote>
+    <content type="html"><![CDATA[<blockquote>
+  <p>OGRE（Object-Oriented Graphics Rendering Engine，即：面向对象图形渲染引擎）是一个用C++开发的面向场景、非常灵活的3D引擎，它旨在让开发人员更容易、更直接地利用硬件加速的3D图形系统开发应用。这个类库隐藏了底层系统库（如：Direct3D和OpenGL）的所有细节，提供了一个基于世界对象和其他直观类的接口。 译者注:ogre在英文中意为：食人魔鬼, 怪物, 象鬼的人，故其LOGO是一个怪物头。</p>
+</blockquote>
 
 <p>以上引用自百度百科。</p>
 
@@ -26,33 +28,35 @@
 
 <p>配置文件的例子如下：</p>
 
-<blockquote><p>[Bootstrap]
-Zip=../media/packs/OgreCore.zip</p></blockquote>
+<p>``` ini
+[Bootstrap]
+Zip=../media/packs/OgreCore.zip</p>
 
-<h1>Resource locations to be added to the default path</h1>
-
+<h1 id="resource-locations-to-be-added-to-the-default-path">Resource locations to be added to the default path</h1>
 <p>[General]
 FileSystem=../media
 FileSystem=../media/fonts
 FileSystem=../media/sounds
 Zip=../media/packs/ogretestmap.zip
-Zip=../media/packs/skybox.zip</p>
-
-<h1>Zip=../media/packs/chiropteraDM.pk3</h1>
+Zip=../media/packs/skybox.zip
+#Zip=../media/packs/chiropteraDM.pk3
+```</p>
 
 <p>它分了section，在section下有许多配置语句，也就是一些赋值语句。</p>
 
 <p>其配置文件的文法类似如下：<!-- more --></p>
 
-<blockquote><p>file –> section+</p></blockquote>
+<p>```
+file –&gt; section+</p>
 
-<p>section –> ‘[‘ identifier ‘]’body</p>
+<p>section –&gt; ‘[‘ identifier ‘]’body</p>
 
-<p>body –> statement</p>
+<p>body –&gt; statement</p>
 
-<p>statement –> assign_statement</p>
+<p>statement –&gt; assign_statement</p>
 
-<p>assign_statement –> identifer ‘=’value</p>
+<p>assign_statement –&gt; identifer ‘=’value
+```</p>
 
 <p>我们可以借助一个Python的SimpleParse模块进行分析。这是一款强大Python解析模块。</p>
 
@@ -134,82 +138,70 @@ Zip=../media/packs/skybox.zip</p>
 <span class='line-number'>71</span>
 <span class='line-number'>72</span>
 <span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
 </pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">declaration</span> <span class="o">=</span> <span class="s">r&#39;&#39;&#39;</span>
-</span><span class='line'><span class="s">file           :=  [ \t\n]&lt;em&gt;, section+</span>
-</span><span class='line'><span class="s">section        :=  &#39;[&#39;, section_name, &#39;]&#39;, ts,&#39;\n&#39;, body</span>
-</span><span class='line'><span class="s">section_name   :=  identifier</span>
-</span><span class='line'><span class="s">body           :=  statement&lt;/em&gt;</span>
-</span><span class='line'><span class="s">statement      :=  (ts,&#39;#&#39;, -&#39;\n&#39;&lt;em&gt;,&#39;\n&#39;)/equality/nullline</span>
-</span><span class='line'><span class="s">nullline       :=  ts,&#39;\n&#39;</span>
-</span><span class='line'><span class="s">equality       :=  ts, item, ts, &#39;=&#39;, ts, value, ts, &#39;\n&#39;</span>
-</span><span class='line'><span class="s">item           := identifier</span>
-</span><span class='line'><span class="s">identifier     :=  [a-zA-Z], [a-zA-Z0-9_]&lt;/em&gt;</span>
-</span><span class='line'><span class="s">value          :=  -&#39;\n&#39;&lt;em&gt;</span>
-</span><span class='line'><span class="s">ts             :=  [ \t]&lt;/em&gt;</span>
-</span><span class='line'><span class="s">&#39;&#39;&#39;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">declaration</span> <span class="o">=</span> <span class="n">r</span><span class="err">’’’</span>
+</span><span class='line'><span class="nb">file</span>           <span class="p">:</span><span class="o">=</span>  <span class="p">[</span> \<span class="n">t</span>\<span class="n">n</span><span class="p">]</span><span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">section</span><span class="o">+</span>
+</span><span class='line'><span class="n">section</span>        <span class="p">:</span><span class="o">=</span>  <span class="err">‘</span><span class="p">[</span><span class="err">’</span><span class="p">,</span> <span class="n">section_name</span><span class="p">,</span> <span class="err">‘</span><span class="p">]</span><span class="err">’</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span><span class="err">’</span>\<span class="n">n</span><span class="err">’</span><span class="p">,</span> <span class="n">body</span>
+</span><span class='line'><span class="n">section_name</span>   <span class="p">:</span><span class="o">=</span>  <span class="n">identifier</span>
+</span><span class='line'><span class="n">body</span>           <span class="p">:</span><span class="o">=</span>  <span class="n">statement</span><span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">statement</span>      <span class="p">:</span><span class="o">=</span>  <span class="p">(</span><span class="n">ts</span><span class="p">,</span><span class="err">’</span><span class="c">#’, -‘\n’&lt;em&gt;,’\n’)/equality/nullline</span>
+</span><span class='line'><span class="n">nullline</span>       <span class="p">:</span><span class="o">=</span>  <span class="n">ts</span><span class="p">,</span><span class="err">’</span>\<span class="n">n</span><span class="err">’</span>
+</span><span class='line'><span class="n">equality</span>       <span class="p">:</span><span class="o">=</span>  <span class="n">ts</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="err">‘</span><span class="o">=</span><span class="err">’</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="err">‘</span>\<span class="n">n</span><span class="err">’</span>
+</span><span class='line'><span class="n">item</span>           <span class="p">:</span><span class="o">=</span> <span class="n">identifier</span>
+</span><span class='line'><span class="n">identifier</span>     <span class="p">:</span><span class="o">=</span>  <span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="n">zA</span><span class="o">-</span><span class="n">Z</span><span class="p">],</span> <span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="n">zA</span><span class="o">-</span><span class="n">Z0</span><span class="o">-</span><span class="mi">9</span><span class="n">_</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">value</span>          <span class="p">:</span><span class="o">=</span>  <span class="o">-</span><span class="err">‘</span>\<span class="n">n</span><span class="err">’</span><span class="o">*</span>
+</span><span class='line'><span class="n">ts</span>             <span class="p">:</span><span class="o">=</span>  <span class="p">[</span> \<span class="n">t</span><span class="p">]</span><span class="o">*</span>
+</span><span class='line'><span class="err">‘’’</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
-</span><span class='line'><span class="s">[Bootstrap]</span>
-</span><span class='line'><span class="s">Zip=../media/packs/OgreCore.zip&lt;/p&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">text</span> <span class="o">=</span> <span class="err">‘’’</span>
+</span><span class='line'><span class="p">[</span><span class="n">Bootstrap</span><span class="p">]</span>
+</span><span class='line'><span class="n">Zip</span><span class="o">=../</span><span class="n">media</span><span class="o">/</span><span class="n">packs</span><span class="o">/</span><span class="n">OgreCore</span><span class="o">.</span><span class="n">zip</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="s">&lt;h1&gt;Resource locations to be added to the default path&lt;/h1&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span> <span class="nb">id</span><span class="o">=</span><span class="s">&quot;resource-locations-to-be-added-to-the-default-path-1&quot;</span><span class="o">&gt;</span><span class="n">Resource</span> <span class="n">locations</span> <span class="n">to</span> <span class="n">be</span> <span class="n">added</span> <span class="n">to</span> <span class="n">the</span> <span class="n">default</span> <span class="n">path</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">[</span><span class="n">General</span><span class="p">]</span>
+</span><span class='line'><span class="n">FileSystem</span><span class="o">=../</span><span class="n">media</span>
+</span><span class='line'><span class="n">FileSystem</span><span class="o">=../</span><span class="n">media</span><span class="o">/</span><span class="n">Audio</span>
+</span><span class='line'><span class="n">FileSystem</span><span class="o">=../</span><span class="n">media</span><span class="o">/</span><span class="n">sounds</span>
+</span><span class='line'><span class="n">FileSystem</span><span class="o">=../</span><span class="n">media</span><span class="o">/</span><span class="n">materials</span><span class="o">/</span><span class="n">programs</span>
+</span><span class='line'><span class="n">FileSystem</span><span class="o">=../</span><span class="n">media</span><span class="o">/</span><span class="n">materials</span><span class="o">/</span><span class="n">scripts</span>
+</span><span class='line'><span class="n">FileSystem</span><span class="o">=../</span><span class="n">media</span><span class="o">/</span><span class="n">materials</span><span class="o">/</span><span class="n">textures</span>
+</span><span class='line'><span class="n">FileSystem</span><span class="o">=../</span><span class="n">media</span><span class="o">/</span><span class="n">models</span>
+</span><span class='line'><span class="n">FileSystem</span><span class="o">=../</span><span class="n">media</span><span class="o">/</span><span class="n">overlays</span>
+</span><span class='line'><span class="n">Zip</span><span class="o">=../</span><span class="n">media</span><span class="o">/</span><span class="n">packs</span><span class="o">/</span><span class="n">ogretestmap</span><span class="o">.</span><span class="n">zip</span>
+</span><span class='line'><span class="c">#Zip=../media/packs/chiropteraDM.pk3&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="s">&lt;p&gt;[General]</span>
-</span><span class='line'><span class="s">FileSystem=../media</span>
-</span><span class='line'><span class="s">FileSystem=../media/Audio</span>
-</span><span class='line'><span class="s">FileSystem=../media/sounds</span>
-</span><span class='line'><span class="s">FileSystem=../media/materials/programs</span>
-</span><span class='line'><span class="s">FileSystem=../media/materials/scripts</span>
-</span><span class='line'><span class="s">FileSystem=../media/materials/textures</span>
-</span><span class='line'><span class="s">FileSystem=../media/models</span>
-</span><span class='line'><span class="s">FileSystem=../media/overlays</span>
-</span><span class='line'><span class="s">Zip=../media/packs/ogretestmap.zip&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s">&lt;h1&gt;Zip=../media/packs/chiropteraDM.pk3&lt;/h1&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s">&lt;p&gt;&#39;&#39;&#39;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">’’’</span>
 </span><span class='line'><span class="kn">from</span> <span class="nn">simpleparse.parser</span> <span class="kn">import</span> <span class="n">Parser</span>
 </span><span class='line'><span class="kn">import</span> <span class="nn">pprint</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">lastItem</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class='line'><span class="n">section_name</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-</span><span class='line'><span class="k">def</span> <span class="nf">config_maker</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">section_name</span> <span class="o">=</span> <span class="err">‘’</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">config_maker</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+</span><span class='line'>    <span class="err">‘</span><span class="s">&#39;’make the config tuple, and adds them to config’’’</span>
+</span><span class='line'>    <span class="k">global</span> <span class="n">config</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">lastItem</span><span class="p">,</span> <span class="n">section_name</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="err">‘</span><span class="n">section_name</span><span class="err">’</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">section_name</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="err">‘</span><span class="n">item</span><span class="err">’</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">lastItem</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="err">‘</span><span class="n">value</span><span class="err">’</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">config</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">lastItem</span><span class="p">,</span> <span class="n">text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]))</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="s">&#39;&#39;&#39;make the config tuple, and adds them to config&#39;&#39;&#39;</span>
-</span><span class='line'><span class="k">global</span> <span class="n">config</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">lastItem</span><span class="p">,</span> <span class="n">section_name</span>
-</span><span class='line'><span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;section_name&#39;</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">section_name</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
-</span><span class='line'><span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;item&#39;</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">lastItem</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
-</span><span class='line'><span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;value&#39;</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">lastItem</span><span class="p">,</span> <span class="n">text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]))</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">travel</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">root</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">travel</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">if</span> <span class="n">root</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">tag</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">children</span> <span class="o">=</span> <span class="n">root</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">tag</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">children</span> <span class="o">=</span> <span class="n">root</span>
 </span><span class='line'><span class="n">func</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">if</span> <span class="n">children</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
 </span><span class='line'>    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span> <span class="n">travel</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">==</span><span class="s">&quot;&lt;strong&gt;main&lt;/strong&gt;&quot;</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">==</span><span class="err">”</span><span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">main</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span><span class="err">”</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="p">(</span> <span class="n">declaration</span><span class="p">,</span> <span class="err">“</span><span class="nb">file</span><span class="err">”</span> <span class="p">)</span>
+</span><span class='line'>    <span class="n">success</span><span class="p">,</span> <span class="n">resultTrees</span><span class="p">,</span> <span class="n">nextChar</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="p">(</span> <span class="n">declaration</span><span class="p">,</span> <span class="s">&quot;file&quot;</span> <span class="p">)</span>
-</span><span class='line'><span class="n">success</span><span class="p">,</span> <span class="n">resultTrees</span><span class="p">,</span> <span class="n">nextChar</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
 </span><span class='line'><span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">resultTrees</span><span class="p">:</span>
 </span><span class='line'>    <span class="n">config</span> <span class="o">=</span> <span class="p">[]</span>
 </span><span class='line'>    <span class="n">travel</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">config_maker</span><span class="p">)</span>
@@ -222,7 +214,7 @@ Zip=../media/packs/skybox.zip</p>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>输出如下的内容，我们就可以很方便地读取里面的内容了。
-<a href="http://everet.org/wp-content/uploads/2012/03/QQ%E6%88%AA%E5%9B%BE20120316192157.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ%E6%88%AA%E5%9B%BE20120316192157.png" alt="" /></a></p>
+<a href="http://everet.org/wp-content/uploads/2012/03/QQ截图20120316192157.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ截图20120316192157.png" alt="" /></a></p>
 ]]></content>
   </entry>
   
@@ -243,7 +235,7 @@ Zip=../media/packs/skybox.zip</p>
 
 <p>15:09:13</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA98_thumb.jpg">![UARF0O4MI_$6HXMIHAA]{98</a>](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA98.jpg)</p>
+<p>![UARF0O4MI<em>$6HXMIHAA](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI</em>6HXMIHAA98_thumb.jpg)</p>
 
 <p>XellOs</p>
 
@@ -260,7 +252,7 @@ Zip=../media/packs/skybox.zip</p>
 <p>15:11:04</p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/01/EARXHLNMG6QY4MSIYYJ.png"><img src="http://everet.org/wp-content/uploads/2012/01/EARXHLNMG6QY4MSIYYJ_thumb.png" alt="EARXH%L@NMG6Q@Y4MSIY(YJ" /></a>15:11:04
-杨旭瑜<a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#58;&#x79;&#97;&#110;&#103;&#x78;&#117;&#x79;&#x75;&#x5f;&#102;&#105;&#x73;&#x68;&#x40;&#113;&#x71;&#46;&#99;&#111;&#109;">&#121;&#97;&#x6e;&#103;&#120;&#x75;&#121;&#x75;&#95;&#102;&#105;&#x73;&#x68;&#64;&#113;&#113;&#46;&#x63;&#111;&#x6d;</a>中止了语音通话。</p>
+杨旭瑜&lt;yangxuyu_fish@qq.com&gt;中止了语音通话。</p>
 
 <p>XellOs</p>
 
@@ -392,7 +384,7 @@ Zip=../media/packs/skybox.zip</p>
 
 <p>15:16:39</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA98_thumb1.jpg">![UARF0O4MI_$6HXMIHAA]{98</a>](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA981.jpg)</p>
+<p>[![UARF0O4MI<em>$6HXMIHAA]{98](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI</em>6HXMIHAA98<em>thumb1.jpg)](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI</em>6HXMIHAA981.jpg)</p>
 
 <p>XellOs</p>
 
@@ -422,7 +414,7 @@ Zip=../media/packs/skybox.zip</p>
 
 <p>15:17:07</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA98_thumb2.jpg">![UARF0O4MI_$6HXMIHAA]{98</a>](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA982.jpg)</p>
+<p>![UARF0O4MI<em>$6HXMIHAA](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI</em>6HXMIHAA98_thumb2.jpg)</p>
 
 <p>XellOs</p>
 
@@ -464,7 +456,7 @@ Zip=../media/packs/skybox.zip</p>
 
 <p>15:17:57</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/01/4U8MOI7DP52Q92TC.gif"><img src="http://everet.org/wp-content/uploads/2012/01/4U8MOI7DP52Q92TC_thumb.gif" alt="}4U8}`MOI7D)}P5`2$Q92TC" /></a></p>
+<p><img src="http://everet.org/wp-content/uploads/2012/01/4U8MOI7DP52Q92TC_thumb.gif" alt="4U8MOI7DQ92TC" /></p>
 
 <p>XellOs</p>
 
@@ -518,7 +510,7 @@ Zip=../media/packs/skybox.zip</p>
 
 <p>15:19:55</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/01/NFYZI7A9P9HQA0BKSI.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/NFYZI7A9P9HQA0BKSI_thumb.jpg" alt="{~NF`YZ@I7A9P9HQA0BK$SI" /></a></p>
+<p><img src="http://everet.org/wp-content/uploads/2012/01/NFYZI7A9P9HQA0BKSI_thumb.jpg" alt="I" /></p>
 
 <p>XellOs</p>
 
@@ -536,7 +528,7 @@ Zip=../media/packs/skybox.zip</p>
 
 <p>15:20:03</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/01/XN9XY3P2OIAVBS4IKR8MW.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/XN9XY3P2OIAVBS4IKR8MW_thumb.jpg" alt="XN9XY`3P2OI$AVBS4IKR8MW" /></a></p>
+<p><img src="http://everet.org/wp-content/uploads/2012/01/XN9XY3P2OIAVBS4IKR8MW_thumb.jpg" alt="X" /></p>
 
 <p>XellOs</p>
 
@@ -627,9 +619,8 @@ Zip=../media/packs/skybox.zip</p>
 <p>15:22:41</p>
 
 <ul>
-<li>-#</li>
+  <li>-#</li>
 </ul>
-
 
 <p>XellOs</p>
 
@@ -835,7 +826,7 @@ Zip=../media/packs/skybox.zip</p>
 
 <p>15:32:50</p>
 
-<p>[![]~)Z$<em>L$~U]R%UQM{Q~</em>X)B](http://everet.org/wp-content/uploads/2012/01/Z_LURUQMQ_XB_thumb.gif)](http://everet.org/wp-content/uploads/2012/01/Z_LURUQMQ_XB.gif)</p>
+<p>[![]~)Z$_L$~U]R%UQM{Q~_X)B](http://everet.org/wp-content/uploads/2012/01/Z_LURUQMQ_XB_thumb.gif)](http://everet.org/wp-content/uploads/2012/01/Z_LURUQMQ_XB.gif)</p>
 
 <p>XellOs</p>
 
@@ -1027,15 +1018,15 @@ Zip=../media/packs/skybox.zip</p>
 
 <p>15:41:06</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA9810_thumb.jpg">![UARF0O4MI_$6HXMIHAA]{98[10]</a>](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA9810.jpg)</p>
+<p>[![UARF0O4MI<em>$6HXMIHAA]{98[10]](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI</em>6HXMIHAA9810<em>thumb.jpg)](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI</em>6HXMIHAA9810.jpg)</p>
 
-<p>某花</p>
+<p>某花</p>
 
 <p>15:41:27</p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/01/FZL83KE0M_OR457U3JDT.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/FZL83KE0M_OR457U3JDT_thumb.jpg" alt="FZ)L83KE~0M_OR457U3J}DT" /></a></p>
 
-<p>某花</p>
+<p>某花</p>
 
 <p>15:42:27</p>
 
@@ -1095,7 +1086,7 @@ Zip=../media/packs/skybox.zip</p>
 
 <p>茫茫多</p>
 
-<p>某花</p>
+<p>某花</p>
 
 <p>15:44:44</p>
 
@@ -1155,7 +1146,7 @@ Zip=../media/packs/skybox.zip</p>
 
 <p>我是这样觉得的</p>
 
-<p>某花</p>
+<p>某花</p>
 
 <p>15:47:48</p>
 
@@ -1189,7 +1180,7 @@ Zip=../media/packs/skybox.zip</p>
 
 <p>15:50:01</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA9812_thumb.jpg">![UARF0O4MI_$6HXMIHAA]{98[12]</a>](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA9812.jpg)</p>
+<p>[![UARF0O4MI<em>$6HXMIHAA]{98[12]](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI</em>6HXMIHAA9812<em>thumb.jpg)](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI</em>6HXMIHAA9812.jpg)</p>
 
 <p>XellOs</p>
 
@@ -1431,11 +1422,11 @@ Zip=../media/packs/skybox.zip</p>
 
 <p>八叉树插件？</p>
 
-<p>某花</p>
+<p>某花</p>
 
 <p>16:02:37</p>
 
-<p>.ogre有没什么八叉树插件...</p>
+<p>.ogre有没什么八叉树插件…</p>
 
 <p>XellOs</p>
 
@@ -1659,11 +1650,11 @@ Zip=../media/packs/skybox.zip</p>
 
 <p><strong>没有啊。</strong></p>
 
-<p>某花</p>
+<p>某花</p>
 
 <p>16:10:32</p>
 
-<p>旭瑜，你装完了吗...</p>
+<p>旭瑜，你装完了吗…</p>
 
 <p>16:11:03</p>
 
@@ -1680,6 +1671,7 @@ XellOs(636202)中止了语音通话。</p>
 <p>16:11:20</p>
 
 <p><strong>我不清楚如何把git.everet.org的东西弄下来。</strong></p>
+
 ]]></content>
   </entry>
   
@@ -1688,475 +1680,7 @@ XellOs(636202)中止了语音通话。</p>
     <link href="http://everet.org/2012/01/clover-progress.html"/>
     <updated>2012-01-28T01:31:58+08:00</updated>
     <id>http://everet.org/2012/01/clover-progress</id>
-    <content type="html"><![CDATA[<h3>2012-3-30:</h3>
-
-<p>今天我们把视频提交了。也上传了一份。</p>
-
-<p><a href="http://v.youku.com/v_show/id_XMzc0MTAyMDg0.html">http://v.youku.com/v_show/id_XMzc0MTAyMDg0.html<!-- more --></a></p>
-
-<h3>2012-3-19：</h3>
-
-<p>前几天各种生病，今天好多了，又要准备开工了...<!-- more --></p>
-
-<h3>2012-3-13：</h3>
-
-<p>现在是凌晨1点18分，在FoldingUp的group排序似乎可以用了。下一步工作也基本可以开始了。</p>
-
-<p>天气多变，很多人都生病了啊。</p>
-
-<p>加油啊！</p>
-
-<h3>2012-3-12:</h3>
-
-<p>今天是植树节，其实平时也是完全没时间概念，只是看到Google的Logo才想起已经是12号了。</p>
-
-<p>现在是16点37分，刚刚实现了动画，把解释器放到另一个线程，每执行一条重要的命令就会阻塞到动画做完。</p>
-
-<p>现在准备做鼠标折纸，然后自动生成脚本文件。</p>
-
-<p>我们已经进入第三行了啊~悲剧了啊~~</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/01/QQ%E6%88%AA%E5%9B%BE20120312163717.png"><img src="http://everet.org/wp-content/uploads/2012/01/QQ%E6%88%AA%E5%9B%BE20120312163717.png" alt="" /><!-- more --></a></p>
-
-<h3>2012-3-11:</h3>
-
-<p>现在是11号凌晨0点53分，刚刚写完了Clover数据结构文件保存的文章，留个链接</p>
-
-<p><a href="http://everet.org/2012/03/clover-save-file.html">http://everet.org/2012/03/clover-save-file.html</a></p>
-
-<h3>2012-3-10:</h3>
-
-<p>今晚花了一晚就实现了文件的保存和读取，重建整个结构其实还是比想象中简单很多啊~~</p>
-
-<p>现在是下午14:43，Todo List变成这样了。</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/01/IMG_0016.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/IMG_0016.jpg" alt="" /><!-- more --></a></p>
-
-<h3>2012-3-9：</h3>
-
-<p>加了4行就把CutFace的割两边的版本改造成支持所有情况了。</p>
-
-<p>ShadowSystem的Undo和Redo基本可以用了，Revert还有点问题。</p>
-
-<p>旭瑜貌似在帮另外一拨人做Android的界面，Group写了很久了。</p>
-
-<p>师兄在实现鼠标拖那张纸。</p>
-
-<p>今天屠文翔同学一起弄ShadowSystem，晚点屠文翔会弄多层纸的交互。<!-- more --></p>
-
-<h3>2012-3-8:</h3>
-
-<p>11点多收到明天面试，本来还想接着写完ShadowSystem的，就临时拿本《算法导论》看看了，很久没翻过了。</p>
-
-<h3>2012-3-7:</h3>
-
-<p>现在是凌晨2点22分，我发现cut face在更新整个数据结构的时候还是会有所遗漏，明天再弄了。</p>
-
-<p>发现问题出在我最引以为傲的2B算法上。</p>
-
-<p>现在目前我们的工作总结：</p>
-
-<p>屠文翔同学弄了FoldingUp和Bending两种模式的视觉效果了...</p>
-
-<p>Group还没有顺序，这个问题很严重，会导致绘图的时候面的次序出错。旭瑜要加油啊。</p>
-
-<p>师兄正在主要还是在解决一些复杂的数学问题....</p>
-
-<!-- more -->
-
-
-<h3>2012-3-6:</h3>
-
-<p>想一下我们现在的TODO List：</p>
-
-<ol>
-<li><p>将3维的纸张重新映射回2维的值，得到有折痕的纸。</p></li>
-<li><p>将折痕变成提示折痕</p></li>
-<li><p>脚本引擎的完善</p></li>
-<li><p>自动贴合</p></li>
-<li><p>避免面完全重叠</p></li>
-<li><p>将折纸过程重放，需要深入理解这个数据结构才可以完成</p></li>
-<li><p>保存文件</p></li>
-<li><p>加载文件</p></li>
-<li><p>换贴图</p></li>
-</ol>
-
-
-<h5>对于脚本引擎的想法：</h5>
-
-<ul>
-<li><p>虽然对于普通用户可能没什么用，但是脚本对于我们测试整个系统有着莫大的帮助。</p></li>
-<li><p>而且对于我们的技术分也有提高。</p></li>
-<li><p>臆想的效果是：进入脚本折叠模式后，弹出代码框和一个输出框（默认不显示，主要用于提示他的语法错误了），</p></li>
-<li><p>然后友好地弹出每个顶点的索引和位置，还需要尽量避免信息框互相遮挡。</p></li>
-<li><p>为了解决遮挡问题，我们可以鼠标点击某个顶点，会另外弹出一个特殊的框来显示顶点的信息。</p></li>
-</ul>
-
-
-<hr />
-
-<p>现在是北京时间凌晨4点22分，我终于折好了飞机，发现问题出在Face引用了历史中的Vertex。睡醒了再修正了。</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/01/QQ%E6%88%AA%E5%9B%BE20120306042141.png"><img src="http://everet.org/wp-content/uploads/2012/01/QQ%E6%88%AA%E5%9B%BE20120306042141.png" alt="" /></a></p>
-
-<p>使用如下的脚本....很2B，需要改进</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c">#&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="mi">2</span><span class="n">B</span><span class="err">飞机</span> <span class="n">By</span> <span class="n">ET</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c">#&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="err">先在中间画条折线</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">edgeMiddle</span> <span class="o">=</span> <span class="n">Edge</span><span class="p">(</span><span class="n">Vertex</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Vertex</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
-</span><span class='line'><span class="n">face</span> <span class="o">=</span> <span class="n">FindFacesByVertex</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</span><span class='line'><span class="n">CutFace2</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">edgeMiddle</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">for</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">v3</span><span class="p">,</span> <span class="n">sign</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c"># 左上角往回折</span>
-</span><span class='line'><span class="n">edge</span> <span class="o">=</span> <span class="n">Edge</span><span class="p">(</span><span class="n">Vertex</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">sign</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Vertex</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">sign</span> <span class="o">*</span> <span class="mi">50</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
-</span><span class='line'><span class="n">face</span> <span class="o">=</span> <span class="n">FindFacesByVertex</span><span class="p">(</span><span class="n">v1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</span><span class='line'><span class="n">CutFace2</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">edge</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">faces</span> <span class="o">=</span> <span class="n">FindFacesByVertex</span><span class="p">(</span><span class="n">v1</span><span class="p">)</span>
-</span><span class='line'><span class="n">RotateFaces</span><span class="p">(</span><span class="n">faces</span><span class="p">,</span> <span class="n">edge</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># 上面1/4反折</span>
-</span><span class='line'><span class="n">edge</span> <span class="o">=</span> <span class="n">Edge</span><span class="p">(</span><span class="n">Vertex</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="n">sign</span> <span class="o">*</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Vertex</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">sign</span> <span class="o">*</span> <span class="mi">30</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
-</span><span class='line'><span class="n">face</span> <span class="o">=</span> <span class="n">FindFacesByVertex</span><span class="p">(</span><span class="n">v2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</span><span class='line'><span class="n">CutFace2</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">edge</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">edge</span> <span class="o">=</span> <span class="n">Edge</span><span class="p">(</span><span class="n">Vertex</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">sign</span> <span class="o">*</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Vertex</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">sign</span> <span class="o">*</span> <span class="mi">30</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
-</span><span class='line'><span class="n">face</span> <span class="o">=</span> <span class="n">FindFacesByVertex</span><span class="p">(</span><span class="n">v1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</span><span class='line'><span class="n">CutFace2</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">edge</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># 翅膀往回折</span>
-</span><span class='line'><span class="n">faces</span> <span class="o">=</span> <span class="n">FindFacesByVertex</span><span class="p">(</span><span class="n">v3</span><span class="p">)</span>
-</span><span class='line'><span class="n">RotateFaces</span><span class="p">(</span><span class="n">faces</span><span class="p">,</span> <span class="n">edge</span><span class="p">,</span> <span class="n">sign</span> <span class="o">*</span> <span class="mi">90</span><span class="p">)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="err">对折</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">faces</span> <span class="o">=</span> <span class="n">FindFacesByVertex</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
-</span><span class='line'><span class="n">RotateFaces</span><span class="p">(</span><span class="n">faces</span><span class="p">,</span> <span class="n">edgeMiddle</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>大合照：</p>
-
-<!-- more -->
-
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'> &lt;a href="http://everet.org/wp-content/uploads/2012/01/QQ%E6%88%AA%E5%9B%BE20120306141134.png">&lt;img src="http://everet.org/wp-content/uploads/2012/01/QQ%E6%88%AA%E5%9B%BE20120306141134.png" alt="" />&lt;/a></span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<h3>2012-3-5:</h3>
-
-<p>今天凌晨3点实现了割线过0个顶点的cut a face。可以使用脚本割面和折叠了。</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/01/%E6%9C%AA%E5%91%BD%E5%90%8D2.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/%E6%9C%AA%E5%91%BD%E5%90%8D2.jpg" alt="" /></a></p>
-
-<p>我们的提交日志，超长的图片:<!-- more --></p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/01/2012-03-05-16-16-07.png"><img src="http://everet.org/wp-content/uploads/2012/01/2012-03-05-16-16-07.png" alt="" /></a></p>
-
-<h3>2012-3-4:</h3>
-
-<p>刚刚花了2个小时加了脚本引擎，可以使用脚本来控制整个系统。哇哈哈~~~</p>
-
-<p>原来这么简单啊....</p>
-
-<p>屠文翔同学也做了进入折叠模式的特效。还有折叠时的半透明效果，相当的牛逼啊。</p>
-
-<p>为了方便脚本控制折叠，我们将每个点都显示出来了。</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/01/QQ%E6%88%AA%E5%9B%BE20120304205034.png"><img src="http://everet.org/wp-content/uploads/2012/01/QQ%E6%88%AA%E5%9B%BE20120304205034.png" alt="" /></a></p>
-
-<h3><!-- more -->2012-3-3:</h3>
-
-<p>好久没有更新了，猛地发现已将近一个月都没更新了。</p>
-
-<p>现在已经可以用代码折叠了....截个图留念一下...</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/01/QQ%E6%88%AA%E5%9B%BE20120303215309.png"><img src="http://everet.org/wp-content/uploads/2012/01/QQ%E6%88%AA%E5%9B%BE20120303215309.png" alt="" /></a></p>
-
-<h3><!-- more -->2012-2-6:</h3>
-
-<p>今天把面分割和折叠写了。</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/01/%E6%9C%AA%E5%91%BD%E5%90%8D1.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/%E6%9C%AA%E5%91%BD%E5%90%8D1.jpg" alt="" /></a></p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/01/21.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/21.jpg" alt="" /></a></p>
-
-<p>数据结构见：<a href="http://everet.org/2012/02/clover-data-structure.html">http://everet.org/2012/02/clover-data-structure.html</a></p>
-
-<h3>2012-2-1:</h3>
-
-<p>刚刚把我测试的分支里的main.py拆分开来了。</p>
-
-<h3>2012-1-31：</h3>
-
-<p>发现动手写代码还是需要看很多遍Tutorial，记下地址：<a href="http://wiki.python-ogre.org/index.php/Basic_Tutorial_1">http://wiki.python-ogre.org/index.php/Basic_Tutorial_1</a></p>
-
-<p><strong>屠文翔同学的日志：<a href="http://www.cnblogs.com/kidshusang/archive/2012/01/31/2333970.html">http://www.cnblogs.com/kidshusang/archive/2012/01/31/2333970.html</a> 转载过来存档。</strong></p>
-
-<blockquote><p>果然验证了简单的问题不简单，想要弄个导航立方体，遇到了各种各样的难题</p></blockquote>
-
-<p>首先是Ogre貌似并不能直接导入3ds模型，Ogre仅支持自己的.mesh格式的模型</p>
-
-<p>所以我要通过一个叫做3ds2mesh的工具把我的立方体3ds转换成mesh</p>
-
-<!-- more -->
-
-
-<p>第二个难题是为立方体贴图</p>
-
-<p>因为6个面标识着六个方向，所以要为六个不同的面贴不同的图</p>
-
-<p>这就意味着我第一步的工作白费了！无法为一个现成的，空白的六面体贴图</p>
-
-<p>这就意味着，要不我就用3dsMax把贴好图的立方体导出来，要不我就用代码生成一个立方体，并同时为每一个面定义贴图</p>
-
-<p>我选择后者。（参考资料的传送门：<a href="http://0flyingpig0.blog.163.com/blog/static/9937055620101209433665/">http://0flyingpig0.blog.163.com/blog/static/9937055620101209433665/</a>）</p>
-
-<p>第三个难题是，Ogre管理Material（材质）的方法和Irrlicht真的是完全不一样</p>
-
-<p>在Ogre里面，如果想要控制光照，反面裁剪，纹理贴图，就要自己新建一个Material，并给Entity赋予这个Material</p>
-
-<p>而Irrlicht里面只用设个标志位就好了</p>
-
-<p>我不能说哪种方法更好，不过看起来Irrlicht的方法更简单，而Ogre的方法更专业</p>
-
-<p>另外，材质也是可以使用脚本的，脚本后缀名为.material</p>
-
-<p>（脚本使用方法传送门：<a href="http://www.ogre3d.org/docs/manual/manual_14.html#SEC23">http://www.ogre3d.org/docs/manual/manual_14.html#SEC23</a>）</p>
-
-<p>（脚本教程传送门：<a href="http://www.ogre3d.org/tikiwiki/MadMarx+Tutorial+7&amp;structure=Tutorials">http://www.ogre3d.org/tikiwiki/MadMarx+Tutorial+7&amp;structure=Tutorials</a>）</p>
-
-<p>第四个难题揭示了我是多么的天真。</p>
-
-<p>现在我已经弄好了六面体，并且把它摆在场景中央</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/01/r_%E6%9C%AA%E5%91%BD%E5%90%8D-1.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/r_%E6%9C%AA%E5%91%BD%E5%90%8D-1.jpg" alt="" /></a></p>
-
-<p>一切看起来正常，六面体的正面正对着我。</p>
-
-<p>貌似此时需要做的只是写玩导航逻辑就大功告成，也就是说我拖动六面体，场景镜头就会转动</p>
-
-<p>可是我觉得把一个导航块放在场景中间有些不合适，所以我决定把它放在旁边</p>
-
-<p>尼玛啊……</p>
-
-<p>它在逻辑上是朝向这正面，但是由于视角问题，变得好像不是朝向正面</p>
-
-<p>解决方法我先在想到的有两种</p>
-
-<p>第一种是让它倾斜一个角度朝向我，并把这个方向当做是初始方向，以后的旋转镜头都加上这个偏移量</p>
-
-<p>第二种是将这个六面体渲染成一张texture（RTT）并贴出来</p>
-
-<p>我先试试看第一种方法……</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/01/r_%E6%9C%AA%E5%91%BD%E5%90%8D-2.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/r_%E6%9C%AA%E5%91%BD%E5%90%8D-2.jpg" alt="" /></a></p>
-
-<p>另外，Ogre管理资源的方法真的是非常的诡异，有空我要好好看看这篇东西<a href="http://www.ogre3d.org/tikiwiki/Resources+and+ResourceManagers&amp;structure=Tutorials">http://www.ogre3d.org/tikiwiki/Resources+and+ResourceManagers&amp;structure=Tutorials</a></p>
-
-<p><strong>屠文翔同学的日志：<a href="http://www.cnblogs.com/kidshusang/archive/2012/01/31/2332526.html">http://www.cnblogs.com/kidshusang/archive/2012/01/31/2332526.html</a> 转载过来存档。</strong></p>
-
-<blockquote><p>啊，这一晃眼十多天就过去了</p></blockquote>
-
-<p>今天天气转暖了，是个开始工作的好日子</p>
-
-<p>前两天亮哥提议我们使用Python加速开发，也就是使用PythonOgre，是个不错的建议</p>
-
-<p>于是前两天装了PythonOgre，看了看教程和例子，发现PythonOgre里面已经集成了CEGUI，好吧真方便</p>
-
-<p>（顺便吐槽一下，这几天习惯了使用VIM，突然有点不习惯普通的文本编辑方式）</p>
-
-<p>今天开了小组会议，会议中我们把Clover逻辑层面的数据结构给讨论了一下</p>
-
-<p>会议记录传送门：<a href="http://everet.org/2012/01/clover-architecture-design-meeting.html">http://everet.org/2012/01/clover-architecture-design-meeting.html</a></p>
-
-<p>（密码什么的我会随便乱说么）</p>
-
-<!-- more -->
-
-
-<p>回顾一下今天我做的事</p>
-
-<p>因为vim，python和pythonOgre我一个都不熟，所以花费在熟悉他们上面的时间比干正事的时间多得多</p>
-
-<p>不过总算我理清了python是如何处理类，模块和集成的了</p>
-
-<p>之前帮骨架系统装上界面后，CEGUI把所有键盘和鼠标消息都截断了</p>
-
-<p>于是亮哥抱怨无法“围观”他的作品，只好自己开个无界面版的分支</p>
-
-<p>我自己也开了个分支，尝试解决这个问题</p>
-
-<p>不过在经过研究Ogre.Renderer.Ogre.sf_ois模块中的代码和一些尝试以后，我发现这个问题还真不太好解决（也可能是我没太明白它的消息处理机制），而且也没什么必要去解决（因为我们的软件必然不是用WASD来移动照相机……）</p>
-
-<p>我决定明天开始研究如何完全使用鼠标来移动视角</p>
-
-<p>计划下明天要做的事</p>
-
-<p>首先，纯用鼠标移动视角是件很简单的事情</p>
-
-<p>可是按照一般事情的尿性来看，简单的事情都没有想象中那么简单</p>
-
-<p>一个矛盾点就是，如果通过在屏幕上拖动鼠标来移动视角，那么界面就废了……</p>
-
-<p>所以我的想法是参考3dsMax的做法，在屏幕上放一个指示方向的六面体骰子，通过拖动这个骰子来改变视角</p>
-
-<p>这个骰子不可能是CEGUI，只能是3D场景中的一部分</p>
-
-<p>所以我的工作可以归纳为一下几个：</p>
-
-<p>1.找一个六面体模型，并弄好标有上下左右前后的纹理，导入PythonOgre</p>
-
-<p>2.研究下鼠标如何和这个六面体交互，需要用到拾取吗？</p>
-
-<p>3.研究下鼠标的事件机制</p>
-
-<p>4.研究下摄像机，因为摄像机有两种移动方式，一种是自己动，一种是跟着节点动</p>
-
-<p>亮哥工作日志的传送门：<a href="http://everet.org/2012/01/clover-progress.html">http://everet.org/2012/01/clover-progress.html</a></p>
-
-<h3>2012-1-30：</h3>
-
-<blockquote><p>架构设计会议记录：<a href="http://everet.org/2012/01/clover-architecture-design-meeting.html">http://everet.org/2012/01/clover-architecture-design-meeting.html</a></p></blockquote>
-
-<p>选用Triangle List来画三角形，虽然比strip更耗空间，不过方便建模。一个三角形就是三个点，初步是按顺时针和逆时针把两个面画了。日后再改了，反面裁剪的开关我也没去找在哪里。</p>
-
-<p>TODO：</p>
-
-<blockquote><ol>
-<li><p>点的拾取和边的拾取。可能要自己写算法拾取，也可能有现成的解决方案。关键得有人去解决这个问题。</p></li>
-<li><p>动态添加点。这个怎么弄？首先得定位在哪里添加，是打散三角形还是怎样。还是说本来就很多点，这样方便使用物理引擎模拟纸张的弯曲。</p></li>
-<li><p>光照材质这些外观的东西先忽略...<!-- more --></p></li>
-</ol>
-</blockquote>
-
-<h3>2012-1-29:</h3>
-
-<blockquote><p>师兄把Python-Ogre装了。</p></blockquote>
-
-<h3>2012-1-28：</h3>
-
-<blockquote><p>屠文翔把界面框架写了。</p></blockquote>
-
-<p>自定义几何体 <a href="http://www.ogre3d.org/tikiwiki/ManualObject">http://www.ogre3d.org/tikiwiki/ManualObject</a></p>
-
-<h3>2012-1-27:</h3>
-
-<blockquote><p>开工，预期使用Python编码，Git管理。<!-- more --></p></blockquote>
-
-<p>进度记录：<a href="http://everet.org/2012/01/clover-progress.html">http://everet.org/2012/01/clover-progress.html</a></p>
-
-<p>网页浏览版本库： <a href="http://git.everet.org/">http://git.everet.org/</a></p>
-
-<p>屠文翔的通知：</p>
-
-<blockquote><p>各位新年好啊</p>
-
-<p>春节期间走亲访友外加同学聚会唱k陪女朋友很辛苦吧？</p>
-
-<p>现在有个好消息，你们解脱了，因为要开始工作了！<!-- more --></p>
-
-<p>首先回顾一下我们要做什么</p>
-
-<p>在2月29日之前提交文档(见附件)</p>
-
-<p>然后回顾一下之前我们做了些什么</p>
-
-<p>定下来了大方向和技术框架</p>
-
-<p>图像引擎使用OGRE</p>
-
-<p>界面UI使用CEGUI</p>
-
-<p>物理引擎使用Newton</p>
-
-<p>骨架系统的一些需求见需求文档（附件2）</p>
-
-<p>另外还有就是，华亮和我都已经弄好了OGRE环境，华亮还弄好了PythonOgre的环境，我这边还弄好了CEGUI的环境</p>
-
-<p>接下来一周内要做的工作</p>
-
-<p>首先徐小孟同学要开始配置和熟悉OGRE环境，以及</p>
-
-<p>这里是OgreSDK的下载地址，下载1.7.4  <a href="http://www.ogre3d.org/download/sdk">http://www.ogre3d.org/download/sdk</a></p>
-
-<p>这里是Ogre安装教程 <a href="http://www.ogre3d.org/tikiwiki/Installing+the+Ogre+SDK">http://www.ogre3d.org/tikiwiki/Installing+the+Ogre+SDK</a></p>
-
-<p>这里是Ogre基础教程 <a href="http://www.ogre3d.org/tikiwiki/Tutorials">http://www.ogre3d.org/tikiwiki/Tutorials</a></p>
-
-<p>华亮强烈建议我们使用PythonOgre进行开发，PythonOgre是使用Python语言重新封装的Ogre的一个库，使用PythonOgre最大的好处就是不需要编译</p>
-
-<p>这里是PythonOgre安装及使用的一些简单教程 <a href="http://everet.org/2012/01/python-ogre-start.html">http://everet.org/2012/01/python-ogre-start.html</a></p>
-
-<p>华亮还强烈建议这次我们要做到文档完善，结构清晰，注释充分，架构健壮……</p>
-
-<p>所以华亮这一周的工作是弄个架构设计文档出来，最好把骨架系统也搭起来。如果遇到需要和大家商量的地方可以在qq上商量。</p>
-
-<p>对于我，杨旭瑜和徐小孟，这一周的共同工作则是，安装PythonOgre（对于徐小孟同学，你还要安装原版的OgreSDK），研究Ogre的例子和源码，学习Ogre的设计架构（听说徐小孟同学在写自己的渲染引擎，这点可能对你比较有帮助）；学习Ogre的功能，并留意其中对我们以后的开发用的上的功能。</p>
-
-<p>另外，虽然是华亮负责架构，但并不意味这我们可以不用去了解。因为我们是基于Ogre开发，所以可以预见到我们的软件架构和Ogre自身的架构是有许多相似之处的。我建议大家多去关注一下Ogre里面用到的设计模式，如单例模式，工厂模式，这对我们自己以后的发展也很有帮助。</p>
-
-<p>以上！</p>
-
-<p>屠文翔</p></blockquote>
-]]></content>
+    <content type="html"><![CDATA[Liquid error: undefined method `strip!' for nil:NilClass]]></content>
   </entry>
   
   <entry>
@@ -2168,12 +1692,11 @@ XellOs(636202)中止了语音通话。</p>
 
 <p>Python是什么？“Python是一种面向对象、直译式计算机程序设计语言，由<a href="http://baike.baidu.com/view/2975166.htm">Guido van Rossum</a>于1989年底发明， 第一个公开发行版发行于1991年。Python语法简捷而清晰，具有丰富和强大的类库。它常被昵称为胶水语言，它能够很轻松的把用其他语言制作的各种模块（尤其是C/C++）轻松地联结在一起。常见的一种应用情形是，使用python快速生成程序的原型（有时甚至是程序的最终界面），然后对其中有特别要求的部分，用更合适的语言改写，比如3D游戏中的图形渲染模块，速度要求非常高，就可以用C++重写。”摘自百度百科。</p>
 
-<h2>Python+OGRE=？</h2>
+<h2 id="pythonogre">Python+OGRE=？</h2>
 
 <!-- more -->
 
-
-<h2></h2>
+<h2 id="section"></h2>
 
 <p>Python+OGRE=开发速度+简介的代码+良好的可读性+可移植性+无需编译+无需内存管理。</p>
 
@@ -2181,13 +1704,15 @@ XellOs(636202)中止了语音通话。</p>
 
 <p>相信开发过游戏的同志们都会被长时间的编译所折磨过吧？使用Python虽然比纯C++的运行速度要慢，但是带来的开发速度是不可小觑的。</p>
 
-<h3>安装</h3>
+<h3 id="section-1">安装</h3>
 
 <p>OGRE的Python包装在 <a href="http://sourceforge.net/projects/python-ogre/files/Latest/">http://sourceforge.net/projects/python-ogre/files/Latest/</a> 下载。教程在这里 <a href="http://wiki.python-ogre.org/index.php/SettingUpAnApplication">http://wiki.python-ogre.org/index.php/SettingUpAnApplication</a> 。</p>
 
 <p>最新版的可以从SVN中下载：</p>
 
-<blockquote><p>svn co https://python-ogre.svn.sourceforge.net/svnroot/python-ogre python-ogre</p></blockquote>
+<blockquote>
+  <p>svn co https://python-ogre.svn.sourceforge.net/svnroot/python-ogre python-ogre</p>
+</blockquote>
 
 <p>安装过程非常的简单：</p>
 
@@ -2217,8 +1742,6 @@ XellOs(636202)中止了语音通话。</p>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
 <span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
 </pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">ogre.renderer.OGRE</span> <span class="kn">as</span> <span class="nn">ogre</span>
@@ -2226,12 +1749,10 @@ XellOs(636202)中止了语音通话。</p>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">class</span> <span class="nc">TutorialApplication</span><span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">Application</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>   <span class="k">def</span> <span class="nf">_createScene</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">_createScene</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>       <span class="k">pass</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>   <span class="k">pass</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">==</span> <span class="s">&#39;&lt;strong&gt;main&lt;/strong&gt;&#39;</span><span class="p">:</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">==</span> <span class="err">‘</span><span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">main</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span><span class="err">’</span><span class="p">:</span>
 </span><span class='line'>   <span class="n">ta</span> <span class="o">=</span> <span class="n">TutorialApplication</span><span class="p">()</span>
 </span><span class='line'>   <span class="n">ta</span><span class="o">.</span><span class="n">go</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
@@ -2240,9 +1761,11 @@ XellOs(636202)中止了语音通话。</p>
 
 <p>其中SampleFramework.py可以从我们刚刚下载的OGRE的Python包装中复制出来。另外需要创建两个文件。</p>
 
-<h4>plugins.cfg</h4>
+<h4 id="pluginscfg">plugins.cfg</h4>
 
-<blockquote></blockquote>
+<blockquote>
+
+</blockquote>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2256,20 +1779,12 @@ XellOs(636202)中止了语音通话。</p>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
+</pre></td><td class='code'><pre><code class=''><span class='line'># Defines plugins to load&lt;/p>
 </span><span class='line'>
-</span><span class='line'>&lt;h1>Defines plugins to load&lt;/h1>
-</span><span class='line'>
-</span><span class='line'>&lt;h1>Define plugin folder&lt;/h1>
-</span><span class='line'>
+</span><span class='line'>&lt;h1 id="define-plugin-folder">Define plugin folder&lt;/h1>
 </span><span class='line'>&lt;p>PluginFolder=./plugins&lt;/p>
 </span><span class='line'>
-</span><span class='line'>&lt;h1>Define D3D rendering implementation plugin&lt;/h1>
-</span><span class='line'>
+</span><span class='line'>&lt;h1 id="define-d3d-rendering-implementation-plugin">Define D3D rendering implementation plugin&lt;/h1>
 </span><span class='line'>&lt;p>Plugin=RenderSystem_GL.dll
 </span><span class='line'>Plugin=RenderSystem_Direct3D9.dll
 </span><span class='line'>Plugin=Plugin_ParticleFX.dll
@@ -2277,7 +1792,7 @@ XellOs(636202)中止了语音通话。</p>
 </span><span class='line'>Plugin=Plugin_OctreeSceneManager.dll
 </span><span class='line'>Plugin=Plugin_CgProgramManager.dll</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h4>resources.cfg</h4>
+<h4 id="resourcescfg">resources.cfg</h4>
 
 <p>里面留空就好。</p>
 
@@ -2296,49 +1811,70 @@ XellOs(636202)中止了语音通话。</p>
     <id>http://everet.org/2012/01/scar</id>
     <content type="html"><![CDATA[<p>Scar，中文名：伤疤，是我们的<strong>《计算机图形学》</strong>和<strong>《IT项目管理》</strong>的大作业。虽然不想做的很大，但是最后我们写了4万多行代码。发现也是挺大的。</p>
 
-<h2><strong>简介</strong></h2>
+<h2 id="section"><strong>简介</strong></h2>
 
 <p><strong>我们花费的时间：4个月（9.14 – 12.14），这个是由屠文翔同学辛劳得出的粗略统计。</strong></p>
 
 <ul>
-<li><p>验证准备阶段：9月14日 – 9月21日</p></li>
-<li><p>设计阶段：9月22日 – 10月18日</p></li>
-<li><p>构建阶段：10月19日 – 11月16日</p></li>
-<li><p>赶工阶段：12月6日 – 12月14日</p></li>
+  <li>
+    <p>验证准备阶段：9月14日 – 9月21日</p>
+  </li>
+  <li>
+    <p>设计阶段：9月22日 – 10月18日</p>
+  </li>
+  <li>
+    <p>构建阶段：10月19日 – 11月16日</p>
+  </li>
+  <li>
+    <p>赶工阶段：12月6日 – 12月14日</p>
+  </li>
 </ul>
-
 
 <p><strong>参与人数：7人（其中编外2人）</strong></p>
 
 <ul>
-<li><p>项目经理：屠文翔</p></li>
-<li><p>开发人员：华亮、杨旭瑜、杨成熙、谢骏飞 、林剑飞、陈存腾</p></li>
+  <li>
+    <p>项目经理：屠文翔</p>
+  </li>
+  <li>
+    <p>开发人员：华亮、杨旭瑜、杨成熙、谢骏飞 、林剑飞、陈存腾</p>
+  </li>
 </ul>
-
 
 <p><strong>总代码量：42437行</strong></p>
 
 <ul>
-<li><p>这个是我们非常努力得到的，记得那段时间我也基本持续几个月每天两三点睡，课也不上，去上了也是大家带着笔记本一起在教室后面写代码。</p></li>
-<li><p>我们的项目是开源的，遵循<a href="http://www.mozilla.org/MPL/">Mozilla Public License 1.1</a>协议，托管在Google Code上。<a href="http://code.google.com/p/opengl-scut/">http://code.google.com/p/opengl-scut/</a>。</p></li>
+  <li>
+    <p>这个是我们非常努力得到的，记得那段时间我也基本持续几个月每天两三点睡，课也不上，去上了也是大家带着笔记本一起在教室后面写代码。</p>
+  </li>
+  <li>
+    <p>我们的项目是开源的，遵循<a href="http://www.mozilla.org/MPL/">Mozilla Public License 1.1</a>协议，托管在Google Code上。<a href="http://code.google.com/p/opengl-scut/">http://code.google.com/p/opengl-scut/</a>。</p>
+  </li>
 </ul>
 
-
 <!-- more -->
-
 
 <p><strong>完成情况：基本完成</strong></p>
 
 <ul>
-<li><p>基地、战场等场景的构建</p></li>
-<li><p>模拟太空飞行的全方位角度旋转操控 锁定、开火等一系列逻辑</p></li>
-<li><p>局域网联机数据传输</p></li>
-<li><p>绚丽的画面，友好的UI 优秀的用户体验，强烈的代入感</p></li>
-<li><p>AI框架和一个简单的电脑AI实例</p></li>
+  <li>
+    <p>基地、战场等场景的构建</p>
+  </li>
+  <li>
+    <p>模拟太空飞行的全方位角度旋转操控 锁定、开火等一系列逻辑</p>
+  </li>
+  <li>
+    <p>局域网联机数据传输</p>
+  </li>
+  <li>
+    <p>绚丽的画面，友好的UI 优秀的用户体验，强烈的代入感</p>
+  </li>
+  <li>
+    <p>AI框架和一个简单的电脑AI实例</p>
+  </li>
 </ul>
 
-
-<h2><strong>游戏截图</strong></h2>
+<h2 id="section-1"><strong>游戏截图</strong></h2>
 
 <p>游戏加载画面</p>
 
@@ -2352,7 +1888,7 @@ XellOs(636202)中止了语音通话。</p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/01/22.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/22.jpg" alt="" /></a></p>
 
-<h2>Scar所使用的技术</h2>
+<h2 id="scar">Scar所使用的技术</h2>
 
 <p>我们选用C++和Python作为我们的开发语言。对于Scar这款游戏，我们选择了Irrlicht游戏引擎，Irrlicht它由C++实现，相比起OGRE，它更加简单轻巧。在开发过程中，我们汲取WPF的思想，自己开发了一套界面库，可以使用Python描述界面，进行界面描述和组装，比起WPF，我们可以在Python中编写消息响应函数，虽然界面库并不完善，但是我们还是用它艰难地完成了开发。</p>
 
@@ -2362,13 +1898,13 @@ XellOs(636202)中止了语音通话。</p>
 
 <p>对于网络的开发，我们使用Boost.asio库，Boost.asio是一个异步IO库，也提供了高层的抽象。也可以加快我们的开发速度。</p>
 
-<h2>Scar的设计</h2>
+<h2 id="scar-1">Scar的设计</h2>
 
 <p>我们的部分类的类图，点击看大图。分辨率为7771*1645，如果需要观看请下载到电脑上。</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/01/%E7%B1%BB%E5%9B%BE.png">http://everet.org/wp-content/uploads/2012/01/类图.png</a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/01/类图.png">http://everet.org/wp-content/uploads/2012/01/类图.png</a></p>
 
-<h3>内存管理</h3>
+<h3 id="section-2">内存管理</h3>
 
 <p>在C/C++程序员中，最容易出现的问题就是内存管理的失误，其中出现频率最高的错误就是内存泄露，分配内存后忘记释放了。在C++中，我们可以使用智能指针来实现自动的内存管理，其核心思想都是引用计数器。其中典型代表有STL的auto_ptr，但是auto_ptr实在有太多缺陷。而Boost库中的shared_ptr，相比起auto_ptr就强大很多，而且，在C++0x的标准中，shared_ptr已经正式进入了C++的标准。虽然使用智能指针可以让程序员省去自己管理内存的麻烦，但是智能指针在循环引用时也会导致内存泄露（所以像Python中，垃圾回收器会每隔一段时间扫描循环引用。如果仅仅靠引用计数，还是会导致内存泄露。）</p>
 
@@ -2406,29 +1942,21 @@ XellOs(636202)中止了语音通话。</p>
 <span class='line-number'>29</span>
 <span class='line-number'>30</span>
 <span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
 </pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">class</span> <span class="nc">IReferenceCounted</span>
 </span><span class='line'><span class="p">{</span>
-</span><span class='line'><span class="k">public</span><span class="o">:&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="k">public</span><span class="o">:</span>
+</span><span class='line'>    <span class="n">IReferenceCounted</span><span class="p">()</span> <span class="o">:</span> <span class="n">ReferenceCounter</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">virtual</span> <span class="o">~</span><span class="n">IReferenceCounted</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>    <span class="p">}</span>
+</span><span class='line'>    <span class="kt">bool</span> <span class="n">drop</span><span class="p">()</span> <span class="k">const</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// someone is doing bad reference counting.</span>
+</span><span class='line'>        <span class="n">_IRR_DEBUG_BREAK_IF</span><span class="p">(</span><span class="n">ReferenceCounter</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">IReferenceCounted</span><span class="p">()</span> <span class="o">:</span> <span class="n">ReferenceCounter</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>    <span class="p">}</span>
-</span><span class='line'><span class="k">virtual</span> <span class="o">~</span><span class="n">IReferenceCounted</span><span class="p">()</span>
-</span><span class='line'><span class="p">{</span>    <span class="p">}</span>
-</span><span class='line'><span class="kt">bool</span> <span class="n">drop</span><span class="p">()</span> <span class="k">const</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="c1">// someone is doing bad reference counting.</span>
-</span><span class='line'>    <span class="n">_IRR_DEBUG_BREAK_IF</span><span class="p">(</span><span class="n">ReferenceCounter</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="o">--</span><span class="n">ReferenceCounter</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>        <span class="o">--</span><span class="n">ReferenceCounter</span><span class="p">;</span>
 </span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ReferenceCounter</span><span class="p">)</span>
 </span><span class='line'>    <span class="p">{</span>
 </span><span class='line'>        <span class="k">delete</span> <span class="k">this</span><span class="p">;</span>
@@ -2440,15 +1968,9 @@ XellOs(636202)中止了语音通话。</p>
 </span><span class='line'><span class="n">s32</span> <span class="n">getReferenceCount</span><span class="p">()</span> <span class="k">const</span>
 </span><span class='line'><span class="p">{</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">ReferenceCounter</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="p">}</span> <span class="k">private</span><span class="o">:</span>
+</span><span class='line'><span class="k">mutable</span> <span class="n">s32</span> <span class="n">ReferenceCounter</span><span class="p">;</span> <span class="p">};</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">private</span><span class="o">:&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">mutable</span> <span class="n">s32</span> <span class="n">ReferenceCounter</span><span class="p">;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">};</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
@@ -2459,15 +1981,15 @@ XellOs(636202)中止了语音通话。</p>
 
 <p>我个人觉得这种方法比使用智能指针更可靠，不会被智能指针所玩弄。</p>
 
-<h3>一些设计</h3>
+<h3 id="section-3">一些设计</h3>
 
 <p>在Irrlicht中，所有的在场景中出现的物体都是派生自ISceneNode，它提供了场景节点的一个基本抽象。所有的场景节点都是挂载在一个抽象的根节点Root上，如下图：</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/01/QQ%E6%88%AA%E5%9B%BE20120123160921.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/QQ%E6%88%AA%E5%9B%BE20120123160921.jpg" alt="" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/01/QQ截图20120123160921.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/QQ截图20120123160921.jpg" alt="" /></a></p>
 
 <p>在引用计数方面，父节点对子节点引用，子节点不对父节点引用，所以不存在环，就避免了循环引用。</p>
 
-<h5>一些设计模式：</h5>
+<h5 id="section-4">一些设计模式：</h5>
 
 <p>而场景节点仅仅保存了顶点信息和一些变换信息，并没有描述其行为的代码。所以Irrlicht中有ISceneNodeAnimator，它作为“行为”独立于ISceneNode，可以动态注册到场景节点中，方便地增加或者修改节点的行为。这是一种策略模式（Strategy），将行为独立于对象可以方便地动态地更改对象的行为，也可以将行为复用。</p>
 
@@ -2479,13 +2001,19 @@ XellOs(636202)中止了语音通话。</p>
 
 <p>当然还有观察者模式等等解决通知问题的模式。</p>
 
-<h2>总结</h2>
+<h2 id="section-5">总结</h2>
 
 <p>为什么有这篇总结：在大二学期末在和我们的《软件软件需求分析与建模》的老师刘艳霞交流中，她对我们说：期末考试并不意味着一门课的结束，你们假期回家应该要总结每一门课，写下自己感想。我觉得很有道理，总结过去，启示未来。对于自己犯的错误予以改正，对于他人犯错误，有则改之无则加勉。</p>
 
-<blockquote><p><strong>Those who cannot remember the past are condemned to repeat it.</strong></p>
+<blockquote>
+  <p><strong>Those who cannot remember the past are condemned to repeat it.</strong></p>
+</blockquote>
 
-<p><strong>—— George Santayana</strong></p></blockquote>
+<blockquote>
+
+  <p><strong>—— George Santayana</strong></p>
+
+</blockquote>
 
 <p>上面那句话是黄翰老师在算法课上讲解动态规划时PPT上的一句话，不仅揭示了DP的核心思想，还蕴含了我们的生活的真谛。</p>
 
@@ -2494,29 +2022,45 @@ XellOs(636202)中止了语音通话。</p>
 <p><strong>下面为屠文翔同学总结大家的总结得到的总结。</strong></p>
 
 <ul>
-<li><p>沟通、协作是项目成功的基础。</p></li>
-<li><p>不要把计划定得太大，尤其是在时间不够的情况下。</p></li>
-<li><p>第一步是需求，第二步是骨架系统。</p></li>
-<li><p>简单的事情往往比它看上去的要复杂。</p></li>
-<li><p>有时候人要被别人刀在身后捅着才会继续走。</p></li>
+  <li>
+    <p>沟通、协作是项目成功的基础。</p>
+  </li>
+  <li>
+    <p>不要把计划定得太大，尤其是在时间不够的情况下。</p>
+  </li>
+  <li>
+    <p>第一步是需求，第二步是骨架系统。</p>
+  </li>
+  <li>
+    <p>简单的事情往往比它看上去的要复杂。</p>
+  </li>
+  <li>
+    <p>有时候人要被别人刀在身后捅着才会继续走。</p>
+  </li>
 </ul>
-
 
 <p><strong>Scar部分文档</strong>：</p>
 
 <ul>
-<li><p><a href="http://everet.org/wp-content/uploads/2012/01/9%E6%9C%8815%E6%97%A5-%E6%B8%B8%E6%88%8F%E8%83%8C%E6%99%AF%E5%8F%8A%E5%8E%86%E5%8F%B2.docx">9月15日-游戏背景及历史</a></p></li>
-<li><p><a href="http://everet.org/wp-content/uploads/2012/01/%E5%9B%A2%E9%98%9F%E5%8D%8F%E8%AE%AE.docx">团队协议</a></p></li>
-<li><p><a href="http://everet.org/wp-content/uploads/2012/01/%E8%8C%83%E5%9B%B4%E5%A3%B0%E6%98%8E.docx">范围声明</a></p></li>
-<li><p><a href="http://everet.org/wp-content/uploads/2012/01/%E9%87%8C%E7%A8%8B%E7%A2%91%E6%8A%A5%E5%91%8A.doc">里程碑报告</a></p></li>
+  <li>
+    <p><a href="http://everet.org/wp-content/uploads/2012/01/9月15日-游戏背景及历史.docx">9月15日-游戏背景及历史</a></p>
+  </li>
+  <li>
+    <p><a href="http://everet.org/wp-content/uploads/2012/01/团队协议.docx">团队协议</a></p>
+  </li>
+  <li>
+    <p><a href="http://everet.org/wp-content/uploads/2012/01/范围声明.docx">范围声明</a></p>
+  </li>
+  <li>
+    <p><a href="http://everet.org/wp-content/uploads/2012/01/里程碑报告.doc">里程碑报告</a></p>
+  </li>
 </ul>
-
 
 <p>更全文档请参见：<a href="http://code.google.com/p/opengl-scut/">http://code.google.com/p/opengl-scut/</a></p>
 
-<h3><strong>对于我个人：</strong></h3>
+<h3 id="section-6"><strong>对于我个人：</strong></h3>
 
-<p>****虽然项目停滞已经一段时间了，但是还是想总结一下这个学期做的东西。尽管做了一个学期的图形学大作业，但是我还是对计算机图形学还是一窍不通，对于IT项目管理，课也没上过，所以也不知讲了啥。不过在项目管理方面，还是得到了屠文翔同学许多教诲。</p>
+<p><em>**</em>虽然项目停滞已经一段时间了，但是还是想总结一下这个学期做的东西。尽管做了一个学期的图形学大作业，但是我还是对计算机图形学还是一窍不通，对于IT项目管理，课也没上过，所以也不知讲了啥。不过在项目管理方面，还是得到了屠文翔同学许多教诲。</p>
 
 <p><strong>对于IT项目管理的总结：</strong></p>
 
@@ -2532,7 +2076,7 @@ XellOs(636202)中止了语音通话。</p>
 
 <p>何为项目成功？即满足范围、时间和成本这三个目标的同时还让了项目发起人满意。在《IT项目管理》一书中说道：在美国，拥有一个由人才组成的团队更重要，而在中国，搞好关系管理更重要。这可能就是中国特色的项目管理吧。</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/01/%E5%9B%BE%E7%89%872.png"><img src="http://everet.org/wp-content/uploads/2012/01/%E5%9B%BE%E7%89%872.png" alt="" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/01/图片2.png"><img src="http://everet.org/wp-content/uploads/2012/01/图片2.png" alt="" /></a></p>
 
 <p>一个项目开始时，要做些什么？</p>
 
@@ -2546,7 +2090,7 @@ XellOs(636202)中止了语音通话。</p>
 
 <p>在制定项目计划过程中，我们需要团队协议（Team Contract），就像君子协定，大家签了就要花时间和精力去做。我们需要范围说明（Project Scope Statement），阐述我们需要做什么，做到怎么样。还需要一个非常重要的东西——工作分解结构（Work Breakdown Structure, WBS），如下图为WBS和甘特图。</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/01/%E5%9B%BE%E7%89%871.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/%E5%9B%BE%E7%89%871-640x338.jpg" alt="" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/01/图片1.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/图片1-640x338.jpg" alt="" /></a></p>
 
 <p>在WBS，我们将工作分解成细粒度的工作包，可以方便我们计划时间和分配任务。当然还有很多像网络图甘特图等等的工具可以方便我们做计划。</p>
 
@@ -2554,11 +2098,11 @@ XellOs(636202)中止了语音通话。</p>
 
 <p>9大知识领域：范围管理、时间管理、成本管理、质量管理、人力资源管理、沟通管理、风险管理、采购管理、项目集成管理；</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/01/%E5%9B%BE%E7%89%871.png"><img src="http://everet.org/wp-content/uploads/2012/01/%E5%9B%BE%E7%89%871-640x339.png" alt="" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/01/图片1.png"><img src="http://everet.org/wp-content/uploads/2012/01/图片1-640x339.png" alt="" /></a></p>
 
 <p>5大过程组：启动，计划，执行，监控，收尾。</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/01/%E5%9B%BE%E7%89%872.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/%E5%9B%BE%E7%89%872-640x323.jpg" alt="" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/01/图片2.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/图片2-640x323.jpg" alt="" /></a></p>
 
 <p>最后的对于项目管理的看法纯属个人观点，存在诸多错漏，请指正。</p>
 

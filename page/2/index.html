@@ -166,51 +166,46 @@
 
 <p>这篇文章中的所有的编码,是针对最新的Py3k分支<a href="http://code.python.org/hg/branches/py3k/">Python Mercurial repository mirror</a>。</p>
 
-<h3>until语句</h3>
+<h3 id="until">until语句</h3>
 
 <p>有些语言，像Ruby，拥有until语句，用来补充while语句 (until num == 0 等价与 while num != 0)。在Ruby总，我可以这样写：</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">num</span> <span class="o">=</span> <span class="mi">3</span>
-</span><span class='line'><span class="n">until</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span> <span class="n">do</span>
-</span><span class='line'>  <span class="n">puts</span> <span class="n">num</span>
-</span><span class='line'>  <span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span>
-</span><span class='line'><span class="n">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">num</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class="line"><span class="n">until</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span> <span class="n">do</span>
+</span><span class="line">  <span class="n">puts</span> <span class="n">num</span>
+</span><span class="line">  <span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span>
+</span><span class="line"><span class="n">end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>它会输出</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="mi">3</span>
-</span><span class='line'><span class="mi">2</span>
-</span><span class='line'><span class="mi">1</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="mi">3</span>
+</span><span class="line"><span class="mi">2</span>
+</span><span class="line"><span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>所以,我想要添加一个类似的功能到Python。也就是说,能够写成这样:</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">num</span> <span class="o">=</span> <span class="mi">3</span>
-</span><span class='line'><span class="n">until</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span class='line'>  <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
-</span><span class='line'>  <span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">num</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class="line"><span class="n">until</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class="line">  <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span><span class="line">  <span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
   
@@ -300,7 +295,7 @@
 
 <p>第一个主要步骤是数据预处理。</p>
 
-<h2>例子</h2>
+<h2 id="section">例子</h2>
 
 <p>一般的国内的验证都比较喜欢加上噪点，再加上一些干扰线，来扰乱视线。但是这些噪声，对于计算机识别程序来说，基本上没起到什么干扰。</p>
 
@@ -351,31 +346,27 @@
 
 <p>目前特效都设计为过滤器，接受一张图像和输出一张图像。不同的过滤器可以组合在一起形成新的特效过滤器。Unix的管道过滤器的思想真是美好啊。</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">new_effect</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">img</span><span class="p">:</span> <span class="n">effect_a</span><span class="p">(</span><span class="n">effect_b</span><span class="p">(</span><span class="n">effect_c</span><span class="p">(</span><span class="n">img</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">new_effect</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">img</span><span class="p">:</span> <span class="n">effect_a</span><span class="p">(</span><span class="n">effect_b</span><span class="p">(</span><span class="n">effect_c</span><span class="p">(</span><span class="n">img</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>源码请见Github: <a href="https://github.com/cedricporter/EffectLab/downloads">https://github.com/cedricporter/EffectLab/downloads</a></p>
 
-<h2>目前实现的效果</h2>
+<h2 id="section">目前实现的效果</h2>
 
 <p>左边为原图，右边为处理后的图片。</p>
 
-<h3>镜头变形效果[1]</h3>
+<h3 id="section-1">镜头变形效果[1]</h3>
 
 <p>首先将图像映射到长宽取值范围都为[-1, 1]，然后从<a href="http://zh.wikipedia.org/zh/%E7%AC%9B%E5%8D%A1%E5%84%BF%E5%9D%90%E6%A0%87%E7%B3%BB">笛卡尔坐标系</a>映射到<a href="http://zh.wikipedia.org/wiki/%E6%9E%81%E5%9D%90%E6%A0%87%E7%B3%BB">极坐标系</a>。然后我们就可以控制<img src="http://upload.wikimedia.org/wikipedia/zh/math/4/b/4/4b43b0aee35624cd95b910189b3dc231.png" alt="r" />（半径坐标）和<img src="http://upload.wikimedia.org/wikipedia/zh/math/5/0/d/50d91f80cbb8feda1d10e167107ad1ff.png" alt="\theta" />（角坐标、极角或<a href="http://zh.wikipedia.org/wiki/%E6%96%B9%E4%BD%8D%E8%A7%92">方位角</a>，有时也表示为<img src="http://upload.wikimedia.org/wikipedia/zh/math/7/f/2/7f20aa0b3691b496aec21cf356f63e04.png" alt="\phi" />或<img src="http://upload.wikimedia.org/wikipedia/zh/math/e/3/5/e358efa489f58062f10dd7316b65649e.png" alt="t" />）。</p>
 
 <p><strong>r = r ^ 2</strong></p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">effect</span> <span class="o">=</span> <span class="n">RadianFormulaEffect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="p">(</span><span class="n">r</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">phi</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">effect</span> <span class="o">=</span> <span class="n">RadianFormulaEffect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="p">(</span><span class="n">r</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">phi</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
   
@@ -420,13 +411,13 @@
 
 <p>现在的各种网络服务已经成为我们生活的重要的组成部分，像各种社交网站，购物网站，网上银行，投票，论坛等服务，为我们的带来的极大的便利。然而，这些系统都在遭受着恶意程序的滥用。所以，验证码系统用于阻挡这些恶意程序。</p>
 
-<h2>验证码CAPTCHA存在的意义</h2>
+<h2 id="captcha">验证码CAPTCHA存在的意义</h2>
 
 <p>现在，每天有2亿的验证码CAPTCHA被人类识别出来。我们可利用其解决一些计算机难以处理或者耗费大量人力的问题。目前，像Google的<a href="http://www.google.com/recaptcha/aboutus">reCAPTCHA</a>项目，就是利用验证码来数字化图书和报纸。而像一些广告公司将广告融入了验证码，让人们在输入验证码的时候输入广告中的特定部分，但是这种验证码的样本必然会比较少，因为较难产生大量的广告验证码，所以很容易被破解。</p>
 
 <p>因为CAPTCHA的需求量十分巨大，所以CAPTCHA需要能够自动产生并且评估正确性。此外，人类必须要能够快速地识别并输入验证码，否则容易惹恼用户以至于用户流失。对于CAPTCHA，可以引入人工智能领域的难题，来使现有技术短期无法成功破解。如果一种CAPTCHA没有被破解，那么就有一个可以区分人类和计算机的方法。如果CAPTCHA被破解了，那么一个人工智能的问题也就随之解决了。</p>
 
-<h2>验证码CAPTCHA的困境</div>
+<h2 id="captcha---more---">验证码CAPTCHA的困境</div>
   
   
     <footer>
@@ -510,7 +501,7 @@
 
   <div class="entry-content"><p>Python中很奇葩的一个地方是它的函数的默认参数的值，仅仅在def语句执行的时候计算一次。这会导致什么问题呢？</p>
 
-<h2>奇葩的例子</h2>
+<h2 id="section">奇葩的例子</h2>
 
 <p>我们来看一个例子：</div>
   
@@ -553,17 +544,16 @@
 
   <div class="entry-content"><p>想起我们在C++中，要实现一个点积，如果是固定维数的向量，我们或许会通过这么一个成员函数来实现</p>
 
-<figure class='code'><figcaption><span>cpp  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="n">Point2d</span> <span class="n">DotProduct</span><span class="p">(</span><span class="k">const</span> <span class="n">Point2d</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">Point2d</span><span class="p">(</span><span class="n">m_x</span> <span class="o">*</span> <span class="n">rhs</span><span class="p">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">m_y</span> <span class="o">*</span> <span class="n">rhs</span><span class="p">.</span><span class="n">y</span><span class="p">());</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>cpp  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="cpp"><span class="line"><span class="n">Point2d</span> <span class="n">DotProduct</span><span class="p">(</span><span class="k">const</span> <span class="n">Point2d</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">Point2d</span><span class="p">(</span><span class="n">m_x</span> <span class="o">*</span> <span class="n">rhs</span><span class="p">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">m_y</span> <span class="o">*</span> <span class="n">rhs</span><span class="p">.</span><span class="n">y</span><span class="p">());</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>对于非固定维数的向量，我们或许动用一个循环，然后又变成了一坨代码。</p>
 
@@ -608,13 +598,13 @@
 
   <div class="entry-content"><p>Syntaxhighlighter Evolved是一款Javascript的语法高亮插件，高亮是在用户的浏览器完成，这样可以减轻服务器的压力。而WP-Syntax恰恰相反，它是在服务器完成语法高亮。WP-Syntax比Syntaxhighlighter Evolved更有优势的地方是支持rss高亮，而且支持的语言众多，使用了GeSHi高亮引擎，可定制性相当强，至于高亮带来的压力，我们可以用缓存插件来解决。</p>
 
-<h4>Syntaxhighlighter Evolved Plugin Usage</h4>
+<h4 id="syntaxhighlighter-evolvedplugin-usage">Syntaxhighlighter Evolved Plugin Usage</h4>
 
-<p>Just wrap your code in <code>[language]</code>, such as <code>**[php]**code here**[/php]**</code> or <code>[css]code here[/css]</code>.</p>
+<p>Just wrap your code in <code>[language]</code>, such as <code>[php]code here[/php]**</code> or <code>[css]code here[/css]</code>.</p>
 
-<h4>WP-Syntax Basic Usage</h4>
+<h4 id="wp-syntaxbasic-usage">WP-Syntax Basic Usage</h4>
 
-<p>Wrap code blocks with<strong> <code>&lt;pre lang="LANGUAGE" line="1"&gt;</code> </strong>and <strong><code>&lt;/pre&gt;</code></strong></p>
+<p>Wrap code blocks with <code>&lt;pre lang="LANGUAGE" line="1"&gt;</code> and <code>&lt;/pre&gt;</code></p>
 
 <p>我们很明显就可以看到两者之间的区别。Syntaxhighlighter Evolved用的是非常特殊的高亮标记<strong>[language]</strong>，如果我们直接卸载Syntaxhighlighter Evolved然后装上WP-Syntax就会导致Syntaxhighlighter Evolved的高亮标记直接输出，而且代码不会被高亮。</p>
 

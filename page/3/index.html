@@ -129,39 +129,38 @@ In [1]: import dis In [2 &hellip;">
 
 <p>我们在交互式环境iPython下，可以动态地获取我们刚刚创建的函数的字节码。</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">dis</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">say_hello</span><span class="p">():</span>
-</span><span class='line'>   <span class="o">...</span><span class="p">:</span>     <span class="k">print</span> <span class="s">&#39;Hello, ET&#39;</span>
-</span><span class='line'>   <span class="o">...</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">say_hello</span><span class="p">)</span>
-</span><span class='line'>  <span class="mi">2</span>           <span class="mi">0</span> <span class="n">LOAD_CONST</span>               <span class="mi">1</span> <span class="p">(</span><span class="s">&#39;Hello, ET&#39;</span><span class="p">)</span>
-</span><span class='line'>              <span class="mi">3</span> <span class="n">PRINT_ITEM</span>
-</span><span class='line'>              <span class="mi">4</span> <span class="n">PRINT_NEWLINE</span>
-</span><span class='line'>              <span class="mi">5</span> <span class="n">LOAD_CONST</span>               <span class="mi">0</span> <span class="p">(</span><span class="bp">None</span><span class="p">)</span>
-</span><span class='line'>              <span class="mi">8</span> <span class="n">RETURN_VALUE</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">say_hello</span><span class="p">()</span>
-</span><span class='line'><span class="n">Hello</span><span class="p">,</span> <span class="n">ET</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">dis</span>
+</span><span class="line">
+</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">say_hello</span><span class="p">():</span>
+</span><span class="line">   <span class="o">...</span><span class="p">:</span>     <span class="k">print</span> <span class="s">&#39;Hello, ET&#39;</span>
+</span><span class="line">   <span class="o">...</span><span class="p">:</span>
+</span><span class="line">
+</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">say_hello</span><span class="p">)</span>
+</span><span class="line">  <span class="mi">2</span>           <span class="mi">0</span> <span class="n">LOAD_CONST</span>               <span class="mi">1</span> <span class="p">(</span><span class="s">&#39;Hello, ET&#39;</span><span class="p">)</span>
+</span><span class="line">              <span class="mi">3</span> <span class="n">PRINT_ITEM</span>
+</span><span class="line">              <span class="mi">4</span> <span class="n">PRINT_NEWLINE</span>
+</span><span class="line">              <span class="mi">5</span> <span class="n">LOAD_CONST</span>               <span class="mi">0</span> <span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+</span><span class="line">              <span class="mi">8</span> <span class="n">RETURN_VALUE</span>
+</span><span class="line">
+</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">say_hello</span><span class="p">()</span>
+</span><span class="line"><span class="n">Hello</span><span class="p">,</span> <span class="n">ET</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>而对于文件的字节码，我们可以先读取然后编译。</div>
   
@@ -206,7 +205,7 @@ In [1]: import dis In [2 &hellip;">
 
 <p>于是我准备切换到WP-Syntax阵营。不幸的是，我刚刚装上WP-Syntax这个插件，贴上的<a href="http://everet.org/2012/03/ftp-server.html">ftp.py</a>的Python代码，就发现语法高亮出错了！！</p>
 
-<p>我们可以用简单的代码再现一次这个bug。就是在多行&#8221;&#8217;注释时会出现这个bug。</div>
+<p>我们可以用简单的代码再现一次这个bug。就是在多行’&#8217;’注释时会出现这个bug。</div>
   
   
     <footer>
@@ -253,9 +252,9 @@ In [1]: import dis In [2 &hellip;">
 
 <p>嗯，我们可以用脚本将整个数据库dump下来变成文件，放在服务器上作为备份，这样的本地备份万一服务器的数据遭遇了不可恢复的灾难那就悲剧了。所以我们可以寻求异地备份，将备份放置到其他机器上面。</p>
 
-<h2>异地备份</h2>
+<h2 id="section">异地备份</h2>
 
-<h3>方法一</div>
+<h3 id="more---">方法一</div>
   
   
     <footer>
@@ -295,24 +294,20 @@ In [1]: import dis In [2 &hellip;">
 
 
   <div class="entry-content">
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>粘过来常常看下，以免忘了...
-</span><span class='line'>#define EPERM 1  /* Not super-user */
-</span><span class='line'>#define ENOENT 2 /* No such file or directory */
-</span><span class='line'>#define ESRCH 3  /* No such process */
-</span><span class='line'>#define EINTR 4  /* Interrupted system call */
-</span><span class='line'>#define EIO 5  /* I/O error */
-</span><span class='line'>#define ENXIO 6  /* No such device or address */</span></code></pre></td></tr></table></div></figure>
-
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">粘过来常常看下，以免忘了...
+</span><span class="line">#define EPERM 1  /* Not super-user */
+</span><span class="line">#define ENOENT 2 /* No such file or directory */
+</span><span class="line">#define ESRCH 3  /* No such process */
+</span><span class="line">#define EINTR 4  /* Interrupted system call */
+</span><span class="line">#define EIO 5  /* I/O error */
+</span><span class="line">#define ENXIO 6  /* No such device or address */</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
   
@@ -355,21 +350,21 @@ In [1]: import dis In [2 &hellip;">
 
   <div class="entry-content"><p><strong>吾尝终日而思矣，不如须臾之所学也；吾尝跂而望矣，不如登高之博见也。登高而招，臂非加长也，而见者远；顺风而呼，声非加疾也，而闻者彰。假舆马者，非利足也，而致千里；假舟楫者，非能水也，而绝江河。君子生非异也，善假于物也。</strong></p>
 
-<p>&#8212;- 《劝学》</p>
+<p>—- 《劝学》</p>
 
 <p><strong>学而不思则罔，思而不学则殆。</strong></p>
 
 <p><strong>温故而知新，可以为师矣。</strong></p>
 
-<p>&#8212;- 《论语·为政第二》</p>
+<p>—- 《论语·为政第二》</p>
 
 <p><strong>学而时习之，不亦说乎？有朋自远方来，不亦乐乎？人不知而不愠，不亦君子乎？</strong></p>
 
-<p>&#8212;- 《论语·学而第一》</p>
+<p>—- 《论语·学而第一》</p>
 
 <p><strong>KISS. Keep It Simple, <a href="http://EverET.org">Stupid</a>.</strong></p>
 
-<p>&#8212;- Unkown</p>
+<p>—- Unkown</p>
 
 <p><strong>A designer knows he has arrived at perfection not when there is no longer anything to add, but when there is no longer any thing to take away.</strong></p>
 
@@ -414,17 +409,20 @@ In [1]: import dis In [2 &hellip;">
 
   <div class="entry-content"><p>第一次见到注释中的TODO是在用VS自动生成MFC框架的时候，里面自动生成的函数可能会有一句注释：</p>
 
-<blockquote><p>// TODO Fix this function.</p></blockquote>
+<blockquote>
+  <p>// TODO Fix this function.</p>
+</blockquote>
 
 <p>很久以前以为这仅仅是给人看的，原来，它也可以在VS里面开启一个TastList窗口，显示代码中所有的TODO（代办事项）。然后我们就可以方便地在TaskList中看到代码中哪些东西还需要我们完成。这个在其他的开发环境也有类似的功能。</p>
 
 <p>在Python源码中，主要有三个特殊的注释：TODO、FIXME、XXX。</p>
 
-<h2>TODO</h2>
+<h2 id="todo">TODO</h2>
 
 <p>说明还有工作需要做，COMMENT简要地描述还有什么工作要做。</p>
 
-<blockquote><p>/<em> TODO: C speedup not implemented for sort_keys </em>/</div>
+<blockquote>
+  <p>/* TODO: C speedup not implemented for sort_keys */</div>
   
   
     <footer>
@@ -506,13 +504,13 @@ In [1]: import dis In [2 &hellip;">
   </header>
 
 
-  <div class="entry-content"><h2>Spark简介</h2>
+  <div class="entry-content"><h2 id="spark">Spark简介</h2>
 
 <p>Spark 解析器与 EBNF 语法有一些共同之处，但它将解析／处理过程分成了比传统的 EBNF 语法所允许的更小的组件。Spark 的优点在于，它对整个过程中每一步操作的控制都进行了微调，还提供了将定制代码插入到过程中的能力。</p>
 
 <p>Spark的最新版是10年前发布的，真是非常的长寿，可见设计精良。其中的采用的设计模式有Reflection Pattern、Visitor Pattern、Pipes and Filters Pattern和Strategy Pattern。</p>
 
-<h2>初识Spark</h2>
+<h2 id="spark-1">初识Spark</h2>
 
 <p>第一次知道Spark这个模块是在IBM的网站<a href="http://everet.org/2012/05/python-spark-calculator.html#reference-everet-3">[3]</a>上看到的。</p>
 
@@ -555,7 +553,7 @@ In [1]: import dis In [2 &hellip;">
   </header>
 
 
-  <div class="entry-content"><h2>LL(1)</h2>
+  <div class="entry-content"><h2 id="ll1">LL(1)</h2>
 
 <p>何为LL(1)？通俗来说就是向前看一个词法单元的自顶向下解析器。两个L都代表left-to-right，第一个L表示解析器按“从左到右”的顺序解析输入内容；第二个L表示下降解析时也是按“从左到右”的顺序遍历子节点。而(1)表示它使用一个向前看 词法单元。</p>
 
@@ -604,11 +602,13 @@ In [1]: import dis In [2 &hellip;">
 
 <p>在小学时，大家都学习过如何分辨句子中的不同语言成分，例如动词和名词等。识别计算机语言也是如此（我们称之为语法分析）。</p>
 
-<h2>小例子</h2>
+<h2 id="section">小例子</h2>
 
 <p>我们来看一下：</p>
 
-<blockquote><p>return x + 1;</p></blockquote>
+<blockquote>
+  <p>return x + 1;</p>
+</blockquote>
 
 <p>语法图：</div>
   

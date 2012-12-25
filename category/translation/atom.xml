@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Translation | EverET.org]]></title>
   <link href="http://everet.org/category/translation/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-25T23:07:51+08:00</updated>
+  <updated>2012-12-26T02:57:37+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -33,7 +33,7 @@
 
 <p>这篇文章中的所有的编码,是针对最新的Py3k分支<a href="http://code.python.org/hg/branches/py3k/">Python Mercurial repository mirror</a>。</p>
 
-<h3>until语句</h3>
+<h3 id="until">until语句</h3>
 
 <p>有些语言，像Ruby，拥有until语句，用来补充while语句 (until num == 0 等价与 while num != 0)。在Ruby总，我可以这样写：</p>
 
@@ -76,12 +76,11 @@
 
 <!-- more -->
 
-
-<h3>A language-advocacy digression（不知如何翻译）</h3>
+<h3 id="a-language-advocacy-digression">A language-advocacy digression（不知如何翻译）</h3>
 
 <p>本文并没有企图建议添加一个Until语句到Python。虽然我认为这样的语句会让一些代码清晰,而且这篇文章也展示了这是多么容易为Python添加这样的语句，但我非常尊重Python的简约主义的哲学。所以我在这里做的一切，仅仅是为了更能了解Python的内部工作原理。</p>
 
-<h3>修改语法</h3>
+<h3 id="section">修改语法</h3>
 
 <p>Python使用一个自定义解析器生成器pgen。这是一个LL(1)的解析器，用于将Python源代码转换成一个解析树。解析器生成器的输入文件  Grammar/Grammar <a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id4">[1]</a>。这是一个简单的文本文件，用于定义Python的语法。 我们对这个语法文件进行了两处修改。第一个是添加until语句的定义。我发现那里的while语句定义为(while_stmt),于是我们在下面补充until_stmt[2]:</p>
 
@@ -91,9 +90,9 @@
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 </pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">compound_stmt</span><span class="p">:</span> <span class="n">if_stmt</span> <span class="o">|</span> <span class="n">while_stmt</span> <span class="o">|</span> <span class="n">until_stmt</span> <span class="o">|</span> <span class="n">for_stmt</span> <span class="o">|</span> <span class="n">try_stmt</span> <span class="o">|</span> <span class="n">with_stmt</span> <span class="o">|</span> <span class="n">funcdef</span> <span class="o">|</span> <span class="n">classdef</span> <span class="o">|</span> <span class="n">decorated</span>
-</span><span class='line'><span class="n">if_stmt</span><span class="p">:</span> <span class="s">&#39;if&#39;</span> <span class="n">test</span> <span class="s">&#39;:&#39;</span> <span class="n">suite</span> <span class="p">(</span><span class="s">&#39;elif&#39;</span> <span class="n">test</span> <span class="s">&#39;:&#39;</span> <span class="n">suite</span><span class="p">)</span><span class="o">*</span> <span class="p">[</span><span class="s">&#39;else&#39;</span> <span class="s">&#39;:&#39;</span> <span class="n">suite</span><span class="p">]</span>
-</span><span class='line'><span class="n">while_stmt</span><span class="p">:</span> <span class="s">&#39;while&#39;</span> <span class="n">test</span> <span class="s">&#39;:&#39;</span> <span class="n">suite</span> <span class="p">[</span><span class="s">&#39;else&#39;</span> <span class="s">&#39;:&#39;</span> <span class="n">suite</span><span class="p">]</span>
-</span><span class='line'><span class="n">until_stmt</span><span class="p">:</span> <span class="s">&#39;until&#39;</span> <span class="n">test</span> <span class="s">&#39;:&#39;</span> <span class="n">suite</span>
+</span><span class='line'><span class="n">if_stmt</span><span class="p">:</span> <span class="err">‘</span><span class="k">if</span><span class="err">’</span> <span class="n">test</span> <span class="err">‘</span><span class="p">:</span><span class="err">’</span> <span class="n">suite</span> <span class="p">(</span><span class="err">‘</span><span class="k">elif</span><span class="err">’</span> <span class="n">test</span> <span class="err">‘</span><span class="p">:</span><span class="err">’</span> <span class="n">suite</span><span class="p">)</span><span class="o">*</span> <span class="p">[</span><span class="err">‘</span><span class="k">else</span><span class="err">’</span> <span class="err">‘</span><span class="p">:</span><span class="err">’</span> <span class="n">suite</span><span class="p">]</span>
+</span><span class='line'><span class="n">while_stmt</span><span class="p">:</span> <span class="err">‘</span><span class="k">while</span><span class="err">’</span> <span class="n">test</span> <span class="err">‘</span><span class="p">:</span><span class="err">’</span> <span class="n">suite</span> <span class="p">[</span><span class="err">‘</span><span class="k">else</span><span class="err">’</span> <span class="err">‘</span><span class="p">:</span><span class="err">’</span> <span class="n">suite</span><span class="p">]</span>
+</span><span class='line'><span class="n">until_stmt</span><span class="p">:</span> <span class="err">‘</span><span class="n">until</span><span class="err">’</span> <span class="n">test</span> <span class="err">‘</span><span class="p">:</span><span class="err">’</span> <span class="n">suite</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>注意，我决定了从我定义的until语句中去掉else子句，只是为了让他们有点不同（因为，坦率地说，我不喜欢循环的else子句，认为它有悖于the Zen of Python）。
@@ -101,7 +100,7 @@
 当您在修改完<strong>Grammar/Grammar</strong>后准备运行make时注意运行pgen程序运行时重新生成Include/graminit.h以及Python/graminit.c再重新编译。
 <strong>（译注：cedricporter@Stupid-ET:~/projects/python2.7-2.7.2/Parser$ ./pgen ../Grammar/Grammar graminit.h graminit.c）</strong></p>
 
-<h3>修改AST生成代码</h3>
+<h3 id="ast">修改AST生成代码</h3>
 
 <p>在Python的解析器创建了一个解析树后,这棵树被转换成一个AST（译注：抽象语法树），因为AST让后续的编译流程更简单。</p>
 
@@ -110,7 +109,7 @@
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">|</span> <span class="n">While</span><span class="p">(</span><span class="n">expr</span> <span class="n">test</span><span class="p">,</span> <span class="n">stmt</span><span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span> <span class="n">body</span><span class="p">,</span> <span class="n">stmt</span><span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span> <span class="n">orelse</span><span class="p">)</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">|</span> <span class="n">While</span><span class="p">(</span><span class="n">expr</span> <span class="n">test</span><span class="p">,</span> <span class="n">stmt</span><span class="o">*</span> <span class="n">body</span><span class="p">,</span> <span class="n">stmt</span><span class="o">*</span> <span class="n">orelse</span><span class="p">)</span>
 </span><span class='line'><span class="o">|</span> <span class="n">Until</span><span class="p">(</span><span class="n">expr</span> <span class="n">test</span><span class="p">,</span> <span class="n">stmt</span><span class="o">*</span> <span class="n">body</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
@@ -128,24 +127,10 @@
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">case</span> <span class="n">while_stmt</span>:<span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="n">ast_for_while_stmt</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">ch</span><span class="p">);</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">case</span> <span class="n">until_stmt</span>:<span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="n">ast_for_until_stmt</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">ch</span><span class="p">);</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">case</span> <span class="n">while_stmt</span>:
+</span><span class='line'>    <span class="k">return</span> <span class="n">ast_for_while_stmt</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">ch</span><span class="p">);</span>
+</span><span class='line'><span class="k">case</span> <span class="n">until_stmt</span>:
+</span><span class='line'>    <span class="k">return</span> <span class="n">ast_for_until_stmt</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">ch</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>现在我们要实现ast_for_until_stmt：</p>
@@ -174,18 +159,13 @@
 <span class='line-number'>21</span>
 <span class='line-number'>22</span>
 <span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
 </pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">static</span> <span class="n">stmt_ty</span>
-</span><span class='line'><span class="nf">ast_for_until_stmt</span><span class="p">(</span><span class="k">struct</span> <span class="n">compiling</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">c</span><span class="p">,</span> <span class="k">const</span> <span class="n">node</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="n">n</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="nf">ast_for_until_stmt</span><span class="p">(</span><span class="k">struct</span> <span class="n">compiling</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">c</span><span class="p">,</span> <span class="k">const</span> <span class="n">node</span> <span class="o">*</span><span class="n">n</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="o">/&lt;/</span><span class="n">em</span><span class="o">&gt;</span> <span class="n">until_stmt</span><span class="o">:</span> <span class="err">‘</span><span class="n">until</span><span class="err">’</span> <span class="n">test</span> <span class="err">‘</span><span class="o">:</span><span class="err">’</span> <span class="n">suite</span> <span class="err">*/</span>
+</span><span class='line'>    <span class="n">REQ</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">until_stmt</span><span class="p">);</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="cm">/* until_stmt: &#39;until&#39; test &#39;:&#39; suite */</span>
-</span><span class='line'><span class="n">REQ</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">until_stmt</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">NCH</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">if</span> <span class="p">(</span><span class="n">NCH</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>    <span class="n">expr_ty</span> <span class="n">expression</span><span class="p">;</span>
 </span><span class='line'>    <span class="n">asdl_seq</span> <span class="o">*</span><span class="n">suite_seq</span><span class="p">;</span>
 </span><span class='line'>
@@ -201,17 +181,15 @@
 </span><span class='line'><span class="n">PyErr_Format</span><span class="p">(</span><span class="n">PyExc_SystemError</span><span class="p">,</span>
 </span><span class='line'>             <span class="s">&quot;wrong number of tokens for &#39;until&#39; statement: %d&quot;</span><span class="p">,</span>
 </span><span class='line'>             <span class="n">NCH</span><span class="p">(</span><span class="n">n</span><span class="p">));</span>
-</span><span class='line'><span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'><span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</code></pre>
 
 <p>再一次,这是看起来像ast_for_while_stmt，不过不同的是，它不支持else子句。也正如预期的那样，在until语句的主体中使用其他AST创建函数像ast_for_expr对于条件表达式和 ast_for_suite来递归地创建AST。最后，一个until新节点被创建返回。</p>
 
 <p>注意,我们通过一些宏，像NCH和CHILD来访问解析树节点。这些都是值得我们去理解——他们的代码在<strong>Include/node.h</strong>.</p>
 
-<h3>题外话：AST组合</h3>
+<h3 id="ast-1">题外话：AST组合</h3>
 
 <p>我选择创建一个新until类型的AST,但实际上这是没有必要的。虽然我能通过实现组合现有的AST节点来节省一些工作:</p>
 
@@ -233,7 +211,7 @@
 
 <p>与其在ast_until_stmt里面创建一个新的Until节点，我可以创建一个Not节点下面挂上While节点。因为AST解释器已经知道如何处理这些节点，所以下一步可以跳过了。</p>
 
-<h3>将AST变成字节码</h3>
+<h3 id="ast-2">将AST变成字节码</h3>
 
 <p>The next step is compiling the AST into Python bytecode. The compilation has an intermediate result which is a CFG (Control Flow Graph), but since the same code handles it I will ignore this detail for now and leave it for another article.</p>
 
@@ -246,24 +224,10 @@
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">case</span> <span class="n">While_kind</span>:<span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="n">compiler_while</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">case</span> <span class="n">Until_kind</span>:<span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="n">compiler_until</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">case</span> <span class="n">While_kind</span>:
+</span><span class='line'>    <span class="k">return</span> <span class="n">compiler_while</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+</span><span class='line'><span class="k">case</span> <span class="n">Until_kind</span>:
+</span><span class='line'>    <span class="k">return</span> <span class="n">compiler_until</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>想必你也想知道Until_kind是什么，它是一个根据AST定义自动生成到Include/Python-ast.h的常量(实际上是一个_stmt_kind的枚举)。当然，我们调用的compiler_until还不存在。我等等就会实现它。</p>
@@ -274,21 +238,9 @@
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">define</span> <span class="n">VISIT</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">TYPE</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span> <span class="p">{</span><span class="err">\</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">compiler_visit_</span> <span class="err">##</span> <span class="n">TYPE</span><span class="p">((</span><span class="n">C</span><span class="p">),</span> <span class="p">(</span><span class="n">V</span><span class="p">)))</span> \
-</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> \
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#define VISIT(C, TYPE, V) {\</span>
+</span><span class='line'><span class="cp">    if (!compiler_visit_ ## TYPE((C), (V))) \</span>
+</span><span class='line'><span class="cp">        return 0; \</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>在compiler_body中，它是用来调用compiler_visit_stmt的。</p>
@@ -334,18 +286,13 @@
 <span class='line-number'>36</span>
 <span class='line-number'>37</span>
 <span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
 </pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">static</span> <span class="kt">int</span>
 </span><span class='line'><span class="nf">compiler_until</span><span class="p">(</span><span class="k">struct</span> <span class="n">compiler</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="n">stmt_ty</span> <span class="n">s</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">basicblock</span> <span class="o">*</span><span class="n">loop</span><span class="p">,</span> <span class="o">*</span><span class="n">end</span><span class="p">,</span> <span class="o">*</span><span class="n">anchor</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">constant</span> <span class="o">=</span> <span class="n">expr_constant</span><span class="p">(</span><span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">Until</span><span class="p">.</span><span class="n">test</span><span class="p">);</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">basicblock</span> <span class="o">*</span><span class="n">loop</span><span class="p">,</span> <span class="o">*</span><span class="n">end</span><span class="p">,</span> <span class="o">*</span><span class="n">anchor</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'><span class="kt">int</span> <span class="n">constant</span> <span class="o">=</span> <span class="n">expr_constant</span><span class="p">(</span><span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">Until</span><span class="p">.</span><span class="n">test</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">constant</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">if</span> <span class="p">(</span><span class="n">constant</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'><span class="n">loop</span> <span class="o">=</span> <span class="n">compiler_new_block</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
@@ -376,15 +323,13 @@
 </span><span class='line'><span class="n">compiler_pop_fblock</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">LOOP</span><span class="p">,</span> <span class="n">loop</span><span class="p">);</span>
 </span><span class='line'><span class="n">compiler_use_next_block</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">end</span><span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'><span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</code></pre>
 
 <p>我必须得承认，这些代码是在我没有深刻理解Python字节码的前提下编写的。就像接下来的文章那样，它仅仅是模仿它的亲戚函数compiler_while。我们通过仔细阅读，知道Python虚拟机是基于栈的，大致看了一下dis模块的文档，发现那里有<a href="http://docs.python.org/py3k/library/dis.html">一系列Python字节码的描述</a>.</p>
 
-<h3>嗯！我们完成了，不是吗？</h3>
+<h3 id="section-1">嗯！我们完成了，不是吗？</h3>
 
 <p>在修改完后，我们运行make，然后我们运行我们新编译出来的Python来测试我们新增的until语句：</p>
 
@@ -396,18 +341,14 @@
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">blockquote</span><span class="o">&gt;&lt;</span><span class="n">blockquote</span><span class="o">&gt;&lt;</span><span class="n">blockquote</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">until</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span class='line'><span class="o">...</span>   <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
-</span><span class='line'><span class="o">...</span>   <span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span>
-</span><span class='line'><span class="o">...</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="err">»</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">until</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'><span class="err">…</span>   <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span><span class='line'><span class="err">…</span>   <span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span>
+</span><span class='line'><span class="err">…</span>
 </span><span class='line'><span class="mi">3</span>
 </span><span class='line'><span class="mi">2</span>
 </span><span class='line'><span class="mi">1</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p></blockquote></blockquote></blockquote>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>瞧！它能够工作！我们通过dis模块来看看新语句的字节码：</p>
 
@@ -420,16 +361,12 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
 </pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">dis</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">myfoo</span><span class="p">(</span><span class="n">num</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">until</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">myfoo</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">until</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">myfoo</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
@@ -456,41 +393,25 @@
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="mi">4</span>           <span class="mi">0</span> <span class="n">SETUP_LOOP</span>              <span class="mi">36</span> <span class="p">(</span><span class="n">to</span> <span class="mi">39</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="mi">4</span>           <span class="mi">0</span> <span class="n">SETUP_LOOP</span>              <span class="mi">36</span> <span class="p">(</span><span class="n">to</span> <span class="mi">39</span><span class="p">)</span>
+</span><span class='line'>     <span class="err"> »</span>    <span class="mi">3</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span><span class='line'>            <span class="mi">6</span> <span class="n">LOAD_CONST</span>               <span class="mi">1</span> <span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>            <span class="mi">9</span> <span class="n">COMPARE_OP</span>               <span class="mi">2</span> <span class="p">(</span><span class="o">==</span><span class="p">)</span>
+</span><span class='line'>           <span class="mi">12</span> <span class="n">POP_JUMP_IF_TRUE</span>        <span class="mi">38</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span>    <span class="mi">3</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">num</span><span class="p">)</span>
-</span><span class='line'>        <span class="mi">6</span> <span class="n">LOAD_CONST</span>               <span class="mi">1</span> <span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>        <span class="mi">9</span> <span class="n">COMPARE_OP</span>               <span class="mi">2</span> <span class="p">(</span><span class="o">==</span><span class="p">)</span>
-</span><span class='line'>       <span class="mi">12</span> <span class="n">POP_JUMP_IF_TRUE</span>        <span class="mi">38</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="mi">5</span>          <span class="mi">15</span> <span class="n">LOAD_NAME</span>                <span class="mi">0</span> <span class="p">(</span><span class="k">print</span><span class="p">)</span>
+</span><span class='line'>           <span class="mi">18</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span><span class='line'>           <span class="mi">21</span> <span class="n">CALL_FUNCTION</span>            <span class="mi">1</span>
+</span><span class='line'>           <span class="mi">24</span> <span class="n">POP_TOP</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="mi">5</span>          <span class="mi">15</span> <span class="n">LOAD_NAME</span>                <span class="mi">0</span> <span class="p">(</span><span class="k">print</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>       <span class="mi">18</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">num</span><span class="p">)</span>
-</span><span class='line'>       <span class="mi">21</span> <span class="n">CALL_FUNCTION</span>            <span class="mi">1</span>
-</span><span class='line'>       <span class="mi">24</span> <span class="n">POP_TOP</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="mi">6</span>          <span class="mi">25</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">num</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>       <span class="mi">28</span> <span class="n">LOAD_CONST</span>               <span class="mi">2</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>       <span class="mi">31</span> <span class="n">INPLACE_SUBTRACT</span>
-</span><span class='line'>       <span class="mi">32</span> <span class="n">STORE_FAST</span>               <span class="mi">0</span> <span class="p">(</span><span class="n">num</span><span class="p">)</span>
-</span><span class='line'>       <span class="mi">35</span> <span class="n">JUMP_ABSOLUTE</span>            <span class="mi">3</span>
-</span><span class='line'>  <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span>   <span class="mi">38</span> <span class="n">POP_BLOCK</span>
-</span><span class='line'>  <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span>   <span class="mi">39</span> <span class="n">LOAD_CONST</span>               <span class="mi">0</span> <span class="p">(</span><span class="bp">None</span><span class="p">)</span>
-</span><span class='line'>       <span class="mi">42</span> <span class="n">RETURN_VALUE</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="mi">6</span>          <span class="mi">25</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span><span class='line'>           <span class="mi">28</span> <span class="n">LOAD_CONST</span>               <span class="mi">2</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>           <span class="mi">31</span> <span class="n">INPLACE_SUBTRACT</span>
+</span><span class='line'>           <span class="mi">32</span> <span class="n">STORE_FAST</span>               <span class="mi">0</span> <span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span><span class='line'>           <span class="mi">35</span> <span class="n">JUMP_ABSOLUTE</span>            <span class="mi">3</span>
+</span><span class='line'>     <span class="err"> »</span>   <span class="mi">38</span> <span class="n">POP_BLOCK</span>
+</span><span class='line'>     <span class="err"> »</span>   <span class="mi">39</span> <span class="n">LOAD_CONST</span>               <span class="mi">0</span> <span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+</span><span class='line'>           <span class="mi">42</span> <span class="n">RETURN_VALUE</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>最有趣的是编号12的字节码：如果条件为真，我们跳转到循环的后面。这个符合until的语义。如果jump没有被执行，循环体就继续运行，直到它跳转到编号35的字节码。</p>
@@ -504,29 +425,17 @@
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
 </pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
-</span><span class='line'>  <span class="n">File</span> <span class="s">&quot;zy.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">9</span><span class="p">,</span> <span class="ow">in</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">myfoo</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="n">File</span> <span class="s">&quot;zy.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">5</span><span class="p">,</span> <span class="ow">in</span> <span class="n">myfoo</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="ne">SystemError</span><span class="p">:</span> <span class="n">no</span> <span class="nb">locals</span> <span class="n">when</span> <span class="n">loading</span> <span class="s">&#39;print&#39;</span>
+</span><span class='line'>  <span class="n">File</span> <span class="err">“</span><span class="n">zy</span><span class="o">.</span><span class="n">py</span><span class="err">”</span><span class="p">,</span> <span class="n">line</span> <span class="mi">9</span><span class="p">,</span> <span class="ow">in</span>
+</span><span class='line'>    <span class="n">myfoo</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">File</span> <span class="err">“</span><span class="n">zy</span><span class="o">.</span><span class="n">py</span><span class="err">”</span><span class="p">,</span> <span class="n">line</span> <span class="mi">5</span><span class="p">,</span> <span class="ow">in</span> <span class="n">myfoo</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span><span class='line'><span class="ne">SystemError</span><span class="p">:</span> <span class="n">no</span> <span class="nb">locals</span> <span class="n">when</span> <span class="n">loading</span> <span class="err">‘</span><span class="k">print</span><span class="err">’</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>哇...这个真是悲剧。究竟哪里出错了？</p>
+<p>哇…这个真是悲剧。究竟哪里出错了？</p>
 
-<h3>丢失符号</h3>
+<h3 id="section-2">丢失符号</h3>
 
 <p>在解析AST的时候，Python解析器执行的步骤之一是构建符号表。通过在PyAST_Compile里面调用PySymtable_Build（Python/symtable.c）来遍历AST。拥有每一个作用域的符号表有助于编译器找出一些关键的信息，就像哪些变量是全局的，哪些变量是局部的。</p>
 
@@ -543,65 +452,42 @@
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">case</span> <span class="n">While_kind</span>:<span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">VISIT</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">While</span><span class="p">.</span><span class="n">test</span><span class="p">);</span>
-</span><span class='line'><span class="n">VISIT_SEQ</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">stmt</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">While</span><span class="p">.</span><span class="n">body</span><span class="p">);</span>
-</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">While</span><span class="p">.</span><span class="n">orelse</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">VISIT_SEQ</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">stmt</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">While</span><span class="p">.</span><span class="n">orelse</span><span class="p">);</span>
-</span><span class='line'><span class="k">break</span><span class="p">;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">case</span> <span class="n">Until_kind</span>:<span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">VISIT</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">Until</span><span class="p">.</span><span class="n">test</span><span class="p">);</span>
-</span><span class='line'><span class="n">VISIT_SEQ</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">stmt</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">Until</span><span class="p">.</span><span class="n">body</span><span class="p">);</span>
-</span><span class='line'><span class="k">break</span><span class="p">;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">case</span> <span class="n">While_kind</span>:
+</span><span class='line'>    <span class="n">VISIT</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">While</span><span class="p">.</span><span class="n">test</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">VISIT_SEQ</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">stmt</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">While</span><span class="p">.</span><span class="n">body</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">While</span><span class="p">.</span><span class="n">orelse</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">VISIT_SEQ</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">stmt</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">While</span><span class="p">.</span><span class="n">orelse</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">break</span><span class="p">;</span>
+</span><span class='line'><span class="k">case</span> <span class="n">Until_kind</span>:
+</span><span class='line'>    <span class="n">VISIT</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">Until</span><span class="p">.</span><span class="n">test</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">VISIT_SEQ</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="n">stmt</span><span class="p">,</span> <span class="n">s</span><span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span><span class="n">v</span><span class="p">.</span><span class="n">Until</span><span class="p">.</span><span class="n">body</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">break</span><span class="p">;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>现在，我们真的完成了。修改后的源码可以在myfoo(3)运行正常。</p>
 
-<h3>结论</h3>
+<h3 id="section-3">结论</h3>
 
 <p>在本文中，我展示了如何为Python增加一个新语句。尽管需要比较多处的修改Python编译器，但是这些修改并不难，因为我跟随着一个相似的语句来修改。</p>
 
 <p>Python编译器适宜隔非常复杂的程序，我不想自称专家。然而，我真的对Python内部实现相当感兴趣，特别是前端。因此，我发现这种练习是一个编译理论与实践的结合。它将作为后续文章的基础来更深层次地探究编译器。</p>
 
-<h3>参考</h3>
-
+<h3 id="section-4">参考</h3>
 <p>I used a few excellent references for the construction of this article. Here they are, in no particular order:</p>
 
 <ul>
-<li><p><a href="http://www.python.org/dev/peps/pep-0339/">PEP 339: Design of the CPython compiler</a> – probably the most important and comprehensive piece of <em>official</em> documentation for the Python compiler. Being very short, it painfully displays the scarcity of good documentation of the internals of Python.</p></li>
-<li><p>"Python Compiler Internals" – an article by Thomas Lee</p></li>
-<li><p>"Python: Design and Implementation" – a presentation by Guido van Rossum</p></li>
-<li><p>Python (2.5) Virtual Machine, A guided tour – a presentation by Peter Tröger</p></li>
+  <li><a href="http://www.python.org/dev/peps/pep-0339/">PEP 339: Design of the CPython compiler</a> – probably the most important and comprehensive piece of <em>official</em> documentation for the Python compiler. Being very short, it painfully displays the scarcity of good documentation of the internals of Python.</li>
+  <li>“Python Compiler Internals” – an article by Thomas Lee</li>
+  <li>“Python: Design and Implementation” – a presentation by Guido van Rossum</li>
+  <li>Python (2.5) Virtual Machine, A guided tour – a presentation by Peter Tröger</li>
 </ul>
 
+<p><a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id1">[1]</a> From here on, references to files in the Python source are given relatively to the root of the source tree, which is the directory where you run configure and make to build Python.</p>
 
-<p><img src="https://www.evernote.com/shard/s144/res/25bdd2c0-7952-4d98-8e91-46cd69bd606a.jpg" alt="http://eli.thegreenplace.net/wp-content/uploads/hline.jpg" /></p>
+<p><a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id2">[2]</a> This demonstrates a common technique I use when modifying source code I’m not familiar with: <em>work by similarity</em>. This principle won’t solve all your problems, but it can definitely ease the process. Since everything that has to be done forwhile also has to be done for until, it serves as a pretty good guideline.</p>
 
-<p><a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id1">[1]</a></p>
+<p><a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id3">[3]</a> By the way, without this code there’s a compiler warning for Python/symtable.c. The compiler notices that theUntil_kind enumeration value isn’t handled in the switch statement of symtable_visit_stmt and complains. It’s always important to check for compiler warnings!</p>
 
-<p>From here on, references to files in the Python source are given relatively to the root of the source tree, which is the directory where you run configure and make to build Python.</p>
-
-<p><a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id2">[2]</a></p>
-
-<p>This demonstrates a common technique I use when modifying source code I’m not familiar with: <em>work by similarity</em>. This principle won’t solve all your problems, but it can definitely ease the process. Since everything that has to be done forwhile also has to be done for until, it serves as a pretty good guideline.</p>
-
-<p><a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id3">[3]</a></p>
-
-<p>By the way, without this code there’s a compiler warning for Python/symtable.c. The compiler notices that theUntil_kind enumeration value isn’t handled in the switch statement of symtable_visit_stmt and complains. It’s always important to check for compiler warnings!</p>
 ]]></content>
   </entry>
   

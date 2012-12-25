@@ -117,41 +117,39 @@
 
 <!-- more -->
 
-
 <p><a href="http://everet.org/wp-content/uploads/2012/03/QQ20120321193734.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ20120321193734_thumb.png" alt="QQ截图20120321193734" /></a></p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">Image</span><span class="o">,</span> <span class="nn">ImageDraw</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;1.bmp&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">draw</span> <span class="o">=</span> <span class="n">ImageDraw</span><span class="o">.</span><span class="n">Draw</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
-</span><span class='line'><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">52</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">51</span><span class="p">):</span>
-</span><span class='line'>        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-</span><span class='line'>        <span class="k">if</span> <span class="n">count</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span class='line'>            <span class="n">draw</span><span class="o">.</span><span class="n">rectangle</span><span class="p">((</span><span class="n">i</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">j</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">10</span><span class="p">),</span><span class="n">fill</span><span class="o">=</span><span class="s">&quot;#ff0000&quot;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">im</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;test.bmp&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">Image</span><span class="o">,</span> <span class="nn">ImageDraw</span>
+</span><span class="line">
+</span><span class="line"><span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;1.bmp&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">draw</span> <span class="o">=</span> <span class="n">ImageDraw</span><span class="o">.</span><span class="n">Draw</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
+</span><span class="line"><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line">
+</span><span class="line"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">52</span><span class="p">):</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">51</span><span class="p">):</span>
+</span><span class="line">        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class="line">        <span class="k">if</span> <span class="n">count</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class="line">            <span class="n">draw</span><span class="o">.</span><span class="n">rectangle</span><span class="p">((</span><span class="n">i</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">j</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">10</span><span class="p">),</span><span class="n">fill</span><span class="o">=</span><span class="s">&quot;#ff0000&quot;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">im</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;test.bmp&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>下面是师兄写的引擎写的地形贴上Python生成的大姨妈图：
-<a href="http://everet.org/wp-content/uploads/2012/03/QQ%E6%88%AA%E5%9B%BE20120321201014.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ%E6%88%AA%E5%9B%BE20120321201014.png" alt="" /></a></p>
+<a href="http://everet.org/wp-content/uploads/2012/03/QQ截图20120321201014.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ截图20120321201014.png" alt="" /></a></p>
 </div>
 
 
@@ -229,11 +227,11 @@
         </li>
     
         <li class="related">
-        <a href="/2012/06/python-dot-product.html">Python计算点积</a>
+        <a href="/2012/07/effectlab.html">Python图像处理特效库EffectLab</a>
         </li>
     
         <li class="related">
-        <a href="/2012/07/effectlab.html">Python图像处理特效库EffectLab</a>
+        <a href="/2012/06/python-dot-product.html">Python计算点积</a>
         </li>
     
         <li class="related">

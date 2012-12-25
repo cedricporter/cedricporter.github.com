@@ -109,13 +109,13 @@
 
 <div class="entry-content"><p>Syntaxhighlighter Evolved是一款Javascript的语法高亮插件，高亮是在用户的浏览器完成，这样可以减轻服务器的压力。而WP-Syntax恰恰相反，它是在服务器完成语法高亮。WP-Syntax比Syntaxhighlighter Evolved更有优势的地方是支持rss高亮，而且支持的语言众多，使用了GeSHi高亮引擎，可定制性相当强，至于高亮带来的压力，我们可以用缓存插件来解决。</p>
 
-<h4>Syntaxhighlighter Evolved Plugin Usage</h4>
+<h4 id="syntaxhighlighter-evolvedplugin-usage">Syntaxhighlighter Evolved Plugin Usage</h4>
 
-<p>Just wrap your code in <code>[language]</code>, such as <code>**[php]**code here**[/php]**</code> or <code>[css]code here[/css]</code>.</p>
+<p>Just wrap your code in <code>[language]</code>, such as <code>[php]code here[/php]**</code> or <code>[css]code here[/css]</code>.</p>
 
-<h4>WP-Syntax Basic Usage</h4>
+<h4 id="wp-syntaxbasic-usage">WP-Syntax Basic Usage</h4>
 
-<p>Wrap code blocks with<strong> <code>&lt;pre lang="LANGUAGE" line="1"&gt;</code> </strong>and <strong><code>&lt;/pre&gt;</code></strong></p>
+<p>Wrap code blocks with <code>&lt;pre lang="LANGUAGE" line="1"&gt;</code> and <code>&lt;/pre&gt;</code></p>
 
 <p>我们很明显就可以看到两者之间的区别。Syntaxhighlighter Evolved用的是非常特殊的高亮标记<strong>[language]</strong>，如果我们直接卸载Syntaxhighlighter Evolved然后装上WP-Syntax就会导致Syntaxhighlighter Evolved的高亮标记直接输出，而且代码不会被高亮。</p>
 
@@ -123,152 +123,146 @@
 
 <p>对于这种这么繁琐的事情，我们就把它交给Python来完成吧。<!-- more --></p>
 
-<h3> 代码</h3>
+<h3 id="section"> 代码</h3>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/env python</span>
-</span><span class='line'><span class="c"># author:  Hua Liang [ Stupid ET ]</span>
-</span><span class='line'><span class="c"># email:   et@everet.org</span>
-</span><span class='line'><span class="c"># website: http://EverET.org</span>
-</span><span class='line'><span class="c">#</span>
-</span><span class='line'><span class="c"># database migrate from syntaxhighlighter evolved to wp-syntax</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">sys</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="n">pat</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">new_str</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">py</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pat</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">sql</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">new_str</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">sql</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</span><span class='line'><span class="c">#sql = open(&#39;et.sql&#39;).read()</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># [python] =&gt; &lt;pre lang=&quot;python&quot;&gt;</span>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[python.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;python&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/python\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[plain.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;text&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/plain\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[code.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;text&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/code\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;(\[c(\s.*?)?\])&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;cpp&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/c\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[shell.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;bash&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/shell\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[php.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;php&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/php\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[lisp.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;lisp&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/lisp\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[javascript.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;javascript&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/javascript\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[html.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;html&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/html\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[c\+\+.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;cpp&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/c\+\+\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[c#.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;csharp&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/c#\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># for s in re.findall(r&#39;\&lt;pre lang=\&quot;.*?\&quot;\&gt;&#39;, sql):</span>
-</span><span class='line'><span class="c">#     print s</span>
-</span><span class='line'><span class="c"># for s in re.findall(r&#39;\[/.*?\]&#39;, sql):</span>
-</span><span class='line'><span class="c">#     print s</span>
-</span><span class='line'>
-</span><span class='line'><span class="c">#output = open(&#39;fix-et.sql&#39;, &#39;w&#39;)</span>
-</span><span class='line'><span class="n">output</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
-</span><span class='line'><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
-</span><span class='line'><span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="c">#!/usr/bin/env python</span>
+</span><span class="line"><span class="c"># author:  Hua Liang [ Stupid ET ]</span>
+</span><span class="line"><span class="c"># email:   et@everet.org</span>
+</span><span class="line"><span class="c"># website: http://EverET.org</span>
+</span><span class="line"><span class="c">#</span>
+</span><span class="line"><span class="c"># database migrate from syntaxhighlighter evolved to wp-syntax</span>
+</span><span class="line">
+</span><span class="line"><span class="kn">import</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">sys</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="n">pat</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">new_str</span><span class="p">):</span>
+</span><span class="line">    <span class="n">py</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pat</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+</span><span class="line">    <span class="n">sql</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">new_str</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">sql</span>
+</span><span class="line">
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class="line"><span class="c">#sql = open(&#39;et.sql&#39;).read()</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># [python] =&gt; &lt;pre lang=&quot;python&quot;&gt;</span>
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[python.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;python&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/python\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[plain.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;text&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/plain\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[code.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;text&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/code\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;(\[c(\s.*?)?\])&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;cpp&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/c\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[shell.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;bash&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/shell\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[php.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;php&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/php\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[lisp.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;lisp&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/lisp\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[javascript.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;javascript&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/javascript\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[html.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;html&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/html\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[c\+\+.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;cpp&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/c\+\+\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[c#.*?\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;pre lang=&quot;csharp&quot; escaped=&quot;true&quot;&gt;&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">sql</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\[/c#\]&#39;</span><span class="p">,</span> <span class="n">sql</span><span class="p">,</span> <span class="s">&#39;&lt;/pre&gt;&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># for s in re.findall(r&#39;\&lt;pre lang=\&quot;.*?\&quot;\&gt;&#39;, sql):</span>
+</span><span class="line"><span class="c">#     print s</span>
+</span><span class="line"><span class="c"># for s in re.findall(r&#39;\[/.*?\]&#39;, sql):</span>
+</span><span class="line"><span class="c">#     print s</span>
+</span><span class="line">
+</span><span class="line"><span class="c">#output = open(&#39;fix-et.sql&#39;, &#39;w&#39;)</span>
+</span><span class="line"><span class="n">output</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+</span><span class="line"><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+</span><span class="line"><span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>最新源码：<a href="https://github.com/cedricporter/et-python/blob/master/migrate-db/migrant.py">https://github.com/cedricporter/et-python/blob/master/migrate-db/migrant.py</a></p>
 
-<h3>使用</h3>
+<h3 id="section-1">使用</h3>
 
-<figure class='code'><figcaption><span>bash  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysqldump -u root -p wordpress_db | ./migrant.py &gt; fix.sql
-</span><span class='line'>mysql -u root -p wordpress_db &lt; fix.sql
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">mysqldump -u root -p wordpress_db | ./migrant.py &gt; fix.sql
+</span><span class="line">mysql -u root -p wordpress_db &lt; fix.sql
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-
-<p>整个过程就是</p>
-
-<ol>
-<li><p>使用mysqldump将数据库dump成文本</p></li>
-<li><p>通过我们的过滤器程序migrant.py将syntaxhighlighter evolved的高亮风格变成wp-syntax的高亮风格。</p></li>
-<li><p>导入回数据库。</p></li>
-</ol>
-
+<p>整个过程就是
+  1. 使用mysqldump将数据库dump成文本
+  2. 通过我们的过滤器程序migrant.py将syntaxhighlighter evolved的高亮风格变成wp-syntax的高亮风格。
+  3. 导入回数据库。</p>
 
 <p>搞定!</p>
 

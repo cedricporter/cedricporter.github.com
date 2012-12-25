@@ -125,51 +125,69 @@
 
 <p>我们可以使用如下命令克隆我们的Google Code上的项目。</p>
 
-<blockquote><p>git svn clone &#8211;username cedricporter@gmail.com -s <a href="https://et-vim-setting.googlecode.com/svn">https://et-vim-setting.googlecode.com/svn</a> vim_setting</p></blockquote>
+<p><code>git svn clone --username cedricporter@gmail.com -s https://et-vim-setting.googlecode.com/svn vim_setting</code></p>
 
 <!-- more -->
 
-
-<blockquote></blockquote>
-
 <p>我在用如下命令把我的Windows上的配置文件_vimrc提交到Google Code的SVN服务器上。</p>
 
-<blockquote><p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
-$ git status</p>
-
-<h1>On branch master</h1>
-
-<p>nothing to commit (working directory clean)</p>
-
-<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
-$ git add .</p>
-
-<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
-$ git status</p>
-
-<h1>On branch master</h1>
-
-<h1>Changes to be committed:</h1>
-
-<h1>(use &#8220;git reset HEAD <file>&#8230;&#8221; to unstage)</h1>
-
-<h1></h1>
-
-<h1>new file: _vimrc</h1>
-
-<p>#</p>
-
-<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
-$ git commit -am &#8216;add windows setting&#8217;       <br/>
-[master 6d6f696] add windows setting      <br/>
-1 files changed, 632 insertions(+), 0 deletions(-)      <br/>
-create mode 100755 _vimrc</p>
-
-<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
-$ git svn dcommit      <br/>
-Committing to <a href="https://et-vim-setting.googlecode.com/svn/trunk">https://et-vim-setting.googlecode.com/svn/trunk</a> &#8230;      <br/>
-Authentication realm: &lt;<a href="https://et-vim-setting.googlecode.com:443">https://et-vim-setting.googlecode.com:443</a>> Google Code Subversion Repository      <br/>
-Password for &#8216;Cedric Porter&#8217;:</p></blockquote>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="go">Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting       </span>
+</span><span class="line"><span class="gp">$</span> git status
+</span><span class="line"><span class="gp">#</span> On branch master
+</span><span class="line"><span class="go">nothing to commit (working directory clean)</span>
+</span><span class="line">
+</span><span class="line"><span class="go">Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting       </span>
+</span><span class="line"><span class="gp">$</span> git add .
+</span><span class="line">
+</span><span class="line"><span class="go">Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting       </span>
+</span><span class="line"><span class="gp">$</span> git status
+</span><span class="line"><span class="gp">#</span> On branch master
+</span><span class="line"><span class="gp">#</span> Changes to be committed:
+</span><span class="line"><span class="gp">#</span> <span class="o">(</span>use <span class="s2">&quot;git reset HEAD &lt;file&gt;...&quot;</span> to unstage<span class="o">)</span>
+</span><span class="line"><span class="gp">#</span>
+</span><span class="line"><span class="gp">#</span> new file: _vimrc
+</span><span class="line"><span class="gp">#</span>
+</span><span class="line">
+</span><span class="line"><span class="go">Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting       </span>
+</span><span class="line"><span class="gp">$</span> git commit -am <span class="s1">&#39;add windows setting&#39;</span>
+</span><span class="line"><span class="go">[master 6d6f696] add windows setting        </span>
+</span><span class="line"><span class="go">1 files changed, 632 insertions(+), 0 deletions(-)        </span>
+</span><span class="line"><span class="go">create mode 100755 _vimrc</span>
+</span><span class="line">
+</span><span class="line"><span class="go">Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting       </span>
+</span><span class="line"><span class="gp">$</span> git svn dcommit
+</span><span class="line"><span class="go">Committing to https://et-vim-setting.googlecode.com/svn/trunk ...        </span>
+</span><span class="line"><span class="go">Authentication realm: &lt;https://et-vim-setting.googlecode.com:443&gt; Google Code Subversion Repository        </span>
+</span><span class="line"><span class="go">Password for &#39;Cedric Porter&#39;:        </span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>更多的Git教程请查看《Pro Git》，在美国的Amazon有卖，电子版地址 <a href="http://progit.org/book/zh/">http://progit.org/book/zh/</a> ，他们的翻译也是使用Git管理。</p>
 </div>
@@ -241,11 +259,11 @@ Password for &#8216;Cedric Porter&#8217;:</p></blockquote>
     <ul class="posts">
     
         <li class="related">
-        <a href="/2012/03/vim.html">我的Vim配置</a>
+        <a href="/2012/01/gitosis-in-ubuntu.html">Ubuntu使用Gitosis搭建Git服务器，Windows客户端支持中文</a>
         </li>
     
         <li class="related">
-        <a href="/2012/01/gitosis-in-ubuntu.html">Ubuntu使用Gitosis搭建Git服务器，Windows客户端支持中文</a>
+        <a href="/2012/03/vim.html">我的Vim配置</a>
         </li>
     
         <li class="related">
@@ -257,7 +275,7 @@ Password for &#8216;Cedric Porter&#8217;:</p></blockquote>
         </li>
     
         <li class="related">
-        <a href="/2012/03/ftp-server.html">我的FTP Server——ftp.py</a>
+        <a href="/2012/01/gitweb-password.html">给Gitweb加上访问密码，保护我们的私有项目</a>
         </li>
     
     </ul>

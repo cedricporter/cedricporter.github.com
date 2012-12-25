@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Git | EverET.org]]></title>
   <link href="http://everet.org/tag/git/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-25T23:07:51+08:00</updated>
+  <updated>2012-12-26T02:57:37+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -18,89 +18,7 @@
     <link href="http://everet.org/2012/02/server-migration.html"/>
     <updated>2012-02-10T23:23:41+08:00</updated>
     <id>http://everet.org/2012/02/server-migration</id>
-    <content type="html"><![CDATA[<p>原来的主机是基于Xen的，价格非常的贵，于是现在换了基于OpenVZ的burst.net的主机，性能虽然可能比不上原来的，但是便宜了不少。内存从128MB换成了512MB，不过价格便宜了一半。感觉速度还是<strong>快</strong>了很多很多啊~而且还有原生的<strong>ipv6</strong>的支持，不再需要借助tunnelbreaker，真是校网的救星。</p>
-
-<p>不过想起昨天还真是悲剧，开通了10分钟84就将账号发给我，但是竟然没有ip地址，这真是奇葩啊。于是发了ticket就去闲逛了，我们比他们晚13个小时，他们上午8点上班，也就是我们的晚上9点。于是晚上9点多就有人回复解决了问题，把问题修复了，并且把ip重新发了。然后技术支持很好心的问了还有什么需要帮忙，然后就再顺便帮忙分配了一些ipv6的地址。</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/02/QQ%E6%88%AA%E5%9B%BE20120210155314.jpg"><img src="http://everet.org/wp-content/uploads/2012/02/QQ%E6%88%AA%E5%9B%BE20120210155314-640x578.jpg" alt="" /></a></p>
-
-<p>于是今天开工迁移了。这次将网站都迁移过去了，等过几天再把Git版本库也迁移过去。</p>
-
-<p>原来的主机用的是nginx（发音同 engine x），换到burst.net后默认就装了apache，于是就决定换回apache了，重新配置了下换成worker模式，感觉和nginx差不多吧。</p>
-
-<p>在如下python写的简单的压力测试下服务器基本也没什么压力。<!-- more --></p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="err">!</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">urlopen</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">threading</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">class</span> <span class="nc">Flood</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
-</span><span class='line'>        <span class="n">url</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://everet.org/2012/02/how-to-open-sack.html&#39;</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">print</span> <span class="n">url</span><span class="o">.</span><span class="n">getcode</span><span class="p">()</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">q</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span class='line'><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">t</span> <span class="o">=</span> <span class="n">Flood</span><span class="p">()</span>
-</span><span class='line'><span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</span><span class='line'><span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">i</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c">#&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/02/image.png"><img src="http://everet.org/wp-content/uploads/2012/02/image_thumb.png" alt="image" /></a></p>
-
-<p>现在服务器上挂了4个wordpress，也没什么压力。</p>
-
-<p>前几天在原来的服务器上用nginx+webpy写个几个查看信息的页面，webpy就占了60MB的内存，而且发了几百个并发就死了，这让我情何以堪。可能是我的配置有问题，不过内存还是比较无语的问题，所以还是找找更轻量级的实现了。</p>
-]]></content>
+    <content type="html"><![CDATA[Liquid error: undefined method `strip!' for nil:NilClass]]></content>
   </entry>
   
   <entry>
@@ -126,51 +44,42 @@
 
 <p>我们可以使用如下命令克隆我们的Google Code上的项目。</p>
 
-<blockquote><p>git svn clone --username cedricporter@gmail.com -s <a href="https://et-vim-setting.googlecode.com/svn">https://et-vim-setting.googlecode.com/svn</a> vim_setting</p></blockquote>
+<p><code>git svn clone --username cedricporter@gmail.com -s https://et-vim-setting.googlecode.com/svn vim_setting</code></p>
 
 <!-- more -->
 
-
-<blockquote></blockquote>
-
 <p>我在用如下命令把我的Windows上的配置文件_vimrc提交到Google Code的SVN服务器上。</p>
 
-<blockquote><p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
-$ git status</p>
+<p>``` console
+Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br />
+$ git status       <br />
+# On branch master      <br />
+nothing to commit (working directory clean)</p>
 
-<h1>On branch master</h1>
-
-<p>nothing to commit (working directory clean)</p>
-
-<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
+<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br />
 $ git add .</p>
 
-<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
-$ git status</p>
+<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br />
+$ git status      <br />
+# On branch master      <br />
+# Changes to be committed:      <br />
+# (use “git reset HEAD <file>..." to unstage)        
+#        
+# new file: _vimrc        
+#</file></p>
 
-<h1>On branch master</h1>
-
-<h1>Changes to be committed:</h1>
-
-<h1>(use "git reset HEAD <file>..." to unstage)</h1>
-
-<h1></h1>
-
-<h1>new file: _vimrc</h1>
-
-<p>#</p>
-
-<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
-$ git commit -am 'add windows setting'       <br/>
-[master 6d6f696] add windows setting      <br/>
-1 files changed, 632 insertions(+), 0 deletions(-)      <br/>
+<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br />
+$ git commit -am ‘add windows setting’       <br />
+[master 6d6f696] add windows setting      <br />
+1 files changed, 632 insertions(+), 0 deletions(-)      <br />
 create mode 100755 _vimrc</p>
 
-<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
-$ git svn dcommit      <br/>
-Committing to <a href="https://et-vim-setting.googlecode.com/svn/trunk">https://et-vim-setting.googlecode.com/svn/trunk</a> ...      <br/>
-Authentication realm: &lt;<a href="https://et-vim-setting.googlecode.com:443">https://et-vim-setting.googlecode.com:443</a>> Google Code Subversion Repository      <br/>
-Password for 'Cedric Porter':</p></blockquote>
+<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br />
+$ git svn dcommit      <br />
+Committing to https://et-vim-setting.googlecode.com/svn/trunk …      <br />
+Authentication realm: <a href="https://et-vim-setting.googlecode.com:443">https://et-vim-setting.googlecode.com:443</a> Google Code Subversion Repository      <br />
+Password for ‘Cedric Porter’:      <br />
+```</p>
 
 <p>更多的Git教程请查看《Pro Git》，在美国的Amazon有卖，电子版地址 <a href="http://progit.org/book/zh/">http://progit.org/book/zh/</a> ，他们的翻译也是使用Git管理。</p>
 ]]></content>
@@ -189,34 +98,37 @@ Password for 'Cedric Porter':</p></blockquote>
 
 <p>我们首先用htpasswd生成密码：</p>
 
-<blockquote><p>htpasswd -cb 文件名 帐号 密码</p></blockquote>
+<p>```
+htpasswd -cb 文件名 帐号 密码</p>
 
 <p>htpasswd -b 其他帐号 密码</p>
 
-<p>-c代表创建一个新的，-b代表批处理。</p>
+<p>-c代表创建一个新的，-b代表批处理。
+```</p>
 
 <!-- more -->
 
-
 <p>我们可以在这里<a href="http://everet.org/wp-content/uploads/2012/01/htpasswd.rar">htpasswd </a>下载htpasswd.py，然后添加可执行权限，改名为htpasswd放到/usr/local/bin下，就可以在任意地方调用了。</p>
 
-<blockquote><p>$ chmod +x htpasswd.py</p></blockquote>
-
-<p>$ cp htpasswd.py /usr/local/bin/htpasswd</p>
+<p><code>console
+$ chmod +x htpasswd.py
+$ cp htpasswd.py /usr/local/bin/htpasswd
+</code></p>
 
 <p>然后，我们可以</p>
 
-<blockquote><p>root@everet:~# htpasswd -cb gitweb username_et password</p></blockquote>
-
-<p>root@everet:~# cat gitweb</p>
-
-<p>username_et:kPj.q84Ax1rrc</p>
+<p><code>console
+root@everet:~# htpasswd -cb gitweb username_et password
+root@everet:~# cat gitweb
+username_et:kPj.q84Ax1rrc
+</code></p>
 
 <p>然后就在当前目录生成了一个gitweb的文件，里面就有帐号和密码，我们将其复制到某个地方，例如/etc/nginx/下。</p>
 
 <p>我们修改我们的配置</p>
 
-<blockquote><h1>gitweb</h1></blockquote>
+<p>``` nginx
+# gitweb</p>
 
 <p>server {</p>
 
@@ -226,7 +138,7 @@ Password for 'Cedric Porter':</p></blockquote>
 
 <p>access_log  off;</p>
 
-<p>auth_basic "EverET.org Gitweb Server";</p>
+<p>auth_basic “EverET.org Gitweb Server”;</p>
 
 <p>auth_basic_user_file /etc/nginx/gitweb;</p>
 
@@ -234,7 +146,14 @@ Password for 'Cedric Porter':</p></blockquote>
 
 <p>index   gitweb.cgi ;</p>
 
-<p>location ~ .(cgi|pl).*$ {</p>
+<table>
+  <tbody>
+    <tr>
+      <td>location ~ .(cgi</td>
+      <td>pl).*$ {</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>gzip off;</p>
 
@@ -278,7 +197,8 @@ Password for 'Cedric Porter':</p></blockquote>
 
 <p>}</p>
 
-<p>}</p>
+<p>}
+```</p>
 
 <p>下面附上大牛写的htpasswd。点击这里下载 <a href="http://everet.org/wp-content/uploads/2012/01/htpasswd.rar">htpasswd </a></p>
 
@@ -408,67 +328,40 @@ Password for 'Cedric Porter':</p></blockquote>
 <span class='line-number'>123</span>
 <span class='line-number'>124</span>
 <span class='line-number'>125</span>
-<span class='line-number'>126</span>
-<span class='line-number'>127</span>
-<span class='line-number'>128</span>
-<span class='line-number'>129</span>
-<span class='line-number'>130</span>
-<span class='line-number'>131</span>
-<span class='line-number'>132</span>
-<span class='line-number'>133</span>
-<span class='line-number'>134</span>
-<span class='line-number'>135</span>
-<span class='line-number'>136</span>
-<span class='line-number'>137</span>
-<span class='line-number'>138</span>
-<span class='line-number'>139</span>
-<span class='line-number'>140</span>
 </pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="err">!</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="s">&quot;&quot;&quot;Replacement for htpasswd&quot;&quot;&quot;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Original</span> <span class="n">author</span><span class="p">:</span> <span class="n">Eli</span> <span class="n">Carter</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span> <span class="nb">id</span><span class="o">=</span><span class="s">&quot;usrbinpython&quot;</span><span class="o">&gt;</span><span class="err">!</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">”</span><span class="s">&quot;”Replacement for htpasswd”””</span>
+</span><span class='line'><span class="c"># Original author: Eli Carter&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">os</span>
 </span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
 </span><span class='line'><span class="kn">import</span> <span class="nn">random</span>
 </span><span class='line'><span class="kn">from</span> <span class="nn">optparse</span> <span class="kn">import</span> <span class="n">OptionParser</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">We</span> <span class="n">need</span> <span class="n">a</span> <span class="n">crypt</span> <span class="n">module</span><span class="p">,</span> <span class="n">but</span> <span class="n">Windows</span> <span class="n">doesn</span><span class="s">&#39;t have one by default.  Try to find&lt;/h1&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">one</span><span class="p">,</span> <span class="ow">and</span> <span class="n">tell</span> <span class="n">the</span> <span class="n">user</span> <span class="k">if</span> <span class="n">we</span> <span class="n">can</span><span class="s">&#39;t.&lt;/h1&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">try</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">crypt</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">try</span><span class="p">:</span>
-</span><span class='line'>    <span class="kn">import</span> <span class="nn">fcrypt</span> <span class="kn">as</span> <span class="nn">crypt</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span> <span class="nb">id</span><span class="o">=</span><span class="s">&quot;we-need-a-crypt-module-but-windows-doesnt-have-one-by-default--try-to-find&quot;</span><span class="o">&gt;</span><span class="n">We</span> <span class="n">need</span> <span class="n">a</span> <span class="n">crypt</span> <span class="n">module</span><span class="p">,</span> <span class="n">but</span> <span class="n">Windows</span> <span class="n">doesn</span><span class="err">’</span><span class="n">t</span> <span class="n">have</span> <span class="n">one</span> <span class="n">by</span> <span class="n">default</span><span class="o">.</span>  <span class="n">Try</span> <span class="n">to</span> <span class="n">find</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="c"># one, and tell the user if we can’t.</span>
+</span><span class='line'><span class="k">try</span><span class="p">:</span>
+</span><span class='line'>    <span class="kn">import</span> <span class="nn">crypt</span>
 </span><span class='line'><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Cannot find a crypt module.  &quot;</span>
-</span><span class='line'>                     <span class="s">&quot;Possibly http://carey.geek.nz/code/python-fcrypt/</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="k">try</span><span class="p">:</span>
+</span><span class='line'>        <span class="kn">import</span> <span class="nn">fcrypt</span> <span class="kn">as</span> <span class="nn">crypt</span>
+</span><span class='line'>    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="err">“</span><span class="n">Cannot</span> <span class="n">find</span> <span class="n">a</span> <span class="n">crypt</span> <span class="n">module</span><span class="o">.</span>  <span class="err">“</span>
+</span><span class='line'>                         <span class="err">“</span><span class="n">Possibly</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">carey</span><span class="o">.</span><span class="n">geek</span><span class="o">.</span><span class="n">nz</span><span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">fcrypt</span><span class="o">/</span>\<span class="n">n</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">salt</span><span class="p">():</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">salt</span><span class="p">():</span>
+</span><span class='line'>    <span class="err">“</span><span class="s">&quot;”Returns a string of 2 randome letters”””</span>
+</span><span class='line'>    <span class="n">letters</span> <span class="o">=</span> <span class="err">‘</span><span class="n">abcdefghijklmnopqrstuvwxyz</span><span class="err">’</span> \
+</span><span class='line'>              <span class="err">‘</span><span class="n">ABCDEFGHIJKLMNOPQRSTUVWXYZ</span><span class="err">’</span> \
+</span><span class='line'>              <span class="err">‘</span><span class="mo">01234567</span><span class="mi">89</span><span class="o">/.</span><span class="err">’</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span> <span class="o">+</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="s">&quot;&quot;&quot;Returns a string of 2 randome letters&quot;&quot;&quot;</span>
-</span><span class='line'><span class="n">letters</span> <span class="o">=</span> <span class="s">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span> \
-</span><span class='line'>          <span class="s">&#39;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;</span> \
-</span><span class='line'>          <span class="s">&#39;0123456789/.&#39;</span>
-</span><span class='line'><span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span> <span class="o">+</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">class</span> <span class="nc">HtpasswdFile</span><span class="p">:</span>
+</span><span class='line'>    <span class="err">“</span><span class="s">&quot;”A class for manipulating htpasswd files.”””&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">class</span> <span class="nc">HtpasswdFile</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="s">&quot;&quot;&quot;A class for manipulating htpasswd files.&quot;&quot;&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">create</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">create</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
 </span><span class='line'>    <span class="bp">self</span><span class="o">.</span><span class="n">entries</span> <span class="o">=</span> <span class="p">[]</span>
 </span><span class='line'>    <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
 </span><span class='line'>    <span class="k">if</span> <span class="ow">not</span> <span class="n">create</span><span class="p">:</span>
@@ -507,21 +400,20 @@ Password for 'Cedric Porter':</p></blockquote>
 </span><span class='line'>                    <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">username</span><span class="p">]</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span class='line'>    <span class="err">“”“</span><span class="o">%</span><span class="n">prog</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span><span class="n">b</span> <span class="n">filename</span> <span class="n">username</span> <span class="n">password</span>
+</span><span class='line'>    <span class="n">Create</span> <span class="ow">or</span> <span class="n">update</span> <span class="n">an</span> <span class="n">htpasswd</span> <span class="nb">file</span><span class="err">”””</span>
+</span><span class='line'>    <span class="c"># For now, we only care about the use cases that affect tests/functional.py</span>
+</span><span class='line'>    <span class="n">parser</span> <span class="o">=</span> <span class="n">OptionParser</span><span class="p">(</span><span class="n">usage</span><span class="o">=</span><span class="n">main</span><span class="o">.&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">doc</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="err">‘</span><span class="o">-</span><span class="n">b</span><span class="err">’</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="err">’</span><span class="n">store_true</span><span class="err">’</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="err">’</span><span class="n">batch</span><span class="err">’</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">help</span><span class="o">=</span><span class="err">’</span><span class="n">Batch</span> <span class="n">mode</span><span class="p">;</span> <span class="n">password</span> <span class="ow">is</span> <span class="n">passed</span> <span class="n">on</span> <span class="n">the</span> <span class="n">command</span> <span class="n">line</span> <span class="n">IN</span> <span class="n">THE</span> <span class="n">CLEAR</span><span class="o">.</span><span class="err">’</span>
+</span><span class='line'>        <span class="p">)</span>
+</span><span class='line'>    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="err">‘</span><span class="o">-</span><span class="n">c</span><span class="err">’</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="err">’</span><span class="n">store_true</span><span class="err">’</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="err">’</span><span class="n">create</span><span class="err">’</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">help</span><span class="o">=</span><span class="err">’</span><span class="n">Create</span> <span class="n">a</span> <span class="n">new</span> <span class="n">htpasswd</span> <span class="nb">file</span><span class="p">,</span> <span class="n">overwriting</span> <span class="nb">any</span> <span class="n">existing</span> <span class="nb">file</span><span class="o">.</span><span class="err">’</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="err">‘</span><span class="o">-</span><span class="n">D</span><span class="err">’</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="err">’</span><span class="n">store_true</span><span class="err">’</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="err">’</span><span class="n">delete_user</span><span class="err">’</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="err">’</span><span class="n">Remove</span> <span class="n">the</span> <span class="n">given</span> <span class="n">user</span> <span class="kn">from</span> <span class="nn">the</span> <span class="nn">password</span> <span class="nn">file.</span><span class="err">’)&lt;/</span><span class="nn">p</span><span class="err">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="s">&quot;&quot;&quot;%prog [-c] -b filename username password</span>
-</span><span class='line'><span class="s">Create or update an htpasswd file&quot;&quot;&quot;</span>
-</span><span class='line'><span class="c"># For now, we only care about the use cases that affect tests/functional.py</span>
-</span><span class='line'><span class="n">parser</span> <span class="o">=</span> <span class="n">OptionParser</span><span class="p">(</span><span class="n">usage</span><span class="o">=</span><span class="n">main</span><span class="o">.</span><span class="n">__doc__</span><span class="p">)</span>
-</span><span class='line'><span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-b&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;batch&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-</span><span class='line'>    <span class="n">help</span><span class="o">=</span><span class="s">&#39;Batch mode; password is passed on the command line IN THE CLEAR.&#39;</span>
-</span><span class='line'>    <span class="p">)</span>
-</span><span class='line'><span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-c&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;create&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-</span><span class='line'>    <span class="n">help</span><span class="o">=</span><span class="s">&#39;Create a new htpasswd file, overwriting any existing file.&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-D&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;delete_user&#39;</span><span class="p">,</span>
-</span><span class='line'>    <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;Remove the given user from the password file.&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">def</span> <span class="nf">syntax_error</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
 </span><span class='line'>    <span class="sd">&quot;&quot;&quot;Utility function for displaying fatal error messages with usage</span>
@@ -557,13 +449,12 @@ Password for 'Cedric Porter':</p></blockquote>
 </span><span class='line'><span class="n">passwdfile</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">==</span> <span class="s">&#39;&lt;strong&gt;main&lt;/strong&gt;&#39;</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">main</span><span class="p">()</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">==</span> <span class="err">‘</span><span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">main</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span><span class="err">’</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">main</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
 ]]></content>
   </entry>
   
@@ -583,7 +474,6 @@ Password for 'Cedric Porter':</p></blockquote>
 <p>我们首先打开 TortoiseGit 下的 puttygen，然后点击load，把自己密钥加载进来，我们之前创建的密钥，如果没做任何更改，则文件名为id_rsa。</p>
 
 <!-- more -->
-
 
 <p><a href="http://everet.org/wp-content/uploads/2012/01/image7.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb7.png" alt="image" /></a></p>
 
@@ -638,42 +528,46 @@ Password for 'Cedric Porter':</p></blockquote>
     <id>http://everet.org/2012/01/gitosis-in-ubuntu</id>
     <content type="html"><![CDATA[<p>更详细的教程请见 《Pro Git》<a href="http://progit.org/book/zh/ch4-7.html">http://progit.org/book/zh/ch4-7.html</a>。</p>
 
-<h3>安装必备工具</h3>
+<h3 id="section">安装必备工具</h3>
 
-<p>apt-get install git gitweb gitosis</p>
+<p><code>apt-get install git gitweb gitosis</code></p>
 
 <p>用自己的公钥来初始化Gitosis</p>
 
-<p>root@everet:/var# sudo -H -u git gitosis-init &lt; /tmp/authorized_keys
+<p><code>console
+root@everet:/var# sudo -H -u git gitosis-init &lt; /tmp/authorized_keys
 Initialized empty Git repository in /home/git/repositories/gitosis-admin.git/
-Reinitialized existing Git repository in /home/git/repositories/gitosis-admin.git/</p>
+Reinitialized existing Git repository in /home/git/repositories/gitosis-admin.git/
+</code></p>
 
 <p>对该仓库中的<code>post-update</code> 脚本加上可执行权限</p>
 
-<p>root@everet:/home/git/repositories/gitosis-admin.git/hooks# chmod 755 post-update</p>
+<p><code>root@everet:/home/git/repositories/gitosis-admin.git/hooks # chmod 755 post-update</code></p>
 
-<h3>克隆 Gitosis 的控制仓库</h3>
+<h3 id="gitosis-">克隆 Gitosis 的控制仓库</h3>
 
-<p>$ git clone git@everet.org:gitosis-admin.git</p>
+<p><code>$ git clone git@everet.org:gitosis-admin.git</code></p>
 
 <p>这会得到一个名为 <code>gitosis-admin</code> 的工作目录，主要由两部分组成：</p>
 
 <!-- more -->
 
-
-<blockquote><p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/everet
-$ cd gitosis-admin/</p></blockquote>
+<p>``` console
+Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/everet
+$ cd gitosis-admin/</p>
 
 <p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/everet/gitosis-admin
 $ find .
 ./gitosis.conf
 ./keydir
-./keydir/cedricporter@ET.pub</p>
+./keydir/cedricporter@ET.pub
+```</p>
 
 <p>如果我们要增加工程：clover，我们可以修改gitosis.conf</p>
 
-<blockquote><p>$ cat gitosis.conf
-[gitosis]</p></blockquote>
+<p>``` console
+$ cat gitosis.conf
+[gitosis]</p>
 
 <p>[group gitosis-admin]
 writable = gitosis-admin
@@ -681,17 +575,20 @@ members = cedricporter@ET</p>
 
 <p>[group clover]
 writable = clover
-members = cedricporter@ET</p>
+members = cedricporter@ET
+```</p>
 
 <p>修改完后，提交并推送到服务器。</p>
 
-<blockquote><p>$ git commit -am 'add project clover'
+<p>``` console
+$ git commit -am ‘add project clover’
 [master 3d0dd1b] add project clover
-Committer: U-CedricPorter-PC\Cedric Porter <Cedric Porter@CedricPorter-PC.(none)></p></blockquote>
+Committer: U-CedricPorter-PC\Cedric Porter &lt;Cedric Porter@CedricPorter-PC.(none)&gt;</p>
 
-<p>$ git push</p>
+<p>$ git push
+```</p>
 
-<h2>Windows客户端</h2>
+<h2 id="windows">Windows客户端</h2>
 
 <p>如果我们使用cygwin的git，那么就不会存在任何任何中文乱码问题。</p>
 

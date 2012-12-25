@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="字符画很好玩，我们来看看怎样将一张图片变成字符画。 我们首先将图片变成黑白的，那么每个像素的取值范围为：0-255. 然后我们将0-255映射到0-14的范围上，然后用如下字符代替： color = &#8216;MNHQ$OC?7>!:-;.&#8217; 也就是像素为0的点用“M”表示， &hellip;">
+  <meta name="description" content="字符画很好玩，我们来看看怎样将一张图片变成字符画。 我们首先将图片变成黑白的，那么每个像素的取值范围为：0-255. 然后我们将0-255映射到0-14的范围上，然后用如下字符代替： color = ‘MNHQ$OC?7&gt;!:-;.’ 也就是像素为0的点用“M”表示，像素为14的点用“.” &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -113,7 +113,7 @@
 
 <p>然后我们将0-255映射到0-14的范围上，然后用如下字符代替：</p>
 
-<p>color = &#8216;MNHQ$OC?7>!:-;.&#8217;</p>
+<p>color = ‘MNHQ$OC?7&gt;!:-;.’</p>
 
 <p>也就是像素为0的点用“M”表示，像素为14的点用“.”表示。</p>
 
@@ -121,133 +121,133 @@
 
 <p>我们来看一段代码：<!-- more --></p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">Image</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;MNHQ$OC?7&gt;!:-;.&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">to_html</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">html_head</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
-</span><span class='line'><span class="s">            &lt;html&gt;</span>
-</span><span class='line'><span class="s">              &lt;head&gt;</span>
-</span><span class='line'><span class="s">                &lt;style type=&quot;text/css&quot;&gt;</span>
-</span><span class='line'><span class="s">                  body {font-family:Monospace; font-size:5px;}</span>
-</span><span class='line'><span class="s">                &lt;/style&gt;</span>
-</span><span class='line'><span class="s">              &lt;/head&gt;</span>
-</span><span class='line'><span class="s">            &lt;body&gt; &#39;&#39;&#39;</span>
-</span><span class='line'>    <span class="n">html_tail</span> <span class="o">=</span> <span class="s">&#39;&lt;/body&gt;&lt;/html&gt;&#39;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
-</span><span class='line'>        <span class="n">pic_str</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">pic_str</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="s">&#39; &lt;br/&gt;&#39;</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">pic_str</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">html_head</span> <span class="o">+</span> <span class="n">pic_str</span> <span class="o">+</span> <span class="n">html_tail</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="n">wrapper</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@to_html</span>
-</span><span class='line'><span class="k">def</span> <span class="nf">make_char_img</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">pix</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-</span><span class='line'>    <span class="n">pic_str</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-</span><span class='line'>    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
-</span><span class='line'>        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">width</span><span class="p">):</span>
-</span><span class='line'>            <span class="n">pic_str</span> <span class="o">+=</span> <span class="n">color</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">pix</span><span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">])</span> <span class="o">*</span> <span class="mi">14</span> <span class="o">/</span> <span class="mi">255</span><span class="p">]</span>
-</span><span class='line'>        <span class="n">pic_str</span> <span class="o">+=</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">pic_str</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">img_name</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img_name</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
-</span><span class='line'>    <span class="n">m</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">delta</span> <span class="o">=</span> <span class="n">m</span> <span class="o">/</span> <span class="mf">200.0</span>
-</span><span class='line'>    <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">/</span> <span class="n">delta</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span> <span class="o">/</span> <span class="n">delta</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
-</span><span class='line'>    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s">&#39;L&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="n">img</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">save_to_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">pic_str</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">outfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pic_str</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">outfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-</span><span class='line'>    <span class="n">img</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="s">&#39;6.jpg&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">pic_str</span> <span class="o">=</span> <span class="n">make_char_img</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">save_to_file</span><span class="p">(</span><span class="s">&#39;char.html&#39;</span><span class="p">,</span> <span class="n">pic_str</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">main</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">Image</span>
+</span><span class="line">
+</span><span class="line"><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;MNHQ$OC?7&gt;!:-;.&#39;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">to_html</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+</span><span class="line">    <span class="n">html_head</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+</span><span class="line"><span class="s">            &lt;html&gt;</span>
+</span><span class="line"><span class="s">              &lt;head&gt;</span>
+</span><span class="line"><span class="s">                &lt;style type=&quot;text/css&quot;&gt;</span>
+</span><span class="line"><span class="s">                  body {font-family:Monospace; font-size:5px;}</span>
+</span><span class="line"><span class="s">                &lt;/style&gt;</span>
+</span><span class="line"><span class="s">              &lt;/head&gt;</span>
+</span><span class="line"><span class="s">            &lt;body&gt; &#39;&#39;&#39;</span>
+</span><span class="line">    <span class="n">html_tail</span> <span class="o">=</span> <span class="s">&#39;&lt;/body&gt;&lt;/html&gt;&#39;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+</span><span class="line">        <span class="n">pic_str</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</span><span class="line">        <span class="n">pic_str</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="s">&#39; &lt;br/&gt;&#39;</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">pic_str</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">html_head</span> <span class="o">+</span> <span class="n">pic_str</span> <span class="o">+</span> <span class="n">html_tail</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="n">wrapper</span>
+</span><span class="line">
+</span><span class="line"><span class="nd">@to_html</span>
+</span><span class="line"><span class="k">def</span> <span class="nf">make_char_img</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+</span><span class="line">    <span class="n">pix</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</span><span class="line">    <span class="n">pic_str</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+</span><span class="line">    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">width</span><span class="p">):</span>
+</span><span class="line">            <span class="n">pic_str</span> <span class="o">+=</span> <span class="n">color</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">pix</span><span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">])</span> <span class="o">*</span> <span class="mi">14</span> <span class="o">/</span> <span class="mi">255</span><span class="p">]</span>
+</span><span class="line">        <span class="n">pic_str</span> <span class="o">+=</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">pic_str</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">img_name</span><span class="p">):</span>
+</span><span class="line">    <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img_name</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
+</span><span class="line">    <span class="n">m</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+</span><span class="line">    <span class="n">delta</span> <span class="o">=</span> <span class="n">m</span> <span class="o">/</span> <span class="mf">200.0</span>
+</span><span class="line">    <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">/</span> <span class="n">delta</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span> <span class="o">/</span> <span class="n">delta</span><span class="p">)</span>
+</span><span class="line">    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+</span><span class="line">    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s">&#39;L&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="n">img</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">save_to_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">pic_str</span><span class="p">):</span>
+</span><span class="line">    <span class="n">outfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+</span><span class="line">    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pic_str</span><span class="p">)</span>
+</span><span class="line">    <span class="n">outfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span class="line">    <span class="n">img</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="s">&#39;6.jpg&#39;</span><span class="p">)</span>
+</span><span class="line">    <span class="n">pic_str</span> <span class="o">=</span> <span class="n">make_char_img</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</span><span class="line">    <span class="n">save_to_file</span><span class="p">(</span><span class="s">&#39;char.html&#39;</span><span class="p">,</span> <span class="n">pic_str</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class="line">    <span class="n">main</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>整个程序的核心都在下面两行，一个是字符的色阶表，一个是映射公式。</p>
 
-<blockquote></blockquote>
+<blockquote>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>color = 'MNHQ$OC?7>!:-;.'
-</span><span class='line'>pic_str += color[int(pix[w, h]) * 14 / 255]</span></code></pre></td></tr></table></div></figure>
+</blockquote>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">color = 'MNHQ$OC?7&gt;!:-;.'
+</span><span class="line">pic_str += color[int(pix[w, h]) * 14 / 255]</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>效果如下：</p>
 
@@ -347,7 +347,7 @@
         </li>
     
         <li class="related">
-        <a href="/2012/02/python-crawl-jingdong.html">Python抓取京东商城的所有笔记本电脑的参数</a>
+        <a href="/2012/05/python-spark-calculator.html">Python使用spark模块构造计算器</a>
         </li>
     
     </ul>

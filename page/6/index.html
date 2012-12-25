@@ -167,9 +167,12 @@
 
 <p>原型是:</p>
 
-<blockquote><h1>include &lt;unistd.h></h1></blockquote>
-
-<p>int pipe(int file_descriptor[2]);</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">#include &lt;unistd.h&gt;
+</span><span class="line">
+</span><span class="line">int pipe(int file_descriptor[2]);</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>参数是一个由两个整型的文件描述符组成的数组的指针。成功返回0，失败返回-1，并设置errno来表面失败的原因。</p>
 
@@ -316,7 +319,9 @@
 
 <p>它的介绍如下：</p>
 
-<blockquote><p>Clearly makes blog posts, articles and webpages clean and easy to read. Save them to Evernote to read them anywhere.</p></blockquote>
+<blockquote>
+  <p>Clearly makes blog posts, articles and webpages clean and easy to read. Save them to Evernote to read them anywhere.</p>
+</blockquote>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/03/image2.png"><img src="http://everet.org/wp-content/uploads/2012/03/image_thumb2.png" alt="image" /></a></p>
 
@@ -373,7 +378,7 @@
 
 <p>课下的时间都花在Scar上，网络也没仔细研究过，悲剧了，现在开始要好好补下才行了。</p>
 
-<h2>以下的内容是关于FTP协议的。</h2>
+<h2 id="ftp">以下的内容是关于FTP协议的。</h2>
 
 <p>HTTP和FTP都是文件传输协议,他们都运行在TCP之上.</p>
 
@@ -422,15 +427,15 @@
   </header>
 
 
-  <div class="entry-content"><p>作者：<a href="mailto:esr@snark.thyrsus.com">Eric Steven Raymond</a></p>
+  <div class="entry-content"><p>作者：<a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#101;&#115;&#114;&#064;&#115;&#110;&#097;&#114;&#107;&#046;&#116;&#104;&#121;&#114;&#115;&#117;&#115;&#046;&#099;&#111;&#109;">&#069;&#114;&#105;&#099;&#032;&#083;&#116;&#101;&#118;&#101;&#110;&#032;&#082;&#097;&#121;&#109;&#111;&#110;&#100;</a></p>
 
-<p>译者 ： <a href="mailto:prawn_liu@foxmail.com">刘海粟</a>   （此文部分内容参考<a href="mailto:leekawo@hotmail.com">Ken Lee</a> 前辈的<a href="http://www.angelfire.com/ok/leekawo/hackersim.htm">译文</a> ）</p>
+<p>译者 ： <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#112;&#114;&#097;&#119;&#110;&#095;&#108;&#105;&#117;&#064;&#102;&#111;&#120;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;">刘海粟</a>   （此文部分内容参考<a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#108;&#101;&#101;&#107;&#097;&#119;&#111;&#064;&#104;&#111;&#116;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;">&#075;&#101;&#110;&#032;&#076;&#101;&#101;</a> 前辈的<a href="http://www.angelfire.com/ok/leekawo/hackersim.htm">译文</a> ）</p>
 
 <p>本文的PDF文档可以从<a href="http://download.csdn.net/source/2940137">这里</a> 获得。</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/03/4540017_12933565089XHX.jpg"><img src="http://everet.org/wp-content/uploads/2012/03/4540017_12933565089XHX_thumb.jpg" alt="4540017_12933565089XHX" /></a></p>
+<p>[<img src="http://everet.org/wp-content/uploads/2012/03/4540017_12933565089XHX.jpg" alt="4540017_12933565089XHX](http://everet.org/wp-content/uploads/2012/03/4540017_12933565089XHX_thumb.jpg)" /></p>
 
-<h2>为何有此文章?</h2>
+<h2 id="section">为何有此文章?</h2>
 
 <p>身为《<a href="http://www.catb.org/jargon/">黑客辞典</a> 》 <a href="http://blog.csdn.net/UndeadWraith/article/details/6099254#1">[1] </a>和其他一些知名文档的作者, 我常收到热心的网络新人的电子邮件, 问及“如何可以成为一名神奇的黑客？”。 早在1996年我便注意到，好像还没有任何一个“常见问题”或者网络文档论述过这个重要的问题，于是我决定撰写此文。我相信很多黑客都在考虑我现在考虑的这些问题。然而，我并不认为我在这个问题上是唯一的权威，如果你不认同下面读到的这些内容，那请你写下你的看法。
 如果你正在阅读离线文档，那么你可以在<a href="http://catb.org/~esr/faqs/hacker-howto.html">这里</a> 找到本文的最新版。
@@ -475,7 +480,9 @@
   </header>
 
 
-  <div class="entry-content"><blockquote><p>OGRE（Object-Oriented Graphics Rendering Engine，即：面向对象图形渲染引擎）是一个用C++开发的面向场景、非常灵活的3D引擎，它旨在让开发人员更容易、更直接地利用硬件加速的3D图形系统开发应用。这个类库隐藏了底层系统库（如：Direct3D和OpenGL）的所有细节，提供了一个基于世界对象和其他直观类的接口。 译者注:ogre在英文中意为：食人魔鬼, 怪物, 象鬼的人，故其LOGO是一个怪物头。</p></blockquote>
+  <div class="entry-content"><blockquote>
+  <p>OGRE（Object-Oriented Graphics Rendering Engine，即：面向对象图形渲染引擎）是一个用C++开发的面向场景、非常灵活的3D引擎，它旨在让开发人员更容易、更直接地利用硬件加速的3D图形系统开发应用。这个类库隐藏了底层系统库（如：Direct3D和OpenGL）的所有细节，提供了一个基于世界对象和其他直观类的接口。 译者注:ogre在英文中意为：食人魔鬼, 怪物, 象鬼的人，故其LOGO是一个怪物头。</p>
+</blockquote>
 
 <p>以上引用自百度百科。</p>
 
@@ -483,19 +490,29 @@
 
 <p>配置文件的例子如下：</p>
 
-<blockquote><p>[Bootstrap]
-Zip=../media/packs/OgreCore.zip</p></blockquote>
-
-<h1>Resource locations to be added to the default path</h1>
-
-<p>[General]
-FileSystem=../media
-FileSystem=../media/fonts
-FileSystem=../media/sounds
-Zip=../media/packs/ogretestmap.zip
-Zip=../media/packs/skybox.zip</p>
-
-<h1>Zip=../media/packs/chiropteraDM.pk3</h1>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="ini"><span class="line"><span class="k">[Bootstrap]</span>
+</span><span class="line"><span class="na">Zip</span><span class="o">=</span><span class="s">../media/packs/OgreCore.zip</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># Resource locations to be added to the default path</span>
+</span><span class="line"><span class="k">[General]</span>
+</span><span class="line"><span class="na">FileSystem</span><span class="o">=</span><span class="s">../media</span>
+</span><span class="line"><span class="na">FileSystem</span><span class="o">=</span><span class="s">../media/fonts</span>
+</span><span class="line"><span class="na">FileSystem</span><span class="o">=</span><span class="s">../media/sounds</span>
+</span><span class="line"><span class="na">Zip</span><span class="o">=</span><span class="s">../media/packs/ogretestmap.zip</span>
+</span><span class="line"><span class="na">Zip</span><span class="o">=</span><span class="s">../media/packs/skybox.zip</span>
+</span><span class="line"><span class="c">#Zip=../media/packs/chiropteraDM.pk3</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>它分了section，在section下有许多配置语句，也就是一些赋值语句。</p>
 
@@ -591,15 +608,15 @@ Zip=../media/packs/skybox.zip</p>
 
   <div class="entry-content"><p>Clover的数据结构是由面层，边层和点层所组成。</p>
 
-<h2>面层</h2>
+<h2 id="section">面层</h2>
 
 <p>面层是一棵二叉树外加一个面组用于实现重叠的面的拾取和避免Z-Buffer失效。当发生折叠的时候，肯定至少有一个面会被分割成为两个面，所以二叉树的叶子增加两个节点，叶子更新，渲染层也需要更新。</p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/03/facetree.png"><img src="http://everet.org/wp-content/uploads/2012/03/facetree_thumb.png" alt="facetree" /></a></p>
 
-<h2></h2>
+<h2 id="section-1"></h2>
 
-<h2>边层</h2>
+<h2 id="section-2">边层</h2>
 
 <p>边层是二叉树组成的森林，</p>
 

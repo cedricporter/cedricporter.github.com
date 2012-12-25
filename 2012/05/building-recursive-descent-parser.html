@@ -111,11 +111,13 @@
 
 <p>在小学时，大家都学习过如何分辨句子中的不同语言成分，例如动词和名词等。识别计算机语言也是如此（我们称之为语法分析）。</p>
 
-<h2>小例子</h2>
+<h2 id="section">小例子</h2>
 
 <p>我们来看一下：</p>
 
-<blockquote><p>return x + 1;</p></blockquote>
+<blockquote>
+  <p>return x + 1;</p>
+</blockquote>
 
 <p>语法图：<!-- more --></p>
 
@@ -133,43 +135,55 @@
 
 <p>为了避免构造解析树，我们通过函数调用序列隐私地得到他们的信息。我们要做的事情就是为每一个子结构构造一个函数。</p>
 
-<blockquote><p>stat  ::= returnstat</p></blockquote>
-
-<p>returnstat ::= &#8220;return&#8221; expr &#8220;;&#8221;</p>
-
-<p>expr ::= &#8220;x&#8221; &#8220;+&#8221; &#8220;1&#8221;</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">stat  ::= returnstat
+</span><span class="line">returnstat ::= "return" expr ";"
+</span><span class="line">expr ::= "x" "+" "1"</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>构造出来的函数：</p>
 
-<blockquote><p>/<em>* To parse a statement, call stat(); </em>/
-void stat()
-{ returnstat(); }
-void returnstat() { match(&#8220;return&#8221; ); expr(); match(&#8220;;&#8221; ); }
-void expr()
-{ match(&#8220;x&#8221; ); match(&#8220;+&#8221; ); match(&#8220;1&#8221; ); }</p></blockquote>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">/** To parse a statement, call stat(); */
+</span><span class="line">void stat()
+</span><span class="line">{ returnstat(); }
+</span><span class="line">void returnstat() { match("return" ); expr(); match(";" ); }
+</span><span class="line">void expr()
+</span><span class="line">{ match("x" ); match("+" ); match("1" ); }</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>如何解析if、return和赋值语句呢？</p>
 
 <p>我们可以将stat实现成这样。</p>
 
-<blockquote><p>void stat() {
-if ( «lookahead token is return » )               returnstat();
-else if ( «lookahead token is identifier » ) assign();
-else if ( «lookahead token is if » )                ifstat();
-else «parse error »
-}</p></blockquote>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">void stat() {
+</span><span class="line"> if ( «lookahead token is return » )               returnstat();
+</span><span class="line"> else if ( «lookahead token is identifier » ) assign();
+</span><span class="line"> else if ( «lookahead token is if » )                ifstat();
+</span><span class="line"> else «parse error »
+</span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>如果要手写这种解析器，头几个可能挺好玩的，但是这样的活多干几次就会觉得很无聊了。</p>
 
-<h2>例子</h2>
+<h2 id="section-1">例子</h2>
 
 <ul>
-<li><p><a href="http://everet.org/2012/05/calculator-by-recursive-descent-parser.html">用Python实现的LL(1)递归下降语法器计算器</a></p></li>
-<li><p><a href="http://everet.org/2012/05/python-spark-calculator.html">Python使用spark模块构造计算器</a></p></li>
+  <li><a href="http://everet.org/2012/05/calculator-by-recursive-descent-parser.html">用Python实现的LL(1)递归下降语法器计算器</a></li>
+  <li><a href="http://everet.org/2012/05/python-spark-calculator.html">Python使用spark模块构造计算器</a></li>
 </ul>
 
-
-<h2>参考</h2>
+<h2 id="section-2">参考</h2>
 
 <p>[1] Language Implementation Patterns</p>
 

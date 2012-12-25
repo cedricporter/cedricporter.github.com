@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Linux | EverET.org]]></title>
   <link href="http://everet.org/tag/linux/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-25T23:07:51+08:00</updated>
+  <updated>2012-12-26T02:57:37+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -20,13 +20,13 @@
     <id>http://everet.org/2012/11/multi-user-nginx-php-server</id>
     <content type="html"><![CDATA[<p>趁这段时间有空，换成Xen的VPS，系统装了Ubuntu 12.04。决定重新配置一下服务器，另外将Web Server从Apache换成Nginx。</p>
 
-<h2>目标</h2>
+<h2 id="section">目标</h2>
 
 <p>搭建一个前端为nginx支持多用户的php虚拟主机。每个站点可以跑在不同的权限的用户下，一个站点被黑的时候希望不要影响到另一个站点，或者一个同学也不要可以随意访问到别的同学的内容。</p>
 
-<h2>行动<!-- more --></h2>
+<h2 id="more---">行动<!-- more --></h2>
 
-<h3>预备</h3>
+<h3 id="section-1">预备</h3>
 
 <p>首先创建用户，例如user01。我们可以通过</p>
 
@@ -43,7 +43,7 @@
 
 <p>来添加用户，然后在<strong>~user01</strong>目录下面创建一个文件夹<strong>www</strong>，权限为750。group为www-data，这样，只有user01可以读写，www-data仅能读，其他人无权访问。</p>
 
-<h3>php</h3>
+<h3 id="php">php</h3>
 
 <p>从php 5.3.5开始就直接内置支持fpm了，建议直接安装php 5.4。使用php-fpm（php Fastcgi Process Manager），目前这样的方式运行php性能貌似是最高的。</p>
 
@@ -75,7 +75,7 @@
 <p>定义了php进程的权限为user01，监听文件为<strong>/var/run/php5-fpm.user01.sock</strong>。
 这里的定义实际上是指的是用<strong>/var/run/php5-fpm.user01.sock</strong>这个来处理php时的权限为<strong>user01</strong>。到此为止，php的配置就完成了。</p>
 
-<h3>nginx</h3>
+<h3 id="nginx">nginx</h3>
 
 <p>我们nginx的权限为www-data，这样可以读～user01/www目录的内容，但是不能写。nginx的站点配置比较简单。我们来看一下可以工作的简单的配置：</p>
 
@@ -97,15 +97,10 @@
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>&lt;/p&gt;
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>
+</span><span class='line'>    server_name user01.everet.org;&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;server_name user01.everet.org;
-</span><span class='line'>
-</span><span class='line'>access_log  /var/log/nginx/user01.everet.org.access.log;
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;access_log  /var/log/nginx/user01.everet.org.access.log;
 </span><span class='line'>error_log   /var/log/nginx/user01.everet.org.error.log;
 </span><span class='line'>
 </span><span class='line'>root    /home/user01/www/;
@@ -118,15 +113,13 @@
 </span><span class='line'>location ~ .php<span class="nv">$ </span><span class="o">{</span>
 </span><span class='line'>    include fastcgi_params;
 </span><span class='line'>    fastcgi_pass unix:/var/run/php5-fpm.user01.sock;
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;<span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'><span class="o">}</span> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</code></pre>
 
 <p>也就是当处理到.php结尾的uri时，传递到<strong>/var/run/php5-fpm.user01.sock</strong>这个unix套接字处理，此时的php脚本的权限为user01。如果配置得当，就不会影响到其他用户。</p>
 
-<h3>wordpress</h3>
+<h3 id="wordpress">wordpress</h3>
 
 <p>我们用php的主要原因是wordpress，wordpress默认情况下非常臃肿，运行缓慢。因为页面基本只是在更新文章或者发表评论才会更新，所以平时不需要总是动态生成页面。对此，WP Super Cache插件可以很好地进行缓存。WP Super Cache有两种缓存模式一种是PHP缓存、另一种是mod_rewrite缓存（我们选择这个），mod_rewrite是生成静态的页面文件，然后通过.htaccess文件控制Apache来rewrite url。例如我们访问<a href="http://everet.org/2012/01/scar.html">http://everet.org/2012/01/scar.html</a>，其中uri为/2012/01/scar.html，进入到Apache通过rewrite后就变成了/wp-content/cache/supercache/everet.org/2012/01/scar.html/index.html，然后就可以读取静态文件返回给浏览器了。如果静态文件存在的话，就不需要经过php处理了，否则就调用php动态生成页面，同时插件还会生成那个页面的静态文件，下次就直接读取那个静态文件。</p>
 
@@ -184,18 +177,13 @@
 <span class='line-number'>49</span>
 <span class='line-number'>50</span>
 <span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>&lt;/p&gt;
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>
+</span><span class='line'>    server_name user01.everet.org;&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;server_name user01.everet.org;
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;access_log 	/var/log/nginx/user01.everet.org.access.log;
+</span><span class='line'>error_log 	/var/log/nginx/user01.everet.org.error.log;
 </span><span class='line'>
-</span><span class='line'>access_log  /var/log/nginx/user01.everet.org.access.log;
-</span><span class='line'>error_log   /var/log/nginx/user01.everet.org.error.log;
-</span><span class='line'>
-</span><span class='line'>root    /home/user01/www/;
+</span><span class='line'>root	/home/user01/www/;
 </span><span class='line'>index   index.php;
 </span><span class='line'>
 </span><span class='line'><span class="nb">set</span> <span class="nv">$cache_uri</span> <span class="nv">$request_uri</span>;
@@ -233,32 +221,30 @@
 </span><span class='line'>    try_files <span class="nv">$uri</span> /index.php;
 </span><span class='line'>    include fastcgi_params;
 </span><span class='line'>    fastcgi_pass unix:/var/run/php5-fpm.user01.sock;
-</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">}</span>	
 </span><span class='line'>
 </span><span class='line'>location ~* .<span class="o">(</span>ogg|ogv|svg|svgz|oet|otf|woff|mp4|ttf|css|rss|atom|js|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|mp3|bmp|rtf<span class="o">)</span><span class="nv">$ </span><span class="o">{</span>
 </span><span class='line'>    expires max;
 </span><span class='line'>    log_not_found off;
 </span><span class='line'>    access_log off;
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;<span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'><span class="o">}</span> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</code></pre>
 
-<p>我们来慢慢阅读一下这个配置。首先，set $cache_uri $request_uri就是将请求的uri保存到我们的变量$cache_uri中。然后，如果请求方法是POST（$request_method = POST）、包含请求字符串（$query_string != ""）、请求的uri包含一些特殊的php文件（$request_url ~<em> "(/wp-admin/|.........）或者登录过评论过（通过cookie判断，$http_cookie ~</em> "comment_author|w............"），就将$cache_uri设置为'null cache'，这样是让$cache_uri这个字符串变量变成一个无意义的字符串，以让后面拼接出来的路径无意义。</p>
+<p>我们来慢慢阅读一下这个配置。首先，<code>set $cache_uri $request_uri</code>就是将请求的uri保存到我们的变量<code>$cache_uri</code>中。然后，如果请求方法是POST（<code>$request_method = POST</code>）、包含请求字符串（<code>$query_string != ""</code>）、请求的uri包含一些特殊的php文件（<code>$request_url ~* "(/wp-admin/|.........</code>）或者登录过评论过（通过cookie判断，<code>$http_cookie ~* "comment_author|w............"</code>），就将<code>$cache_uri</code>设置为’null cache’，这样是让<code>$cache_uri</code>这个字符串变量变成一个无意义的字符串，以让后面拼接出来的路径无意义。</p>
 
-<p>对于 <strong>try_files /wp-content/cache/supercache/$http_host/$cache_uri/index.html $uri $uri/ /index.php;</strong></p>
+<p>对于 <code>try_files /wp-content/cache/supercache/$http_host/$cache_uri/index.html $uri $uri/ /index.php;</code></p>
 
-<p>这个是依次尝试访问这些文件，成功就直接返回不再继续，如果都找不到就返回最后一个文件/index.php。我们还记得WP Super Cache生成的静态文件结构是/wp-content/cache/supercache/everet.org/2012/01/scar.html/index.html，也就是先尝试WP Super Cache生成的缓存，有就直接返回缓存。</p>
+<p>这个是依次尝试访问这些文件，成功就直接返回不再继续，如果都找不到就返回最后一个文件/index.php。我们还记得WP Super Cache生成的静态文件结构是<code>/wp-content/cache/supercache/everet.org/2012/01/scar.html/index.html</code>，也就是先尝试WP Super Cache生成的缓存，有就直接返回缓存。</p>
 
 <p>用ab测试了一下，对于缓存后的博客文章的RPS可以到900，还挺快的啊。</p>
 
 <p>另外，对于wordpress的wp-config.php文件，里面写有数据库的帐号和密码，所以我们需要将权限改为600，即只有user01自己能够读写，其他人无权访问。</p>
 
-<h2>参考资料</h2>
+<h2 id="section-2">参考资料</h2>
 
 <ul>
-<li><a href="http://rtcamp.com/tutorials/wordpress-nginx-wp-super-cache/">WordPress-Nginx + WP Super cache</a></li>
+  <li><a href="http://rtcamp.com/tutorials/wordpress-nginx-wp-super-cache/">WordPress-Nginx + WP Super cache</a></li>
 </ul>
 
 ]]></content>
@@ -275,11 +261,11 @@
 
 <p>对于screen的使用就不再罗嗦了。具体可以参看后面的参考资料中提供的链接。</p>
 
-<h2>一些技巧</h2>
+<h2 id="section">一些技巧</h2>
 
 <p>下面可能会与诸位使用习惯有所冲突，请见谅。</p>
 
-<h3>把ctrl+a还给我</h3>
+<h3 id="ctrla">把ctrl+a还给我</h3>
 
 <p>首先，screen的命令的前缀是ctrl+a，进入screen后，ctrl+a就成了命令前缀了。我经常使用ctrl+a跳到行首，ctrl+e跳到行尾，所以需要修改一下前缀，否则ctrl+a跳到行首这个习惯就得改了。我们在家目录下面创建一个文件<strong>～/.screenrc</strong>。然后在里面写上</p>
 
@@ -290,15 +276,15 @@
 
 <p>然后就把前缀改成ctrl+z了，如果需要暂停程序的话，就用ctrl+z z来暂停。这样ctrl+a就回来了。</p>
 
-<h3>偷懒</h3>
+<h3 id="section-1">偷懒</h3>
 
 <p>每次打screen真麻烦，我们在<strong>～/.bashrc</strong>中加上<!-- more --></p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">alias </span><span class="nv">sc</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span>
-</span><span class='line'><span class="nb">alias </span><span class="nv">scb</span><span class="o">=</span><span class="s1">&#39;screen -dr normaltask || screen -S normaltask&#39;</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">alias </span><span class="nv">sc</span><span class="o">=</span>’screen’
+</span><span class='line'><span class="nb">alias </span><span class="nv">scb</span><span class="o">=</span>’screen -dr normaltask <span class="o">||</span> screen -S normaltask’
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>输入<strong>source ~/.bashrc</strong> 就可以用sc来代替screen了。</p>
@@ -307,7 +293,7 @@
 
 <p>然后每次登录的时候，输入 scb，就可以恢复到normaltask这个常用窗口之前的任务了。是不是很方便呢？</p>
 
-<h3>补全</h3>
+<h3 id="section-2">补全</h3>
 
 <p>在screen下面的补全很有问题，和bash有明显的区别，只能补全文件名，对于命令的参数的补全就无法补全了。因为screen默认貌似是使用未登录的shell。</p>
 
@@ -320,12 +306,18 @@
 
 <p>就可以使用bash的补全了。</p>
 
-<h2>参考资料</h2>
+<h2 id="section-3">参考资料</h2>
 
 <ol>
-<li><p><a href="http://blog.longwin.com.tw/2005/11/screen_teach/">screen 教學</a></p></li>
-<li><p><a href="http://hi.baidu.com/willor/item/3b60db19132035fd65eabfab">screen命令</a></p></li>
-<li><p><a href="http://serverfault.com/questions/126009/how-do-i-ask-screen-to-behave-like-a-standard-bash-shell">How do I ask screen to behave like a standard bash shell?</a></p></li>
+  <li>
+    <p><a href="http://blog.longwin.com.tw/2005/11/screen_teach/">screen 教學</a></p>
+  </li>
+  <li>
+    <p><a href="http://hi.baidu.com/willor/item/3b60db19132035fd65eabfab">screen命令</a></p>
+  </li>
+  <li>
+    <p><a href="http://serverfault.com/questions/126009/how-do-i-ask-screen-to-behave-like-a-standard-bash-shell">How do I ask screen to behave like a standard bash shell?</a></p>
+  </li>
 </ol>
 
 ]]></content>
@@ -338,11 +330,11 @@
     <id>http://everet.org/2012/09/chrome-ramdisk</id>
     <content type="html"><![CDATA[<p>我现在使用的一台电脑的硬盘速度非常慢，Chrome有时也会对硬盘读写也会让机器发生顿卡，真是悲剧。所以我决定将Chrome经常读写的数据放置到内存中以提高响应速度。 Chrome的数据文件主要有用户配置文件以及磁盘缓存文件。在Ubuntu下就分别放置在~/.config/google-chrome以及~/.cache/google-chrome下面。 在Linux下，ramdisk直接就有了，直接拿来用就可以了，而在Windows下需要安装一些程序来创建ramdisk。我们来看看Linux下怎么做。 在Linux下，/dev/shm目录就是映射到了内存，所有写的东西都是直接写到了内存里面，不过这个目录不是持久的，断电就没了。</p>
 
-<h2>Hack</h2>
+<h2 id="hack">Hack</h2>
 
 <p>我们的想法是，开机的时候将Chrome的数据文件全部放到/dev/shm下面，然后中间所有的读写都是在/dev/shm里面完成，因为都是在内存里面完成，所以速度会非常快。<!-- more --> 但是，坏处是，断电的时候，这个文件夹就会清空了。所以我们在关闭Chrome的时候，再将/dev/shm的数据复制到硬盘里面。这样的不足之处是，中间如果电脑突然断电会导致这次打开Chrome做的所有操作都没了，不过这不是大问题，因为只要是登录了的Chrome，都会将配置备份到Google的服务器，所以插件和收藏夹还是比较安全的。如果需要更安全，可以每隔一段时间（例如一两个小时），将/dev/shm的数据复制到硬盘，不过我觉得没什么必要，所以就不定期复制到硬盘。 嗯，那我们要处理的就两个文件夹：一个是用户数据文件夹<strong>~/.config/google-chrome</strong>，那些用户信息，历史记录都在里面；另一个是<strong>~/.cache/google-chrome</strong>，用来保存页面缓存文件。 这两个文件夹都可以通过启动参数设置位置，不过我为了全局性，就是无论从哪里打开chrome都可以享受ramdisk，所以我决定将这两个文件夹重定向到/dev/shm下面。</p>
 
-<h3>初始化，复制到内存</h3>
+<h3 id="section">初始化，复制到内存</h3>
 
 <p>我们编写一个开机自启动的脚本。在Ubuntu下，我们可以在系统设置那里增加一个自启动。</p>
 
@@ -357,25 +349,21 @@
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;h1&gt;!/bin/bash&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;echo <span class="s2">&quot;Copies from disk to shm&quot;</span>
+</span><span class='line'>&lt;p&gt;echo “Copies from disk to shm”
 </span><span class='line'>cp -rf /home/cedricporter/shm_backup/cedricporter /dev/shm/cedricporter
-</span><span class='line'>chown cedricporter /dev/shm/cedricporter&lt;/p&gt;
+</span><span class='line'>chown cedricporter /dev/shm/cedricporter &lt;/p&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;ln -s /dev/shm/cedricporter/.config/google-chrome ~/.config/google-chrome
 </span><span class='line'>ln -s /dev/shm/cedricporter/.cache/google-chrome ~/.cache/google-chrome&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;p&gt;date &gt;&gt; /home/cedricporter/shm_backup/load.log
+</span><span class='line'>&lt;p&gt;date » /home/cedricporter/shm_backup/load.log
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>这里做的是，将硬盘里面的Chrome数据文件复制到内存里面，然后建立文件夹链接。</p>
 
-<h3>关闭，写到硬盘</h3>
+<h3 id="section-1">关闭，写到硬盘</h3>
 
 <p>关闭Chrome后，写到硬盘。</p>
 
@@ -389,22 +377,18 @@
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;h1&gt;!/bin/bash&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;echo <span class="s2">&quot;save from shm to disk&quot;</span>
+</span><span class='line'>&lt;p&gt;echo “save from shm to disk”
 </span><span class='line'>cp -rf /dev/shm/cedricporter /home/cedricporter/shm_backup&lt;/p&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;file<span class="o">=</span>/home/cedricporter/shm_backup/save.log
-</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;----- Start Saving -----&quot;</span> &gt;&gt; <span class="nv">$file</span>
-</span><span class='line'>date &gt;&gt; <span class="nv">$file</span>
-</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;----- End -----&quot;</span> &gt;&gt; <span class="nv">$file</span>
+</span><span class='line'><span class="nb">echo</span> “—– Start Saving —–” » <span class="nv">$file</span>
+</span><span class='line'>date » <span class="nv">$file</span>
+</span><span class='line'><span class="nb">echo</span> “—– End —–” » <span class="nv">$file</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h3> 增加关闭Chrome时触发脚本</h3>
+<h3 id="chrome"> 增加关闭Chrome时触发脚本</h3>
 
 <p>我们期望在关闭Chrome的时候，能够调用我们写到硬盘的脚本，来将/dev/shm里面的内容写到硬盘里面，好让下次开机的时候将数据载入到内存中。</p>
 
@@ -414,7 +398,7 @@
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">exec</span> -a <span class="s2">&quot;$0&quot;</span> <span class="s2">&quot;$HERE/chrome&quot;</span> <span class="s2">&quot;$@&quot;</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">exec</span> -a “<span class="nv">$0</span>” “<span class="nv">$HERE</span>/chrome” “<span class="nv">$@</span>”
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>我不想去修改这个shell文件，所以，我将其重命名为google-chrome.origin，然后新建一个shell文件，命名为google-chrome，内容如下：</p>
@@ -423,11 +407,7 @@
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;!/bin/bash&lt;/h1&gt;
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;/opt/google/chrome/google-chrome.origin &amp;amp;&amp;amp; /home/cedricporter/projects/chrome_cache/chrome_save_to_disk.sh
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
@@ -458,12 +438,12 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 </pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">cedricporter@cedricporter-Lenovo:~/projects/CaptchaSystem$</span> sudo strace -p 2207
-</span><span class='line'><span class="go">[sudo] password for cedricporter:</span>
+</span><span class='line'><span class="go">[sudo] password for cedricporter: </span>
 </span><span class='line'><span class="go">Process 2207 attached - interrupt to quit</span>
-</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/b6c1d4f6fff0b536652c83081e5233e1.png&quot;, {st_mode=S_IFREG|0600, st_size=5398, ...}) = 0</span>
-</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/739ea0e4eabe22c5b551156fc3ff93da.png&quot;, {st_mode=S_IFREG|0600, st_size=6059, ...}) = 0</span>
-</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/2aac704bfd3d3a865f66e5c3ee2ba80a.png&quot;, {st_mode=S_IFREG|0600, st_size=6362, ...}) = 0</span>
-</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/5dbe53248aa8a41612137100a315e076.png&quot;, {st_mode=S_IFREG|0600, st_size=6260, ...}) = 0</span>
+</span><span class='line'><span class="go">lstat(“/home/cedricporter/.thumbnails/normal/b6c1d4f6fff0b536652c83081e5233e1.png”, {st_mode=S_IFREG|0600, st_size=5398, …}) = 0</span>
+</span><span class='line'><span class="go">lstat(“/home/cedricporter/.thumbnails/normal/739ea0e4eabe22c5b551156fc3ff93da.png”, {st_mode=S_IFREG|0600, st_size=6059, …}) = 0</span>
+</span><span class='line'><span class="go">lstat(“/home/cedricporter/.thumbnails/normal/2aac704bfd3d3a865f66e5c3ee2ba80a.png”, {st_mode=S_IFREG|0600, st_size=6362, …}) = 0</span>
+</span><span class='line'><span class="go">lstat(“/home/cedricporter/.thumbnails/normal/5dbe53248aa8a41612137100a315e076.png”, {st_mode=S_IFREG|0600, st_size=6260, …}) = 0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>出来的结果就像刷屏一样，全部都是lstat的系统调用，读取的都是.thumbnails下面的图片。<!-- more --></p>
@@ -474,7 +454,7 @@
 
 <p>于是我在非常卡的情况下，把.thumbnail目录删了，瞬间就不卡了。</p>
 
-<h2>Solution</h2>
+<h2 id="solution">Solution</h2>
 
 <p>既然这样，我也就不让它检查缓存了，到时塞爆硬盘我再手动删除缓存算了，不想经常电脑因为硬盘卡住完全动不了。</p>
 
@@ -483,6 +463,7 @@
 /desktop/gnome/thumbnail_cache/maximum_size</p>
 
 <p>然后就不会自动更新缓存了。 当然也可将这两个值设置小一点，就不会有那么多缓存要扫描了。</p>
+
 ]]></content>
   </entry>
   
@@ -493,9 +474,9 @@
     <id>http://everet.org/2012/08/popo-linux</id>
     <content type="html"><![CDATA[<p>在网易实习时，上班一定要开着泡泡，不过泡泡貌似在Linux会严重地水土不服，所以只能装一个虚拟机来解决这个问题。借助<a href="http://everet.org/2012/07/virtualbox-seamless.html">VirtualBox的无缝模式</a>，我们在一定程度上可以缓解这个问题。但是我平时会在多个虚拟桌面。如果恰巧不幸，我长时间没有切换到泡泡所在的虚拟桌面时，那就会有很长时间都不知道有新的泡泡消息。这个无论对人对己都有非常不好的影响。首先，别人无法在第一时间找到我，即便是我开着泡泡；第二，如果有重要通知，我却不幸地没有在泡泡的虚拟桌面时，那就大祸了。<!-- more --></p>
 
-<h2>Ubuntu的4个虚拟桌面</h2>
+<h2 id="ubuntu4">Ubuntu的4个虚拟桌面</h2>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/08/2012-08-21-112057%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png"><img src="http://everet.org/wp-content/uploads/2012/08/2012-08-21-112057%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png" alt="" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/08/2012-08-21-112057的屏幕截图.png"><img src="http://everet.org/wp-content/uploads/2012/08/2012-08-21-112057的屏幕截图.png" alt="" /></a></p>
 
 <p>那肿么办呢？</p>
 
@@ -507,13 +488,13 @@
 
 <p><a href="http://everet.org/wp-content/uploads/2012/08/tips.png"><img src="http://everet.org/wp-content/uploads/2012/08/tips.png" alt="" /></a></p>
 
-<p>啦啦啦啦啦，看上去可以工作。自从用了这个提示外挂，我再也不用每隔一会儿切换到虚拟机所在虚拟桌面去查看了，<sup>_<sup>，变相提高工作效率，减小了上下文切换的开销。</sup></sup></p>
+<p>啦啦啦啦啦，看上去可以工作。自从用了这个提示外挂，我再也不用每隔一会儿切换到虚拟机所在虚拟桌面去查看了，^_^，变相提高工作效率，减小了上下文切换的开销。</p>
 
 <p>目前我在Ubuntu与XP下使用，其他的还没试过，不过这个应该都是通用的。使用时先编辑一下windowsplugin.py里面的虚拟机宿主的IP，然后将windowsplugin.py放到Windows的启动项，将notify.py放到Linux的启动项即可。</p>
 
 <p>目前的版本是通过轮询监控泡泡的窗口，将来有空的话我会继续开发后续版本。后续版本将会进行DLL Hook，争取可以拿到新消息内容。加油～～</p>
 
-<h2>依赖包</h2>
+<h2 id="section">依赖包</h2>
 
 <p>在Linux宿主需要安装libnotify用户飘窗提示，在Windows需要安装win32gui，其中Win32 Python2.7的win32gui已经附在后面的下载地址里面了。</p>
 

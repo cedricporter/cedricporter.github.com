@@ -121,97 +121,92 @@
 
 <p>我们从clickcha的源码中看看这个插件的工作原理。</p>
 
-<h2>生成验证码</h2>
+<h2 id="section">生成验证码</h2>
 
 <p>首先，插件在comment_form过程下增加了钩子，这样就可以将自己的页面的代码插入到评论框下面。</p>
 
-<figure class='code'><figcaption><span>php  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">add_action(&#39;comment_form&#39;, &#39;clickcha_comment_form&#39;, 10);</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>php  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="x">add_action(&#39;comment_form&#39;, &#39;clickcha_comment_form&#39;, 10);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>其中有一段js，用于验证码token和图片的获取。</p>
 
-<figure class='code'><figcaption><span>javascript  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">clickcha_token</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;clickchatoken&#39;</span><span class="p">).</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">token</span><span class="p">;</span>
-</span><span class='line'>    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;clickcha&#39;</span><span class="p">).</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">&#39;http://api.clickcha.com/challenge?key=&amp;token=&#39;</span> <span class="o">+</span> <span class="nx">token</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="kd">function</span> <span class="nx">clickcha_get_token</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
-</span><span class='line'>    <span class="nx">e</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">&#39;http://api.clickcha.com/token?output=json&amp;key=&amp;rnd=&#39;</span> <span class="o">+</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">();</span>
-</span><span class='line'>    <span class="nx">e</span><span class="p">.</span><span class="nx">type</span><span class="o">=</span> <span class="s1">&#39;text/javascript&#39;</span><span class="p">;</span>
-</span><span class='line'>    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="nx">clickcha_get_token</span><span class="p">();</span>
-</span><span class='line'><span class="c1">// Firefox&#39;s bfcache workaround</span>
-</span><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">onpageshow</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span><span class="k">if</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">persisted</span><span class="p">)</span> <span class="nx">clickcha_get_token</span><span class="p">();};</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>javascript  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">clickcha_token</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;clickchatoken&#39;</span><span class="p">).</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">token</span><span class="p">;</span>
+</span><span class="line">    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;clickcha&#39;</span><span class="p">).</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">&#39;http://api.clickcha.com/challenge?key=&amp;token=&#39;</span> <span class="o">+</span> <span class="nx">token</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="kd">function</span> <span class="nx">clickcha_get_token</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">    <span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
+</span><span class="line">    <span class="nx">e</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">&#39;http://api.clickcha.com/token?output=json&amp;key=&amp;rnd=&#39;</span> <span class="o">+</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">();</span>
+</span><span class="line">    <span class="nx">e</span><span class="p">.</span><span class="nx">type</span><span class="o">=</span> <span class="s1">&#39;text/javascript&#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="nx">clickcha_get_token</span><span class="p">();</span>
+</span><span class="line"><span class="c1">// Firefox&#39;s bfcache workaround</span>
+</span><span class="line"><span class="nb">window</span><span class="p">.</span><span class="nx">onpageshow</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span><span class="k">if</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">persisted</span><span class="p">)</span> <span class="nx">clickcha_get_token</span><span class="p">();};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>在下面这段语句增加引用服务器生成的js。</p>
 
-<figure class='code'><figcaption><span>javascript  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;clickcha&#39;</span><span class="p">).</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">&#39;http://api.clickcha.com/challenge?key=&amp;token=&#39;</span> <span class="o">+</span> <span class="nx">token</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>javascript  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;clickcha&#39;</span><span class="p">).</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">&#39;http://api.clickcha.com/challenge?key=&amp;token=&#39;</span> <span class="o">+</span> <span class="nx">token</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>clickcha服务器生成的被引用的那段js里面的内容</p>
 
-<figure class='code'><figcaption><span>javascript  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">clickcha_token</span><span class="p">(</span><span class="s1">&#39;ww6pGtBKXh_IdBDKVNHYVmeT3fTPDo8pwqCwpUqPIS-ZhYGKhc6SN9TdpZzudXujexPaKfarM57QoTPtd0AqOw&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>javascript  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">clickcha_token</span><span class="p">(</span><span class="s1">&#39;ww6pGtBKXh_IdBDKVNHYVmeT3fTPDo8pwqCwpUqPIS-ZhYGKhc6SN9TdpZzudXujexPaKfarM57QoTPtd0AqOw&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>服务器clickcha服务器被引用的js里，调用了clickcha_token来设置表单中的token和验证码的图片。</p>
 
-<h2>验证</h2>
+<h2 id="section-1">验证</h2>
 
 <p>插件在评论预处理挂上处理钩子。</p>
 
-<figure class='code'><figcaption><span>php  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">add_action(&#39;preprocess_comment&#39;, &#39;clickcha_comment_post&#39;);</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>php  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="x">add_action(&#39;preprocess_comment&#39;, &#39;clickcha_comment_post&#39;);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<p>然后在评论预处理过程向clickcha的服务器发送GET请求验证，如果服务器返回’PASSED’，那么通过验证，否则直接调用wp_die结束处理过程。</p>
 
-<p>然后在评论预处理过程向clickcha的服务器发送GET请求验证，如果服务器返回&#8217;PASSED&#8217;，那么通过验证，否则直接调用wp_die结束处理过程。</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>php  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="x">$response=file_get_contents(&#39;http://api.clickcha.com/verify?key=&#39;.$public_key.&#39;&amp;token=&#39;.$_POST[&#39;clickcha_token&#39;].&#39;&amp;private_key=&#39;.$private_key.&#39;&amp;x=&#39;.$_POST[&#39;clickcha_x&#39;].&#39;&amp;y=&#39;.$_POST[&#39;clickcha_y&#39;]);</span>
+</span><span class="line"><span class="x">$result = get_submatch(&#39;|(\w+)|&#39;, $response);</span>
+</span><span class="line"><span class="x">if(!empty($result)) {</span>
+</span><span class="line"><span class="x">    if($result!=&#39;PASSED&#39;) {</span>
+</span><span class="line"><span class="x">        wp_die(&quot;Clickcha verification failed ($result). Please go back and try again.&quot;);</span>
+</span><span class="line"><span class="x">    }</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<figure class='code'><figcaption><span>php  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">$response=file_get_contents(&#39;http://api.clickcha.com/verify?key=&#39;.$public_key.&#39;&amp;token=&#39;.$_POST[&#39;clickcha_token&#39;].&#39;&amp;private_key=&#39;.$private_key.&#39;&amp;x=&#39;.$_POST[&#39;clickcha_x&#39;].&#39;&amp;y=&#39;.$_POST[&#39;clickcha_y&#39;]);</span>
-</span><span class='line'><span class="x">$result = get_submatch(&#39;|(\w+)|&#39;, $response);</span>
-</span><span class='line'><span class="x">if(!empty($result)) {</span>
-</span><span class='line'><span class="x">    if($result!=&#39;PASSED&#39;) {</span>
-</span><span class='line'><span class="x">        wp_die(&quot;Clickcha verification failed ($result). Please go back and try again.&quot;);</span>
-</span><span class='line'><span class="x">    }</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2> 演示</h2>
+<h2 id="section-2"> 演示</h2>
 
 <p>clickcha官方demo：<a href="http://clickcha.com/demo/">http://clickcha.com/demo/</a></p>
+
 </div>
 
 

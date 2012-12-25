@@ -109,9 +109,9 @@
 
 <div class="entry-content"><p>在网易实习时，上班一定要开着泡泡，不过泡泡貌似在Linux会严重地水土不服，所以只能装一个虚拟机来解决这个问题。借助<a href="http://everet.org/2012/07/virtualbox-seamless.html">VirtualBox的无缝模式</a>，我们在一定程度上可以缓解这个问题。但是我平时会在多个虚拟桌面。如果恰巧不幸，我长时间没有切换到泡泡所在的虚拟桌面时，那就会有很长时间都不知道有新的泡泡消息。这个无论对人对己都有非常不好的影响。首先，别人无法在第一时间找到我，即便是我开着泡泡；第二，如果有重要通知，我却不幸地没有在泡泡的虚拟桌面时，那就大祸了。<!-- more --></p>
 
-<h2>Ubuntu的4个虚拟桌面</h2>
+<h2 id="ubuntu4">Ubuntu的4个虚拟桌面</h2>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/08/2012-08-21-112057%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png"><img src="http://everet.org/wp-content/uploads/2012/08/2012-08-21-112057%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png" alt="" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/08/2012-08-21-112057的屏幕截图.png"><img src="http://everet.org/wp-content/uploads/2012/08/2012-08-21-112057的屏幕截图.png" alt="" /></a></p>
 
 <p>那肿么办呢？</p>
 
@@ -123,13 +123,13 @@
 
 <p><a href="http://everet.org/wp-content/uploads/2012/08/tips.png"><img src="http://everet.org/wp-content/uploads/2012/08/tips.png" alt="" /></a></p>
 
-<p>啦啦啦啦啦，看上去可以工作。自从用了这个提示外挂，我再也不用每隔一会儿切换到虚拟机所在虚拟桌面去查看了，<sup>_<sup>，变相提高工作效率，减小了上下文切换的开销。</sup></sup></p>
+<p>啦啦啦啦啦，看上去可以工作。自从用了这个提示外挂，我再也不用每隔一会儿切换到虚拟机所在虚拟桌面去查看了，^_^，变相提高工作效率，减小了上下文切换的开销。</p>
 
 <p>目前我在Ubuntu与XP下使用，其他的还没试过，不过这个应该都是通用的。使用时先编辑一下windowsplugin.py里面的虚拟机宿主的IP，然后将windowsplugin.py放到Windows的启动项，将notify.py放到Linux的启动项即可。</p>
 
 <p>目前的版本是通过轮询监控泡泡的窗口，将来有空的话我会继续开发后续版本。后续版本将会进行DLL Hook，争取可以拿到新消息内容。加油～～</p>
 
-<h2>依赖包</h2>
+<h2 id="section">依赖包</h2>
 
 <p>在Linux宿主需要安装libnotify用户飘窗提示，在Windows需要安装win32gui，其中Win32 Python2.7的win32gui已经附在后面的下载地址里面了。</p>
 
@@ -215,7 +215,7 @@
         </li>
     
         <li class="related">
-        <a href="/2012/03/vim-table.html">又一个Vim速查表</a>
+        <a href="/2012/02/6-hard-disk-is-installed-to-the-computer.html">给电脑装了6块硬盘后</a>
         </li>
     
         <li class="related">
@@ -223,7 +223,7 @@
         </li>
     
         <li class="related">
-        <a href="/2012/02/6-hard-disk-is-installed-to-the-computer.html">给电脑装了6块硬盘后</a>
+        <a href="/2012/03/vim-table.html">又一个Vim速查表</a>
         </li>
     
     </ul>

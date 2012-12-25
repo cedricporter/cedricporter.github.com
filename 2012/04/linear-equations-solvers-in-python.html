@@ -124,41 +124,32 @@
 <p>我们来围观一下：
 <a href="http://everet.org/wp-content/uploads/2012/04/Screenshot-at-2012-04-24-195023.png"><img src="http://everet.org/wp-content/uploads/2012/04/Screenshot-at-2012-04-24-195023.png" alt="" /></a></p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>说到底呢，这个段代码的关键是利用了复数。
-</span><span class='line'>第一步：
-</span><span class='line'>2 * x + 233 = x * 8 + 3
-</span><span class='line'>变成
-</span><span class='line'>2 * x + 233 -(x * 8 + 3)
-</span><span class='line'>然后把x变成虚数1j
-</span><span class='line'>然后变成
-</span><span class='line'>2 * 1j + 233 -(1j * 8 + 3)
-</span><span class='line'>通过eval算出结果为230-6j
-</span><span class='line'>因为我们知道这个表达式结果为0，而且j也相当于x。
-</span><span class='line'>所以问题变成了：230-6j=0，也就是230-6x=0。
-</span><span class='line'>最后x = - 230 / 6 = 38.33333333336。</span></code></pre></td></tr></table></div></figure>
-
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">说到底呢，这个段代码的关键是利用了复数。
+</span><span class="line">第一步：
+</span><span class="line">2 * x + 233 = x * 8 + 3
+</span><span class="line">变成
+</span><span class="line">2 * x + 233 -(x * 8 + 3)
+</span><span class="line">然后把x变成虚数1j
+</span><span class="line">然后变成
+</span><span class="line">2 * 1j + 233 -(1j * 8 + 3)
+</span><span class="line">通过eval算出结果为230-6j
+</span><span class="line">因为我们知道这个表达式结果为0，而且j也相当于x。
+</span><span class="line">所以问题变成了：230-6j=0，也就是230-6x=0。
+</span><span class="line">最后x = - 230 / 6 = 38.33333333336。</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <!-- more -->
-
-
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"></pre></td><td class='code'><pre><code class=''></code></pre></td></tr></table></div></figure>
-
 
 <p>这里的核心是用到了Python的黑暗魔法eval，eval的第一个参数是表达式，第二个参数是命名空间，也就是把 x = 1j 通过第二个参数把一些值放进去。</p>
 
@@ -166,16 +157,14 @@
 
 <p>神奇的求解函数：</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">s</span><span class="p">(</span><span class="n">eq</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="s">&#39;x&#39;</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">r</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">eq</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">,</span> <span class="s">&#39;-(&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="p">{</span><span class="n">var</span><span class="p">:</span><span class="mi">1j</span><span class="p">})</span>
-</span><span class='line'>    <span class="k">return</span> <span class="o">-</span><span class="n">r</span><span class="o">.</span><span class="n">real</span> <span class="o">/</span> <span class="n">r</span><span class="o">.</span><span class="n">imag</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">s</span><span class="p">(</span><span class="n">eq</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="s">&#39;x&#39;</span><span class="p">):</span>
+</span><span class="line">    <span class="n">r</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">eq</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">,</span> <span class="s">&#39;-(&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="p">{</span><span class="n">var</span><span class="p">:</span><span class="mi">1j</span><span class="p">})</span>
+</span><span class="line">    <span class="k">return</span> <span class="o">-</span><span class="n">r</span><span class="o">.</span><span class="n">real</span> <span class="o">/</span> <span class="n">r</span><span class="o">.</span><span class="n">imag</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
 
@@ -262,7 +251,7 @@
         </li>
     
         <li class="related">
-        <a href="/2012/06/python-byte-code.html">查看Python字节码</a>
+        <a href="/2012/06/python-dot-product.html">Python计算点积</a>
         </li>
     
     </ul>

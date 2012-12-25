@@ -109,46 +109,41 @@
   </header>
 
 
-<div class="entry-content"><h2>为什么调试Nginx</h2>
+<div class="entry-content"><h2 id="nginx">为什么调试Nginx</h2>
 
-<p> 为什么要调试Nginx，原因多种多样。如果阅读源码的话，开着进程单步走下去不失为一种很好的源码导读方式。</p>
+<p>为什么要调试Nginx，原因多种多样。如果阅读源码的话，开着进程单步走下去不失为一种很好的源码导读方式。 </p>
 
-<h2>编译Nginx</h2>
+<h2 id="nginx-1">编译Nginx</h2>
 
-<figure class='code'><figcaption><span>bash  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>  ./configure --prefix<span class="o">=</span><span class="s2">&quot;$HOME/my-nginx&quot;</span> --with-debug
-</span><span class='line'>  make <span class="o">&amp;&amp;</span> make install
-</span><span class='line'>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">  ./configure --prefix<span class="o">=</span><span class="s2">&quot;$HOME/my-nginx&quot;</span> --with-debug
+</span><span class="line">  make <span class="o">&amp;&amp;</span> make install
+</span><span class="line">
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-
-<p>  当然还要看一下，生成出来的的Makefile是不是有-O优化，如果有的话需要关闭优化，可以看一下根目录下的Makefile以及objs/Makefile。有的话记得需要改成-O0或者直接删掉就好了。</p>
+<p>当然还要看一下，生成出来的的Makefile是不是有-O优化，如果有的话需要关闭优化，可以看一下根目录下的Makefile以及objs/Makefile。有的话记得需要改成-O0或者直接删掉就好了。 </p>
 
 <!-- more -->
 
+<h2 id="nginx-2">为调试配置Nginx</h2>
 
-<p></p>
+<p>然后在$HOME/my-nginx/conf下面就是我们的配置文件了，我们编辑nginx.conf，加上：   </p>
 
-<h2>为调试配置Nginx</h2>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>nginx  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="nginx"><span class="line">  <span class="k">error_log</span> <span class="s">/dev/stdout</span> <span class="s">debug</span><span class="p">;</span>
+</span><span class="line">  <span class="k">master_process</span> <span class="no">off</span><span class="p">;</span>
+</span><span class="line">  <span class="k">daemon</span> <span class="no">off</span><span class="p">;</span>
+</span><span class="line">
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p> 然后在$HOME/my-nginx/conf下面就是我们的配置文件了，我们编辑nginx.conf，加上：</p>
-
-<figure class='code'><figcaption><span>nginx  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='nginx'><span class='line'>  <span class="k">error_log</span> <span class="s">/dev/stdout</span> <span class="s">debug</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">master_process</span> <span class="no">off</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">daemon</span> <span class="no">off</span><span class="p">;</span>
-</span><span class='line'>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>   我们可以看到error_log /dev/stdout这样一句，这样可以将输出日志直接打印到标准输出，调试的时候可以实时看到输出。</p>
+<p>我们可以看到error_log /dev/stdout这样一句，这样可以将输出日志直接打印到标准输出，调试的时候可以实时看到输出。 </p>
 
 <p><img src="http://everet.org/wp-content/uploads/2012/12/wpid-snapshot1-small.png" alt="" /></p>
 </div>

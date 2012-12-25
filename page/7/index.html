@@ -151,43 +151,44 @@
 
   <div class="entry-content"><p>一个很2B的求两个List的差集的作为示例</p>
 
-<figure class='code'><figcaption><span>cpp  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'>        <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Minus</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">list1</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">list2</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">{</span>
-</span><span class='line'>            <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">ret</span> <span class="o">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="n">foreach</span> <span class="p">(</span><span class="n">T</span> <span class="n">e</span> <span class="n">in</span> <span class="n">list1</span><span class="p">)</span>
-</span><span class='line'>            <span class="p">{</span>
-</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">list2</span><span class="p">.</span><span class="n">Contains</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-</span><span class='line'>                <span class="p">{</span>
-</span><span class='line'>                    <span class="n">ret</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>cpp  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="cpp"><span class="line">        <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Minus</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">list1</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">list2</span><span class="p">)</span>
+</span><span class="line">        <span class="p">{</span>
+</span><span class="line">            <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">ret</span> <span class="o">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line">            <span class="n">foreach</span> <span class="p">(</span><span class="n">T</span> <span class="n">e</span> <span class="n">in</span> <span class="n">list1</span><span class="p">)</span>
+</span><span class="line">            <span class="p">{</span>
+</span><span class="line">                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">list2</span><span class="p">.</span><span class="n">Contains</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+</span><span class="line">                <span class="p">{</span>
+</span><span class="line">                    <span class="n">ret</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">                <span class="p">}</span>
+</span><span class="line">            <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">            <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+</span><span class="line">        <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>当然地球人会这样写:</p>
 
-<blockquote><p>List<Edge> beDeletedEdges = currentEdgeList.Except(originEdgeList).ToList();</p></blockquote>
+<blockquote>
+  <p>List<edge> beDeletedEdges = currentEdgeList.Except(originEdgeList).ToList();</edge></p>
+</blockquote>
 
-<p>好吧，我喜欢把C#当Python写&#8230;&#8230;</p>
+<p>好吧，我喜欢把C#当Python写……</p>
 </div>
   
   
@@ -239,10 +240,13 @@
 
 <p>这真是弱爆了的用户体验啊。不过也怪我没仔细看说明。</p>
 
-<blockquote><h4>shutdownhtml</h4>
+<blockquote>
 
-<pre><code>  If this field is non-empty, then Bugzilla will be completely disabled and this text will be displayed instead of all the Bugzilla pages.
-</code></pre></blockquote>
+  <h4 id="shutdownhtml">shutdownhtml</h4>
+
+  <pre><code>  If this field is non-empty, then Bugzilla will be completely disabled and this text will be displayed instead of all the Bugzilla pages.
+</code></pre>
+</blockquote>
 </div>
   
   
@@ -423,7 +427,10 @@
 
 <p>对于MySQL来说，其下可以有很多个数据库，可以使用</p>
 
-<blockquote><p>CREATE DATABASE database_name;</p></blockquote>
+<blockquote>
+
+  <p>CREATE DATABASE database_name;</p>
+</blockquote>
 
 <p>来建数据库。</p>
 
@@ -431,7 +438,10 @@
 
 <p>然后我们可以选择当前操作的数据库，然后在其下建表</p>
 
-<blockquote><p>CREATE TABLE table_name;</p></blockquote>
+<blockquote>
+
+  <p>CREATE TABLE table_name;</p>
+</blockquote>
 
 <p>举个例子，我们可以在MySQL下一些数据库：ET，LST，zhke，test。</p>
 

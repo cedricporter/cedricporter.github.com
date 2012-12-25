@@ -9,8 +9,14 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="书的示例代码在 http://pix.cs.olemiss.edu/csci561/prg561.1.html 我在Ubuntu 10.10上编译会出现错误如下错误 tcpservpoll01.c: In function ‘main’:
-tcpservpoll01.c:13: error: ‘ &hellip;">
+  <meta name="description" content="书的示例代码在 http://pix.cs.olemiss.edu/csci561/prg561.1.html 我在Ubuntu 10.10上编译会出现错误如下错误 1
+2
+3
+4
+5
+6
+tcpservpoll01.c: In function ‘main’:
+tcpservpoll01.c: &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -112,17 +118,23 @@ tcpservpoll01.c:13: error: ‘ &hellip;">
 
 <p>我在Ubuntu 10.10上编译会出现错误如下错误</p>
 
-<blockquote><p>tcpservpoll01.c: In function ‘main’:
-tcpservpoll01.c:13: error: ‘OPEN_MAX’ undeclared (first use in this function)
-tcpservpoll01.c:13: error: (Each undeclared identifier is reported only once
-tcpservpoll01.c:13: error: for each function it appears in.)
-tcpservpoll01.c:13: warning: unused variable ‘client’
-make: *** [tcpservpoll01.o] Error 1
-解决方案是去定义一下OPEN_MAX它。</p></blockquote>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">tcpservpoll01.c: In function ‘main’:
+</span><span class="line">tcpservpoll01.c:13: error: ‘OPEN_MAX’ undeclared (first use in this function)
+</span><span class="line">tcpservpoll01.c:13: error: (Each undeclared identifier is reported only once
+</span><span class="line">tcpservpoll01.c:13: error: for each function it appears in.)
+</span><span class="line">tcpservpoll01.c:13: warning: unused variable ‘client’
+</span><span class="line">make: *** [tcpservpoll01.o] Error 1</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>解决方案是去定义一下OPEN_MAX它。</p>
 
 <p>我们在unp.h里面加上</p>
 
-<blockquote><h1>define OPEN_MAX 1024</h1></blockquote>
+<p><code>#define OPEN_MAX 1024</code></p>
 
 <p>就好了。</p>
 

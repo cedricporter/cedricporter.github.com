@@ -126,92 +126,89 @@ In [1]: import dis In [2 &hellip;">
 
 <p>我们在交互式环境iPython下，可以动态地获取我们刚刚创建的函数的字节码。</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">dis</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">say_hello</span><span class="p">():</span>
-</span><span class='line'>   <span class="o">...</span><span class="p">:</span>     <span class="k">print</span> <span class="s">&#39;Hello, ET&#39;</span>
-</span><span class='line'>   <span class="o">...</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">say_hello</span><span class="p">)</span>
-</span><span class='line'>  <span class="mi">2</span>           <span class="mi">0</span> <span class="n">LOAD_CONST</span>               <span class="mi">1</span> <span class="p">(</span><span class="s">&#39;Hello, ET&#39;</span><span class="p">)</span>
-</span><span class='line'>              <span class="mi">3</span> <span class="n">PRINT_ITEM</span>
-</span><span class='line'>              <span class="mi">4</span> <span class="n">PRINT_NEWLINE</span>
-</span><span class='line'>              <span class="mi">5</span> <span class="n">LOAD_CONST</span>               <span class="mi">0</span> <span class="p">(</span><span class="bp">None</span><span class="p">)</span>
-</span><span class='line'>              <span class="mi">8</span> <span class="n">RETURN_VALUE</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">say_hello</span><span class="p">()</span>
-</span><span class='line'><span class="n">Hello</span><span class="p">,</span> <span class="n">ET</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">dis</span>
+</span><span class="line">
+</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">say_hello</span><span class="p">():</span>
+</span><span class="line">   <span class="o">...</span><span class="p">:</span>     <span class="k">print</span> <span class="s">&#39;Hello, ET&#39;</span>
+</span><span class="line">   <span class="o">...</span><span class="p">:</span>
+</span><span class="line">
+</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">say_hello</span><span class="p">)</span>
+</span><span class="line">  <span class="mi">2</span>           <span class="mi">0</span> <span class="n">LOAD_CONST</span>               <span class="mi">1</span> <span class="p">(</span><span class="s">&#39;Hello, ET&#39;</span><span class="p">)</span>
+</span><span class="line">              <span class="mi">3</span> <span class="n">PRINT_ITEM</span>
+</span><span class="line">              <span class="mi">4</span> <span class="n">PRINT_NEWLINE</span>
+</span><span class="line">              <span class="mi">5</span> <span class="n">LOAD_CONST</span>               <span class="mi">0</span> <span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+</span><span class="line">              <span class="mi">8</span> <span class="n">RETURN_VALUE</span>
+</span><span class="line">
+</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">say_hello</span><span class="p">()</span>
+</span><span class="line"><span class="n">Hello</span><span class="p">,</span> <span class="n">ET</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>而对于文件的字节码，我们可以先读取然后编译。<!-- more --></p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">s</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;test.py&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">co</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&#39;file test.py&#39;</span><span class="p">,</span> <span class="s">&#39;exec&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">co</span><span class="p">)</span>
-</span><span class='line'>  <span class="mi">1</span>           <span class="mi">0</span> <span class="n">LOAD_CONST</span>               <span class="mi">0</span> <span class="p">(</span><span class="n">code</span> <span class="nb">object</span> <span class="n">say_hello</span> <span class="n">at</span> <span class="mh">0x29a2bb0</span><span class="p">,</span>
-</span><span class='line'>                                             <span class="nb">file</span> <span class="s">&quot;file test.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>              <span class="mi">3</span> <span class="n">MAKE_FUNCTION</span>            <span class="mi">0</span>
-</span><span class='line'>              <span class="mi">6</span> <span class="n">STORE_NAME</span>               <span class="mi">0</span> <span class="p">(</span><span class="n">say_hello</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="mi">4</span>           <span class="mi">9</span> <span class="n">LOAD_NAME</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">say_hello</span><span class="p">)</span>
-</span><span class='line'>             <span class="mi">12</span> <span class="n">CALL_FUNCTION</span>            <span class="mi">0</span>
-</span><span class='line'>             <span class="mi">15</span> <span class="n">POP_TOP</span>
-</span><span class='line'>             <span class="mi">16</span> <span class="n">LOAD_CONST</span>               <span class="mi">1</span> <span class="p">(</span><span class="bp">None</span><span class="p">)</span>
-</span><span class='line'>             <span class="mi">19</span> <span class="n">RETURN_VALUE</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">s</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;test.py&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">co</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&#39;file test.py&#39;</span><span class="p">,</span> <span class="s">&#39;exec&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">co</span><span class="p">)</span>
+</span><span class="line">  <span class="mi">1</span>           <span class="mi">0</span> <span class="n">LOAD_CONST</span>               <span class="mi">0</span> <span class="p">(</span><span class="n">code</span> <span class="nb">object</span> <span class="n">say_hello</span> <span class="n">at</span> <span class="mh">0x29a2bb0</span><span class="p">,</span>
+</span><span class="line">                                             <span class="nb">file</span> <span class="s">&quot;file test.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class="line">              <span class="mi">3</span> <span class="n">MAKE_FUNCTION</span>            <span class="mi">0</span>
+</span><span class="line">              <span class="mi">6</span> <span class="n">STORE_NAME</span>               <span class="mi">0</span> <span class="p">(</span><span class="n">say_hello</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="mi">4</span>           <span class="mi">9</span> <span class="n">LOAD_NAME</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">say_hello</span><span class="p">)</span>
+</span><span class="line">             <span class="mi">12</span> <span class="n">CALL_FUNCTION</span>            <span class="mi">0</span>
+</span><span class="line">             <span class="mi">15</span> <span class="n">POP_TOP</span>
+</span><span class="line">             <span class="mi">16</span> <span class="n">LOAD_CONST</span>               <span class="mi">1</span> <span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+</span><span class="line">             <span class="mi">19</span> <span class="n">RETURN_VALUE</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>其中，dis的输出为：</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>行号            字节码偏移量     字节码指令        指令参数          对于参数的相关说明
-</span><span class='line'>   1             0            LOAD_CONST        1               ('Hello, ET')</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">行号            字节码偏移量     字节码指令        指令参数          对于参数的相关说明
+</span><span class="line">   1             0            LOAD_CONST        1               ('Hello, ET')</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>对于dis模块的介绍，我们可以围观 <a href="http://docs.python.org/library/dis.html">http://docs.python.org/library/dis.html</a>。</p>
 
 <p>字节码的定义在opcode.h中。</p>
 
-<h2>参考：</h2>
+<h2 id="section">参考：</h2>
 
 <ol>
-<li>《Python源码剖析》</li>
+  <li>《Python源码剖析》</li>
 </ol>
 
 </div>

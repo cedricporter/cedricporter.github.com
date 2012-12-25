@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Vim | EverET.org]]></title>
   <link href="http://everet.org/tag/vim/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-25T23:07:51+08:00</updated>
+  <updated>2012-12-26T02:57:37+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -21,7 +21,6 @@
     <content type="html"><![CDATA[<p>图片非常的大，请耐心等候~~</p>
 
 <!-- more -->
-
 
 <p><a href="http://everet.org/wp-content/uploads/2012/03/vim-cheat-sheet-full.png"><img src="http://everet.org/wp-content/uploads/2012/03/vim-cheat-sheet-full.png" alt="" /></a></p>
 
@@ -42,9 +41,9 @@
 
 <p>配置效果如下图：<!-- more --></p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/03/QQ%E6%88%AA%E5%9B%BE20120325190256.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ%E6%88%AA%E5%9B%BE20120325190256.png" alt="" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/03/QQ截图20120325190256.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ截图20120325190256.png" alt="" /></a></p>
 
-<h2>配置文件</h2>
+<h2 id="section">配置文件</h2>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>vim  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -609,164 +608,134 @@
 <span class='line-number'>560</span>
 <span class='line-number'>561</span>
 <span class='line-number'>562</span>
-<span class='line-number'>563</span>
-<span class='line-number'>564</span>
-<span class='line-number'>565</span>
-<span class='line-number'>566</span>
-<span class='line-number'>567</span>
-<span class='line-number'>568</span>
-<span class='line-number'>569</span>
-<span class='line-number'>570</span>
-<span class='line-number'>571</span>
-<span class='line-number'>572</span>
-<span class='line-number'>573</span>
-<span class='line-number'>574</span>
-<span class='line-number'>575</span>
-<span class='line-number'>576</span>
-<span class='line-number'>577</span>
-<span class='line-number'>578</span>
-<span class='line-number'>579</span>
-<span class='line-number'>580</span>
-<span class='line-number'>581</span>
-<span class='line-number'>582</span>
-<span class='line-number'>583</span>
-<span class='line-number'>584</span>
-<span class='line-number'>585</span>
-<span class='line-number'>586</span>
-</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
-</span><span class='line'><span class="c">&quot; Vim setting by Hua Liang [Stupid ET [Cedric Porter]]</span>
-</span><span class='line'><span class="c">&quot;    email:   et@everet.org</span>
-</span><span class='line'><span class="c">&quot;    website: http://EverET.org</span>
-</span><span class='line'><span class="c">&quot;</span>
-</span><span class='line'><span class="c">&quot; How to upgrade:</span>
-</span><span class='line'><span class="c">&quot; Git：</span>
-</span><span class='line'><span class="c">&quot;    https://github.com/cedricporter/vim-emacs-setting</span>
-</span><span class='line'><span class="c">&quot; How to install:</span>
-</span><span class='line'><span class="c">&quot;    copy the file you pull from git to the HOME folder</span>
-</span><span class='line'><span class="c">&quot;&lt;/p&gt;</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'>“””””””””””””””””””””””””””””””””””””””””””””””””””
+</span><span class='line'>” Vim setting by Hua Liang [Stupid ET [Cedric Porter]]
+</span><span class='line'>“    email:   <span class="nb">et</span>@everet.org
+</span><span class='line'>“    website: http:<span class="sr">//</span>EverET.org
+</span><span class='line'>“
+</span><span class='line'>“ How <span class="k">to</span> upgrade:
+</span><span class='line'>“ Git：
+</span><span class='line'>“    https:<span class="sr">//</span>github.<span class="k">com</span><span class="sr">/cedricporter/</span><span class="k">vim</span><span class="p">-</span>emacs<span class="p">-</span>setting
+</span><span class='line'>“ How <span class="k">to</span> install:
+</span><span class='line'>“    copy the <span class="k">file</span> you pull from git <span class="k">to</span> the HOME folder
+</span><span class='line'>“<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;<span class="k">tags</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>“<span class="k">tags</span>
 </span><span class='line'><span class="k">set</span> <span class="k">tags</span><span class="p">=~</span><span class="sr">/.vim/</span>tagfiles/stl_tags
 </span><span class='line'><span class="k">set</span> <span class="k">tags</span><span class="p">+=~</span><span class="sr">/.vim/</span>tagfiles/systags
 </span><span class='line'><span class="k">set</span> <span class="k">tags</span><span class="p">+=~</span><span class="sr">/.vim/</span>tagfiles/opengl_tags
 </span><span class='line'><span class="k">set</span> <span class="k">tags</span><span class="p">+=</span>.<span class="sr">/tags,./</span>..<span class="sr">/tags,./</span>**<span class="sr">/tags&lt;/</span><span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; build <span class="k">tags</span> of your own project with CTRL<span class="p">+</span>F12
-</span><span class='line'>map   :<span class="k">w</span>:<span class="p">!</span>ctags <span class="p">-</span>R <span class="p">--</span><span class="k">c</span><span class="p">++-</span>kinds<span class="p">=+</span><span class="k">p</span> <span class="p">--</span>fields<span class="p">=+</span>iaS <span class="p">--</span>extra<span class="p">=+</span><span class="k">q</span> .<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” build <span class="k">tags</span> of your own project with CTRL<span class="p">+</span>F12
+</span><span class='line'>map   :<span class="k">w</span>:<span class="p">!</span>ctags <span class="p">-</span>R –<span class="k">c</span><span class="p">++-</span>kinds<span class="p">=+</span><span class="k">p</span> –fields<span class="p">=+</span>iaS –extra<span class="p">=+</span><span class="k">q</span> .<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; Vimgdb
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” Vimgdb
 </span><span class='line'><span class="p">:</span>run macros<span class="sr">/gdb_mappings.vim&lt;/</span><span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>&quot;
-</span><span class='line'><span class="c">&quot; =&gt; General</span>
-</span><span class='line'><span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
-</span><span class='line'><span class="c">&quot; Platform Test</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>”””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+</span><span class='line'>” <span class="p">=</span>&amp;gt; General
+</span><span class='line'>“””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+</span><span class='line'>” Platform Test
 </span><span class='line'><span class="k">function</span><span class="p">!</span> MySys<span class="p">()</span>
-</span><span class='line'>  <span class="k">if</span> has<span class="p">(</span><span class="s2">&quot;win32&quot;</span><span class="p">)&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">pre</span><span class="p">&gt;&lt;</span>code<span class="p">&gt;</span><span class="k">return</span> <span class="s2">&quot;windows&quot;</span>
-</span><span class='line'><span class="p">&lt;</span><span class="sr">/code&gt;&lt;/</span><span class="k">pre</span><span class="p">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>  <span class="k">else</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">pre</span><span class="p">&gt;&lt;</span>code<span class="p">&gt;</span><span class="k">return</span> <span class="s2">&quot;linux&quot;</span>
-</span><span class='line'><span class="p">&lt;</span><span class="sr">/code&gt;&lt;/</span><span class="k">pre</span><span class="p">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>  <span class="k">endif</span>
+</span><span class='line'>  <span class="k">if</span> has<span class="p">(</span>“win32”<span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> “windows”
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>    <span class="k">return</span> “linux”
+</span><span class='line'>  <span class="k">endif</span>
 </span><span class='line'><span class="k">endfunction</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>&quot;
-</span><span class='line'><span class="k">set</span> <span class="nb">nocompatible</span> <span class="c">&quot;不要vim模仿vi模式，建议设置，否则会有很多不兼容的问题&lt;/p&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>”””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+</span><span class='line'><span class="k">set</span> <span class="nb">nocompatible</span> “不要<span class="k">vim</span>模仿<span class="k">vi</span>模式，建议设置，否则会有很多不兼容的问题<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; Sets how many <span class="nb">lines</span> of <span class="k">history</span> VIM has <span class="k">to</span> remember
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” Sets how many <span class="nb">lines</span> of <span class="k">history</span> VIM has <span class="k">to</span> remember
 </span><span class='line'><span class="k">set</span> <span class="k">history</span><span class="p">=</span><span class="m">700</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; Enable <span class="k">filetype</span> plugin
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” Enable <span class="k">filetype</span> plugin
 </span><span class='line'><span class="k">filetype</span> plugin <span class="k">on</span>
 </span><span class='line'><span class="k">filetype</span> indent <span class="k">on</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; Set <span class="k">to</span> auto read when <span class="k">a</span> <span class="k">file</span> <span class="k">is</span> changed from the outside
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” Set <span class="k">to</span> auto read when <span class="k">a</span> <span class="k">file</span> <span class="k">is</span> changed from the outside
 </span><span class='line'><span class="k">set</span> <span class="nb">autoread</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; With <span class="k">a</span> map leader it&#39;<span class="k">s</span> possible <span class="k">to</span> <span class="k">do</span> extra <span class="nb">key</span> combinations
-</span><span class='line'><span class="c">&quot; like w saves the current file</span>
-</span><span class='line'><span class="k">let</span> mapleader <span class="p">=</span> <span class="s2">&quot;,&quot;</span>
-</span><span class='line'><span class="k">let</span> <span class="k">g</span>:mapleader <span class="p">=</span> <span class="s2">&quot;,&quot;</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” With <span class="k">a</span> map leader it’<span class="k">s</span> possible <span class="k">to</span> <span class="k">do</span> extra <span class="nb">key</span> combinations
+</span><span class='line'>“ like <span class="k">w</span> saves the current <span class="k">file</span>
+</span><span class='line'><span class="k">let</span> mapleader <span class="p">=</span> “<span class="p">,</span>”
+</span><span class='line'><span class="k">let</span> <span class="k">g</span>:mapleader <span class="p">=</span> “<span class="p">,</span>”<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; Fast saving
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” Fast saving
 </span><span class='line'>nmap <span class="k">w</span> :<span class="k">w</span><span class="p">!</span>
-</span><span class='line'><span class="c">&quot; Fast make</span>
+</span><span class='line'>“ Fast <span class="k">make</span>
 </span><span class='line'>nmap <span class="k">m</span> :<span class="k">w</span>:<span class="k">make</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;Fast reloading of the .vimrc
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>“Fast reloading of the .vimrc
 </span><span class='line'>map  <span class="nb">ss</span> :source $HOME/.vimrc
-</span><span class='line'><span class="c">&quot;Fast editing of .vimrc</span>
+</span><span class='line'>“Fast editing of .vimrc
 </span><span class='line'>map  ee :<span class="k">e</span> $HOME/.vimrc
-</span><span class='line'><span class="c">&quot;When .vimrc is edited, reload it</span>
-</span><span class='line'><span class="c">&quot;autocmd! bufwritepost .vimrc source ~/.vimrc&lt;/p&gt;</span>
+</span><span class='line'>“When .vimrc <span class="k">is</span> edited<span class="p">,</span> reload it
+</span><span class='line'>“autocmd<span class="p">!</span> bufwritepost .vimrc source <span class="p">~</span><span class="sr">/.vimrc&lt;/</span><span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;Language Setting
-</span><span class='line'><span class="k">set</span> <span class="nb">langmenu</span><span class="p">=</span>zh_CN.UTF<span class="m">-8</span>               <span class="c">&quot;设置菜单语言</span>
-</span><span class='line'><span class="k">language</span> <span class="k">messages</span> zh_CN.utf<span class="m">-8</span>          <span class="c">&quot;设置提示信息语言&lt;/p&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>“Language Setting
+</span><span class='line'><span class="k">set</span> <span class="nb">langmenu</span><span class="p">=</span>zh_CN.UTF<span class="m">-8</span>               “设置菜单语言
+</span><span class='line'><span class="k">language</span> <span class="k">messages</span> zh_CN.utf<span class="m">-8</span>          “设置提示信息语言<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>&quot;
-</span><span class='line'><span class="c">&quot; =&gt; VIM user interface</span>
-</span><span class='line'><span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
-</span><span class='line'><span class="c">&quot; Set 5 lines to the curors - when moving vertical..</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>”””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+</span><span class='line'>” <span class="p">=</span>&amp;gt; VIM user interface
+</span><span class='line'>“””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+</span><span class='line'>” Set <span class="m">5</span> <span class="nb">lines</span> <span class="k">to</span> the curors <span class="p">-</span> when moving <span class="k">vertical</span>..
 </span><span class='line'><span class="k">set</span> <span class="k">so</span><span class="p">=</span><span class="m">5</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">wildmenu</span> <span class="c">&quot;Turn on Wild menu</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">ruler</span> <span class="c">&quot;Always show current position</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">cmdheight</span><span class="p">=</span><span class="m">2</span> <span class="c">&quot;The commandbar height</span>
-</span><span class='line'><span class="k">set</span> <span class="k">hid</span> <span class="c">&quot;Change buffer - without saving&lt;/p&gt;</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">wildmenu</span> “Turn <span class="k">on</span> Wild menu
+</span><span class='line'><span class="k">set</span> <span class="nb">ruler</span> “Always show current position
+</span><span class='line'><span class="k">set</span> <span class="nb">cmdheight</span><span class="p">=</span><span class="m">2</span> “The commandbar height
+</span><span class='line'><span class="k">set</span> <span class="k">hid</span> “Change buffer <span class="p">-</span> without saving<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; Set <span class="nb">backspace</span> config
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” Set <span class="nb">backspace</span> config
 </span><span class='line'><span class="k">set</span> <span class="nb">backspace</span><span class="p">=</span><span class="nb">eol</span><span class="p">,</span><span class="k">start</span><span class="p">,</span>indent
 </span><span class='line'><span class="k">set</span> <span class="nb">whichwrap</span><span class="p">+=,</span><span class="k">h</span><span class="p">,</span><span class="k">l</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">set</span> <span class="nb">ignorecase</span> <span class="c">&quot;Ignore case when searching</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">set</span> <span class="nb">ignorecase</span> “Ignore case when searching
 </span><span class='line'><span class="k">set</span> <span class="nb">smartcase</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">set</span> <span class="nb">hlsearch</span> <span class="c">&quot;Highlight search things</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">incsearch</span> <span class="c">&quot;Make search act like search in modern browsers</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">nolazyredraw</span> <span class="c">&quot;Don&#39;t redraw while executing macros</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">magic</span> <span class="c">&quot;Set magic on, for regular expressions</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">showmatch</span> <span class="c">&quot;Show matching bracets when text indicator is over them</span>
-</span><span class='line'><span class="k">set</span> <span class="k">mat</span><span class="p">=</span><span class="m">2</span> <span class="c">&quot;How many tenths of a second to blink</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">showcmd</span> <span class="c">&quot;show (partial) command when not complete&lt;/p&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">set</span> <span class="nb">hlsearch</span> “Highlight search things
+</span><span class='line'><span class="k">set</span> <span class="nb">incsearch</span> “Make search act like search <span class="k">in</span> modern browsers
+</span><span class='line'><span class="k">set</span> <span class="nb">nolazyredraw</span> “Don’<span class="k">t</span> <span class="k">redraw</span> <span class="k">while</span> executing macros
+</span><span class='line'><span class="k">set</span> <span class="nb">magic</span> “Set <span class="nb">magic</span> <span class="k">on</span><span class="p">,</span> <span class="k">for</span> regular expressions
+</span><span class='line'><span class="k">set</span> <span class="nb">showmatch</span> “Show matching bracets when text indicator <span class="k">is</span> over them
+</span><span class='line'><span class="k">set</span> <span class="k">mat</span><span class="p">=</span><span class="m">2</span> “How many tenths of <span class="k">a</span> second <span class="k">to</span> blink
+</span><span class='line'><span class="k">set</span> <span class="nb">showcmd</span>	“show <span class="p">(</span>partial<span class="p">)</span> command when not <span class="nb">complete</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; No sound <span class="k">on</span> errors
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” No sound <span class="k">on</span> errors
 </span><span class='line'><span class="k">set</span> <span class="nb">noerrorbells</span>
 </span><span class='line'><span class="k">set</span> <span class="nb">novisualbell</span>
 </span><span class='line'><span class="k">set</span> <span class="nb">t_vb</span><span class="p">=</span>
 </span><span class='line'><span class="k">set</span> <span class="k">tm</span><span class="p">=</span><span class="m">500</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>&quot;
-</span><span class='line'><span class="c">&quot; =&gt; Colors and Fonts</span>
-</span><span class='line'><span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
-</span><span class='line'><span class="nb">syntax</span> enable <span class="c">&quot;Enable syntax hl&lt;/p&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>”””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+</span><span class='line'>” <span class="p">=</span>&amp;gt; Colors and Fonts
+</span><span class='line'>“””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+</span><span class='line'><span class="nb">syntax</span> enable “Enable <span class="nb">syntax</span> <span class="nb">hl</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; <span class="k">set</span> position and the size of the <span class="nb">window</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” <span class="k">set</span> position and the size of the <span class="nb">window</span>
 </span><span class='line'><span class="k">winpos</span> <span class="m">130</span> <span class="m">20</span>
 </span><span class='line'><span class="k">set</span> <span class="nb">lines</span><span class="p">=</span><span class="m">37</span> <span class="nb">columns</span><span class="p">=</span><span class="m">150</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; Set font according <span class="k">to</span> system
-</span><span class='line'><span class="k">if</span> MySys<span class="p">()</span> <span class="p">==</span> <span class="s2">&quot;mac&quot;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” Set font according <span class="k">to</span> system
+</span><span class='line'><span class="k">if</span> MySys<span class="p">()</span> <span class="p">==</span> “mac”
 </span><span class='line'>  <span class="k">set</span> <span class="nb">gfn</span><span class="p">=</span>Menlo:h14
 </span><span class='line'>  <span class="k">set</span> <span class="k">shell</span><span class="p">=</span><span class="sr">/bin/</span>bash
-</span><span class='line'><span class="k">elseif</span> MySys<span class="p">()</span> <span class="p">==</span> <span class="s2">&quot;windows&quot;</span>
+</span><span class='line'><span class="k">elseif</span> MySys<span class="p">()</span> <span class="p">==</span> “windows”
 </span><span class='line'>  <span class="k">set</span> <span class="nb">gfn</span><span class="p">=</span>Bitstream\ Vera\ Sans\ Mono:h10
-</span><span class='line'><span class="k">elseif</span> MySys<span class="p">()</span> <span class="p">==</span> <span class="s2">&quot;linux&quot;</span>
-</span><span class='line'><span class="c">  &quot;set gfn=Monospace\ 10</span>
+</span><span class='line'><span class="k">elseif</span> MySys<span class="p">()</span> <span class="p">==</span> “linux”
+</span><span class='line'>  “<span class="k">set</span> <span class="nb">gfn</span><span class="p">=</span>Monospace\ <span class="m">10</span>
 </span><span class='line'>  <span class="k">set</span> <span class="nb">gfn</span><span class="p">=</span>Ubuntu\ Mono\ <span class="m">12</span>
 </span><span class='line'>  <span class="k">set</span> <span class="k">shell</span><span class="p">=</span><span class="sr">/bin/</span>bash
 </span><span class='line'><span class="k">endif</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">if</span> has<span class="p">(</span><span class="s2">&quot;gui_running&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">if</span> has<span class="p">(</span>“gui_running”<span class="p">)</span>
 </span><span class='line'>  <span class="k">set</span> <span class="nb">guioptions</span><span class="p">-=</span>T
 </span><span class='line'>  <span class="k">set</span> <span class="nb">t_Co</span><span class="p">=</span><span class="m">256</span>
 </span><span class='line'>  <span class="k">set</span> <span class="nb">background</span><span class="p">=</span><span class="nb">dark</span>
 </span><span class='line'>  <span class="k">colorscheme</span> peaksea
-</span><span class='line'>  <span class="k">set</span> <span class="k">nu</span>        <span class="c">&quot;开启行号显示</span>
+</span><span class='line'>  <span class="k">set</span> <span class="k">nu</span>		“开启行号显示
 </span><span class='line'><span class="k">else</span>
 </span><span class='line'>  <span class="k">colorscheme</span> zellner
 </span><span class='line'>  <span class="k">set</span> <span class="nb">background</span><span class="p">=</span><span class="nb">dark</span>
@@ -774,103 +743,94 @@
 </span><span class='line'><span class="k">endif</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">set</span> <span class="nb">encoding</span><span class="p">=</span>utf8
-</span><span class='line'><span class="k">try</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">pre</span><span class="p">&gt;&lt;</span>code<span class="p">&gt;</span><span class="k">lang</span> en_US
-</span><span class='line'><span class="p">&lt;</span><span class="sr">/code&gt;&lt;/</span><span class="k">pre</span><span class="p">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">catch</span>
+</span><span class='line'><span class="k">try</span>
+</span><span class='line'>    <span class="k">lang</span> en_US
+</span><span class='line'><span class="k">catch</span>
 </span><span class='line'><span class="k">endtry</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">let</span> &amp;amp;<span class="nb">termencoding</span><span class="p">=</span>&amp;amp;<span class="nb">encoding</span>
-</span><span class='line'><span class="c">&quot; 解决打开Windows下编辑的txt乱码问题</span>
-</span><span class='line'><span class="c">&quot; 通过添加gb18030编码等来解决</span>
+</span><span class='line'>“ 解决打开Windows下编辑的txt乱码问题
+</span><span class='line'>“ 通过添加gb18030编码等来解决
 </span><span class='line'><span class="k">set</span> <span class="nb">fileencodings</span><span class="p">=</span>utf<span class="m">-8</span><span class="p">,</span>gbk<span class="p">,</span>ucs<span class="p">-</span>bom<span class="p">,</span>cp936
-</span><span class='line'><span class="k">set</span> <span class="nb">fenc</span><span class="p">=</span>utf<span class="m">-8</span> <span class="c">&quot; default fileencoding</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">fenc</span><span class="p">=</span>utf<span class="m">-8</span> “ default <span class="nb">fileencoding</span>
 </span><span class='line'><span class="k">set</span> <span class="nb">fencs</span><span class="p">=</span>utf<span class="m">-8</span><span class="p">,</span>gb18030<span class="p">,</span>gbk<span class="p">,</span>gb2312<span class="p">,</span>cp936<span class="p">,</span>ucs<span class="p">-</span>bom<span class="p">,</span>euc<span class="p">-</span>jp
-</span><span class='line'><span class="k">set</span> <span class="nb">ffs</span><span class="p">=</span>unix<span class="p">,</span>dos<span class="p">,</span>mac <span class="c">&quot;Default file types&lt;/p&gt;</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">ffs</span><span class="p">=</span>unix<span class="p">,</span>dos<span class="p">,</span>mac “Default <span class="k">file</span> types<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>&quot;
-</span><span class='line'><span class="c">&quot; =&gt; Text, tab and indent related</span>
-</span><span class='line'><span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>”””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+</span><span class='line'>” <span class="p">=</span>&amp;gt; Text<span class="p">,</span> <span class="k">tab</span> and indent related
+</span><span class='line'>“””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””
 </span><span class='line'><span class="k">set</span> <span class="nb">expandtab</span>
 </span><span class='line'><span class="k">set</span> <span class="nb">shiftwidth</span><span class="p">=</span><span class="m">4</span>
 </span><span class='line'><span class="k">set</span> <span class="nb">tabstop</span><span class="p">=</span><span class="m">4</span>
 </span><span class='line'><span class="k">set</span> <span class="nb">smarttab</span>
-</span><span class='line'><span class="c">&quot;set softtabstop=4&lt;/p&gt;</span>
+</span><span class='line'>“<span class="k">set</span> <span class="nb">softtabstop</span><span class="p">=</span><span class="m">4</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">set</span> <span class="nb">lbr</span>     <span class="c">&quot;Line break</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">tw</span><span class="p">=</span><span class="m">500</span>  <span class="c">&quot;Textwidth&lt;/p&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">set</span> <span class="nb">lbr</span>     “Line <span class="k">break</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">tw</span><span class="p">=</span><span class="m">500</span>  “Textwidth<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">set</span> <span class="nb">ai</span> <span class="c">&quot;Auto indent</span>
-</span><span class='line'><span class="k">set</span> <span class="k">si</span> <span class="c">&quot;Smart indet</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">wrap</span> <span class="c">&quot;Wrap lines&lt;/p&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">set</span> <span class="nb">ai</span> “Auto indent
+</span><span class='line'><span class="k">set</span> <span class="k">si</span> “Smart indet
+</span><span class='line'><span class="k">set</span> <span class="nb">wrap</span> “Wrap <span class="nb">lines</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>&quot;
-</span><span class='line'><span class="c">&quot; =&gt; Moving around, tabs and buffers</span>
-</span><span class='line'><span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
-</span><span class='line'><span class="c">&quot; Map space to / (search) and c-space to ? (backgwards search)</span>
-</span><span class='line'><span class="c">&quot;map  /</span>
-</span><span class='line'><span class="c">&quot;map  ?</span>
-</span><span class='line'>map   :<span class="k">noh</span> <span class="c">&quot;Cancel the Highlight of the matching&lt;/p&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>”””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+</span><span class='line'>” <span class="p">=</span>&amp;gt; Moving around<span class="p">,</span> <span class="k">tabs</span> and <span class="k">buffers</span>
+</span><span class='line'>“””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+</span><span class='line'>” Map space <span class="k">to</span> / <span class="p">(</span>search<span class="p">)</span> and <span class="k">c</span><span class="p">-</span>space <span class="k">to</span> ? <span class="p">(</span>backgwards search<span class="p">)</span>
+</span><span class='line'>“map  /
+</span><span class='line'>“map  ?
+</span><span class='line'>map   :<span class="k">noh</span> “Cancel the Highlight of the matching<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; Smart way <span class="k">to</span> move btw. windows
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” Smart way <span class="k">to</span> move btw. windows
 </span><span class='line'>map  <span class="k">j</span>
 </span><span class='line'>map  <span class="k">k</span>
 </span><span class='line'>map  <span class="k">h</span>
 </span><span class='line'>map  <span class="k">l</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; Close the current buffer
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” Close the current buffer
 </span><span class='line'>map <span class="k">bd</span> :Bclose<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; Close <span class="k">all</span> the <span class="k">buffers</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” Close <span class="k">all</span> the <span class="k">buffers</span>
 </span><span class='line'>map <span class="k">ba</span> :<span class="m">1</span><span class="p">,</span><span class="m">300</span> <span class="k">bd</span><span class="p">!&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; Use the arrows <span class="k">to</span> something usefull
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” Use the arrows <span class="k">to</span> something usefull
 </span><span class='line'>map  :<span class="k">bn</span>
 </span><span class='line'>map  :<span class="k">bp</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; Tab configuration
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” Tab configuration
 </span><span class='line'>map <span class="k">tn</span> :<span class="k">tabnew</span>
 </span><span class='line'>map <span class="k">te</span> :<span class="k">tabedit</span>
 </span><span class='line'>map <span class="k">tc</span> :<span class="k">tabclose</span>
 </span><span class='line'>map <span class="k">tm</span> :<span class="k">tabmove</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; When pressing <span class="k">cd</span> switch <span class="k">to</span> the <span class="nb">directory</span> of the open buffer
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” When pressing <span class="k">cd</span> switch <span class="k">to</span> the <span class="nb">directory</span> of the open buffer
 </span><span class='line'>map <span class="k">cd</span> :<span class="k">cd</span> %:<span class="k">p</span>:<span class="k">h</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
-</span><span class='line'><span class="c">&quot; =&gt; Statusline</span>
-</span><span class='line'><span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
-</span><span class='line'><span class="c">&quot; Always hide the statusline</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>””””””””””””””””””””””””””””””
+</span><span class='line'>” <span class="p">=</span>&amp;gt; Statusline
+</span><span class='line'>“”””””””””””””””””””””””””””””
+</span><span class='line'>” Always <span class="k">hide</span> the <span class="nb">statusline</span>
 </span><span class='line'><span class="k">set</span> <span class="nb">laststatus</span><span class="p">=</span><span class="m">2</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; Format the <span class="nb">statusline</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” Format the <span class="nb">statusline</span>
 </span><span class='line'><span class="k">set</span> <span class="nb">statusline</span><span class="p">=</span>\ %{HasPaste<span class="p">()</span>}%<span class="k">t</span>%<span class="k">m</span>%<span class="k">r</span>%<span class="k">h</span>\ %<span class="k">w</span>\ \ CWD:\ %<span class="k">r</span>%{CurDir<span class="p">()</span>}%<span class="k">h</span>\ \ \ Line:\ %<span class="k">l</span>/%L:%<span class="k">c</span>\ %<span class="p">=</span>[%{GitBranch<span class="p">()</span>}]
-</span><span class='line'><span class="c">&quot;set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ [%{(&amp;amp;fenc==\&quot;\&quot;)?&amp;amp;enc:&amp;amp;fenc}%{(&amp;amp;bomb?\&quot;,BOM\&quot;:\&quot;\&quot;)}]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]\ %=[%{GitBranch()}]“&lt;/p&gt;</span>
+</span><span class='line'>“<span class="k">set</span> <span class="nb">statusline</span><span class="p">=</span>\ %{HasPaste<span class="p">()</span>}%F%<span class="k">m</span>%<span class="k">r</span>%<span class="k">h</span>\ %<span class="k">w</span>\ \ CWD:\ %<span class="k">r</span>%{CurDir<span class="p">()</span>}%<span class="k">h</span>\ \ [%{<span class="p">(</span>&amp;amp;<span class="nb">fenc</span><span class="p">==</span><span class="s2">&quot;&quot;</span><span class="p">)</span>?&amp;amp;<span class="nb">enc</span>:&amp;amp;<span class="nb">fenc</span>}%{<span class="p">(</span>&amp;amp;<span class="nb">bomb</span>?<span class="s2">&quot;,BOM&quot;</span>:<span class="s2">&quot;&quot;</span><span class="p">)</span>}]\ [ASCII<span class="p">=</span>\%<span class="m">03</span>.<span class="m">3</span>b]\ [HEX<span class="p">=</span>\%<span class="m">02</span>.<span class="m">2</span>B]\ [POS<span class="p">=</span>%<span class="m">04</span>l<span class="p">,</span>%<span class="m">04</span>v][%<span class="k">p</span>%%]\ [LEN<span class="p">=</span>%L]\ %<span class="p">=</span>[%{GitBranch<span class="p">()</span>}]“<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">function</span><span class="p">!</span> CurDir<span class="p">()&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">function</span><span class="p">!</span> CurDir<span class="p">()</span>
+</span><span class='line'>    <span class="k">let</span> curdir <span class="p">=</span> substitute<span class="p">(</span>getcwd<span class="p">(),</span> ‘<span class="sr">/Users/</span>amir<span class="sr">/’, “~/</span>”<span class="p">,</span> “<span class="k">g</span>”<span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> curdir
+</span><span class='line'><span class="k">endfunction</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">pre</span><span class="p">&gt;&lt;</span>code<span class="p">&gt;</span><span class="k">let</span> curdir <span class="p">=</span> substitute<span class="p">(</span>getcwd<span class="p">(),</span> <span class="s1">&#39;/Users/amir/&#39;</span><span class="p">,</span> <span class="s2">&quot;~/&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="k">return</span> curdir
-</span><span class='line'><span class="p">&lt;</span><span class="sr">/code&gt;&lt;/</span><span class="k">pre</span><span class="p">&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">function</span><span class="p">!</span> HasPaste<span class="p">()</span>
+</span><span class='line'>    <span class="k">if</span> &amp;amp;<span class="nb">paste</span>
+</span><span class='line'>        <span class="k">return</span> ‘PASTE MODE  ‘
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>        <span class="k">return</span> ‘’
+</span><span class='line'>    <span class="k">endif</span>
+</span><span class='line'><span class="k">endfunction</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">endfunction</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">function</span><span class="p">!</span> HasPaste<span class="p">()&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">pre</span><span class="p">&gt;&lt;</span>code<span class="p">&gt;</span><span class="k">if</span> &amp;amp;<span class="nb">paste</span>
-</span><span class='line'>    <span class="k">return</span> <span class="s1">&#39;PASTE MODE  &#39;</span>
-</span><span class='line'><span class="k">else</span>
-</span><span class='line'>    <span class="k">return</span> <span class="s1">&#39;&#39;</span>
-</span><span class='line'><span class="k">endif</span>
-</span><span class='line'><span class="p">&lt;</span><span class="sr">/code&gt;&lt;/</span><span class="k">pre</span><span class="p">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">endfunction</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>&quot;
-</span><span class='line'><span class="c">&quot; =&gt; Parenthesis/bracket expanding</span>
-</span><span class='line'><span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>”””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+</span><span class='line'>” <span class="p">=</span>&amp;gt; Parenthesis/bracket expanding
+</span><span class='line'>“”””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””
 </span><span class='line'><span class="nb">vnoremap</span> $<span class="m">1</span> <span class="p">&lt;</span>code<span class="p">&gt;</span>&amp;gt;<span class="k">a</span><span class="p">)&lt;</span>/code<span class="p">&gt;</span>
 </span><span class='line'><span class="nb">vnoremap</span> $<span class="m">2</span> <span class="p">&lt;</span>code<span class="p">&gt;</span>&amp;gt;<span class="k">a</span>]<span class="p">&lt;</span>/code<span class="p">&gt;</span>
 </span><span class='line'><span class="nb">vnoremap</span> $<span class="m">3</span> <span class="p">&lt;</span>code<span class="p">&gt;</span>&amp;gt;<span class="k">a</span>}<span class="p">&lt;</span>/code<span class="p">&gt;</span>
@@ -878,348 +838,340 @@
 </span><span class='line'><span class="nb">vnoremap</span> $<span class="k">q</span> <span class="p">&lt;</span>code<span class="p">&gt;</span>&amp;gt;<span class="k">a</span>&#39;<span class="p">&lt;</span>/code<span class="p">&gt;</span>
 </span><span class='line'><span class="nb">vnoremap</span> $<span class="k">e</span> <span class="p">&lt;</span>code<span class="p">&gt;</span>&amp;gt;<span class="k">a</span>&quot;<span class="p">&lt;</span><span class="sr">/code&gt;&lt;/</span><span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="s2">&quot; Map auto complete of (, &quot;</span><span class="p">,</span> &#39;<span class="p">,</span> [
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” Map auto <span class="nb">complete</span> of <span class="p">(,</span> “<span class="p">,</span> ‘<span class="p">,</span> [
 </span><span class='line'><span class="nb">inoremap</span> $<span class="m">1</span> <span class="p">()</span><span class="k">i</span>
 </span><span class='line'><span class="nb">inoremap</span> $<span class="m">2</span> []<span class="k">i</span>
 </span><span class='line'><span class="nb">inoremap</span> $<span class="m">3</span> {}<span class="k">i</span>
 </span><span class='line'><span class="nb">inoremap</span> $<span class="m">4</span> {<span class="k">o</span>}O
-</span><span class='line'><span class="nb">inoremap</span> $<span class="k">q</span> <span class="s1">&#39;&#39;</span><span class="k">i</span>
-</span><span class='line'><span class="nb">inoremap</span> $<span class="k">e</span> <span class="s2">&quot;&quot;</span><span class="k">i</span>
-</span><span class='line'><span class="nb">inoremap</span> $<span class="k">t</span> &amp;<span class="k">lt</span>;<span class="p">&gt;</span><span class="k">i</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
+</span><span class='line'><span class="nb">inoremap</span> $<span class="k">q</span> ‘‘<span class="k">i</span>
+</span><span class='line'><span class="nb">inoremap</span> $<span class="k">e</span> ““<span class="k">i</span>
+</span><span class='line'><span class="nb">inoremap</span> $<span class="k">t</span> &amp;<span class="k">lt</span>;&amp;gt;<span class="k">i</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>&quot;
-</span><span class='line'><span class="c">&quot; =&gt; General Abbrevs</span>
-</span><span class='line'><span class="c">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
-</span><span class='line'>iab xdate <span class="p">=</span>strftime<span class="p">(</span><span class="s2">&quot;%d/%m/%y %H:%M:%S&quot;</span><span class="p">)&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>”””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+</span><span class='line'>” <span class="p">=</span>&amp;gt; General Abbrevs
+</span><span class='line'>“””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””””
+</span><span class='line'>iab xdate <span class="p">=</span>strftime<span class="p">(</span>“%<span class="k">d</span><span class="sr">/%m/</span>%<span class="k">y</span> %H:%M:%S”<span class="p">)&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;<span class="p">-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-</span>
-</span><span class='line'><span class="c">&quot;common setting</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>”<span class="p">-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-</span>
+</span><span class='line'>“common setting
 </span><span class='line'>autocmd <span class="nb">BufEnter</span> * <span class="k">lcd</span> %:<span class="k">p</span>:<span class="k">h</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot; 缩进
-</span><span class='line'><span class="k">if</span> has<span class="p">(</span><span class="s2">&quot;autocmd&quot;</span><span class="p">)&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>” 缩进
+</span><span class='line'><span class="k">if</span> has<span class="p">(</span>“autocmd”<span class="p">)</span>
+</span><span class='line'>    <span class="k">filetype</span> plugin indent <span class="k">on</span> “根据文件进行缩进
+</span><span class='line'>    augroup vimrcEx
+</span><span class='line'>        <span class="k">au</span><span class="p">!</span>
+</span><span class='line'>        autocmd <span class="nb">FileType</span> text <span class="k">setlocal</span> <span class="nb">textwidth</span><span class="p">=</span><span class="m">78</span>
+</span><span class='line'>        autocmd <span class="nb">BufReadPost</span> *
+</span><span class='line'>                    \ <span class="k">if</span> line<span class="p">(</span>“’<span class="s2">&quot;”) &amp;gt; 1 &amp;amp;&amp;amp; line(“’&quot;</span>”<span class="p">)</span>  Git Vim configuration
+</span><span class='line'>““””””””””””””””””””””””””””””””
+</span><span class='line'>“<span class="nb">gd</span> :GitDiff
+</span><span class='line'>“gD :GitDiff —cached
+</span><span class='line'>“<span class="k">gs</span> :GitStatus
+</span><span class='line'>“gl :GitLog
+</span><span class='line'>“ga :GitAdd
+</span><span class='line'>“gA :GitAdd
+</span><span class='line'>“gc :GitCommit
+</span><span class='line'>“In the git<span class="p">-</span>status buffer:
+</span><span class='line'>“    :GitAdd <span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">pre</span><span class="p">&gt;&lt;</span>code<span class="p">&gt;</span><span class="k">filetype</span> plugin indent <span class="k">on</span> <span class="c">&quot;根据文件进行缩进</span>
-</span><span class='line'>augroup vimrcEx
-</span><span class='line'>    <span class="k">au</span><span class="p">!</span>
-</span><span class='line'>    autocmd <span class="nb">FileType</span> text <span class="k">setlocal</span> <span class="nb">textwidth</span><span class="p">=</span><span class="m">78</span>
-</span><span class='line'>    autocmd <span class="nb">BufReadPost</span> *
-</span><span class='line'>                \ <span class="k">if</span> line<span class="p">(</span><span class="s2">&quot;&#39;\&quot;&quot;</span><span class="p">)</span> &amp;gt; <span class="m">1</span> &amp;amp;&amp;amp; line<span class="p">(</span><span class="s2">&quot;&#39;\&quot;&quot;</span><span class="p">)</span>  Git Vim configuration
-</span><span class='line'><span class="p">&lt;</span><span class="sr">/code&gt;&lt;/</span><span class="k">pre</span><span class="p">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="s2">&quot;“”&quot;</span>”<span class="s2">&quot;”&quot;</span>”<span class="s2">&quot;”&quot;</span>”<span class="s2">&quot;”&quot;</span>”<span class="s2">&quot;”&quot;</span>”<span class="s2">&quot;”&quot;</span>”<span class="s2">&quot;”&quot;</span>”<span class="s2">&quot;”&quot;</span>
-</span><span class='line'><span class="c">&quot;gd :GitDiff</span>
-</span><span class='line'><span class="c">&quot;gD :GitDiff —cached</span>
-</span><span class='line'><span class="c">&quot;gs :GitStatus</span>
-</span><span class='line'><span class="c">&quot;gl :GitLog</span>
-</span><span class='line'><span class="c">&quot;ga :GitAdd</span>
-</span><span class='line'><span class="c">&quot;gA :GitAdd</span>
-</span><span class='line'><span class="c">&quot;gc :GitCommit</span>
-</span><span class='line'><span class="c">&quot;In the git-status buffer:</span>
-</span><span class='line'><span class="c">&quot;    :GitAdd&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;<span class="p">--------------------------------------------------</span>
-</span><span class='line'><span class="c">&quot;neocomplcache 自动补全</span>
-</span><span class='line'><span class="c">&quot; Disable AutoComplPop.</span>
-</span><span class='line'><span class="c">&quot;let g:acp_enableAtStartup = 0</span>
-</span><span class='line'><span class="c">&quot; Use neocomplcache.</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>”————————————————–
+</span><span class='line'>“neocomplcache 自动补全
+</span><span class='line'>“ Disable AutoComplPop.
+</span><span class='line'>“<span class="k">let</span> <span class="k">g</span>:acp_enableAtStartup <span class="p">=</span> <span class="m">0</span>
+</span><span class='line'>“ Use neocomplcache.
 </span><span class='line'><span class="k">let</span> <span class="k">g</span>:neocomplcache_enable_at_startup <span class="p">=</span> <span class="m">1</span>
-</span><span class='line'><span class="c">&quot; Use smartcase.</span>
+</span><span class='line'>“ Use <span class="nb">smartcase</span>.
 </span><span class='line'><span class="k">let</span> <span class="k">g</span>:neocomplcache_enable_smart_case <span class="p">=</span> <span class="m">1</span>
-</span><span class='line'><span class="c">&quot; Use camel case completion.</span>
+</span><span class='line'>“ Use camel case completion.
 </span><span class='line'><span class="k">let</span> <span class="k">g</span>:neocomplcache_enable_camel_case_completion <span class="p">=</span> <span class="m">1</span>
-</span><span class='line'><span class="c">&quot; Use underbar completion.</span>
+</span><span class='line'>“ Use underbar completion.
 </span><span class='line'><span class="k">let</span> <span class="k">g</span>:neocomplcache_enable_underbar_completion <span class="p">=</span> <span class="m">1</span>
-</span><span class='line'><span class="c">&quot; Set minimum syntax keyword length.</span>
+</span><span class='line'>“ Set minimum <span class="nb">syntax</span> keyword length.
 </span><span class='line'><span class="k">let</span> <span class="k">g</span>:neocomplcache_min_syntax_length <span class="p">=</span> <span class="m">3</span>
-</span><span class='line'><span class="k">let</span> <span class="k">g</span>:neocomplcache_lock_buffer_name_pattern <span class="p">=</span> <span class="s1">&#39;*ku*&#39;</span>
-</span><span class='line'><span class="c">&quot; Auto select the first one.</span>
+</span><span class='line'><span class="k">let</span> <span class="k">g</span>:neocomplcache_lock_buffer_name_pattern <span class="p">=</span> ‘*ku*’
+</span><span class='line'>” Auto select the <span class="k">first</span> one.
 </span><span class='line'><span class="k">let</span> <span class="k">g</span>:neocomplcache_enable_auto_select<span class="p">=</span><span class="m">1</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;WinManager
-</span><span class='line'><span class="c">&quot;   显示帮助</span>
-</span><span class='line'><span class="c">&quot;   如果光标下是目录, 则进入该目录; 如果光标下文件, 则打开该文件</span>
-</span><span class='line'><span class="c">&quot;-  返回上级目录</span>
-</span><span class='line'><span class="c">&quot;c  切换vim 当前工作目录正在浏览的目录</span>
-</span><span class='line'><span class="c">&quot;d  创建目录</span>
-</span><span class='line'><span class="c">&quot;D  删除目录或文件</span>
-</span><span class='line'><span class="c">&quot;i  切换显示方式</span>
-</span><span class='line'><span class="c">&quot;R  文件或目录重命名</span>
-</span><span class='line'><span class="c">&quot;s  选择排序方式</span>
-</span><span class='line'><span class="c">&quot;x  定制浏览方式, 使用你指定的程序打开该文件</span>
-</span><span class='line'><span class="k">let</span> <span class="k">g</span>:winManagerWindowLayout<span class="p">=</span><span class="s1">&#39;FileExplorer|TagList&#39;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>“WinManager
+</span><span class='line'>“	显示帮助
+</span><span class='line'>“	如果光标下是目录<span class="p">,</span> 则进入该目录; 如果光标下文件<span class="p">,</span> 则打开该文件
+</span><span class='line'>“<span class="p">-</span>	返回上级目录
+</span><span class='line'>“<span class="k">c</span>	切换<span class="k">vim</span> 当前工作目录正在浏览的目录
+</span><span class='line'>“<span class="k">d</span>	创建目录
+</span><span class='line'>“D	删除目录或文件
+</span><span class='line'>“<span class="k">i</span>	切换显示方式
+</span><span class='line'>“R	文件或目录重命名
+</span><span class='line'>“<span class="k">s</span>	选择排序方式
+</span><span class='line'>“<span class="k">x</span>	定制浏览方式<span class="p">,</span> 使用你指定的程序打开该文件
+</span><span class='line'><span class="k">let</span> <span class="k">g</span>:winManagerWindowLayout<span class="p">=</span>’FileExplorer<span class="p">|</span>TagList’
 </span><span class='line'>nmap <span class="nb">wm</span> :WMToggle<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;Cscope
-</span><span class='line'><span class="c">&quot;$ cscope -Rbq</span>
-</span><span class='line'><span class="c">&quot;:cs add /home/wooin/vim71/cscope.out /home/wooin/vim71</span>
-</span><span class='line'><span class="c">&quot;cs find c Print</span>
-</span><span class='line'><span class="c">&quot;:cw 打开Quickix窗口</span>
-</span><span class='line'><span class="c">&quot;--------------------------------------------------</span>
-</span><span class='line'><span class="c">&quot;:make</span>
-</span><span class='line'><span class="c">&quot;:cw</span>
-</span><span class='line'><span class="c">&quot;:cn        // 切换到下一个结果</span>
-</span><span class='line'><span class="c">&quot;:cp        // 切换到上一个结果</span>
-</span><span class='line'><span class="c">&quot;如果你经常使用这两个命令, 你还可以给他们设定快捷键, 比如在~/.vimrc中增加:</span>
-</span><span class='line'><span class="c">&quot;nmap  :cn</span>
-</span><span class='line'><span class="c">&quot;nmap  :cp</span>
-</span><span class='line'><span class="c">&quot;-------------------------------------------------</span>
-</span><span class='line'><span class="c">&quot;cscope的主要功能是通过同的子命令&quot;find&quot;来实现的</span>
-</span><span class='line'><span class="c">&quot;cscope find&quot;的用法:</span>
-</span><span class='line'><span class="c">&quot;cs find c|d|e|f|g|i|s|t name</span>
-</span><span class='line'><span class="c">&quot;0 或 s    查找本 C 符号(可以跳过注释)</span>
-</span><span class='line'><span class="c">&quot;1 或 g    查找本定义</span>
-</span><span class='line'><span class="c">&quot;2 或 d    查找本函数调用的函数</span>
-</span><span class='line'><span class="c">&quot;3 或 c    查找调用本函数的函数</span>
-</span><span class='line'><span class="c">&quot;4 或 t    查找本字符串</span>
-</span><span class='line'><span class="c">&quot;6 或 e    查找本 egrep 模式</span>
-</span><span class='line'><span class="c">&quot;7 或 f    查找本文件</span>
-</span><span class='line'><span class="c">&quot;8 或 i    查找包含本文件的文件</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>“Cscope
+</span><span class='line'>“$ <span class="k">cscope</span> <span class="p">-</span>Rbq
+</span><span class='line'>“:<span class="k">cs</span> add <span class="sr">/home/</span>wooin<span class="sr">/vim71/</span><span class="k">cscope</span>.out <span class="sr">/home/</span>wooin/vim71
+</span><span class='line'>“<span class="k">cs</span> find <span class="k">c</span> <span class="k">Print</span>
+</span><span class='line'>“:<span class="k">cw</span> 打开Quickix窗口
+</span><span class='line'>“————————————————–
+</span><span class='line'>“:<span class="k">make</span>
+</span><span class='line'>“:<span class="k">cw</span>
+</span><span class='line'>“:<span class="k">cn</span>        <span class="sr">//</span> 切换到下一个结果
+</span><span class='line'>“:<span class="k">cp</span>        <span class="sr">//</span> 切换到上一个结果
+</span><span class='line'>“如果你经常使用这两个命令<span class="p">,</span> 你还可以给他们设定快捷键<span class="p">,</span> 比如在<span class="p">~</span>/.vimrc中增加:
+</span><span class='line'>“nmap  :<span class="k">cn</span>
+</span><span class='line'>“nmap  :<span class="k">cp</span>
+</span><span class='line'>“————————————————<span class="p">-</span>
+</span><span class='line'>“<span class="k">cscope</span>的主要功能是通过同的子命令”find”来实现的
+</span><span class='line'>“<span class="k">cscope</span> find”的用法:
+</span><span class='line'>“<span class="k">cs</span> find <span class="k">c</span><span class="p">|</span><span class="k">d</span><span class="p">|</span><span class="k">e</span><span class="p">|</span><span class="k">f</span><span class="p">|</span><span class="k">g</span><span class="p">|</span><span class="k">i</span><span class="p">|</span><span class="k">s</span><span class="p">|</span><span class="k">t</span> name
+</span><span class='line'>“<span class="m">0</span> 或 <span class="k">s</span>	查找本 C 符号<span class="p">(</span>可以跳过注释<span class="p">)</span>
+</span><span class='line'>“<span class="m">1</span> 或 <span class="k">g</span>	查找本定义
+</span><span class='line'>“<span class="m">2</span> 或 <span class="k">d</span>	查找本函数调用的函数
+</span><span class='line'>“<span class="m">3</span> 或 <span class="k">c</span>	查找调用本函数的函数
+</span><span class='line'>“<span class="m">4</span> 或 <span class="k">t</span>	查找本字符串
+</span><span class='line'>“<span class="m">6</span> 或 <span class="k">e</span>	查找本 egrep 模式
+</span><span class='line'>“<span class="m">7</span> 或 <span class="k">f</span>	查找本文件
+</span><span class='line'>“<span class="m">8</span> 或 <span class="k">i</span>	查找包含本文件的文件
 </span><span class='line'><span class="k">set</span> <span class="nb">cscopequickfix</span><span class="p">=</span><span class="k">s</span><span class="p">-,</span><span class="k">c</span><span class="p">-,</span><span class="k">d</span><span class="p">-,</span><span class="k">i</span><span class="p">-,</span><span class="k">t</span><span class="p">-,</span><span class="k">e</span><span class="p">-</span>
 </span><span class='line'>map  :<span class="k">call</span> Do_CsTag<span class="p">()</span>
-</span><span class='line'>nmap <span class="k">s</span> :<span class="k">cs</span> find <span class="k">s</span> <span class="p">=</span>expand<span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>:<span class="k">copen</span>
-</span><span class='line'>nmap <span class="k">g</span> :<span class="k">cs</span> find <span class="k">g</span> <span class="p">=</span>expand<span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-</span><span class='line'>nmap <span class="k">c</span> :<span class="k">cs</span> find <span class="k">c</span> <span class="p">=</span>expand<span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>:<span class="k">copen</span>
-</span><span class='line'>nmap <span class="k">t</span> :<span class="k">cs</span> find <span class="k">t</span> <span class="p">=</span>expand<span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>:<span class="k">copen</span>
-</span><span class='line'>nmap <span class="k">e</span> :<span class="k">cs</span> find <span class="k">e</span> <span class="p">=</span>expand<span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>:<span class="k">copen</span>
-</span><span class='line'>nmap <span class="k">f</span> :<span class="k">cs</span> find <span class="k">f</span> <span class="p">=</span>expand<span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>:<span class="k">copen</span>
-</span><span class='line'>nmap <span class="k">i</span> :<span class="k">cs</span> find <span class="k">i</span> ^<span class="p">=</span>expand<span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>$:<span class="k">copen</span>
-</span><span class='line'>nmap <span class="k">d</span> :<span class="k">cs</span> find <span class="k">d</span> <span class="p">=</span>expand<span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>:<span class="k">copen</span>
-</span><span class='line'><span class="k">function</span> Do_CsTag<span class="p">()&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
+</span><span class='line'>nmap <span class="k">s</span> :<span class="k">cs</span> find <span class="k">s</span> <span class="p">=</span>expand<span class="p">(</span>“”<span class="p">)</span>:<span class="k">copen</span>
+</span><span class='line'>nmap <span class="k">g</span> :<span class="k">cs</span> find <span class="k">g</span> <span class="p">=</span>expand<span class="p">(</span>“”<span class="p">)</span>
+</span><span class='line'>nmap <span class="k">c</span> :<span class="k">cs</span> find <span class="k">c</span> <span class="p">=</span>expand<span class="p">(</span>“”<span class="p">)</span>:<span class="k">copen</span>
+</span><span class='line'>nmap <span class="k">t</span> :<span class="k">cs</span> find <span class="k">t</span> <span class="p">=</span>expand<span class="p">(</span>“”<span class="p">)</span>:<span class="k">copen</span>
+</span><span class='line'>nmap <span class="k">e</span> :<span class="k">cs</span> find <span class="k">e</span> <span class="p">=</span>expand<span class="p">(</span>“”<span class="p">)</span>:<span class="k">copen</span>
+</span><span class='line'>nmap <span class="k">f</span> :<span class="k">cs</span> find <span class="k">f</span> <span class="p">=</span>expand<span class="p">(</span>“”<span class="p">)</span>:<span class="k">copen</span>
+</span><span class='line'>nmap <span class="k">i</span> :<span class="k">cs</span> find <span class="k">i</span> ^<span class="p">=</span>expand<span class="p">(</span>“”<span class="p">)</span>$:<span class="k">copen</span>
+</span><span class='line'>nmap <span class="k">d</span> :<span class="k">cs</span> find <span class="k">d</span> <span class="p">=</span>expand<span class="p">(</span>“”<span class="p">)</span>:<span class="k">copen</span>
+</span><span class='line'><span class="k">function</span> Do_CsTag<span class="p">()</span>
+</span><span class='line'>    <span class="k">let</span> <span class="nb">dir</span> <span class="p">=</span> getcwd<span class="p">()</span>
+</span><span class='line'>    <span class="k">if</span> filereadable<span class="p">(</span>“<span class="k">tags</span>”<span class="p">)</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="k">g</span>:iswindows<span class="p">==</span><span class="m">1</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">let</span> tagsdeleted<span class="p">=</span>delete<span class="p">(</span><span class="nb">dir</span>.”\”.”<span class="k">tags</span>”<span class="p">)</span>
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>            <span class="k">let</span> tagsdeleted<span class="p">=</span>delete<span class="p">(</span>“./”.”<span class="k">tags</span>”<span class="p">)</span>
+</span><span class='line'>        <span class="k">endif</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span>tagsdeleted<span class="p">!=</span><span class="m">0</span><span class="p">)</span>
+</span><span class='line'>            echohl WarningMsg <span class="p">|</span> echo “Fail <span class="k">to</span> <span class="k">do</span> <span class="k">tags</span><span class="p">!</span> I cannot delete the <span class="k">tags</span>” <span class="p">|</span> echohl None
+</span><span class='line'>            <span class="k">return</span>
+</span><span class='line'>        <span class="k">endif</span>
+</span><span class='line'>    <span class="k">endif</span>
+</span><span class='line'>    <span class="k">if</span> has<span class="p">(</span>“<span class="k">cscope</span>”<span class="p">)</span>
+</span><span class='line'>        <span class="k">silent</span><span class="p">!</span> execute “<span class="k">cs</span> kill <span class="m">-1</span>”
+</span><span class='line'>    <span class="k">endif</span>
+</span><span class='line'>    <span class="k">if</span> filereadable<span class="p">(</span>“<span class="k">cscope</span>.<span class="k">files</span>”<span class="p">)</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="k">g</span>:iswindows<span class="p">==</span><span class="m">1</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">let</span> csfilesdeleted<span class="p">=</span>delete<span class="p">(</span><span class="nb">dir</span>.”\”.”<span class="k">cscope</span>.<span class="k">files</span>”<span class="p">)</span>
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>            <span class="k">let</span> csfilesdeleted<span class="p">=</span>delete<span class="p">(</span>“./”.”<span class="k">cscope</span>.<span class="k">files</span>”<span class="p">)</span>
+</span><span class='line'>        <span class="k">endif</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span>csfilesdeleted<span class="p">!=</span><span class="m">0</span><span class="p">)</span>
+</span><span class='line'>            echohl WarningMsg <span class="p">|</span> echo “Fail <span class="k">to</span> <span class="k">do</span> <span class="k">cscope</span><span class="p">!</span> I cannot delete the <span class="k">cscope</span>.<span class="k">files</span>” <span class="p">|</span> echohl None
+</span><span class='line'>            <span class="k">return</span>
+</span><span class='line'>        <span class="k">endif</span>
+</span><span class='line'>    <span class="k">endif</span>
+</span><span class='line'>    <span class="k">if</span> filereadable<span class="p">(</span>“<span class="k">cscope</span>.out”<span class="p">)</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="k">g</span>:iswindows<span class="p">==</span><span class="m">1</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">let</span> csoutdeleted<span class="p">=</span>delete<span class="p">(</span><span class="nb">dir</span>.”\”.”<span class="k">cscope</span>.out”<span class="p">)</span>
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>            <span class="k">let</span> csoutdeleted<span class="p">=</span>delete<span class="p">(</span>“./”.”<span class="k">cscope</span>.out”<span class="p">)</span>
+</span><span class='line'>        <span class="k">endif</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span>csoutdeleted<span class="p">!=</span><span class="m">0</span><span class="p">)</span>
+</span><span class='line'>            echohl WarningMsg <span class="p">|</span> echo “Fail <span class="k">to</span> <span class="k">do</span> <span class="k">cscope</span><span class="p">!</span> I cannot delete the <span class="k">cscope</span>.out” <span class="p">|</span> echohl None
+</span><span class='line'>            <span class="k">return</span>
+</span><span class='line'>        <span class="k">endif</span>
+</span><span class='line'>    <span class="k">endif</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span>executable<span class="p">(</span>‘ctags’<span class="p">))</span>
+</span><span class='line'>        “<span class="k">silent</span><span class="p">!</span> execute “<span class="p">!</span>ctags <span class="p">-</span>R –<span class="k">c</span><span class="p">-</span>types<span class="p">=+</span><span class="k">p</span> –fields<span class="p">=+</span>S <span class="p">&lt;</span><span class="k">em</span><span class="p">&gt;</span>”
+</span><span class='line'>        <span class="k">silent</span><span class="p">!</span> execute “<span class="p">!</span>ctags <span class="p">-</span>R –<span class="k">c</span><span class="p">++-</span>kinds<span class="p">=+</span><span class="k">p</span> –fields<span class="p">=+</span>iaS –extra<span class="p">=+</span><span class="k">q</span> .”
+</span><span class='line'>    <span class="k">endif</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span>executable<span class="p">(</span>‘<span class="k">cscope</span>’<span class="p">)</span> &amp;amp;&amp;amp; has<span class="p">(</span>“<span class="k">cscope</span>”<span class="p">)</span> <span class="p">)</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="k">g</span>:iswindows<span class="p">!=</span><span class="m">1</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">silent</span><span class="p">!</span> execute “<span class="p">!</span>find . <span class="p">-</span>name ‘<span class="p">&lt;</span><span class="sr">/em&gt;.h’ -o -name ‘&lt;em&gt;.c’ -o -name ‘&lt;/</span><span class="k">em</span><span class="p">&gt;</span>.cpp’ <span class="p">-</span><span class="k">o</span> <span class="p">-</span>name ‘<span class="p">&lt;</span><span class="k">em</span><span class="p">&gt;</span>.java’ <span class="p">-</span><span class="k">o</span> <span class="p">-</span>name ‘<span class="p">&lt;</span>/<span class="k">em</span><span class="p">&gt;</span>.<span class="k">cs</span>’ &amp;gt; <span class="k">cscope</span>.<span class="k">files</span>”
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>            <span class="k">silent</span><span class="p">!</span> execute “<span class="p">!</span><span class="nb">dir</span> <span class="sr">/s/</span><span class="k">b</span> <span class="p">&lt;</span><span class="k">em</span><span class="p">&gt;</span>.<span class="k">c</span><span class="p">,&lt;</span><span class="sr">/em&gt;.cpp,&lt;em&gt;.h,&lt;/</span><span class="k">em</span><span class="p">&gt;</span>.java<span class="p">,</span>*.<span class="k">cs</span> » <span class="k">cscope</span>.<span class="k">files</span>”
+</span><span class='line'>        <span class="k">endif</span>
+</span><span class='line'>        <span class="k">silent</span><span class="p">!</span> execute “<span class="p">!</span><span class="k">cscope</span> <span class="p">-</span><span class="k">b</span>”
+</span><span class='line'>        execute “normal :”
+</span><span class='line'>        <span class="k">if</span> filereadable<span class="p">(</span>“<span class="k">cscope</span>.out”<span class="p">)</span>
+</span><span class='line'>            execute “<span class="k">cs</span> add <span class="k">cscope</span>.out”
+</span><span class='line'>        <span class="k">endif</span>
+</span><span class='line'>    <span class="k">endif</span>
+</span><span class='line'><span class="k">endfunction</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">pre</span><span class="p">&gt;&lt;</span>code<span class="p">&gt;</span><span class="k">let</span> <span class="nb">dir</span> <span class="p">=</span> getcwd<span class="p">()</span>
-</span><span class='line'><span class="k">if</span> filereadable<span class="p">(</span><span class="s2">&quot;tags&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="k">g</span>:iswindows<span class="p">==</span><span class="m">1</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">let</span> tagsdeleted<span class="p">=</span>delete<span class="p">(</span><span class="nb">dir</span>.<span class="s2">&quot;\\&quot;</span>.<span class="s2">&quot;tags&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">else</span>
-</span><span class='line'>        <span class="k">let</span> tagsdeleted<span class="p">=</span>delete<span class="p">(</span><span class="s2">&quot;./&quot;</span>.<span class="s2">&quot;tags&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">endif</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span>tagsdeleted<span class="p">!=</span><span class="m">0</span><span class="p">)</span>
-</span><span class='line'>        echohl WarningMsg <span class="p">|</span> echo <span class="s2">&quot;Fail to do tags! I cannot delete the tags&quot;</span> <span class="p">|</span> echohl None
-</span><span class='line'>        <span class="k">return</span>
-</span><span class='line'>    <span class="k">endif</span>
-</span><span class='line'><span class="k">endif</span>
-</span><span class='line'><span class="k">if</span> has<span class="p">(</span><span class="s2">&quot;cscope&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">silent</span><span class="p">!</span> execute <span class="s2">&quot;cs kill -1&quot;</span>
-</span><span class='line'><span class="k">endif</span>
-</span><span class='line'><span class="k">if</span> filereadable<span class="p">(</span><span class="s2">&quot;cscope.files&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="k">g</span>:iswindows<span class="p">==</span><span class="m">1</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">let</span> csfilesdeleted<span class="p">=</span>delete<span class="p">(</span><span class="nb">dir</span>.<span class="s2">&quot;\\&quot;</span>.<span class="s2">&quot;cscope.files&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">else</span>
-</span><span class='line'>        <span class="k">let</span> csfilesdeleted<span class="p">=</span>delete<span class="p">(</span><span class="s2">&quot;./&quot;</span>.<span class="s2">&quot;cscope.files&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">endif</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span>csfilesdeleted<span class="p">!=</span><span class="m">0</span><span class="p">)</span>
-</span><span class='line'>        echohl WarningMsg <span class="p">|</span> echo <span class="s2">&quot;Fail to do cscope! I cannot delete the cscope.files&quot;</span> <span class="p">|</span> echohl None
-</span><span class='line'>        <span class="k">return</span>
-</span><span class='line'>    <span class="k">endif</span>
-</span><span class='line'><span class="k">endif</span>
-</span><span class='line'><span class="k">if</span> filereadable<span class="p">(</span><span class="s2">&quot;cscope.out&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="k">g</span>:iswindows<span class="p">==</span><span class="m">1</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">let</span> csoutdeleted<span class="p">=</span>delete<span class="p">(</span><span class="nb">dir</span>.<span class="s2">&quot;\\&quot;</span>.<span class="s2">&quot;cscope.out&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">else</span>
-</span><span class='line'>        <span class="k">let</span> csoutdeleted<span class="p">=</span>delete<span class="p">(</span><span class="s2">&quot;./&quot;</span>.<span class="s2">&quot;cscope.out&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">endif</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span>csoutdeleted<span class="p">!=</span><span class="m">0</span><span class="p">)</span>
-</span><span class='line'>        echohl WarningMsg <span class="p">|</span> echo <span class="s2">&quot;Fail to do cscope! I cannot delete the cscope.out&quot;</span> <span class="p">|</span> echohl None
-</span><span class='line'>        <span class="k">return</span>
-</span><span class='line'>    <span class="k">endif</span>
-</span><span class='line'><span class="k">endif</span>
-</span><span class='line'><span class="k">if</span><span class="p">(</span>executable<span class="p">(</span><span class="s1">&#39;ctags&#39;</span><span class="p">))</span>
-</span><span class='line'><span class="c">    &quot;silent! execute &quot;!ctags -R --c-types=+p --fields=+S *&quot;</span>
-</span><span class='line'>    <span class="k">silent</span><span class="p">!</span> execute <span class="s2">&quot;!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .&quot;</span>
-</span><span class='line'><span class="k">endif</span>
-</span><span class='line'><span class="k">if</span><span class="p">(</span>executable<span class="p">(</span><span class="s1">&#39;cscope&#39;</span><span class="p">)</span> &amp;amp;&amp;amp; has<span class="p">(</span><span class="s2">&quot;cscope&quot;</span><span class="p">)</span> <span class="p">)</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="k">g</span>:iswindows<span class="p">!=</span><span class="m">1</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">silent</span><span class="p">!</span> execute <span class="s2">&quot;!find . -name &#39;*.h&#39; -o -name &#39;*.c&#39; -o -name &#39;*.cpp&#39; -o -name &#39;*.java&#39; -o -name &#39;*.cs&#39; &amp;gt; cscope.files&quot;</span>
-</span><span class='line'>    <span class="k">else</span>
-</span><span class='line'>        <span class="k">silent</span><span class="p">!</span> execute <span class="s2">&quot;!dir /s/b *.c,*.cpp,*.h,*.java,*.cs &amp;gt;&amp;gt; cscope.files&quot;</span>
-</span><span class='line'>    <span class="k">endif</span>
-</span><span class='line'>    <span class="k">silent</span><span class="p">!</span> execute <span class="s2">&quot;!cscope -b&quot;</span>
-</span><span class='line'>    execute <span class="s2">&quot;normal :&quot;</span>
-</span><span class='line'>    <span class="k">if</span> filereadable<span class="p">(</span><span class="s2">&quot;cscope.out&quot;</span><span class="p">)</span>
-</span><span class='line'>        execute <span class="s2">&quot;cs add cscope.out&quot;</span>
-</span><span class='line'>    <span class="k">endif</span>
-</span><span class='line'><span class="k">endif</span>
-</span><span class='line'><span class="p">&lt;</span><span class="sr">/code&gt;&lt;/</span><span class="k">pre</span><span class="p">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">endfunction</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;Taglist
-</span><span class='line'><span class="c">&quot;进行Tlist的设置</span>
-</span><span class='line'><span class="c">&quot;TlistUpdate可以更新tags</span>
-</span><span class='line'>map  :<span class="k">silent</span><span class="p">!</span> Tlist <span class="c">&quot;按下F4呼出了</span>
-</span><span class='line'><span class="k">let</span> Tlist_Ctags_Cmd<span class="p">=</span><span class="s1">&#39;ctags&#39;</span> <span class="c">&quot;因为我们放在环境变量里，所以可以直接执行</span>
-</span><span class='line'><span class="k">let</span> Tlist_Use_Right_Window<span class="p">=</span><span class="m">0</span> <span class="c">&quot;让窗口显示在右边，0的话就是显示在左边</span>
-</span><span class='line'><span class="k">let</span> Tlist_Show_One_File<span class="p">=</span><span class="m">0</span> <span class="c">&quot;让taglist可以同时展示多个文件的函数列表，如果想只有1个，设置为1</span>
-</span><span class='line'><span class="k">let</span> Tlist_File_Fold_Auto_Close<span class="p">=</span><span class="m">1</span> <span class="c">&quot;非当前文件，函数列表折叠隐藏</span>
-</span><span class='line'><span class="k">let</span> Tlist_Exit_OnlyWindow<span class="p">=</span><span class="m">1</span> <span class="c">&quot;当taglist是最后一个分割窗口时，自动推出vim</span>
-</span><span class='line'><span class="k">let</span> Tlist_Process_File_Always<span class="p">=</span><span class="m">0</span> <span class="c">&quot;是否一直处理tags.1:处理;0:不处理。不是一直实时更新tags，因为没有必要</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>“Taglist
+</span><span class='line'>“进行Tlist的设置
+</span><span class='line'>“TlistUpdate可以更新<span class="k">tags</span>
+</span><span class='line'>map  :<span class="k">silent</span><span class="p">!</span> Tlist “按下F4呼出了
+</span><span class='line'><span class="k">let</span> Tlist_Ctags_Cmd<span class="p">=</span>’ctags’ “因为我们放在环境变量里，所以可以直接执行
+</span><span class='line'><span class="k">let</span> Tlist_Use_Right_Window<span class="p">=</span><span class="m">0</span> “让窗口显示在右边，<span class="m">0</span>的话就是显示在左边
+</span><span class='line'><span class="k">let</span> Tlist_Show_One_File<span class="p">=</span><span class="m">0</span> “让taglist可以同时展示多个文件的函数列表，如果想只有<span class="m">1</span>个，设置为<span class="m">1</span>
+</span><span class='line'><span class="k">let</span> Tlist_File_Fold_Auto_Close<span class="p">=</span><span class="m">1</span> “非当前文件，函数列表折叠隐藏
+</span><span class='line'><span class="k">let</span> Tlist_Exit_OnlyWindow<span class="p">=</span><span class="m">1</span> “当taglist是最后一个分割窗口时，自动推出<span class="k">vim</span>
+</span><span class='line'><span class="k">let</span> Tlist_Process_File_Always<span class="p">=</span><span class="m">0</span> “是否一直处理<span class="k">tags</span>.<span class="m">1</span>:处理;<span class="m">0</span>:不处理。不是一直实时更新<span class="k">tags</span>，因为没有必要
 </span><span class='line'><span class="k">let</span> Tlist_Inc_Winwidth<span class="p">=</span><span class="m">0</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;MiniBufExplorer
-</span><span class='line'><span class="c">&quot;       向前循环切换到每个buffer名上</span>
-</span><span class='line'><span class="c">&quot;   向后循环切换到每个buffer名上</span>
-</span><span class='line'><span class="c">&quot;   在打开光标所在的buffer</span>
-</span><span class='line'><span class="c">&quot;d      删除光标所在的buffer</span>
-</span><span class='line'><span class="c">&quot;--------------------------------------------------</span>
-</span><span class='line'><span class="c">&quot;   向前循环切换到每个buffer上,并在但前窗口打开</span>
-</span><span class='line'><span class="c">&quot;   向后循环切换到每个buffer上,并在但前窗口打开</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>“MiniBufExplorer
+</span><span class='line'>“		向前循环切换到每个buffer名上
+</span><span class='line'>“	向后循环切换到每个buffer名上
+</span><span class='line'>“	在打开光标所在的buffer
+</span><span class='line'>“<span class="k">d</span>		删除光标所在的buffer
+</span><span class='line'>“————————————————–
+</span><span class='line'>“	向前循环切换到每个buffer上<span class="p">,</span>并在但前窗口打开
+</span><span class='line'>“	向后循环切换到每个buffer上<span class="p">,</span>并在但前窗口打开
 </span><span class='line'><span class="k">let</span> <span class="k">g</span>:miniBufExplMapCTabSwitchBufs<span class="p">=</span><span class="m">1</span>
-</span><span class='line'><span class="c">&quot;--------------------------------------------------</span>
-</span><span class='line'><span class="c">&quot;可以用切换到上下左右的窗口中去,就像:</span>
-</span><span class='line'><span class="c">&quot;C-w,h j k l    向&quot;左,下,上,右&quot;切换窗口.</span>
-</span><span class='line'><span class="c">&quot;let g:miniBufExplMapWindowNavVim = 1</span>
-</span><span class='line'><span class="c">&quot;--------------------------------------------------</span>
-</span><span class='line'><span class="c">&quot;用切换到上下左右窗口中去</span>
-</span><span class='line'><span class="c">&quot;let g:miniBufExplMapWindowNavArrows = 1</span>
-</span><span class='line'><span class="c">&quot;--------------------------------------------------</span>
-</span><span class='line'><span class="c">&quot;防止打开很多个</span>
+</span><span class='line'>“————————————————–
+</span><span class='line'>“可以用切换到上下左右的窗口中去<span class="p">,</span>就像:
+</span><span class='line'>“C<span class="p">-</span><span class="k">w</span><span class="p">,</span><span class="k">h</span> <span class="k">j</span> <span class="k">k</span> <span class="k">l</span>    向”左<span class="p">,</span>下<span class="p">,</span>上<span class="p">,</span>右”切换窗口.
+</span><span class='line'>“<span class="k">let</span> <span class="k">g</span>:miniBufExplMapWindowNavVim <span class="p">=</span> <span class="m">1</span>
+</span><span class='line'>“————————————————–
+</span><span class='line'>“用切换到上下左右窗口中去
+</span><span class='line'>“<span class="k">let</span> <span class="k">g</span>:miniBufExplMapWindowNavArrows <span class="p">=</span> <span class="m">1</span>
+</span><span class='line'>“————————————————–
+</span><span class='line'>“防止打开很多个
 </span><span class='line'><span class="k">let</span> <span class="k">g</span>:miniBufExplorerMoreThanOne<span class="p">=</span><span class="m">0</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;<span class="k">c</span>/<span class="k">h</span>文件间相互切换 <span class="p">--</span> 插件: A
-</span><span class='line'><span class="c">&quot;:A 在新Buffer中切换到c/h文件</span>
-</span><span class='line'><span class="c">&quot;:AS    横向分割窗口并打开c/h文件</span>
-</span><span class='line'><span class="c">&quot;:AV    纵向分割窗口并打开c/h文件</span>
-</span><span class='line'><span class="c">&quot;:AT    新建一个标签页并打开c/h文件</span>
-</span><span class='line'><span class="c">&quot;nnoremap   :A&lt;/p&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>“<span class="k">c</span>/<span class="k">h</span>文件间相互切换 – 插件: A
+</span><span class='line'>“:A	在新Buffer中切换到<span class="k">c</span>/<span class="k">h</span>文件
+</span><span class='line'>“:AS	横向分割窗口并打开<span class="k">c</span>/<span class="k">h</span>文件
+</span><span class='line'>“:AV	纵向分割窗口并打开<span class="k">c</span>/<span class="k">h</span>文件
+</span><span class='line'>“:AT	新建一个标签页并打开<span class="k">c</span>/<span class="k">h</span>文件
+</span><span class='line'>“<span class="nb">nnoremap</span>   :A<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;Grep
-</span><span class='line'><span class="c">&quot;--------------------------------------------------</span>
-</span><span class='line'><span class="c">&quot;:Grep  按照指定的规则在指定的文件中查找</span>
-</span><span class='line'><span class="c">&quot;:Rgrep 同上, 但是是递归的grep</span>
-</span><span class='line'><span class="c">&quot;:GrepBuffer    在所有打开的缓冲区中查找</span>
-</span><span class='line'><span class="c">&quot;:Bgrep 同上</span>
-</span><span class='line'><span class="c">&quot;:GrepArgs  在vim的argument filenames (:args)中查找</span>
-</span><span class='line'><span class="c">&quot;:Fgrep 运行fgrep</span>
-</span><span class='line'><span class="c">&quot;:Rfgrep    运行递归的fgrep</span>
-</span><span class='line'><span class="c">&quot;:Egrep 运行egrep</span>
-</span><span class='line'><span class="c">&quot;:Regrep    运行递归的egrep</span>
-</span><span class='line'><span class="c">&quot;:Agrep 运行agrep</span>
-</span><span class='line'><span class="c">&quot;:Ragrep    运行递归的agrep</span>
-</span><span class='line'><span class="c">&quot;For example, the following map invokes the :Grep command to search for the keyword under the cursor:</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>“Grep
+</span><span class='line'>“————————————————–
+</span><span class='line'>“:Grep	按照指定的规则在指定的文件中查找
+</span><span class='line'>“:Rgrep	同上<span class="p">,</span> 但是是递归的<span class="k">grep</span>
+</span><span class='line'>“:GrepBuffer	在所有打开的缓冲区中查找
+</span><span class='line'>“:Bgrep	同上
+</span><span class='line'>“:GrepArgs	在<span class="k">vim</span>的<span class="k">argument</span> filenames <span class="p">(</span>:args<span class="p">)</span>中查找
+</span><span class='line'>“:Fgrep	运行fgrep
+</span><span class='line'>“:Rfgrep	运行递归的fgrep
+</span><span class='line'>“:Egrep	运行egrep
+</span><span class='line'>“:Regrep	运行递归的egrep
+</span><span class='line'>“:Agrep	运行agrep
+</span><span class='line'>“:Ragrep	运行递归的agrep
+</span><span class='line'>“For example<span class="p">,</span> the following map invokes the :Grep command <span class="k">to</span> search <span class="k">for</span> the keyword under the cursor:
 </span><span class='line'><span class="nb">nnoremap</span>   :Grep<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;高亮的书签 <span class="p">--</span> 插件: VisualMark
-</span><span class='line'><span class="c">&quot;如果是gvim, 直接在代码上按下Ctrl+F2, 如果是vim, 用&quot;mm&quot;</span>
-</span><span class='line'><span class="c">&quot;如果你设置了多个书签, 你可以用F2键正向在期间切换, 用Shift+F2反向在期间切换.&lt;/p&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>“高亮的书签 – 插件: VisualMark
+</span><span class='line'>“如果是<span class="k">gvim</span><span class="p">,</span> 直接在代码上按下Ctrl<span class="p">+</span>F2<span class="p">,</span> 如果是<span class="k">vim</span><span class="p">,</span> 用”<span class="nb">mm</span>”
+</span><span class='line'>“如果你设置了多个书签<span class="p">,</span> 你可以用F2键正向在期间切换<span class="p">,</span> 用Shift<span class="p">+</span>F2反向在期间切换.<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;自动补全
-</span><span class='line'><span class="c">&quot;:help new-omni-completion</span>
-</span><span class='line'><span class="c">&quot;按下&quot;Ctrl+X Ctrl+O&quot;, 此时会弹出一个下列菜单, 显示所有匹配的标签</span>
-</span><span class='line'><span class="c">&quot;--------------------------------------------------</span>
-</span><span class='line'><span class="c">&quot;Ctrl+P     向前切换成员</span>
-</span><span class='line'><span class="c">&quot;Ctrl+N     向后切换成员</span>
-</span><span class='line'><span class="c">&quot;Ctrl+E     表示退出下拉窗口, 并退回到原来录入的文字</span>
-</span><span class='line'><span class="c">&quot;Ctrl+Y     表示退出下拉窗口, 并接受当前选项</span>
-</span><span class='line'><span class="c">&quot;Ctrl+X Ctrl+L  整行补全</span>
-</span><span class='line'><span class="c">&quot;Ctrl+X Ctrl+N  根据当前文件里关键字补全</span>
-</span><span class='line'><span class="c">&quot;Ctrl+X Ctrl+K  根据字典补全</span>
-</span><span class='line'><span class="c">&quot;Ctrl+X Ctrl+T  根据同义词字典补全</span>
-</span><span class='line'><span class="c">&quot;Ctrl+X Ctrl+I  根据头文件内关键字补全</span>
-</span><span class='line'><span class="c">&quot;Ctrl+X Ctrl+]  根据标签补全</span>
-</span><span class='line'><span class="c">&quot;Ctrl+X Ctrl+F  补全文件名</span>
-</span><span class='line'><span class="c">&quot;Ctrl+X Ctrl+D  补全宏定义</span>
-</span><span class='line'><span class="c">&quot;Ctrl+X Ctrl+V  补全vim命令</span>
-</span><span class='line'><span class="c">&quot;Ctrl+X Ctrl+U  用户自定义补全方式</span>
-</span><span class='line'><span class="c">&quot;Ctrl+X Ctrl+S  拼写建议</span>
-</span><span class='line'><span class="c">&quot; OmniCppComplete</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>“自动补全
+</span><span class='line'>“:help <span class="k">new</span><span class="p">-</span>omni<span class="p">-</span>completion
+</span><span class='line'>“按下”Ctrl<span class="p">+</span><span class="k">X</span> Ctrl<span class="p">+</span>O”<span class="p">,</span> 此时会弹出一个下列菜单<span class="p">,</span> 显示所有匹配的标签
+</span><span class='line'>“————————————————–
+</span><span class='line'>“Ctrl<span class="p">+</span><span class="k">P</span>		向前切换成员
+</span><span class='line'>“Ctrl<span class="p">+</span><span class="k">N</span>		向后切换成员
+</span><span class='line'>“Ctrl<span class="p">+</span>E		表示退出下拉窗口<span class="p">,</span> 并退回到原来录入的文字
+</span><span class='line'>“Ctrl<span class="p">+</span>Y		表示退出下拉窗口<span class="p">,</span> 并接受当前选项
+</span><span class='line'>“Ctrl<span class="p">+</span><span class="k">X</span> Ctrl<span class="p">+</span>L	整行补全
+</span><span class='line'>“Ctrl<span class="p">+</span><span class="k">X</span> Ctrl<span class="p">+</span><span class="k">N</span>	根据当前文件里关键字补全
+</span><span class='line'>“Ctrl<span class="p">+</span><span class="k">X</span> Ctrl<span class="p">+</span>K	根据字典补全
+</span><span class='line'>“Ctrl<span class="p">+</span><span class="k">X</span> Ctrl<span class="p">+</span>T	根据同义词字典补全
+</span><span class='line'>“Ctrl<span class="p">+</span><span class="k">X</span> Ctrl<span class="p">+</span>I	根据头文件内关键字补全
+</span><span class='line'>“Ctrl<span class="p">+</span><span class="k">X</span> Ctrl<span class="p">+</span>]	根据标签补全
+</span><span class='line'>“Ctrl<span class="p">+</span><span class="k">X</span> Ctrl<span class="p">+</span>F	补全文件名
+</span><span class='line'>“Ctrl<span class="p">+</span><span class="k">X</span> Ctrl<span class="p">+</span>D	补全宏定义
+</span><span class='line'>“Ctrl<span class="p">+</span><span class="k">X</span> Ctrl<span class="p">+</span>V	补全<span class="k">vim</span>命令
+</span><span class='line'>“Ctrl<span class="p">+</span><span class="k">X</span> Ctrl<span class="p">+</span>U	用户自定义补全方式
+</span><span class='line'>“Ctrl<span class="p">+</span><span class="k">X</span> Ctrl<span class="p">+</span>S	拼写建议
+</span><span class='line'>“ OmniCppComplete
 </span><span class='line'><span class="k">let</span> OmniCpp_NamespaceSearch <span class="p">=</span> <span class="m">1</span>
 </span><span class='line'><span class="k">let</span> OmniCpp_GlobalScopeSearch <span class="p">=</span> <span class="m">1</span>
 </span><span class='line'><span class="k">let</span> OmniCpp_ShowAccess <span class="p">=</span> <span class="m">1</span>
-</span><span class='line'><span class="k">let</span> OmniCpp_ShowPrototypeInAbbr <span class="p">=</span> <span class="m">1</span> <span class="c">&quot; show function parameters</span>
-</span><span class='line'><span class="k">let</span> OmniCpp_MayCompleteDot <span class="p">=</span> <span class="m">1</span> <span class="c">&quot; autocomplete after .</span>
-</span><span class='line'><span class="k">let</span> OmniCpp_MayCompleteArrow <span class="p">=</span> <span class="m">1</span> <span class="c">&quot; autocomplete after -&gt;</span>
-</span><span class='line'><span class="k">let</span> OmniCpp_MayCompleteScope <span class="p">=</span> <span class="m">1</span> <span class="c">&quot; autocomplete after ::</span>
-</span><span class='line'><span class="k">let</span> OmniCpp_DefaultNamespaces <span class="p">=</span> [<span class="s2">&quot;std&quot;</span><span class="p">,</span> <span class="s2">&quot;_GLIBCXX_STD&quot;</span>]
-</span><span class='line'><span class="c">&quot; automatically open and close the popup menu / preview window</span>
-</span><span class='line'><span class="c">&quot;au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif</span>
-</span><span class='line'><span class="k">set</span> <span class="nb">completeopt</span><span class="p">=</span>menuone<span class="p">,</span>menu<span class="p">,</span>longest    <span class="c">&quot;,preview&lt;/p&gt;</span>
+</span><span class='line'><span class="k">let</span> OmniCpp_ShowPrototypeInAbbr <span class="p">=</span> <span class="m">1</span> “ show <span class="k">function</span> parameters
+</span><span class='line'><span class="k">let</span> OmniCpp_MayCompleteDot <span class="p">=</span> <span class="m">1</span> “ autocomplete after .
+</span><span class='line'><span class="k">let</span> OmniCpp_MayCompleteArrow <span class="p">=</span> <span class="m">1</span> “ autocomplete after <span class="p">-</span>&amp;gt;
+</span><span class='line'><span class="k">let</span> OmniCpp_MayCompleteScope <span class="p">=</span> <span class="m">1</span> “ autocomplete after ::
+</span><span class='line'><span class="k">let</span> OmniCpp_DefaultNamespaces <span class="p">=</span> [“std”<span class="p">,</span> “_GLIBCXX_STD”]
+</span><span class='line'>“ automatically open and <span class="k">close</span> the <span class="k">popup</span> menu / preview <span class="nb">window</span>
+</span><span class='line'>“<span class="k">au</span> <span class="nb">CursorMovedI</span><span class="p">,</span><span class="nb">InsertLeave</span> * <span class="k">if</span> pumvisible<span class="p">()</span> <span class="p">==</span> <span class="m">0</span><span class="p">|</span><span class="k">silent</span><span class="p">!</span> <span class="k">pclose</span><span class="p">|</span><span class="k">endif</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">completeopt</span><span class="p">=</span>menuone<span class="p">,</span>menu<span class="p">,</span>longest    “<span class="p">,</span>preview<span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;加速你的补全 <span class="p">--</span> 插件: SuperTab
-</span><span class='line'><span class="c">&quot;:SuperTabHelp</span>
-</span><span class='line'><span class="c">&quot;--------------------------------------------------</span>
-</span><span class='line'><span class="c">&quot; 设置按下后默认的补全方式, 默认是,</span>
-</span><span class='line'><span class="c">&quot; 现在改为. 关于的补全方式,</span>
-</span><span class='line'><span class="c">&quot; 还有其他的补全方式, 你可以看看下面的一些帮助:</span>
-</span><span class='line'><span class="c">&quot; :help ins-completion</span>
-</span><span class='line'><span class="c">&quot; :help compl-omni</span>
-</span><span class='line'><span class="c">&quot;let g:SuperTabDefaultCompletionType=&quot;&quot;</span>
-</span><span class='line'><span class="c">&quot;--------------------------------------------------</span>
-</span><span class='line'><span class="c">&quot; 0 - 不记录上次的补全方式</span>
-</span><span class='line'><span class="c">&quot; 1 - 记住上次的补全方式,直到用其他的补全命令改变它</span>
-</span><span class='line'><span class="c">&quot; 2 - 记住上次的补全方式,直到按ESC退出插入模式为止</span>
-</span><span class='line'><span class="c">&quot;let g:SuperTabRetainCompletionType=2&lt;/p&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>“加速你的补全 – 插件: SuperTab
+</span><span class='line'>“:SuperTabHelp
+</span><span class='line'>“————————————————–
+</span><span class='line'>“ 设置按下后默认的补全方式<span class="p">,</span> 默认是<span class="p">,</span>
+</span><span class='line'>“ 现在改为. 关于的补全方式<span class="p">,</span>
+</span><span class='line'>“ 还有其他的补全方式<span class="p">,</span> 你可以看看下面的一些帮助:
+</span><span class='line'>“ :help ins<span class="p">-</span>completion
+</span><span class='line'>“ :help compl<span class="p">-</span>omni
+</span><span class='line'>“<span class="k">let</span> <span class="k">g</span>:SuperTabDefaultCompletionType<span class="p">=</span>””
+</span><span class='line'>”————————————————–
+</span><span class='line'>“ <span class="m">0</span> <span class="p">-</span> 不记录上次的补全方式
+</span><span class='line'>“ <span class="m">1</span> <span class="p">-</span> 记住上次的补全方式<span class="p">,</span>直到用其他的补全命令改变它
+</span><span class='line'>“ <span class="m">2</span> <span class="p">-</span> 记住上次的补全方式<span class="p">,</span>直到按ESC退出插入模式为止
+</span><span class='line'>“<span class="k">let</span> <span class="k">g</span>:SuperTabRetainCompletionType<span class="p">=</span><span class="m">2</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;Doxygen注释
-</span><span class='line'><span class="c">&quot;To customize the output of the script, see the g:DoxygenToolkit_&lt;em&gt;</span>
-</span><span class='line'><span class="c">&quot;variables in the script&#39;s source.  These variables can be set in your</span>
-</span><span class='line'><span class="c">&quot;.vimrc.</span>
-</span><span class='line'><span class="c">&quot;--------------------------------------------------</span>
-</span><span class='line'><span class="c">&quot;Use:</span>
-</span><span class='line'><span class="c">&quot;- Type of comments (C/C++: /// or /** ... &lt;/em&gt;/, Python: ## and # ) :</span>
-</span><span class='line'><span class="c">&quot;  In vim, default C++ comments are : /&lt;em&gt;* ... &lt;/em&gt;/. But if you prefer to use ///</span>
-</span><span class='line'><span class="c">&quot;  Doxygen comments just add &#39;let g:DoxygenToolkit_commentType = &quot;C++&quot;&#39;</span>
-</span><span class='line'><span class="c">&quot;  (without quotes) in your .vimrc file</span>
-</span><span class='line'><span class="c">&quot;</span>
-</span><span class='line'><span class="c">&quot;- License :</span>
-</span><span class='line'><span class="c">&quot;  In vim, place the cursor on the line that will follow doxygen license</span>
-</span><span class='line'><span class="c">&quot;  comment.  Then, execute the command :DoxLic.  This will generate license</span>
-</span><span class='line'><span class="c">&quot;  comment and leave the cursor on the line just after.</span>
-</span><span class='line'><span class="c">&quot;</span>
-</span><span class='line'><span class="c">&quot;- Author :</span>
-</span><span class='line'><span class="c">&quot;  In vim, place the cursor on the line that will follow doxygen author</span>
-</span><span class='line'><span class="c">&quot;  comment.  Then, execute the command :DoxAuthor.  This will generate the</span>
-</span><span class='line'><span class="c">&quot;  skeleton and leave the cursor just after @author tag if no variable</span>
-</span><span class='line'><span class="c">&quot;  define it, or just after the skeleton.</span>
-</span><span class='line'><span class="c">&quot;</span>
-</span><span class='line'><span class="c">&quot;- Function / class comment :</span>
-</span><span class='line'><span class="c">&quot;  In vim, place the cursor on the line of the function header (or returned</span>
-</span><span class='line'><span class="c">&quot;  value of the function) or the class.  Then execute the command :Dox.  This</span>
-</span><span class='line'><span class="c">&quot;  will generate the skeleton and leave the cursor after the @brief tag.</span>
-</span><span class='line'><span class="c">&quot;</span>
-</span><span class='line'><span class="c">&quot;- Ignore code fragment (C/C++ only) :</span>
-</span><span class='line'><span class="c">&quot;  In vim, if you want to ignore all code fragment placed in a block such as :</span>
-</span><span class='line'><span class="c">&quot;    #ifdef DEBUG</span>
-</span><span class='line'><span class="c">&quot;    ...</span>
-</span><span class='line'><span class="c">&quot;    #endif</span>
-</span><span class='line'><span class="c">&quot;  You only have to execute the command :DoxUndoc(DEBUG) !</span>
-</span><span class='line'><span class="c">&quot;</span>
-</span><span class='line'><span class="c">&quot;- Group :</span>
-</span><span class='line'><span class="c">&quot;  In vim, execute the command :DoxBlock to insert a doxygen block on the</span>
-</span><span class='line'><span class="c">&quot;  following line.</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>“Doxygen注释
+</span><span class='line'>“To customize the output of the <span class="k">script</span><span class="p">,</span> see the <span class="k">g</span>:DoxygenToolkit_*
+</span><span class='line'>“variables <span class="k">in</span> the <span class="k">script</span>’<span class="k">s</span> source.  These variables can be <span class="k">set</span> <span class="k">in</span> your
+</span><span class='line'>“.vimrc.
+</span><span class='line'>“————————————————–
+</span><span class='line'>“Use:
+</span><span class='line'>“<span class="p">-</span> Type of <span class="nb">comments</span> <span class="p">(</span>C<span class="sr">/C++: ///</span> or <span class="sr">/** … */</span><span class="p">,</span> Python: ## and # <span class="p">)</span> :
+</span><span class='line'>“  In <span class="k">vim</span><span class="p">,</span> default C<span class="p">++</span> <span class="nb">comments</span> are : <span class="sr">/** … */</span>. But <span class="k">if</span> you prefer <span class="k">to</span> use <span class="sr">//</span>/
+</span><span class='line'>“  Doxygen <span class="nb">comments</span> just add ‘<span class="k">let</span> <span class="k">g</span>:DoxygenToolkit_commentType <span class="p">=</span> “C<span class="p">++</span>”’
+</span><span class='line'>”  <span class="p">(</span>without quotes<span class="p">)</span> <span class="k">in</span> your .vimrc <span class="k">file</span>
+</span><span class='line'>“
+</span><span class='line'>“<span class="p">-</span> License :
+</span><span class='line'>“  In <span class="k">vim</span><span class="p">,</span> place the cursor <span class="k">on</span> the line that will follow doxygen license
+</span><span class='line'>“  <span class="k">comment</span>.  Then<span class="p">,</span> execute the command :DoxLic.  This will generate license
+</span><span class='line'>“  <span class="k">comment</span> and leave the cursor <span class="k">on</span> the line just after.
+</span><span class='line'>“
+</span><span class='line'>“<span class="p">-</span> Author :
+</span><span class='line'>“  In <span class="k">vim</span><span class="p">,</span> place the cursor <span class="k">on</span> the line that will follow doxygen author
+</span><span class='line'>“  <span class="k">comment</span>.  Then<span class="p">,</span> execute the command :DoxAuthor.  This will generate the
+</span><span class='line'>“  skeleton and leave the cursor just after @author <span class="nb">tag</span> <span class="k">if</span> no variable
+</span><span class='line'>“  <span class="nb">define</span> it<span class="p">,</span> or just after the skeleton.
+</span><span class='line'>“
+</span><span class='line'>“<span class="p">-</span> Function / class <span class="k">comment</span> :
+</span><span class='line'>“  In <span class="k">vim</span><span class="p">,</span> place the cursor <span class="k">on</span> the line of the <span class="k">function</span> header <span class="p">(</span>or returned
+</span><span class='line'>“  value of the <span class="k">function</span><span class="p">)</span> or the class.  Then execute the command :Dox.  This
+</span><span class='line'>“  will generate the skeleton and leave the cursor after the @brief <span class="nb">tag</span>.
+</span><span class='line'>“
+</span><span class='line'>“<span class="p">-</span> Ignore code fragment <span class="p">(</span>C/C<span class="p">++</span> <span class="k">only</span><span class="p">)</span> :
+</span><span class='line'>“  In <span class="k">vim</span><span class="p">,</span> <span class="k">if</span> you want <span class="k">to</span> ignore <span class="k">all</span> code fragment placed <span class="k">in</span> <span class="k">a</span> block such <span class="k">as</span> :
+</span><span class='line'>“    #ifdef DEBUG
+</span><span class='line'>“    …
+</span><span class='line'>“    #<span class="k">endif</span>
+</span><span class='line'>“  You <span class="k">only</span> have <span class="k">to</span> execute the command :DoxUndoc<span class="p">(</span>DEBUG<span class="p">)</span> <span class="p">!</span>
+</span><span class='line'>“
+</span><span class='line'>“<span class="p">-</span> Group :
+</span><span class='line'>“  In <span class="k">vim</span><span class="p">,</span> execute the command :DoxBlock <span class="k">to</span> insert <span class="k">a</span> doxygen block <span class="k">on</span> the
+</span><span class='line'>“  following line.
 </span><span class='line'>map fg : Dox
-</span><span class='line'><span class="k">let</span> <span class="k">g</span>:DoxygenToolkit_authorName<span class="p">=</span><span class="s2">&quot;Cedric Porter&quot;</span>
-</span><span class='line'><span class="k">let</span> <span class="k">g</span>:DoxygenToolkit_licenseTag<span class="p">=</span><span class="s2">&quot;GPL v4 \&quot;</span>
-</span><span class='line'><span class="k">let</span> <span class="k">g</span>:DoxygenToolkit_undocTag<span class="p">=</span><span class="s2">&quot;DOXIGEN_SKIP_BLOCK&quot;</span>
-</span><span class='line'><span class="k">let</span> <span class="k">g</span>:DoxygenToolkit_briefTag_pre <span class="p">=</span> <span class="s2">&quot;@brief\t&quot;</span>
-</span><span class='line'><span class="k">let</span> <span class="k">g</span>:DoxygenToolkit_paramTag_pre <span class="p">=</span> <span class="s2">&quot;@param\t&quot;</span>
-</span><span class='line'><span class="k">let</span> <span class="k">g</span>:DoxygenToolkit_returnTag <span class="p">=</span> <span class="s2">&quot;@return\t&quot;</span>
-</span><span class='line'><span class="k">let</span> <span class="k">g</span>:DoxygenToolkit_briefTag_funcName <span class="p">=</span> <span class="s2">&quot;no&quot;</span>
+</span><span class='line'><span class="k">let</span> <span class="k">g</span>:DoxygenToolkit_authorName<span class="p">=</span>”Cedric Porter”
+</span><span class='line'><span class="k">let</span> <span class="k">g</span>:DoxygenToolkit_licenseTag<span class="p">=</span>”GPL v4 <span class="c">&quot;</span>
+</span><span class='line'><span class="c">let g:DoxygenToolkit_undocTag=”DOXIGEN_SKIP_BLOCK”</span>
+</span><span class='line'><span class="k">let</span> <span class="k">g</span>:DoxygenToolkit_briefTag_pre <span class="p">=</span> “@brief\<span class="k">t</span>”
+</span><span class='line'><span class="k">let</span> <span class="k">g</span>:DoxygenToolkit_paramTag_pre <span class="p">=</span> “@param\<span class="k">t</span>”
+</span><span class='line'><span class="k">let</span> <span class="k">g</span>:DoxygenToolkit_returnTag <span class="p">=</span> “@<span class="k">return</span>\<span class="k">t</span>”
+</span><span class='line'><span class="k">let</span> <span class="k">g</span>:DoxygenToolkit_briefTag_funcName <span class="p">=</span> “no”
 </span><span class='line'><span class="k">let</span> <span class="k">g</span>:DoxygenToolkit_maxFunctionProtoLines <span class="p">=</span> <span class="m">30</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;对NERD_commenter的设置
-</span><span class='line'><span class="c">&quot;在光标所在行上，按下一次ctrl+h是注释，再按下一次是取消注释。</span>
-</span><span class='line'><span class="c">&quot;而其内建的指令\cm是多行注释，类似C++的/**/，\cu是取消注释。</span>
-</span><span class='line'><span class="c">&quot;let NERDShutUp=1&lt;/p&gt;</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>“对NERD_commenter的设置
+</span><span class='line'>“在光标所在行上，按下一次ctrl<span class="p">+</span><span class="k">h</span>是注释，再按下一次是取消注释。
+</span><span class='line'>“而其内建的指令\cm是多行注释，类似C<span class="p">++</span>的<span class="sr">/**/</span>，\cu是取消注释。
+</span><span class='line'>“<span class="k">let</span> NERDShutUp<span class="p">=</span><span class="m">1</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>map  :<span class="k">call</span> StartPython<span class="p">()</span>
-</span><span class='line'><span class="k">function</span> StartPython<span class="p">()&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
+</span><span class='line'><span class="k">function</span> StartPython<span class="p">()</span>
+</span><span class='line'>    :<span class="k">w</span>
+</span><span class='line'>    :<span class="p">!</span>python %:<span class="k">t</span>
+</span><span class='line'><span class="k">endfunction</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">pre</span><span class="p">&gt;&lt;</span>code<span class="p">&gt;</span>:<span class="k">w</span>
-</span><span class='line'><span class="p">:!</span>python %:<span class="k">t</span>
-</span><span class='line'><span class="p">&lt;</span><span class="sr">/code&gt;&lt;/</span><span class="k">pre</span><span class="p">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span><span class="k">endfunction</span><span class="p">&lt;</span>/<span class="k">p</span><span class="p">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>&quot;NERD_tree 提供展示文件/目录列表的功能，比自带的文件浏览器要好很多
-</span><span class='line'><span class="c">&quot; 让Tree把自己给装饰得多姿多彩漂亮点</span>
+</span><span class='line'><span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>“NERD_tree 提供展示文件/目录列表的功能，比自带的文件浏览器要好很多
+</span><span class='line'>“ 让Tree把自己给装饰得多姿多彩漂亮点
 </span><span class='line'><span class="k">let</span> NERDChristmasTree<span class="p">=</span><span class="m">1</span>
-</span><span class='line'><span class="c">&quot; 控制当光标移动超过一定距离时，是否自动将焦点调整到屏中心</span>
+</span><span class='line'>“ 控制当光标移动超过一定距离时，是否自动将焦点调整到屏中心
 </span><span class='line'><span class="k">let</span> NERDTreeAutoCenter<span class="p">=</span><span class="m">1</span>
 </span><span class='line'><span class="k">let</span> NERDTreeShowHidden<span class="p">=</span><span class="m">1</span>
 </span><span class='line'>map  : NERDTreeToggle
 </span><span class='line'>map  : NERDTreeClose
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
 ]]></content>
   </entry>
   

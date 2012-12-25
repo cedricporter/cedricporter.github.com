@@ -109,15 +109,15 @@
 
 <div class="entry-content"><p>Clover的数据结构是由面层，边层和点层所组成。</p>
 
-<h2>面层</h2>
+<h2 id="section">面层</h2>
 
 <p>面层是一棵二叉树外加一个面组用于实现重叠的面的拾取和避免Z-Buffer失效。当发生折叠的时候，肯定至少有一个面会被分割成为两个面，所以二叉树的叶子增加两个节点，叶子更新，渲染层也需要更新。</p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/03/facetree.png"><img src="http://everet.org/wp-content/uploads/2012/03/facetree_thumb.png" alt="facetree" /></a></p>
 
-<h2></h2>
+<h2 id="section-1"></h2>
 
-<h2>边层</h2>
+<h2 id="section-2">边层</h2>
 
 <p>边层是二叉树组成的森林，</p>
 
@@ -125,8 +125,7 @@
 
 <!-- more -->
 
-
-<h2>点层</h2>
+<h2 id="section-3">点层</h2>
 
 <p>至于点层，就是十字链表。就是链表串着链表。当一个点的位置发生变化，它就会克隆一个自己向下插入到历史表中。有新的点产生时，则会向右边增加。这里是整个数据结构的核心，面层和边层只是对于点层的索引罢了。</p>
 
@@ -134,43 +133,70 @@
 
 <p>所以整个折纸过程都在这个数据结构里面。只要辅助我们精心设计的ShadowSystem，就可以Undo和Redo，甚至重放整个折纸过程。</p>
 
-<h2></h2>
+<h2 id="section-4"></h2>
 
-<h2>保存文件</h2>
+<h2 id="section-5">保存文件</h2>
 
 <p>现在我们的问题可以抽象为，保存面二叉树，边森林，和点十字链表，只是将他们保存到文件肯定很容易，但是如何将他们之间的关系保存到文件里面就是需要我们细细斟酌了。</p>
 
 <p>今晚花了一整个晚上把保存文件和读取文件做了，借鉴了编译器的语法分析器的思想和关系数据库的表之间的关联的思想，来做文件的保存和读取。</p>
 
-<h3>文件格式文法</h3>
+<h3 id="section-6">文件格式文法</h3>
 
-<blockquote><p><strong>Clover</strong>                –> VertexLayer EdgeLayer FaceLayer ShadowSytem</p></blockquote>
-
-<p><strong>ShadowSysem</strong>->TrunkName num SnapshotNode*</p>
-
-<p><strong>SnapshotNode</strong>  -> type num face+ num edge* num vertex_id  originVertexListCount  originEdgeListCount</p>
-
-<p><strong>VertexLayer</strong>  -> TrunkName VertexTable vertex_count</p>
-
-<p><strong>EdgeLayer</strong>    -> TrunkName num EdgeTree+</p>
-
-<p><strong>EdgeTree</strong>       –> Edge+</p>
-
-<p><strong>FaceLayer</strong>     –> TrunkName FaceTree</p>
-
-<p><strong>FaceTree</strong>       –> Face+</p>
-
-<p><strong>Edge</strong>              –> edge_id vertex1_id vertex2_id</p>
-
-<p>| –1</p>
-
-<p><strong>Face</strong>              –> face_id start_vertex1 start_vertex2 num edge_id+</p>
-
-<p>| –1</p>
-
-<p><strong>face_id</strong>         -> positive_number</p>
-
-<p><strong>edge_id</strong>        -> positive_number</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">**Clover**                –&gt; VertexLayer EdgeLayer FaceLayer ShadowSytem
+</span><span class="line">
+</span><span class="line">**ShadowSysem**-&gt;TrunkName num SnapshotNode*
+</span><span class="line">
+</span><span class="line">**SnapshotNode**  -&gt; type num face+ num edge* num vertex_id  originVertexListCount  originEdgeListCount
+</span><span class="line">
+</span><span class="line">**VertexLayer**  -&gt; TrunkName VertexTable vertex_count
+</span><span class="line">
+</span><span class="line">**EdgeLayer**    -&gt; TrunkName num EdgeTree+
+</span><span class="line">
+</span><span class="line">**EdgeTree**       –&gt; Edge+
+</span><span class="line">
+</span><span class="line">**FaceLayer**     –&gt; TrunkName FaceTree
+</span><span class="line">
+</span><span class="line">**FaceTree**       –&gt; Face+
+</span><span class="line">
+</span><span class="line">**Edge**              –&gt; edge_id vertex1_id vertex2_id
+</span><span class="line">
+</span><span class="line">| –1
+</span><span class="line">
+</span><span class="line">**Face**              –&gt; face_id start_vertex1 start_vertex2 num edge_id+
+</span><span class="line">
+</span><span class="line">| –1
+</span><span class="line">
+</span><span class="line">**face_id**         -&gt; positive_number
+</span><span class="line">
+</span><span class="line">**edge_id**        -&gt; positive_number</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>我使用自顶向下的语法分析方法，这样实现起来很快，也就是一大堆递归。</p>
 

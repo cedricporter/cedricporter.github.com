@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Ubuntu | EverET.org]]></title>
   <link href="http://everet.org/tag/ubuntu/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-25T23:07:51+08:00</updated>
+  <updated>2012-12-26T02:57:37+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -20,11 +20,11 @@
     <id>http://everet.org/2012/09/chrome-ramdisk</id>
     <content type="html"><![CDATA[<p>我现在使用的一台电脑的硬盘速度非常慢，Chrome有时也会对硬盘读写也会让机器发生顿卡，真是悲剧。所以我决定将Chrome经常读写的数据放置到内存中以提高响应速度。 Chrome的数据文件主要有用户配置文件以及磁盘缓存文件。在Ubuntu下就分别放置在~/.config/google-chrome以及~/.cache/google-chrome下面。 在Linux下，ramdisk直接就有了，直接拿来用就可以了，而在Windows下需要安装一些程序来创建ramdisk。我们来看看Linux下怎么做。 在Linux下，/dev/shm目录就是映射到了内存，所有写的东西都是直接写到了内存里面，不过这个目录不是持久的，断电就没了。</p>
 
-<h2>Hack</h2>
+<h2 id="hack">Hack</h2>
 
 <p>我们的想法是，开机的时候将Chrome的数据文件全部放到/dev/shm下面，然后中间所有的读写都是在/dev/shm里面完成，因为都是在内存里面完成，所以速度会非常快。<!-- more --> 但是，坏处是，断电的时候，这个文件夹就会清空了。所以我们在关闭Chrome的时候，再将/dev/shm的数据复制到硬盘里面。这样的不足之处是，中间如果电脑突然断电会导致这次打开Chrome做的所有操作都没了，不过这不是大问题，因为只要是登录了的Chrome，都会将配置备份到Google的服务器，所以插件和收藏夹还是比较安全的。如果需要更安全，可以每隔一段时间（例如一两个小时），将/dev/shm的数据复制到硬盘，不过我觉得没什么必要，所以就不定期复制到硬盘。 嗯，那我们要处理的就两个文件夹：一个是用户数据文件夹<strong>~/.config/google-chrome</strong>，那些用户信息，历史记录都在里面；另一个是<strong>~/.cache/google-chrome</strong>，用来保存页面缓存文件。 这两个文件夹都可以通过启动参数设置位置，不过我为了全局性，就是无论从哪里打开chrome都可以享受ramdisk，所以我决定将这两个文件夹重定向到/dev/shm下面。</p>
 
-<h3>初始化，复制到内存</h3>
+<h3 id="section">初始化，复制到内存</h3>
 
 <p>我们编写一个开机自启动的脚本。在Ubuntu下，我们可以在系统设置那里增加一个自启动。</p>
 
@@ -39,25 +39,21 @@
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;h1&gt;!/bin/bash&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;echo <span class="s2">&quot;Copies from disk to shm&quot;</span>
+</span><span class='line'>&lt;p&gt;echo “Copies from disk to shm”
 </span><span class='line'>cp -rf /home/cedricporter/shm_backup/cedricporter /dev/shm/cedricporter
-</span><span class='line'>chown cedricporter /dev/shm/cedricporter&lt;/p&gt;
+</span><span class='line'>chown cedricporter /dev/shm/cedricporter &lt;/p&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;ln -s /dev/shm/cedricporter/.config/google-chrome ~/.config/google-chrome
 </span><span class='line'>ln -s /dev/shm/cedricporter/.cache/google-chrome ~/.cache/google-chrome&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;p&gt;date &gt;&gt; /home/cedricporter/shm_backup/load.log
+</span><span class='line'>&lt;p&gt;date » /home/cedricporter/shm_backup/load.log
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>这里做的是，将硬盘里面的Chrome数据文件复制到内存里面，然后建立文件夹链接。</p>
 
-<h3>关闭，写到硬盘</h3>
+<h3 id="section-1">关闭，写到硬盘</h3>
 
 <p>关闭Chrome后，写到硬盘。</p>
 
@@ -71,22 +67,18 @@
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;h1&gt;!/bin/bash&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;echo <span class="s2">&quot;save from shm to disk&quot;</span>
+</span><span class='line'>&lt;p&gt;echo “save from shm to disk”
 </span><span class='line'>cp -rf /dev/shm/cedricporter /home/cedricporter/shm_backup&lt;/p&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;file<span class="o">=</span>/home/cedricporter/shm_backup/save.log
-</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;----- Start Saving -----&quot;</span> &gt;&gt; <span class="nv">$file</span>
-</span><span class='line'>date &gt;&gt; <span class="nv">$file</span>
-</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;----- End -----&quot;</span> &gt;&gt; <span class="nv">$file</span>
+</span><span class='line'><span class="nb">echo</span> “—– Start Saving —–” » <span class="nv">$file</span>
+</span><span class='line'>date » <span class="nv">$file</span>
+</span><span class='line'><span class="nb">echo</span> “—– End —–” » <span class="nv">$file</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h3> 增加关闭Chrome时触发脚本</h3>
+<h3 id="chrome"> 增加关闭Chrome时触发脚本</h3>
 
 <p>我们期望在关闭Chrome的时候，能够调用我们写到硬盘的脚本，来将/dev/shm里面的内容写到硬盘里面，好让下次开机的时候将数据载入到内存中。</p>
 
@@ -96,7 +88,7 @@
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">exec</span> -a <span class="s2">&quot;$0&quot;</span> <span class="s2">&quot;$HERE/chrome&quot;</span> <span class="s2">&quot;$@&quot;</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">exec</span> -a “<span class="nv">$0</span>” “<span class="nv">$HERE</span>/chrome” “<span class="nv">$@</span>”
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>我不想去修改这个shell文件，所以，我将其重命名为google-chrome.origin，然后新建一个shell文件，命名为google-chrome，内容如下：</p>
@@ -105,11 +97,7 @@
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;!/bin/bash&lt;/h1&gt;
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;/opt/google/chrome/google-chrome.origin &amp;amp;&amp;amp; /home/cedricporter/projects/chrome_cache/chrome_save_to_disk.sh
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
@@ -140,12 +128,12 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 </pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">cedricporter@cedricporter-Lenovo:~/projects/CaptchaSystem$</span> sudo strace -p 2207
-</span><span class='line'><span class="go">[sudo] password for cedricporter:</span>
+</span><span class='line'><span class="go">[sudo] password for cedricporter: </span>
 </span><span class='line'><span class="go">Process 2207 attached - interrupt to quit</span>
-</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/b6c1d4f6fff0b536652c83081e5233e1.png&quot;, {st_mode=S_IFREG|0600, st_size=5398, ...}) = 0</span>
-</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/739ea0e4eabe22c5b551156fc3ff93da.png&quot;, {st_mode=S_IFREG|0600, st_size=6059, ...}) = 0</span>
-</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/2aac704bfd3d3a865f66e5c3ee2ba80a.png&quot;, {st_mode=S_IFREG|0600, st_size=6362, ...}) = 0</span>
-</span><span class='line'><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/5dbe53248aa8a41612137100a315e076.png&quot;, {st_mode=S_IFREG|0600, st_size=6260, ...}) = 0</span>
+</span><span class='line'><span class="go">lstat(“/home/cedricporter/.thumbnails/normal/b6c1d4f6fff0b536652c83081e5233e1.png”, {st_mode=S_IFREG|0600, st_size=5398, …}) = 0</span>
+</span><span class='line'><span class="go">lstat(“/home/cedricporter/.thumbnails/normal/739ea0e4eabe22c5b551156fc3ff93da.png”, {st_mode=S_IFREG|0600, st_size=6059, …}) = 0</span>
+</span><span class='line'><span class="go">lstat(“/home/cedricporter/.thumbnails/normal/2aac704bfd3d3a865f66e5c3ee2ba80a.png”, {st_mode=S_IFREG|0600, st_size=6362, …}) = 0</span>
+</span><span class='line'><span class="go">lstat(“/home/cedricporter/.thumbnails/normal/5dbe53248aa8a41612137100a315e076.png”, {st_mode=S_IFREG|0600, st_size=6260, …}) = 0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>出来的结果就像刷屏一样，全部都是lstat的系统调用，读取的都是.thumbnails下面的图片。<!-- more --></p>
@@ -156,7 +144,7 @@
 
 <p>于是我在非常卡的情况下，把.thumbnail目录删了，瞬间就不卡了。</p>
 
-<h2>Solution</h2>
+<h2 id="solution">Solution</h2>
 
 <p>既然这样，我也就不让它检查缓存了，到时塞爆硬盘我再手动删除缓存算了，不想经常电脑因为硬盘卡住完全动不了。</p>
 
@@ -165,6 +153,7 @@
 /desktop/gnome/thumbnail_cache/maximum_size</p>
 
 <p>然后就不会自动更新缓存了。 当然也可将这两个值设置小一点，就不会有那么多缓存要扫描了。</p>
+
 ]]></content>
   </entry>
   
@@ -181,15 +170,15 @@
 
 <p>嗯，我们可以用脚本将整个数据库dump下来变成文件，放在服务器上作为备份，这样的本地备份万一服务器的数据遭遇了不可恢复的灾难那就悲剧了。所以我们可以寻求异地备份，将备份放置到其他机器上面。</p>
 
-<h2>异地备份</h2>
+<h2 id="section">异地备份</h2>
 
-<h3>方法一<!-- more --></h3>
+<h3 id="more---">方法一<!-- more --></h3>
 
 <p>我们有空的时候，打开自己的电脑，然后从服务器上面将备份下载回自己的电脑保存。</p>
 
 <p>评论：这样的方法未免有点2B，而且效率实在太低。备份的版本还需要自己保存。真是麻烦。</p>
 
-<h3>方法二</h3>
+<h3 id="section-1">方法二</h3>
 
 <p>让服务器将数据库备份到其他服务器上面。</p>
 
@@ -199,11 +188,11 @@
 
 <p>像Gmail有10GB的空间，QQ邮箱更是无限容量，不够了可以免费扩容。于是乎，邮箱是个非常好的异地备份存放点。而且邮件本来就是一封一封的，我们可以方便地将不同时期的版本下回来比较。此外，我们还可以在邮箱设置收件规则，自动将我们的备份邮件标记为已读并放置到分类到备份文件夹中，这样就不会扰乱我们的正常邮件了。</p>
 
-<h2>实施</h2>
+<h2 id="section-2">实施</h2>
 
 <p>我们可以使用Python来把数据库dump下来，然后压缩，发送到自己的邮箱。然后周期性运行我们可以借助cron按照时间表来运行我们的备份任务。</p>
 
-<h3>cron</h3>
+<h3 id="cron">cron</h3>
 
 <p>首先我们看看如果配置cron运行我们的周期性备份。</p>
 
@@ -211,19 +200,25 @@
 
 <p>每个非注释行代表一个命令：</p>
 
-<blockquote><p><em>minute hour day month weekday username command</em></p></blockquote>
+<blockquote>
+  <p><em>minute hour day month weekday username command</em></p>
+</blockquote>
 
 <p>我们可以加入如下行，</p>
 
-<blockquote><p>30 4 * * 1,3,4 root /etc/apache2/db/backup.py</p></blockquote>
+<blockquote>
+  <p>30 4 * * 1,3,4 root /etc/apache2/db/backup.py</p>
+</blockquote>
 
 <p>意思是每周一三四凌晨4点30分运行我们的备份程序。</p>
 
 <p>修改完配置后我们重启一下cron。</p>
 
-<blockquote><p>service cron restart</p></blockquote>
+<blockquote>
+  <p>service cron restart</p>
+</blockquote>
 
-<h3>Python</h3>
+<h3 id="python">Python</h3>
 
 <p>下面的Python代码是备份整个数据库，然后将备份以附件形式发送到指定邮箱。</p>
 
@@ -287,24 +282,9 @@
 <span class='line-number'>55</span>
 <span class='line-number'>56</span>
 <span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="err">!</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">env</span> <span class="n">python</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">website</span><span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">EverET</span><span class="o">.</span><span class="n">org</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">smtplib</span><span class="o">,</span> <span class="nn">os</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/env python</span>
+</span><span class='line'><span class="c"># website: http://EverET.org</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">smtplib</span><span class="o">,</span> <span class="nn">os</span>
 </span><span class='line'><span class="kn">from</span> <span class="nn">email.MIMEMultipart</span> <span class="kn">import</span> <span class="n">MIMEMultipart</span>
 </span><span class='line'><span class="kn">from</span> <span class="nn">email.MIMEBase</span> <span class="kn">import</span> <span class="n">MIMEBase</span>
 </span><span class='line'><span class="kn">from</span> <span class="nn">email.MIMEText</span> <span class="kn">import</span> <span class="n">MIMEText</span>
@@ -312,13 +292,12 @@
 </span><span class='line'><span class="kn">from</span> <span class="nn">email</span> <span class="kn">import</span> <span class="n">Encoders</span>
 </span><span class='line'><span class="kn">import</span> <span class="nn">subprocess</span><span class="o">,</span> <span class="nn">time</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">send_mail</span><span class="p">(</span><span class="n">send_from</span><span class="p">,</span> <span class="n">send_to</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">send_mail</span><span class="p">(</span><span class="n">send_from</span><span class="p">,</span> <span class="n">send_to</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">files</span><span class="o">=</span><span class="p">[],</span> <span class="n">server</span><span class="o">=</span><span class="err">”</span><span class="n">localhost</span><span class="err">”</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">send_to</span><span class="p">)</span><span class="o">==</span><span class="nb">list</span>
+</span><span class='line'>    <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">files</span><span class="p">)</span><span class="o">==</span><span class="nb">list</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="n">files</span><span class="o">=</span><span class="p">[],</span> <span class="n">server</span><span class="o">=</span><span class="s">&quot;localhost&quot;</span><span class="p">):</span>
-</span><span class='line'><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">send_to</span><span class="p">)</span><span class="o">==</span><span class="nb">list</span>
-</span><span class='line'><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">files</span><span class="p">)</span><span class="o">==</span><span class="nb">list</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEMultipart</span><span class="p">()</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEMultipart</span><span class="p">()</span>
 </span><span class='line'><span class="n">msg</span><span class="p">[</span><span class="s">&#39;From&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">send_from</span>
 </span><span class='line'><span class="n">msg</span><span class="p">[</span><span class="s">&#39;To&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">COMMASPACE</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">send_to</span><span class="p">)</span>
 </span><span class='line'><span class="n">msg</span><span class="p">[</span><span class="s">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">formatdate</span><span class="p">(</span><span class="n">localtime</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -340,32 +319,26 @@
 </span><span class='line'><span class="n">smtp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">backup</span><span class="p">():</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">backup</span><span class="p">():</span>
+</span><span class='line'>    <span class="n">passwd</span><span class="o">=</span><span class="err">”</span><span class="n">your</span> <span class="n">password</span><span class="err">”</span>
+</span><span class='line'>    <span class="n">user</span><span class="o">=</span><span class="err">’</span><span class="n">root</span><span class="err">’</span>
+</span><span class='line'>    <span class="n">ret</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
+</span><span class='line'>            <span class="err">‘</span><span class="s">&#39;’mysqldump -u </span><span class="si">%s</span><span class="s"> -p”</span><span class="si">%s</span><span class="s">” –all-databases |</span>
+</span><span class='line'>            <span class="n">gzip</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">db</span><span class="o">/</span><span class="nb">all</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">gz</span><span class="err">’’’</span>
+</span><span class='line'>            <span class="o">%</span> <span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">passwd</span><span class="p">),</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">ret</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">passwd</span><span class="o">=</span><span class="s">&quot;your password&quot;</span>
-</span><span class='line'><span class="n">user</span><span class="o">=</span><span class="s">&#39;root&#39;</span>
-</span><span class='line'><span class="n">ret</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
-</span><span class='line'>        <span class="sd">&#39;&#39;&#39;mysqldump -u %s -p&quot;%s&quot; --all-databases |</span>
-</span><span class='line'><span class="sd">        gzip &amp;gt; /etc/apache2/db/all.sql.gz&#39;&#39;&#39;</span>
-</span><span class='line'>        <span class="o">%</span> <span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">passwd</span><span class="p">),</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</span><span class='line'><span class="k">return</span> <span class="n">ret</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">==</span> <span class="s">&#39;&lt;strong&gt;main&lt;/strong&gt;&#39;</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">if</span> <span class="n">backup</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">send_mail</span><span class="p">(</span>
-</span><span class='line'>        <span class="s">&#39;et@everet.org&#39;</span><span class="p">,</span>        <span class="c"># from mail</span>
-</span><span class='line'>        <span class="p">[</span><span class="s">&#39;your@mail.com&#39;</span><span class="p">],</span>   <span class="c"># to mail</span>
-</span><span class='line'>        <span class="s">&#39;all database backup&#39;</span><span class="p">,</span>
-</span><span class='line'>        <span class="s">&#39;backup time:</span><span class="si">%s</span><span class="s">&#39;</span>
-</span><span class='line'>        <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">()),</span> <span class="p">),</span>
-</span><span class='line'>        <span class="p">[</span><span class="s">&#39;/etc/apache2/db/all.sql.gz&#39;</span><span class="p">])</span>
-</span><span class='line'><span class="k">else</span><span class="p">:</span>
-</span><span class='line'>    <span class="k">print</span> <span class="s">&#39;error&#39;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">==</span> <span class="err">‘</span><span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">main</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span><span class="err">’</span><span class="p">:</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">backup</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">send_mail</span><span class="p">(</span>
+</span><span class='line'>            <span class="err">‘</span><span class="n">et</span><span class="nd">@everet.org</span><span class="err">’</span><span class="p">,</span>        <span class="c"># from mail</span>
+</span><span class='line'>            <span class="p">[</span><span class="err">‘</span><span class="n">your</span><span class="nd">@mail.com</span><span class="err">’</span><span class="p">],</span>   <span class="c"># to mail</span>
+</span><span class='line'>            <span class="err">‘</span><span class="nb">all</span> <span class="n">database</span> <span class="n">backup</span><span class="err">’</span><span class="p">,</span>
+</span><span class='line'>            <span class="err">‘</span><span class="n">backup</span> <span class="n">time</span><span class="p">:</span><span class="o">%</span><span class="n">s</span><span class="err">’</span>
+</span><span class='line'>            <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">()),</span> <span class="p">),</span>
+</span><span class='line'>            <span class="p">[</span><span class="err">‘</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">db</span><span class="o">/</span><span class="nb">all</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">gz</span><span class="err">’</span><span class="p">])</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">print</span> <span class="err">‘</span><span class="n">error</span><span class="err">’</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>因为我们数据库的密码是写在了脚本里面，所以我们需要修改权限，让仅自己可读，以提高安全性。</p>
@@ -374,6 +347,7 @@
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>chmod 700 backup.py
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
 ]]></content>
   </entry>
   
@@ -389,7 +363,6 @@
 <p>那如果我们想截一个区域，就要打开screenshot，然后选中Select area to grab，非常地麻烦。</p>
 
 <!-- more -->
-
 
 <p><a href="http://everet.org/wp-content/uploads/2012/04/Screenshot-at-2012-04-23-011846.png"><img src="http://everet.org/wp-content/uploads/2012/04/Screenshot-at-2012-04-23-011846.png" alt="" /></a></p>
 
@@ -414,17 +387,19 @@
 
 <p>我在Ubuntu 10.10上编译会出现错误如下错误</p>
 
-<blockquote><p>tcpservpoll01.c: In function ‘main’:
+<p><code>
+tcpservpoll01.c: In function ‘main’:
 tcpservpoll01.c:13: error: ‘OPEN_MAX’ undeclared (first use in this function)
 tcpservpoll01.c:13: error: (Each undeclared identifier is reported only once
 tcpservpoll01.c:13: error: for each function it appears in.)
 tcpservpoll01.c:13: warning: unused variable ‘client’
 make: *** [tcpservpoll01.o] Error 1
-解决方案是去定义一下OPEN_MAX它。</p></blockquote>
+</code>
+解决方案是去定义一下OPEN_MAX它。</p>
 
 <p>我们在unp.h里面加上</p>
 
-<blockquote><h1>define OPEN_MAX 1024</h1></blockquote>
+<p><code>#define OPEN_MAX 1024</code></p>
 
 <p>就好了。</p>
 

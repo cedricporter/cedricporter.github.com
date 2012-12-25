@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: SVN | EverET.org]]></title>
   <link href="http://everet.org/tag/svn/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-25T23:07:51+08:00</updated>
+  <updated>2012-12-26T02:57:37+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -36,51 +36,42 @@
 
 <p>我们可以使用如下命令克隆我们的Google Code上的项目。</p>
 
-<blockquote><p>git svn clone --username cedricporter@gmail.com -s <a href="https://et-vim-setting.googlecode.com/svn">https://et-vim-setting.googlecode.com/svn</a> vim_setting</p></blockquote>
+<p><code>git svn clone --username cedricporter@gmail.com -s https://et-vim-setting.googlecode.com/svn vim_setting</code></p>
 
 <!-- more -->
 
-
-<blockquote></blockquote>
-
 <p>我在用如下命令把我的Windows上的配置文件_vimrc提交到Google Code的SVN服务器上。</p>
 
-<blockquote><p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
-$ git status</p>
+<p>``` console
+Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br />
+$ git status       <br />
+# On branch master      <br />
+nothing to commit (working directory clean)</p>
 
-<h1>On branch master</h1>
-
-<p>nothing to commit (working directory clean)</p>
-
-<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
+<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br />
 $ git add .</p>
 
-<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
-$ git status</p>
+<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br />
+$ git status      <br />
+# On branch master      <br />
+# Changes to be committed:      <br />
+# (use “git reset HEAD <file>..." to unstage)        
+#        
+# new file: _vimrc        
+#</file></p>
 
-<h1>On branch master</h1>
-
-<h1>Changes to be committed:</h1>
-
-<h1>(use "git reset HEAD <file>..." to unstage)</h1>
-
-<h1></h1>
-
-<h1>new file: _vimrc</h1>
-
-<p>#</p>
-
-<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
-$ git commit -am 'add windows setting'       <br/>
-[master 6d6f696] add windows setting      <br/>
-1 files changed, 632 insertions(+), 0 deletions(-)      <br/>
+<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br />
+$ git commit -am ‘add windows setting’       <br />
+[master 6d6f696] add windows setting      <br />
+1 files changed, 632 insertions(+), 0 deletions(-)      <br />
 create mode 100755 _vimrc</p>
 
-<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br/>
-$ git svn dcommit      <br/>
-Committing to <a href="https://et-vim-setting.googlecode.com/svn/trunk">https://et-vim-setting.googlecode.com/svn/trunk</a> ...      <br/>
-Authentication realm: &lt;<a href="https://et-vim-setting.googlecode.com:443">https://et-vim-setting.googlecode.com:443</a>> Google Code Subversion Repository      <br/>
-Password for 'Cedric Porter':</p></blockquote>
+<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/vim_setting     <br />
+$ git svn dcommit      <br />
+Committing to https://et-vim-setting.googlecode.com/svn/trunk …      <br />
+Authentication realm: <a href="https://et-vim-setting.googlecode.com:443">https://et-vim-setting.googlecode.com:443</a> Google Code Subversion Repository      <br />
+Password for ‘Cedric Porter’:      <br />
+```</p>
 
 <p>更多的Git教程请查看《Pro Git》，在美国的Amazon有卖，电子版地址 <a href="http://progit.org/book/zh/">http://progit.org/book/zh/</a> ，他们的翻译也是使用Git管理。</p>
 ]]></content>

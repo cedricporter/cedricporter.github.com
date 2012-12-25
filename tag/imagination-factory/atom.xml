@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Imagination Factory | EverET.org]]></title>
   <link href="http://everet.org/tag/imagination-factory/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-25T23:07:51+08:00</updated>
+  <updated>2012-12-26T02:57:37+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -34,7 +34,6 @@
 
 <!-- more -->
 
-
 <p><a href="http://everet.org/wp-content/uploads/2012/01/image15.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb15.png" alt="image" /></a></p>
 
 <p>大致思路：</p>
@@ -42,6 +41,7 @@
 <p><a href="http://everet.org/wp-content/uploads/2012/01/image17.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb17.png" alt="image" /></a></p>
 
 <p>C++写的动态链接库导出了三个函数，分别用于获取图像，处理图像和保存图像，C#写的界面只是用于处理用户交互。然后把工作交给C++处理。现在看来有点类似MVC，虽然当时也没MVC这个概念，但是都是些很基本的分层的思想。在现在看来以前的设计水平确实挺低下的。</p>
+
 ]]></content>
   </entry>
   

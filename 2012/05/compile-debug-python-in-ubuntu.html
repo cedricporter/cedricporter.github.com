@@ -111,65 +111,76 @@
 
 <p>不过在Linux下可能有点不那么顺畅。但是稍微设置一下还是可以很方便地调试的。我们来看看在Ubuntu下怎么做。</p>
 
-<h2>获取源码</h2>
+<h2 id="section">获取源码</h2>
 
 <p>在Ubuntu下获取Python2.7的源码非常方便，只需要使用apt-get就可以轻松取得。在Shell下输入</p>
 
-<blockquote><p>apt-get source python2.7</p></blockquote>
+<blockquote>
+  <p>apt-get source python2.7</p>
+</blockquote>
 
 <p>即可以将Python的源码下载到当前目录。</p>
 
 <p>然后我们就可以得到一个tar.gz的压缩包。</p>
 
-<h2>编译</h2>
+<h2 id="section-1">编译</h2>
 
 <p>我们进入源码文件夹后输入</p>
 
-<blockquote><p>./configure</p></blockquote>
-
-<p>make</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">./configure
+</span><span class="line">make</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>然后就可以编译得到python。</p>
 
 <p>当然，此时的Python不是调试版的，如果要编译调试版的Python，就需要再做一些东西。首先我们可以Google一下怎么做，貌似很多都是引用了源码README的一段话：<!-- more --></p>
 
-<blockquote><p>command; e.g. &#8220;make OPT=-g&#8221; will build a debugging version of Python
+<blockquote>
+  <p>command; e.g. “make OPT=-g” will build a debugging version of Python
 on most platforms. The default is OPT=-O; a value for OPT in the
 environment when the configure script is run overrides this default
 (likewise for CC; and the initial value for LIBS is used as the base
-set of libraries to link with).</p></blockquote>
+set of libraries to link with).</p>
+</blockquote>
 
 <p>好，我们现在使用</p>
 
-<p>make OPT=-g</p>
+<p><code>make OPT=-g</code></p>
 
-<p>试试，嗯，确实用gdb可以调试了，不过单步的时候会在源码那里会一下在上一下在下地跳来跳去。而且查看变量值的时候很多变量显示的是<optimized out>。原因是编译的时候优化了。那优化选项什么时候被加进去了？</p>
+<p>试试，嗯，确实用gdb可以调试了，不过单步的时候会在源码那里会一下在上一下在下地跳来跳去。而且查看变量值的时候很多变量显示的是<optimized out="">。原因是编译的时候优化了。那优化选项什么时候被加进去了？</optimized></p>
 
 <p>我们来看看configure生成的Makefile中的一段。</p>
 
-<blockquote><h1>Compiler options</h1>
-
-<p>OPT= -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes
-BASECFLAGS= -fno-strict-aliasing
-CFLAGS= $(BASECFLAGS) -g -O2 $(OPT) $(EXTRA_CFLAGS)</p>
-
-<h1>Both CPPFLAGS and LDFLAGS need to contain the shell&#8217;s value for setup.py to</h1>
-
-<h1>be able to build extension modules using the directories specified in the</h1>
-
-<h1>environment variables</h1>
-
-<p>CPPFLAGS= -I. -IInclude -I$(srcdir)/Include</p></blockquote>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># Compiler options
+</span><span class="line">OPT= -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes
+</span><span class="line">BASECFLAGS= -fno-strict-aliasing
+</span><span class="line">CFLAGS= $(BASECFLAGS) -g -O2 $(OPT) $(EXTRA_CFLAGS)
+</span><span class="line"># Both CPPFLAGS and LDFLAGS need to contain the shell's value for setup.py to
+</span><span class="line"># be able to build extension modules using the directories specified in the
+</span><span class="line"># environment variables
+</span><span class="line">CPPFLAGS= -I. -IInclude -I$(srcdir)/Include</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>可以看到OPT的-O3已经被我们的OPT=-g参数覆盖掉了，不过还有一个-O2在CFLAGS那里。呃，原来源码的README还是不可靠的啊。</p>
 
 <p>我们现在来重新编译：</p>
 
-<blockquote><p>make clean</p></blockquote>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>console  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="go">make clean</span>
+</span><span class="line"><span class="go">make -j4 OPT=-g CFLAGS=-g</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>make -j4 OPT=-g CFLAGS=-g</p>
-
-<p>这样编译的时候gcc就不会优化代码了。我们单步的时候就不会跳来跳去，变量的值也不会出现<optimized out>。</p>
+<p>这样编译的时候gcc就不会优化代码了。我们单步的时候就不会跳来跳去，变量的值也不会出现<code>&lt;optimized out&gt;</code>。</p>
 
 <p>另外“-j4”选项是指开4个gcc编译，我是2核处理器，所以开4个gcc编译会快些。</p>
 
@@ -251,11 +262,11 @@ CFLAGS= $(BASECFLAGS) -g -O2 $(OPT) $(EXTRA_CFLAGS)</p>
         </li>
     
         <li class="related">
-        <a href="/2012/03/emacs.html">我的Emacs配置</a>
+        <a href="/2012/03/ftp-server.html">我的FTP Server——ftp.py</a>
         </li>
     
         <li class="related">
-        <a href="/2012/03/ftp-server.html">我的FTP Server——ftp.py</a>
+        <a href="/2012/03/emacs.html">我的Emacs配置</a>
         </li>
     
         <li class="related">

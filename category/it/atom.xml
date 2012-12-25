@@ -4,7 +4,7 @@
   <title><![CDATA[Category: IT | EverET.org]]></title>
   <link href="http://everet.org/category/it/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-25T23:07:51+08:00</updated>
+  <updated>2012-12-26T02:57:37+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -18,11 +18,11 @@
     <link href="http://everet.org/2012/12/debug-nginx.html"/>
     <updated>2012-12-24T07:41:00+08:00</updated>
     <id>http://everet.org/2012/12/debug-nginx</id>
-    <content type="html"><![CDATA[<h2>为什么调试Nginx</h2>
+    <content type="html"><![CDATA[<h2 id="nginx">为什么调试Nginx</h2>
 
-<p> 为什么要调试Nginx，原因多种多样。如果阅读源码的话，开着进程单步走下去不失为一种很好的源码导读方式。</p>
+<p>为什么要调试Nginx，原因多种多样。如果阅读源码的话，开着进程单步走下去不失为一种很好的源码导读方式。 </p>
 
-<h2>编译Nginx</h2>
+<h2 id="nginx-1">编译Nginx</h2>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -33,22 +33,19 @@
 <span class='line-number'>6</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;p&gt;  ./configure --prefix<span class="o">=</span><span class="s2">&quot;$HOME/my-nginx&quot;</span> --with-debug
+</span><span class='line'>&lt;p&gt;./configure –prefix<span class="o">=</span>”<span class="nv">$HOME</span>/my-nginx” –with-debug
 </span><span class='line'>  make &amp;amp;&amp;amp; make install&lt;/p&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>  当然还要看一下，生成出来的的Makefile是不是有-O优化，如果有的话需要关闭优化，可以看一下根目录下的Makefile以及objs/Makefile。有的话记得需要改成-O0或者直接删掉就好了。</p>
+<p>当然还要看一下，生成出来的的Makefile是不是有-O优化，如果有的话需要关闭优化，可以看一下根目录下的Makefile以及objs/Makefile。有的话记得需要改成-O0或者直接删掉就好了。 </p>
 
 <!-- more -->
 
+<h2 id="nginx-2">为调试配置Nginx</h2>
 
-<p></p>
-
-<h2>为调试配置Nginx</h2>
-
-<p> 然后在$HOME/my-nginx/conf下面就是我们的配置文件了，我们编辑nginx.conf，加上： <br/>
+<p>然后在$HOME/my-nginx/conf下面就是我们的配置文件了，我们编辑nginx.conf，加上： <br />
 <div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>nginx  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -59,13 +56,13 @@
 <span class='line-number'>7</span>
 </pre></td><td class='code'><pre><code class='nginx'><span class='line'><span class="k">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="s">&lt;p&gt;</span>  <span class="s">error_log</span> <span class="s">/dev/stdout</span> <span class="s">debug</span><span class="p">;</span>
+</span><span class='line'><span class="s">&lt;p&gt;error_log</span> <span class="s">/dev/stdout</span> <span class="s">debug</span><span class="p">;</span>
 </span><span class='line'>  <span class="k">master_process</span> <span class="no">off</span><span class="p">;</span>
 </span><span class='line'>  <span class="k">daemon</span> <span class="no">off</span><span class="p">;</span><span class="k">&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="s">&lt;p&gt;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-   我们可以看到error_log /dev/stdout这样一句，这样可以将输出日志直接打印到标准输出，调试的时候可以实时看到输出。</p>
+   我们可以看到error_log /dev/stdout这样一句，这样可以将输出日志直接打印到标准输出，调试的时候可以实时看到输出。 </p>
 
 <p><img src="http://everet.org/wp-content/uploads/2012/12/wpid-snapshot1-small.png" alt="" /></p>
 ]]></content>
@@ -76,7 +73,7 @@
     <link href="http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html"/>
     <updated>2012-12-19T07:14:27+08:00</updated>
     <id>http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi</id>
-    <content type="html"><![CDATA[<h2>有博客，为什么还需要Wiki呢？</h2>
+    <content type="html"><![CDATA[<h2 id="wiki">有博客，为什么还需要Wiki呢？</h2>
 
 <p>有博客，为什么还需要Wiki呢？对于这个问题，我也思考了许久。博客记录的东西很扁平，而且不太适宜记录一些零碎不完整的东西。如果别人订阅了你的博客，你的博客却经常发布一些不完整的内容，这样会严重影响别人的心情。所以我觉得博客适宜将一些比较完整的内容的写在里面。此外，平时在网上看到什么东西，虽然都可以收录到EverNote里面（EverNote里面有提供目录以及标签可以很好地进行分类），但是，EverNote的劣势在于，不方便将知识组织知识，将它们串联在一起。</p>
 
@@ -92,34 +89,22 @@
 
 <p>前端依旧是Nginx，后端用uWSGI处理Python。Nginx可以很好的转发。</p>
 
-<h2>Nginx的配置</h2>
+<h2 id="nginx">Nginx的配置</h2>
 
-<h3>Install</h3>
+<h3 id="install">Install</h3>
 
-<blockquote></blockquote>
+<blockquote>
+
+</blockquote>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
-</span><span class='line'>
-</span><span class='line'>&lt;h1>apt-get install python-software-properties&lt;/h1>
-</span><span class='line'>
-</span><span class='line'>&lt;h1>apt-add-repository ppa:nginx/stable&lt;/h1>
-</span><span class='line'>
-</span><span class='line'>&lt;h1>apt-get update&lt;/h1>
-</span><span class='line'>
-</span><span class='line'>&lt;h1>apt-get install nginx-full&lt;/h1>
-</span><span class='line'>
-</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</pre></td><td class='code'><pre><code class=''><span class='line'># apt-get install python-software-properties
+</span><span class='line'># apt-add-repository ppa:nginx/stable
+</span><span class='line'># apt-get update
+</span><span class='line'># apt-get install nginx-full</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>我们在/etc/nginx/sites-available文件夹里面新建一个文件wiki.everet.org，然后链接到sites-enables。就可以运行nginx -t &amp;&amp; service nginx reload:</p>
 
@@ -147,15 +132,10 @@
 <span class='line-number'>21</span>
 <span class='line-number'>22</span>
 <span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='nginx'><span class='line'><span class="k">server</span> <span class="p">{</span><span class="kn">&lt;/p&gt;</span>
+</pre></td><td class='code'><pre><code class='nginx'><span class='line'><span class="k">server</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">server_name</span> <span class="s">i.everet.org</span> <span class="s">wiki.everet.org</span><span class="p">;</span><span class="kn">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="s">&lt;pre&gt;&lt;code&gt;server_name</span> <span class="s">i.everet.org</span> <span class="s">wiki.everet.org</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">access_log</span>  <span class="s">/var/log/nginx/wiki.everet.org.access.log</span><span class="p">;</span>
+</span><span class='line'><span class="s">&lt;pre&gt;&lt;code&gt;access_log</span>  <span class="s">/var/log/nginx/wiki.everet.org.access.log</span><span class="p">;</span>
 </span><span class='line'><span class="kn">error_log</span> <span class="s">/var/log/nginx/wiki.everet.org.error.org</span><span class="p">;</span>
 </span><span class='line'>
 </span><span class='line'><span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
@@ -174,13 +154,11 @@
 </span><span class='line'>    <span class="kn">alias</span> <span class="s">/var/www/moinmoin/python-env/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/</span><span class="p">;</span>
 </span><span class='line'>    <span class="kn">add_header</span> <span class="s">Cache-Control</span> <span class="s">public</span><span class="p">;</span>
 </span><span class='line'>    <span class="kn">expires</span> <span class="s">1M</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="kn">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s">&lt;p&gt;</span><span class="err">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'><span class="p">}</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</code></pre>
 
-<h2>Python</h2>
+<h2 id="python">Python</h2>
 
 <p>在这里，我们需要借助一个程序virtualenv，它可以创建一个干净的Python运行环境。其实Python核心就是一个解释器，然后外加许多包，也就是所谓的“电池”。如果我们自己编译Python的话，可以选择生成一个静态链接的Python可执行文件，就可以拿着这个解释器文件走了。</p>
 
@@ -192,41 +170,35 @@
 
 <p>activate这个脚本做的事情就是将新的Python可执行的路径加入到环境变量PATH最前面。然后清空PYTHONHOME这个环境变量。</p>
 
-<blockquote></blockquote>
+<blockquote>
+
+</blockquote>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
-</span><span class='line'>
-</span><span class='line'>&lt;h1>mkdir -p /var/www/moinmoin&lt;/h1>
-</span><span class='line'>
-</span><span class='line'>&lt;h1>virtualenv /var/www/moinmoin/python-env&lt;/h1>
-</span><span class='line'>
-</span><span class='line'>&lt;h1>. /var/www/moinmoin/python-env/bin/activate&lt;/h1>
-</span><span class='line'>
-</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</pre></td><td class='code'><pre><code class=''><span class='line'># mkdir -p /var/www/moinmoin
+</span><span class='line'># virtualenv /var/www/moinmoin/python-env
+</span><span class='line'># . /var/www/moinmoin/python-env/bin/activate</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>运行完activate后，环境变量就改了，我们可以看到提示符已经改变了。然后我们进行后续工作。</p>
 
-<h2>MoinMoin</h2>
+<h2 id="moinmoin">MoinMoin</h2>
 
 <p>然后现在安装moinmoin</p>
 
-<blockquote></blockquote>
+<blockquote>
+
+</blockquote>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>(python-env) # python setup.py install</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>然后将安装目录的wiki文件夹下面的data与uderlay目录复制出来，放到/var/www/moinmoin/wiki。然后将wiki/config目录下的wikiconfig.py以及wiki/server/moin.wsgi改名moin_wsgi.py复制到/var/www/moinmoin/wiki目录下面，然后/var/www/moinmoin/wiki目录结构如下：</p>
 
-<blockquote></blockquote>
+<blockquote>
+
+</blockquote>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -247,41 +219,31 @@
 
 <p>然后将wiki目录修改属主为uwsgi。</p>
 
-<blockquote></blockquote>
+<blockquote>
+
+</blockquote>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
-</span><span class='line'>
-</span><span class='line'>&lt;h1>chown uwsgi:uwsgi /var/www/moinmoin/wiki -R&lt;/h1>
-</span><span class='line'>
-</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</pre></td><td class='code'><pre><code class=''><span class='line'># chown uwsgi:uwsgi /var/www/moinmoin/wiki -R</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h2>uWSGI</h2>
+<h2 id="uwsgi">uWSGI</h2>
 
-<h3>Install</h3>
+<h3 id="install-1">Install</h3>
 
 <p>安装最新的lts版的uwsgi，不过在此之前，需要安装python-dev才能够正确编译。</p>
 
-<blockquote></blockquote>
+<blockquote>
+
+</blockquote>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
-</span><span class='line'>
-</span><span class='line'>&lt;h1>sudo apt-get install python-dev build-essential&lt;/h1>
-</span><span class='line'>
-</span><span class='line'>&lt;p>(python-env) # pip install http://projects.unbit.it/downloads/uwsgi-lts.tar.gz</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</pre></td><td class='code'><pre><code class=''><span class='line'># sudo apt-get install python-dev build-essential
+</span><span class='line'>(python-env) # pip install http://projects.unbit.it/downloads/uwsgi-lts.tar.gz</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>如果我们还在virtualenv的环境变量下，uwsgi会被安装到/var/www/moinmoin/python-env/bin下面，就一个文件uwsgi。</p>
 
-<h3>Autostart</h3>
+<h3 id="autostart">Autostart</h3>
 
 <p>我们现在来为uwsgi编写开机启动：</p>
 
@@ -319,54 +281,42 @@
 <span class='line-number'>31</span>
 <span class='line-number'>32</span>
 <span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;/etc/init.d/uwsgi&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;#&lt;/p&gt;
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># /etc/init.d/uwsgi</span>
+</span><span class='line'><span class="c">#&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;daemon<span class="o">=</span>/var/www/moinmoin/python-env/bin/uwsgi
 </span><span class='line'><span class="nv">pid</span><span class="o">=</span>/var/run/uwsgi.pid
-</span><span class='line'><span class="nv">args</span><span class="o">=</span><span class="s2">&quot;-x /etc/uwsgi/uwsgi.xml&quot;</span>&lt;/p&gt;
+</span><span class='line'><span class="nv">args</span><span class="o">=</span>”-x /etc/uwsgi/uwsgi.xml”&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;p&gt;case <span class="s2">&quot;$1&quot;</span> in&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;start<span class="o">)</span>
-</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Starting uwsgi&quot;</span>
-</span><span class='line'>    start-stop-daemon -p <span class="nv">$pid</span> --start --exec <span class="nv">$daemon</span> -- <span class="nv">$args</span>
-</span><span class='line'>    ;;
-</span><span class='line'>stop<span class="o">)</span>
-</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Stopping script uwsgi&quot;</span>
-</span><span class='line'>    start-stop-daemon --signal INT -p <span class="nv">$pid</span> --stop <span class="nv">$daemon</span> -- <span class="nv">$args</span>
-</span><span class='line'>    ;;
-</span><span class='line'>restart<span class="o">)</span>
-</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Restarting uwsgi&quot;</span>
-</span><span class='line'>    start-stop-daemon --signal INT -p <span class="nv">$pid</span> --stop <span class="nv">$daemon</span> -- <span class="nv">$args</span>
-</span><span class='line'>    sleep 2
-</span><span class='line'>    start-stop-daemon -p <span class="nv">$pid</span> --start --exec <span class="nv">$daemon</span> -- <span class="nv">$args</span>
-</span><span class='line'>    ;;
-</span><span class='line'>reload<span class="o">)</span>
-</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Reloading conf&quot;</span>
-</span><span class='line'>    <span class="nb">kill</span> -HUP <span class="k">$(</span>cat <span class="nv">$pid</span><span class="k">)</span>
-</span><span class='line'>    ;;
-</span><span class='line'>*<span class="o">)</span>
-</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Usage: /etc/init.d/uwsgi {start|stop|restart|reload}&quot;</span>
-</span><span class='line'>    <span class="nb">exit </span>1
-</span><span class='line'>    ;;
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;esac&lt;/p&gt;
+</span><span class='line'>&lt;p&gt;case “<span class="nv">$1</span>” in
+</span><span class='line'>    start<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> “Starting uwsgi”
+</span><span class='line'>        start-stop-daemon -p <span class="nv">$pid</span> –start –exec <span class="nv">$daemon</span> – <span class="nv">$args</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    stop<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> “Stopping script uwsgi”
+</span><span class='line'>        start-stop-daemon –signal INT -p <span class="nv">$pid</span> –stop <span class="nv">$daemon</span> – <span class="nv">$args</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    restart<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> “Restarting uwsgi”
+</span><span class='line'>        start-stop-daemon –signal INT -p <span class="nv">$pid</span> –stop <span class="nv">$daemon</span> – <span class="nv">$args</span>
+</span><span class='line'>        sleep 2
+</span><span class='line'>        start-stop-daemon -p <span class="nv">$pid</span> –start –exec <span class="nv">$daemon</span> – <span class="nv">$args</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    reload<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> “Reloading conf”
+</span><span class='line'>        <span class="nb">kill</span> -HUP <span class="k">$(</span>cat <span class="nv">$pid</span><span class="k">)</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    *<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> “Usage: /etc/init.d/uwsgi <span class="o">{</span>start|stop|restart|reload<span class="o">}</span>”
+</span><span class='line'>        <span class="nb">exit </span>1
+</span><span class='line'>        ;;
+</span><span class='line'><span class="k">esac</span>&lt;/p&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;exit 0
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h3>Config</h3>
+<h3 id="config">Config</h3>
 
 <p>/etc/uwsgi/uwsgi.xml内容如下：</p>
 
@@ -410,66 +360,59 @@
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <ul>
-<li><p>其中reload-on-as是指内存消耗达到128就重新加载过进程。</p></li>
-<li><p>touch-reload是指wikiconfig.py被修改就重新加载进程。</p></li>
-<li><p>master-as-root是指master进程uid为root，这样才有足够权限在/var/run中创建socket。</p></li>
+  <li>
+    <p>其中reload-on-as是指内存消耗达到128就重新加载过进程。</p>
+  </li>
+  <li>
+    <p>touch-reload是指wikiconfig.py被修改就重新加载进程。</p>
+  </li>
+  <li>
+    <p>master-as-root是指master进程uid为root，这样才有足够权限在/var/run中创建socket。</p>
+  </li>
 </ul>
-
 
 <p>其他参数就没什么特别的了。</p>
 
-<h3>Add User</h3>
+<h3 id="add-user">Add User</h3>
 
 <p>添加用户</p>
 
-<blockquote></blockquote>
+<blockquote>
+
+</blockquote>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
-</span><span class='line'>
-</span><span class='line'>&lt;h1>adduser --system --no-create-home --disabled-login --disabled-password --group uwsgi&lt;/h1>
-</span><span class='line'>
-</span><span class='line'>&lt;h1>touch /var/log/uwsgi.log&lt;/h1>
-</span><span class='line'>
-</span><span class='line'>&lt;h1>chown uwsgi:uwsgi /var/log/uwsgi.log&lt;/h1>
-</span><span class='line'>
-</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</pre></td><td class='code'><pre><code class=''><span class='line'># adduser –system –no-create-home –disabled-login –disabled-password –group uwsgi
+</span><span class='line'># touch /var/log/uwsgi.log
+</span><span class='line'># chown uwsgi:uwsgi /var/log/uwsgi.log</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h3>Run</h3>
+<h3 id="run">Run</h3>
 
 <p>加到开机启动，然后运行uwsgi服务。</p>
 
-<blockquote></blockquote>
+<blockquote>
+
+</blockquote>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
-</span><span class='line'>
-</span><span class='line'>&lt;h1>update-rc.d uwsgi defaults&lt;/h1>
-</span><span class='line'>
-</span><span class='line'>&lt;h1>service uwsgi start&lt;/h1>
-</span><span class='line'>
-</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</pre></td><td class='code'><pre><code class=''><span class='line'># update-rc.d uwsgi defaults
+</span><span class='line'># service uwsgi start</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h2>扩展阅读</h2>
+<h2 id="section">扩展阅读</h2>
 
 <ul>
-<li><p><a href="http://uwsgi-docs.readthedocs.org/en/latest/Nginx.html#dynamic-apps">UWSGI_SCRIPT</a></p></li>
-<li><p><a href="https://uwsgi-docs.readthedocs.org/en/latest/Vars.html?highlight=%20UWSGI_CHDIR">uwsgi protocol magic variables</a></p></li>
-<li><p><a href="http://moinmo.in/EmacsForMoinMoin">Emacs的moinmoin-mode</a></p></li>
+  <li>
+    <p><a href="http://uwsgi-docs.readthedocs.org/en/latest/Nginx.html#dynamic-apps">UWSGI_SCRIPT</a></p>
+  </li>
+  <li>
+    <p><a href="https://uwsgi-docs.readthedocs.org/en/latest/Vars.html?highlight=%20UWSGI_CHDIR">uwsgi protocol magic variables</a></p>
+  </li>
+  <li>
+    <p><a href="http://moinmo.in/EmacsForMoinMoin">Emacs的moinmoin-mode</a></p>
+  </li>
 </ul>
 
 ]]></content>
@@ -482,13 +425,13 @@
     <id>http://everet.org/2012/11/multi-user-nginx-php-server</id>
     <content type="html"><![CDATA[<p>趁这段时间有空，换成Xen的VPS，系统装了Ubuntu 12.04。决定重新配置一下服务器，另外将Web Server从Apache换成Nginx。</p>
 
-<h2>目标</h2>
+<h2 id="section">目标</h2>
 
 <p>搭建一个前端为nginx支持多用户的php虚拟主机。每个站点可以跑在不同的权限的用户下，一个站点被黑的时候希望不要影响到另一个站点，或者一个同学也不要可以随意访问到别的同学的内容。</p>
 
-<h2>行动<!-- more --></h2>
+<h2 id="more---">行动<!-- more --></h2>
 
-<h3>预备</h3>
+<h3 id="section-1">预备</h3>
 
 <p>首先创建用户，例如user01。我们可以通过</p>
 
@@ -505,7 +448,7 @@
 
 <p>来添加用户，然后在<strong>~user01</strong>目录下面创建一个文件夹<strong>www</strong>，权限为750。group为www-data，这样，只有user01可以读写，www-data仅能读，其他人无权访问。</p>
 
-<h3>php</h3>
+<h3 id="php">php</h3>
 
 <p>从php 5.3.5开始就直接内置支持fpm了，建议直接安装php 5.4。使用php-fpm（php Fastcgi Process Manager），目前这样的方式运行php性能貌似是最高的。</p>
 
@@ -537,7 +480,7 @@
 <p>定义了php进程的权限为user01，监听文件为<strong>/var/run/php5-fpm.user01.sock</strong>。
 这里的定义实际上是指的是用<strong>/var/run/php5-fpm.user01.sock</strong>这个来处理php时的权限为<strong>user01</strong>。到此为止，php的配置就完成了。</p>
 
-<h3>nginx</h3>
+<h3 id="nginx">nginx</h3>
 
 <p>我们nginx的权限为www-data，这样可以读～user01/www目录的内容，但是不能写。nginx的站点配置比较简单。我们来看一下可以工作的简单的配置：</p>
 
@@ -559,15 +502,10 @@
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>&lt;/p&gt;
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>
+</span><span class='line'>    server_name user01.everet.org;&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;server_name user01.everet.org;
-</span><span class='line'>
-</span><span class='line'>access_log  /var/log/nginx/user01.everet.org.access.log;
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;access_log  /var/log/nginx/user01.everet.org.access.log;
 </span><span class='line'>error_log   /var/log/nginx/user01.everet.org.error.log;
 </span><span class='line'>
 </span><span class='line'>root    /home/user01/www/;
@@ -580,15 +518,13 @@
 </span><span class='line'>location ~ .php<span class="nv">$ </span><span class="o">{</span>
 </span><span class='line'>    include fastcgi_params;
 </span><span class='line'>    fastcgi_pass unix:/var/run/php5-fpm.user01.sock;
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;<span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'><span class="o">}</span> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</code></pre>
 
 <p>也就是当处理到.php结尾的uri时，传递到<strong>/var/run/php5-fpm.user01.sock</strong>这个unix套接字处理，此时的php脚本的权限为user01。如果配置得当，就不会影响到其他用户。</p>
 
-<h3>wordpress</h3>
+<h3 id="wordpress">wordpress</h3>
 
 <p>我们用php的主要原因是wordpress，wordpress默认情况下非常臃肿，运行缓慢。因为页面基本只是在更新文章或者发表评论才会更新，所以平时不需要总是动态生成页面。对此，WP Super Cache插件可以很好地进行缓存。WP Super Cache有两种缓存模式一种是PHP缓存、另一种是mod_rewrite缓存（我们选择这个），mod_rewrite是生成静态的页面文件，然后通过.htaccess文件控制Apache来rewrite url。例如我们访问<a href="http://everet.org/2012/01/scar.html">http://everet.org/2012/01/scar.html</a>，其中uri为/2012/01/scar.html，进入到Apache通过rewrite后就变成了/wp-content/cache/supercache/everet.org/2012/01/scar.html/index.html，然后就可以读取静态文件返回给浏览器了。如果静态文件存在的话，就不需要经过php处理了，否则就调用php动态生成页面，同时插件还会生成那个页面的静态文件，下次就直接读取那个静态文件。</p>
 
@@ -646,18 +582,13 @@
 <span class='line-number'>49</span>
 <span class='line-number'>50</span>
 <span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>&lt;/p&gt;
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>
+</span><span class='line'>    server_name user01.everet.org;&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;server_name user01.everet.org;
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;access_log 	/var/log/nginx/user01.everet.org.access.log;
+</span><span class='line'>error_log 	/var/log/nginx/user01.everet.org.error.log;
 </span><span class='line'>
-</span><span class='line'>access_log  /var/log/nginx/user01.everet.org.access.log;
-</span><span class='line'>error_log   /var/log/nginx/user01.everet.org.error.log;
-</span><span class='line'>
-</span><span class='line'>root    /home/user01/www/;
+</span><span class='line'>root	/home/user01/www/;
 </span><span class='line'>index   index.php;
 </span><span class='line'>
 </span><span class='line'><span class="nb">set</span> <span class="nv">$cache_uri</span> <span class="nv">$request_uri</span>;
@@ -695,32 +626,30 @@
 </span><span class='line'>    try_files <span class="nv">$uri</span> /index.php;
 </span><span class='line'>    include fastcgi_params;
 </span><span class='line'>    fastcgi_pass unix:/var/run/php5-fpm.user01.sock;
-</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">}</span>	
 </span><span class='line'>
 </span><span class='line'>location ~* .<span class="o">(</span>ogg|ogv|svg|svgz|oet|otf|woff|mp4|ttf|css|rss|atom|js|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|mp3|bmp|rtf<span class="o">)</span><span class="nv">$ </span><span class="o">{</span>
 </span><span class='line'>    expires max;
 </span><span class='line'>    log_not_found off;
 </span><span class='line'>    access_log off;
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;<span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'><span class="o">}</span> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</code></pre>
 
-<p>我们来慢慢阅读一下这个配置。首先，set $cache_uri $request_uri就是将请求的uri保存到我们的变量$cache_uri中。然后，如果请求方法是POST（$request_method = POST）、包含请求字符串（$query_string != ""）、请求的uri包含一些特殊的php文件（$request_url ~<em> "(/wp-admin/|.........）或者登录过评论过（通过cookie判断，$http_cookie ~</em> "comment_author|w............"），就将$cache_uri设置为'null cache'，这样是让$cache_uri这个字符串变量变成一个无意义的字符串，以让后面拼接出来的路径无意义。</p>
+<p>我们来慢慢阅读一下这个配置。首先，<code>set $cache_uri $request_uri</code>就是将请求的uri保存到我们的变量<code>$cache_uri</code>中。然后，如果请求方法是POST（<code>$request_method = POST</code>）、包含请求字符串（<code>$query_string != ""</code>）、请求的uri包含一些特殊的php文件（<code>$request_url ~* "(/wp-admin/|.........</code>）或者登录过评论过（通过cookie判断，<code>$http_cookie ~* "comment_author|w............"</code>），就将<code>$cache_uri</code>设置为’null cache’，这样是让<code>$cache_uri</code>这个字符串变量变成一个无意义的字符串，以让后面拼接出来的路径无意义。</p>
 
-<p>对于 <strong>try_files /wp-content/cache/supercache/$http_host/$cache_uri/index.html $uri $uri/ /index.php;</strong></p>
+<p>对于 <code>try_files /wp-content/cache/supercache/$http_host/$cache_uri/index.html $uri $uri/ /index.php;</code></p>
 
-<p>这个是依次尝试访问这些文件，成功就直接返回不再继续，如果都找不到就返回最后一个文件/index.php。我们还记得WP Super Cache生成的静态文件结构是/wp-content/cache/supercache/everet.org/2012/01/scar.html/index.html，也就是先尝试WP Super Cache生成的缓存，有就直接返回缓存。</p>
+<p>这个是依次尝试访问这些文件，成功就直接返回不再继续，如果都找不到就返回最后一个文件/index.php。我们还记得WP Super Cache生成的静态文件结构是<code>/wp-content/cache/supercache/everet.org/2012/01/scar.html/index.html</code>，也就是先尝试WP Super Cache生成的缓存，有就直接返回缓存。</p>
 
 <p>用ab测试了一下，对于缓存后的博客文章的RPS可以到900，还挺快的啊。</p>
 
 <p>另外，对于wordpress的wp-config.php文件，里面写有数据库的帐号和密码，所以我们需要将权限改为600，即只有user01自己能够读写，其他人无权访问。</p>
 
-<h2>参考资料</h2>
+<h2 id="section-2">参考资料</h2>
 
 <ul>
-<li><a href="http://rtcamp.com/tutorials/wordpress-nginx-wp-super-cache/">WordPress-Nginx + WP Super cache</a></li>
+  <li><a href="http://rtcamp.com/tutorials/wordpress-nginx-wp-super-cache/">WordPress-Nginx + WP Super cache</a></li>
 </ul>
 
 ]]></content>
@@ -733,11 +662,11 @@
     <id>http://everet.org/2012/09/chrome-ramdisk</id>
     <content type="html"><![CDATA[<p>我现在使用的一台电脑的硬盘速度非常慢，Chrome有时也会对硬盘读写也会让机器发生顿卡，真是悲剧。所以我决定将Chrome经常读写的数据放置到内存中以提高响应速度。 Chrome的数据文件主要有用户配置文件以及磁盘缓存文件。在Ubuntu下就分别放置在~/.config/google-chrome以及~/.cache/google-chrome下面。 在Linux下，ramdisk直接就有了，直接拿来用就可以了，而在Windows下需要安装一些程序来创建ramdisk。我们来看看Linux下怎么做。 在Linux下，/dev/shm目录就是映射到了内存，所有写的东西都是直接写到了内存里面，不过这个目录不是持久的，断电就没了。</p>
 
-<h2>Hack</h2>
+<h2 id="hack">Hack</h2>
 
 <p>我们的想法是，开机的时候将Chrome的数据文件全部放到/dev/shm下面，然后中间所有的读写都是在/dev/shm里面完成，因为都是在内存里面完成，所以速度会非常快。<!-- more --> 但是，坏处是，断电的时候，这个文件夹就会清空了。所以我们在关闭Chrome的时候，再将/dev/shm的数据复制到硬盘里面。这样的不足之处是，中间如果电脑突然断电会导致这次打开Chrome做的所有操作都没了，不过这不是大问题，因为只要是登录了的Chrome，都会将配置备份到Google的服务器，所以插件和收藏夹还是比较安全的。如果需要更安全，可以每隔一段时间（例如一两个小时），将/dev/shm的数据复制到硬盘，不过我觉得没什么必要，所以就不定期复制到硬盘。 嗯，那我们要处理的就两个文件夹：一个是用户数据文件夹<strong>~/.config/google-chrome</strong>，那些用户信息，历史记录都在里面；另一个是<strong>~/.cache/google-chrome</strong>，用来保存页面缓存文件。 这两个文件夹都可以通过启动参数设置位置，不过我为了全局性，就是无论从哪里打开chrome都可以享受ramdisk，所以我决定将这两个文件夹重定向到/dev/shm下面。</p>
 
-<h3>初始化，复制到内存</h3>
+<h3 id="section">初始化，复制到内存</h3>
 
 <p>我们编写一个开机自启动的脚本。在Ubuntu下，我们可以在系统设置那里增加一个自启动。</p>
 
@@ -752,25 +681,21 @@
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;h1&gt;!/bin/bash&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;echo <span class="s2">&quot;Copies from disk to shm&quot;</span>
+</span><span class='line'>&lt;p&gt;echo “Copies from disk to shm”
 </span><span class='line'>cp -rf /home/cedricporter/shm_backup/cedricporter /dev/shm/cedricporter
-</span><span class='line'>chown cedricporter /dev/shm/cedricporter&lt;/p&gt;
+</span><span class='line'>chown cedricporter /dev/shm/cedricporter &lt;/p&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;ln -s /dev/shm/cedricporter/.config/google-chrome ~/.config/google-chrome
 </span><span class='line'>ln -s /dev/shm/cedricporter/.cache/google-chrome ~/.cache/google-chrome&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;p&gt;date &gt;&gt; /home/cedricporter/shm_backup/load.log
+</span><span class='line'>&lt;p&gt;date » /home/cedricporter/shm_backup/load.log
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>这里做的是，将硬盘里面的Chrome数据文件复制到内存里面，然后建立文件夹链接。</p>
 
-<h3>关闭，写到硬盘</h3>
+<h3 id="section-1">关闭，写到硬盘</h3>
 
 <p>关闭Chrome后，写到硬盘。</p>
 
@@ -784,22 +709,18 @@
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;h1&gt;!/bin/bash&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;echo <span class="s2">&quot;save from shm to disk&quot;</span>
+</span><span class='line'>&lt;p&gt;echo “save from shm to disk”
 </span><span class='line'>cp -rf /dev/shm/cedricporter /home/cedricporter/shm_backup&lt;/p&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;file<span class="o">=</span>/home/cedricporter/shm_backup/save.log
-</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;----- Start Saving -----&quot;</span> &gt;&gt; <span class="nv">$file</span>
-</span><span class='line'>date &gt;&gt; <span class="nv">$file</span>
-</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;----- End -----&quot;</span> &gt;&gt; <span class="nv">$file</span>
+</span><span class='line'><span class="nb">echo</span> “—– Start Saving —–” » <span class="nv">$file</span>
+</span><span class='line'>date » <span class="nv">$file</span>
+</span><span class='line'><span class="nb">echo</span> “—– End —–” » <span class="nv">$file</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h3> 增加关闭Chrome时触发脚本</h3>
+<h3 id="chrome"> 增加关闭Chrome时触发脚本</h3>
 
 <p>我们期望在关闭Chrome的时候，能够调用我们写到硬盘的脚本，来将/dev/shm里面的内容写到硬盘里面，好让下次开机的时候将数据载入到内存中。</p>
 
@@ -809,7 +730,7 @@
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">exec</span> -a <span class="s2">&quot;$0&quot;</span> <span class="s2">&quot;$HERE/chrome&quot;</span> <span class="s2">&quot;$@&quot;</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">exec</span> -a “<span class="nv">$0</span>” “<span class="nv">$HERE</span>/chrome” “<span class="nv">$@</span>”
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>我不想去修改这个shell文件，所以，我将其重命名为google-chrome.origin，然后新建一个shell文件，命名为google-chrome，内容如下：</p>
@@ -818,11 +739,7 @@
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;!/bin/bash&lt;/h1&gt;
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;/opt/google/chrome/google-chrome.origin &amp;amp;&amp;amp; /home/cedricporter/projects/chrome_cache/chrome_save_to_disk.sh
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
@@ -843,7 +760,6 @@
     <content type="html"><![CDATA[<p>最近经常用到ASCII码，所以弄一张表过来方便查找。</p>
 
 <!-- more -->
-
 
 <p><a href="http://everet.org/wp-content/uploads/2012/08/asciifull.gif"><img src="http://everet.org/wp-content/uploads/2012/08/asciifull.gif" alt="" /></a></p>
 

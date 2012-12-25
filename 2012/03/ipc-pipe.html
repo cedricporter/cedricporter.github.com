@@ -115,9 +115,12 @@
 
 <p>原型是:</p>
 
-<blockquote><h1>include &lt;unistd.h></h1></blockquote>
-
-<p>int pipe(int file_descriptor[2]);</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">#include &lt;unistd.h&gt;
+</span><span class="line">
+</span><span class="line">int pipe(int file_descriptor[2]);</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>参数是一个由两个整型的文件描述符组成的数组的指针。成功返回0，失败返回-1，并设置errno来表面失败的原因。</p>
 
@@ -128,7 +131,6 @@
 <p>管道有一些内置的缓冲区，它在write和read调用之间保存数据。</p>
 
 <!-- more -->
-
 
 <p>缓冲区满的时候，write可能会阻塞。</p>
 
@@ -142,163 +144,198 @@
 
 <p>引用计数是程序设计中非常重要的思想啊~~~</p>
 
-<figure class='code'><figcaption><span>cpp  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;unistd.h&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;string.h&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>     <span class="kt">int</span> <span class="n">data_processed</span><span class="p">;</span>
-</span><span class='line'>     <span class="kt">int</span> <span class="n">file_pipes</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
-</span><span class='line'>     <span class="kt">char</span> <span class="n">some_data</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
-</span><span class='line'>     <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="n">BUFSIZ</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
-</span><span class='line'>     <span class="n">pid_t</span> <span class="n">fork_result</span><span class="p">;</span>
-</span><span class='line'>     <span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>     <span class="n">memset</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>     <span class="k">if</span> <span class="p">(</span><span class="n">pipe</span><span class="p">(</span><span class="n">file_pipes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>     <span class="p">{</span>
-</span><span class='line'>    <span class="n">fork_result</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">fork_result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>         <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Fork Failure&quot;</span><span class="p">);</span>
-</span><span class='line'>         <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">fork_result</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>         <span class="c1">// child process</span>
-</span><span class='line'>         <span class="n">close</span><span class="p">(</span><span class="n">file_pipes</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
-</span><span class='line'>         <span class="k">while</span> <span class="p">(</span><span class="n">counter</span><span class="o">--</span><span class="p">)</span>
-</span><span class='line'>         <span class="p">{</span>
-</span><span class='line'>          <span class="n">data_processed</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">file_pipes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">BUFSIZ</span><span class="p">);</span>
-</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="n">data_processed</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>           <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>          <span class="n">buffer</span><span class="p">[</span><span class="n">data_processed</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
-</span><span class='line'>          <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d - Read %d bytes: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">counter</span><span class="p">,</span> <span class="n">data_processed</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span>
-</span><span class='line'>         <span class="p">}</span>
-</span><span class='line'>         <span class="n">close</span><span class="p">(</span><span class="n">file_pipes</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-</span><span class='line'>         <span class="n">printf</span><span class="p">(</span><span class="s">&quot;reader done</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">else</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>         <span class="c1">// parent process</span>
-</span><span class='line'>         <span class="n">close</span><span class="p">(</span><span class="n">file_pipes</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-</span><span class='line'>         <span class="k">while</span> <span class="p">(</span><span class="n">counter</span><span class="o">--</span><span class="p">)</span>
-</span><span class='line'>         <span class="p">{</span>
-</span><span class='line'>          <span class="n">sprintf</span><span class="p">(</span><span class="n">some_data</span><span class="p">,</span> <span class="s">&quot;[%d] &quot;</span><span class="p">,</span> <span class="n">counter</span><span class="p">);</span>
-</span><span class='line'>          <span class="n">data_processed</span> <span class="o">=</span> <span class="n">write</span><span class="p">(</span><span class="n">file_pipes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">some_data</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">some_data</span><span class="p">));</span>
-</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="n">data_processed</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>           <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>          <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d - Wrote %d bytes</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">counter</span><span class="p">,</span> <span class="n">data_processed</span><span class="p">);</span>
-</span><span class='line'>         <span class="p">}</span>
-</span><span class='line'>         <span class="n">close</span><span class="p">(</span><span class="n">file_pipes</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
-</span><span class='line'>         <span class="n">printf</span><span class="p">(</span><span class="s">&quot;writer done</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_SUCCESS</span><span class="p">);</span>
-</span><span class='line'>     <span class="p">}</span>
-</span><span class='line'>     <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>cpp  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+</pre></td><td class="code"><pre><code class="cpp"><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;unistd.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;string.h&gt;</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">     <span class="kt">int</span> <span class="n">data_processed</span><span class="p">;</span>
+</span><span class="line">     <span class="kt">int</span> <span class="n">file_pipes</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+</span><span class="line">     <span class="kt">char</span> <span class="n">some_data</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+</span><span class="line">     <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="n">BUFSIZ</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+</span><span class="line">     <span class="n">pid_t</span> <span class="n">fork_result</span><span class="p">;</span>
+</span><span class="line">     <span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">     <span class="n">memset</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">));</span>
+</span><span class="line">
+</span><span class="line">     <span class="k">if</span> <span class="p">(</span><span class="n">pipe</span><span class="p">(</span><span class="n">file_pipes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class="line">     <span class="p">{</span>
+</span><span class="line">	  <span class="n">fork_result</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+</span><span class="line">	  <span class="k">if</span> <span class="p">(</span><span class="n">fork_result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="line">	  <span class="p">{</span>
+</span><span class="line">	       <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Fork Failure&quot;</span><span class="p">);</span>
+</span><span class="line">	       <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
+</span><span class="line">	  <span class="p">}</span>
+</span><span class="line">	  <span class="k">if</span> <span class="p">(</span><span class="n">fork_result</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class="line">	  <span class="p">{</span>
+</span><span class="line">	       <span class="c1">// child process</span>
+</span><span class="line">	       <span class="n">close</span><span class="p">(</span><span class="n">file_pipes</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span><span class="line">	       <span class="k">while</span> <span class="p">(</span><span class="n">counter</span><span class="o">--</span><span class="p">)</span>
+</span><span class="line">	       <span class="p">{</span>
+</span><span class="line">		    <span class="n">data_processed</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">file_pipes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">BUFSIZ</span><span class="p">);</span>
+</span><span class="line">		    <span class="k">if</span> <span class="p">(</span><span class="n">data_processed</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class="line">			 <span class="k">break</span><span class="p">;</span>
+</span><span class="line">		    <span class="n">buffer</span><span class="p">[</span><span class="n">data_processed</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+</span><span class="line">		    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d - Read %d bytes: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">counter</span><span class="p">,</span> <span class="n">data_processed</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span>
+</span><span class="line">	       <span class="p">}</span>
+</span><span class="line">	       <span class="n">close</span><span class="p">(</span><span class="n">file_pipes</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span><span class="line">	       <span class="n">printf</span><span class="p">(</span><span class="s">&quot;reader done</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">	  <span class="p">}</span>
+</span><span class="line">	  <span class="k">else</span>
+</span><span class="line">	  <span class="p">{</span>
+</span><span class="line">	       <span class="c1">// parent process</span>
+</span><span class="line">	       <span class="n">close</span><span class="p">(</span><span class="n">file_pipes</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span><span class="line">	       <span class="k">while</span> <span class="p">(</span><span class="n">counter</span><span class="o">--</span><span class="p">)</span>
+</span><span class="line">	       <span class="p">{</span>
+</span><span class="line">		    <span class="n">sprintf</span><span class="p">(</span><span class="n">some_data</span><span class="p">,</span> <span class="s">&quot;[%d] &quot;</span><span class="p">,</span> <span class="n">counter</span><span class="p">);</span>
+</span><span class="line">		    <span class="n">data_processed</span> <span class="o">=</span> <span class="n">write</span><span class="p">(</span><span class="n">file_pipes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">some_data</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">some_data</span><span class="p">));</span>
+</span><span class="line">		    <span class="k">if</span> <span class="p">(</span><span class="n">data_processed</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class="line">			 <span class="k">break</span><span class="p">;</span>
+</span><span class="line">		    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d - Wrote %d bytes</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">counter</span><span class="p">,</span> <span class="n">data_processed</span><span class="p">);</span>
+</span><span class="line">	       <span class="p">}</span>
+</span><span class="line">	       <span class="n">close</span><span class="p">(</span><span class="n">file_pipes</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span><span class="line">	       <span class="n">printf</span><span class="p">(</span><span class="s">&quot;writer done</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">	  <span class="p">}</span>
+</span><span class="line">	  <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_SUCCESS</span><span class="p">);</span>
+</span><span class="line">     <span class="p">}</span>
+</span><span class="line">     <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>下面是在我的虚拟机的输出：（因为有两个屏幕，开个虚拟机让一个鼠标在两个系统两个屏幕间互相移动，这是相当的爽啊）</p>
 
-<blockquote><p>cedricporter-virtual-machine 1 # ./1
-29 - Wrote 5 bytes
-28 - Wrote 5 bytes
-27 - Wrote 5 bytes
-26 - Wrote 5 bytes
-25 - Wrote 5 bytes
-24 - Wrote 5 bytes
-23 - Wrote 5 bytes
-22 - Wrote 5 bytes
-21 - Wrote 5 bytes
-20 - Wrote 5 bytes
-19 - Wrote 5 bytes
-18 - Wrote 5 bytes
-29 - Read 60 bytes: [29] [28] [27] [26] [25] [24] [23] [22] [21] [20] [19] [18]
-17 - Wrote 5 bytes
-16 - Wrote 5 bytes
-15 - Wrote 5 bytes
-14 - Wrote 5 bytes
-13 - Wrote 5 bytes
-12 - Wrote 5 bytes
-11 - Wrote 5 bytes
-10 - Wrote 5 bytes
-9 - Wrote 4 bytes
-8 - Wrote 4 bytes
-7 - Wrote 4 bytes
-6 - Wrote 4 bytes
-5 - Wrote 4 bytes
-4 - Wrote 4 bytes
-3 - Wrote 4 bytes
-2 - Wrote 4 bytes
-1 - Wrote 4 bytes
-0 - Wrote 4 bytes
-writer done
-cedricporter-virtual-machine 1 # 28 - Read 80 bytes: [17] [16] [15] [14] [13] [12] [11] [10] [9] [8] [7] [6] [5] [4] [3] [2] [1] [0]
-reader done</p></blockquote>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="go">cedricporter-virtual-machine 1 # ./1</span>
+</span><span class="line"><span class="go">29 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">28 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">27 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">26 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">25 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">24 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">23 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">22 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">21 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">20 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">19 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">18 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">29 - Read 60 bytes: [29] [28] [27] [26] [25] [24] [23] [22] [21] [20] [19] [18]</span>
+</span><span class="line"><span class="go">17 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">16 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">15 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">14 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">13 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">12 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">11 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">10 - Wrote 5 bytes</span>
+</span><span class="line"><span class="go">9 - Wrote 4 bytes</span>
+</span><span class="line"><span class="go">8 - Wrote 4 bytes</span>
+</span><span class="line"><span class="go">7 - Wrote 4 bytes</span>
+</span><span class="line"><span class="go">6 - Wrote 4 bytes</span>
+</span><span class="line"><span class="go">5 - Wrote 4 bytes</span>
+</span><span class="line"><span class="go">4 - Wrote 4 bytes</span>
+</span><span class="line"><span class="go">3 - Wrote 4 bytes</span>
+</span><span class="line"><span class="go">2 - Wrote 4 bytes</span>
+</span><span class="line"><span class="go">1 - Wrote 4 bytes</span>
+</span><span class="line"><span class="go">0 - Wrote 4 bytes</span>
+</span><span class="line"><span class="go">writer done</span>
+</span><span class="line"><span class="go">cedricporter-virtual-machine 1 # 28 - Read 80 bytes: [17] [16] [15] [14] [13] [12] [11] [10] [9] [8] [7] [6] [5] [4] [3] [2] [1] [0]</span>
+</span><span class="line"><span class="go">reader done</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
 
 

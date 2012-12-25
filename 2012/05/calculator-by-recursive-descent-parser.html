@@ -107,7 +107,7 @@
   </header>
 
 
-<div class="entry-content"><h2>LL(1)</h2>
+<div class="entry-content"><h2 id="ll1">LL(1)</h2>
 
 <p>何为LL(1)？通俗来说就是向前看一个词法单元的自顶向下解析器。两个L都代表left-to-right，第一个L表示解析器按“从左到右”的顺序解析输入内容；第二个L表示下降解析时也是按“从左到右”的顺序遍历子节点。而(1)表示它使用一个向前看 词法单元。</p>
 
@@ -119,196 +119,191 @@
 
 <p>我们可以使用如下文法表示计算表达式：</p>
 
-<h1>expr ::= expr addop term | term</h1>
+<h1 id="expr--expr-addop-term--term">expr ::= expr addop term | term</h1>
+<p># term ::= term mulop factor | factor
+# factor ::= number | ( expr )
+# addop ::= + | -
+# mulop ::= * | /</p>
 
-<h1>term ::= term mulop factor | factor</h1>
-
-<h1>factor ::= number | ( expr )</h1>
-
-<h1>addop ::= + | -</h1>
-
-<h1>mulop ::= * | /</h1>
-
-<h2>例子</h2>
+<h2 id="section">例子</h2>
 
 <p>我们用Python构造一个递归下降实现的计算器。</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/env python</span>
-</span><span class='line'><span class="c"># author:  Hua Liang [ Stupid ET ]</span>
-</span><span class='line'><span class="c"># email:   et@everet.org</span>
-</span><span class='line'><span class="c"># website: http://EverET.org</span>
-</span><span class='line'><span class="c">#</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Grammar:</span>
-</span><span class='line'><span class="c">#     expr    ::= expr addop term | term</span>
-</span><span class='line'><span class="c">#     term    ::= term mulop factor | factor</span>
-</span><span class='line'><span class="c">#     factor  ::= number | ( expr )</span>
-</span><span class='line'><span class="c">#     addop   ::= + | -</span>
-</span><span class='line'><span class="c">#     mulop   ::= * | /</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="nn">tokenize</span><span class="o">,</span> <span class="nn">StringIO</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">tokens</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class='line'><span class="n">cur_tok</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">scan</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">g</span> <span class="o">=</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">generate_tokens</span><span class="p">(</span>
-</span><span class='line'>        <span class="n">StringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">return</span> <span class="p">((</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">g</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">get_token</span><span class="p">():</span>
-</span><span class='line'>    <span class="k">global</span> <span class="n">tokens</span><span class="p">,</span> <span class="n">cur_tok</span>
-</span><span class='line'>    <span class="n">cur_tok</span> <span class="o">=</span> <span class="n">tokens</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-</span><span class='line'>    <span class="c">#print cur_tok</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">cur_tok</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">global</span> <span class="n">tokens</span><span class="p">,</span> <span class="n">cur_tok</span>
-</span><span class='line'>    <span class="n">t</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">cur_tok</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="nb">type</span> <span class="ow">or</span> <span class="n">t</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">OP</span> <span class="ow">and</span> <span class="n">v</span> <span class="o">==</span> <span class="n">val</span><span class="p">:</span>
-</span><span class='line'>        <span class="n">get_token</span><span class="p">()</span>
-</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
-</span><span class='line'>        <span class="k">raise</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">expr</span><span class="p">():</span>
-</span><span class='line'>    <span class="k">global</span> <span class="n">cur_tok</span>
-</span><span class='line'>    <span class="n">tmp</span> <span class="o">=</span> <span class="n">term</span><span class="p">()</span>
-</span><span class='line'>    <span class="n">t</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">cur_tok</span>
-</span><span class='line'>    <span class="k">while</span> <span class="n">v</span> <span class="o">==</span> <span class="s">&#39;+&#39;</span> <span class="ow">or</span> <span class="n">v</span> <span class="o">==</span> <span class="s">&#39;-&#39;</span><span class="p">:</span>
-</span><span class='line'>        <span class="n">match</span><span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">OP</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">rhs</span> <span class="o">=</span> <span class="n">term</span><span class="p">()</span>
-</span><span class='line'>        <span class="n">e</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">tmp</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">print</span> <span class="n">e</span><span class="p">,</span> <span class="s">&#39;=&#39;</span><span class="p">,</span> <span class="n">tmp</span>
-</span><span class='line'>        <span class="n">t</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">cur_tok</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">tmp</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">term</span><span class="p">():</span>
-</span><span class='line'>    <span class="k">global</span> <span class="n">cur_tok</span>
-</span><span class='line'>    <span class="n">tmp</span> <span class="o">=</span> <span class="n">factor</span><span class="p">()</span>
-</span><span class='line'>    <span class="n">t</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">cur_tok</span>
-</span><span class='line'>    <span class="k">while</span> <span class="n">v</span> <span class="o">==</span> <span class="s">&#39;*&#39;</span> <span class="ow">or</span> <span class="n">v</span> <span class="o">==</span> <span class="s">&#39;/&#39;</span><span class="p">:</span>
-</span><span class='line'>        <span class="n">match</span><span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">OP</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">rhs</span> <span class="o">=</span> <span class="n">factor</span><span class="p">()</span>
-</span><span class='line'>        <span class="n">e</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">tmp</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">print</span> <span class="n">e</span><span class="p">,</span> <span class="s">&#39;=&#39;</span><span class="p">,</span> <span class="n">tmp</span>
-</span><span class='line'>        <span class="n">t</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">cur_tok</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">tmp</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">factor</span><span class="p">():</span>
-</span><span class='line'>    <span class="k">global</span> <span class="n">cur_tok</span>
-</span><span class='line'>    <span class="n">t</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">cur_tok</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">NUMBER</span><span class="p">:</span>
-</span><span class='line'>        <span class="n">match</span><span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">NUMBER</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">elif</span> <span class="n">v</span> <span class="o">==</span> <span class="s">&#39;(&#39;</span><span class="p">:</span>
-</span><span class='line'>        <span class="n">match</span><span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">OP</span><span class="p">,</span> <span class="s">&#39;(&#39;</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">tmp</span> <span class="o">=</span> <span class="n">expr</span><span class="p">()</span>
-</span><span class='line'>        <span class="n">match</span><span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">OP</span><span class="p">,</span> <span class="s">&#39;)&#39;</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">tmp</span>
-</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
-</span><span class='line'>        <span class="k">raise</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;12 + 2 * ( 5 + 6 )&#39;</span>
-</span><span class='line'>    <span class="n">tokens</span> <span class="o">=</span> <span class="n">scan</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">get_token</span><span class="p">()</span>
-</span><span class='line'>    <span class="n">res</span> <span class="o">=</span> <span class="n">expr</span><span class="p">()</span>
-</span><span class='line'>    <span class="k">print</span> <span class="n">text</span><span class="p">,</span> <span class="s">&#39;=&#39;</span><span class="p">,</span> <span class="n">res</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+<span class="line-number">72</span>
+<span class="line-number">73</span>
+<span class="line-number">74</span>
+<span class="line-number">75</span>
+<span class="line-number">76</span>
+<span class="line-number">77</span>
+<span class="line-number">78</span>
+<span class="line-number">79</span>
+<span class="line-number">80</span>
+<span class="line-number">81</span>
+<span class="line-number">82</span>
+<span class="line-number">83</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="c">#!/usr/bin/env python</span>
+</span><span class="line"><span class="c"># author:  Hua Liang [ Stupid ET ]</span>
+</span><span class="line"><span class="c"># email:   et@everet.org</span>
+</span><span class="line"><span class="c"># website: http://EverET.org</span>
+</span><span class="line"><span class="c">#</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># Grammar:</span>
+</span><span class="line"><span class="c">#     expr    ::= expr addop term | term</span>
+</span><span class="line"><span class="c">#     term    ::= term mulop factor | factor</span>
+</span><span class="line"><span class="c">#     factor  ::= number | ( expr )</span>
+</span><span class="line"><span class="c">#     addop   ::= + | -</span>
+</span><span class="line"><span class="c">#     mulop   ::= * | /</span>
+</span><span class="line">
+</span><span class="line"><span class="kn">import</span> <span class="nn">tokenize</span><span class="o">,</span> <span class="nn">StringIO</span>
+</span><span class="line">
+</span><span class="line"><span class="n">tokens</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class="line"><span class="n">cur_tok</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">scan</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+</span><span class="line">    <span class="n">g</span> <span class="o">=</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">generate_tokens</span><span class="p">(</span>
+</span><span class="line">        <span class="n">StringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">)</span>
+</span><span class="line">    <span class="k">return</span> <span class="p">((</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">g</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">get_token</span><span class="p">():</span>
+</span><span class="line">    <span class="k">global</span> <span class="n">tokens</span><span class="p">,</span> <span class="n">cur_tok</span>
+</span><span class="line">    <span class="n">cur_tok</span> <span class="o">=</span> <span class="n">tokens</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class="line">    <span class="c">#print cur_tok</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">cur_tok</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">):</span>
+</span><span class="line">    <span class="k">global</span> <span class="n">tokens</span><span class="p">,</span> <span class="n">cur_tok</span>
+</span><span class="line">    <span class="n">t</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">cur_tok</span>
+</span><span class="line">    <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="nb">type</span> <span class="ow">or</span> <span class="n">t</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">OP</span> <span class="ow">and</span> <span class="n">v</span> <span class="o">==</span> <span class="n">val</span><span class="p">:</span>
+</span><span class="line">        <span class="n">get_token</span><span class="p">()</span>
+</span><span class="line">    <span class="k">else</span><span class="p">:</span>
+</span><span class="line">        <span class="k">raise</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">expr</span><span class="p">():</span>
+</span><span class="line">    <span class="k">global</span> <span class="n">cur_tok</span>
+</span><span class="line">    <span class="n">tmp</span> <span class="o">=</span> <span class="n">term</span><span class="p">()</span>
+</span><span class="line">    <span class="n">t</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">cur_tok</span>
+</span><span class="line">    <span class="k">while</span> <span class="n">v</span> <span class="o">==</span> <span class="s">&#39;+&#39;</span> <span class="ow">or</span> <span class="n">v</span> <span class="o">==</span> <span class="s">&#39;-&#39;</span><span class="p">:</span>
+</span><span class="line">        <span class="n">match</span><span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">OP</span><span class="p">)</span>
+</span><span class="line">        <span class="n">rhs</span> <span class="o">=</span> <span class="n">term</span><span class="p">()</span>
+</span><span class="line">        <span class="n">e</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span>
+</span><span class="line">        <span class="n">tmp</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</span><span class="line">        <span class="k">print</span> <span class="n">e</span><span class="p">,</span> <span class="s">&#39;=&#39;</span><span class="p">,</span> <span class="n">tmp</span>
+</span><span class="line">        <span class="n">t</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">cur_tok</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">tmp</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">term</span><span class="p">():</span>
+</span><span class="line">    <span class="k">global</span> <span class="n">cur_tok</span>
+</span><span class="line">    <span class="n">tmp</span> <span class="o">=</span> <span class="n">factor</span><span class="p">()</span>
+</span><span class="line">    <span class="n">t</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">cur_tok</span>
+</span><span class="line">    <span class="k">while</span> <span class="n">v</span> <span class="o">==</span> <span class="s">&#39;*&#39;</span> <span class="ow">or</span> <span class="n">v</span> <span class="o">==</span> <span class="s">&#39;/&#39;</span><span class="p">:</span>
+</span><span class="line">        <span class="n">match</span><span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">OP</span><span class="p">)</span>
+</span><span class="line">        <span class="n">rhs</span> <span class="o">=</span> <span class="n">factor</span><span class="p">()</span>
+</span><span class="line">        <span class="n">e</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span>
+</span><span class="line">        <span class="n">tmp</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</span><span class="line">        <span class="k">print</span> <span class="n">e</span><span class="p">,</span> <span class="s">&#39;=&#39;</span><span class="p">,</span> <span class="n">tmp</span>
+</span><span class="line">        <span class="n">t</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">cur_tok</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">tmp</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">factor</span><span class="p">():</span>
+</span><span class="line">    <span class="k">global</span> <span class="n">cur_tok</span>
+</span><span class="line">    <span class="n">t</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">cur_tok</span>
+</span><span class="line">    <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">NUMBER</span><span class="p">:</span>
+</span><span class="line">        <span class="n">match</span><span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">NUMBER</span><span class="p">)</span>
+</span><span class="line">        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</span><span class="line">    <span class="k">elif</span> <span class="n">v</span> <span class="o">==</span> <span class="s">&#39;(&#39;</span><span class="p">:</span>
+</span><span class="line">        <span class="n">match</span><span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">OP</span><span class="p">,</span> <span class="s">&#39;(&#39;</span><span class="p">)</span>
+</span><span class="line">        <span class="n">tmp</span> <span class="o">=</span> <span class="n">expr</span><span class="p">()</span>
+</span><span class="line">        <span class="n">match</span><span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">OP</span><span class="p">,</span> <span class="s">&#39;)&#39;</span><span class="p">)</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">tmp</span>
+</span><span class="line">    <span class="k">else</span><span class="p">:</span>
+</span><span class="line">        <span class="k">raise</span>
+</span><span class="line">
+</span><span class="line"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class="line">    <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;12 + 2 * ( 5 + 6 )&#39;</span>
+</span><span class="line">    <span class="n">tokens</span> <span class="o">=</span> <span class="n">scan</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</span><span class="line">    <span class="n">get_token</span><span class="p">()</span>
+</span><span class="line">    <span class="n">res</span> <span class="o">=</span> <span class="n">expr</span><span class="p">()</span>
+</span><span class="line">    <span class="k">print</span> <span class="n">text</span><span class="p">,</span> <span class="s">&#39;=&#39;</span><span class="p">,</span> <span class="n">res</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>对于12 + 2 * ( 5 + 6 )，运行结果如下：
 <a href="http://everet.org/wp-content/uploads/2012/05/Screenshot-from-2012-05-15-214802.png"><img src="http://everet.org/wp-content/uploads/2012/05/Screenshot-from-2012-05-15-214802.png" alt="" /></a></p>
 
 <p>源码请见：<a href="https://github.com/cedricporter/et-python/blob/master/compilers/func-cal/main.py">https://github.com/cedricporter/et-python/blob/master/compilers/func-cal/main.py</a></p>
 
-<h2>参考</h2>
+<h2 id="section-1">参考</h2>
 
 <p>[1] Language Implementation Patterns</p>
 

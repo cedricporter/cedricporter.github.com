@@ -115,59 +115,51 @@
 
 <p>目前特效都设计为过滤器，接受一张图像和输出一张图像。不同的过滤器可以组合在一起形成新的特效过滤器。Unix的管道过滤器的思想真是美好啊。</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">new_effect</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">img</span><span class="p">:</span> <span class="n">effect_a</span><span class="p">(</span><span class="n">effect_b</span><span class="p">(</span><span class="n">effect_c</span><span class="p">(</span><span class="n">img</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">new_effect</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">img</span><span class="p">:</span> <span class="n">effect_a</span><span class="p">(</span><span class="n">effect_b</span><span class="p">(</span><span class="n">effect_c</span><span class="p">(</span><span class="n">img</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>源码请见Github: <a href="https://github.com/cedricporter/EffectLab/downloads">https://github.com/cedricporter/EffectLab/downloads</a></p>
 
-<h2>目前实现的效果</h2>
+<h2 id="section">目前实现的效果</h2>
 
 <p>左边为原图，右边为处理后的图片。</p>
 
-<h3>镜头变形效果[1]</h3>
+<h3 id="section-1">镜头变形效果[1]</h3>
 
 <p>首先将图像映射到长宽取值范围都为[-1, 1]，然后从<a href="http://zh.wikipedia.org/zh/%E7%AC%9B%E5%8D%A1%E5%84%BF%E5%9D%90%E6%A0%87%E7%B3%BB">笛卡尔坐标系</a>映射到<a href="http://zh.wikipedia.org/wiki/%E6%9E%81%E5%9D%90%E6%A0%87%E7%B3%BB">极坐标系</a>。然后我们就可以控制<img src="http://upload.wikimedia.org/wikipedia/zh/math/4/b/4/4b43b0aee35624cd95b910189b3dc231.png" alt="r" />（半径坐标）和<img src="http://upload.wikimedia.org/wikipedia/zh/math/5/0/d/50d91f80cbb8feda1d10e167107ad1ff.png" alt="\theta" />（角坐标、极角或<a href="http://zh.wikipedia.org/wiki/%E6%96%B9%E4%BD%8D%E8%A7%92">方位角</a>，有时也表示为<img src="http://upload.wikimedia.org/wikipedia/zh/math/7/f/2/7f20aa0b3691b496aec21cf356f63e04.png" alt="\phi" />或<img src="http://upload.wikimedia.org/wikipedia/zh/math/e/3/5/e358efa489f58062f10dd7316b65649e.png" alt="t" />）。</p>
 
 <p><strong>r = r ^ 2</strong></p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">effect</span> <span class="o">=</span> <span class="n">RadianFormulaEffect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="p">(</span><span class="n">r</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">phi</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">effect</span> <span class="o">=</span> <span class="n">RadianFormulaEffect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="p">(</span><span class="n">r</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">phi</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <!-- more -->
-
-
 <p><a href="http://everet.org/wp-content/uploads/2012/07/5.jpg"><img src="http://everet.org/wp-content/uploads/2012/07/5.jpg" alt="" /></a></p>
 
 <p><strong>r = sqrt(r)</strong></p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">effect</span> <span class="o">=</span> <span class="n">RadianFormulaEffect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">phi</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">effect</span> <span class="o">=</span> <span class="n">RadianFormulaEffect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">phi</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/07/1.jpg"><img src="http://everet.org/wp-content/uploads/2012/07/1.jpg" alt="" /></a></p>
 
 <p><strong>x = math.sin(x * math.pi / 2)</strong>
 <strong>y = math.sin(y * math.pi / 2)</strong></p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">effect</span> <span class="o">=</span> <span class="n">LensWarpEffect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">sin</span><span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">effect</span> <span class="o">=</span> <span class="n">LensWarpEffect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">sin</span><span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/07/4.jpg"><img src="http://everet.org/wp-content/uploads/2012/07/4.jpg" alt="" /></a></p>
 
-<h3>局部变形效果（液化）[2]</h3>
+<h3 id="section-2">局部变形效果（液化）[2]</h3>
 
 <p>这个是Photoshop里面的液化效果。就是将照片作为液体胶泥一样，然后可以任意推动来变形。</p>
 
@@ -177,19 +169,22 @@
 
 <p>下图鼠标起点圆心为(130, 120)，鼠标终点为(130, 50)，圆半径为100.也就是向上拖动。</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">effect</span> <span class="o">=</span> <span class="n">LocalWarpEffect</span><span class="p">((</span><span class="mi">130</span><span class="p">,</span> <span class="mi">120</span><span class="p">),</span> <span class="p">(</span><span class="mi">130</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">effect</span> <span class="o">=</span> <span class="n">LocalWarpEffect</span><span class="p">((</span><span class="mi">130</span><span class="p">,</span> <span class="mi">120</span><span class="p">),</span> <span class="p">(</span><span class="mi">130</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/07/6.jpg"><img src="http://everet.org/wp-content/uploads/2012/07/6.jpg" alt="" /></a></p>
 
-<h2>参考资料</h2>
+<h2 id="section-3">参考资料</h2>
 
 <ol>
-<li><p><a href="http://paulbourke.net/miscellaneous/imagewarp/">Image warping / distortion</a></p></li>
-<li><p>Andreas Gustafsson, <strong>Interactive Image Warping</strong></p></li>
+  <li>
+    <p><a href="http://paulbourke.net/miscellaneous/imagewarp/">Image warping / distortion</a></p>
+  </li>
+  <li>
+    <p>Andreas Gustafsson, <strong>Interactive Image Warping</strong></p>
+  </li>
 </ol>
 
 </div>
@@ -277,7 +272,7 @@
         </li>
     
         <li class="related">
-        <a href="/2012/04/linear-equations-solvers-in-python.html">Python的“黑暗魔法”，两行解一元一次方程</a>
+        <a href="/2012/06/database-migrate-from-syntaxhighlighter-evolved-to-wp-syntax.html">从syntaxhighlighter evolved迁移至wp-syntax</a>
         </li>
     
     </ul>

@@ -157,7 +157,7 @@
   </header>
 
 
-  <div class="entry-content"><h2>C/C++</h2>
+  <div class="entry-content"><h2 id="cc">C/C++</h2>
 
 <p><strong>深度搜索C++对象模型</strong></p>
 
@@ -218,7 +218,7 @@
 
 <p>然后我们将0-255映射到0-14的范围上，然后用如下字符代替：</p>
 
-<p>color = &#8216;MNHQ$OC?7>!:-;.&#8217;</p>
+<p>color = ‘MNHQ$OC?7&gt;!:-;.’</p>
 
 <p>也就是像素为0的点用“M”表示，像素为14的点用“.”表示。</p>
 
@@ -263,11 +263,13 @@
   </header>
 
 
-  <div class="entry-content"><h2>防民之口，甚于防川。</h2>
+  <div class="entry-content"><h2 id="section">防民之口，甚于防川。</h2>
 
 <p>引用自百度百科的对于“防民之口，甚于防川”的启示：</p>
 
-<blockquote><p>中国历史上有很多统治者荒淫无道，但他们又怕人民议论，就采取了压制社会言论的措施，以为可以高枕无忧、平安无事。实际上这是最愚蠢的作法，它不仅使下情无法上达，错误的政策得不到纠正，加剧社会矛盾。更可怕的在于虽然民众口上不说，但心里却充满了仇恨，只要社会矛盾到达临界点，大规模的暴乱必然爆发，给社会生产力造成极大破坏。正可谓“防民之口，甚于防川。”中国人是世界上最能忍受暴政的民族，但也是爆发起义最多的国家。</p></blockquote>
+<blockquote>
+  <p>中国历史上有很多统治者荒淫无道，但他们又怕人民议论，就采取了压制社会言论的措施，以为可以高枕无忧、平安无事。实际上这是最愚蠢的作法，它不仅使下情无法上达，错误的政策得不到纠正，加剧社会矛盾。更可怕的在于虽然民众口上不说，但心里却充满了仇恨，只要社会矛盾到达临界点，大规模的暴乱必然爆发，给社会生产力造成极大破坏。正可谓“防民之口，甚于防川。”中国人是世界上最能忍受暴政的民族，但也是爆发起义最多的国家。</p>
+</blockquote>
 
 <p>无逻辑的舆论的控制，究竟会引发什么后果呢？或许多年后答案便自己浮现。</p>
 
@@ -314,23 +316,26 @@
 
 <p>不过在Linux下可能有点不那么顺畅。但是稍微设置一下还是可以很方便地调试的。我们来看看在Ubuntu下怎么做。</p>
 
-<h2>获取源码</h2>
+<h2 id="section">获取源码</h2>
 
 <p>在Ubuntu下获取Python2.7的源码非常方便，只需要使用apt-get就可以轻松取得。在Shell下输入</p>
 
-<blockquote><p>apt-get source python2.7</p></blockquote>
+<blockquote>
+  <p>apt-get source python2.7</p>
+</blockquote>
 
 <p>即可以将Python的源码下载到当前目录。</p>
 
 <p>然后我们就可以得到一个tar.gz的压缩包。</p>
 
-<h2>编译</h2>
+<h2 id="section-1">编译</h2>
 
 <p>我们进入源码文件夹后输入</p>
 
-<blockquote><p>./configure</p></blockquote>
-
-<p>make</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">./configure
+</span><span class="line">make</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>然后就可以编译得到python。</p>
 
@@ -377,17 +382,22 @@
 
 <p>在《Unix编程艺术》中，Raymond说道：</p>
 
-<blockquote><p>混合语言是一种知识密集型（而不是编码密集型）的编程。要让它能够工作，我们不仅应该具备相当数量的多种语言应用知识，并且还需要具备能够判断这些语言在什么地方最适合、以及怎样把他们组合在一起的潜经验。</p></blockquote>
+<blockquote>
+  <p>混合语言是一种知识密集型（而不是编码密集型）的编程。要让它能够工作，我们不仅应该具备相当数量的多种语言应用知识，并且还需要具备能够判断这些语言在什么地方最适合、以及怎样把他们组合在一起的潜经验。</p>
+</blockquote>
 
 <p>在混合语言编程中，我们遇到的第一个问题是如何需要让他们可以互相调用。也就是像C++可以调用Python的函数、Python又可以调用C++的函数。</p>
 
 <p>对于C++和Python的混合编程主要有两种方式。</p>
 
 <ol>
-<li><p>将C++写的模块编译成动态链接库，然后由Python主程序使用。这种一般是单方向的使用。</p></li>
-<li><p>用C++主程序调用Python。然后Python中可以使用C++主程序的函数。</p></li>
+  <li>
+    <p>将C++写的模块编译成动态链接库，然后由Python主程序使用。这种一般是单方向的使用。</p>
+  </li>
+  <li>
+    <p>用C++主程序调用Python。然后Python中可以使用C++主程序的函数。</p>
+  </li>
 </ol>
-
 
 <p>对于第一种方式非常简单，我们在此就不讨论了。我们将着重讨论第二种方式。</div>
   
@@ -430,25 +440,25 @@
 
   <div class="entry-content"><p>每个程序都拥有自己的生命，每个程序都应该拥有自己的帮助文档。一个好的帮助文档可以让一个程序的寿命延长。当然，有了一个好的帮助文档还不够，还需要友好快捷的帮助方式。</p>
 
-<h2>Shell</h2>
+<h2 id="shell">Shell</h2>
 
 <p>我们在shell下可以使用各种小工具，像ls，ps，grep等，当我们需要查看ls的帮助，可以是键入man ls，至于什么是man，我们可以输入man man，就可以看到man的帮助了。</p>
 
 <p>这给用户提供了一种统一而便捷的帮助接口。</p>
 
-<h2>Vim</h2>
+<h2 id="vim">Vim</h2>
 
 <p>Vim的帮助主要是通过:help， 例如，可以输入:help x，查看x按键的帮助。如果不指定主题，:help默认打开一个总揽的帮助窗口。</p>
 
-<h2>Python</h2>
+<h2 id="python">Python</h2>
 
 <p>Python交互式解释器除了python自带的，还有一个非常好用的交互环境是iPython，ipython - Tools for Interactive Computing in Python。</p>
 
-<p>Python的文档是和对象绑定在一起的，每个对象都有一个<strong>doc</strong>的属性，我们可以通过这个属性查看这个对象的文档，例如print str.<strong>doc</strong>，当然，如果我们需要更详细的帮助文档，我们可以help(str)，查看str的帮助。如果我们想了解一下os模块，我们可以键入help(os)，就可以看到关于os的详细的帮助文档。</p>
+<p>Python的文档是和对象绑定在一起的，每个对象都有一个__doc__的属性，我们可以通过这个属性查看这个对象的文档，例如print str.<strong>doc</strong>，当然，如果我们需要更详细的帮助文档，我们可以help(str)，查看str的帮助。如果我们想了解一下os模块，我们可以键入help(os)，就可以看到关于os的详细的帮助文档。</p>
 
 <p>Python是个神奇的语言，交互解释器也是一个神奇的环境。</p>
 
-<h2>Emacs</h2>
+<h2 id="emacs">Emacs</h2>
 
 <p>emacs里面有非常详细的各种文档，我们可以是用 Ctrl+h    i   g 打开它，然后阅读帮助文档。</p>
 
@@ -499,12 +509,14 @@
 
 <p>豆瓣的介绍：</p>
 
-<blockquote><p>来玩pythonchallenge吧，理由如下：
-0、Tim Peters的理由：&#8221;I&#8217;ve been using Python since 1991, and while I&#8217;ve always enjoyed it, I have to confess this is the most Python fun I&#8217;ve had this century! Excellent work. Thank you!&#8221;
-1、沈大仙的理由：&#8221;说到这里, 想起我们部门新来两位同事, 在使用 Python 做项目之前, 先沉下心来做了两周的 Python Challenge, 把 Python 模了个透, 结果两周后程序写出来相当漂亮, 甚至让我这种老牌 Python 程序员跌破眼镜, 与我周围的同事立马有了境界上的区分。&#8221;
+<blockquote>
+  <p>来玩pythonchallenge吧，理由如下：
+0、Tim Peters的理由：”I’ve been using Python since 1991, and while I’ve always enjoyed it, I have to confess this is the most Python fun I’ve had this century! Excellent work. Thank you!”
+1、沈大仙的理由：”说到这里, 想起我们部门新来两位同事, 在使用 Python 做项目之前, 先沉下心来做了两周的 Python Challenge, 把 Python 模了个透, 结果两周后程序写出来相当漂亮, 甚至让我这种老牌 Python 程序员跌破眼镜, 与我周围的同事立马有了境界上的区分。”
 2、给你的理由：能在短时间内完成全部33题，这可以证明你很聪明。
 3、自己的理由：俺连滚带爬好不容易做到了第27题，沮丧地看到了自己的笨，但从好处想，这至少可以证明俺有毅力，嘿嘿。
-4、自私的理由：憋死在第27题，等老大们来给个提示拉俺一把吧。</p></blockquote>
+4、自私的理由：憋死在第27题，等老大们来给个提示拉俺一把吧。</p>
+</blockquote>
 
 </div>
   
@@ -593,33 +605,30 @@
 <p>我们来围观一下：
 <a href="http://everet.org/wp-content/uploads/2012/04/Screenshot-at-2012-04-24-195023.png"><img src="http://everet.org/wp-content/uploads/2012/04/Screenshot-at-2012-04-24-195023.png" alt="" /></a></p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>说到底呢，这个段代码的关键是利用了复数。
-</span><span class='line'>第一步：
-</span><span class='line'>2 * x + 233 = x * 8 + 3
-</span><span class='line'>变成
-</span><span class='line'>2 * x + 233 -(x * 8 + 3)
-</span><span class='line'>然后把x变成虚数1j
-</span><span class='line'>然后变成
-</span><span class='line'>2 * 1j + 233 -(1j * 8 + 3)
-</span><span class='line'>通过eval算出结果为230-6j
-</span><span class='line'>因为我们知道这个表达式结果为0，而且j也相当于x。
-</span><span class='line'>所以问题变成了：230-6j=0，也就是230-6x=0。
-</span><span class='line'>最后x = - 230 / 6 = 38.33333333336。</span></code></pre></td></tr></table></div></figure>
-
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">说到底呢，这个段代码的关键是利用了复数。
+</span><span class="line">第一步：
+</span><span class="line">2 * x + 233 = x * 8 + 3
+</span><span class="line">变成
+</span><span class="line">2 * x + 233 -(x * 8 + 3)
+</span><span class="line">然后把x变成虚数1j
+</span><span class="line">然后变成
+</span><span class="line">2 * 1j + 233 -(1j * 8 + 3)
+</span><span class="line">通过eval算出结果为230-6j
+</span><span class="line">因为我们知道这个表达式结果为0，而且j也相当于x。
+</span><span class="line">所以问题变成了：230-6j=0，也就是230-6x=0。
+</span><span class="line">最后x = - 230 / 6 = 38.33333333336。</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
   

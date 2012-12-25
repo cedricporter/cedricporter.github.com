@@ -194,7 +194,7 @@
 
 <p>不过想起昨天还真是悲剧，开通了10分钟84就将账号发给我，但是竟然没有ip地址，这真是奇葩啊。于是发了ticket就去闲逛了，我们比他们晚13个小时，他们上午8点上班，也就是我们的晚上9点。于是晚上9点多就有人回复解决了问题，把问题修复了，并且把ip重新发了。然后技术支持很好心的问了还有什么需要帮忙，然后就再顺便帮忙分配了一些ipv6的地址。</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/02/QQ%E6%88%AA%E5%9B%BE20120210155314.jpg"><img src="http://everet.org/wp-content/uploads/2012/02/QQ%E6%88%AA%E5%9B%BE20120210155314-640x578.jpg" alt="" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/02/QQ截图20120210155314.jpg"><img src="http://everet.org/wp-content/uploads/2012/02/QQ截图20120210155314-640x578.jpg" alt="" /></a></p>
 
 <p>于是今天开工迁移了。这次将网站都迁移过去了，等过几天再把Git版本库也迁移过去。</p>
 
@@ -344,17 +344,23 @@
 
 <p>我在Ubuntu 10.10上编译会出现错误如下错误</p>
 
-<blockquote><p>tcpservpoll01.c: In function ‘main’:
-tcpservpoll01.c:13: error: ‘OPEN_MAX’ undeclared (first use in this function)
-tcpservpoll01.c:13: error: (Each undeclared identifier is reported only once
-tcpservpoll01.c:13: error: for each function it appears in.)
-tcpservpoll01.c:13: warning: unused variable ‘client’
-make: *** [tcpservpoll01.o] Error 1
-解决方案是去定义一下OPEN_MAX它。</p></blockquote>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">tcpservpoll01.c: In function ‘main’:
+</span><span class="line">tcpservpoll01.c:13: error: ‘OPEN_MAX’ undeclared (first use in this function)
+</span><span class="line">tcpservpoll01.c:13: error: (Each undeclared identifier is reported only once
+</span><span class="line">tcpservpoll01.c:13: error: for each function it appears in.)
+</span><span class="line">tcpservpoll01.c:13: warning: unused variable ‘client’
+</span><span class="line">make: *** [tcpservpoll01.o] Error 1</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>解决方案是去定义一下OPEN_MAX它。</p>
 
 <p>我们在unp.h里面加上</p>
 
-<blockquote><h1>define OPEN_MAX 1024</h1></blockquote>
+<p><code>#define OPEN_MAX 1024</code></p>
 
 <p>就好了。</p>
 
@@ -463,7 +469,7 @@ make: *** [tcpservpoll01.o] Error 1
 
 <p>我们可以使用如下命令克隆我们的Google Code上的项目。</p>
 
-<blockquote><p>git svn clone &#8211;username cedricporter@gmail.com -s <a href="https://et-vim-setting.googlecode.com/svn">https://et-vim-setting.googlecode.com/svn</a> vim_setting</p></blockquote>
+<p><code>git svn clone --username cedricporter@gmail.com -s https://et-vim-setting.googlecode.com/svn vim_setting</code></p>
 
 </div>
   
@@ -564,7 +570,7 @@ make: *** [tcpservpoll01.o] Error 1
 
 <p>15:09:13</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA98_thumb.jpg">![UARF0O4MI_$6HXMIHAA]{98</a>](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI_6HXMIHAA98.jpg)</p>
+<p>![UARF0O4MI<em>$6HXMIHAA](http://everet.org/wp-content/uploads/2012/01/UARF0O4MI</em>6HXMIHAA98_thumb.jpg)</p>
 
 <p>XellOs</p>
 

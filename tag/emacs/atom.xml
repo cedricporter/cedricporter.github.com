@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Emacs | EverET.org]]></title>
   <link href="http://everet.org/tag/emacs/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-25T23:07:51+08:00</updated>
+  <updated>2012-12-26T02:57:37+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -18,11 +18,11 @@
     <link href="http://everet.org/2012/12/debug-nginx.html"/>
     <updated>2012-12-24T07:41:00+08:00</updated>
     <id>http://everet.org/2012/12/debug-nginx</id>
-    <content type="html"><![CDATA[<h2>为什么调试Nginx</h2>
+    <content type="html"><![CDATA[<h2 id="nginx">为什么调试Nginx</h2>
 
-<p> 为什么要调试Nginx，原因多种多样。如果阅读源码的话，开着进程单步走下去不失为一种很好的源码导读方式。</p>
+<p>为什么要调试Nginx，原因多种多样。如果阅读源码的话，开着进程单步走下去不失为一种很好的源码导读方式。 </p>
 
-<h2>编译Nginx</h2>
+<h2 id="nginx-1">编译Nginx</h2>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -33,22 +33,19 @@
 <span class='line-number'>6</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;p&gt;  ./configure --prefix<span class="o">=</span><span class="s2">&quot;$HOME/my-nginx&quot;</span> --with-debug
+</span><span class='line'>&lt;p&gt;./configure –prefix<span class="o">=</span>”<span class="nv">$HOME</span>/my-nginx” –with-debug
 </span><span class='line'>  make &amp;amp;&amp;amp; make install&lt;/p&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>  当然还要看一下，生成出来的的Makefile是不是有-O优化，如果有的话需要关闭优化，可以看一下根目录下的Makefile以及objs/Makefile。有的话记得需要改成-O0或者直接删掉就好了。</p>
+<p>当然还要看一下，生成出来的的Makefile是不是有-O优化，如果有的话需要关闭优化，可以看一下根目录下的Makefile以及objs/Makefile。有的话记得需要改成-O0或者直接删掉就好了。 </p>
 
 <!-- more -->
 
+<h2 id="nginx-2">为调试配置Nginx</h2>
 
-<p></p>
-
-<h2>为调试配置Nginx</h2>
-
-<p> 然后在$HOME/my-nginx/conf下面就是我们的配置文件了，我们编辑nginx.conf，加上： <br/>
+<p>然后在$HOME/my-nginx/conf下面就是我们的配置文件了，我们编辑nginx.conf，加上： <br />
 <div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>nginx  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -59,13 +56,13 @@
 <span class='line-number'>7</span>
 </pre></td><td class='code'><pre><code class='nginx'><span class='line'><span class="k">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="s">&lt;p&gt;</span>  <span class="s">error_log</span> <span class="s">/dev/stdout</span> <span class="s">debug</span><span class="p">;</span>
+</span><span class='line'><span class="s">&lt;p&gt;error_log</span> <span class="s">/dev/stdout</span> <span class="s">debug</span><span class="p">;</span>
 </span><span class='line'>  <span class="k">master_process</span> <span class="no">off</span><span class="p">;</span>
 </span><span class='line'>  <span class="k">daemon</span> <span class="no">off</span><span class="p">;</span><span class="k">&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="s">&lt;p&gt;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-   我们可以看到error_log /dev/stdout这样一句，这样可以将输出日志直接打印到标准输出，调试的时候可以实时看到输出。</p>
+   我们可以看到error_log /dev/stdout这样一句，这样可以将输出日志直接打印到标准输出，调试的时候可以实时看到输出。 </p>
 
 <p><img src="http://everet.org/wp-content/uploads/2012/12/wpid-snapshot1-small.png" alt="" /></p>
 ]]></content>
@@ -92,15 +89,15 @@
 
 <p>配置效果如下：<!-- more --></p>
 
-<h3>写Python</h3>
+<h3 id="python">写Python</h3>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/03/QQ%E6%88%AA%E5%9B%BE20120325190039.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ%E6%88%AA%E5%9B%BE20120325190039.png" alt="" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/03/QQ截图20120325190039.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ截图20120325190039.png" alt="" /></a></p>
 
-<h3>写C</h3>
+<h3 id="c">写C</h3>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/03/QQ%E6%88%AA%E5%9B%BE20120325190144.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ%E6%88%AA%E5%9B%BE20120325190144.png" alt="" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/03/QQ截图20120325190144.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ截图20120325190144.png" alt="" /></a></p>
 
-<h2>主配置文件</h2>
+<h2 id="section">主配置文件</h2>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>lisp  </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -718,49 +715,6 @@
 <span class='line-number'>613</span>
 <span class='line-number'>614</span>
 <span class='line-number'>615</span>
-<span class='line-number'>616</span>
-<span class='line-number'>617</span>
-<span class='line-number'>618</span>
-<span class='line-number'>619</span>
-<span class='line-number'>620</span>
-<span class='line-number'>621</span>
-<span class='line-number'>622</span>
-<span class='line-number'>623</span>
-<span class='line-number'>624</span>
-<span class='line-number'>625</span>
-<span class='line-number'>626</span>
-<span class='line-number'>627</span>
-<span class='line-number'>628</span>
-<span class='line-number'>629</span>
-<span class='line-number'>630</span>
-<span class='line-number'>631</span>
-<span class='line-number'>632</span>
-<span class='line-number'>633</span>
-<span class='line-number'>634</span>
-<span class='line-number'>635</span>
-<span class='line-number'>636</span>
-<span class='line-number'>637</span>
-<span class='line-number'>638</span>
-<span class='line-number'>639</span>
-<span class='line-number'>640</span>
-<span class='line-number'>641</span>
-<span class='line-number'>642</span>
-<span class='line-number'>643</span>
-<span class='line-number'>644</span>
-<span class='line-number'>645</span>
-<span class='line-number'>646</span>
-<span class='line-number'>647</span>
-<span class='line-number'>648</span>
-<span class='line-number'>649</span>
-<span class='line-number'>650</span>
-<span class='line-number'>651</span>
-<span class='line-number'>652</span>
-<span class='line-number'>653</span>
-<span class='line-number'>654</span>
-<span class='line-number'>655</span>
-<span class='line-number'>656</span>
-<span class='line-number'>657</span>
-<span class='line-number'>658</span>
 </pre></td><td class='code'><pre><code class='scm'><span class='line'><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; Setting By Hua Liang [ [ Stupid ET ] Cedric Porter ]</span>
@@ -768,21 +722,21 @@
 </span><span class='line'><span class="c1">;; website: http://EverET.org&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;Personal information</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">user-full-name</span> <span class="s">&quot;Cedric Porter&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">user-mail-address</span> <span class="s">&quot;cedricporter@gmail.com&quot;</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">user-full-name</span> <span class="err">“</span><span class="nv">Cedric</span> <span class="nv">Porter</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">user-mail-address</span> <span class="err">“</span><span class="nv">cedricporter@gmail</span><span class="o">.</span><span class="nv">com</span><span class="err">”</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">set-default-font</span> <span class="s">&quot;Ubuntu Mono-12&quot;</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">set-default-font</span> <span class="err">“</span><span class="nv">Ubuntu</span> <span class="nv">Mono-12</span><span class="err">”</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; Add plugins to load-path.</span>
 </span><span class='line'><span class="c1">;; We will put some tiny plugins in it</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;load-path</span> <span class="s">&quot;~/.emacs.d/plugins/&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;load-path</span> <span class="s">&quot;~/.emacs.d/plugins/configs&quot;</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="err">‘</span><span class="nv">load-path</span> <span class="err">“</span><span class="nv">~/</span><span class="o">.</span><span class="nv">emacs</span><span class="o">.</span><span class="nv">d/plugins/</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="err">‘</span><span class="nv">load-path</span> <span class="err">“</span><span class="nv">~/</span><span class="o">.</span><span class="nv">emacs</span><span class="o">.</span><span class="nv">d/plugins/configs</span><span class="err">”</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; ====================      line number      ====================</span>
 </span><span class='line'><span class="c1">;; 调用linum.el(line number)来显示行号：</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;linum</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="err">‘</span><span class="nv">linum</span><span class="p">)</span>
 </span><span class='line'><span class="p">(</span><span class="nf">global-linum-mode</span> <span class="nv">t</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;; --------------------      End         --------------------&lt;/p&gt;</span>
+</span><span class='line'><span class="c1">;; ——————–      End         ——————–&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;======================    time setting        =====================</span>
 </span><span class='line'><span class="c1">;;启用时间显示设置，在minibuffer上面的那个杠上（忘了叫什么来着）</span>
@@ -804,46 +758,43 @@
 </span><span class='line'><span class="p">(</span><span class="nf">display-time-mode</span> <span class="mi">1</span><span class="p">)</span>
 </span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">display-time-24hr-format</span> <span class="nv">t</span><span class="p">)</span>
 </span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">display-time-day-and-date</span> <span class="nv">t</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;;----------------------    END    time setting    ---------------------&lt;/p&gt;</span>
+</span><span class='line'><span class="c1">;;———————-    END    time setting    ———————&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; ==================== recent-jump ====================</span>
 </span><span class='line'><span class="c1">;; set recent-jump</span>
 </span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">recent-jump-threshold</span> <span class="mi">4</span><span class="p">)</span>
 </span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">recent-jump-ring-length</span> <span class="mi">10</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;C-o&quot;</span><span class="p">)</span> <span class="ss">&#39;recent-jump-jump-backward</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;M-o&quot;</span><span class="p">)</span> <span class="ss">&#39;recent-jump-jump-forward</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;recent-jump</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;; -------------------- end of recent-jump --------------------&lt;/p&gt;</span>
+</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="err">“</span><span class="nv">C-o</span><span class="err">”</span><span class="p">)</span> <span class="err">‘</span><span class="nv">recent-jump-jump-backward</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="err">“</span><span class="nv">M-o</span><span class="err">”</span><span class="p">)</span> <span class="err">‘</span><span class="nv">recent-jump-jump-forward</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="err">‘</span><span class="nv">recent-jump</span><span class="p">)</span>
+</span><span class='line'><span class="c1">;; ——————– end of recent-jump ——————–&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; ==================== UI setting ====================</span>
 </span><span class='line'><span class="c1">;; 实现全屏效果，快捷键为f11</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="err">[</span><span class="nv">f11</span><span class="err">]</span> <span class="ss">&#39;my-fullscreen</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="err">[</span><span class="nv">f11</span><span class="err">]</span> <span class="err">‘</span><span class="nv">my-fullscreen</span><span class="p">)</span>
 </span><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">my-fullscreen</span> <span class="p">()</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">x-send-client-message</span>
-</span><span class='line'>   <span class="nv">nil</span> <span class="mi">0</span> <span class="nv">nil</span> <span class="s">&quot;&lt;em&gt;NET_WM_STATE&quot;</span> <span class="mi">32</span>
-</span><span class='line'>   <span class="o">&#39;</span><span class="p">(</span><span class="mi">2</span> <span class="s">&quot;&lt;/em&gt;NET_WM_STATE_FULLSCREEN&quot;</span> <span class="mi">0</span><span class="p">))</span>
+</span><span class='line'>   <span class="nv">nil</span> <span class="mi">0</span> <span class="nv">nil</span> <span class="err">“</span><span class="nv">_NET_WM_STATE</span><span class="err">”</span> <span class="mi">32</span>
+</span><span class='line'>   <span class="err">‘</span><span class="p">(</span><span class="mi">2</span> <span class="err">“</span><span class="nv">_NET_WM_STATE_FULLSCREEN</span><span class="err">”</span> <span class="mi">0</span><span class="p">))</span>
 </span><span class='line'>  <span class="p">)</span>
 </span><span class='line'><span class="c1">;; 最大化</span>
 </span><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">my-maximized</span> <span class="p">()</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">x-send-client-message</span>
-</span><span class='line'>   <span class="nv">nil</span> <span class="mi">0</span> <span class="nv">nil</span> <span class="s">&quot;&lt;em&gt;NET_WM_STATE&quot;</span> <span class="mi">32</span>
-</span><span class='line'>   <span class="o">&#39;</span><span class="p">(</span><span class="mi">2</span> <span class="s">&quot;&lt;/em&gt;NET_WM_STATE_MAXIMIZED_HORZ&quot;</span> <span class="mi">0</span><span class="p">))</span>
+</span><span class='line'>   <span class="nv">nil</span> <span class="mi">0</span> <span class="nv">nil</span> <span class="err">“</span><span class="nv">_NET_WM_STATE</span><span class="err">”</span> <span class="mi">32</span>
+</span><span class='line'>   <span class="err">‘</span><span class="p">(</span><span class="mi">2</span> <span class="err">“</span><span class="nv">_NET_WM_STATE_MAXIMIZED_HORZ</span><span class="err">”</span> <span class="mi">0</span><span class="p">))</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">x-send-client-message</span>
-</span><span class='line'>   <span class="nv">nil</span> <span class="mi">0</span> <span class="nv">nil</span> <span class="s">&quot;&lt;em&gt;NET_WM_STATE&quot;</span> <span class="mi">32</span>
-</span><span class='line'>   <span class="o">&#39;</span><span class="p">(</span><span class="mi">2</span> <span class="s">&quot;&lt;/em&gt;NET_WM_STATE_MAXIMIZED_VERT&quot;</span> <span class="mi">0</span><span class="p">))</span>
+</span><span class='line'>   <span class="nv">nil</span> <span class="mi">0</span> <span class="nv">nil</span> <span class="err">“</span><span class="nv">_NET_WM_STATE</span><span class="err">”</span> <span class="mi">32</span>
+</span><span class='line'>   <span class="err">‘</span><span class="p">(</span><span class="mi">2</span> <span class="err">“</span><span class="nv">_NET_WM_STATE_MAXIMIZED_VERT</span><span class="err">”</span> <span class="mi">0</span><span class="p">))</span>
 </span><span class='line'>  <span class="p">)</span>
 </span><span class='line'><span class="c1">;; 启动emacs时窗口最大化</span>
 </span><span class='line'><span class="p">(</span><span class="nf">my-maximized</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; 启动窗口大小</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">default-frame-alist&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>  <span class="o">&#39;</span><span class="p">((</span><span class="nf">height</span> <span class="o">.</span> <span class="mi">35</span><span class="p">)</span> <span class="p">(</span><span class="nf">width</span> <span class="o">.</span> <span class="mi">125</span><span class="p">)</span> <span class="p">(</span><span class="nf">menu-bar-lines</span> <span class="o">.</span> <span class="mi">20</span><span class="p">)</span> <span class="p">(</span><span class="nf">tool-bar-lines</span> <span class="o">.</span> <span class="mi">0</span><span class="p">)))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; -------------------- UI setting --------------------&lt;/p&gt;</span>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">default-frame-alist</span>
+</span><span class='line'>      <span class="err">‘</span><span class="p">((</span><span class="nf">height</span> <span class="o">.</span> <span class="mi">35</span><span class="p">)</span> <span class="p">(</span><span class="nf">width</span> <span class="o">.</span> <span class="mi">125</span><span class="p">)</span> <span class="p">(</span><span class="nf">menu-bar-lines</span> <span class="o">.</span> <span class="mi">20</span><span class="p">)</span> <span class="p">(</span><span class="nf">tool-bar-lines</span> <span class="o">.</span> <span class="mi">0</span><span class="p">)))</span>
+</span><span class='line'><span class="c1">;; ——————– UI setting ——————–&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; 在Emacs23里，可以用命令M-x quick-calc或快捷键C-x * q来启动Quick Calculator模式。</span>
 </span><span class='line'><span class="c1">;; 这是一个非常小巧的工具，启动后会在minibuffer里提示输入数学计算式，回车就显示结果。</span>
@@ -860,13 +811,13 @@
 </span><span class='line'><span class="c1">;;参考： http://www.emacswiki.org/emacs/MenuBar</span>
 </span><span class='line'><span class="p">(</span><span class="nf">menu-bar-mode</span> <span class="mi">-1</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; eliminate long &quot;yes&quot; or &quot;no&quot; prompts</span>
-</span><span class='line'><span class="p">(</span><span class="nf">fset</span> <span class="ss">&#39;yes-or-no-p</span> <span class="ss">&#39;y-or-n-p</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; eliminate long “yes” or “no” prompts</span>
+</span><span class='line'><span class="p">(</span><span class="nf">fset</span> <span class="err">‘</span><span class="nv">yes-or-no-p</span> <span class="err">‘</span><span class="nv">y-or-n-p</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; 方便的在 kill-ring 里寻找需要的东西。</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;browse-kill-ring</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="err">‘</span><span class="nv">browse-kill-ring</span><span class="p">)</span>
 </span><span class='line'><span class="p">(</span><span class="nf">browse-kill-ring-default-keybindings</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="s">&quot;\C-c\C-k&quot;</span> <span class="ss">&#39;browse-kill-ring</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="err">“\</span><span class="nv">C-c</span><span class="err">\</span><span class="nv">C-k</span><span class="err">”</span> <span class="err">‘</span><span class="nv">browse-kill-ring</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; 4.1 在单元格之间移动</span>
 </span><span class='line'><span class="c1">;; table-forward-celltab</span>
@@ -876,479 +827,439 @@
 </span><span class='line'><span class="c1">;; table-span-cell</span>
 </span><span class='line'><span class="c1">;;</span>
 </span><span class='line'><span class="c1">;; 4.3 拆分单元格</span>
-</span><span class='line'><span class="c1">;; +---------------------------------------+---------------+</span>
+</span><span class='line'><span class="c1">;; +—————————————+—————+</span>
 </span><span class='line'><span class="c1">;; |table-split-cell-horizontally          |C-c C-c -      |</span>
-</span><span class='line'><span class="c1">;; +---------------------------------------+---------------+</span>
+</span><span class='line'><span class="c1">;; +—————————————+—————+</span>
 </span><span class='line'><span class="c1">;; |table-split-cell-vertically            |C-c C-c |      |</span>
-</span><span class='line'><span class="c1">;; +---------------------------------------+---------------+</span>
+</span><span class='line'><span class="c1">;; +—————————————+—————+</span>
 </span><span class='line'><span class="c1">;;</span>
 </span><span class='line'><span class="c1">;; 4.4 扩大或缩小单元格的宽度、高度</span>
-</span><span class='line'><span class="c1">;; +--------------------------------------+----------+</span>
+</span><span class='line'><span class="c1">;; +————————————–+———-+</span>
 </span><span class='line'><span class="c1">;; |垂直扩大：table-highten-cell          |C-c C-c } |</span>
 </span><span class='line'><span class="c1">;; |                                      |          |</span>
-</span><span class='line'><span class="c1">;; +--------------------------------------+----------+</span>
+</span><span class='line'><span class="c1">;; +————————————–+———-+</span>
 </span><span class='line'><span class="c1">;; |垂直缩小：table-shorten-cell          |C-c C-c { |</span>
 </span><span class='line'><span class="c1">;; |                                      |          |</span>
-</span><span class='line'><span class="c1">;; +--------------------------------------+----------+</span>
-</span><span class='line'><span class="c1">;; |水平扩大: table-widen-cell            |C-c C-c &gt; |</span>
+</span><span class='line'><span class="c1">;; +————————————–+———-+</span>
+</span><span class='line'><span class="c1">;; |水平扩大: table-widen-cell            |C-c C-c &amp;gt; |</span>
 </span><span class='line'><span class="c1">;; |                                      |          |</span>
-</span><span class='line'><span class="c1">;; +--------------------------------------+----------+</span>
+</span><span class='line'><span class="c1">;; +————————————–+———-+</span>
 </span><span class='line'><span class="c1">;; |水平缩小：table-narrow-cell           |C-c C-c &amp;lt; |</span>
 </span><span class='line'><span class="c1">;; |                                      |          |</span>
-</span><span class='line'><span class="c1">;; +--------------------------------------+----------+</span>
+</span><span class='line'><span class="c1">;; +————————————–+———-+</span>
 </span><span class='line'><span class="c1">;;</span>
 </span><span class='line'><span class="c1">;; 5、单元格对齐方式</span>
-</span><span class='line'><span class="c1">;; +---------------------------------------+-----------+</span>
+</span><span class='line'><span class="c1">;; +—————————————+———–+</span>
 </span><span class='line'><span class="c1">;; |命令：table-justify                    |C-c C-c :  |</span>
-</span><span class='line'><span class="c1">;; +---------------------------------------+-----------+&lt;/p&gt;</span>
+</span><span class='line'><span class="c1">;; +—————————————+———–+&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; 可以“所见即所得”的编辑一个文本模式的 表格。</span>
-</span><span class='line'><span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;table-insert</span> <span class="s">&quot;table&quot;</span> <span class="s">&quot;WYGIWYS table editor&quot;</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'><span class="p">(</span><span class="nf">autoload</span> <span class="err">‘</span><span class="nv">table-insert</span> <span class="err">“</span><span class="nv">table</span><span class="err">”</span> <span class="err">“</span><span class="nv">WYGIWYS</span> <span class="nv">table</span> <span class="nv">editor</span><span class="err">”</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; 解决汉字表格对齐问题，也就是设置等宽汉字</span>
-</span><span class='line'><span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="k">and </span><span class="p">(</span><span class="nf">fboundp</span> <span class="ss">&#39;daemonp</span><span class="p">)</span> <span class="p">(</span><span class="nf">daemonp</span><span class="p">))</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;after-make-frame-functions</span>
-</span><span class='line'>          <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">frame</span><span class="p">)</span>
-</span><span class='line'>            <span class="p">(</span><span class="nf">with-selected-frame</span> <span class="nv">frame</span>
-</span><span class='line'>              <span class="p">(</span><span class="nf">set-fontset-font</span> <span class="s">&quot;fontset-default&quot;</span>
-</span><span class='line'>                                <span class="ss">&#39;chinese-gbk</span> <span class="s">&quot;WenQuanYi Micro Hei Mono 12&quot;</span><span class="p">))))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span>  <span class="p">(</span><span class="nf">set-fontset-font</span> <span class="s">&quot;fontset-default&quot;</span> <span class="ss">&#39;chinese-gbk</span> <span class="s">&quot;WenQuanYi Micro Hei Mono 12&quot;</span><span class="p">))</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'><span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="k">and </span><span class="p">(</span><span class="nf">fboundp</span> <span class="err">‘</span><span class="nv">daemonp</span><span class="p">)</span> <span class="p">(</span><span class="nf">daemonp</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">add-hook</span> <span class="err">‘</span><span class="nv">after-make-frame-functions</span>
+</span><span class='line'>              <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">frame</span><span class="p">)</span>
+</span><span class='line'>                <span class="p">(</span><span class="nf">with-selected-frame</span> <span class="nv">frame</span>
+</span><span class='line'>                  <span class="p">(</span><span class="nf">set-fontset-font</span> <span class="err">“</span><span class="nv">fontset-default</span><span class="err">”</span>
+</span><span class='line'>                                    <span class="err">‘</span><span class="nv">chinese-gbk</span> <span class="err">“</span><span class="nv">WenQuanYi</span> <span class="nv">Micro</span> <span class="nv">Hei</span> <span class="nv">Mono</span> <span class="mi">12</span><span class="err">”</span><span class="p">))))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">set-fontset-font</span> <span class="err">“</span><span class="nv">fontset-default</span><span class="err">”</span> <span class="err">‘</span><span class="nv">chinese-gbk</span> <span class="err">“</span><span class="nv">WenQuanYi</span> <span class="nv">Micro</span> <span class="nv">Hei</span> <span class="nv">Mono</span> <span class="mi">12</span><span class="err">”</span><span class="p">))</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;设置句尾</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">sentence-end</span> <span class="s">&quot;\([。！？]\|……\|[.?!][]\&quot;&#39;)}]&lt;em&gt;\($\|[ \t]\)\)[ \t\n]&lt;/em&gt;&quot;</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;直接打开图片</span>
-</span><span class='line'><span class="p">(</span><span class="nf">auto-image-file-mode</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; take the place of C-x C-f</span>
-</span><span class='line'><span class="c1">;; 当你输入了一些字符后，系统会自动帮你补全；</span>
-</span><span class='line'><span class="c1">;; C-s(next)或是C-r(previous)用来在列表中循环；</span>
-</span><span class='line'><span class="c1">;; 按[Tab]键会自动列出可能的补全方法；</span>
-</span><span class='line'><span class="c1">;; 用C-x C-d直接打开当前目录的Dired浏览模式；</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;ido</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">ido-mode</span> <span class="nv">t</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; 去掉滚动栏</span>
-</span><span class='line'><span class="p">(</span><span class="nf">scroll-bar-mode</span> <span class="nv">nil</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; 一打开就起用 text 模式。</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">default-major-mode</span> <span class="ss">&#39;text-mode</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; 语法高亮</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-font-lock-mode</span> <span class="nv">t</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;use meta and direction key to go to the window</span>
-</span><span class='line'><span class="p">(</span><span class="nf">windmove-default-keybindings</span> <span class="ss">&#39;meta</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; session</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;session</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;after-init-hook</span> <span class="ss">&#39;session-initialize</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nb">load </span><span class="s">&quot;desktop&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">desktop-save-mode</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; back to last position when we close the file</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;saveplace</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq-default</span> <span class="nv">save-place</span> <span class="nv">t</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;tabbar</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;tabbar</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">tabbar-mode</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="err">[</span><span class="p">(</span><span class="nf">meta</span> <span class="nv">j</span><span class="p">)</span><span class="err">]</span> <span class="ss">&#39;tabbar-backward</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="err">[</span><span class="p">(</span><span class="nf">meta</span> <span class="nv">k</span><span class="p">)</span><span class="err">]</span> <span class="ss">&#39;tabbar-forward</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="err">[</span><span class="p">(</span><span class="nf">control</span> <span class="nv">meta</span> <span class="nv">j</span><span class="p">)</span><span class="err">]</span> <span class="ss">&#39;tabbar-backward-group</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="err">[</span><span class="p">(</span><span class="nf">control</span> <span class="nv">meta</span> <span class="nv">k</span><span class="p">)</span><span class="err">]</span> <span class="ss">&#39;tabbar-forward-group</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;;set group strategy</span>
-</span><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">tabbar-buffer-groups</span> <span class="p">()</span>
-</span><span class='line'>  <span class="s">&quot;tabbar group&quot;</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">list</span>
-</span><span class='line'>   <span class="p">(</span><span class="nf">cond&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span><span class="p">((</span><span class="nb">memq </span><span class="nv">major-mode</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">shell-mode</span> <span class="nv">dired-mode</span><span class="p">))</span>
-</span><span class='line'> <span class="s">&quot;shell&quot;</span>
-</span><span class='line'> <span class="p">)</span>
-</span><span class='line'><span class="p">((</span><span class="nb">memq </span><span class="nv">major-mode</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">c-mode</span> <span class="nv">c++-mode</span><span class="p">))</span>
-</span><span class='line'> <span class="s">&quot;cc&quot;</span>
-</span><span class='line'> <span class="p">)</span>
-</span><span class='line'><span class="p">((</span><span class="nf">eq</span> <span class="nv">major-mode</span> <span class="ss">&#39;python-mode</span><span class="p">)</span>
-</span><span class='line'> <span class="s">&quot;python&quot;</span>
-</span><span class='line'> <span class="p">)</span>
-</span><span class='line'><span class="p">((</span><span class="nb">memq </span><span class="nv">major-mode</span>
-</span><span class='line'>   <span class="o">&#39;</span><span class="p">(</span><span class="nv">php-mode</span> <span class="nv">nxml-mode</span> <span class="nv">nxhtml-mode</span><span class="p">))</span>
-</span><span class='line'> <span class="s">&quot;WebDev&quot;</span>
-</span><span class='line'> <span class="p">)</span>
-</span><span class='line'><span class="p">((</span><span class="nf">eq</span> <span class="nv">major-mode</span> <span class="ss">&#39;emacs-lisp-mode</span><span class="p">)</span>
-</span><span class='line'>  <span class="s">&quot;Emacs-lisp&quot;</span>
-</span><span class='line'>  <span class="p">)</span>
-</span><span class='line'><span class="p">((</span><span class="nb">memq </span><span class="nv">major-mode</span>
-</span><span class='line'>   <span class="o">&#39;</span><span class="p">(</span><span class="nv">tex-mode</span> <span class="nv">latex-mode</span> <span class="nv">text-mode</span> <span class="nv">snippet-mode</span><span class="p">))</span>
-</span><span class='line'> <span class="s">&quot;Text&quot;</span>
-</span><span class='line'> <span class="p">)</span>
-</span><span class='line'><span class="p">((</span><span class="nf">string-equal</span> <span class="s">&quot;*&quot;</span> <span class="p">(</span><span class="nb">substring </span><span class="p">(</span><span class="nf">buffer-name</span><span class="p">)</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">))</span>
-</span><span class='line'> <span class="s">&quot;emacs&quot;</span>
-</span><span class='line'> <span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">t</span>
-</span><span class='line'> <span class="s">&quot;other&quot;</span>
-</span><span class='line'> <span class="p">)</span>
-</span><span class='line'><span class="p">)))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">setq</span> <span class="nv">tabbar-buffer-groups-function</span> <span class="ss">&#39;tabbar-buffer-groups</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;;; 设置tabbar外观</span>
-</span><span class='line'><span class="c1">;; 设置默认主题: 字体, 背景和前景颜色，大小</span>
-</span><span class='line'><span class="p">(</span><span class="nf">set-face-attribute</span> <span class="ss">&#39;tabbar-default</span> <span class="nv">nil&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>                <span class="nv">:family</span> <span class="s">&quot;Vera Sans YuanTi Mono&quot;</span>
-</span><span class='line'>                <span class="nv">:background</span> <span class="s">&quot;gray80&quot;</span>
-</span><span class='line'>                <span class="nv">:foreground</span> <span class="s">&quot;gray10&quot;</span>
-</span><span class='line'>                <span class="nv">:height</span> <span class="mf">1.0</span>
-</span><span class='line'>                <span class="p">)</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; 设置左边按钮外观：外框框边大小和颜色</span>
-</span><span class='line'><span class="p">(</span><span class="nf">set-face-attribute</span> <span class="ss">&#39;tabbar-button</span> <span class="nv">nil&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>                <span class="nv">:inherit</span> <span class="ss">&#39;tabbar-default</span>
-</span><span class='line'>                <span class="nv">:box</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">:line-width</span> <span class="mi">1</span> <span class="nv">:color</span> <span class="s">&quot;gray30&quot;</span><span class="p">)</span>
-</span><span class='line'>                <span class="p">)</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; 设置当前tab外观：颜色，字体，外框大小和颜色</span>
-</span><span class='line'><span class="p">(</span><span class="nf">set-face-attribute</span> <span class="ss">&#39;tabbar-selected</span> <span class="nv">nil&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>                <span class="nv">:inherit</span> <span class="ss">&#39;tabbar-default</span>
-</span><span class='line'>                <span class="nv">:foreground</span> <span class="s">&quot;DarkGreen&quot;</span>
-</span><span class='line'>                <span class="nv">:background</span> <span class="s">&quot;LightGoldenrod&quot;</span>
-</span><span class='line'>                <span class="nv">:box</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">:line-width</span> <span class="mi">2</span> <span class="nv">:color</span> <span class="s">&quot;DarkGoldenrod&quot;</span><span class="p">)</span>
-</span><span class='line'>                <span class="c1">;; :overline &quot;black&quot;</span>
-</span><span class='line'>                <span class="c1">;; :underline &quot;black&quot;</span>
-</span><span class='line'>                <span class="nv">:weight</span> <span class="ss">&#39;bold</span>
-</span><span class='line'>                <span class="p">)</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; 设置非当前tab外观：外框大小和颜色</span>
-</span><span class='line'><span class="p">(</span><span class="nf">set-face-attribute</span> <span class="ss">&#39;tabbar-unselected</span> <span class="nv">nil&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>                <span class="nv">:inherit</span> <span class="ss">&#39;tabbar-default</span>
-</span><span class='line'>                <span class="nv">:box</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">:line-width</span> <span class="mi">2</span> <span class="nv">:color</span> <span class="s">&quot;gray70&quot;</span><span class="p">)</span>
-</span><span class='line'>                <span class="p">)</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; cancel grouping</span>
-</span><span class='line'><span class="c1">;;(setq tabbar-buffer-groups-function</span>
-</span><span class='line'><span class="c1">;;    (lambda (b) (list “All Buffers”)))</span>
-</span><span class='line'><span class="c1">;;(setq tabbar-buffer-list-function</span>
-</span><span class='line'><span class="c1">;;    (lambda ()</span>
-</span><span class='line'><span class="c1">;;        (remove-if</span>
-</span><span class='line'><span class="c1">;;          (lambda(buffer)</span>
-</span><span class='line'><span class="c1">;;             (find (aref (buffer-name buffer) 0) ” *”))</span>
-</span><span class='line'><span class="c1">;;          (buffer-list))))&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;禁用启动信息</span>
-</span><span class='line'><span class="c1">;(setq inhibit-startup-message t)&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; 回车缩进</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="s">&quot;\C-m&quot;</span> <span class="ss">&#39;newline-and-indent</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;C-&quot;</span><span class="p">)</span> <span class="ss">&#39;newline</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; 显示括号匹配</span>
-</span><span class='line'><span class="p">(</span><span class="nf">show-paren-mode</span> <span class="nv">t</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">show-paren-style</span> <span class="ss">&#39;parentheses</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;highlight-parentheses</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">highlight-parentheses-mode</span> <span class="mi">1</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; 显示ascii表</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;ascii</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;用一个很大的 kill ring. 这样防止我不小心删掉重要的东西。</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">kill-ring-max</span> <span class="mi">200</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;高亮显示选中的区域</span>
-</span><span class='line'><span class="p">(</span><span class="nf">transient-mark-mode</span> <span class="nv">t</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;支持emacs和外部程序的拷贝粘贴</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">x-select-enable-clipboard</span> <span class="nv">t</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;在标题栏提示当前位置</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">frame-title-format</span> <span class="s">&quot;ET@%b&quot;</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;使用C-k删掉指针到改行末的所有东西</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq-default</span> <span class="nv">kill-whole-line</span> <span class="nv">t</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;==================== 注释 ====================</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;C-c c&quot;</span><span class="p">)</span> <span class="ss">&#39;comment-or-uncomment-region</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;C-c b&quot;</span><span class="p">)</span> <span class="ss">&#39;comment-box</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;C-c k&quot;</span><span class="p">)</span> <span class="ss">&#39;comment-kill</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;;-------------------- end --------------------&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;(require &#39;doxygen-config.el)&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;==================== color theme ====================</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;load-path</span> <span class="s">&quot;~/.emacs.d/plugins/color-theme-6.6.0/&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;color-theme</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">load-file</span> <span class="s">&quot;~/.emacs.d/plugins/color-theme-6.6.0/themes/color-theme-library.el&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;;(require &#39;color-theme-library)</span>
-</span><span class='line'><span class="c1">;;(color-theme-charcoal-black)</span>
-</span><span class='line'><span class="c1">;;(color-theme-taylor)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">color-theme-taylor-et</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;;-------------------- color theme --------------------&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;==================== evil ====================</span>
-</span><span class='line'><span class="c1">;;vi emulator</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">evil-want-C-i-jump</span> <span class="nv">t</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">evil-want-C-u-scroll</span> <span class="nv">t</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;load-path</span> <span class="s">&quot;~/.emacs.d/plugins/evil&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;evil</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">evil-mode</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;surround</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-surround-mode</span> <span class="mi">1</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;(global-set-key [(kdb &quot;C-u&quot;)] &#39;evil-scroll-up)&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;,i&quot;</span> <span class="ss">&#39;ibuffer</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;,bs&quot;</span> <span class="ss">&#39;ido-switch-buffer</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;,bd&quot;</span> <span class="ss">&#39;kill-this-buffer</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;(define-key evil-normal-state-map &quot;,m&quot; &#39;magit-status)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;,w&quot;</span> <span class="ss">&#39;save-buffer</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;ZZ&quot;</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;C-c C-c&quot;</span><span class="p">))</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; org-mode relaterat</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;,a&quot;</span> <span class="ss">&#39;org-agenda</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; lisp-relaterat som annars inte verkar fungera</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;,hv&quot;</span> <span class="ss">&#39;describe-variable</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;,hk&quot;</span> <span class="ss">&#39;describe-key</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;,hf&quot;</span> <span class="ss">&#39;describe-function</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;,hm&quot;</span> <span class="ss">&#39;describe-mode</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; window</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;,0&quot;</span> <span class="ss">&#39;delete-window</span><span class="p">)</span>         <span class="c1">;delete this window, same as C-x 0</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;,1&quot;</span> <span class="ss">&#39;delete-other-windows</span><span class="p">)</span>  <span class="c1">;delete other windows</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;,2&quot;</span> <span class="ss">&#39;split-window-up-down</span><span class="p">)</span>  <span class="c1">;split the window to up and down windows, which the upper one is bigger</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;,3&quot;</span> <span class="ss">&#39;split-window-3</span><span class="p">)</span>        <span class="c1">;split the window to 3 window, left big</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;,4&quot;</span> <span class="ss">&#39;split-window-4</span><span class="p">)</span>        <span class="c1">;split the window into 4 equal size window</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;,q&quot;</span> <span class="ss">&#39;winner-undo</span><span class="p">)</span>           <span class="c1">;undo, in other word, restore to previous window style</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">evil-normal-state-map</span> <span class="s">&quot;,Q&quot;</span> <span class="ss">&#39;winner-redo</span><span class="p">)</span>           <span class="c1">;redo window style change&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; End of evil config copied from monotux@reddit</span>
-</span><span class='line'><span class="c1">;;-------------------- evil --------------------&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;==================== undo tree ====================</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;undo-tree</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;;-------------------- undo tree --------------------&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;window-setting</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;==================== yasnippt ====================</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;load-path</span> <span class="s">&quot;~/.emacs.d/plugins/yasnippet&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;yasnippet</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">yas/initialize</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">yas/load-directory</span> <span class="s">&quot;~/.emacs.d/plugins/yasnippet/snippets&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;;-------------------- yasnippt --------------------&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;==================== auto complete ====================</span>
-</span><span class='line'><span class="c1">;; auto complete with clang</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;load-path</span> <span class="s">&quot;~/.emacs.d/plugins/auto-complete&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;auto-complete-config</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;ac-dictionary-directories</span> <span class="s">&quot;~/.emacs.d/plugins/auto-complete/ac-dict/&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;auto-complete-clang</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">setq</span> <span class="nv">ac-auto-start</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">ac-quick-help-delay</span> <span class="mf">0.5</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;; (ac-set-trigger-key &quot;TAB&quot;)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">define-key</span> <span class="nv">ac-mode-map</span> <span class="err">[</span><span class="p">(</span><span class="nf">control</span> <span class="nv">tab</span><span class="p">)</span><span class="err">]</span> <span class="ss">&#39;auto-complete</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">defun</span> <span class="nv">my-ac-config</span> <span class="p">()</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">setq-default</span> <span class="nv">ac-sources</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">ac-source-abbrev</span> <span class="nv">ac-source-dictionary</span> <span class="nv">ac-source-words-in-same-mode-buffers</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;emacs-lisp-mode-hook</span> <span class="ss">&#39;ac-emacs-lisp-mode-setup</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">;; (add-hook &#39;c-mode-common-hook &#39;ac-cc-mode-setup)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;ruby-mode-hook</span> <span class="ss">&#39;ac-ruby-mode-setup</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;css-mode-hook</span> <span class="ss">&#39;ac-css-mode-setup</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;auto-complete-mode-hook</span> <span class="ss">&#39;ac-common-setup</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">global-auto-complete-mode</span> <span class="nv">t</span><span class="p">))</span>
-</span><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">my-ac-cc-mode-setup</span> <span class="p">()</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">setq</span> <span class="nv">ac-sources</span> <span class="p">(</span><span class="nb">append </span><span class="o">&#39;</span><span class="p">(</span><span class="nv">ac-source-clang</span> <span class="nv">ac-source-yasnippet</span><span class="p">)</span> <span class="nv">ac-sources</span><span class="p">)))</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;c-mode-common-hook</span> <span class="ss">&#39;my-ac-cc-mode-setup</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;; ac-source-gtags</span>
-</span><span class='line'><span class="p">(</span><span class="nf">my-ac-config</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;; -------------------- end of auto complete --------------------&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;==================== python ====================</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;python</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;python-mode</span> <span class="s">&quot;python-mode&quot;</span> <span class="s">&quot;Python Mode.&quot;</span> <span class="nv">t</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;auto-mode-alist</span> <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;\.py\&#39;&quot;</span> <span class="o">.</span> <span class="nv">python-mode</span><span class="p">))</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;interpreter-mode-alist</span> <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;python&quot;</span> <span class="o">.</span> <span class="nv">python-mode</span><span class="p">))</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;load-path</span> <span class="s">&quot;~/.emacs.d/plugins/Pymacs&quot;</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;pymacs</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;pymacs-apply</span> <span class="s">&quot;pymacs&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;pymacs-call</span> <span class="s">&quot;pymacs&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;pymacs-eval</span> <span class="s">&quot;pymacs&quot;</span> <span class="nv">nil</span> <span class="nv">t</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;pymacs-exec</span> <span class="s">&quot;pymacs&quot;</span> <span class="nv">nil</span> <span class="nv">t</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;pymacs-load</span> <span class="s">&quot;pymacs&quot;</span> <span class="nv">nil</span> <span class="nv">t</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;pymacs-autoload</span> <span class="s">&quot;pymacs&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;;(eval-after-load &quot;pymacs&quot;</span>
-</span><span class='line'><span class="c1">;;  &#39;(add-to-list &#39;pymacs-load-path YOUR-PYMACS-DIRECTORY&quot;))&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;; Initialize Rope</span>
-</span><span class='line'><span class="p">(</span><span class="nf">pymacs-load</span> <span class="s">&quot;ropemacs&quot;</span> <span class="s">&quot;rope-&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">ropemacs-enable-autoimport</span> <span class="nv">t</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">ac-ropemacs-initialize</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;python-mode-hook&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>  <span class="p">(</span><span class="k">lambda </span><span class="p">()</span>
-</span><span class='line'>    <span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;ac-sources</span> <span class="ss">&#39;ac-source-ropemacs</span><span class="p">)))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;-------------------- python --------------------&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;==================== cedet ====================</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;load-path</span> <span class="s">&quot;~/.emacs.d/plugins/cedet/common&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;;(add-to-list &#39;load-path &quot;~/.emacs.d/plugins/cedet/semantic&quot;)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;cedet</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;semantic-ia</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">global-ede-mode</span> <span class="mi">1</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">global-srecode-minor-mode</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;;-------------------- cedet --------------------&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; (setq semanticdb-project-roots (list (expand-file-name &quot;/&quot;)))</span>
-</span><span class='line'><span class="p">(</span><span class="nf">defconst</span> <span class="nv">cedet-user-include-dirs</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">list </span><span class="s">&quot;..&quot;</span> <span class="s">&quot;../include&quot;</span> <span class="s">&quot;../inc&quot;</span> <span class="s">&quot;../common&quot;</span> <span class="s">&quot;../public&quot;</span> <span class="s">&quot;../lib&quot;</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>    <span class="s">&quot;../..&quot;</span> <span class="s">&quot;../../include&quot;</span> <span class="s">&quot;../../inc&quot;</span> <span class="s">&quot;../../common&quot;</span> <span class="s">&quot;../../public&quot;</span><span class="p">))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">defconst</span> <span class="nv">cedet-win32-include-dirs</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">list </span><span class="s">&quot;C:/MinGW/include&quot;</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>    <span class="s">&quot;C:/MinGW/include/c++/3.4.5&quot;</span>
-</span><span class='line'>    <span class="s">&quot;C:/MinGW/include/c++/3.4.5/mingw32&quot;</span>
-</span><span class='line'>    <span class="s">&quot;C:/MinGW/include/c++/3.4.5/backward&quot;</span>
-</span><span class='line'>    <span class="s">&quot;C:/MinGW/lib/gcc/mingw32/3.4.5/include&quot;</span>
-</span><span class='line'>    <span class="s">&quot;C:/Program Files/Microsoft Visual Studio/VC98/MFC/Include&quot;</span><span class="p">))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;semantic-c</span> <span class="nv">nil</span> <span class="ss">&#39;noerror</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">include-dirs</span> <span class="nv">cedet-user-include-dirs</span><span class="p">))</span>
-</span><span class='line'>  <span class="c1">;(when (eq system-type &#39;windows-nt)</span>
-</span><span class='line'>  <span class="c1">;  (setq include-dirs (append include-dirs cedet-win32-include-dirs)))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">mapc</span> <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">dir</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>      <span class="p">(</span><span class="nf">semantic-add-system-include</span> <span class="nv">dir</span> <span class="ss">&#39;c++-mode</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">(</span><span class="nf">semantic-add-system-include</span> <span class="nv">dir</span> <span class="ss">&#39;c-mode</span><span class="p">))</span>
-</span><span class='line'>    <span class="nv">include-dirs</span><span class="p">))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; code folding</span>
-</span><span class='line'><span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="k">and </span><span class="nv">window-system</span> <span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;semantic-tag-folding</span> <span class="nv">nil</span> <span class="ss">&#39;noerror</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">global-semantic-tag-folding-mode</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;C-?&quot;</span><span class="p">)</span> <span class="ss">&#39;global-semantic-tag-folding-mode</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">define-key</span> <span class="nv">semantic-tag-folding-mode-map</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;C-c , -&quot;</span><span class="p">)</span> <span class="ss">&#39;semantic-tag-folding-fold-block</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">define-key</span> <span class="nv">semantic-tag-folding-mode-map</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;C-c , +&quot;</span><span class="p">)</span> <span class="ss">&#39;semantic-tag-folding-show-block</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">define-key</span> <span class="nv">semantic-tag-folding-mode-map</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;C-_&quot;</span><span class="p">)</span> <span class="ss">&#39;semantic-tag-folding-fold-all</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">define-key</span> <span class="nv">semantic-tag-folding-mode-map</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;C-+&quot;</span><span class="p">)</span> <span class="ss">&#39;semantic-tag-folding-show-all</span><span class="p">))</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; ==================== semantic ====================</span>
-</span><span class='line'><span class="c1">;; (semantic-load-enable-minimum-features)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">semantic-load-enable-code-helpers</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;; (semantic-load-enable-guady-code-helpers)</span>
-</span><span class='line'><span class="c1">;; (semantic-load-enable-excessive-code-helpers)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">semantic-load-enable-semantic-debugging-helpers</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; (semantic-decoration-mode 1)&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; jump to definition</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="err">[</span><span class="nv">f12</span><span class="err">]</span> <span class="ss">&#39;semantic-ia-fast-jump</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; go back</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="err">[</span><span class="nv">S-f12</span><span class="err">]</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>            <span class="p">(</span><span class="k">lambda </span><span class="p">()</span>
-</span><span class='line'>              <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
-</span><span class='line'>              <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">ring-empty-p</span> <span class="p">(</span><span class="nf">oref</span> <span class="nv">semantic-mru-bookmark-ring</span> <span class="nv">ring</span><span class="p">))</span>
-</span><span class='line'>                  <span class="p">(</span><span class="nf">error</span> <span class="s">&quot;Semantic Bookmark ring is currently empty&quot;</span><span class="p">))</span>
-</span><span class='line'>              <span class="p">(</span><span class="k">let* </span><span class="p">((</span><span class="nf">ring</span> <span class="p">(</span><span class="nf">oref</span> <span class="nv">semantic-mru-bookmark-ring</span> <span class="nv">ring</span><span class="p">))</span>
-</span><span class='line'>                     <span class="p">(</span><span class="nf">alist</span> <span class="p">(</span><span class="nf">semantic-mrub-ring-to-assoc-list</span> <span class="nv">ring</span><span class="p">))</span>
-</span><span class='line'>                     <span class="p">(</span><span class="nf">first</span> <span class="p">(</span><span class="nb">cdr </span><span class="p">(</span><span class="nb">car </span><span class="nv">alist</span><span class="p">))))</span>
-</span><span class='line'>                <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">semantic-equivalent-tag-p</span> <span class="p">(</span><span class="nf">oref</span> <span class="nv">first</span> <span class="nv">tag</span><span class="p">)</span>
-</span><span class='line'>                                               <span class="p">(</span><span class="nf">semantic-current-tag</span><span class="p">))</span>
-</span><span class='line'>                    <span class="p">(</span><span class="nf">setq</span> <span class="nv">first</span> <span class="p">(</span><span class="nb">cdr </span><span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">alist</span><span class="p">)))))</span>
-</span><span class='line'>                <span class="p">(</span><span class="nf">semantic-mrub-switch-tags</span> <span class="nv">first</span><span class="p">))))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;(define-key c-mode-base-map (kbd &quot;M-n&quot;) &#39;semantic-ia-complete-symbol)</span>
-</span><span class='line'><span class="c1">;; -------------------- semantic --------------------&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; ==================== gud ====================&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">gud-tooltip-mode</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;gdb-mode-hook</span> <span class="o">&#39;</span><span class="p">(</span><span class="k">lambda </span><span class="p">()</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>                        <span class="p">(</span><span class="nf">define-key</span> <span class="nv">c-mode-base-map</span> <span class="err">[</span><span class="p">(</span><span class="nf">f5</span><span class="p">)</span><span class="err">]</span> <span class="ss">&#39;gud-go</span><span class="p">)</span>
-</span><span class='line'>                        <span class="p">(</span><span class="nf">define-key</span> <span class="nv">c-mode-base-map</span> <span class="err">[</span><span class="p">(</span><span class="nf">f11</span><span class="p">)</span><span class="err">]</span> <span class="ss">&#39;gud-step</span><span class="p">)</span>
-</span><span class='line'>                        <span class="p">(</span><span class="nf">define-key</span> <span class="nv">c-mode-base-map</span> <span class="err">[</span><span class="p">(</span><span class="nf">f10</span><span class="p">)</span><span class="err">]</span> <span class="ss">&#39;gud-next</span><span class="p">)))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; -------------------- gud --------------------&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; compile</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">compilation-read-command</span> <span class="nv">nil</span><span class="p">)</span> <span class="c1">;don&#39;t prompt to press ENTER</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="err">[</span><span class="p">(</span><span class="nf">f7</span><span class="p">)</span><span class="err">]</span> <span class="p">(</span><span class="nf">lambda</span><span class="p">()</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>         <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
-</span><span class='line'>         <span class="p">(</span><span class="nf">save-some-buffers</span> <span class="nv">t</span><span class="p">)</span>     <span class="c1">;save all buffers</span>
-</span><span class='line'>         <span class="p">(</span><span class="nf">compile</span> <span class="nv">compile-command</span><span class="p">)</span> <span class="c1">;compile</span>
-</span><span class='line'>         <span class="p">))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">global-set-key</span> <span class="err">[</span><span class="nv">f4</span><span class="err">]</span> <span class="ss">&#39;eshell</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="err">[</span><span class="p">(</span><span class="nf">shift</span> <span class="nv">f4</span><span class="p">)</span><span class="err">]</span> <span class="ss">&#39;shell</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;定制C/C++缩进风格</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;c-mode-hook&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>      <span class="o">&#39;</span><span class="p">(</span><span class="k">lambda </span><span class="p">()</span>
-</span><span class='line'>         <span class="p">(</span><span class="nf">c-set-style</span> <span class="s">&quot;k&amp;amp;r;&quot;</span><span class="p">)))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;c++-mode-hook&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>      <span class="o">&#39;</span><span class="p">(</span><span class="k">lambda </span><span class="p">()</span>
-</span><span class='line'>         <span class="p">(</span><span class="nf">c-set-style</span> <span class="s">&quot;stroustrup&quot;</span><span class="p">)))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; 设置缩进字符数</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">c-basic-offset</span> <span class="mi">4</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">global-set-key</span> <span class="err">[</span><span class="p">(</span><span class="nf">f5</span><span class="p">)</span><span class="err">]</span> <span class="ss">&#39;speedbar</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
-</span><span class='line'><span class="c1">;; ;;; Auto-completion</span>
-</span><span class='line'><span class="c1">;; ;;;  Integrates:</span>
-</span><span class='line'><span class="c1">;; ;;;   1) Rope</span>
-</span><span class='line'><span class="c1">;; ;;;   2) Yasnippet</span>
-</span><span class='line'><span class="c1">;; ;;;   all with AutoComplete.el</span>
-</span><span class='line'><span class="c1">;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
-</span><span class='line'><span class="c1">;; (defun prefix-list-elements (list prefix)</span>
-</span><span class='line'><span class="c1">;;   (let (value)</span>
-</span><span class='line'><span class="c1">;;     (nreverse</span>
-</span><span class='line'><span class="c1">;;      (dolist (element list value)</span>
-</span><span class='line'><span class="c1">;;       (setq value (cons (format &quot;%s%s&quot; prefix element) value))))))</span>
-</span><span class='line'><span class="c1">;; (defvar ac-source-rope</span>
-</span><span class='line'><span class="c1">;;   &#39;((candidates</span>
-</span><span class='line'><span class="c1">;;      . (lambda ()</span>
-</span><span class='line'><span class="c1">;;          (prefix-list-elements (rope-completions) ac-target))))</span>
-</span><span class='line'><span class="c1">;;   &quot;Source for Rope&quot;)</span>
-</span><span class='line'><span class="c1">;; (defun ac-python-find ()</span>
-</span><span class='line'><span class="c1">;;   &quot;Python &lt;code&gt;ac-find-function&#39;.&quot;</span>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">sentence-end</span> <span class="err">“\</span><span class="p">(</span><span class="err">[。！？]\</span><span class="nv">|</span><span class="err">……\</span><span class="nv">|</span><span class="err">[</span><span class="o">.</span><span class="nv">?!</span><span class="err">][]</span><span class="s">&quot;’)}]&lt;em&gt;\($\|[ \t]\)\)[ \t\n]&lt;/em&gt;”)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;直接打开图片</span>
+</span><span class='line'><span class="s">(auto-image-file-mode)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; take the place of C-x C-f</span>
+</span><span class='line'><span class="s">;; 当你输入了一些字符后，系统会自动帮你补全；</span>
+</span><span class='line'><span class="s">;; C-s(next)或是C-r(previous)用来在列表中循环；</span>
+</span><span class='line'><span class="s">;; 按[Tab]键会自动列出可能的补全方法；</span>
+</span><span class='line'><span class="s">;; 用C-x C-d直接打开当前目录的Dired浏览模式；</span>
+</span><span class='line'><span class="s">(require ‘ido)</span>
+</span><span class='line'><span class="s">(ido-mode t)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; 去掉滚动栏</span>
+</span><span class='line'><span class="s">(scroll-bar-mode nil)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; 一打开就起用 text 模式。</span>
+</span><span class='line'><span class="s">(setq default-major-mode ‘text-mode)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; 语法高亮</span>
+</span><span class='line'><span class="s">(global-font-lock-mode t)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;use meta and direction key to go to the window</span>
+</span><span class='line'><span class="s">(windmove-default-keybindings ‘meta)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; session</span>
+</span><span class='line'><span class="s">(require ‘session)</span>
+</span><span class='line'><span class="s">(add-hook ‘after-init-hook ‘session-initialize)</span>
+</span><span class='line'><span class="s">(load “desktop”)</span>
+</span><span class='line'><span class="s">(desktop-save-mode)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; back to last position when we close the file</span>
+</span><span class='line'><span class="s">(require ‘saveplace)</span>
+</span><span class='line'><span class="s">(setq-default save-place t)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;tabbar</span>
+</span><span class='line'><span class="s">(require ‘tabbar)</span>
+</span><span class='line'><span class="s">(tabbar-mode 1)</span>
+</span><span class='line'><span class="s">(global-set-key [(meta j)] ‘tabbar-backward)</span>
+</span><span class='line'><span class="s">(global-set-key [(meta k)] ‘tabbar-forward)</span>
+</span><span class='line'><span class="s">(global-set-key [(control meta j)] ‘tabbar-backward-group)</span>
+</span><span class='line'><span class="s">(global-set-key [(control meta k)] ‘tabbar-forward-group)</span>
+</span><span class='line'><span class="s">;;set group strategy</span>
+</span><span class='line'><span class="s">(defun tabbar-buffer-groups ()</span>
+</span><span class='line'><span class="s">  “tabbar group”</span>
+</span><span class='line'><span class="s">  (list</span>
+</span><span class='line'><span class="s">   (cond</span>
+</span><span class='line'><span class="s">    ((memq major-mode ‘(shell-mode dired-mode))</span>
+</span><span class='line'><span class="s">     “shell”</span>
+</span><span class='line'><span class="s">     )</span>
+</span><span class='line'><span class="s">    ((memq major-mode ‘(c-mode c++-mode))</span>
+</span><span class='line'><span class="s">     “cc”</span>
+</span><span class='line'><span class="s">     )</span>
+</span><span class='line'><span class="s">    ((eq major-mode ‘python-mode)</span>
+</span><span class='line'><span class="s">     “python”</span>
+</span><span class='line'><span class="s">     )</span>
+</span><span class='line'><span class="s">    ((memq major-mode</span>
+</span><span class='line'><span class="s">	   ‘(php-mode nxml-mode nxhtml-mode))</span>
+</span><span class='line'><span class="s">     “WebDev”</span>
+</span><span class='line'><span class="s">     )</span>
+</span><span class='line'><span class="s">    ((eq major-mode ‘emacs-lisp-mode)</span>
+</span><span class='line'><span class="s">      “Emacs-lisp”</span>
+</span><span class='line'><span class="s">      )</span>
+</span><span class='line'><span class="s">    ((memq major-mode</span>
+</span><span class='line'><span class="s">	   ‘(tex-mode latex-mode text-mode snippet-mode))</span>
+</span><span class='line'><span class="s">     “Text”</span>
+</span><span class='line'><span class="s">     )</span>
+</span><span class='line'><span class="s">    ((string-equal “*” (substring (buffer-name) 0 1))</span>
+</span><span class='line'><span class="s">     “emacs”</span>
+</span><span class='line'><span class="s">     )</span>
+</span><span class='line'><span class="s">    (t</span>
+</span><span class='line'><span class="s">     “other”</span>
+</span><span class='line'><span class="s">     )</span>
+</span><span class='line'><span class="s">    )))</span>
+</span><span class='line'><span class="s">(setq tabbar-buffer-groups-function ‘tabbar-buffer-groups)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;;; 设置tabbar外观</span>
+</span><span class='line'><span class="s">;; 设置默认主题: 字体, 背景和前景颜色，大小</span>
+</span><span class='line'><span class="s">(set-face-attribute ‘tabbar-default nil</span>
+</span><span class='line'><span class="s">                    :family “Vera Sans YuanTi Mono”</span>
+</span><span class='line'><span class="s">                    :background “gray80”</span>
+</span><span class='line'><span class="s">                    :foreground “gray10”</span>
+</span><span class='line'><span class="s">                    :height 1.0</span>
+</span><span class='line'><span class="s">                    )</span>
+</span><span class='line'><span class="s">;; 设置左边按钮外观：外框框边大小和颜色</span>
+</span><span class='line'><span class="s">(set-face-attribute ‘tabbar-button nil</span>
+</span><span class='line'><span class="s">                    :inherit ‘tabbar-default</span>
+</span><span class='line'><span class="s">                    :box ‘(:line-width 1 :color “gray30”)</span>
+</span><span class='line'><span class="s">                    )</span>
+</span><span class='line'><span class="s">;; 设置当前tab外观：颜色，字体，外框大小和颜色</span>
+</span><span class='line'><span class="s">(set-face-attribute ‘tabbar-selected nil</span>
+</span><span class='line'><span class="s">                    :inherit ‘tabbar-default</span>
+</span><span class='line'><span class="s">                    :foreground “DarkGreen”</span>
+</span><span class='line'><span class="s">                    :background “LightGoldenrod”</span>
+</span><span class='line'><span class="s">                    :box ‘(:line-width 2 :color “DarkGoldenrod”)</span>
+</span><span class='line'><span class="s">                    ;; :overline “black”</span>
+</span><span class='line'><span class="s">                    ;; :underline “black”</span>
+</span><span class='line'><span class="s">                    :weight ‘bold</span>
+</span><span class='line'><span class="s">                    )</span>
+</span><span class='line'><span class="s">;; 设置非当前tab外观：外框大小和颜色</span>
+</span><span class='line'><span class="s">(set-face-attribute ‘tabbar-unselected nil</span>
+</span><span class='line'><span class="s">                    :inherit ‘tabbar-default</span>
+</span><span class='line'><span class="s">                    :box ‘(:line-width 2 :color “gray70”)</span>
+</span><span class='line'><span class="s">                    )</span>
+</span><span class='line'><span class="s">;; cancel grouping</span>
+</span><span class='line'><span class="s">;;(setq tabbar-buffer-groups-function</span>
+</span><span class='line'><span class="s">;;    (lambda (b) (list “All Buffers”)))</span>
+</span><span class='line'><span class="s">;;(setq tabbar-buffer-list-function</span>
+</span><span class='line'><span class="s">;;    (lambda ()</span>
+</span><span class='line'><span class="s">;;        (remove-if</span>
+</span><span class='line'><span class="s">;;          (lambda(buffer)</span>
+</span><span class='line'><span class="s">;;             (find (aref (buffer-name buffer) 0) ” *”))</span>
+</span><span class='line'><span class="s">;;          (buffer-list))))&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;禁用启动信息</span>
+</span><span class='line'><span class="s">;(setq inhibit-startup-message t)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; 回车缩进</span>
+</span><span class='line'><span class="s">(global-set-key “\C-m” ‘newline-and-indent)</span>
+</span><span class='line'><span class="s">(global-set-key (kbd “C-“) ‘newline)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; 显示括号匹配</span>
+</span><span class='line'><span class="s">(show-paren-mode t)</span>
+</span><span class='line'><span class="s">(setq show-paren-style ‘parentheses)</span>
+</span><span class='line'><span class="s">(require ‘highlight-parentheses)</span>
+</span><span class='line'><span class="s">(highlight-parentheses-mode 1)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; 显示ascii表</span>
+</span><span class='line'><span class="s">(require ‘ascii)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;用一个很大的 kill ring. 这样防止我不小心删掉重要的东西。</span>
+</span><span class='line'><span class="s">(setq kill-ring-max 200)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;高亮显示选中的区域</span>
+</span><span class='line'><span class="s">(transient-mark-mode t)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;支持emacs和外部程序的拷贝粘贴</span>
+</span><span class='line'><span class="s">(setq x-select-enable-clipboard t)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;在标题栏提示当前位置</span>
+</span><span class='line'><span class="s">(setq frame-title-format “ET@%b”)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;使用C-k删掉指针到改行末的所有东西</span>
+</span><span class='line'><span class="s">(setq-default kill-whole-line t)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;==================== 注释 ====================</span>
+</span><span class='line'><span class="s">(global-set-key (kbd “C-c c”) ‘comment-or-uncomment-region)</span>
+</span><span class='line'><span class="s">(global-set-key (kbd “C-c b”) ‘comment-box)</span>
+</span><span class='line'><span class="s">(global-set-key (kbd “C-c k”) ‘comment-kill)</span>
+</span><span class='line'><span class="s">;;——————– end ——————–&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;(require ‘doxygen-config.el)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;==================== color theme ====================</span>
+</span><span class='line'><span class="s">(add-to-list ‘load-path “~/.emacs.d/plugins/color-theme-6.6.0/”)</span>
+</span><span class='line'><span class="s">(require ‘color-theme)</span>
+</span><span class='line'><span class="s">(load-file “~/.emacs.d/plugins/color-theme-6.6.0/themes/color-theme-library.el”)</span>
+</span><span class='line'><span class="s">;;(require ‘color-theme-library)</span>
+</span><span class='line'><span class="s">;;(color-theme-charcoal-black)</span>
+</span><span class='line'><span class="s">;;(color-theme-taylor)</span>
+</span><span class='line'><span class="s">(color-theme-taylor-et)</span>
+</span><span class='line'><span class="s">;;——————– color theme ——————–&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;==================== evil ====================</span>
+</span><span class='line'><span class="s">;;vi emulator</span>
+</span><span class='line'><span class="s">(setq evil-want-C-i-jump t)</span>
+</span><span class='line'><span class="s">(setq evil-want-C-u-scroll t)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;(add-to-list ‘load-path “~/.emacs.d/plugins/evil”)</span>
+</span><span class='line'><span class="s">(require ‘evil)</span>
+</span><span class='line'><span class="s">(evil-mode 1)</span>
+</span><span class='line'><span class="s">(require ‘surround)</span>
+</span><span class='line'><span class="s">(global-surround-mode 1)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;(global-set-key [(kdb “C-u”)] ‘evil-scroll-up)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;(define-key evil-normal-state-map “,i” ‘ibuffer)</span>
+</span><span class='line'><span class="s">(define-key evil-normal-state-map “,bs” ‘ido-switch-buffer)</span>
+</span><span class='line'><span class="s">(define-key evil-normal-state-map “,bd” ‘kill-this-buffer)</span>
+</span><span class='line'><span class="s">;(define-key evil-normal-state-map “,m” ‘magit-status)</span>
+</span><span class='line'><span class="s">(define-key evil-normal-state-map “,w” ‘save-buffer)</span>
+</span><span class='line'><span class="s">(define-key evil-normal-state-map “ZZ” (kbd “C-c C-c”))&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; org-mode relaterat</span>
+</span><span class='line'><span class="s">(define-key evil-normal-state-map “,a” ‘org-agenda)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; lisp-relaterat som annars inte verkar fungera</span>
+</span><span class='line'><span class="s">(define-key evil-normal-state-map “,hv” ‘describe-variable)</span>
+</span><span class='line'><span class="s">(define-key evil-normal-state-map “,hk” ‘describe-key)</span>
+</span><span class='line'><span class="s">(define-key evil-normal-state-map “,hf” ‘describe-function)</span>
+</span><span class='line'><span class="s">(define-key evil-normal-state-map “,hm” ‘describe-mode)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; window</span>
+</span><span class='line'><span class="s">(define-key evil-normal-state-map “,0” ‘delete-window)         ;delete this window, same as C-x 0</span>
+</span><span class='line'><span class="s">(define-key evil-normal-state-map “,1” ‘delete-other-windows)  ;delete other windows</span>
+</span><span class='line'><span class="s">(define-key evil-normal-state-map “,2” ‘split-window-up-down)  ;split the window to up and down windows, which the upper one is bigger</span>
+</span><span class='line'><span class="s">(define-key evil-normal-state-map “,3” ‘split-window-3)        ;split the window to 3 window, left big</span>
+</span><span class='line'><span class="s">(define-key evil-normal-state-map “,4” ‘split-window-4)        ;split the window into 4 equal size window</span>
+</span><span class='line'><span class="s">(define-key evil-normal-state-map “,q” ‘winner-undo)	       ;undo, in other word, restore to previous window style</span>
+</span><span class='line'><span class="s">(define-key evil-normal-state-map “,Q” ‘winner-redo)	       ;redo window style change&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; End of evil config copied from monotux@reddit</span>
+</span><span class='line'><span class="s">;;——————– evil ——————–&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;==================== undo tree ====================</span>
+</span><span class='line'><span class="s">(require ‘undo-tree)</span>
+</span><span class='line'><span class="s">;;——————– undo tree ——————–&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;(require ‘window-setting)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;==================== yasnippt ====================</span>
+</span><span class='line'><span class="s">(add-to-list ‘load-path “~/.emacs.d/plugins/yasnippet”)</span>
+</span><span class='line'><span class="s">(require ‘yasnippet)</span>
+</span><span class='line'><span class="s">(yas/initialize)</span>
+</span><span class='line'><span class="s">(yas/load-directory “~/.emacs.d/plugins/yasnippet/snippets”)</span>
+</span><span class='line'><span class="s">;;——————– yasnippt ——————–&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;==================== auto complete ====================</span>
+</span><span class='line'><span class="s">;; auto complete with clang</span>
+</span><span class='line'><span class="s">(add-to-list ‘load-path “~/.emacs.d/plugins/auto-complete”)</span>
+</span><span class='line'><span class="s">(require ‘auto-complete-config)</span>
+</span><span class='line'><span class="s">(add-to-list ‘ac-dictionary-directories “~/.emacs.d/plugins/auto-complete/ac-dict/”)</span>
+</span><span class='line'><span class="s">(require ‘auto-complete-clang)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;(setq ac-auto-start 1)</span>
+</span><span class='line'><span class="s">(setq ac-quick-help-delay 0.5)</span>
+</span><span class='line'><span class="s">;; (ac-set-trigger-key “TAB”)</span>
+</span><span class='line'><span class="s">(define-key ac-mode-map [(control tab)] ‘auto-complete)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;(defun my-ac-config ()</span>
+</span><span class='line'><span class="s">  (setq-default ac-sources ‘(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))</span>
+</span><span class='line'><span class="s">  (add-hook ‘emacs-lisp-mode-hook ‘ac-emacs-lisp-mode-setup)</span>
+</span><span class='line'><span class="s">  ;; (add-hook ‘c-mode-common-hook ‘ac-cc-mode-setup)</span>
+</span><span class='line'><span class="s">  (add-hook ‘ruby-mode-hook ‘ac-ruby-mode-setup)</span>
+</span><span class='line'><span class="s">  (add-hook ‘css-mode-hook ‘ac-css-mode-setup)</span>
+</span><span class='line'><span class="s">  (add-hook ‘auto-complete-mode-hook ‘ac-common-setup)</span>
+</span><span class='line'><span class="s">  (global-auto-complete-mode t))</span>
+</span><span class='line'><span class="s">(defun my-ac-cc-mode-setup ()</span>
+</span><span class='line'><span class="s">  (setq ac-sources (append ‘(ac-source-clang ac-source-yasnippet) ac-sources)))</span>
+</span><span class='line'><span class="s">(add-hook ‘c-mode-common-hook ‘my-ac-cc-mode-setup)</span>
+</span><span class='line'><span class="s">;; ac-source-gtags</span>
+</span><span class='line'><span class="s">(my-ac-config)</span>
+</span><span class='line'><span class="s">;; ——————– end of auto complete ——————–&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;==================== python ====================</span>
+</span><span class='line'><span class="s">(require ‘python)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;(autoload ‘python-mode “python-mode” “Python Mode.” t)</span>
+</span><span class='line'><span class="s">(add-to-list ‘auto-mode-alist ‘(“\.py\’” . python-mode))</span>
+</span><span class='line'><span class="s">(add-to-list ‘interpreter-mode-alist ‘(“python” . python-mode))</span>
+</span><span class='line'><span class="s">(add-to-list ‘load-path “~/.emacs.d/plugins/Pymacs”)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;(require ‘pymacs)</span>
+</span><span class='line'><span class="s">(autoload ‘pymacs-apply “pymacs”)</span>
+</span><span class='line'><span class="s">(autoload ‘pymacs-call “pymacs”)</span>
+</span><span class='line'><span class="s">(autoload ‘pymacs-eval “pymacs” nil t)</span>
+</span><span class='line'><span class="s">(autoload ‘pymacs-exec “pymacs” nil t)</span>
+</span><span class='line'><span class="s">(autoload ‘pymacs-load “pymacs” nil t)</span>
+</span><span class='line'><span class="s">(autoload ‘pymacs-autoload “pymacs”)</span>
+</span><span class='line'><span class="s">;;(eval-after-load “pymacs”</span>
+</span><span class='line'><span class="s">;;  ‘(add-to-list ‘pymacs-load-path YOUR-PYMACS-DIRECTORY”))&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;; Initialize Rope</span>
+</span><span class='line'><span class="s">(pymacs-load “ropemacs” “rope-“)</span>
+</span><span class='line'><span class="s">(setq ropemacs-enable-autoimport t)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;(ac-ropemacs-initialize)</span>
+</span><span class='line'><span class="s">(add-hook ‘python-mode-hook</span>
+</span><span class='line'><span class="s">	  (lambda ()</span>
+</span><span class='line'><span class="s">	    (add-to-list ‘ac-sources ‘ac-source-ropemacs)))</span>
+</span><span class='line'><span class="s">;;——————– python ——————–&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;==================== cedet ====================</span>
+</span><span class='line'><span class="s">(add-to-list ‘load-path “~/.emacs.d/plugins/cedet/common”)</span>
+</span><span class='line'><span class="s">;;(add-to-list ‘load-path “~/.emacs.d/plugins/cedet/semantic”)</span>
+</span><span class='line'><span class="s">(require ‘cedet)</span>
+</span><span class='line'><span class="s">(require ‘semantic-ia)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;(global-ede-mode 1)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;(global-srecode-minor-mode 1)</span>
+</span><span class='line'><span class="s">;;——————– cedet ——————–&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; (setq semanticdb-project-roots (list (expand-file-name “/”)))</span>
+</span><span class='line'><span class="s">(defconst cedet-user-include-dirs</span>
+</span><span class='line'><span class="s">  (list “..” “../include” “../inc” “../common” “../public” “../lib”</span>
+</span><span class='line'><span class="s">        “../..” “../../include” “../../inc” “../../common” “../../public”))</span>
+</span><span class='line'><span class="s">(defconst cedet-win32-include-dirs</span>
+</span><span class='line'><span class="s">  (list “C:/MinGW/include”</span>
+</span><span class='line'><span class="s">        “C:/MinGW/include/c++/3.4.5”</span>
+</span><span class='line'><span class="s">        “C:/MinGW/include/c++/3.4.5/mingw32”</span>
+</span><span class='line'><span class="s">        “C:/MinGW/include/c++/3.4.5/backward”</span>
+</span><span class='line'><span class="s">        “C:/MinGW/lib/gcc/mingw32/3.4.5/include”</span>
+</span><span class='line'><span class="s">        “C:/Program Files/Microsoft Visual Studio/VC98/MFC/Include”))</span>
+</span><span class='line'><span class="s">(require ‘semantic-c nil ‘noerror)</span>
+</span><span class='line'><span class="s">(let ((include-dirs cedet-user-include-dirs))</span>
+</span><span class='line'><span class="s">  ;(when (eq system-type ‘windows-nt)</span>
+</span><span class='line'><span class="s">  ;  (setq include-dirs (append include-dirs cedet-win32-include-dirs)))</span>
+</span><span class='line'><span class="s">  (mapc (lambda (dir)</span>
+</span><span class='line'><span class="s">          (semantic-add-system-include dir ‘c++-mode)</span>
+</span><span class='line'><span class="s">          (semantic-add-system-include dir ‘c-mode))</span>
+</span><span class='line'><span class="s">        include-dirs))&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; code folding</span>
+</span><span class='line'><span class="s">(when (and window-system (require ‘semantic-tag-folding nil ‘noerror))</span>
+</span><span class='line'><span class="s">  (global-semantic-tag-folding-mode 1)</span>
+</span><span class='line'><span class="s">  (global-set-key (kbd “C-?”) ‘global-semantic-tag-folding-mode)</span>
+</span><span class='line'><span class="s">  (define-key semantic-tag-folding-mode-map (kbd “C-c , -“) ‘semantic-tag-folding-fold-block)</span>
+</span><span class='line'><span class="s">  (define-key semantic-tag-folding-mode-map (kbd “C-c , +”) ‘semantic-tag-folding-show-block)</span>
+</span><span class='line'><span class="s">  (define-key semantic-tag-folding-mode-map (kbd “C-_”) ‘semantic-tag-folding-fold-all)</span>
+</span><span class='line'><span class="s">  (define-key semantic-tag-folding-mode-map (kbd “C-+”) ‘semantic-tag-folding-show-all))&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; ==================== semantic ====================</span>
+</span><span class='line'><span class="s">;; (semantic-load-enable-minimum-features)</span>
+</span><span class='line'><span class="s">(semantic-load-enable-code-helpers)</span>
+</span><span class='line'><span class="s">;; (semantic-load-enable-guady-code-helpers)</span>
+</span><span class='line'><span class="s">;; (semantic-load-enable-excessive-code-helpers)</span>
+</span><span class='line'><span class="s">(semantic-load-enable-semantic-debugging-helpers)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; (semantic-decoration-mode 1)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; jump to definition</span>
+</span><span class='line'><span class="s">(global-set-key [f12] ‘semantic-ia-fast-jump)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; go back</span>
+</span><span class='line'><span class="s">(global-set-key [S-f12]</span>
+</span><span class='line'><span class="s">                (lambda ()</span>
+</span><span class='line'><span class="s">                  (interactive)</span>
+</span><span class='line'><span class="s">                  (if (ring-empty-p (oref semantic-mru-bookmark-ring ring))</span>
+</span><span class='line'><span class="s">                      (error “Semantic Bookmark ring is currently empty”))</span>
+</span><span class='line'><span class="s">                  (let* ((ring (oref semantic-mru-bookmark-ring ring))</span>
+</span><span class='line'><span class="s">                         (alist (semantic-mrub-ring-to-assoc-list ring))</span>
+</span><span class='line'><span class="s">                         (first (cdr (car alist))))</span>
+</span><span class='line'><span class="s">                    (if (semantic-equivalent-tag-p (oref first tag)</span>
+</span><span class='line'><span class="s">                                                   (semantic-current-tag))</span>
+</span><span class='line'><span class="s">                        (setq first (cdr (car (cdr alist)))))</span>
+</span><span class='line'><span class="s">                    (semantic-mrub-switch-tags first))))&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;;(define-key c-mode-base-map (kbd “M-n”) ‘semantic-ia-complete-symbol)</span>
+</span><span class='line'><span class="s">;; ——————– semantic ——————–&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; ==================== gud ====================&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;(gud-tooltip-mode 1)</span>
+</span><span class='line'><span class="s">(add-hook ‘gdb-mode-hook ‘(lambda ()</span>
+</span><span class='line'><span class="s">                            (define-key c-mode-base-map [(f5)] ‘gud-go)</span>
+</span><span class='line'><span class="s">                            (define-key c-mode-base-map [(f11)] ‘gud-step)</span>
+</span><span class='line'><span class="s">                            (define-key c-mode-base-map [(f10)] ‘gud-next)))&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; ——————– gud ——————–&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; compile</span>
+</span><span class='line'><span class="s">(setq compilation-read-command nil)	;don’t prompt to press ENTER</span>
+</span><span class='line'><span class="s">(global-set-key [(f7)] (lambda()</span>
+</span><span class='line'><span class="s">			 (interactive)</span>
+</span><span class='line'><span class="s">			 (save-some-buffers t)	   ;save all buffers</span>
+</span><span class='line'><span class="s">			 (compile compile-command) ;compile</span>
+</span><span class='line'><span class="s">			 ))&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;(global-set-key [f4] ‘eshell)</span>
+</span><span class='line'><span class="s">(global-set-key [(shift f4)] ‘shell)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;定制C/C++缩进风格</span>
+</span><span class='line'><span class="s">(add-hook ‘c-mode-hook</span>
+</span><span class='line'><span class="s">          ‘(lambda ()</span>
+</span><span class='line'><span class="s">             (c-set-style “k&amp;amp;r;”)))</span>
+</span><span class='line'><span class="s">(add-hook ‘c++-mode-hook</span>
+</span><span class='line'><span class="s">          ‘(lambda ()</span>
+</span><span class='line'><span class="s">             (c-set-style “stroustrup”)))&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; 设置缩进字符数</span>
+</span><span class='line'><span class="s">(setq c-basic-offset 4)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;(global-set-key [(f5)] ‘speedbar)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;p&gt;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
+</span><span class='line'><span class="s">;; ;;; Auto-completion</span>
+</span><span class='line'><span class="s">;; ;;;  Integrates:</span>
+</span><span class='line'><span class="s">;; ;;;   1) Rope</span>
+</span><span class='line'><span class="s">;; ;;;   2) Yasnippet</span>
+</span><span class='line'><span class="s">;; ;;;   all with AutoComplete.el</span>
+</span><span class='line'><span class="s">;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
+</span><span class='line'><span class="s">;; (defun prefix-list-elements (list prefix)</span>
+</span><span class='line'><span class="s">;;   (let (value)</span>
+</span><span class='line'><span class="s">;;     (nreverse</span>
+</span><span class='line'><span class="s">;;      (dolist (element list value)</span>
+</span><span class='line'><span class="s">;;       (setq value (cons (format “%s%s” prefix element) value))))))</span>
+</span><span class='line'><span class="s">;; (defvar ac-source-rope</span>
+</span><span class='line'><span class="s">;;   ‘((candidates</span>
+</span><span class='line'><span class="s">;;      . (lambda ()</span>
+</span><span class='line'><span class="s">;;          (prefix-list-elements (rope-completions) ac-target))))</span>
+</span><span class='line'><span class="s">;;   “Source for Rope”)</span>
+</span><span class='line'><span class="s">;; (defun ac-python-find ()</span>
+</span><span class='line'><span class="s">;;   “Python &lt;code&gt;ac-find-function&#39;.&quot;</span>
 </span><span class='line'><span class="c1">;;   (require &#39;thingatpt)</span>
 </span><span class='line'><span class="c1">;;   (let ((symbol (car-safe (bounds-of-thing-at-point &#39;symbol))))</span>
 </span><span class='line'><span class="c1">;;     (if (null symbol)</span>
@@ -1357,36 +1268,36 @@
 </span><span class='line'><span class="c1">;;           nil)</span>
 </span><span class='line'><span class="c1">;;       symbol)))</span>
 </span><span class='line'><span class="c1">;; (defun ac-python-candidate ()</span>
-</span><span class='line'><span class="c1">;;   &quot;Python&lt;/code&gt;ac-candidates-function&#39;&quot;</span>
+</span><span class='line'><span class="c1">;;   &quot;Python &lt;/code&gt;ac-candidates-function’”</span>
 </span><span class='line'><span class="c1">;;   (let (candidates)</span>
 </span><span class='line'><span class="c1">;;     (dolist (source ac-sources)</span>
 </span><span class='line'><span class="c1">;;       (if (symbolp source)</span>
 </span><span class='line'><span class="c1">;;           (setq source (symbol-value source)))</span>
-</span><span class='line'><span class="c1">;;       (let* ((ac-limit (or (cdr-safe (assq &#39;limit source)) ac-limit))</span>
-</span><span class='line'><span class="c1">;;              (requires (cdr-safe (assq &#39;requires source)))</span>
+</span><span class='line'><span class="c1">;;       (let* ((ac-limit (or (cdr-safe (assq ‘limit source)) ac-limit))</span>
+</span><span class='line'><span class="c1">;;              (requires (cdr-safe (assq ‘requires source)))</span>
 </span><span class='line'><span class="c1">;;              cand)</span>
 </span><span class='line'><span class="c1">;;         (if (or (null requires)</span>
-</span><span class='line'><span class="c1">;;                 (&gt;= (length ac-target) requires))</span>
+</span><span class='line'><span class="c1">;;                 (&amp;gt;= (length ac-target) requires))</span>
 </span><span class='line'><span class="c1">;;             (setq cand</span>
 </span><span class='line'><span class="c1">;;                   (delq nil</span>
 </span><span class='line'><span class="c1">;;                         (mapcar (lambda (candidate)</span>
-</span><span class='line'><span class="c1">;;                                   (propertize candidate &#39;source source))</span>
-</span><span class='line'><span class="c1">;;                                 (funcall (cdr (assq &#39;candidates source)))))))</span>
-</span><span class='line'><span class="c1">;;         (if (and (&gt; ac-limit 1)</span>
-</span><span class='line'><span class="c1">;;                  (&gt; (length cand) ac-limit))</span>
+</span><span class='line'><span class="c1">;;                                   (propertize candidate ‘source source))</span>
+</span><span class='line'><span class="c1">;;                                 (funcall (cdr (assq ‘candidates source)))))))</span>
+</span><span class='line'><span class="c1">;;         (if (and (&amp;gt; ac-limit 1)</span>
+</span><span class='line'><span class="c1">;;                  (&amp;gt; (length cand) ac-limit))</span>
 </span><span class='line'><span class="c1">;;             (setcdr (nthcdr (1- ac-limit) cand) nil))</span>
 </span><span class='line'><span class="c1">;;         (setq candidates (append candidates cand))))</span>
 </span><span class='line'><span class="c1">;;     (delete-dups candidates)))</span>
-</span><span class='line'><span class="c1">;; (add-hook &#39;python-mode-hook</span>
+</span><span class='line'><span class="c1">;; (add-hook ‘python-mode-hook</span>
 </span><span class='line'><span class="c1">;;           (lambda ()</span>
 </span><span class='line'><span class="c1">;;                  (auto-complete-mode 1)</span>
-</span><span class='line'><span class="c1">;;                  (set (make-local-variable &#39;ac-sources)</span>
-</span><span class='line'><span class="c1">;;                       (append ac-sources &#39;(ac-source-rope) &#39;(ac-source-yasnippet)))</span>
-</span><span class='line'><span class="c1">;;                  (set (make-local-variable &#39;ac-find-function) &#39;ac-python-find)</span>
-</span><span class='line'><span class="c1">;;                  (set (make-local-variable &#39;ac-candidate-function) &#39;ac-python-candidate)</span>
-</span><span class='line'><span class="c1">;;                  (set (make-local-variable &#39;ac-auto-start) nil)))</span>
+</span><span class='line'><span class="c1">;;                  (set (make-local-variable ‘ac-sources)</span>
+</span><span class='line'><span class="c1">;;                       (append ac-sources ‘(ac-source-rope) ‘(ac-source-yasnippet)))</span>
+</span><span class='line'><span class="c1">;;                  (set (make-local-variable ‘ac-find-function) ‘ac-python-find)</span>
+</span><span class='line'><span class="c1">;;                  (set (make-local-variable ‘ac-candidate-function) ‘ac-python-candidate)</span>
+</span><span class='line'><span class="c1">;;                  (set (make-local-variable ‘ac-auto-start) nil)))</span>
 </span><span class='line'><span class="c1">;;</span>
-</span><span class='line'><span class="c1">;; ;;Ryan&#39;s python specific tab completion</span>
+</span><span class='line'><span class="c1">;; ;;Ryan’s python specific tab completion</span>
 </span><span class='line'><span class="c1">;; (defun ryan-python-tab ()</span>
 </span><span class='line'><span class="c1">;;   ; Try the following:</span>
 </span><span class='line'><span class="c1">;;   ; 1) Do a yasnippet expansion</span>
@@ -1397,31 +1308,31 @@
 </span><span class='line'><span class="c1">;;       (indent-for-tab-command)))</span>
 </span><span class='line'><span class="c1">;;</span>
 </span><span class='line'><span class="c1">;; (defadvice ac-start (before advice-turn-on-auto-start activate)</span>
-</span><span class='line'><span class="c1">;;   (set (make-local-variable &#39;ac-auto-start) t))</span>
+</span><span class='line'><span class="c1">;;   (set (make-local-variable ‘ac-auto-start) t))</span>
 </span><span class='line'><span class="c1">;; (defadvice ac-cleanup (after advice-turn-off-auto-start activate)</span>
-</span><span class='line'><span class="c1">;;   (set (make-local-variable &#39;ac-auto-start) nil))</span>
+</span><span class='line'><span class="c1">;;   (set (make-local-variable ‘ac-auto-start) nil))</span>
 </span><span class='line'><span class="c1">;;</span>
-</span><span class='line'><span class="c1">;; (define-key python-mode-map &quot;\t&quot; &#39;ryan-python-tab)</span>
+</span><span class='line'><span class="c1">;; (define-key python-mode-map “\t” ‘ryan-python-tab)</span>
 </span><span class='line'><span class="c1">;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
 </span><span class='line'><span class="c1">;; ;;; End Auto Completion</span>
 </span><span class='line'><span class="c1">;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; git emacs</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;load-path</span> <span class="s">&quot;~/.emacs.d/plugins/git-emacs/&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;git-emacs</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="err">‘</span><span class="nv">load-path</span> <span class="err">“</span><span class="nv">~/</span><span class="o">.</span><span class="nv">emacs</span><span class="o">.</span><span class="nv">d/plugins/git-emacs/</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="err">‘</span><span class="nv">git-emacs</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;==================== w3m ====================</span>
-</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;load-path</span> <span class="s">&quot;~/.emacs.d/plugins/emacs-w3m-1.4.4&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">;(require &#39;w3m-load)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;w3m-e21</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">provide</span> <span class="ss">&#39;w3m-e23</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="err">‘</span><span class="nv">load-path</span> <span class="err">“</span><span class="nv">~/</span><span class="o">.</span><span class="nv">emacs</span><span class="o">.</span><span class="nv">d/plugins/emacs-w3m-1</span><span class="o">.</span><span class="mf">4.4</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="c1">;(require ‘w3m-load)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="err">‘</span><span class="nv">w3m-e21</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">provide</span> <span class="err">‘</span><span class="nv">w3m-e23</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;-------------------- w3m --------------------&lt;/p&gt;</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;——————– w3m ——————–&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h2>窗口切换布局的配置</h2>
+<h2 id="section-1">窗口切换布局的配置</h2>
 
 <p>这个参考了IBM的配置</p>
 
@@ -1660,21 +1571,6 @@
 <span class='line-number'>232</span>
 <span class='line-number'>233</span>
 <span class='line-number'>234</span>
-<span class='line-number'>235</span>
-<span class='line-number'>236</span>
-<span class='line-number'>237</span>
-<span class='line-number'>238</span>
-<span class='line-number'>239</span>
-<span class='line-number'>240</span>
-<span class='line-number'>241</span>
-<span class='line-number'>242</span>
-<span class='line-number'>243</span>
-<span class='line-number'>244</span>
-<span class='line-number'>245</span>
-<span class='line-number'>246</span>
-<span class='line-number'>247</span>
-<span class='line-number'>248</span>
-<span class='line-number'>249</span>
 </pre></td><td class='code'><pre><code class='scm'><span class='line'><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;; Setting By:  Hua Liang [ Stupid ET ]</span>
@@ -1685,131 +1581,119 @@
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;==================== window ====================&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">eval-when-compile</span> <span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;cl</span><span class="p">))</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">eval-when-compile</span> <span class="p">(</span><span class="nf">require</span> <span class="err">‘</span><span class="nv">cl</span><span class="p">))</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">winner-mode</span> <span class="mi">1</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">; +----------+-----------+</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">; +———-+———–+</span>
 </span><span class='line'><span class="c1">; |          |           |</span>
 </span><span class='line'><span class="c1">; |          |           |</span>
-</span><span class='line'><span class="c1">; +----------+-----------+</span>
+</span><span class='line'><span class="c1">; +———-+———–+</span>
 </span><span class='line'><span class="c1">; |          |           |</span>
 </span><span class='line'><span class="c1">; |          |           |</span>
-</span><span class='line'><span class="c1">; +----------+-----------+&lt;/p&gt;</span>
+</span><span class='line'><span class="c1">; +———-+———–+&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">defun</span> <span class="nv">split-window-4</span><span class="p">()</span>
-</span><span class='line'>  <span class="s">&quot;Splite window into 4 sub-window&quot;</span>
+</span><span class='line'>  <span class="err">“</span><span class="nv">Splite</span> <span class="nv">window</span> <span class="nv">into</span> <span class="mi">4</span> <span class="nv">sub-window</span><span class="err">”</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="mi">1</span> <span class="p">(</span><span class="nb">length </span><span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="mi">1</span> <span class="p">(</span><span class="nb">length </span><span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span>
+</span><span class='line'>      <span class="p">(</span><span class="nf">progn</span> <span class="p">(</span><span class="nf">split-window-vertically</span><span class="p">)</span>
+</span><span class='line'>	     <span class="p">(</span><span class="nf">split-window-horizontally</span><span class="p">)</span>
+</span><span class='line'>	     <span class="p">(</span><span class="nf">other-window</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>	     <span class="p">(</span><span class="nf">split-window-horizontally</span><span class="p">)</span>
+</span><span class='line'>	     <span class="p">)</span>
+</span><span class='line'>    <span class="p">)</span>
+</span><span class='line'>  <span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>  <span class="p">(</span><span class="nf">progn</span> <span class="p">(</span><span class="nf">split-window-vertically</span><span class="p">)</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">split-window-horizontally</span><span class="p">)</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">other-window</span> <span class="mi">2</span><span class="p">)</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">split-window-horizontally</span><span class="p">)</span>
-</span><span class='line'>     <span class="p">)</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="err">“</span><span class="nv">C-x</span> <span class="mi">4</span> <span class="mi">4</span><span class="err">”</span><span class="p">)</span> <span class="err">‘</span><span class="nv">split-window-4</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span>  <span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;C-x 4 4&quot;</span><span class="p">)</span> <span class="ss">&#39;split-window-4</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">; +----------------+</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">; +—————-+</span>
 </span><span class='line'><span class="c1">; |                |</span>
-</span><span class='line'><span class="c1">; +----------------+</span>
+</span><span class='line'><span class="c1">; +—————-+</span>
 </span><span class='line'><span class="c1">; |                |</span>
-</span><span class='line'><span class="c1">; +----------------+</span>
+</span><span class='line'><span class="c1">; +—————-+</span>
 </span><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">split-window-up-down</span><span class="p">()</span>
-</span><span class='line'>  <span class="s">&quot;Splite window into 2 up and down window&quot;</span>
+</span><span class='line'>  <span class="err">“</span><span class="nv">Splite</span> <span class="nv">window</span> <span class="nv">into</span> <span class="mi">2</span> <span class="nv">up</span> <span class="k">and </span><span class="nv">down</span> <span class="nv">window</span><span class="err">”</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="mi">1</span> <span class="p">(</span><span class="nb">length </span><span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="mi">1</span> <span class="p">(</span><span class="nb">length </span><span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span>
+</span><span class='line'>      <span class="p">(</span><span class="nf">progn</span> <span class="p">(</span><span class="nf">split-window-vertically</span> <span class="mi">-10</span><span class="p">)</span>
+</span><span class='line'>	     <span class="p">(</span><span class="nf">other-window</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>	     <span class="p">(</span><span class="nf">eshell</span><span class="p">)</span>
+</span><span class='line'>	     <span class="p">)</span>
+</span><span class='line'>    <span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="err">“</span><span class="nv">C-x</span> <span class="mi">4</span> <span class="mi">2</span><span class="err">”</span><span class="p">)</span> <span class="err">‘</span><span class="nv">split-window-up-down</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>  <span class="p">(</span><span class="nf">progn</span> <span class="p">(</span><span class="nf">split-window-vertically</span> <span class="mi">-10</span><span class="p">)</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">other-window</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">eshell</span><span class="p">)</span>
-</span><span class='line'>     <span class="p">)</span>
-</span><span class='line'><span class="p">))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;C-x 4 2&quot;</span><span class="p">)</span> <span class="ss">&#39;split-window-up-down</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">; +----------+-----------+</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">; +———-+———–+</span>
 </span><span class='line'><span class="c1">; |          |           |</span>
 </span><span class='line'><span class="c1">; |          |           |</span>
-</span><span class='line'><span class="c1">; +          +-----------+</span>
+</span><span class='line'><span class="c1">; +          +———–+</span>
 </span><span class='line'><span class="c1">; |          |           |</span>
 </span><span class='line'><span class="c1">; |          |           |</span>
-</span><span class='line'><span class="c1">; +----------+-----------+</span>
+</span><span class='line'><span class="c1">; +———-+———–+</span>
 </span><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">split-window-3</span><span class="p">()</span>
-</span><span class='line'>  <span class="s">&quot;Splite window into 3 sub-window&quot;</span>
+</span><span class='line'>  <span class="err">“</span><span class="nv">Splite</span> <span class="nv">window</span> <span class="nv">into</span> <span class="mi">3</span> <span class="nv">sub-window</span><span class="err">”</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="mi">1</span> <span class="p">(</span><span class="nb">length </span><span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="mi">1</span> <span class="p">(</span><span class="nb">length </span><span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span>
+</span><span class='line'>      <span class="p">(</span><span class="nf">progn</span> <span class="p">(</span><span class="nf">split-window-horizontally</span><span class="p">)</span>         <span class="c1">;split to left and right</span>
+</span><span class='line'>	     <span class="p">(</span><span class="nf">enlarge-window-horizontally</span> <span class="mi">15</span><span class="p">)</span>	 <span class="c1">;make the main window bigger</span>
+</span><span class='line'>	     <span class="p">(</span><span class="nf">other-window</span> <span class="mi">1</span><span class="p">)</span>		         <span class="c1">;go to the right window</span>
+</span><span class='line'>	     <span class="p">(</span><span class="nf">split-window-vertically</span><span class="p">)</span>	         <span class="c1">;split the right window to two window</span>
+</span><span class='line'>	     <span class="p">(</span><span class="nf">eshell</span><span class="p">)</span>			         <span class="c1">;open shell at left top window</span>
+</span><span class='line'>	     <span class="p">(</span><span class="nf">other-window</span> <span class="mi">2</span><span class="p">)</span> 		         <span class="c1">;go back to origin window</span>
+</span><span class='line'>	     <span class="p">)</span>
+</span><span class='line'>    <span class="p">)</span>
+</span><span class='line'>  <span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>  <span class="p">(</span><span class="nf">progn</span> <span class="p">(</span><span class="nf">split-window-horizontally</span><span class="p">)</span>         <span class="c1">;split to left and right</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">enlarge-window-horizontally</span> <span class="mi">15</span><span class="p">)</span>    <span class="c1">;make the main window bigger</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">other-window</span> <span class="mi">1</span><span class="p">)</span>                <span class="c1">;go to the right window</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">split-window-vertically</span><span class="p">)</span>           <span class="c1">;split the right window to two window</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">eshell</span><span class="p">)</span>                    <span class="c1">;open shell at left top window</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">other-window</span> <span class="mi">2</span><span class="p">)</span>                <span class="c1">;go back to origin window</span>
-</span><span class='line'>     <span class="p">)</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="err">“</span><span class="nv">C-x</span> <span class="mi">4</span> <span class="mi">3</span><span class="err">”</span><span class="p">)</span> <span class="err">‘</span><span class="nv">split-window-3</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span>  <span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;C-x 4 3&quot;</span><span class="p">)</span> <span class="ss">&#39;split-window-3</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;  +----------------------+                 +------------+-----------+</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;  +———————-+                 +————+———–+</span>
 </span><span class='line'><span class="c1">;  |                      |           \     |            |           |</span>
-</span><span class='line'><span class="c1">;  |                      |   +-------+\    |            |           |</span>
-</span><span class='line'><span class="c1">;  +----------+-----------+   +-------+/    |            +-----------+</span>
+</span><span class='line'><span class="c1">;  |                      |   +——-+\    |            |           |</span>
+</span><span class='line'><span class="c1">;  +———-+———–+   +——-+/    |            +———–+</span>
 </span><span class='line'><span class="c1">;  |          |           |           /     |            |           |</span>
 </span><span class='line'><span class="c1">;  |          |           |                 |            |           |</span>
-</span><span class='line'><span class="c1">;  +----------+-----------+                 +------------+-----------+</span>
+</span><span class='line'><span class="c1">;  +———-+———–+                 +————+———–+</span>
 </span><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">split-v-3</span> <span class="p">()</span>
-</span><span class='line'>  <span class="s">&quot;Change 3 window style from horizontal to vertical&quot;</span>
+</span><span class='line'>  <span class="err">“</span><span class="nv">Change</span> <span class="mi">3</span> <span class="nv">window</span> <span class="nv">style</span> <span class="nv">from</span> <span class="nv">horizontal</span> <span class="nv">to</span> <span class="nv">vertical</span><span class="err">”</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">select-window</span> <span class="p">(</span><span class="nf">get-largest-window</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="mi">3</span> <span class="p">(</span><span class="nb">length </span><span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="mi">3</span> <span class="p">(</span><span class="nb">length </span><span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span>
+</span><span class='line'>      <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">winList</span> <span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span>
+</span><span class='line'>	<span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="mi">1</span><span class="nv">stBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="nv">winList</span><span class="p">)))</span>
+</span><span class='line'>	      <span class="p">(</span><span class="mi">2</span><span class="nv">ndBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">winList</span><span class="p">))))</span>
+</span><span class='line'>	      <span class="p">(</span><span class="mi">3</span><span class="nv">rdBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">winList</span><span class="p">))))))</span>
+</span><span class='line'>	  <span class="p">(</span><span class="nf">message</span> <span class="err">“</span><span class="nv">%s</span> <span class="nv">%s</span> <span class="nv">%s</span><span class="err">”</span> <span class="mi">1</span><span class="nv">stBuf</span> <span class="mi">2</span><span class="nv">ndBuf</span> <span class="mi">3</span><span class="nv">rdBuf</span><span class="p">)</span>
+</span><span class='line'>	  <span class="p">(</span><span class="nf">delete-other-windows</span><span class="p">)</span>
+</span><span class='line'>	  <span class="p">(</span><span class="nf">split-window-horizontally</span><span class="p">)</span>
+</span><span class='line'>	  <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="nv">nil</span> <span class="mi">1</span><span class="nv">stBuf</span><span class="p">)</span>
+</span><span class='line'>	  <span class="p">(</span><span class="nf">other-window</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>	  <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="nv">nil</span> <span class="mi">2</span><span class="nv">ndBuf</span><span class="p">)</span>
+</span><span class='line'>	  <span class="p">(</span><span class="nf">split-window-vertically</span><span class="p">)</span>
+</span><span class='line'>	  <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="p">(</span><span class="nf">next-window</span><span class="p">)</span> <span class="mi">3</span><span class="nv">rdBuf</span><span class="p">)</span>
+</span><span class='line'>	  <span class="p">(</span><span class="nf">select-window</span> <span class="p">(</span><span class="nf">get-largest-window</span><span class="p">))</span>
+</span><span class='line'>	  <span class="p">))))</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">winList</span> <span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span>
-</span><span class='line'><span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="mi">1</span><span class="nv">stBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="nv">winList</span><span class="p">)))</span>
-</span><span class='line'>      <span class="p">(</span><span class="mi">2</span><span class="nv">ndBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">winList</span><span class="p">))))</span>
-</span><span class='line'>      <span class="p">(</span><span class="mi">3</span><span class="nv">rdBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">winList</span><span class="p">))))))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">message</span> <span class="s">&quot;%s %s %s&quot;</span> <span class="mi">1</span><span class="nv">stBuf</span> <span class="mi">2</span><span class="nv">ndBuf</span> <span class="mi">3</span><span class="nv">rdBuf</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">delete-other-windows</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">split-window-horizontally</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="nv">nil</span> <span class="mi">1</span><span class="nv">stBuf</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">other-window</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="nv">nil</span> <span class="mi">2</span><span class="nv">ndBuf</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">split-window-vertically</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="p">(</span><span class="nf">next-window</span><span class="p">)</span> <span class="mi">3</span><span class="nv">rdBuf</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">select-window</span> <span class="p">(</span><span class="nf">get-largest-window</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">))))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;  +------------+-----------+                  +----------------------+</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;  +————+———–+                  +———————-+</span>
 </span><span class='line'><span class="c1">;  |            |           |            \     |                      |</span>
-</span><span class='line'><span class="c1">;  |            |           |    +-------+\    |                      |</span>
-</span><span class='line'><span class="c1">;  |            +-----------+    +-------+/    +----------+-----------+</span>
+</span><span class='line'><span class="c1">;  |            |           |    +——-+\    |                      |</span>
+</span><span class='line'><span class="c1">;  |            +———–+    +——-+/    +———-+———–+</span>
 </span><span class='line'><span class="c1">;  |            |           |            /     |          |           |</span>
 </span><span class='line'><span class="c1">;  |            |           |                  |          |           |</span>
-</span><span class='line'><span class="c1">;  +------------+-----------+                  +----------+-----------+&lt;/p&gt;</span>
+</span><span class='line'><span class="c1">;  +————+———–+                  +———-+———–+&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">defun</span> <span class="nv">split-h-3</span> <span class="p">()</span>
-</span><span class='line'>  <span class="s">&quot;Change 3 window style from vertical to horizontal&quot;</span>
+</span><span class='line'>  <span class="err">“</span><span class="nv">Change</span> <span class="mi">3</span> <span class="nv">window</span> <span class="nv">style</span> <span class="nv">from</span> <span class="nv">vertical</span> <span class="nv">to</span> <span class="nv">horizontal</span><span class="err">”</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span>  <span class="p">(</span><span class="nf">select-window</span> <span class="p">(</span><span class="nf">get-largest-window</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="mi">3</span> <span class="p">(</span><span class="nb">length </span><span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">select-window</span> <span class="p">(</span><span class="nf">get-largest-window</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="mi">3</span> <span class="p">(</span><span class="nb">length </span><span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span>
+</span><span class='line'>      <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">winList</span> <span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span>
+</span><span class='line'>	<span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="mi">1</span><span class="nv">stBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="nv">winList</span><span class="p">)))</span>
+</span><span class='line'>	      <span class="p">(</span><span class="mi">2</span><span class="nv">ndBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">winList</span><span class="p">))))</span>
+</span><span class='line'>	      <span class="p">(</span><span class="mi">3</span><span class="nv">rdBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">winList</span><span class="p">))))))</span>
+</span><span class='line'>	  <span class="p">(</span><span class="nf">message</span> <span class="err">“</span><span class="nv">%s</span> <span class="nv">%s</span> <span class="nv">%s</span><span class="err">”</span> <span class="mi">1</span><span class="nv">stBuf</span> <span class="mi">2</span><span class="nv">ndBuf</span> <span class="mi">3</span><span class="nv">rdBuf</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">winList</span> <span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span>
-</span><span class='line'><span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="mi">1</span><span class="nv">stBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="nv">winList</span><span class="p">)))</span>
-</span><span class='line'>      <span class="p">(</span><span class="mi">2</span><span class="nv">ndBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">winList</span><span class="p">))))</span>
-</span><span class='line'>      <span class="p">(</span><span class="mi">3</span><span class="nv">rdBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">winList</span><span class="p">))))))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">message</span> <span class="s">&quot;%s %s %s&quot;</span> <span class="mi">1</span><span class="nv">stBuf</span> <span class="mi">2</span><span class="nv">ndBuf</span> <span class="mi">3</span><span class="nv">rdBuf</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="p">(</span><span class="nf">delete-other-windows</span><span class="p">)</span>
+</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>  <span class="p">(</span><span class="nf">delete-other-windows</span><span class="p">)</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">split-window-vertically</span><span class="p">)</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="nv">nil</span> <span class="mi">1</span><span class="nv">stBuf</span><span class="p">)</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">other-window</span> <span class="mi">1</span><span class="p">)</span>
@@ -1820,111 +1704,109 @@
 </span><span class='line'>  <span class="p">))))</span>
 </span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;  +------------+-----------+                 +------------+-----------+</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;  +————+———–+                 +————+———–+</span>
 </span><span class='line'><span class="c1">;  |            |           |            \    |            |           |</span>
-</span><span class='line'><span class="c1">;  |            |           |    +-------+\   |            |           |</span>
-</span><span class='line'><span class="c1">;  +------------+-----------+    +-------+/   +------------+           |</span>
+</span><span class='line'><span class="c1">;  |            |           |    +——-+\   |            |           |</span>
+</span><span class='line'><span class="c1">;  +————+———–+    +——-+/   +————+           |</span>
 </span><span class='line'><span class="c1">;  |                        |            /    |            |           |</span>
 </span><span class='line'><span class="c1">;  |                        |                 |            |           |</span>
-</span><span class='line'><span class="c1">;  +------------+-----------+                 +------------+-----------+</span>
-</span><span class='line'><span class="c1">;  +------------+-----------+                 +------------+-----------+</span>
+</span><span class='line'><span class="c1">;  +————+———–+                 +————+———–+</span>
+</span><span class='line'><span class="c1">;  +————+———–+                 +————+———–+</span>
 </span><span class='line'><span class="c1">;  |            |           |            \    |            |           |</span>
-</span><span class='line'><span class="c1">;  |            |           |    +-------+\   |            |           |</span>
-</span><span class='line'><span class="c1">;  |            +-----------+    +-------+/   +------------+-----------+</span>
+</span><span class='line'><span class="c1">;  |            |           |    +——-+\   |            |           |</span>
+</span><span class='line'><span class="c1">;  |            +———–+    +——-+/   +————+———–+</span>
 </span><span class='line'><span class="c1">;  |            |           |            /    |                        |</span>
 </span><span class='line'><span class="c1">;  |            |           |                 |                        |</span>
-</span><span class='line'><span class="c1">;  +------------+-----------+                 +------------+-----------+&lt;/p&gt;</span>
+</span><span class='line'><span class="c1">;  +————+———–+                 +————+———–+&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">defun</span> <span class="nv">change-split-type-3</span> <span class="p">()</span>
-</span><span class='line'>  <span class="s">&quot;Change 3 window style from horizontal to vertical and vice-versa&quot;</span>
+</span><span class='line'>  <span class="err">“</span><span class="nv">Change</span> <span class="mi">3</span> <span class="nv">window</span> <span class="nv">style</span> <span class="nv">from</span> <span class="nv">horizontal</span> <span class="nv">to</span> <span class="nv">vertical</span> <span class="k">and </span><span class="nv">vice-versa</span><span class="err">”</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span>  <span class="p">(</span><span class="nf">select-window</span> <span class="p">(</span><span class="nf">get-largest-window</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="mi">3</span> <span class="p">(</span><span class="nb">length </span><span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">select-window</span> <span class="p">(</span><span class="nf">get-largest-window</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="mi">3</span> <span class="p">(</span><span class="nb">length </span><span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span>
+</span><span class='line'>      <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">winList</span> <span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span>
+</span><span class='line'>	<span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="mi">1</span><span class="nv">stBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="nv">winList</span><span class="p">)))</span>
+</span><span class='line'>	      <span class="p">(</span><span class="mi">2</span><span class="nv">ndBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">winList</span><span class="p">))))</span>
+</span><span class='line'>	      <span class="p">(</span><span class="mi">3</span><span class="nv">rdBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">winList</span><span class="p">)))))</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">winList</span> <span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span>
-</span><span class='line'><span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="mi">1</span><span class="nv">stBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="nv">winList</span><span class="p">)))</span>
-</span><span class='line'>      <span class="p">(</span><span class="mi">2</span><span class="nv">ndBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">winList</span><span class="p">))))</span>
-</span><span class='line'>      <span class="p">(</span><span class="mi">3</span><span class="nv">rdBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">winList</span><span class="p">)))))</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="p">(</span><span class="nf">split-3</span>
+</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>      <span class="p">(</span><span class="nf">split-3</span>
 </span><span class='line'>       <span class="p">(</span><span class="nf">lambda</span><span class="p">(</span><span class="mi">1</span><span class="nv">stBuf</span> <span class="mi">2</span><span class="nv">ndBuf</span> <span class="mi">3</span><span class="nv">rdBuf</span> <span class="nv">split-1</span> <span class="nv">split-2</span><span class="p">)</span>
-</span><span class='line'>     <span class="s">&quot;change 3 window from horizontal to vertical and vice-versa&quot;</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">message</span> <span class="s">&quot;%s %s %s&quot;</span> <span class="mi">1</span><span class="nv">stBuf</span> <span class="mi">2</span><span class="nv">ndBuf</span> <span class="mi">3</span><span class="nv">rdBuf</span><span class="p">)</span>
+</span><span class='line'>	 <span class="s">&quot;change 3 window from horizontal to vertical and vice-versa&quot;</span>
+</span><span class='line'>	 <span class="p">(</span><span class="nf">message</span> <span class="s">&quot;%s %s %s&quot;</span> <span class="mi">1</span><span class="nv">stBuf</span> <span class="mi">2</span><span class="nv">ndBuf</span> <span class="mi">3</span><span class="nv">rdBuf</span><span class="p">)</span>
 </span><span class='line'>
-</span><span class='line'>     <span class="p">(</span><span class="nf">delete-other-windows</span><span class="p">)</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">funcall</span> <span class="nv">split-1</span><span class="p">)</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="nv">nil</span> <span class="mi">2</span><span class="nv">ndBuf</span><span class="p">)</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">funcall</span> <span class="nv">split-2</span><span class="p">)</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="p">(</span><span class="nf">next-window</span><span class="p">)</span> <span class="mi">3</span><span class="nv">rdBuf</span><span class="p">)</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">other-window</span> <span class="mi">2</span><span class="p">)</span>
-</span><span class='line'>     <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="nv">nil</span> <span class="mi">1</span><span class="nv">stBuf</span><span class="p">)))</span>
+</span><span class='line'>	 <span class="p">(</span><span class="nf">delete-other-windows</span><span class="p">)</span>
+</span><span class='line'>	 <span class="p">(</span><span class="nf">funcall</span> <span class="nv">split-1</span><span class="p">)</span>
+</span><span class='line'>	 <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="nv">nil</span> <span class="mi">2</span><span class="nv">ndBuf</span><span class="p">)</span>
+</span><span class='line'>	 <span class="p">(</span><span class="nf">funcall</span> <span class="nv">split-2</span><span class="p">)</span>
+</span><span class='line'>	 <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="p">(</span><span class="nf">next-window</span><span class="p">)</span> <span class="mi">3</span><span class="nv">rdBuf</span><span class="p">)</span>
+</span><span class='line'>	 <span class="p">(</span><span class="nf">other-window</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>	 <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="nv">nil</span> <span class="mi">1</span><span class="nv">stBuf</span><span class="p">)))</span>
 </span><span class='line'>
 </span><span class='line'>      <span class="p">(</span><span class="nf">split-type-1</span> <span class="nv">nil</span><span class="p">)</span>
 </span><span class='line'>      <span class="p">(</span><span class="nf">split-type-2</span> <span class="nv">nil</span><span class="p">)</span>
 </span><span class='line'>      <span class="p">)</span>
 </span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">window-width</span><span class="p">)</span> <span class="p">(</span><span class="nf">frame-width</span><span class="p">))</span>
 </span><span class='line'>      <span class="p">(</span><span class="nf">setq</span> <span class="nv">split-type-1</span> <span class="ss">&#39;split-window-horizontally</span>
-</span><span class='line'>        <span class="nv">split-type-2</span> <span class="ss">&#39;split-window-vertically</span><span class="p">)</span>
+</span><span class='line'>	    <span class="nv">split-type-2</span> <span class="ss">&#39;split-window-vertically</span><span class="p">)</span>
 </span><span class='line'>    <span class="p">(</span><span class="nf">setq</span> <span class="nv">split-type-1</span> <span class="ss">&#39;split-window-vertically</span>
-</span><span class='line'>      <span class="nv">split-type-2</span> <span class="ss">&#39;split-window-horizontally</span><span class="p">))</span>
+</span><span class='line'>	  <span class="nv">split-type-2</span> <span class="ss">&#39;split-window-horizontally</span><span class="p">))</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">funcall</span> <span class="nv">split-3</span> <span class="mi">1</span><span class="nv">stBuf</span> <span class="mi">2</span><span class="nv">ndBuf</span> <span class="mi">3</span><span class="nv">rdBuf</span> <span class="nv">split-type-1</span> <span class="nv">split-type-2</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="p">))))</span>
 </span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;C-x 4 c&quot;</span><span class="p">)</span> <span class="p">(</span><span class="k">quote </span><span class="nv">change-split-type-3</span><span class="p">))</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="err">“</span><span class="nv">C-x</span> <span class="mi">4</span> <span class="nv">c</span><span class="err">”</span><span class="p">)</span> <span class="p">(</span><span class="k">quote </span><span class="nv">change-split-type-3</span><span class="p">))</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;;==================== buffer =====================&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;  +------------+-----------+                   +------------+-----------+</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="c1">;  +————+———–+                   +————+———–+</span>
 </span><span class='line'><span class="c1">;  |            |     C     |            \      |            |     A     |</span>
-</span><span class='line'><span class="c1">;  |            |           |    +-------+\     |            |           |</span>
-</span><span class='line'><span class="c1">;  |     A      |-----------|    +-------+/     |     B      |-----------|</span>
+</span><span class='line'><span class="c1">;  |            |           |    +——-+\     |            |           |</span>
+</span><span class='line'><span class="c1">;  |     A      |———–|    +——-+/     |     B      |———–|</span>
 </span><span class='line'><span class="c1">;  |            |     B     |            /      |            |     C     |</span>
 </span><span class='line'><span class="c1">;  |            |           |                   |            |           |</span>
-</span><span class='line'><span class="c1">;  +------------+-----------+                   +------------+-----------+</span>
+</span><span class='line'><span class="c1">;  +————+———–+                   +————+———–+</span>
 </span><span class='line'><span class="c1">;</span>
-</span><span class='line'><span class="c1">;  +------------------------+                   +------------------------+</span>
+</span><span class='line'><span class="c1">;  +————————+                   +————————+</span>
 </span><span class='line'><span class="c1">;  |           A            |           \       |           B            |</span>
-</span><span class='line'><span class="c1">;  |                        |   +-------+\      |                        |</span>
-</span><span class='line'><span class="c1">;  +------------+-----------+   +-------+/      +------------+-----------+</span>
+</span><span class='line'><span class="c1">;  |                        |   +——-+\      |                        |</span>
+</span><span class='line'><span class="c1">;  +————+———–+   +——-+/      +————+———–+</span>
 </span><span class='line'><span class="c1">;  |     B      |     C     |           /       |     C      |     A     |</span>
 </span><span class='line'><span class="c1">;  |            |           |                   |            |           |</span>
-</span><span class='line'><span class="c1">;  +------------+-----------+                   +------------+-----------+&lt;/p&gt;</span>
+</span><span class='line'><span class="c1">;  +————+———–+                   +————+———–+&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">defun</span> <span class="nv">roll-v-3</span> <span class="p">(</span><span class="nf">&amp;optional</span><span class="c1">; arg)</span>
-</span><span class='line'>  <span class="s">&quot;Rolling 3 window buffers (anti-)clockwise&quot;</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span> <span class="s">&quot;P&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">defun</span> <span class="nv">roll-v-3</span> <span class="p">(</span><span class="nf">&amp;amp</span><span class="c1">;optional; arg)</span>
+</span><span class='line'>  <span class="err">“</span><span class="nv">Rolling</span> <span class="mi">3</span> <span class="nv">window</span> <span class="nv">buffers</span> <span class="p">(</span><span class="nf">anti-</span><span class="p">)</span><span class="nv">clockwise</span><span class="err">”</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">interactive</span> <span class="err">“</span><span class="nv">P</span><span class="err">”</span><span class="p">)</span>
 </span><span class='line'>  <span class="p">(</span><span class="nf">select-window</span> <span class="p">(</span><span class="nf">get-largest-window</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="mi">3</span> <span class="p">(</span><span class="nb">length </span><span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="mi">3</span> <span class="p">(</span><span class="nb">length </span><span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span>
+</span><span class='line'>      <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">winList</span> <span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span>
+</span><span class='line'>	<span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="mi">1</span><span class="nv">stWin</span> <span class="p">(</span><span class="nb">car </span><span class="nv">winList</span><span class="p">))</span>
+</span><span class='line'>	      <span class="p">(</span><span class="mi">2</span><span class="nv">ndWin</span> <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">winList</span><span class="p">)))</span>
+</span><span class='line'>	      <span class="p">(</span><span class="mi">3</span><span class="nv">rdWin</span> <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nf">last</span> <span class="nv">winList</span><span class="p">))))</span>
+</span><span class='line'>	  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="mi">1</span><span class="nv">stBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="mi">1</span><span class="nv">stWin</span><span class="p">))</span>
+</span><span class='line'>		<span class="p">(</span><span class="mi">2</span><span class="nv">ndBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="mi">2</span><span class="nv">ndWin</span><span class="p">))</span>
+</span><span class='line'>		<span class="p">(</span><span class="mi">3</span><span class="nv">rdBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="mi">3</span><span class="nv">rdWin</span><span class="p">)))</span>
+</span><span class='line'>	    <span class="p">(</span><span class="k">if </span><span class="nv">arg</span> <span class="p">(</span><span class="nf">progn</span>
+</span><span class='line'>					<span class="c1">; anti-clockwise</span>
+</span><span class='line'>		      <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="mi">1</span><span class="nv">stWin</span> <span class="mi">3</span><span class="nv">rdBuf</span><span class="p">)</span>
+</span><span class='line'>		      <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="mi">2</span><span class="nv">ndWin</span> <span class="mi">1</span><span class="nv">stBuf</span><span class="p">)</span>
+</span><span class='line'>		      <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="mi">3</span><span class="nv">rdWin</span> <span class="mi">2</span><span class="nv">ndBuf</span><span class="p">))</span>
+</span><span class='line'>	      <span class="p">(</span><span class="nf">progn</span>                                      <span class="c1">; clockwise</span>
+</span><span class='line'>		<span class="p">(</span><span class="nf">set-window-buffer</span> <span class="mi">1</span><span class="nv">stWin</span> <span class="mi">2</span><span class="nv">ndBuf</span><span class="p">)</span>
+</span><span class='line'>		<span class="p">(</span><span class="nf">set-window-buffer</span> <span class="mi">2</span><span class="nv">ndWin</span> <span class="mi">3</span><span class="nv">rdBuf</span><span class="p">)</span>
+</span><span class='line'>		<span class="p">(</span><span class="nf">set-window-buffer</span> <span class="mi">3</span><span class="nv">rdWin</span> <span class="mi">1</span><span class="nv">stBuf</span><span class="p">))</span>
+</span><span class='line'>	      <span class="p">))))))</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">winList</span> <span class="p">(</span><span class="nf">window-list</span><span class="p">)))</span>
-</span><span class='line'><span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="mi">1</span><span class="nv">stWin</span> <span class="p">(</span><span class="nb">car </span><span class="nv">winList</span><span class="p">))</span>
-</span><span class='line'>      <span class="p">(</span><span class="mi">2</span><span class="nv">ndWin</span> <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">winList</span><span class="p">)))</span>
-</span><span class='line'>      <span class="p">(</span><span class="mi">3</span><span class="nv">rdWin</span> <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nf">last</span> <span class="nv">winList</span><span class="p">))))</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="mi">1</span><span class="nv">stBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="mi">1</span><span class="nv">stWin</span><span class="p">))</span>
-</span><span class='line'>    <span class="p">(</span><span class="mi">2</span><span class="nv">ndBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="mi">2</span><span class="nv">ndWin</span><span class="p">))</span>
-</span><span class='line'>    <span class="p">(</span><span class="mi">3</span><span class="nv">rdBuf</span> <span class="p">(</span><span class="nf">window-buffer</span> <span class="mi">3</span><span class="nv">rdWin</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="k">if </span><span class="nv">arg</span> <span class="p">(</span><span class="nf">progn</span>
-</span><span class='line'>                <span class="c1">; anti-clockwise</span>
-</span><span class='line'>          <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="mi">1</span><span class="nv">stWin</span> <span class="mi">3</span><span class="nv">rdBuf</span><span class="p">)</span>
-</span><span class='line'>          <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="mi">2</span><span class="nv">ndWin</span> <span class="mi">1</span><span class="nv">stBuf</span><span class="p">)</span>
-</span><span class='line'>          <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="mi">3</span><span class="nv">rdWin</span> <span class="mi">2</span><span class="nv">ndBuf</span><span class="p">))</span>
-</span><span class='line'>      <span class="p">(</span><span class="nf">progn</span>                                      <span class="c1">; clockwise</span>
-</span><span class='line'>    <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="mi">1</span><span class="nv">stWin</span> <span class="mi">2</span><span class="nv">ndBuf</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="mi">2</span><span class="nv">ndWin</span> <span class="mi">3</span><span class="nv">rdBuf</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nf">set-window-buffer</span> <span class="mi">3</span><span class="nv">rdWin</span> <span class="mi">1</span><span class="nv">stBuf</span><span class="p">))</span>
-</span><span class='line'>      <span class="p">))))))</span>
-</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="err">“</span><span class="nv">C-x</span> <span class="mi">4</span> <span class="nv">r</span><span class="err">”</span><span class="p">)</span>  <span class="p">(</span><span class="k">quote </span><span class="nv">roll-v-3</span><span class="p">))</span>
+</span><span class='line'><span class="c1">;;——————– window ——————-&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">global-set-key</span> <span class="p">(</span><span class="nf">kbd</span> <span class="s">&quot;C-x 4 r&quot;</span><span class="p">)</span>  <span class="p">(</span><span class="k">quote </span><span class="nv">roll-v-3</span><span class="p">))</span>
-</span><span class='line'><span class="c1">;;-------------------- window -------------------&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">provide</span> <span class="ss">&#39;window-setting</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
+</span><span class='line'><span class="nv">&lt;p&gt;</span><span class="p">(</span><span class="nf">provide</span> <span class="err">‘</span><span class="nv">window-setting</span><span class="p">)</span><span class="nv">&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">&lt;p&gt;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
 ]]></content>
   </entry>
   

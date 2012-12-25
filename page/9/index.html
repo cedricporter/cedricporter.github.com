@@ -118,11 +118,16 @@
 
 <p>我们首先用htpasswd生成密码：</p>
 
-<blockquote><p>htpasswd -cb 文件名 帐号 密码</p></blockquote>
-
-<p>htpasswd -b 其他帐号 密码</p>
-
-<p>-c代表创建一个新的，-b代表批处理。</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">htpasswd -cb 文件名 帐号 密码
+</span><span class="line">
+</span><span class="line">htpasswd -b 其他帐号 密码
+</span><span class="line">
+</span><span class="line">-c代表创建一个新的，-b代表批处理。</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
   
@@ -210,7 +215,7 @@
   </header>
 
 
-  <div class="entry-content"><h3>2012-3-30:</h3>
+  <div class="entry-content"><h3 id="section">2012-3-30:</h3>
 
 <p>今天我们把视频提交了。也上传了一份。</p>
 
@@ -304,23 +309,27 @@
 
   <div class="entry-content"><p>更详细的教程请见 《Pro Git》<a href="http://progit.org/book/zh/ch4-7.html">http://progit.org/book/zh/ch4-7.html</a>。</p>
 
-<h3>安装必备工具</h3>
+<h3 id="section">安装必备工具</h3>
 
-<p>apt-get install git gitweb gitosis</p>
+<p><code>apt-get install git gitweb gitosis</code></p>
 
 <p>用自己的公钥来初始化Gitosis</p>
 
-<p>root@everet:/var# sudo -H -u git gitosis-init &lt; /tmp/authorized_keys
-Initialized empty Git repository in /home/git/repositories/gitosis-admin.git/
-Reinitialized existing Git repository in /home/git/repositories/gitosis-admin.git/</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="gp">root@everet:/var#</span> sudo -H -u git gitosis-init &lt; /tmp/authorized_keys
+</span><span class="line"><span class="go">Initialized empty Git repository in /home/git/repositories/gitosis-admin.git/</span>
+</span><span class="line"><span class="go">Reinitialized existing Git repository in /home/git/repositories/gitosis-admin.git/</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>对该仓库中的<code>post-update</code> 脚本加上可执行权限</p>
 
-<p>root@everet:/home/git/repositories/gitosis-admin.git/hooks# chmod 755 post-update</p>
+<p><code>root@everet:/home/git/repositories/gitosis-admin.git/hooks # chmod 755 post-update</code></p>
 
-<h3>克隆 Gitosis 的控制仓库</h3>
+<h3 id="gitosis-">克隆 Gitosis 的控制仓库</h3>
 
-<p>$ git clone git@everet.org:gitosis-admin.git</p>
+<p><code>$ git clone git@everet.org:gitosis-admin.git</code></p>
 
 <p>这会得到一个名为 <code>gitosis-admin</code> 的工作目录，主要由两部分组成：</p>
 
@@ -367,7 +376,7 @@ Reinitialized existing Git repository in /home/git/repositories/gitosis-admin.gi
 
 <p>Python是什么？“Python是一种面向对象、直译式计算机程序设计语言，由<a href="http://baike.baidu.com/view/2975166.htm">Guido van Rossum</a>于1989年底发明， 第一个公开发行版发行于1991年。Python语法简捷而清晰，具有丰富和强大的类库。它常被昵称为胶水语言，它能够很轻松的把用其他语言制作的各种模块（尤其是C/C++）轻松地联结在一起。常见的一种应用情形是，使用python快速生成程序的原型（有时甚至是程序的最终界面），然后对其中有特别要求的部分，用更合适的语言改写，比如3D游戏中的图形渲染模块，速度要求非常高，就可以用C++重写。”摘自百度百科。</p>
 
-<h2>Python+OGRE=？</h2>
+<h2 id="pythonogre">Python+OGRE=？</h2>
 
 </div>
   
@@ -410,28 +419,123 @@ Reinitialized existing Git repository in /home/git/repositories/gitosis-admin.gi
 
   <div class="entry-content"><p>PIL中包括Image，ImageEnhance，ImageGrab等。</p>
 
-<h2>Image</h2>
+<h2 id="image">Image</h2>
 
 <p>Image模块仅用一个类来表示PIL中的图像，并提供了许多工厂函数，不同类型的图像可以使用统一的接口进行处理。</p>
 
 <p><a href="http://www.pythonware.com/library/pil/handbook/image.htm">http://www.pythonware.com/library/pil/handbook/image.htm</a></p>
 
-<h3>主要函数（可以顾名思义，这里主要有个提纲，方便记忆）有：</h3>
+<h3 id="section">主要函数（可以顾名思义，这里主要有个提纲，方便记忆）有：</h3>
 
-<blockquote><p><strong>Image.new(mode, size)</strong> => image</p></blockquote>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">**Image.new(mode, size)** =&gt; image
+</span><span class="line">
+</span><span class="line">**Image.new(mode, size, color)** =&gt; image
+</span><span class="line">
+</span><span class="line">**Image.open(infile)** =&gt; image
+</span><span class="line">
+</span><span class="line">**Image.open(infile, mode)** =&gt; image
+</span><span class="line">
+</span><span class="line">**Image.blend(image1, image2, alpha)** =&gt; image&lt;!-- more --&gt;
+</span><span class="line">
+</span><span class="line">**im.convert(mode)** =&gt; image
+</span><span class="line">
+</span><span class="line">**im.convert(mode, matrix)** =&gt; image
+</span><span class="line">
+</span><span class="line">**im.copy()** =&gt; image
+</span><span class="line">
+</span><span class="line">**im.crop(box)** =&gt; image
+</span><span class="line">
+</span><span class="line">**im.paste(image, box)**
+</span><span class="line">
+</span><span class="line">**im.paste(colour, box)**
+</span><span class="line">
+</span><span class="line">**im.paste(image, box, mask)**
+</span><span class="line">
+</span><span class="line">**im.paste(colour, box, mask)**
+</span><span class="line">
+</span><span class="line">**im.resize(size)** =&gt; image
+</span><span class="line">
+</span><span class="line">**im.resize(size, filter)** =&gt; image
+</span><span class="line">
+</span><span class="line">**im.save(outfile, _options..._)**
+</span><span class="line">
+</span><span class="line">**im.save(outfile, format, _options..._)**
+</span><span class="line">
+</span><span class="line">**im.seek(frame)**   可用于gif
+</span><span class="line">
+</span><span class="line">**im.split()** =&gt; sequence    RGB通道分离
+</span><span class="line">
+</span><span class="line">**im.transpose(method)** =&gt; image</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p><strong>Image.new(mode, size, color)</strong> => image</p>
+<h2 id="imageenhance">ImageEnhance</h2>
 
-<p><strong>Image.open(infile)</strong> => image</p>
+<p>图像增强，锐化，对比度，亮度的处理。</p>
 
-<p><strong>Image.open(infile, mode)</strong> => image</p>
+<p><a href="http://www.pythonware.com/library/pil/handbook/imageenhance.htm">http://www.pythonware.com/library/pil/handbook/imageenhance.htm</a></p>
 
-<p><strong>Image.blend(image1, image2, alpha)</strong> => image</div>
+<h2 id="imagegrab">ImageGrab</h2>
+
+<p>ImageGrab模块可以进行屏幕截图。也可以复制剪切板中的图像。不过手册说仅仅适用于Windows。</p>
+
+<p><a href="http://www.pythonware.com/library/pil/handbook/imagegrab.htm">http://www.pythonware.com/library/pil/handbook/imagegrab.htm</a></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">**ImageGrab.grab()** =&gt; image
+</span><span class="line">
+</span><span class="line">**ImageGrab.grab(bbox)** =&gt; image
+</span><span class="line">
+</span><span class="line">**ImageGrab.grabclipboard()** =&gt; image or list of strings or None</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="imagedraw">ImageDraw</h2>
+
+<p>可以画2D图。</p>
+
+<p><a href="http://www.pythonware.com/library/pil/handbook/imagedraw.htm">http://www.pythonware.com/library/pil/handbook/imagedraw.htm</a></p>
+</div>
   
-  
-    <footer>
-      <a rel="full-article" href="/2012/01/pil-brief-intro.html">Read on &rarr;</a>
-    </footer>
   
 
 
@@ -477,25 +581,22 @@ Reinitialized existing Git repository in /home/git/repositories/gitosis-admin.gi
 
 <p>如果没有发生错误，这说明安装完成了。我们输入以下代码，将会打开一幅图像。</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">Image</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;yun.jpg&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="k">print</span> <span class="n">img</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%d</span><span class="s"> * </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">mode</span>
-</span><span class='line'><span class="n">new_img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
-</span><span class='line'><span class="n">new_img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&quot;new_yun.jpg&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="n">new_img</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">Image</span>
+</span><span class="line">
+</span><span class="line"><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;yun.jpg&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="k">print</span> <span class="n">img</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%d</span><span class="s"> * </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">mode</span>
+</span><span class="line"><span class="n">new_img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+</span><span class="line"><span class="n">new_img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&quot;new_yun.jpg&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="n">new_img</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
   
@@ -538,11 +639,16 @@ Reinitialized existing Git repository in /home/git/repositories/gitosis-admin.gi
 
   <div class="entry-content"><p>好吧，最近又被人骂说我用筷子没文化没传统，于是记录一下用筷子有什么禁忌。学习一下中国的传统文化。</p>
 
-<blockquote><p>中国人使用筷子用餐是从远古流传下来的，古时又称其为“箸”，日常生活当中对筷子的运用是非常有讲究的。一般我们在使用筷子时，正确的使用方法讲究得是用右手执筷，大拇指和食指捏住筷子的上端，另外三个手指自然弯曲扶住筷子，并且筷子的两端一定要对齐。在 使用过程当中，用餐前筷子一定要整齐码放在饭碗的右侧，用餐后则一定要整齐的竖向码放在饭碗的正中。但这要绝对禁忌以下十二种筷子的使用方法。</p>
+<blockquote>
+  <p>中国人使用筷子用餐是从远古流传下来的，古时又称其为“箸”，日常生活当中对筷子的运用是非常有讲究的。一般我们在使用筷子时，正确的使用方法讲究得是用右手执筷，大拇指和食指捏住筷子的上端，另外三个手指自然弯曲扶住筷子，并且筷子的两端一定要对齐。在 使用过程当中，用餐前筷子一定要整齐码放在饭碗的右侧，用餐后则一定要整齐的竖向码放在饭碗的正中。但这要绝对禁忌以下十二种筷子的使用方法。</p>
+</blockquote>
 
-<h3>1三长两短：</h3>
+<blockquote>
 
-<p>这意思就是说在用餐前或用餐过程当中，将筷子长短不齐的放在桌子上。这种做法 是大不吉利的，通常我们管它叫“三长两短”。其意思是代表“死亡”。因为中国人过去认为人死以后是要装进棺材的，在人装进去以后，还没有盖棺材盖的时候，棺材的组成部分是前后两块短木板，两旁加底部共三块长木板，五块木板合在一起做成的棺材正好是三长两短 ，所以说这是极为不吉利的事情。</p></blockquote>
+  <h3 id="section">1三长两短：</h3>
+
+  <p>这意思就是说在用餐前或用餐过程当中，将筷子长短不齐的放在桌子上。这种做法 是大不吉利的，通常我们管它叫“三长两短”。其意思是代表“死亡”。因为中国人过去认为人死以后是要装进棺材的，在人装进去以后，还没有盖棺材盖的时候，棺材的组成部分是前后两块短木板，两旁加底部共三块长木板，五块木板合在一起做成的棺材正好是三长两短 ，所以说这是极为不吉利的事情。</p>
+</blockquote>
 
 </div>
   

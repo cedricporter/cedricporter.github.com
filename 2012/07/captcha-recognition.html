@@ -113,7 +113,7 @@
 
 <p>第一个主要步骤是数据预处理。</p>
 
-<h2>例子</h2>
+<h2 id="section">例子</h2>
 
 <p>一般的国内的验证都比较喜欢加上噪点，再加上一些干扰线，来扰乱视线。但是这些噪声，对于计算机识别程序来说，基本上没起到什么干扰。</p>
 
@@ -125,21 +125,21 @@
 
 <p><a href="http://everet.org/wp-content/uploads/2012/07/big.png"><img src="http://everet.org/wp-content/uploads/2012/07/big.png" alt="" /></a></p>
 
-<h2>移除噪点</h2>
+<h2 id="section-1">移除噪点</h2>
 
 <p>首先我们来分析一下噪点由什么特性，噪点一般为孤立的点，最多也是会和其他的噪点粘在一起，所以总体来说，噪点相对于其他部分来说是孤立的小群体。</p>
 
 <p>那我们可以对每一个连接在一起的块进行着色，Flood Fill专门干这事的。然后对于字符的块，必然是非常的大，而噪点的块，必然是非常的小。所以我们就可以轻松区分字符和噪点了。</p>
 
-<h2>移除干扰线</h2>
+<h2 id="section-2">移除干扰线</h2>
 
 <p>干扰线相对于噪点来说，虽然复杂了一点，但是还是非常的简单。</p>
 
-<p>如何找到干扰线呢？干扰线的搜索问题是具有最优子结构的特性，于是这个问题我们可以用动态规划来解决[1]。</p>
+<p>如何找到干扰线呢？干扰线的搜索问题是具有最优子结构的特性，于是这个问题我们可以用动态规划来解决<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>。</p>
 
 <p>我们可以建立一个打分表，每个像素有一个分数。</p>
 
-<p>动归的方程(如何画公式[2])为：</p>
+<p>动归的方程(如何画公式<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>)为：</p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-194236.png"><img src="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-194236.png" alt="" /></a></p>
 
@@ -149,13 +149,18 @@
 
 <p>这个实现起来非常的简单，就不放代码了，以免引起不必要的事端。</p>
 
-<h2>参考资料</h2>
+<h2 id="section-3">参考资料</h2>
 
-<ol>
-<li><p>Ryan Fortune, Gary Luu, Peter McMahon, <strong>CS229 Project Report: Cracking CAPTCHAs</strong></p></li>
-<li><p>OpenOffice.org Formula How-To</p></li>
-</ol>
-
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Ryan Fortune, Gary Luu, Peter McMahon, <strong>CS229 Project Report: Cracking CAPTCHAs</strong><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>OpenOffice.org Formula How-To<a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 </div>
 
 
@@ -233,15 +238,15 @@
         </li>
     
         <li class="related">
-        <a href="/2012/01/chopsticks.html">中国人使用筷子的十二种忌讳</a>
-        </li>
-    
-        <li class="related">
         <a href="/2012/01/conflict-in-life.html">传统文化中最矛盾的两句话是什么？</a>
         </li>
     
         <li class="related">
-        <a href="/2012/02/6-hard-disk-is-installed-to-the-computer.html">给电脑装了6块硬盘后</a>
+        <a href="/2012/01/chopsticks.html">中国人使用筷子的十二种忌讳</a>
+        </li>
+    
+        <li class="related">
+        <a href="/2012/03/vim-table.html">又一个Vim速查表</a>
         </li>
     
     </ul>

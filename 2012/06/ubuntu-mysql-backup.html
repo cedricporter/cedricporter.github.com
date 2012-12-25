@@ -115,15 +115,15 @@
 
 <p>嗯，我们可以用脚本将整个数据库dump下来变成文件，放在服务器上作为备份，这样的本地备份万一服务器的数据遭遇了不可恢复的灾难那就悲剧了。所以我们可以寻求异地备份，将备份放置到其他机器上面。</p>
 
-<h2>异地备份</h2>
+<h2 id="section">异地备份</h2>
 
-<h3>方法一<!-- more --></h3>
+<h3 id="more---">方法一<!-- more --></h3>
 
 <p>我们有空的时候，打开自己的电脑，然后从服务器上面将备份下载回自己的电脑保存。</p>
 
 <p>评论：这样的方法未免有点2B，而且效率实在太低。备份的版本还需要自己保存。真是麻烦。</p>
 
-<h3>方法二</h3>
+<h3 id="section-1">方法二</h3>
 
 <p>让服务器将数据库备份到其他服务器上面。</p>
 
@@ -133,11 +133,11 @@
 
 <p>像Gmail有10GB的空间，QQ邮箱更是无限容量，不够了可以免费扩容。于是乎，邮箱是个非常好的异地备份存放点。而且邮件本来就是一封一封的，我们可以方便地将不同时期的版本下回来比较。此外，我们还可以在邮箱设置收件规则，自动将我们的备份邮件标记为已读并放置到分类到备份文件夹中，这样就不会扰乱我们的正常邮件了。</p>
 
-<h2>实施</h2>
+<h2 id="section-2">实施</h2>
 
 <p>我们可以使用Python来把数据库dump下来，然后压缩，发送到自己的邮箱。然后周期性运行我们可以借助cron按照时间表来运行我们的备份任务。</p>
 
-<h3>cron</h3>
+<h3 id="cron">cron</h3>
 
 <p>首先我们看看如果配置cron运行我们的周期性备份。</p>
 
@@ -145,148 +145,151 @@
 
 <p>每个非注释行代表一个命令：</p>
 
-<blockquote><p><em>minute hour day month weekday username command</em></p></blockquote>
+<blockquote>
+  <p><em>minute hour day month weekday username command</em></p>
+</blockquote>
 
 <p>我们可以加入如下行，</p>
 
-<blockquote><p>30 4 * * 1,3,4 root /etc/apache2/db/backup.py</p></blockquote>
+<blockquote>
+  <p>30 4 * * 1,3,4 root /etc/apache2/db/backup.py</p>
+</blockquote>
 
 <p>意思是每周一三四凌晨4点30分运行我们的备份程序。</p>
 
 <p>修改完配置后我们重启一下cron。</p>
 
-<blockquote><p>service cron restart</p></blockquote>
+<blockquote>
+  <p>service cron restart</p>
+</blockquote>
 
-<h3>Python</h3>
+<h3 id="python">Python</h3>
 
 <p>下面的Python代码是备份整个数据库，然后将备份以附件形式发送到指定邮箱。</p>
 
 <p>我们在用mysqldump将数据库dump下来后再用gzip压缩一下，对于我们的数据库原来是35MB，用gzip压缩后就只有5MB，小了很多。</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/env python</span>
-</span><span class='line'><span class="c"># website: http://EverET.org</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">smtplib</span><span class="o">,</span> <span class="nn">os</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">email.MIMEMultipart</span> <span class="kn">import</span> <span class="n">MIMEMultipart</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">email.MIMEBase</span> <span class="kn">import</span> <span class="n">MIMEBase</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">email.MIMEText</span> <span class="kn">import</span> <span class="n">MIMEText</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">email.Utils</span> <span class="kn">import</span> <span class="n">COMMASPACE</span><span class="p">,</span> <span class="n">formatdate</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">email</span> <span class="kn">import</span> <span class="n">Encoders</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">subprocess</span><span class="o">,</span> <span class="nn">time</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">send_mail</span><span class="p">(</span><span class="n">send_from</span><span class="p">,</span> <span class="n">send_to</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span>
-</span><span class='line'>        <span class="n">files</span><span class="o">=</span><span class="p">[],</span> <span class="n">server</span><span class="o">=</span><span class="s">&quot;localhost&quot;</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">send_to</span><span class="p">)</span><span class="o">==</span><span class="nb">list</span>
-</span><span class='line'>    <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">files</span><span class="p">)</span><span class="o">==</span><span class="nb">list</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEMultipart</span><span class="p">()</span>
-</span><span class='line'>    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;From&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">send_from</span>
-</span><span class='line'>    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;To&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">COMMASPACE</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">send_to</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">formatdate</span><span class="p">(</span><span class="n">localtime</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;Subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subject</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">msg</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span> <span class="n">MIMEText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-</span><span class='line'>        <span class="n">part</span> <span class="o">=</span> <span class="n">MIMEBase</span><span class="p">(</span><span class="s">&#39;application&#39;</span><span class="p">,</span> <span class="s">&quot;octet-stream&quot;</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">part</span><span class="o">.</span><span class="n">set_payload</span><span class="p">(</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="s">&quot;rb&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="p">)</span>
-</span><span class='line'>        <span class="n">Encoders</span><span class="o">.</span><span class="n">encode_base64</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">part</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">&#39;Content-Disposition&#39;</span><span class="p">,</span>
-</span><span class='line'>                <span class="s">&#39;attachment; filename=&quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span>
-</span><span class='line'>                <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
-</span><span class='line'>        <span class="n">msg</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">smtp</span> <span class="o">=</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">smtp</span><span class="o">.</span><span class="n">sendmail</span><span class="p">(</span><span class="n">send_from</span><span class="p">,</span> <span class="n">send_to</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">as_string</span><span class="p">())</span>
-</span><span class='line'>    <span class="n">smtp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">backup</span><span class="p">():</span>
-</span><span class='line'>    <span class="n">passwd</span><span class="o">=</span><span class="s">&quot;your password&quot;</span>
-</span><span class='line'>    <span class="n">user</span><span class="o">=</span><span class="s">&#39;root&#39;</span>
-</span><span class='line'>    <span class="n">ret</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
-</span><span class='line'>            <span class="sd">&#39;&#39;&#39;mysqldump -u %s -p&quot;%s&quot; --all-databases |</span>
-</span><span class='line'><span class="sd">            gzip &gt; /etc/apache2/db/all.sql.gz&#39;&#39;&#39;</span>
-</span><span class='line'>            <span class="o">%</span> <span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">passwd</span><span class="p">),</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">ret</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">backup</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span class='line'>        <span class="n">send_mail</span><span class="p">(</span>
-</span><span class='line'>            <span class="s">&#39;et@everet.org&#39;</span><span class="p">,</span>        <span class="c"># from mail</span>
-</span><span class='line'>            <span class="p">[</span><span class="s">&#39;your@mail.com&#39;</span><span class="p">],</span>   <span class="c"># to mail</span>
-</span><span class='line'>            <span class="s">&#39;all database backup&#39;</span><span class="p">,</span>
-</span><span class='line'>            <span class="s">&#39;backup time:</span><span class="si">%s</span><span class="s">&#39;</span>
-</span><span class='line'>            <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">()),</span> <span class="p">),</span>
-</span><span class='line'>            <span class="p">[</span><span class="s">&#39;/etc/apache2/db/all.sql.gz&#39;</span><span class="p">])</span>
-</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
-</span><span class='line'>        <span class="k">print</span> <span class="s">&#39;error&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="c">#!/usr/bin/env python</span>
+</span><span class="line"><span class="c"># website: http://EverET.org</span>
+</span><span class="line"><span class="kn">import</span> <span class="nn">smtplib</span><span class="o">,</span> <span class="nn">os</span>
+</span><span class="line"><span class="kn">from</span> <span class="nn">email.MIMEMultipart</span> <span class="kn">import</span> <span class="n">MIMEMultipart</span>
+</span><span class="line"><span class="kn">from</span> <span class="nn">email.MIMEBase</span> <span class="kn">import</span> <span class="n">MIMEBase</span>
+</span><span class="line"><span class="kn">from</span> <span class="nn">email.MIMEText</span> <span class="kn">import</span> <span class="n">MIMEText</span>
+</span><span class="line"><span class="kn">from</span> <span class="nn">email.Utils</span> <span class="kn">import</span> <span class="n">COMMASPACE</span><span class="p">,</span> <span class="n">formatdate</span>
+</span><span class="line"><span class="kn">from</span> <span class="nn">email</span> <span class="kn">import</span> <span class="n">Encoders</span>
+</span><span class="line"><span class="kn">import</span> <span class="nn">subprocess</span><span class="o">,</span> <span class="nn">time</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">send_mail</span><span class="p">(</span><span class="n">send_from</span><span class="p">,</span> <span class="n">send_to</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span>
+</span><span class="line">        <span class="n">files</span><span class="o">=</span><span class="p">[],</span> <span class="n">server</span><span class="o">=</span><span class="s">&quot;localhost&quot;</span><span class="p">):</span>
+</span><span class="line">    <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">send_to</span><span class="p">)</span><span class="o">==</span><span class="nb">list</span>
+</span><span class="line">    <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">files</span><span class="p">)</span><span class="o">==</span><span class="nb">list</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEMultipart</span><span class="p">()</span>
+</span><span class="line">    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;From&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">send_from</span>
+</span><span class="line">    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;To&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">COMMASPACE</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">send_to</span><span class="p">)</span>
+</span><span class="line">    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">formatdate</span><span class="p">(</span><span class="n">localtime</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</span><span class="line">    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;Subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subject</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">msg</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span> <span class="n">MIMEText</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="p">)</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+</span><span class="line">        <span class="n">part</span> <span class="o">=</span> <span class="n">MIMEBase</span><span class="p">(</span><span class="s">&#39;application&#39;</span><span class="p">,</span> <span class="s">&quot;octet-stream&quot;</span><span class="p">)</span>
+</span><span class="line">        <span class="n">part</span><span class="o">.</span><span class="n">set_payload</span><span class="p">(</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="s">&quot;rb&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="p">)</span>
+</span><span class="line">        <span class="n">Encoders</span><span class="o">.</span><span class="n">encode_base64</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+</span><span class="line">        <span class="n">part</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">&#39;Content-Disposition&#39;</span><span class="p">,</span>
+</span><span class="line">                <span class="s">&#39;attachment; filename=&quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span>
+</span><span class="line">                <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+</span><span class="line">        <span class="n">msg</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">smtp</span> <span class="o">=</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
+</span><span class="line">    <span class="n">smtp</span><span class="o">.</span><span class="n">sendmail</span><span class="p">(</span><span class="n">send_from</span><span class="p">,</span> <span class="n">send_to</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">as_string</span><span class="p">())</span>
+</span><span class="line">    <span class="n">smtp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">backup</span><span class="p">():</span>
+</span><span class="line">    <span class="n">passwd</span><span class="o">=</span><span class="s">&quot;your password&quot;</span>
+</span><span class="line">    <span class="n">user</span><span class="o">=</span><span class="s">&#39;root&#39;</span>
+</span><span class="line">    <span class="n">ret</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span>
+</span><span class="line">            <span class="sd">&#39;&#39;&#39;mysqldump -u %s -p&quot;%s&quot; --all-databases |</span>
+</span><span class="line"><span class="sd">            gzip &gt; /etc/apache2/db/all.sql.gz&#39;&#39;&#39;</span>
+</span><span class="line">            <span class="o">%</span> <span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">passwd</span><span class="p">),</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">ret</span>
+</span><span class="line">
+</span><span class="line"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class="line">    <span class="k">if</span> <span class="n">backup</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class="line">        <span class="n">send_mail</span><span class="p">(</span>
+</span><span class="line">            <span class="s">&#39;et@everet.org&#39;</span><span class="p">,</span>        <span class="c"># from mail</span>
+</span><span class="line">            <span class="p">[</span><span class="s">&#39;your@mail.com&#39;</span><span class="p">],</span>   <span class="c"># to mail</span>
+</span><span class="line">            <span class="s">&#39;all database backup&#39;</span><span class="p">,</span>
+</span><span class="line">            <span class="s">&#39;backup time:</span><span class="si">%s</span><span class="s">&#39;</span>
+</span><span class="line">            <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">()),</span> <span class="p">),</span>
+</span><span class="line">            <span class="p">[</span><span class="s">&#39;/etc/apache2/db/all.sql.gz&#39;</span><span class="p">])</span>
+</span><span class="line">    <span class="k">else</span><span class="p">:</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&#39;error&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>因为我们数据库的密码是写在了脚本里面，所以我们需要修改权限，让仅自己可读，以提高安全性。</p>
 
-<figure class='code'><figcaption><span>bash  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>chmod 700 backup.py
-</span></code></pre></td></tr></table></div></figure>
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">chmod 700 backup.py
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
 

@@ -111,7 +111,7 @@
 
 <p>不过想起昨天还真是悲剧，开通了10分钟84就将账号发给我，但是竟然没有ip地址，这真是奇葩啊。于是发了ticket就去闲逛了，我们比他们晚13个小时，他们上午8点上班，也就是我们的晚上9点。于是晚上9点多就有人回复解决了问题，把问题修复了，并且把ip重新发了。然后技术支持很好心的问了还有什么需要帮忙，然后就再顺便帮忙分配了一些ipv6的地址。</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/02/QQ%E6%88%AA%E5%9B%BE20120210155314.jpg"><img src="http://everet.org/wp-content/uploads/2012/02/QQ%E6%88%AA%E5%9B%BE20120210155314-640x578.jpg" alt="" /></a></p>
+<p><a href="http://everet.org/wp-content/uploads/2012/02/QQ截图20120210155314.jpg"><img src="http://everet.org/wp-content/uploads/2012/02/QQ截图20120210155314-640x578.jpg" alt="" /></a></p>
 
 <p>于是今天开工迁移了。这次将网站都迁移过去了，等过几天再把Git版本库也迁移过去。</p>
 
@@ -119,45 +119,44 @@
 
 <p>在如下python写的简单的压力测试下服务器基本也没什么压力。<!-- more --></p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/python</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">urlopen</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">threading</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">Flood</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class='line'>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
-</span><span class='line'>            <span class="n">url</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://everet.org/2012/02/how-to-open-sack.html&#39;</span><span class="p">)</span>
-</span><span class='line'>            <span class="k">print</span> <span class="n">url</span><span class="o">.</span><span class="n">getcode</span><span class="p">()</span>
-</span><span class='line'><span class="n">q</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span class='line'><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">t</span> <span class="o">=</span> <span class="n">Flood</span><span class="p">()</span>
-</span><span class='line'>    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</span><span class='line'>    <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-</span><span class='line'><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">i</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'><span class="c">#</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="c">#!/usr/bin/python</span>
+</span><span class="line"><span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">urlopen</span>
+</span><span class="line"><span class="kn">import</span> <span class="nn">threading</span>
+</span><span class="line">
+</span><span class="line"><span class="k">class</span> <span class="nc">Flood</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+</span><span class="line">            <span class="n">url</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://everet.org/2012/02/how-to-open-sack.html&#39;</span><span class="p">)</span>
+</span><span class="line">            <span class="k">print</span> <span class="n">url</span><span class="o">.</span><span class="n">getcode</span><span class="p">()</span>
+</span><span class="line"><span class="n">q</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+</span><span class="line">    <span class="n">t</span> <span class="o">=</span> <span class="n">Flood</span><span class="p">()</span>
+</span><span class="line">    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span><span class="line">    <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</span><span class="line"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+</span><span class="line">    <span class="n">i</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="c">#</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/02/image.png"><img src="http://everet.org/wp-content/uploads/2012/02/image_thumb.png" alt="image" /></a></p>
 

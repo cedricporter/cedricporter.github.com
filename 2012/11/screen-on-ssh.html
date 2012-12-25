@@ -113,33 +113,31 @@
 
 <p>对于screen的使用就不再罗嗦了。具体可以参看后面的参考资料中提供的链接。</p>
 
-<h2>一些技巧</h2>
+<h2 id="section">一些技巧</h2>
 
 <p>下面可能会与诸位使用习惯有所冲突，请见谅。</p>
 
-<h3>把ctrl+a还给我</h3>
+<h3 id="ctrla">把ctrl+a还给我</h3>
 
 <p>首先，screen的命令的前缀是ctrl+a，进入screen后，ctrl+a就成了命令前缀了。我经常使用ctrl+a跳到行首，ctrl+e跳到行尾，所以需要修改一下前缀，否则ctrl+a跳到行首这个习惯就得改了。我们在家目录下面创建一个文件<strong>～/.screenrc</strong>。然后在里面写上</p>
 
-<figure class='code'><figcaption><span>bash  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>escape ^Zz
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">escape ^Zz
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>然后就把前缀改成ctrl+z了，如果需要暂停程序的话，就用ctrl+z z来暂停。这样ctrl+a就回来了。</p>
 
-<h3>偷懒</h3>
+<h3 id="section-1">偷懒</h3>
 
 <p>每次打screen真麻烦，我们在<strong>～/.bashrc</strong>中加上<!-- more --></p>
 
-<figure class='code'><figcaption><span>bash  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">alias </span><span class="nv">sc</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span>
-</span><span class='line'><span class="nb">alias </span><span class="nv">scb</span><span class="o">=</span><span class="s1">&#39;screen -dr normaltask || screen -S normaltask&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nb">alias </span><span class="nv">sc</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span>
+</span><span class="line"><span class="nb">alias </span><span class="nv">scb</span><span class="o">=</span><span class="s1">&#39;screen -dr normaltask || screen -S normaltask&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>输入<strong>source ~/.bashrc</strong> 就可以用sc来代替screen了。</p>
 
@@ -147,26 +145,31 @@
 
 <p>然后每次登录的时候，输入 scb，就可以恢复到normaltask这个常用窗口之前的任务了。是不是很方便呢？</p>
 
-<h3>补全</h3>
+<h3 id="section-2">补全</h3>
 
 <p>在screen下面的补全很有问题，和bash有明显的区别，只能补全文件名，对于命令的参数的补全就无法补全了。因为screen默认貌似是使用未登录的shell。</p>
 
 <p>所以，我们在<strong>~/.screenrc</strong>加上一句：</p>
 
-<figure class='code'><figcaption><span>bash  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>shell -<span class="nv">$SHELL</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">shell -<span class="nv">$SHELL</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>就可以使用bash的补全了。</p>
 
-<h2>参考资料</h2>
+<h2 id="section-3">参考资料</h2>
 
 <ol>
-<li><p><a href="http://blog.longwin.com.tw/2005/11/screen_teach/">screen 教學</a></p></li>
-<li><p><a href="http://hi.baidu.com/willor/item/3b60db19132035fd65eabfab">screen命令</a></p></li>
-<li><p><a href="http://serverfault.com/questions/126009/how-do-i-ask-screen-to-behave-like-a-standard-bash-shell">How do I ask screen to behave like a standard bash shell?</a></p></li>
+  <li>
+    <p><a href="http://blog.longwin.com.tw/2005/11/screen_teach/">screen 教學</a></p>
+  </li>
+  <li>
+    <p><a href="http://hi.baidu.com/willor/item/3b60db19132035fd65eabfab">screen命令</a></p>
+  </li>
+  <li>
+    <p><a href="http://serverfault.com/questions/126009/how-do-i-ask-screen-to-behave-like-a-standard-bash-shell">How do I ask screen to behave like a standard bash shell?</a></p>
+  </li>
 </ol>
 
 </div>

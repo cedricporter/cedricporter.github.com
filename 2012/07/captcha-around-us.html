@@ -111,21 +111,21 @@
 
 <p>现在的各种网络服务已经成为我们生活的重要的组成部分，像各种社交网站，购物网站，网上银行，投票，论坛等服务，为我们的带来的极大的便利。然而，这些系统都在遭受着恶意程序的滥用。所以，验证码系统用于阻挡这些恶意程序。</p>
 
-<h2>验证码CAPTCHA存在的意义</h2>
+<h2 id="captcha">验证码CAPTCHA存在的意义</h2>
 
 <p>现在，每天有2亿的验证码CAPTCHA被人类识别出来。我们可利用其解决一些计算机难以处理或者耗费大量人力的问题。目前，像Google的<a href="http://www.google.com/recaptcha/aboutus">reCAPTCHA</a>项目，就是利用验证码来数字化图书和报纸。而像一些广告公司将广告融入了验证码，让人们在输入验证码的时候输入广告中的特定部分，但是这种验证码的样本必然会比较少，因为较难产生大量的广告验证码，所以很容易被破解。</p>
 
 <p>因为CAPTCHA的需求量十分巨大，所以CAPTCHA需要能够自动产生并且评估正确性。此外，人类必须要能够快速地识别并输入验证码，否则容易惹恼用户以至于用户流失。对于CAPTCHA，可以引入人工智能领域的难题，来使现有技术短期无法成功破解。如果一种CAPTCHA没有被破解，那么就有一个可以区分人类和计算机的方法。如果CAPTCHA被破解了，那么一个人工智能的问题也就随之解决了。</p>
 
-<h2>验证码CAPTCHA的困境<!-- more --></h2>
+<h2 id="captcha---more---">验证码CAPTCHA的困境<!-- more --></h2>
 
 <p>计算机程序可以一天24小时不间断运行，即使是在较低的识别率也可以在较短的时间内大量穿越CAPTCHA系统。所以CAPACHA的识别率需要低于0.01%才可以有效地阻挡自动化的恶意程序的攻击。当然，也可以通过IP辅助来限制一台机器的尝试次数。</p>
 
-<h2>CAPTCHA的类型</h2>
+<h2 id="captcha-1">CAPTCHA的类型</h2>
 
 <p>CAPTCHA主要分成3类——文本、图像和声音。</p>
 
-<h3>文本验证码（Text-based CAPTCHA)</h3>
+<h3 id="text-based-captcha">文本验证码（Text-based CAPTCHA)</h3>
 
 <p>文本验证码方便计算机自动地大量产生，是目前应用最多的最广泛的技术。文本验证码主要靠图像变形和添加噪声。</p>
 
@@ -137,36 +137,50 @@
 
 <p>验证码识别的主要流程一般都较为固定。</p>
 
-<h4>识别流程</h4>
+<h4 id="section">识别流程</h4>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/07/2.png"><img src="http://everet.org/wp-content/uploads/2012/07/2.png" alt="" /></a></p>
 
-<h4>分割</h4>
+<h4 id="section-1">分割</h4>
 
 <p>下图为垂直投影字符分割[7]</p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/07/Selection_012.png"><img src="http://everet.org/wp-content/uploads/2012/07/Selection_012.png" alt="" /></a></p>
 
-<h3>图像验证码（Image-based CAPTCHA）</h3>
+<h3 id="image-based-captcha">图像验证码（Image-based CAPTCHA）</h3>
 
 <p>图像验证码基于图像分类、目标识别、场景理解等问题，一般情况下比文本验证码更加难以破解，但是现有的图像验证码需要庞大的图像数据库，而且无法大规模产生。更糟糕的是，一旦数据库被公布，算法不功自破。[6]</p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-08-224238.png"><img src="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-08-224238.png" alt="" /></a></p>
 
-<h3>声音验证码（Sound-based CAPTCHA）</h3>
+<h3 id="sound-based-captcha">声音验证码（Sound-based CAPTCHA）</h3>
 
 <p>声音验证码以随机间隔播放随机选择的一个或多个人播报的数字字母，再添加背景噪声。声音验证码容易收到机器学习算法的攻击。而且相对于视觉上的验证码，用户友好性更低。对于字母的声音，可能农村地区的少部分群体会因为对于字母发音不熟悉而导致无法理解，而无法通过测试。</p>
 
-<h2>参考资料</h2>
+<h2 id="section-2">参考资料</h2>
 
 <ol>
-<li><p>Jeff Yan, Ahmad Salah El Ahmad, <strong>A Low-cost Attack on a Microsoft CAPTCHA</strong></p></li>
-<li><p>李秋洁 茅耀斌 王执铨, <strong>CAPTCHA技术研究综述</strong></p></li>
-<li><p>Prof. (Mrs.) A.A. Chandavale,  Prof. Dr.A.M. Sapkal, Dr.R.M.Jalnekar, <strong>Algorithm To Break Visual CAPTCHA</strong></p></li>
-<li><p>Shujun Li, S. Amier Haider Shah, &#8230;,   <strong>Breaking e-Banking CAPTCHAs</strong></p></li>
-<li><p>Ibrahim Furkan Ince, Ilker Yengin, Yucel Batu Salman, <strong>DESIGNING CAPTCHA ALGORITHM: SPLITTING AND ROTATING</strong></p></li>
-<li><p>Michele Merler (mm3233), Jacquilene Jacob (jj2442),  <strong>BREAKING AN IMAGE BASED CAPTCHA</strong></p></li>
-<li><p>Shih-Yu Huang, Yeuan-Kuen Lee, Graeme Bell and Zhan-he Ou, <strong>An Efficient Segmentation Algorithm for CAPTCHAs with Line Cluttering and Character Warping</strong></p></li>
+  <li>
+    <p>Jeff Yan, Ahmad Salah El Ahmad, <strong>A Low-cost Attack on a Microsoft CAPTCHA</strong></p>
+  </li>
+  <li>
+    <p>李秋洁 茅耀斌 王执铨, <strong>CAPTCHA技术研究综述</strong></p>
+  </li>
+  <li>
+    <p>Prof. (Mrs.) A.A. Chandavale,  Prof. Dr.A.M. Sapkal, Dr.R.M.Jalnekar, <strong>Algorithm To Break Visual CAPTCHA</strong></p>
+  </li>
+  <li>
+    <p>Shujun Li, S. Amier Haider Shah, …,   <strong>Breaking e-Banking CAPTCHAs</strong></p>
+  </li>
+  <li>
+    <p>Ibrahim Furkan Ince, Ilker Yengin, Yucel Batu Salman, <strong>DESIGNING CAPTCHA ALGORITHM: SPLITTING AND ROTATING</strong></p>
+  </li>
+  <li>
+    <p>Michele Merler (mm3233), Jacquilene Jacob (jj2442),  <strong>BREAKING AN IMAGE BASED CAPTCHA</strong></p>
+  </li>
+  <li>
+    <p>Shih-Yu Huang, Yeuan-Kuen Lee, Graeme Bell and Zhan-he Ou, <strong>An Efficient Segmentation Algorithm for CAPTCHAs with Line Cluttering and Character Warping</strong></p>
+  </li>
 </ol>
 
 </div>

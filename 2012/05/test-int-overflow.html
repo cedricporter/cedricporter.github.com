@@ -121,83 +121,86 @@
 
 <p>我们来看一下Python中对于加法的实现。</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">case</span> <span class="n">BINARY_ADD</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">w</span> <span class="o">=</span> <span class="n">POP</span><span class="p">();</span>
-</span><span class='line'>    <span class="n">v</span> <span class="o">=</span> <span class="n">TOP</span><span class="p">();</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">PyInt_CheckExact</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">PyInt_CheckExact</span><span class="p">(</span><span class="n">w</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>        <span class="o">/*</span> <span class="n">INLINE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">+</span> <span class="nb">int</span> <span class="o">*/</span>
-</span><span class='line'>        <span class="n">register</span> <span class="nb">long</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">a</span> <span class="o">=</span> <span class="n">PyInt_AS_LONG</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">b</span> <span class="o">=</span> <span class="n">PyInt_AS_LONG</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
-</span><span class='line'>        <span class="o">/*</span> <span class="n">cast</span> <span class="n">to</span> <span class="n">avoid</span> <span class="n">undefined</span> <span class="n">behaviour</span>
-</span><span class='line'>           <span class="n">on</span> <span class="n">overflow</span> <span class="o">*/</span>
-</span><span class='line'>        <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="nb">long</span><span class="p">)((</span><span class="n">unsigned</span> <span class="nb">long</span><span class="p">)</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">);</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">((</span><span class="n">i</span><span class="o">^</span><span class="n">a</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">i</span><span class="o">^</span><span class="n">b</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>            <span class="n">goto</span> <span class="n">slow_add</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">x</span> <span class="o">=</span> <span class="n">PyInt_FromLong</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyString_CheckExact</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
-</span><span class='line'>             <span class="n">PyString_CheckExact</span><span class="p">(</span><span class="n">w</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">x</span> <span class="o">=</span> <span class="n">string_concatenate</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">next_instr</span><span class="p">);</span>
-</span><span class='line'>        <span class="o">/*</span> <span class="n">string_concatenate</span> <span class="n">consumed</span> <span class="n">the</span> <span class="n">ref</span> <span class="n">to</span> <span class="n">v</span> <span class="o">*/</span>
-</span><span class='line'>        <span class="n">goto</span> <span class="n">skip_decref_vx</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">slow_add</span><span class="p">:</span>
-</span><span class='line'>        <span class="n">x</span> <span class="o">=</span> <span class="n">PyNumber_Add</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">skip_decref_vx</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">SET_TOP</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">!=</span> <span class="n">NULL</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">break</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">case</span> <span class="n">BINARY_ADD</span><span class="p">:</span>
+</span><span class="line">    <span class="n">w</span> <span class="o">=</span> <span class="n">POP</span><span class="p">();</span>
+</span><span class="line">    <span class="n">v</span> <span class="o">=</span> <span class="n">TOP</span><span class="p">();</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">PyInt_CheckExact</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">PyInt_CheckExact</span><span class="p">(</span><span class="n">w</span><span class="p">))</span> <span class="p">{</span>
+</span><span class="line">        <span class="o">/*</span> <span class="n">INLINE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">+</span> <span class="nb">int</span> <span class="o">*/</span>
+</span><span class="line">        <span class="n">register</span> <span class="nb">long</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">        <span class="n">a</span> <span class="o">=</span> <span class="n">PyInt_AS_LONG</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+</span><span class="line">        <span class="n">b</span> <span class="o">=</span> <span class="n">PyInt_AS_LONG</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
+</span><span class="line">        <span class="o">/*</span> <span class="n">cast</span> <span class="n">to</span> <span class="n">avoid</span> <span class="n">undefined</span> <span class="n">behaviour</span>
+</span><span class="line">           <span class="n">on</span> <span class="n">overflow</span> <span class="o">*/</span>
+</span><span class="line">        <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="nb">long</span><span class="p">)((</span><span class="n">unsigned</span> <span class="nb">long</span><span class="p">)</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">);</span>
+</span><span class="line">        <span class="k">if</span> <span class="p">((</span><span class="n">i</span><span class="o">^</span><span class="n">a</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">i</span><span class="o">^</span><span class="n">b</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class="line">            <span class="n">goto</span> <span class="n">slow_add</span><span class="p">;</span>
+</span><span class="line">        <span class="n">x</span> <span class="o">=</span> <span class="n">PyInt_FromLong</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyString_CheckExact</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+</span><span class="line">             <span class="n">PyString_CheckExact</span><span class="p">(</span><span class="n">w</span><span class="p">))</span> <span class="p">{</span>
+</span><span class="line">        <span class="n">x</span> <span class="o">=</span> <span class="n">string_concatenate</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">next_instr</span><span class="p">);</span>
+</span><span class="line">        <span class="o">/*</span> <span class="n">string_concatenate</span> <span class="n">consumed</span> <span class="n">the</span> <span class="n">ref</span> <span class="n">to</span> <span class="n">v</span> <span class="o">*/</span>
+</span><span class="line">        <span class="n">goto</span> <span class="n">skip_decref_vx</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">      <span class="n">slow_add</span><span class="p">:</span>
+</span><span class="line">        <span class="n">x</span> <span class="o">=</span> <span class="n">PyNumber_Add</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">);</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+</span><span class="line">  <span class="n">skip_decref_vx</span><span class="p">:</span>
+</span><span class="line">    <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
+</span><span class="line">    <span class="n">SET_TOP</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">!=</span> <span class="n">NULL</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
+</span><span class="line">    <span class="k">break</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>可见，当</p>
 
-<blockquote><p>if ((i<sup>a)</sup> &lt; 0 &amp;&amp; (i<sup>b)</sup> &lt; 0) goto slow_add;</p></blockquote>
+<blockquote>
+  <p>if ((i^a) &lt; 0 &amp;&amp; (i^b) &lt; 0) goto slow_add;</p>
+</blockquote>
 
 <p>为真的时候就是发生溢出了，所以去到了慢速加法通道。
 那我们有</p>
 
-<blockquote><p>i = a + b</p></blockquote>
+<blockquote>
+  <p>i = a + b</p>
+</blockquote>
 
 <p>什么时候溢出呢？在a、b都为正数的时候和为负数（正正负）或者a、b都为负数的时候和为正数（负负正）。
-所以当 (i<sup>a)</sup> &lt; 0 &amp;&amp; (i<sup>b)</sup> &lt; 0 为 true 的时候溢出了，因为它们的最高位都符合正正负或负负正。</p>
+所以当 (i^a) &lt; 0 &amp;&amp; (i^b) &lt; 0 为 true 的时候溢出了，因为它们的最高位都符合正正负或负负正。</p>
 </div>
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Bugzilla | EverET.org]]></title>
   <link href="http://everet.org/tag/bugzilla/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-25T23:07:51+08:00</updated>
+  <updated>2012-12-26T02:57:37+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -34,10 +34,13 @@
 
 <p>这真是弱爆了的用户体验啊。不过也怪我没仔细看说明。</p>
 
-<blockquote><h4>shutdownhtml</h4>
+<blockquote>
 
-<pre><code>  If this field is non-empty, then Bugzilla will be completely disabled and this text will be displayed instead of all the Bugzilla pages.
-</code></pre></blockquote>
+  <h4 id="shutdownhtml">shutdownhtml</h4>
+
+  <pre><code>  If this field is non-empty, then Bugzilla will be completely disabled and this text will be displayed instead of all the Bugzilla pages.
+</code></pre>
+</blockquote>
 ]]></content>
   </entry>
   

@@ -111,12 +111,11 @@
 
 <p>Python是什么？“Python是一种面向对象、直译式计算机程序设计语言，由<a href="http://baike.baidu.com/view/2975166.htm">Guido van Rossum</a>于1989年底发明， 第一个公开发行版发行于1991年。Python语法简捷而清晰，具有丰富和强大的类库。它常被昵称为胶水语言，它能够很轻松的把用其他语言制作的各种模块（尤其是C/C++）轻松地联结在一起。常见的一种应用情形是，使用python快速生成程序的原型（有时甚至是程序的最终界面），然后对其中有特别要求的部分，用更合适的语言改写，比如3D游戏中的图形渲染模块，速度要求非常高，就可以用C++重写。”摘自百度百科。</p>
 
-<h2>Python+OGRE=？</h2>
+<h2 id="pythonogre">Python+OGRE=？</h2>
 
 <!-- more -->
 
-
-<h2></h2>
+<h2 id="section"></h2>
 
 <p>Python+OGRE=开发速度+简介的代码+良好的可读性+可移植性+无需编译+无需内存管理。</p>
 
@@ -124,13 +123,15 @@
 
 <p>相信开发过游戏的同志们都会被长时间的编译所折磨过吧？使用Python虽然比纯C++的运行速度要慢，但是带来的开发速度是不可小觑的。</p>
 
-<h3>安装</h3>
+<h3 id="section-1">安装</h3>
 
 <p>OGRE的Python包装在 <a href="http://sourceforge.net/projects/python-ogre/files/Latest/">http://sourceforge.net/projects/python-ogre/files/Latest/</a> 下载。教程在这里 <a href="http://wiki.python-ogre.org/index.php/SettingUpAnApplication">http://wiki.python-ogre.org/index.php/SettingUpAnApplication</a> 。</p>
 
 <p>最新版的可以从SVN中下载：</p>
 
-<blockquote><p>svn co https://python-ogre.svn.sourceforge.net/svnroot/python-ogre python-ogre</p></blockquote>
+<blockquote>
+  <p>svn co https://python-ogre.svn.sourceforge.net/svnroot/python-ogre python-ogre</p>
+</blockquote>
 
 <p>安装过程非常的简单：</p>
 
@@ -144,65 +145,65 @@
 
 <p>第一个程序：</p>
 
-<figure class='code'><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">ogre.renderer.OGRE</span> <span class="kn">as</span> <span class="nn">ogre</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">SampleFramework</span> <span class="kn">as</span> <span class="nn">sf</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">TutorialApplication</span><span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">Application</span><span class="p">):</span>
-</span><span class='line'>
-</span><span class='line'>   <span class="k">def</span> <span class="nf">_createScene</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class='line'>       <span class="k">pass</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class='line'>   <span class="n">ta</span> <span class="o">=</span> <span class="n">TutorialApplication</span><span class="p">()</span>
-</span><span class='line'>   <span class="n">ta</span><span class="o">.</span><span class="n">go</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">ogre.renderer.OGRE</span> <span class="kn">as</span> <span class="nn">ogre</span>
+</span><span class="line"><span class="kn">import</span> <span class="nn">SampleFramework</span> <span class="kn">as</span> <span class="nn">sf</span>
+</span><span class="line">
+</span><span class="line"><span class="k">class</span> <span class="nc">TutorialApplication</span><span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">Application</span><span class="p">):</span>
+</span><span class="line">
+</span><span class="line">   <span class="k">def</span> <span class="nf">_createScene</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">       <span class="k">pass</span>
+</span><span class="line">
+</span><span class="line"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class="line">   <span class="n">ta</span> <span class="o">=</span> <span class="n">TutorialApplication</span><span class="p">()</span>
+</span><span class="line">   <span class="n">ta</span><span class="o">.</span><span class="n">go</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>其中SampleFramework.py可以从我们刚刚下载的OGRE的Python包装中复制出来。另外需要创建两个文件。</p>
 
-<h4>plugins.cfg</h4>
+<h4 id="pluginscfg">plugins.cfg</h4>
 
-<blockquote></blockquote>
+<blockquote>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># Defines plugins to load
-</span><span class='line'>
-</span><span class='line'># Define plugin folder
-</span><span class='line'>PluginFolder=./plugins
-</span><span class='line'>
-</span><span class='line'># Define D3D rendering implementation plugin
-</span><span class='line'>Plugin=RenderSystem_GL.dll
-</span><span class='line'>Plugin=RenderSystem_Direct3D9.dll
-</span><span class='line'>Plugin=Plugin_ParticleFX.dll
-</span><span class='line'>Plugin=Plugin_BSPSceneManager.dll
-</span><span class='line'>Plugin=Plugin_OctreeSceneManager.dll
-</span><span class='line'>Plugin=Plugin_CgProgramManager.dll</span></code></pre></td></tr></table></div></figure>
+</blockquote>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># Defines plugins to load
+</span><span class="line">
+</span><span class="line"># Define plugin folder
+</span><span class="line">PluginFolder=./plugins
+</span><span class="line">
+</span><span class="line"># Define D3D rendering implementation plugin
+</span><span class="line">Plugin=RenderSystem_GL.dll
+</span><span class="line">Plugin=RenderSystem_Direct3D9.dll
+</span><span class="line">Plugin=Plugin_ParticleFX.dll
+</span><span class="line">Plugin=Plugin_BSPSceneManager.dll
+</span><span class="line">Plugin=Plugin_OctreeSceneManager.dll
+</span><span class="line">Plugin=Plugin_CgProgramManager.dll</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<h4>resources.cfg</h4>
+<h4 id="resourcescfg">resources.cfg</h4>
 
 <p>里面留空就好。</p>
 
@@ -288,11 +289,11 @@
         </li>
     
         <li class="related">
-        <a href="/2012/03/python-parse-ogre-configuration-file.html">神奇的Python：解析OGRE配置文件</a>
+        <a href="/2012/05/python-spark-calculator.html">Python使用spark模块构造计算器</a>
         </li>
     
         <li class="related">
-        <a href="/2012/05/python-spark-calculator.html">Python使用spark模块构造计算器</a>
+        <a href="/2012/03/python-parse-ogre-configuration-file.html">神奇的Python：解析OGRE配置文件</a>
         </li>
     
         <li class="related">
