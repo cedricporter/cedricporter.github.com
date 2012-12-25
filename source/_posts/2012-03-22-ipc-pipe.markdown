@@ -6,7 +6,7 @@ slug: ipc-pipe
 title: 进程间通信：管道pipe一个简单的例子
 wordpress_id: 797
 categories:
-- 我的代码
+- My Code
 tags:
 - Linux
 ---

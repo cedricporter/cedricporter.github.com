@@ -6,7 +6,7 @@ slug: the-installation-of-the-ssd-to-the-notebook
 title: 给笔记本加装了SSD
 wordpress_id: 620
 categories:
-- 胡思乱想
+- Life
 ---
 
 一直感觉电脑性能的瓶颈在硬盘上，于是就决定加装一个SSD。做法是把光驱卸掉，把硬盘装到硬盘架上插到光驱里面。于是就把最没用的部件从电脑上拆掉了。

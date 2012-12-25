@@ -6,7 +6,7 @@ slug: python-ascii-art
 title: Python根据图片生成字符画
 wordpress_id: 1012
 categories:
-- 我的代码
+- My Code
 tags:
 - Python
 - 图像处理

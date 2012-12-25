@@ -6,7 +6,7 @@ slug: 6-hard-disk-is-installed-to-the-computer
 title: 给电脑装了6块硬盘后
 wordpress_id: 575
 categories:
-- 胡思乱想
+- Life
 ---
 
 今天在光驱位装了块硬盘，于是想在弄过几块硬盘看看到了Z盘会发生什么事情。

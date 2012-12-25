@@ -6,7 +6,7 @@ slug: python-grammar
 title: Python文法
 wordpress_id: 1039
 categories:
-- 技术类
+- IT
 tags:
 - compile
 - Python

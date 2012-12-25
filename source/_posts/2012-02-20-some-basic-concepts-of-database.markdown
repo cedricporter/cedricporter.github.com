@@ -6,7 +6,7 @@ slug: some-basic-concepts-of-database
 title: 数据库的一些基本概念
 wordpress_id: 573
 categories:
-- 技术类
+- IT
 tags:
 - Mysql
 ---

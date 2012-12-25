@@ -6,7 +6,7 @@ slug: mass-thoughts
 title: 临近大三结束的一些杂乱的思绪
 wordpress_id: 944
 categories:
-- 胡思乱想
+- Life
 post_format:
 - 日志
 ---

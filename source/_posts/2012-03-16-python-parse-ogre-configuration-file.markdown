@@ -6,7 +6,7 @@ slug: python-parse-ogre-configuration-file
 title: 神奇的Python：解析OGRE配置文件
 wordpress_id: 705
 categories:
-- 我的代码
+- My Code
 tags:
 - OGRE
 - Python

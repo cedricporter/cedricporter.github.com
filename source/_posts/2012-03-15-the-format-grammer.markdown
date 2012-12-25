@@ -6,7 +6,7 @@ slug: the-format-grammer
 title: 神奇的Python:格式化UltraDemo的文法
 wordpress_id: 695
 categories:
-- 我的代码
+- My Code
 tags:
 - compile
 - Python

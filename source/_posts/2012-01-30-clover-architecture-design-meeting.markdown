@@ -6,7 +6,7 @@ slug: clover-architecture-design-meeting
 title: Clover架构设计会议记录
 wordpress_id: 424
 categories:
-- 技术类
+- IT
 tags:
 - Clover
 - OGRE

@@ -6,7 +6,7 @@ slug: effectlab
 title: Python图像处理特效库EffectLab
 wordpress_id: 1278
 categories:
-- 我的代码
+- My Code
 tags:
 - Python
 - 图像处理

@@ -6,7 +6,7 @@ slug: server-migration
 title: 服务器迁移告一段落
 wordpress_id: 501
 categories:
-- 胡思乱想
+- Life
 tags:
 - Apache
 - Git

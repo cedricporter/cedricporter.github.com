@@ -6,7 +6,7 @@ slug: pil-brief-intro
 title: Python进行图像处理——PIL简介
 wordpress_id: 274
 categories:
-- 我的代码
+- My Code
 tags:
 - Python
 - 图像处理

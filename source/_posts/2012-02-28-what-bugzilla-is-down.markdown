@@ -6,7 +6,7 @@ slug: what-bugzilla-is-down
 title: What？Bugzilla is down
 wordpress_id: 623
 categories:
-- 技术类
+- IT
 tags:
 - Bugzilla
 ---

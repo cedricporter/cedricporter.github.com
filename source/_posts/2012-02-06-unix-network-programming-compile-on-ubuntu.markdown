@@ -6,7 +6,7 @@ slug: unix-network-programming-compile-on-ubuntu
 title: 《Unix网络编程》的代码在Ubuntu上编译
 wordpress_id: 469
 categories:
-- 技术类
+- IT
 tags:
 - Linux
 - Ubuntu

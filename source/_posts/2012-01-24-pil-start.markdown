@@ -6,7 +6,7 @@ slug: pil-start
 title: Python进行图像处理——开篇
 wordpress_id: 266
 categories:
-- 我的代码
+- My Code
 tags:
 - Python
 - 图像处理

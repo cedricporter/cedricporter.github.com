@@ -6,7 +6,7 @@ slug: '%e8%b0%83%e8%af%95nginx'
 title: 调试Nginx
 wordpress_id: 1502
 categories:
-- 技术类
+- IT
 tags:
 - Emacs
 - Nginx

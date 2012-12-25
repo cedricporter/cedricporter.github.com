@@ -6,7 +6,7 @@ slug: chinese-zodiac
 title: 十二生肖
 wordpress_id: 791
 categories:
-- 胡思乱想
+- Life
 ---
 
 今天突然发现，我在中国生存了二十多年，竟然连十二生肖的循序都不知道，于是乎就上网找了下记录一下。

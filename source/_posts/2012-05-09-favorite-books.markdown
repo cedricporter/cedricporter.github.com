@@ -6,7 +6,7 @@ slug: favorite-books
 title: 我喜欢的那些书
 wordpress_id: 1018
 categories:
-- 胡思乱想
+- Life
 ---
 
 ## C/C++

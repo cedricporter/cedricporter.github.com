@@ -6,7 +6,7 @@ slug: burst-net-transfer
 title: 两台Burst.Net主机传输文件真快
 wordpress_id: 526
 categories:
-- 胡思乱想
+- Life
 ---
 
 在两台主机间传数据真快啊，不过也说明是100Mb的网，可惜可惜。

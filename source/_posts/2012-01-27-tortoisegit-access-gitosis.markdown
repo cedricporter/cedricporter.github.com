@@ -6,7 +6,7 @@ slug: tortoisegit-access-gitosis
 title: TortoiseGit访问Gitosis搭建的版本库
 wordpress_id: 317
 categories:
-- 技术类
+- IT
 tags:
 - Git
 - TortoiseGit

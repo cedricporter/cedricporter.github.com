@@ -6,7 +6,7 @@ slug: ftp-protocol
 title: 'Mission: FTP Protocol'
 wordpress_id: 738
 categories:
-- 网络
+- Web
 tags:
 - Web
 ---

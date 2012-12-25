@@ -7,7 +7,7 @@ title: 网易泡泡的Linux虚拟机宿主提示外挂
 wordpress_id: 1376
 categories:
 - Linux
-- 我的代码
+- My Code
 tags:
 - Linux
 - Python

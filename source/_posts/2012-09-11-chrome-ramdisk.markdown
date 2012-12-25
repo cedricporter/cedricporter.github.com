@@ -6,7 +6,7 @@ slug: chrome-ramdisk
 title: '[优化]将Chrome的数据放置到内存中去'
 wordpress_id: 1400
 categories:
-- 技术类
+- IT
 tags:
 - Linux
 - Ubuntu

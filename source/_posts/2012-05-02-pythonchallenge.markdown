@@ -6,7 +6,7 @@ slug: pythonchallenge
 title: 发现一个很好玩的Python网站
 wordpress_id: 953
 categories:
-- 技术类
+- IT
 tags:
 - Python
 ---

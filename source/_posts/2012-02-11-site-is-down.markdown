@@ -7,7 +7,7 @@ slug: site-is-down
 title: 悲剧啊，我的网站今天宕机了
 wordpress_id: 520
 categories:
-- 胡思乱想
+- Life
 ---
 
 吃饭完回来看到监控邮件发来我的网站**不可用(403 Forbidden)，**有图有真相。

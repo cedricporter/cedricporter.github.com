@@ -6,7 +6,7 @@ slug: python-function-default-parameter
 title: 谈谈Python函数的默认参数
 wordpress_id: 1234
 categories:
-- 我的代码
+- My Code
 tags:
 - Python
 ---

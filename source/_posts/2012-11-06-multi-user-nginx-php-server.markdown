@@ -6,7 +6,7 @@ slug: multi-user-nginx-php-server
 title: 配置多用户的虚拟主机
 wordpress_id: 1432
 categories:
-- 技术类
+- IT
 tags:
 - Apache
 - Linux

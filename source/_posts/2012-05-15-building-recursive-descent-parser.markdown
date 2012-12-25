@@ -6,7 +6,7 @@ slug: building-recursive-descent-parser
 title: 构建LL(1)递归下降语法解析器
 wordpress_id: 1056
 categories:
-- 我的代码
+- My Code
 tags:
 - compile
 - Python

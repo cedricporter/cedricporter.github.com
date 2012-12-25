@@ -6,7 +6,7 @@ slug: access-svn-with-git
 title: 使用Git访问SVN
 wordpress_id: 441
 categories:
-- 技术类
+- IT
 tags:
 - Git
 - SVN

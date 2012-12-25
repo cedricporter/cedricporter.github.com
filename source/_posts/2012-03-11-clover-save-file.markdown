@@ -6,7 +6,7 @@ slug: clover-save-file
 title: Clover折纸数据结构的文件保存
 wordpress_id: 672
 categories:
-- 我的代码
+- My Code
 tags:
 - Clover
 - 数据结构

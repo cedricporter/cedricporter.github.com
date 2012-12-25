@@ -6,7 +6,7 @@ slug: how-to-become-a-hacker
 title: '[分享]How To Become A Hacker——如何成为黑客'
 wordpress_id: 714
 categories:
-- 技术类
+- IT
 ---
 
 作者：[Eric Steven Raymond](mailto:esr@snark.thyrsus.com)

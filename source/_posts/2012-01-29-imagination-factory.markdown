@@ -6,7 +6,7 @@ slug: imagination-factory
 title: 我们的图像处理 Imagination Factory
 wordpress_id: 342
 categories:
-- 我的代码
+- My Code
 tags:
 - C++
 - Imagination Factory

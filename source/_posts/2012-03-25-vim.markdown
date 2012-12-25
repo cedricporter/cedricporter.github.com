@@ -6,7 +6,7 @@ slug: vim
 title: 我的Vim配置
 wordpress_id: 836
 categories:
-- 技术类
+- IT
 tags:
 - Vim
 ---

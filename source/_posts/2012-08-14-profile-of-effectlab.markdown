@@ -6,7 +6,7 @@ slug: profile-of-effectlab
 title: 对Python图像处理库EffectLab进行性能测试
 wordpress_id: 1365
 categories:
-- 我的代码
+- My Code
 tags:
 - Python
 - 图像处理

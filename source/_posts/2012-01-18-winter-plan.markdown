@@ -6,7 +6,7 @@ slug: winter-plan
 title: 寒假计划
 wordpress_id: 80
 categories:
-- 胡思乱想
+- Life
 tags:
 - Clover
 - Git

@@ -6,7 +6,7 @@ slug: captcha-recognition
 title: Python验证码识别之预处理
 wordpress_id: 1309
 categories:
-- 技术类
+- IT
 tags:
 - Captcha
 - Python

@@ -6,7 +6,7 @@ slug: errno-table
 title: errno表
 wordpress_id: 1127
 categories:
-- 技术类
+- IT
 tags:
 - C++
 - Linux

@@ -6,7 +6,7 @@ slug: linear-equations-solvers-in-python
 title: Python的“黑暗魔法”，两行解一元一次方程
 wordpress_id: 935
 categories:
-- 技术类
+- IT
 tags:
 - Python
 ---

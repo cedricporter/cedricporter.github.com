@@ -6,7 +6,7 @@ slug: database-migrate-from-syntaxhighlighter-evolved-to-wp-syntax
 title: 从syntaxhighlighter evolved迁移至wp-syntax
 wordpress_id: 1201
 categories:
-- 技术类
+- IT
 tags:
 - Python
 - Wordpress

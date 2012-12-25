@@ -6,7 +6,7 @@ slug: python-print-triangle
 title: Python打印字符三角形
 wordpress_id: 924
 categories:
-- 技术类
+- IT
 tags:
 - Python
 ---

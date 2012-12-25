@@ -6,7 +6,7 @@ slug: how-to-open-sack
 title: '[分享]如何拆米袋的缝合线'
 wordpress_id: 495
 categories:
-- 技术类
+- IT
 ---
 
 今天家里的米用完了，我爸让我拆米袋，于是想看看怎么正确地拆米袋的先。

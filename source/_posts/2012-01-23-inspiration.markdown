@@ -6,7 +6,7 @@ slug: inspiration
 title: 改变你一生的5句英文励志铭言
 wordpress_id: 227
 categories:
-- 胡思乱想
+- Life
 tags:
 - English
 ---

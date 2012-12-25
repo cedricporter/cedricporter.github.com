@@ -6,7 +6,7 @@ slug: python-image-cell
 title: Python进行图像处理——生成交替颜色的格子图
 wordpress_id: 777
 categories:
-- 我的代码
+- My Code
 tags:
 - Python
 - 图像处理

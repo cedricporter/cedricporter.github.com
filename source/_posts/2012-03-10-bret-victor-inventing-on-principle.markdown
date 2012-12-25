@@ -6,7 +6,7 @@ slug: bret-victor-inventing-on-principle
 title: Bret Victor - Inventing on Principle
 wordpress_id: 662
 categories:
-- 胡思乱想
+- Life
 ---
 
 苹果[Bret Victor](http://worrydream.com/)的Inventing on Principle演讲，确实有很大的冲击力。

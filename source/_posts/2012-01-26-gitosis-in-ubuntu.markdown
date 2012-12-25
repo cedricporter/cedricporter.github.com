@@ -6,7 +6,7 @@ slug: gitosis-in-ubuntu
 title: Ubuntu使用Gitosis搭建Git服务器，Windows客户端支持中文
 wordpress_id: 292
 categories:
-- 技术类
+- IT
 tags:
 - Git
 - Gitosis

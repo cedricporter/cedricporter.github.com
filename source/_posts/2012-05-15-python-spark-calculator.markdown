@@ -6,7 +6,7 @@ slug: python-spark-calculator
 title: Python使用spark模块构造计算器
 wordpress_id: 1076
 categories:
-- 我的代码
+- My Code
 tags:
 - compile
 - Python

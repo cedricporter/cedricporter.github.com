@@ -6,7 +6,7 @@ slug: captcha-around-us
 title: 我们身边的验证码技术
 wordpress_id: 1254
 categories:
-- 技术类
+- IT
 tags:
 - Captcha
 ---

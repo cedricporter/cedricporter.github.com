@@ -6,7 +6,7 @@ slug: after-returning-home-into-a-tragedy-railway-telecom
 title: 回家后，电信变成悲剧的铁通
 wordpress_id: 77
 categories:
-- 胡思乱想
+- Life
 ---
 
 回家了，因为电信太贵，所以家里换成了铁通。铁通首先很悲剧地就是没有公网IP，这样我就很难让别人直接连接到我的电脑了。

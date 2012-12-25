@@ -6,7 +6,7 @@ slug: add-new-grammer-to-python
 title: '走进Python: 为Python增加新语法'
 wordpress_id: 1326
 categories:
-- 翻译
+- Translation
 tags:
 - compile
 - Python

@@ -6,7 +6,7 @@ slug: dramatic-comment-in-stdio-h
 title: 在stdio.h中发现一个很强悍注释
 wordpress_id: 856
 categories:
-- 技术类
+- IT
 ---
 
 如下图所示……

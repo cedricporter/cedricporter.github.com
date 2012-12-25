@@ -6,7 +6,7 @@ slug: python-automatically-download-all-albums-of-all-your-friends
 title: python自动下载人人所有好友的相册
 wordpress_id: 54
 categories:
-- 我的代码
+- My Code
 tags:
 - Python
 ---

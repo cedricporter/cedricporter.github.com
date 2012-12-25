@@ -6,7 +6,7 @@ slug: ultrademo
 title: UltraDemo —— 数据结构实验平台
 wordpress_id: 913
 categories:
-- 我的代码
+- My Code
 tags:
 - C++
 - UltraDemo

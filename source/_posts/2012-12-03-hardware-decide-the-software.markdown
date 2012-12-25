@@ -6,7 +6,7 @@ slug: hardware-decide-the-software
 title: 有什么样的硬件，用什么样的软件
 wordpress_id: 1457
 categories:
-- 胡思乱想
+- Life
 tags:
 - Android
 ---

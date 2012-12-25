@@ -6,7 +6,7 @@ slug: management-remote-host
 title: 管理远程主机的一些技巧分享
 wordpress_id: 153
 categories:
-- 技术类
+- IT
 tags:
 - cygwin
 - Linux

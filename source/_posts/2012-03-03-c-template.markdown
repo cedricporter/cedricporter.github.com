@@ -6,7 +6,7 @@ slug: c-template
 title: C#的模板
 wordpress_id: 635
 categories:
-- 我的代码
+- My Code
 ---
 
 一个很2B的求两个List的差集的作为示例

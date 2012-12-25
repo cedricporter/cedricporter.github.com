@@ -6,7 +6,7 @@ slug: todo-fixme-xxx-in-comment
 title: 注释中的TODO、FIXME、XXX
 wordpress_id: 1094
 categories:
-- 技术类
+- IT
 ---
 
 第一次见到注释中的TODO是在用VS自动生成MFC框架的时候，里面自动生成的函数可能会有一句注释：

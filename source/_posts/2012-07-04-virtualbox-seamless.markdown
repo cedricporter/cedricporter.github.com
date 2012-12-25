@@ -6,7 +6,7 @@ slug: virtualbox-seamless
 title: VirtualBox的无缝模式
 wordpress_id: 1246
 categories:
-- 技术类
+- IT
 tags:
 - Linux
 ---

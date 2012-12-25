@@ -6,7 +6,7 @@ slug: calculator-by-recursive-descent-parser
 title: 用LL(1)递归下降语法器构造一个计算器
 wordpress_id: 1062
 categories:
-- 我的代码
+- My Code
 tags:
 - compile
 - Python

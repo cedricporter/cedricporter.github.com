@@ -6,7 +6,7 @@ slug: reduce-spam-in-wordpress
 title: 减少wordpress垃圾评论的方法
 wordpress_id: 437
 categories:
-- 技术类
+- IT
 tags:
 - Web
 - Wordpress

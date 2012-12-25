@@ -6,8 +6,8 @@ slug: python-forwarding-redirecting-tcp-monitor
 title: Python端口转发及重定向实现Eclipse的TCP/IP Monitor
 wordpress_id: 819
 categories:
-- 我的代码
-- 网络
+- My Code
+- Web
 tags:
 - Python
 - Web

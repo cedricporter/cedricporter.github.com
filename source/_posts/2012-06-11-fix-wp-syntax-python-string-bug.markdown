@@ -6,7 +6,7 @@ slug: fix-wp-syntax-python-string-bug
 title: 修正WP-Syntax高亮Python字符串的bug
 wordpress_id: 1164
 categories:
-- 技术类
+- IT
 tags:
 - PHP
 - Python

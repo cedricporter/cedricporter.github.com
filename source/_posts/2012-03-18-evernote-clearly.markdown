@@ -6,7 +6,7 @@ slug: evernote-clearly
 title: 一款期待已久的Chrome插件——Evernote Clearly
 wordpress_id: 757
 categories:
-- 技术类
+- IT
 ---
 
 Evernote Clearly是Chrome的一款插件。Evernote的各种产品我的超喜欢，确实很贴心啊~特别是Evernote的笔记，比有道笔记，Microsoft OneNote都强多了。

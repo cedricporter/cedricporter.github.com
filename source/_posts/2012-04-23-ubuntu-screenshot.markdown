@@ -6,7 +6,7 @@ slug: ubuntu-screenshot
 title: Ubuntu上的屏幕截图
 wordpress_id: 930
 categories:
-- 技术类
+- IT
 tags:
 - Linux
 - Ubuntu

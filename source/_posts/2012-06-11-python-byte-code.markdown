@@ -6,7 +6,7 @@ slug: python-byte-code
 title: 查看Python字节码
 wordpress_id: 1143
 categories:
-- 我的代码
+- My Code
 tags:
 - Python
 ---

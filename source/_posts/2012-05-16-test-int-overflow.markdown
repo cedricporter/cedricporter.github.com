@@ -6,7 +6,7 @@ slug: test-int-overflow
 title: 判断两个有符号整数相加是否溢出
 wordpress_id: 1087
 categories:
-- 技术类
+- IT
 tags:
 - C++
 - Python

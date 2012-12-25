@@ -6,7 +6,7 @@ slug: moinmoin-as-kms-by-nginx-uwsgi
 title: MoinMoin+Nginx+uWSGI搭建个人Wiki
 wordpress_id: 1482
 categories:
-- 技术类
+- IT
 tags:
 - MoinMoin
 - Nginx

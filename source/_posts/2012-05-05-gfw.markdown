@@ -6,7 +6,7 @@ slug: gfw
 title: 猜想祖国的伟大的围墙的原理
 wordpress_id: 999
 categories:
-- 技术类
+- IT
 tags:
 - Web
 ---

@@ -6,7 +6,7 @@ slug: clover-data-structure
 title: Clover数据结构
 wordpress_id: 481
 categories:
-- 技术类
+- IT
 tags:
 - Clover
 ---

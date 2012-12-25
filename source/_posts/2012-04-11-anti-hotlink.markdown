@@ -6,8 +6,8 @@ slug: anti-hotlink
 title: “反盗链”与反“反盗链”
 wordpress_id: 884
 categories:
-- 我的代码
-- 网络
+- My Code
+- Web
 tags:
 - Web
 ---

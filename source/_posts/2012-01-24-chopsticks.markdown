@@ -6,7 +6,7 @@ slug: chopsticks
 title: 中国人使用筷子的十二种忌讳
 wordpress_id: 254
 categories:
-- 胡思乱想
+- Life
 ---
 
 好吧，最近又被人骂说我用筷子没文化没传统，于是记录一下用筷子有什么禁忌。学习一下中国的传统文化。

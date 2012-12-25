@@ -6,7 +6,7 @@ slug: low-memory-vps-configuration
 title: 低内存VPS的配置
 wordpress_id: 90
 categories:
-- 胡思乱想
+- Life
 tags:
 - Apache
 - Linux

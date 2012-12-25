@@ -6,7 +6,7 @@ slug: python-crawl-jingdong
 title: Python抓取京东商城的所有笔记本电脑的参数
 wordpress_id: 532
 categories:
-- 我的代码
+- My Code
 tags:
 - Python
 - Web

@@ -6,7 +6,7 @@ slug: the-http-status-code
 title: HTTP状态码
 wordpress_id: 550
 categories:
-- 技术类
+- IT
 tags:
 - Web
 ---

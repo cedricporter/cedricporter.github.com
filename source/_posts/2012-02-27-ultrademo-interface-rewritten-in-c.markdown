@@ -6,7 +6,7 @@ slug: ultrademo-interface-rewritten-in-c
 title: UltraDemo的界面用C#重写
 wordpress_id: 610
 categories:
-- 我的代码
+- My Code
 tags:
 - C++
 - UltraDemo

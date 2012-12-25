@@ -6,7 +6,7 @@ slug: vim-table
 title: 又一个Vim速查表
 wordpress_id: 859
 categories:
-- 技术类
+- IT
 tags:
 - Vim
 ---

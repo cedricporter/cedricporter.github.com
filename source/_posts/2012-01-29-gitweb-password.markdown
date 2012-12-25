@@ -6,7 +6,7 @@ slug: gitweb-password
 title: 给Gitweb加上访问密码，保护我们的私有项目
 wordpress_id: 358
 categories:
-- 技术类
+- IT
 tags:
 - Git
 - Gitweb

@@ -6,8 +6,8 @@ slug: ftp-server
 title: 我的FTP Server——ftp.py
 wordpress_id: 823
 categories:
-- 我的代码
-- 网络
+- My Code
+- Web
 tags:
 - Python
 - Web

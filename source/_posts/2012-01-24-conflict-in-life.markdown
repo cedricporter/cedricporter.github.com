@@ -6,7 +6,7 @@ slug: conflict-in-life
 title: 传统文化中最矛盾的两句话是什么？
 wordpress_id: 251
 categories:
-- 胡思乱想
+- Life
 ---
 
 有人说，最矛盾的两句话是：

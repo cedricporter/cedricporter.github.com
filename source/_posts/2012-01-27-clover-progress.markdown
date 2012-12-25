@@ -6,7 +6,7 @@ slug: clover-progress
 title: Clover进度
 wordpress_id: 321
 categories:
-- 我的代码
+- My Code
 tags:
 - Clover
 - OGRE

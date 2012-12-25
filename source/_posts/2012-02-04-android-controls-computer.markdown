@@ -6,7 +6,7 @@ slug: android-controls-computer
 title: 在Android管理远程主机
 wordpress_id: 461
 categories:
-- 技术类
+- IT
 tags:
 - Android
 - Linux

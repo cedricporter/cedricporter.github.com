@@ -6,7 +6,7 @@ slug: clickcha
 title: 探索wordpress验证码插件Clickcha
 wordpress_id: 1317
 categories:
-- 技术类
+- IT
 tags:
 - Captcha
 - Wordpress

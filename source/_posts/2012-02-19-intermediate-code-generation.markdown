@@ -6,7 +6,7 @@ slug: intermediate-code-generation
 title: 编译原理知识回顾——中间代码生成
 wordpress_id: 567
 categories:
-- 技术类
+- IT
 tags:
 - compile
 ---

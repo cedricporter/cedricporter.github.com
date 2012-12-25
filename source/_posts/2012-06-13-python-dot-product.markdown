@@ -6,7 +6,7 @@ slug: python-dot-product
 title: Python计算点积
 wordpress_id: 1227
 categories:
-- 技术类
+- IT
 tags:
 - C++
 - Python

@@ -6,7 +6,7 @@ slug: python-ogre-start
 title: Python与OGRE之开篇
 wordpress_id: 282
 categories:
-- 我的代码
+- My Code
 tags:
 - OGRE
 - Python

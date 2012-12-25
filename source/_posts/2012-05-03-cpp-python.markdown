@@ -6,7 +6,7 @@ slug: cpp-python
 title: C++与Python混合编程
 wordpress_id: 972
 categories:
-- 我的代码
+- My Code
 tags:
 - C++
 - Python
