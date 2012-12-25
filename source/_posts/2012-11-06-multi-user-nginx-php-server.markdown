@@ -73,7 +73,7 @@ chdir = /
 
 我们nginx的权限为www-data，这样可以读～user01/www目录的内容，但是不能写。nginx的站点配置比较简单。我们来看一下可以工作的简单的配置：
 
-{% codeblock bash lang:bash %}
+{% codeblock nginx lang:nginx %}
 server {
     server_name user01.everet.org;
 
