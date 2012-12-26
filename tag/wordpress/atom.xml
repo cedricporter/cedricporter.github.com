@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Wordpress | EverET.org]]></title>
   <link href="http://everet.org/tag/wordpress/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-26T03:11:24+08:00</updated>
+  <updated>2012-12-26T18:02:48+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -12,6 +12,95 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[From Wordpress to Octopress]]></title>
+    <link href="http://everet.org/2012/12/migrate-from-wordpress-to-octopress.html"/>
+    <updated>2012-12-25T20:49:00+08:00</updated>
+    <id>http://everet.org/2012/12/migrate-from-wordpress-to-octopress</id>
+    <content type="html"><![CDATA[<h2 id="section">为什么</h2>
+<p>为什么离开Wordpress选择Octopress？ 在Google中搜索Wordpress+Octopress就会找到整版整版的从Wordpress迁移到Octopress的博文，
+其中有介绍各种迁移的理由，例如Wordpress太臃肿，Octopress可以让我们像黑客一样写博客。</p>
+
+<p>这些都太高雅了，我只是不喜欢PHP那一坨一坨文明用语一样的代码，这样改起来的时候实在是让人蛋疼。而Octopress是Ruby写的，于是可以借机学习一下<em>Ruby</em>（<em>这个是主要原因</em>）。</p>
+
+<h2 id="wordpress">对于Wordpress的看法</h2>
+<p>Wordpress可以让我们在浏览器写东西，也可以用客户端来写，例如Windows Live Writer、Emacs + org2blog<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>。
+当我们在其他人电脑，没有客户端的时候，一样可以打开浏览器写。Wordpress既可以是胖客户端，又可以是瘦客户端。
+而且Wordpress架构设计灵活，插件主题丰富。用户体验好，也可以用Markdown、org等等其他语言来写。对于静态化，装个WP-Super-Cache插件就可以将所有文章静态化了，而且静态化的程度是可以控制的。</p>
+
+<h3 id="section-1">缺点</h3>
+<ol>
+  <li>是PHP写的，用MySQL，这两个东西一下就占了一堆内存。对于我们这些穷苦人民的VPS十分不友好。</li>
+  <li>不联网就没法预览最终效果。</li>
+</ol>
+
+<h2 id="octopress">对于Octopress的看法</h2>
+<p>对于Octopress的优点网上也有一堆一堆的评论，我也就不太多说了。我们来看看我觉得的缺点：</p>
+
+<h3 id="section-2">缺点</h3>
+<ol>
+  <li>Octopress是一个胖客户端的博客系统，在写博客前，你需要安装Git、Ruby等等东西，然后把环境调教好，才能开始写东西。</li>
+  <li>如果去到别人的电脑，或者是Windows的话，那么写个博客都会非常的蛋疼。</li>
+  <li>相对缺乏插件与主题。</li>
+  <li>发布一篇文章就要重建整个博客，慢。</li>
+</ol>
+
+<h3 id="section-3">优点</h3>
+<blockquote>
+  <p>Octopress is jekyll with Batteries included.</p>
+</blockquote>
+
+<p>直接就是用Markdown语法，不用纠结org还是markdown。
+可以方便地离线预览文章<code>rake preview</code>。</p>
+
+<h3 id="misc">Misc</h3>
+<p>Octopress默认的markdown引擎是rdiscount，这个实在是让人难以接受，连footnote都不支持。于是果断换成了kramdown<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>。kramdown支持footnote，甚至LaTex<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>。</p>
+
+<h2 id="section-4">其他</h2>
+
+<h3 id="section-5">写博客的三个阶段</h3>
+<p>之前看过阮一峰写的一篇文章<a href="http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html">github Pages和Jekyll入门</a>，里面有讲到，喜欢写博客的人，会经历三个阶段：</p>
+
+<blockquote>
+  <p>第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费空间来写。
+第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。
+第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。</p>
+</blockquote>
+
+<p>好吧，我觉得独立博客的管理确实挺麻烦的，加上刚刚经历买了1年的VPS没到一个月，主机商就跑路的悲剧后，就愈发觉得自己负责可靠性等各种东西的维护确实挺麻烦的。就先暂时放在Github上面，日后再自己管理。</p>
+
+<p>放在Github上面有个坏处是，对于页面都有缓存：<code>Cache-Control: max-age=86400</code>，也就是有一整天缓存时间，如果一天内有访问过这个页面的浏览器不刷新的话就直接从cache里面取了。不过应该也没什么大碍，基本不会一天更新好几次。而且除了自己也没什么人访问。</p>
+
+<h3 id="emacs">Emacs</h3>
+<p>Emacs既可以方便地写Wordpress也可以写Octopress。
+<img src="/imgs/emacs-user-at-work.jpg" alt="Emacs User At Work" /><sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup></p>
+
+<h3 id="ruby">Ruby</h3>
+<p>这段时间看了Ruby，发现竟然可以比Python更加优美，我想，日后，可能也会有很多人从Python流向Ruby，就像曾经人们从Perl流向Python一样。</p>
+
+<p>这就是江山代有才人出，长江后浪推前浪啊。事物总是在进步着。</p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="https://github.com/punchagan/org2blog">https://github.com/punchagan/org2blog</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p><a href="http://kramdown.rubyforge.org/index.html">http://kramdown.rubyforge.org/index.html</a><a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p><a href="http://yanping.me/cn/blog/2012/03/10/octopress-with-latex/">在Octopress中使用LaTeX</a><a href="#fnref:3" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:4">
+      <p><a href="http://batsov.com/articles/2011/11/11/blogging-like-a-hacker-evolution/">http://batsov.com/articles/2011/11/11/blogging-like-a-hacker-evolution/</a><a href="#fnref:4" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[配置多用户的虚拟主机]]></title>
@@ -565,27 +654,6 @@
 <p>最后向WP-Syntax的作者发了邮件，觉得老外真是负责任，很快就回了邮件。</p>
 
 <p>bug的确切地方是出在了插件使用的GESHI高亮库。不过我看了Python.php的最后一次更新是在08年，觉得还是向WP-Syntax作者报告比较靠谱，毕竟用户大都还是使用WP-Syntax而不是直接面向GESHI。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[减少wordpress垃圾评论的方法]]></title>
-    <link href="http://everet.org/2012/01/reduce-spam-in-wordpress.html"/>
-    <updated>2012-01-31T19:21:43+08:00</updated>
-    <id>http://everet.org/2012/01/reduce-spam-in-wordpress</id>
-    <content type="html"><![CDATA[<p>自从有<a href="http://EverET.org/">http://EverET.org/</a>开始以来，我的留言板每天都有几十条来自世界各国的垃圾评论，好在装了Akismet，否则我的博客就就被垃圾评论塞满了。这些都是某些RP低的人用机器自动发的，毫无价值，有俄文，波兰文等等乱七八糟的语言。</p>
-
-<p>仔细看看，垃圾评论都集中到留言板。我的留言板的url曾经是 <a href="http://everet.org/guestbook">http://everet.org/guestbook</a> ，然后我改成了 <a href="http://everet.org/guestbooket">http://everet.org/guestbooket</a> 还是一样，发现原来用 <a href="http://everet.org/guestbook">http://everet.org/guestbook</a> 也可以定向到 <a href="http://everet.org/guestbooket">http://everet.org/guestbooket</a> ，所以改了等于没改。</p>
-
-<p>于是，我把它改成拼音的，改成 liuyan，果然就没有了垃圾评论。</p>
-
-<p><a href="http://everet.org/liuyana">http://everet.org/liuyana</a></p>
-
-<p>哈哈。估计垃圾评论的发送器也是用了Google Hack吧。</p>
-
-<p>想起以前在用<a href="http://baike.baidu.com/view/535826.html?tp=6_11">NBSI</a>注入的时候，也是在里面打开Google页面，然后搜 inurl:asp?= 什么的，然后就让NBSI顺着搜索结果往下测试。</p>
-
-<p>对于垃圾评论发送器我们可以搜索 inurl:guestbook ，然后在搜索结果一部份中就是某些网站的留言板，就可以在那些页面发垃圾评论了。</p>
 ]]></content>
   </entry>
   

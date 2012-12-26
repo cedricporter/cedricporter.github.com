@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="最近经常用到ASCII码，所以弄一张表过来方便查找。 ">
+  <meta name="description" content="EffectLab也是一个基于PIL的Python的图像库，目的是为了提供更多的特效处理以及更快的测试。 目前EffectLab可以实现的特效可以围观之前的文章：http://everet.org/2012/07/effectlab.html。 古人云：_选择了脚本语言_就要忍受其速度。 但是， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,76 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/08/profile-of-effectlab.html">对Python图像处理库EffectLab进行性能测试</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-15T01:49:37+08:00" pubdate data-updated="true">2012-08-15</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://everet.org/2012/07/effectlab.html">EffectLab</a>也是一个基于PIL的Python的图像库，目的是为了提供更多的特效处理以及更快的测试。</p>
+
+<p>目前EffectLab可以实现的特效可以围观之前的文章：<a href="http://everet.org/2012/07/effectlab.html">http://everet.org/2012/07/effectlab.html</a>。</p>
+
+<p>古人云：_选择了脚本语言_就要忍受其速度。</p>
+
+<p>但是，有时脚本语言的速度已经慢到了无法形容的地步时，我们就开始考虑性能优化了。</p>
+
+<h2 id="section">寻找性能热点</h2>
+
+<p>Python有一对很好的性能测试工具：cProfile与pstats。</p>
+
+<p>我们来选择一个波浪效果来做测试：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&quot;RGB&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</span><span class="line"><span class="n">wave</span> <span class="o">=</span> <span class="n">GlobalWaveEffect</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+</span><span class="line"><span class="n">test</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&quot;test()&quot;</span><span class="p">,</span> <span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="n">p</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="n">p</span><span class="o">.</span><span class="n">strip_dirs</span><span class="p">()</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="s">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们可以看到其输出：</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/08/profile-of-effectlab.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -568,59 +638,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/06/database-migrate-from-syntaxhighlighter-evolved-to-wp-syntax.html">从syntaxhighlighter Evolved迁移至wp-syntax</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-13T00:33:42+08:00" pubdate data-updated="true">2012-06-13</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Syntaxhighlighter Evolved是一款Javascript的语法高亮插件，高亮是在用户的浏览器完成，这样可以减轻服务器的压力。而WP-Syntax恰恰相反，它是在服务器完成语法高亮。WP-Syntax比Syntaxhighlighter Evolved更有优势的地方是支持rss高亮，而且支持的语言众多，使用了GeSHi高亮引擎，可定制性相当强，至于高亮带来的压力，我们可以用缓存插件来解决。</p>
-
-<h4 id="syntaxhighlighter-evolvedplugin-usage">Syntaxhighlighter Evolved Plugin Usage</h4>
-
-<p>Just wrap your code in <code>[language]</code>, such as <code>[php]code here[/php]**</code> or <code>[css]code here[/css]</code>.</p>
-
-<h4 id="wp-syntaxbasic-usage">WP-Syntax Basic Usage</h4>
-
-<p>Wrap code blocks with <code>&lt;pre lang="LANGUAGE" line="1"&gt;</code> and <code>&lt;/pre&gt;</code></p>
-
-<p>我们很明显就可以看到两者之间的区别。Syntaxhighlighter Evolved用的是非常特殊的高亮标记<strong>[language]</strong>，如果我们直接卸载Syntaxhighlighter Evolved然后装上WP-Syntax就会导致Syntaxhighlighter Evolved的高亮标记直接输出，而且代码不会被高亮。</p>
-
-<p>我们必须将Syntaxhighlighter Evolved的高亮标记全部替换成WP-Syntax的高亮标记。</p>
-
-<p>对于这种这么繁琐的事情，我们就把它交给Python来完成吧。</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/06/database-migrate-from-syntaxhighlighter-evolved-to-wp-syntax.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -713,38 +730,40 @@
 <a style="font-size: 132%" href="/tag/apache/">Apache</a>
 <a style="font-size: 80%" href="/tag/boost/">Boost</a>
 <a style="font-size: 80%" href="/tag/bugzilla/">Bugzilla</a>
-<a style="font-size: 179%" href="/tag/c-/">C++</a>
+<a style="font-size: 178%" href="/tag/c-/">C++</a>
 <a style="font-size: 132%" href="/tag/captcha/">Captcha</a>
-<a style="font-size: 165%" href="/tag/clover/">Clover</a>
+<a style="font-size: 164%" href="/tag/clover/">Clover</a>
 <a style="font-size: 113%" href="/tag/datastructure/">DataStructure</a>
 <a style="font-size: 80%" href="/tag/design/">Design</a>
 <a style="font-size: 113%" href="/tag/emacs/">Emacs</a>
 <a style="font-size: 80%" href="/tag/english/">English</a>
-<a style="font-size: 165%" href="/tag/git/">Git</a>
+<a style="font-size: 172%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
 <a style="font-size: 113%" href="/tag/gitweb/">Gitweb</a>
-<a style="font-size: 179%" href="/tag/image-processing/">Image Processing</a>
+<a style="font-size: 178%" href="/tag/image-processing/">Image Processing</a>
 <a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
 <a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
-<a style="font-size: 208%" href="/tag/linux/">Linux</a>
+<a style="font-size: 207%" href="/tag/linux/">Linux</a>
 <a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
 <a style="font-size: 132%" href="/tag/mysql/">Mysql</a>
-<a style="font-size: 146%" href="/tag/nginx/">Nginx</a>
+<a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
 <a style="font-size: 156%" href="/tag/ogre/">OGRE</a>
+<a style="font-size: 80%" href="/tag/octopress/">Octopress</a>
 <a style="font-size: 132%" href="/tag/php/">PHP</a>
 <a style="font-size: 250%" href="/tag/python/">Python</a>
 <a style="font-size: 80%" href="/tag/qq/">QQ</a>
+<a style="font-size: 80%" href="/tag/ruby/">Ruby</a>
 <a style="font-size: 80%" href="/tag/svn/">SVN</a>
 <a style="font-size: 113%" href="/tag/scar/">Scar</a>
 <a style="font-size: 113%" href="/tag/tortoisegit/">TortoiseGit</a>
-<a style="font-size: 165%" href="/tag/ubuntu/">Ubuntu</a>
-<a style="font-size: 146%" href="/tag/ultrademo/">UltraDemo</a>
+<a style="font-size: 164%" href="/tag/ubuntu/">Ubuntu</a>
+<a style="font-size: 145%" href="/tag/ultrademo/">UltraDemo</a>
 <a style="font-size: 80%" href="/tag/vpn/">VPN</a>
 <a style="font-size: 113%" href="/tag/vim/">Vim</a>
 <a style="font-size: 113%" href="/tag/wpf/">WPF</a>
-<a style="font-size: 189%" href="/tag/web/">Web</a>
-<a style="font-size: 156%" href="/tag/wordpress/">Wordpress</a>
+<a style="font-size: 188%" href="/tag/web/">Web</a>
+<a style="font-size: 164%" href="/tag/wordpress/">Wordpress</a>
 <a style="font-size: 172%" href="/tag/compile/">compile</a>
 <a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
 <a style="font-size: 80%" href="/tag/ppp/">ppp</a>
@@ -766,6 +785,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/12/debug-nginx.html">调试Nginx</a>
       </li>
     
@@ -779,10 +802,6 @@
     
       <li class="post">
         <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
       </li>
     
   </ul>

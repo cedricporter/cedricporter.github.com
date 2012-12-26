@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Life | EverET.org]]></title>
   <link href="http://everet.org/category/life/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-26T03:11:24+08:00</updated>
+  <updated>2012-12-26T18:02:48+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -12,6 +12,95 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[From Wordpress to Octopress]]></title>
+    <link href="http://everet.org/2012/12/migrate-from-wordpress-to-octopress.html"/>
+    <updated>2012-12-25T20:49:00+08:00</updated>
+    <id>http://everet.org/2012/12/migrate-from-wordpress-to-octopress</id>
+    <content type="html"><![CDATA[<h2 id="section">为什么</h2>
+<p>为什么离开Wordpress选择Octopress？ 在Google中搜索Wordpress+Octopress就会找到整版整版的从Wordpress迁移到Octopress的博文，
+其中有介绍各种迁移的理由，例如Wordpress太臃肿，Octopress可以让我们像黑客一样写博客。</p>
+
+<p>这些都太高雅了，我只是不喜欢PHP那一坨一坨文明用语一样的代码，这样改起来的时候实在是让人蛋疼。而Octopress是Ruby写的，于是可以借机学习一下<em>Ruby</em>（<em>这个是主要原因</em>）。</p>
+
+<h2 id="wordpress">对于Wordpress的看法</h2>
+<p>Wordpress可以让我们在浏览器写东西，也可以用客户端来写，例如Windows Live Writer、Emacs + org2blog<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>。
+当我们在其他人电脑，没有客户端的时候，一样可以打开浏览器写。Wordpress既可以是胖客户端，又可以是瘦客户端。
+而且Wordpress架构设计灵活，插件主题丰富。用户体验好，也可以用Markdown、org等等其他语言来写。对于静态化，装个WP-Super-Cache插件就可以将所有文章静态化了，而且静态化的程度是可以控制的。</p>
+
+<h3 id="section-1">缺点</h3>
+<ol>
+  <li>是PHP写的，用MySQL，这两个东西一下就占了一堆内存。对于我们这些穷苦人民的VPS十分不友好。</li>
+  <li>不联网就没法预览最终效果。</li>
+</ol>
+
+<h2 id="octopress">对于Octopress的看法</h2>
+<p>对于Octopress的优点网上也有一堆一堆的评论，我也就不太多说了。我们来看看我觉得的缺点：</p>
+
+<h3 id="section-2">缺点</h3>
+<ol>
+  <li>Octopress是一个胖客户端的博客系统，在写博客前，你需要安装Git、Ruby等等东西，然后把环境调教好，才能开始写东西。</li>
+  <li>如果去到别人的电脑，或者是Windows的话，那么写个博客都会非常的蛋疼。</li>
+  <li>相对缺乏插件与主题。</li>
+  <li>发布一篇文章就要重建整个博客，慢。</li>
+</ol>
+
+<h3 id="section-3">优点</h3>
+<blockquote>
+  <p>Octopress is jekyll with Batteries included.</p>
+</blockquote>
+
+<p>直接就是用Markdown语法，不用纠结org还是markdown。
+可以方便地离线预览文章<code>rake preview</code>。</p>
+
+<h3 id="misc">Misc</h3>
+<p>Octopress默认的markdown引擎是rdiscount，这个实在是让人难以接受，连footnote都不支持。于是果断换成了kramdown<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>。kramdown支持footnote，甚至LaTex<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>。</p>
+
+<h2 id="section-4">其他</h2>
+
+<h3 id="section-5">写博客的三个阶段</h3>
+<p>之前看过阮一峰写的一篇文章<a href="http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html">github Pages和Jekyll入门</a>，里面有讲到，喜欢写博客的人，会经历三个阶段：</p>
+
+<blockquote>
+  <p>第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费空间来写。
+第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。
+第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。</p>
+</blockquote>
+
+<p>好吧，我觉得独立博客的管理确实挺麻烦的，加上刚刚经历买了1年的VPS没到一个月，主机商就跑路的悲剧后，就愈发觉得自己负责可靠性等各种东西的维护确实挺麻烦的。就先暂时放在Github上面，日后再自己管理。</p>
+
+<p>放在Github上面有个坏处是，对于页面都有缓存：<code>Cache-Control: max-age=86400</code>，也就是有一整天缓存时间，如果一天内有访问过这个页面的浏览器不刷新的话就直接从cache里面取了。不过应该也没什么大碍，基本不会一天更新好几次。而且除了自己也没什么人访问。</p>
+
+<h3 id="emacs">Emacs</h3>
+<p>Emacs既可以方便地写Wordpress也可以写Octopress。
+<img src="/imgs/emacs-user-at-work.jpg" alt="Emacs User At Work" /><sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup></p>
+
+<h3 id="ruby">Ruby</h3>
+<p>这段时间看了Ruby，发现竟然可以比Python更加优美，我想，日后，可能也会有很多人从Python流向Ruby，就像曾经人们从Perl流向Python一样。</p>
+
+<p>这就是江山代有才人出，长江后浪推前浪啊。事物总是在进步着。</p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="https://github.com/punchagan/org2blog">https://github.com/punchagan/org2blog</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p><a href="http://kramdown.rubyforge.org/index.html">http://kramdown.rubyforge.org/index.html</a><a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p><a href="http://yanping.me/cn/blog/2012/03/10/octopress-with-latex/">在Octopress中使用LaTeX</a><a href="#fnref:3" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:4">
+      <p><a href="http://batsov.com/articles/2011/11/11/blogging-like-a-hacker-evolution/">http://batsov.com/articles/2011/11/11/blogging-like-a-hacker-evolution/</a><a href="#fnref:4" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[有什么样的硬件，用什么样的软件]]></title>
@@ -427,57 +516,6 @@
 <h2 id="section-7">生活</h2>
 
 <p>卡内基写的各种书</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[临近大三结束的一些杂乱的思绪]]></title>
-    <link href="http://everet.org/2012/04/mass-thoughts.html"/>
-    <updated>2012-04-29T09:13:05+08:00</updated>
-    <id>http://everet.org/2012/04/mass-thoughts</id>
-    <content type="html"><![CDATA[<p>今天博客主页改版终于告一段落，突然发现很久没有更新博客的文章了，于是想写把一些凌乱的思绪记录到博客中。以前的很多想法都是用笔写下的，今天就当作例外吧。不过发现写在博客里可以搜索，写在本子里，只能人工翻阅查找，不过人工翻阅也会帮助回忆以前做了什么。</p>
-
-<p>我写的字很难看，于是想在写日记的时候练字，想起中小学时被老师逼着练字是一件很痛苦的事情，没想到到了大学，写字竟成了一种享受。</p>
-
-<p>很多程序员写的字比小学一年级的小朋友还更加扭曲，这让我不禁为汉字感到悲哀。作为中国人都写不好汉字，这是什么情况呢？<!-- more --></p>
-
-<p>想起一个无关本文的笑话：</p>
-
-<blockquote>
-  <p>某程序员对书法十分感兴趣，退休后决定在这方面有所建树。于是花重金购买了上等的文房四宝。一日，饭后突生雅兴，一番磨墨拟纸，并点上了上好的檀香，颇有王羲之风范，又具颜真卿气势，定神片刻，泼墨挥毫，郑重地写下一行字：hello world。</p>
-</blockquote>
-
-<p>或许每个人的追求的不一样，有的人想，只要我写的字别人看得懂就好了（我承认我曾经也这么想过，所以致使我现在的字还是很难看），有的人想，反正我都是用电脑打字，基本上不会有机会写字。</p>
-
-<p>不过可喜的是，发现读软件的还是有写字非常好的，例如 <a href="http://zhke.name/">洪科</a> ，他的字就写的非常棒，一年多以前他帮我的写的箴言我还挂在书桌上。</p>
-
-<p>写字很多时候是与人交流，那么我们是想用美好的东西与人交流还是用恶心的东西与人交流呢？</p>
-
-<p>优美的字让看的人心情舒畅，给予人好的用户体验，为别人带来快乐，是站在别人的角度考虑问题。</p>
-
-<p>这几天我把主页由黑色换成了白色，其中有诸多的原因。我经常使用的各种软件，都被我换成了黑色背景，因为我会在阴暗的环境下长时间对着电脑（经常是凌晨，所以很阴暗-_-），黑色的背景在黑夜中让眼睛更加舒适。不过在少数几次白天去图书馆写代码的时候，发现黑色背景导致屏幕反光更为严重，甚至都无法看清屏幕了。</p>
-
-<p><a href="http://kidsang.com/">屠文翔同学</a>一直喜欢白色背景，他指出像我博客这种黑色的主题，第一眼看上去可能会很酷，但是看久了很容易生厌，而且并不是每个人都喜欢黑色喜欢在深夜看电脑。<a href="http://kidsang.com/">屠文翔同学</a>所言极是。而且现在基本所有的网站都是白色的，有一次我环境光线十分充足的情况下去了<a href="http://china.dell.com/cn/p/alienware-laptops?~ck=anav">Alienware</a>的网页，顿时觉得黑色的网页让人很不适。可见黑色网页不适合大多数情况。</p>
-
-<p>于是在昨晚心血来潮就决定把主页换成白色，这样或许让读者会感觉更好一些，或许用户体验会更好一些。</p>
-
-<p>改主页对于我来说不是一件容易的事，我对html，css，js也不是很熟，修改主题显得进度非常缓慢，不过<a href="http://everet.org/2012/03/how-to-become-a-hacker.html">raymond也推荐学习HTML</a>，所以我还是很努力地花了一天时间来修改主题，期间卡住的时候也向屠文翔同学求助，所以问题都可以很快得到解决。于是大部分时间都是花在了微调和浏览器兼容上面。</p>
-
-<p>在改版过程中，我找到了两个比较顺眼的主题，一个看上去挺漂亮，一个看上去挺简陋的但是可以支持各种设备。于是我选了第一个主题来修改，在经过了大半天的努力，在看上去完成了的时候，我开始打开过去写的文章来围观，发现看上去挺漂亮的，字体大气舒适（其实是字体很大），咋一眼看上去挺漂亮的页面，在我阅读的时候，发现非常的困难。因为主题会适应屏幕，它会撑满整个屏幕，所以文章就会很宽，阅读的时候，眼球就需要左右移动，好累啊。这时候我终于明白了，为什么那么多主题都只是占了窗口中间的一个固定宽度的位置来显示文章，因为这样阅读的时候，恰好眼睛可以看完一行，所以眼睛基本不需要移动，只要滚动鼠标就可以阅读了，这样的体验会更加舒适。</p>
-
-<p>于是我扔掉了基本改好的第一个主题，开始对第二个看上去很简陋的主题动刀。于是就变成了现在这样的白色外观了。</p>
-
-<p>于是今天收获的东西是明白了有些看上去很美好的东西，其实一点都不好用，外观的炫酷不是最重要的，重要的内在的体验。</p>
-
-<p>今天的杂想也告一段落，也要想想未来这段时间的计划。</p>
-
-<p>现在挤压着许多的书要看，我知道就算我未来两个月全部用来看书也看不完，而且也不可能所有时间看书，这样会很底效，看完很容易就忘了。</p>
-
-<p>目前看来，最重要的实用技术方面的东西就是看Apache和Python的实现，这个估计会花费很多时间，而且作为一个网络菜鸟，我还需要看很多很多网络方面的书。再作为一个程序菜鸟，我需要看很多设计方面书，最后作为一个算法菜鸟，我还需要努力读懂几本算法书。</p>
-
-<p>唉，我知道我做的计划基本不会实现的，不过有个计划还是可以指导我需要做什么。</p>
-
-<p>最后，还需要练体能，看看有没有机会骑车去西藏，哈哈～</p>
 ]]></content>
   </entry>
   

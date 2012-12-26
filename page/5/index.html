@@ -9,7 +9,19 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="偶们都是被QQ截图宠坏的一代，QQ截图确实很好用，不过在Linux下就木有了，于是该怎么办呢。 我们可以使用系统自带的截图，默认按Print Screen全屏截图或者Alt + Print Screen截活动窗口。 那如果我们想截一个区域，就要打开screenshot，然后选中Select &hellip;">
+  <meta name="description" content="无意看到一个大神写的《Linear equations solver in 3 lines (Python recipe)》，Python解一元一次方程只需要三行就完成了，确实很强悍啊。 我们来围观一下： 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+说到底呢，这个段代码的关键是利用了复数 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +93,75 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/04/linear-equations-solvers-in-python.html">Python的“黑暗魔法”，两行解一元一次方程</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-25T04:06:02+08:00" pubdate data-updated="true">2012-04-25</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>无意看到一个大神写的《<a href="http://code.activestate.com/recipes/365013-linear-equations-solver-in-3-lines/">Linear equations solver in 3 lines (Python recipe)</a>》，Python解一元一次方程只需要三行就完成了，确实很强悍啊。</p>
+
+<p>我们来围观一下：
+<a href="http://everet.org/wp-content/uploads/2012/04/Screenshot-at-2012-04-24-195023.png"><img src="http://everet.org/wp-content/uploads/2012/04/Screenshot-at-2012-04-24-195023.png" alt="" /></a></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">说到底呢，这个段代码的关键是利用了复数。
+</span><span class="line">第一步：
+</span><span class="line">2 * x + 233 = x * 8 + 3
+</span><span class="line">变成
+</span><span class="line">2 * x + 233 -(x * 8 + 3)
+</span><span class="line">然后把x变成虚数1j
+</span><span class="line">然后变成
+</span><span class="line">2 * 1j + 233 -(1j * 8 + 3)
+</span><span class="line">通过eval算出结果为230-6j
+</span><span class="line">因为我们知道这个表达式结果为0，而且j也相当于x。
+</span><span class="line">所以问题变成了：230-6j=0，也就是230-6x=0。
+</span><span class="line">最后x = - 230 / 6 = 38.33333333336。</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/04/linear-equations-solvers-in-python.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -491,116 +572,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/03/ftp-server.html">我的FTP Server——ftp.py</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-24T10:35:06+08:00" pubdate data-updated="true">2012-03-24</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>在上文中，我们简要地学习了下FTP协议，链接 <a href="http://everet.org/2012/03/ftp-protocol.html">http://everet.org/2012/03/ftp-protocol.html</a>。</p>
-
-<p>有兴趣的同学们可以去围观下。</p>
-
-<p>因为最近偶看了下FTP协议，所以决定写个FTP Server玩玩。毕竟一直写的都是应用程序，于是乎想写下服务器端的程序。</p>
-
-<p>结果就有了ftp.py，名字灵感来源于web.py。</p>
-
-<h2 id="ftppy">ftp.py</h2>
-
-<p>ftp.py由Python 2.x实现。目前有部署到我的服务器上。支持Windows、Unix和类Unix系统。支持多线程模式和多进程模式，不过在Windows上仅支持多线程模式。支持虚拟用户。</p>
-
-<p>其中多进程模式支持以其他用户身份运行，加强了安全性。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">usage: ftp.py <span class="o">[</span>-d<span class="o">]</span> <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>-p port<span class="o">]</span> <span class="o">[</span>-o<span class="o">]</span> <span class="o">[</span>-t<span class="o">]</span>
-</span><span class="line">    -d become a daemon
-</span><span class="line">    -h <span class="nb">help</span>
-</span><span class="line">    -p listen port
-</span><span class="line">    -o output log to stdout, by default, it outputs to a log file.
-</span><span class="line">    -t thread mode, fork model by default
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>其中用户设置写在ftp.py.config中，如果文件不存在则默认使用anonymous账户。</p>
-
-<p>用户设置文件ftp.py.config格式如下：</p>
-
-<blockquote>
-  <p>account_info = {
-‘et’:{‘pass’:’123456789’, ‘home_dir’:’/root/’},
-‘lst’:{‘pass’:’987654321’, ‘home_dir’:’/tmp/’}
-}</p>
-</blockquote>
-
-<p>也就是账户名+密码+家目录路径。</p>
-
-<h2 id="ftppyconfig">ftp.py.config</h2>
-
-<p>我们还可以在ftp.py的同级目录中通过ftp.py.config设置我们的FTP Server。</p>
-
-<p>最大用户连接数 limit_connection_number </p>
-
-<p>&#8220;超时时间（单位：秒）timeout</p>
-
-<p>&#8220;默认家目录：default_home_dir</p>
-
-<p>日志文件：logfile</p>
-
-<p>运行的用户身份：runas_user</p>
-
-<h3 id="section">默认值为：</h3>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">limit_connection_number</span> <span class="o">=</span> <span class="mi">5</span>     <span class="c"># max client number</span>
-</span><span class="line"><span class="n">timeout</span> <span class="o">=</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">3</span>                <span class="c"># timeout in second</span>
-</span><span class="line"><span class="n">default_home_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">curdir</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">)</span>
-</span><span class="line"><span class="n">logfile</span> <span class="o">=</span> <span class="s">&#39;/var/log/ftp.py.log&#39;</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;posix&#39;</span> <span class="k">else</span> <span class="n">default_home_dir</span> <span class="o">+</span> <span class="s">&#39;ftp.py.log&#39;</span>
-</span><span class="line"><span class="n">runas_user</span> <span class="o">=</span> <span class="s">&#39;www-data&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h3 id="more---">源码如下：</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/03/ftp-server.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -693,38 +664,40 @@
 <a style="font-size: 132%" href="/tag/apache/">Apache</a>
 <a style="font-size: 80%" href="/tag/boost/">Boost</a>
 <a style="font-size: 80%" href="/tag/bugzilla/">Bugzilla</a>
-<a style="font-size: 179%" href="/tag/c-/">C++</a>
+<a style="font-size: 178%" href="/tag/c-/">C++</a>
 <a style="font-size: 132%" href="/tag/captcha/">Captcha</a>
-<a style="font-size: 165%" href="/tag/clover/">Clover</a>
+<a style="font-size: 164%" href="/tag/clover/">Clover</a>
 <a style="font-size: 113%" href="/tag/datastructure/">DataStructure</a>
 <a style="font-size: 80%" href="/tag/design/">Design</a>
 <a style="font-size: 113%" href="/tag/emacs/">Emacs</a>
 <a style="font-size: 80%" href="/tag/english/">English</a>
-<a style="font-size: 165%" href="/tag/git/">Git</a>
+<a style="font-size: 172%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
 <a style="font-size: 113%" href="/tag/gitweb/">Gitweb</a>
-<a style="font-size: 179%" href="/tag/image-processing/">Image Processing</a>
+<a style="font-size: 178%" href="/tag/image-processing/">Image Processing</a>
 <a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
 <a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
-<a style="font-size: 208%" href="/tag/linux/">Linux</a>
+<a style="font-size: 207%" href="/tag/linux/">Linux</a>
 <a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
 <a style="font-size: 132%" href="/tag/mysql/">Mysql</a>
-<a style="font-size: 146%" href="/tag/nginx/">Nginx</a>
+<a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
 <a style="font-size: 156%" href="/tag/ogre/">OGRE</a>
+<a style="font-size: 80%" href="/tag/octopress/">Octopress</a>
 <a style="font-size: 132%" href="/tag/php/">PHP</a>
 <a style="font-size: 250%" href="/tag/python/">Python</a>
 <a style="font-size: 80%" href="/tag/qq/">QQ</a>
+<a style="font-size: 80%" href="/tag/ruby/">Ruby</a>
 <a style="font-size: 80%" href="/tag/svn/">SVN</a>
 <a style="font-size: 113%" href="/tag/scar/">Scar</a>
 <a style="font-size: 113%" href="/tag/tortoisegit/">TortoiseGit</a>
-<a style="font-size: 165%" href="/tag/ubuntu/">Ubuntu</a>
-<a style="font-size: 146%" href="/tag/ultrademo/">UltraDemo</a>
+<a style="font-size: 164%" href="/tag/ubuntu/">Ubuntu</a>
+<a style="font-size: 145%" href="/tag/ultrademo/">UltraDemo</a>
 <a style="font-size: 80%" href="/tag/vpn/">VPN</a>
 <a style="font-size: 113%" href="/tag/vim/">Vim</a>
 <a style="font-size: 113%" href="/tag/wpf/">WPF</a>
-<a style="font-size: 189%" href="/tag/web/">Web</a>
-<a style="font-size: 156%" href="/tag/wordpress/">Wordpress</a>
+<a style="font-size: 188%" href="/tag/web/">Web</a>
+<a style="font-size: 164%" href="/tag/wordpress/">Wordpress</a>
 <a style="font-size: 172%" href="/tag/compile/">compile</a>
 <a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
 <a style="font-size: 80%" href="/tag/ppp/">ppp</a>
@@ -746,6 +719,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/12/debug-nginx.html">调试Nginx</a>
       </li>
     
@@ -759,10 +736,6 @@
     
       <li class="post">
         <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
       </li>
     
   </ul>

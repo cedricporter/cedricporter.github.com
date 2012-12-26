@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="文法以一种简洁的形式描述着语言的语法。 以下是Python的文法，摘自Python源码目录下的Grammar/Grammar。 Python的编译器的设计：http://www.python.org/dev/peps/pep-0339/ The Zephyr Abstract Syntax &hellip;">
+  <meta name="description" content="不管什么语言应用，识别语言这一步都很重要。 在小学时，大家都学习过如何分辨句子中的不同语言成分，例如动词和名词等。识别计算机语言也是如此（我们称之为语法分析）。 小例子 我们来看一下： return x + 1; 语法图：">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/05/building-recursive-descent-parser.html">构建LL(1)递归下降语法解析器</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-16T05:59:07+08:00" pubdate data-updated="true">2012-05-16</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>不管什么语言应用，识别语言这一步都很重要。</p>
+
+<p>在小学时，大家都学习过如何分辨句子中的不同语言成分，例如动词和名词等。识别计算机语言也是如此（我们称之为语法分析）。</p>
+
+<h2 id="section">小例子</h2>
+
+<p>我们来看一下：</p>
+
+<blockquote>
+  <p>return x + 1;</p>
+</blockquote>
+
+<p>语法图：</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/05/building-recursive-descent-parser.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -572,75 +623,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/04/linear-equations-solvers-in-python.html">Python的“黑暗魔法”，两行解一元一次方程</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-25T04:06:02+08:00" pubdate data-updated="true">2012-04-25</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>无意看到一个大神写的《<a href="http://code.activestate.com/recipes/365013-linear-equations-solver-in-3-lines/">Linear equations solver in 3 lines (Python recipe)</a>》，Python解一元一次方程只需要三行就完成了，确实很强悍啊。</p>
-
-<p>我们来围观一下：
-<a href="http://everet.org/wp-content/uploads/2012/04/Screenshot-at-2012-04-24-195023.png"><img src="http://everet.org/wp-content/uploads/2012/04/Screenshot-at-2012-04-24-195023.png" alt="" /></a></p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">说到底呢，这个段代码的关键是利用了复数。
-</span><span class="line">第一步：
-</span><span class="line">2 * x + 233 = x * 8 + 3
-</span><span class="line">变成
-</span><span class="line">2 * x + 233 -(x * 8 + 3)
-</span><span class="line">然后把x变成虚数1j
-</span><span class="line">然后变成
-</span><span class="line">2 * 1j + 233 -(1j * 8 + 3)
-</span><span class="line">通过eval算出结果为230-6j
-</span><span class="line">因为我们知道这个表达式结果为0，而且j也相当于x。
-</span><span class="line">所以问题变成了：230-6j=0，也就是230-6x=0。
-</span><span class="line">最后x = - 230 / 6 = 38.33333333336。</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/04/linear-equations-solvers-in-python.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -733,38 +715,40 @@
 <a style="font-size: 132%" href="/tag/apache/">Apache</a>
 <a style="font-size: 80%" href="/tag/boost/">Boost</a>
 <a style="font-size: 80%" href="/tag/bugzilla/">Bugzilla</a>
-<a style="font-size: 179%" href="/tag/c-/">C++</a>
+<a style="font-size: 178%" href="/tag/c-/">C++</a>
 <a style="font-size: 132%" href="/tag/captcha/">Captcha</a>
-<a style="font-size: 165%" href="/tag/clover/">Clover</a>
+<a style="font-size: 164%" href="/tag/clover/">Clover</a>
 <a style="font-size: 113%" href="/tag/datastructure/">DataStructure</a>
 <a style="font-size: 80%" href="/tag/design/">Design</a>
 <a style="font-size: 113%" href="/tag/emacs/">Emacs</a>
 <a style="font-size: 80%" href="/tag/english/">English</a>
-<a style="font-size: 165%" href="/tag/git/">Git</a>
+<a style="font-size: 172%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
 <a style="font-size: 113%" href="/tag/gitweb/">Gitweb</a>
-<a style="font-size: 179%" href="/tag/image-processing/">Image Processing</a>
+<a style="font-size: 178%" href="/tag/image-processing/">Image Processing</a>
 <a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
 <a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
-<a style="font-size: 208%" href="/tag/linux/">Linux</a>
+<a style="font-size: 207%" href="/tag/linux/">Linux</a>
 <a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
 <a style="font-size: 132%" href="/tag/mysql/">Mysql</a>
-<a style="font-size: 146%" href="/tag/nginx/">Nginx</a>
+<a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
 <a style="font-size: 156%" href="/tag/ogre/">OGRE</a>
+<a style="font-size: 80%" href="/tag/octopress/">Octopress</a>
 <a style="font-size: 132%" href="/tag/php/">PHP</a>
 <a style="font-size: 250%" href="/tag/python/">Python</a>
 <a style="font-size: 80%" href="/tag/qq/">QQ</a>
+<a style="font-size: 80%" href="/tag/ruby/">Ruby</a>
 <a style="font-size: 80%" href="/tag/svn/">SVN</a>
 <a style="font-size: 113%" href="/tag/scar/">Scar</a>
 <a style="font-size: 113%" href="/tag/tortoisegit/">TortoiseGit</a>
-<a style="font-size: 165%" href="/tag/ubuntu/">Ubuntu</a>
-<a style="font-size: 146%" href="/tag/ultrademo/">UltraDemo</a>
+<a style="font-size: 164%" href="/tag/ubuntu/">Ubuntu</a>
+<a style="font-size: 145%" href="/tag/ultrademo/">UltraDemo</a>
 <a style="font-size: 80%" href="/tag/vpn/">VPN</a>
 <a style="font-size: 113%" href="/tag/vim/">Vim</a>
 <a style="font-size: 113%" href="/tag/wpf/">WPF</a>
-<a style="font-size: 189%" href="/tag/web/">Web</a>
-<a style="font-size: 156%" href="/tag/wordpress/">Wordpress</a>
+<a style="font-size: 188%" href="/tag/web/">Web</a>
+<a style="font-size: 164%" href="/tag/wordpress/">Wordpress</a>
 <a style="font-size: 172%" href="/tag/compile/">compile</a>
 <a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
 <a style="font-size: 80%" href="/tag/ppp/">ppp</a>
@@ -786,6 +770,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/12/debug-nginx.html">调试Nginx</a>
       </li>
     
@@ -799,10 +787,6 @@
     
       <li class="post">
         <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
       </li>
     
   </ul>
