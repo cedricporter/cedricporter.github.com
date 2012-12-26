@@ -109,7 +109,8 @@
   </header>
 
 
-<div class="entry-content"><p>我现在使用的一台电脑的硬盘速度非常慢，Chrome有时也会对硬盘读写也会让机器发生顿卡，真是悲剧。所以我决定将Chrome经常读写的数据放置到内存中以提高响应速度。 Chrome的数据文件主要有用户配置文件以及磁盘缓存文件。在Ubuntu下就分别放置在~/.config/google-chrome以及~/.cache/google-chrome下面。 在Linux下，ramdisk直接就有了，直接拿来用就可以了，而在Windows下需要安装一些程序来创建ramdisk。我们来看看Linux下怎么做。 在Linux下，/dev/shm目录就是映射到了内存，所有写的东西都是直接写到了内存里面，不过这个目录不是持久的，断电就没了。</p>
+<div class="entry-content">
+  <p>我现在使用的一台电脑的硬盘速度非常慢，Chrome有时也会对硬盘读写也会让机器发生顿卡，真是悲剧。所以我决定将Chrome经常读写的数据放置到内存中以提高响应速度。 Chrome的数据文件主要有用户配置文件以及磁盘缓存文件。在Ubuntu下就分别放置在~/.config/google-chrome以及~/.cache/google-chrome下面。 在Linux下，ramdisk直接就有了，直接拿来用就可以了，而在Windows下需要安装一些程序来创建ramdisk。我们来看看Linux下怎么做。 在Linux下，/dev/shm目录就是映射到了内存，所有写的东西都是直接写到了内存里面，不过这个目录不是持久的，断电就没了。</p>
 
 <h2 id="hack">Hack</h2>
 
@@ -198,6 +199,33 @@
 <p>好，搞定。</p>
 
 <p>所有文件都在<a href="https://github.com/cedricporter/chrome_cache">https://github.com/cedricporter/chrome_cache</a>，有兴趣同学可以去下载使用一下，不过需要修改一下脚本里面的路径名。</p>
+
+
+  <hr/>
+    <h2>您可能也喜欢</h2>
+    <ul>
+    
+        <li>
+        <a href="/2012/01/management-remote-host.html">管理远程主机的一些技巧分享</a>
+        </li>
+    
+        <li>
+        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
+        </li>
+    
+        <li>
+        <a href="/2012/11/screen-on-ssh.html">screen在ssh远程登录中的使用</a>
+        </li>
+    
+        <li>
+        <a href="/2012/01/low-memory-vps-configuration.html">低内存VPS的配置</a>
+        </li>
+    
+        <li>
+        <a href="/2012/07/add-new-grammer-to-python.html">走进Python: 为Python增加新语法</a>
+        </li>
+    
+    </ul>
 </div>
 
 
@@ -274,30 +302,9 @@
 <aside class="sidebar">
   
     <section>
-    <h1>Related Posts</h1>
-    <ul class="posts">
-    
-        <li class="related">
-        <a href="/2012/01/management-remote-host.html">管理远程主机的一些技巧分享</a>
-        </li>
-    
-        <li class="related">
-        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
-        </li>
-    
-        <li class="related">
-        <a href="/2012/11/screen-on-ssh.html">screen在ssh远程登录中的使用</a>
-        </li>
-    
-        <li class="related">
-        <a href="/2012/01/low-memory-vps-configuration.html">低内存VPS的配置</a>
-        </li>
-    
-        <li class="related">
-        <a href="/2012/07/add-new-grammer-to-python.html">走进Python: 为Python增加新语法</a>
-        </li>
-    
-    </ul>
+  <h1>About Me</h1>
+  <p>Cedric Porter is Stupid ET.</p>
+  <p>EverET.org is provide by Stupid ET.</p>
 </section>
 <section>
   <h1>Tags</h1>
@@ -351,6 +358,20 @@
 <a style="font-size: 80%" href="/tag/virtual-memory/">virtual memory</a>
 
   </ul>
+</section>
+<section>
+  <h1>Links</h1>
+  <ul>
+    <li><a href="http://414112390.qzone.qq.com/" rel="me" target="_blank">我的QQ空间</a></li>
+    <li><a href="http://www.kidsang.com/" target="_blank">树桑小朋友的自留地</a></li>
+    <li><a href="http://xiaoxia.org/" target="_blank">XIAOXIA[PG]</a></li>
+    <li><a href="http://huanghuachao.cn/">Richard Huang's Blog</a></li>
+    <li><a href="http://jiafei.org/" target="_blank">jiafei</a></li>
+    <li><a href="http://xuyufish.com/" target="_blank">Fish</a></li>
+    <li><a href="http://zhke.name/" target="_blank">汗青-home</a></li>
+    <li><a href="http://www.dorgel.net/blog" target="_blank">Dorgel&#039;s Blog</a></li>
+    <li><a href="http://spead.everet.org" title="俊杰的空间" target="_blank">Spead&#039;s Blog</a></li>
+  </ul>  
 </section>
 <section>
   <h1>Recent Comments</h1>
