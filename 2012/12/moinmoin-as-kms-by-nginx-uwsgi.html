@@ -371,31 +371,29 @@
 <span class="line-number">11</span>
 <span class="line-number">12</span>
 <span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="xml"><span class="line">    /var/run/uwsgi_wiki.sock
-</span><span class="line">    uwsgi
-</span><span class="line">    uwsgi
-</span><span class="line">
-</span><span class="line">    128
-</span><span class="line">    /var/www/moinmoin/wiki/wikiconfig.py
-</span><span class="line">
-</span><span class="line">    3
-</span><span class="line">
-</span><span class="line">
-</span><span class="line">
-</span><span class="line">    /var/run/uwsgi.pid
-</span><span class="line">    /var/log/uwsgi.log
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="xml"><span class="line"><span class="nt">&lt;uwsgi&gt;</span>
+</span><span class="line">    <span class="nt">&lt;socket&gt;</span>/var/run/uwsgi_wiki.sock<span class="nt">&lt;/socket&gt;</span>
+</span><span class="line">    <span class="nt">&lt;uid&gt;</span>uwsgi<span class="nt">&lt;/uid&gt;</span>
+</span><span class="line">    <span class="nt">&lt;gid&gt;</span>uwsgi<span class="nt">&lt;/gid&gt;</span>
+</span><span class="line">    <span class="nt">&lt;master-as-root/&gt;</span>
+</span><span class="line">    <span class="nt">&lt;reload-on-as&gt;</span>128<span class="nt">&lt;/reload-on-as&gt;</span>
+</span><span class="line">    <span class="nt">&lt;touch-reload&gt;</span>/var/www/moinmoin/wiki/wikiconfig.py<span class="nt">&lt;/touch-reload&gt;</span>
+</span><span class="line">    <span class="nt">&lt;master/&gt;</span>
+</span><span class="line">    <span class="nt">&lt;processes&gt;</span>3<span class="nt">&lt;/processes&gt;</span>
+</span><span class="line">    <span class="nt">&lt;no-site/&gt;</span>
+</span><span class="line">    <span class="nt">&lt;vhost/&gt;</span>
+</span><span class="line">    <span class="nt">&lt;memory-report/&gt;</span>
+</span><span class="line">    <span class="nt">&lt;pidfile&gt;</span>/var/run/uwsgi.pid<span class="nt">&lt;/pidfile&gt;</span>
+</span><span class="line">    <span class="nt">&lt;daemonize&gt;</span>/var/log/uwsgi.log<span class="nt">&lt;/daemonize&gt;</span>
+</span><span class="line"><span class="nt">&lt;/uwsgi&gt;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <ul>
-  <li>
-    <p>其中reload-on-as是指内存消耗达到128就重新加载过进程。</p>
-  </li>
-  <li>
-    <p>touch-reload是指wikiconfig.py被修改就重新加载进程。</p>
-  </li>
-  <li>
-    <p>master-as-root是指master进程uid为root，这样才有足够权限在/var/run中创建socket。</p>
-  </li>
+  <li>其中reload-on-as是指内存消耗达到128就重新加载过进程。</li>
+  <li>touch-reload是指wikiconfig.py被修改就重新加载进程。</li>
+  <li>master-as-root是指master进程uid为root，这样才有足够权限在/var/run中创建socket。</li>
 </ul>
 
 <p>其他参数就没什么特别的了。</p>
@@ -403,10 +401,6 @@
 <h3 id="add-user">Add User</h3>
 
 <p>添加用户</p>
-
-<blockquote>
-
-</blockquote>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -419,27 +413,19 @@
 
 <p>加到开机启动，然后运行uwsgi服务。</p>
 
-<blockquote>
-
-</blockquote>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line"># update-rc.d uwsgi defaults
-</span><span class="line"># service uwsgi start</span></code></pre></td></tr></table></div></figure></notextile></div>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c"># update-rc.d uwsgi defaults</span>
+</span><span class="line"><span class="c"># service uwsgi start</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <h2 id="section">扩展阅读</h2>
 
 <ul>
-  <li>
-    <p><a href="http://uwsgi-docs.readthedocs.org/en/latest/Nginx.html#dynamic-apps">UWSGI_SCRIPT</a></p>
-  </li>
-  <li>
-    <p><a href="https://uwsgi-docs.readthedocs.org/en/latest/Vars.html?highlight=%20UWSGI_CHDIR">uwsgi protocol magic variables</a></p>
-  </li>
-  <li>
-    <p><a href="http://moinmo.in/EmacsForMoinMoin">Emacs的moinmoin-mode</a></p>
-  </li>
+  <li><a href="http://uwsgi-docs.readthedocs.org/en/latest/Nginx.html#dynamic-apps">UWSGI_SCRIPT</a></li>
+  <li><a href="https://uwsgi-docs.readthedocs.org/en/latest/Vars.html?highlight=%20UWSGI_CHDIR">uwsgi protocol magic variables</a></li>
+  <li><a href="http://moinmo.in/EmacsForMoinMoin">Emacs的moinmoin-mode</a></li>
 </ul>
 
 </div>
@@ -472,6 +458,17 @@
     <a class='category' href='/category/it/'>IT</a>
   
 </span>
+
+
+      
+
+<span class="categories">
+  Tags:&nbsp
+  
+    <a class='tag' href='/tag/moinmoin/'>MoinMoin</a>, <a class='tag' href='/tag/nginx/'>Nginx</a>, <a class='tag' href='/tag/python/'>Python</a>, <a class='tag' href='/tag/uwsgi/'>uWSGI</a>
+  
+</span>
+
 
 
     </p>
@@ -523,11 +520,11 @@
         </li>
     
         <li class="related">
-        <a href="/2012/03/ftp-protocol.html">Mission: FTP Protocol</a>
+        <a href="/2012/09/chrome-ramdisk.html">[优化]将Chrome的数据放置到内存中去</a>
         </li>
     
         <li class="related">
-        <a href="/2012/09/chrome-ramdisk.html">[优化]将Chrome的数据放置到内存中去</a>
+        <a href="/2012/03/ftp-protocol.html">Mission: FTP Protocol</a>
         </li>
     
     </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Python | EverET.org]]></title>
   <link href="http://everet.org/tag/python/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-26T19:01:10+08:00</updated>
+  <updated>2012-12-26T20:07:54+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -22,7 +22,7 @@
 <p>为什么离开Wordpress选择Octopress？ 在Google中搜索Wordpress+Octopress就会找到整版整版的从Wordpress迁移到Octopress的博文，
 其中有介绍各种迁移的理由，例如Wordpress太臃肿，Octopress可以让我们像黑客一样写博客。</p>
 
-<p>这些都太高雅了，我只是不喜欢PHP那一坨一坨文明用语一样的代码，这样改起来的时候实在是让人蛋疼。而Octopress是Ruby写的，于是可以借机学习一下<em>Ruby</em>（<em>这个是主要原因</em>）。</p>
+<p>这些都太高雅了，我只是不喜欢PHP那一坨一坨文明用语一样的代码，这样改起来的时候实在是让人蛋疼。而Octopress是Ruby写的，于是可以借机学习一下<em>Ruby</em>（<strong>这个是主要原因</strong>）。</p>
 
 <!-- more -->
 
@@ -374,37 +374,29 @@
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
-<span class='line-number'>18</span>
 </pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span>/var/run/uwsgi_wiki.sock
-</span><span class='line'>uwsgi
-</span><span class='line'>uwsgi
-</span><span class='line'>
-</span><span class='line'>128
-</span><span class='line'>/var/www/moinmoin/wiki/wikiconfig.py
-</span><span class='line'>
-</span><span class='line'>3
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>/var/run/uwsgi.pid
-</span><span class='line'>/var/log/uwsgi.log
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;uwsgi&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;socket&gt;</span>/var/run/uwsgi_wiki.sock<span class="nt">&lt;/socket&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;uid&gt;</span>uwsgi<span class="nt">&lt;/uid&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;gid&gt;</span>uwsgi<span class="nt">&lt;/gid&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;master-as-root</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;reload-on-as&gt;</span>128<span class="nt">&lt;/reload-on-as&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;touch-reload&gt;</span>/var/www/moinmoin/wiki/wikiconfig.py<span class="nt">&lt;/touch-reload&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;master</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;processes&gt;</span>3<span class="nt">&lt;/processes&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;no-site</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;vhost</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;memory-report</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;pidfile&gt;</span>/var/run/uwsgi.pid<span class="nt">&lt;/pidfile&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;daemonize&gt;</span>/var/log/uwsgi.log<span class="nt">&lt;/daemonize&gt;</span>
+</span><span class='line'><span class="nt">&lt;/uwsgi&gt;</span>
 </span><span class='line'><span class="nt">&lt;p&gt;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <ul>
-  <li>
-    <p>其中reload-on-as是指内存消耗达到128就重新加载过进程。</p>
-  </li>
-  <li>
-    <p>touch-reload是指wikiconfig.py被修改就重新加载进程。</p>
-  </li>
-  <li>
-    <p>master-as-root是指master进程uid为root，这样才有足够权限在/var/run中创建socket。</p>
-  </li>
+  <li>其中reload-on-as是指内存消耗达到128就重新加载过进程。</li>
+  <li>touch-reload是指wikiconfig.py被修改就重新加载进程。</li>
+  <li>master-as-root是指master进程uid为root，这样才有足够权限在/var/run中创建socket。</li>
 </ul>
 
 <p>其他参数就没什么特别的了。</p>
@@ -412,10 +404,6 @@
 <h3 id="add-user">Add User</h3>
 
 <p>添加用户</p>
-
-<blockquote>
-
-</blockquote>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -428,27 +416,19 @@
 
 <p>加到开机启动，然后运行uwsgi服务。</p>
 
-<blockquote>
-
-</blockquote>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># update-rc.d uwsgi defaults
-</span><span class='line'># service uwsgi start</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># update-rc.d uwsgi defaults</span>
+</span><span class='line'><span class="c"># service uwsgi start</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <h2 id="section">扩展阅读</h2>
 
 <ul>
-  <li>
-    <p><a href="http://uwsgi-docs.readthedocs.org/en/latest/Nginx.html#dynamic-apps">UWSGI_SCRIPT</a></p>
-  </li>
-  <li>
-    <p><a href="https://uwsgi-docs.readthedocs.org/en/latest/Vars.html?highlight=%20UWSGI_CHDIR">uwsgi protocol magic variables</a></p>
-  </li>
-  <li>
-    <p><a href="http://moinmo.in/EmacsForMoinMoin">Emacs的moinmoin-mode</a></p>
-  </li>
+  <li><a href="http://uwsgi-docs.readthedocs.org/en/latest/Nginx.html#dynamic-apps">UWSGI_SCRIPT</a></li>
+  <li><a href="https://uwsgi-docs.readthedocs.org/en/latest/Vars.html?highlight=%20UWSGI_CHDIR">uwsgi protocol magic variables</a></li>
+  <li><a href="http://moinmo.in/EmacsForMoinMoin">Emacs的moinmoin-mode</a></li>
 </ul>
 
 ]]></content>

@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Octopress | EverET.org]]></title>
   <link href="http://everet.org/tag/octopress/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-26T19:01:10+08:00</updated>
+  <updated>2012-12-26T20:07:54+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -22,7 +22,7 @@
 <p>为什么离开Wordpress选择Octopress？ 在Google中搜索Wordpress+Octopress就会找到整版整版的从Wordpress迁移到Octopress的博文，
 其中有介绍各种迁移的理由，例如Wordpress太臃肿，Octopress可以让我们像黑客一样写博客。</p>
 
-<p>这些都太高雅了，我只是不喜欢PHP那一坨一坨文明用语一样的代码，这样改起来的时候实在是让人蛋疼。而Octopress是Ruby写的，于是可以借机学习一下<em>Ruby</em>（<em>这个是主要原因</em>）。</p>
+<p>这些都太高雅了，我只是不喜欢PHP那一坨一坨文明用语一样的代码，这样改起来的时候实在是让人蛋疼。而Octopress是Ruby写的，于是可以借机学习一下<em>Ruby</em>（<strong>这个是主要原因</strong>）。</p>
 
 <!-- more -->
 
