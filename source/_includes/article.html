@@ -24,5 +24,17 @@
     </footer>
   {% endif %}
 {% else %}
-<div class="entry-content">{{ content }}</div>
+<div class="entry-content">
+  {{ content }}
+
+  <hr/>
+    <h2>您可能也喜欢</h2>
+    <ul>
+    {% for p in site.related_posts limit:5 %}
+        <li>
+        <a href="{{ site_url }}{{ root_url }}{{ p.url }}">{{ p.title }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
 {% endif %}
