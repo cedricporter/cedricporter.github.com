@@ -240,48 +240,35 @@ exit 0
 /etc/uwsgi/uwsgi.xml内容如下：
 
 {% codeblock xml lang:xml %}
-
-
-    /var/run/uwsgi_wiki.sock
-    uwsgi
-    uwsgi
-    
-    128
-    /var/www/moinmoin/wiki/wikiconfig.py
-    
-    3
-    
-    
-    
-    /var/run/uwsgi.pid
-    /var/log/uwsgi.log
-
-
+<uwsgi>
+    <socket>/var/run/uwsgi_wiki.sock</socket>
+    <uid>uwsgi</uid>
+    <gid>uwsgi</gid>
+    <master-as-root/>
+    <reload-on-as>128</reload-on-as>
+    <touch-reload>/var/www/moinmoin/wiki/wikiconfig.py</touch-reload>
+    <master/>
+    <processes>3</processes>
+    <no-site/>
+    <vhost/>
+    <memory-report/>
+    <pidfile>/var/run/uwsgi.pid</pidfile>
+    <daemonize>/var/log/uwsgi.log</daemonize>
+</uwsgi>
 {% endcodeblock %}
-
-
-
 
 	
   * 其中reload-on-as是指内存消耗达到128就重新加载过进程。
-
-	
   * touch-reload是指wikiconfig.py被修改就重新加载进程。
-
-	
   * master-as-root是指master进程uid为root，这样才有足够权限在/var/run中创建socket。
-
 
 其他参数就没什么特别的了。
 
 
 ### Add User
 
-
 添加用户
 
-
-> 
 
 {% codeblock %}
 # adduser --system --no-create-home --disabled-login --disabled-password --group uwsgi
@@ -290,41 +277,22 @@ exit 0
 {% endcodeblock %}
 
 
-
-
-
-
 ### Run
-
 
 加到开机启动，然后运行uwsgi服务。
 
 
-> 
 
-{% codeblock %}
+{% codeblock bash lang:bash %}
 # update-rc.d uwsgi defaults
 # service uwsgi start
 {% endcodeblock %}
 
 
-
-
-
-
 ## 扩展阅读
-
-
-
-
-
 	
   * [UWSGI_SCRIPT](http://uwsgi-docs.readthedocs.org/en/latest/Nginx.html#dynamic-apps)
-
-	
   * [uwsgi protocol magic variables](https://uwsgi-docs.readthedocs.org/en/latest/Vars.html?highlight=%20UWSGI_CHDIR)
-
-        
   * [Emacs的moinmoin-mode](http://moinmo.in/EmacsForMoinMoin)
 
 

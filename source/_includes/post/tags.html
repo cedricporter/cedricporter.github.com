@@ -1,0 +1,11 @@
+{% capture tags %}{% if post %}{{ post.tags | tag_links | size }}{% else %}{{ page.tags | tag_links | size }}{% endif %}{% endcapture %}
+{% unless tags == '0' %}
+<span class="categories">
+  Tags:&nbsp
+  {% if post %}
+    {{ post.tags | tag_links }}
+  {% else %}
+    {{ page.tags | tag_links }}
+  {% endif %}
+</span>
+{% endunless %}
