@@ -25,12 +25,13 @@ tags:
 
 我们可以使用如下文法表示计算表达式：
 
+```
 # expr ::= expr addop term | term
 # term ::= term mulop factor | factor
 # factor ::= number | ( expr )
 # addop ::= + | -
 # mulop ::= * | /
-
+```
 
 ## 例子
 
