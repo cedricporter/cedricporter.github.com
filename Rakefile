@@ -204,6 +204,19 @@ task :update_source, :theme do |t, args|
   puts "## Updated #{source_dir} ##"
 end
 
+# lsi
+desc "turn on lsi"
+task :turn_on_lsi do
+  puts "## Turn on lsi in _config.yml ##"
+  `sed -i "s/lsi: false/lsi: true/g" _config.yml`
+end
+
+desc "turn off lsi"
+task :turn_off_lsi do
+  puts "## Turn off lsi in _config.yml ##"
+  `sed -i "s/lsi: true/lsi: false/g" _config.yml`
+end  
+
 ##############
 # Deploying  #
 ##############
@@ -222,7 +235,7 @@ task :deploy do
 end
 
 desc "Generate website and deploy"
-task :gen_deploy => [:integrate, :generate, :deploy] do
+task :gen_deploy => [:turn_on_lsi, :integrate, :generate, :deploy, :turn_off_lsi] do
 end
 
 desc "copy dot files for deployment"
