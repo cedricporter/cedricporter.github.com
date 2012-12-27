@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="不管什么语言应用，识别语言这一步都很重要。 在小学时，大家都学习过如何分辨句子中的不同语言成分，例如动词和名词等。识别计算机语言也是如此（我们称之为语法分析）。 小例子 我们来看一下： return x + 1; 语法图：">
+  <meta name="description" content="LL(1) 何为LL(1)？通俗来说就是向前看一个词法单元的自顶向下解析器。两个L都代表left-to-right，第一个L表示解析器按“从左到右”的顺序解析输入内容；第二个L表示下降解析时也是按“从左到右”的顺序遍历子节点。而(1)表示它使用一个向前看 词法单元。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/05/calculator-by-recursive-descent-parser.html">用LL(1)递归下降语法器构造一个计算器</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-16T06:00:04+08:00" pubdate data-updated="true">2012-05-16</time>
+        
+         | <a href="/2012/05/calculator-by-recursive-descent-parser.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2 id="ll1">LL(1)</h2>
+
+<p>何为LL(1)？通俗来说就是向前看一个词法单元的自顶向下解析器。两个L都代表left-to-right，第一个L表示解析器按“从左到右”的顺序解析输入内容；第二个L表示下降解析时也是按“从左到右”的顺序遍历子节点。而(1)表示它使用一个向前看 词法单元。</p>
+
+<p>我们从一个简单的计算器来看看递归下降的语法器如何构造。</p>
+
+<p>对于 2 + 3 * 5 的抽象语法树如下：</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/05/calculator-by-recursive-descent-parser.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -598,51 +645,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/04/mass-thoughts.html">临近大三结束的一些杂乱的思绪</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-29T09:13:05+08:00" pubdate data-updated="true">2012-04-29</time>
-        
-         | <a href="/2012/04/mass-thoughts.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>今天博客主页改版终于告一段落，突然发现很久没有更新博客的文章了，于是想写把一些凌乱的思绪记录到博客中。以前的很多想法都是用笔写下的，今天就当作例外吧。不过发现写在博客里可以搜索，写在本子里，只能人工翻阅查找，不过人工翻阅也会帮助回忆以前做了什么。</p>
-
-<p>我写的字很难看，于是想在写日记的时候练字，想起中小学时被老师逼着练字是一件很痛苦的事情，没想到到了大学，写字竟成了一种享受。</p>
-
-<p>很多程序员写的字比小学一年级的小朋友还更加扭曲，这让我不禁为汉字感到悲哀。作为中国人都写不好汉字，这是什么情况呢？</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/04/mass-thoughts.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -739,7 +741,7 @@
 <a style="font-size: 164%" href="/tag/clover/">Clover</a>
 <a style="font-size: 113%" href="/tag/datastructure/">DataStructure</a>
 <a style="font-size: 80%" href="/tag/design/">Design</a>
-<a style="font-size: 113%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 132%" href="/tag/emacs/">Emacs</a>
 <a style="font-size: 80%" href="/tag/english/">English</a>
 <a style="font-size: 172%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
@@ -749,6 +751,8 @@
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
 <a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
 <a style="font-size: 207%" href="/tag/linux/">Linux</a>
+<a style="font-size: 80%" href="/tag/lisp/">Lisp</a>
+<a style="font-size: 80%" href="/tag/markdown/">Markdown</a>
 <a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
 <a style="font-size: 132%" href="/tag/mysql/">Mysql</a>
 <a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
@@ -800,6 +804,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
       </li>
     
@@ -813,10 +821,6 @@
     
       <li class="post">
         <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
       </li>
     
   </ul>

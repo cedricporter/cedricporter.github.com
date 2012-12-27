@@ -9,7 +9,8 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="最近洪爷要写数据挖掘的论文需要些数据，于是俺又有机会做苦力了。昨天刚刚回到学校，晚上就帮洪爷写了个爬虫来爬数据京东商城的笔记本的参数。 为了快速完成，基本原理就是人工找到笔记本的页面。 然后他有22页（Page），编号规则如下： http://www.360buy.com/products/670 &hellip;">
+  <meta name="description" content="发现到了现在，我还是除了一些基本的状态码之外， 其他状态码都不是很熟悉，于是找了些状态码过来记录一下，也当做备忘了。 下面的拿Vim把返回码处理成表格还加了颜色，哈哈，果然用Vim就是像刷屏一样。配合宏真是无敌了！ 100
+Continue 初始的请求已经接受，客户应当继续发送请求的其余部分 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +82,76 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/the-http-status-code.html">HTTP状态码</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-19T00:44:30+08:00" pubdate data-updated="true">2012-02-19</time>
+        
+         | <a href="/2012/02/the-http-status-code.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>发现到了现在，我还是除了一些基本的状态码之外， 其他状态码都不是很熟悉，于是找了些状态码过来记录一下，也当做备忘了。</p>
+
+<p>下面的拿Vim把返回码处理成表格还加了颜色，哈哈，果然用Vim就是像刷屏一样。配合宏真是无敌了！</p>
+
+<p><strong>100</strong>
+Continue</p>
+
+<p>初始的请求已经接受，客户应当继续发送请求的其余部分</p>
+
+<p><strong>101</strong>
+Switching Protocols</p>
+
+<p>服务器将遵从客户的请求转换到另外一种协议</p>
+
+<p><strong>200</strong>
+OK</p>
+
+<p>一切正常，对GET和POST请求的应答文档跟在后面</p>
+
+<p><strong>201</strong>
+Created</p>
+
+<p>服务器已经创建了文档，Location头给出了它的URL。</p>
+
+<p><strong>202</strong>
+Accepted</p>
+
+<p>已经接受请求，但处理尚未完成。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/02/the-http-status-code.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -551,56 +622,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/01/reduce-spam-in-wordpress.html">减少wordpress垃圾评论的方法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-31T19:21:43+08:00" pubdate data-updated="true">2012-01-31</time>
-        
-         | <a href="/2012/01/reduce-spam-in-wordpress.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>自从有<a href="http://EverET.org/">http://EverET.org/</a>开始以来，我的留言板每天都有几十条来自世界各国的垃圾评论，好在装了Akismet，否则我的博客就就被垃圾评论塞满了。这些都是某些RP低的人用机器自动发的，毫无价值，有俄文，波兰文等等乱七八糟的语言。</p>
-
-<p>仔细看看，垃圾评论都集中到留言板。我的留言板的url曾经是 <a href="http://everet.org/guestbook">http://everet.org/guestbook</a> ，然后我改成了 <a href="http://everet.org/guestbooket">http://everet.org/guestbooket</a> 还是一样，发现原来用 <a href="http://everet.org/guestbook">http://everet.org/guestbook</a> 也可以定向到 <a href="http://everet.org/guestbooket">http://everet.org/guestbooket</a> ，所以改了等于没改。</p>
-
-<p>于是，我把它改成拼音的，改成 liuyan，果然就没有了垃圾评论。</p>
-
-<p><a href="http://everet.org/liuyana">http://everet.org/liuyana</a></p>
-
-<p>哈哈。估计垃圾评论的发送器也是用了Google Hack吧。</p>
-
-<p>想起以前在用<a href="http://baike.baidu.com/view/535826.html?tp=6_11">NBSI</a>注入的时候，也是在里面打开Google页面，然后搜 inurl:asp?= 什么的，然后就让NBSI顺着搜索结果往下测试。</p>
-
-<p>对于垃圾评论发送器我们可以搜索 inurl:guestbook ，然后在搜索结果一部份中就是某些网站的留言板，就可以在那些页面发垃圾评论了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -697,7 +718,7 @@
 <a style="font-size: 164%" href="/tag/clover/">Clover</a>
 <a style="font-size: 113%" href="/tag/datastructure/">DataStructure</a>
 <a style="font-size: 80%" href="/tag/design/">Design</a>
-<a style="font-size: 113%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 132%" href="/tag/emacs/">Emacs</a>
 <a style="font-size: 80%" href="/tag/english/">English</a>
 <a style="font-size: 172%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
@@ -707,6 +728,8 @@
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
 <a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
 <a style="font-size: 207%" href="/tag/linux/">Linux</a>
+<a style="font-size: 80%" href="/tag/lisp/">Lisp</a>
+<a style="font-size: 80%" href="/tag/markdown/">Markdown</a>
 <a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
 <a style="font-size: 132%" href="/tag/mysql/">Mysql</a>
 <a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
@@ -758,6 +781,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
       </li>
     
@@ -771,10 +798,6 @@
     
       <li class="post">
         <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
       </li>
     
   </ul>

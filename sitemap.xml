@@ -399,6 +399,12 @@
         <lastmod>2012-12-26T19:30:17+08:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html
+        </loc>
+        <lastmod>2012-12-28T03:05:07+08:00</lastmod>
+    </url>
+    <url>
         <loc>http://everet.org/liuyana/</loc>
         <lastmod>2012-12-25T16:30:07+08:00</lastmod>
     </url>
@@ -408,11 +414,11 @@
     </url>
     <url>
         <loc>http://everet.org/feed/</loc>
-        <lastmod>2012-12-27T02:41:54+08:00</lastmod>
+        <lastmod>2012-12-28T03:05:07+08:00</lastmod>
     </url>
     <url>
         <loc>http://everet.org/</loc>
-        <lastmod>2012-12-27T02:41:54+08:00</lastmod>
+        <lastmod>2012-12-28T03:05:07+08:00</lastmod>
     </url>
     <url>
         <loc>http://everet.org/my-works/</loc>
@@ -424,6 +430,6 @@
     </url>
     <url>
         <loc>http://everet.org/archives/</loc>
-        <lastmod>2012-12-27T02:41:54+08:00</lastmod>
+        <lastmod>2012-12-28T03:05:07+08:00</lastmod>
     </url>
 </urlset>

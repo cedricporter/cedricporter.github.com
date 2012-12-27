@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="Clover的数据结构是由面层，边层和点层所组成。 面层 面层是一棵二叉树外加一个面组用于实现重叠的面的拾取和避免Z-Buffer失效。当发生折叠的时候，肯定至少有一个面会被分割成为两个面，所以二叉树的叶子增加两个节点，叶子更新，渲染层也需要更新。 边层 边层是二叉树组成的森林， ">
+  <meta name="description" content="SimpleParse是一款非常简洁的Python解析模板，可以自己定义EBNF文法，然后SimpleParse会输出结构化的。 SimpleParse的介绍可以见，http://www.ibm.com/developerworks/cn/linux/sdk/python/charm-23/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,59 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/03/the-format-grammer.html">神奇的Python:格式化UltraDemo的文法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-16T04:17:39+08:00" pubdate data-updated="true">2012-03-16</time>
+        
+         | <a href="/2012/03/the-format-grammer.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>SimpleParse是一款非常简洁的Python解析模板，可以自己定义EBNF文法，然后SimpleParse会输出结构化的。</p>
+
+<p>SimpleParse的介绍可以见，<a href="http://www.ibm.com/developerworks/cn/linux/sdk/python/charm-23/index.html">http://www.ibm.com/developerworks/cn/linux/sdk/python/charm-23/index.html</a>，我也是从IBM的网站上看到这个神奇的模块的。</p>
+
+<p>我们有如下的UltraDemo的文法，这个是我们之前写在word文档里面的。</p>
+
+<p>他们很乱，于是我们要对其进行格式化。</p>
+
+<p>不幸的是，我们没有现成的工具可以格式化它，所以我们要自己定制一个小工具来完成我们的任务。</p>
+
+<p>此时我们可以借助SimpleParse。</p>
+
+<p>下面的原始的文法，很乱是不是：</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/03/the-format-grammer.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -577,76 +630,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/02/the-http-status-code.html">HTTP状态码</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-19T00:44:30+08:00" pubdate data-updated="true">2012-02-19</time>
-        
-         | <a href="/2012/02/the-http-status-code.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>发现到了现在，我还是除了一些基本的状态码之外， 其他状态码都不是很熟悉，于是找了些状态码过来记录一下，也当做备忘了。</p>
-
-<p>下面的拿Vim把返回码处理成表格还加了颜色，哈哈，果然用Vim就是像刷屏一样。配合宏真是无敌了！</p>
-
-<p><strong>100</strong>
-Continue</p>
-
-<p>初始的请求已经接受，客户应当继续发送请求的其余部分</p>
-
-<p><strong>101</strong>
-Switching Protocols</p>
-
-<p>服务器将遵从客户的请求转换到另外一种协议</p>
-
-<p><strong>200</strong>
-OK</p>
-
-<p>一切正常，对GET和POST请求的应答文档跟在后面</p>
-
-<p><strong>201</strong>
-Created</p>
-
-<p>服务器已经创建了文档，Location头给出了它的URL。</p>
-
-<p><strong>202</strong>
-Accepted</p>
-
-<p>已经接受请求，但处理尚未完成。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/02/the-http-status-code.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -743,7 +726,7 @@ Accepted</p>
 <a style="font-size: 164%" href="/tag/clover/">Clover</a>
 <a style="font-size: 113%" href="/tag/datastructure/">DataStructure</a>
 <a style="font-size: 80%" href="/tag/design/">Design</a>
-<a style="font-size: 113%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 132%" href="/tag/emacs/">Emacs</a>
 <a style="font-size: 80%" href="/tag/english/">English</a>
 <a style="font-size: 172%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
@@ -753,6 +736,8 @@ Accepted</p>
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
 <a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
 <a style="font-size: 207%" href="/tag/linux/">Linux</a>
+<a style="font-size: 80%" href="/tag/lisp/">Lisp</a>
+<a style="font-size: 80%" href="/tag/markdown/">Markdown</a>
 <a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
 <a style="font-size: 132%" href="/tag/mysql/">Mysql</a>
 <a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
@@ -804,6 +789,10 @@ Accepted</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
       </li>
     
@@ -817,10 +806,6 @@ Accepted</p>
     
       <li class="post">
         <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/11/vps-host-disappear.html">VPS主机商跑路了</a>
       </li>
     
   </ul>
