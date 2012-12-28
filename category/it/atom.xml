@@ -4,7 +4,7 @@
   <title><![CDATA[Category: IT | EverET.org]]></title>
   <link href="http://everet.org/category/it/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-28T03:12:25+08:00</updated>
+  <updated>2012-12-28T10:53:32+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -68,7 +68,7 @@
   </tbody>
 </table>
 
-<p>我们可以看到第一张截图，默认插入的图片格式是<code>{ % img url %}</code>，这个是Octopress的Tag，可以方便地定制图片的样式。如果需要插入Markdown格式的图片，可以加上前缀<code>C-u</code>，也就是命令变成<code>C-u</code> <code>C-c</code> <code>C-s</code> <code>s</code>这样。这个快捷键绑定略显麻烦，大家可以自己自己绑定到喜欢的快捷键上。</p>
+<p>我们可以看到第一张截图，默认插入的图片格式是<code> {% img url %} </code>，这个是Octopress的Tag，可以方便地定制图片的样式。如果需要插入Markdown格式的图片，可以加上前缀<code>C-u</code>，也就是命令变成<code>C-u</code> <code>C-c</code> <code>C-s</code> <code>s</code>这样。这个快捷键绑定略显麻烦，大家可以自己自己绑定到喜欢的快捷键上。</p>
 
 <p>首先我们需要设置Octopress的信息，包括本地的图片路径，以及在网络上的图片路径：</p>
 
