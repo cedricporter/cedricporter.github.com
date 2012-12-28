@@ -4,7 +4,7 @@
   <title><![CDATA[EverET.org]]></title>
   <link href="http://everet.org/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-28T10:53:32+08:00</updated>
+  <updated>2012-12-28T21:44:41+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -243,7 +243,7 @@
     </li>
   </ol>
 </div>
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html</a>]]></content>
   </entry>
   
   <entry>
@@ -334,7 +334,7 @@
     </li>
   </ol>
 </div>
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/migrate-from-wordpress-to-octopress.html">http://everet.org/2012/12/migrate-from-wordpress-to-octopress.html</a>]]></content>
   </entry>
   
   <entry>
@@ -379,7 +379,7 @@
 <p>我们可以看到error_log /dev/stdout这样一句，这样可以将输出日志直接打印到标准输出，调试的时候可以实时看到输出。 </p>
 
 <p><img src="http://everet.org/wp-content/uploads/2012/12/wpid-snapshot1-small.png" alt="" /></p>
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/debug-nginx.html">http://everet.org/2012/12/debug-nginx.html</a>]]></content>
   </entry>
   
   <entry>
@@ -706,7 +706,7 @@
   <li><a href="http://moinmo.in/EmacsForMoinMoin">Emacs的moinmoin-mode</a></li>
 </ul>
 
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html</a>]]></content>
   </entry>
   
   <entry>
@@ -723,7 +723,7 @@
 <p>原来，不仅仅是我的手机硬件老了，而是，随着时间的流逝，我们索要的越来越多，最终，超出了大环境的承受能力了。有时候，只要降低一下自己的预期，生活就会很美好了。
 有什么样的能力，就应该过什么样的生活。当然，也可以提高自己的能力。不过现在也没有条件更换硬件，于是也只能有什么样的硬件，用什么样的软件。</p>
 
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/hardware-decide-the-software.html">http://everet.org/2012/12/hardware-decide-the-software.html</a>]]></content>
   </entry>
   
   <entry>
@@ -743,7 +743,7 @@
 
 <p>修炼……</p>
 
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/11/vps-host-disappear.html">http://everet.org/2012/11/vps-host-disappear.html</a>]]></content>
   </entry>
   
   <entry>
@@ -982,7 +982,7 @@
   <li><a href="http://rtcamp.com/tutorials/wordpress-nginx-wp-super-cache/">WordPress-Nginx + WP Super cache</a></li>
 </ul>
 
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/11/multi-user-nginx-php-server.html">http://everet.org/2012/11/multi-user-nginx-php-server.html</a>]]></content>
   </entry>
   
   <entry>
@@ -1055,7 +1055,7 @@
   </li>
 </ol>
 
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/11/screen-on-ssh.html">http://everet.org/2012/11/screen-on-ssh.html</a>]]></content>
   </entry>
   
   <entry>
@@ -1152,7 +1152,7 @@
 <p>好，搞定。</p>
 
 <p>所有文件都在<a href="https://github.com/cedricporter/chrome_cache">https://github.com/cedricporter/chrome_cache</a>，有兴趣同学可以去下载使用一下，不过需要修改一下脚本里面的路径名。</p>
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/09/chrome-ramdisk.html">http://everet.org/2012/09/chrome-ramdisk.html</a>]]></content>
   </entry>
   
   <entry>
@@ -1199,7 +1199,7 @@
 
 <p>然后就不会自动更新缓存了。 当然也可将这两个值设置小一点，就不会有那么多缓存要扫描了。</p>
 
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io.html">http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io.html</a>]]></content>
   </entry>
   
   <entry>
@@ -1238,7 +1238,7 @@
 <p>最后，是下载地址啦：<a href="https://github.com/cedricporter/popo-plugin/tags">https://github.com/cedricporter/popo-plugin/tags</a>。</p>
 
 <p>项目是开源的，有兴趣的同学来一起完善吧～～</p>
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/08/popo-linux.html">http://everet.org/2012/08/popo-linux.html</a>]]></content>
   </entry>
   
   <entry>
@@ -1481,7 +1481,7 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 
 <p>可见运行速度是原来的<strong>159倍</strong>。</p>
 
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/08/profile-of-effectlab.html">http://everet.org/2012/08/profile-of-effectlab.html</a>]]></content>
   </entry>
   
   <entry>
@@ -1496,7 +1496,7 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 <p><a href="http://everet.org/wp-content/uploads/2012/08/asciifull.gif"><img src="http://everet.org/wp-content/uploads/2012/08/asciifull.gif" alt="" /></a></p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/08/extend.gif"><img src="http://everet.org/wp-content/uploads/2012/08/extend.gif" alt="" /></a></p>
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/08/ascii.html">http://everet.org/2012/08/ascii.html</a>]]></content>
   </entry>
   
   <entry>
@@ -1976,7 +1976,7 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 
 <p><a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id3">[3]</a> By the way, without this code there’s a compiler warning for Python/symtable.c. The compiler notices that theUntil_kind enumeration value isn’t handled in the switch statement of symtable_visit_stmt and complains. It’s always important to check for compiler warnings!</p>
 
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/add-new-grammer-to-python.html">http://everet.org/2012/07/add-new-grammer-to-python.html</a>]]></content>
   </entry>
   
   <entry>
@@ -2084,7 +2084,7 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 
 <p>clickcha官方demo：<a href="http://clickcha.com/demo/">http://clickcha.com/demo/</a></p>
 
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/clickcha.html">http://everet.org/2012/07/clickcha.html</a>]]></content>
   </entry>
   
   <entry>
@@ -2146,7 +2146,7 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
     </li>
   </ol>
 </div>
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/captcha-recognition.html">http://everet.org/2012/07/captcha-recognition.html</a>]]></content>
   </entry>
   
   <entry>
@@ -2234,7 +2234,7 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
   </li>
 </ol>
 
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/effectlab.html">http://everet.org/2012/07/effectlab.html</a>]]></content>
   </entry>
   
   <entry>
@@ -2318,7 +2318,7 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
   </li>
 </ol>
 
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/captcha-around-us.html">http://everet.org/2012/07/captcha-around-us.html</a>]]></content>
   </entry>
   
   <entry>
@@ -2335,7 +2335,7 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 <p><a href="http://everet.org/wp-content/uploads/2012/07/fullscreen.png"><img src="http://everet.org/wp-content/uploads/2012/07/fullscreen.png" alt="" /></a></p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-04-212105.png"><img src="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-04-212105.png" alt="" /></a></p>
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/virtualbox-seamless.html">http://everet.org/2012/07/virtualbox-seamless.html</a>]]></content>
   </entry>
   
   <entry>
@@ -2570,7 +2570,7 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 </ol>
 
 <p>(全文完)</p>
-]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/06/python-function-default-parameter.html">http://everet.org/2012/06/python-function-default-parameter.html</a>]]></content>
   </entry>
   
 </feed>
