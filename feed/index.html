@@ -4,7 +4,7 @@
   <title><![CDATA[EverET.org]]></title>
   <link href="http://everet.org/feed" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2012-12-30T13:09:14+08:00</updated>
+  <updated>2012-12-30T18:02:23+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -12,6 +12,45 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[由TT引发的思考]]></title>
+    <link href="http://everet.org/2012/12/tt.html"/>
+    <updated>2012-12-30T13:34:00+08:00</updated>
+    <id>http://everet.org/2012/12/tt</id>
+    <content type="html"><![CDATA[<p>TT是一个很古老的打字软件，还运行在DOS下，能够存活这么多年实属不易。对于这么一个DOS程序，它的优势也起来了。因为DOSBox的跨平台，于是TT也可以跨平台了。</p>
+
+<p><img src="http://everet.org/imgs/snapshot2_20121230_133903_4556ydQ.png" /></p>
+
+<p>这多么像以前我们小学的用DOS的电脑里面的东西，突然想起以前的LOGO语言和打的雷电也是这种感觉。好吧，其实我也不是那么怀旧，如果不是去实习，也不会遇到一个如此奇葩的程序。蓝色背景绿色前景，这个我在实习的时候经常会在新入职的童鞋们的电脑上看的这样的搭配。他们都在练TT，而且不练到60 WPM就不能转正，这还是真是压力巨大。</p>
+
+<p>为了以后节省一点打字时间，我也开始练习TT，虽然在之前的几个月都有练TT，但是发现除了对于数字和特殊符号熟悉了一些外，没有什么进步，一直都维持在40+ WPM，离60还有很大的距离。虽然我练的时间比较少，但是也不至于这样基本没进步吧。难道我一辈子都要维持在这种龟速了。</p>
+
+<h2 id="section">穷则思变</h2>
+
+<p>经过观察，貌似我打英文的速度也不至于那么慢，只是准确率很低，要经常删去打错的，于是乎这样整体速度就还是很慢了。</p>
+
+<!-- more -->
+
+<p>举个例子，如果每打5个字母，就打错3个，那么假如在按下了16个字母键，实际的产出就只有4个字母，而且还要搭上6个退格，也就是总共按下了22个按键。</p>
+
+<p>而如果完全可以不打错的话，就只需要按下4个字母键就可以达到同样的效果。</p>
+
+<p>所以，即便按得很快的人的按键速度是打得慢但是准确的人的2倍，打字速度也不到准确的人的一半。</p>
+
+<p>这就像一个人往前走5步，就发现走错了3步，然后往回退，然后再走五步又发现错了3步，如此周而复始，但头来其实都没走多远。</p>
+
+<p>所以对于我，提高准确率，少做些无用功，或许是提高速度的有效方法。</p>
+
+<h2 id="section-1">根本问题</h2>
+<p>我想，这本质的问题在于：<strong>鲁莽前进</strong>。</p>
+
+<p>就像平时写代码的时候，有时可能会为了速度，不思考就直接开工。如果走错了，到头来最后其实也是看似花了很多时间，却产出很少，大量的时间都在各种重构甚至架构修改上面。</p>
+
+<p>所以，思考清晰下一步，少走一些弯路，这样才是节约时间、对于生命负责的表现啊。</p>
+
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/tt.html">http://everet.org/2012/12/tt.html</a>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Screenshot And Image Paste in Emacs When Writing Markdown]]></title>
@@ -2336,241 +2375,6 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-04-212105.png"><img src="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-04-212105.png" alt="" /></a></p>
  <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/virtualbox-seamless.html">http://everet.org/2012/07/virtualbox-seamless.html</a>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[谈谈Python函数的默认参数]]></title>
-    <link href="http://everet.org/2012/06/python-function-default-parameter.html"/>
-    <updated>2012-06-14T05:10:31+08:00</updated>
-    <id>http://everet.org/2012/06/python-function-default-parameter</id>
-    <content type="html"><![CDATA[<p>Python中很奇葩的一个地方是它的函数的默认参数的值，仅仅在def语句执行的时候计算一次。这会导致什么问题呢？</p>
-
-<h2 id="section">奇葩的例子</h2>
-
-<p>我们来看一个例子：<!-- more --></p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">44</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">packitem</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">pkg</span> <span class="o">=</span> <span class="p">[]):</span>
-</span><span class="line">   <span class="o">....</span><span class="p">:</span>         <span class="n">pkg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-</span><span class="line">   <span class="o">....</span><span class="p">:</span>         <span class="k">return</span> <span class="n">pkg</span>
-</span><span class="line">
-</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">45</span><span class="p">]:</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">]</span>
-</span><span class="line">
-</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">46</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
-</span><span class="line"><span class="n">Out</span><span class="p">[</span><span class="mi">46</span><span class="p">]:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]</span>
-</span><span class="line">
-</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">47</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class="line"><span class="n">Out</span><span class="p">[</span><span class="mi">47</span><span class="p">]:</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-</span><span class="line">
-</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">48</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span class="line"><span class="n">Out</span><span class="p">[</span><span class="mi">48</span><span class="p">]:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-</span><span class="line">
-</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">49</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span class="line"><span class="n">Out</span><span class="p">[</span><span class="mi">49</span><span class="p">]:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>这个可以看到packitem的默认参数pkg=[]仅仅计算了一次。而之后的packitem函数调用时，pkg都指向了最初创建的那个列表。</p>
-
-<h2 id="section-1">为什么</h2>
-
-<p>为什么会这样呢？</p>
-
-<p>我们此时需要从Python编译出来的字节码中寻求答案。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">65</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-</span><span class="line">   <span class="o">....</span><span class="p">:</span>         <span class="k">def</span> <span class="nf">packitem</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">pkg</span> <span class="o">=</span> <span class="p">[]):</span>
-</span><span class="line">   <span class="o">....</span><span class="p">:</span>                 <span class="n">pkg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-</span><span class="line">   <span class="o">....</span><span class="p">:</span>                 <span class="k">return</span> <span class="n">pkg</span>
-</span><span class="line">   <span class="o">....</span><span class="p">:</span>         <span class="k">print</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class="line">   <span class="o">....</span><span class="p">:</span>         <span class="k">print</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span class="line">   <span class="o">....</span><span class="p">:</span>         <span class="k">print</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">66</span><span class="p">]:</span> <span class="n">main</span><span class="p">()</span>
-</span><span class="line"><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-</span><span class="line"><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-</span><span class="line"><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-</span><span class="line">
-</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">67</span><span class="p">]:</span> <span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
-</span><span class="line">  <span class="mi">2</span>           <span class="mi">0</span> <span class="n">BUILD_LIST</span>               <span class="mi">0</span>
-</span><span class="line">              <span class="mi">3</span> <span class="n">LOAD_CONST</span>               <span class="mi">1</span> <span class="p">(</span><span class="n">code</span> <span class="nb">object</span><span class="p">)</span>
-</span><span class="line">              <span class="mi">6</span> <span class="n">MAKE_FUNCTION</span>            <span class="mi">1</span>
-</span><span class="line">              <span class="mi">9</span> <span class="n">STORE_FAST</span>               <span class="mi">0</span> <span class="p">(</span><span class="n">packitem</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line">  <span class="mi">5</span>          <span class="mi">12</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">packitem</span><span class="p">)</span>
-</span><span class="line">             <span class="mi">15</span> <span class="n">LOAD_CONST</span>               <span class="mi">2</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class="line">             <span class="mi">18</span> <span class="n">CALL_FUNCTION</span>            <span class="mi">1</span>
-</span><span class="line">             <span class="mi">21</span> <span class="n">PRINT_ITEM</span>
-</span><span class="line">             <span class="mi">22</span> <span class="n">PRINT_NEWLINE</span>
-</span><span class="line">
-</span><span class="line">  <span class="mi">6</span>          <span class="mi">23</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">packitem</span><span class="p">)</span>
-</span><span class="line">             <span class="mi">26</span> <span class="n">LOAD_CONST</span>               <span class="mi">3</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span class="line">             <span class="mi">29</span> <span class="n">CALL_FUNCTION</span>            <span class="mi">1</span>
-</span><span class="line">             <span class="mi">32</span> <span class="n">PRINT_ITEM</span>
-</span><span class="line">             <span class="mi">33</span> <span class="n">PRINT_NEWLINE</span>
-</span><span class="line">
-</span><span class="line">  <span class="mi">7</span>          <span class="mi">34</span> <span class="n">LOAD_FAST</span>                <span class="mi">0</span> <span class="p">(</span><span class="n">packitem</span><span class="p">)</span>
-</span><span class="line">             <span class="mi">37</span> <span class="n">LOAD_CONST</span>               <span class="mi">4</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span class="line">             <span class="mi">40</span> <span class="n">CALL_FUNCTION</span>            <span class="mi">1</span>
-</span><span class="line">             <span class="mi">43</span> <span class="n">PRINT_ITEM</span>
-</span><span class="line">             <span class="mi">44</span> <span class="n">PRINT_NEWLINE</span>
-</span><span class="line">             <span class="mi">45</span> <span class="n">LOAD_CONST</span>               <span class="mi">0</span> <span class="p">(</span><span class="bp">None</span><span class="p">)</span>
-</span><span class="line">             <span class="mi">48</span> <span class="n">RETURN_VALUE</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>可以看出。packitem函数的默认参数pkg的值是在第一条字节码创建的。随后在MAKE_FUNCTION指令的时候一起和code object打包成一个函数对象，然后通过STORE_FAST 0存在了FAST表的第0位。</p>
-
-<p>后续的函数调用通过LOAD_FAST 0指令将packitem的函数对象取出，然后通过CALL_FUNCTION调用(对于CALL_FUNCTION，我们会在后续的文章进行探讨)。整个函数调用的过程并没有涉及到默认参数值的初始化。</p>
-
-<p>所以，可见，Python函数的默认参数的值仅在函数定义的时候计算，后续的函数调用时的默认参数都是引用最初创建的那个对象。</p>
-
-<h2 id="hack-it">Hack It</h2>
-
-<p>既然Python没有在我们进行函数调用的时候帮我们重新创建的默认参数的值，那我们就自己动手，丰衣足食。</p>
-
-<p>第一种方案是是用不可变的默认值，例如None，然后在函数内部进行判断。此法略显麻烦。</p>
-
-<p>第二种方案是通过装饰器来解决这个问题。</p>
-
-<p>这段脚本是Sean Ross写的，非常感谢他。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">74</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">freshdefaults</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
-</span><span class="line">   <span class="o">....</span><span class="p">:</span>         <span class="n">fdefaults</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">func_defaults</span>
-</span><span class="line">   <span class="o">....</span><span class="p">:</span>         <span class="k">def</span> <span class="nf">refresher</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
-</span><span class="line">   <span class="o">....</span><span class="p">:</span>                 <span class="n">f</span><span class="o">.</span><span class="n">func_defaults</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">fdefaults</span><span class="p">)</span>
-</span><span class="line">   <span class="o">....</span><span class="p">:</span>                 <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-</span><span class="line">   <span class="o">....</span><span class="p">:</span>         <span class="k">return</span> <span class="n">refresher</span>
-</span><span class="line">
-</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">75</span><span class="p">]:</span> <span class="nd">@freshdefaults</span>
-</span><span class="line">   <span class="o">....</span><span class="p">:</span> <span class="k">def</span> <span class="nf">packitem</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">pkg</span> <span class="o">=</span> <span class="p">[]):</span>
-</span><span class="line">   <span class="o">....</span><span class="p">:</span>         <span class="n">pkg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-</span><span class="line">   <span class="o">....</span><span class="p">:</span>         <span class="k">return</span> <span class="n">pkg</span>
-</span><span class="line">
-</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">76</span><span class="p">]:</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">]</span>
-</span><span class="line">
-</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">77</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
-</span><span class="line"><span class="n">Out</span><span class="p">[</span><span class="mi">77</span><span class="p">]:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]</span>
-</span><span class="line">
-</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">78</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class="line"><span class="n">Out</span><span class="p">[</span><span class="mi">78</span><span class="p">]:</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-</span><span class="line">
-</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">79</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span class="line"><span class="n">Out</span><span class="p">[</span><span class="mi">79</span><span class="p">]:</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-</span><span class="line">
-</span><span class="line"><span class="n">In</span> <span class="p">[</span><span class="mi">80</span><span class="p">]:</span> <span class="n">packitem</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span class="line"><span class="n">Out</span><span class="p">[</span><span class="mi">80</span><span class="p">]:</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>可以看到，packitem的输出符合我们的预期了。我们通过装饰器freshdefault，完成了对于默认参数的更新。packitem的pkg已经在每次调用的时候更新了。</p>
-
-<p>装饰器等价于</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">myfunc</span> <span class="o">=</span> <span class="n">wrapper</span><span class="p">(</span><span class="n">myfunc</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>在此例子中 ，等价于在后面加上了一句</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">packitem</span> <span class="o">=</span> <span class="n">freshdefault</span><span class="p">(</span><span class="n">packitem</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h2 id="section-2">参考</h2>
-
-<ol>
-  <li>
-    <p>Python Cookbook</p>
-  </li>
-  <li>
-    <p>Python源码剖析</p>
-  </li>
-</ol>
-
-<p>(全文完)</p>
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/06/python-function-default-parameter.html">http://everet.org/2012/06/python-function-default-parameter.html</a>]]></content>
   </entry>
   
 </feed>

@@ -9,12 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="想起我们在C++中，要实现一个点积，如果是固定维数的向量，我们或许会通过这么一个成员函数来实现 cpp 1
-2
-3
-4
-Point2d DotProduct(const Point2d&amp; rhs)
-{ return Point2d(m_x * rhs.x(), m_y * rhs.y &hellip;">
+  <meta name="description" content="Python中很奇葩的一个地方是它的函数的默认参数的值，仅仅在def语句执行的时候计算一次。这会导致什么问题呢？ 奇葩的例子 我们来看一个例子：">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -86,6 +81,51 @@ Point2d DotProduct(const Point2d&amp; rhs)
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/06/python-function-default-parameter.html">谈谈Python函数的默认参数</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-14T05:10:31+08:00" pubdate data-updated="true">2012-06-14</time>
+        
+         | <a href="/2012/06/python-function-default-parameter.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Python中很奇葩的一个地方是它的函数的默认参数的值，仅仅在def语句执行的时候计算一次。这会导致什么问题呢？</p>
+
+<h2 id="section">奇葩的例子</h2>
+
+<p>我们来看一个例子：</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/06/python-function-default-parameter.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -591,57 +631,6 @@ Point2d DotProduct(const Point2d&amp; rhs)
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/05/python-spark-calculator.html">Python使用spark模块构造计算器</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-16T06:24:58+08:00" pubdate data-updated="true">2012-05-16</time>
-        
-         | <a href="/2012/05/python-spark-calculator.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2 id="spark">Spark简介</h2>
-
-<p>Spark 解析器与 EBNF 语法有一些共同之处，但它将解析／处理过程分成了比传统的 EBNF 语法所允许的更小的组件。Spark 的优点在于，它对整个过程中每一步操作的控制都进行了微调，还提供了将定制代码插入到过程中的能力。</p>
-
-<p>Spark的最新版是10年前发布的，真是非常的长寿，可见设计精良。其中的采用的设计模式有Reflection Pattern、Visitor Pattern、Pipes and Filters Pattern和Strategy Pattern。</p>
-
-<h2 id="spark-1">初识Spark</h2>
-
-<p>第一次知道Spark这个模块是在IBM的网站<a href="http://everet.org/2012/05/python-spark-calculator.html#reference-everet-3">[3]</a>上看到的。</p>
-
-<p>第一次激起我学习这个模块的兴趣是在看Python源码的时候，发现Python的编译器是用The Zephyr Abstract Syntax Description Language(Parser/Python.asdl)来定义的语法，然后通过(Parser/asdl.py、Parser/asdl_c.py、Parser/spark.py)根据Parser/Python.asdl生成C语言解析器。其中仅用了1000多行就实现了一个yacc。这个是非常地强大。</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/05/python-spark-calculator.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -801,6 +790,10 @@ Point2d DotProduct(const Point2d&amp; rhs)
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/12/tt.html">由TT引发的思考</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
       </li>
     
@@ -814,10 +807,6 @@ Point2d DotProduct(const Point2d&amp; rhs)
     
       <li class="post">
         <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="Octopress首选博客语言是Markdown。于是又是Emacs大显身手的时候了。 在用Markdown写东西的时候，我想最蛋疼的应该就是插入图片了。 正常的插入截图的步骤可能为： 打开截图程序截图 保存截图到Octopress的制定目录中 然后在Markdown中写上图片的url的地址 &hellip;">
+  <meta name="description" content="TT是一个很古老的打字软件，还运行在DOS下，能够存活这么多年实属不易。对于这么一个DOS程序，它的优势也起来了。因为DOSBox的跨平台，于是TT也可以跨平台了。 这多么像以前我们小学的用DOS的电脑里面的东西，突然想起以前的LOGO语言和打的雷电也是这种感觉。好吧，其实我也不是那么怀旧， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,59 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/12/tt.html">由TT引发的思考</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-30T13:34:00+08:00" pubdate data-updated="true">2012-12-30</time>
+        
+         | <a href="/2012/12/tt.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>TT是一个很古老的打字软件，还运行在DOS下，能够存活这么多年实属不易。对于这么一个DOS程序，它的优势也起来了。因为DOSBox的跨平台，于是TT也可以跨平台了。</p>
+
+<p><img src="/imgs/snapshot2_20121230_133903_4556ydQ.png" /></p>
+
+<p>这多么像以前我们小学的用DOS的电脑里面的东西，突然想起以前的LOGO语言和打的雷电也是这种感觉。好吧，其实我也不是那么怀旧，如果不是去实习，也不会遇到一个如此奇葩的程序。蓝色背景绿色前景，这个我在实习的时候经常会在新入职的童鞋们的电脑上看的这样的搭配。他们都在练TT，而且不练到60 WPM就不能转正，这还是真是压力巨大。</p>
+
+<p>为了以后节省一点打字时间，我也开始练习TT，虽然在之前的几个月都有练TT，但是发现除了对于数字和特殊符号熟悉了一些外，没有什么进步，一直都维持在40+ WPM，离60还有很大的距离。虽然我练的时间比较少，但是也不至于这样基本没进步吧。难道我一辈子都要维持在这种龟速了。</p>
+
+<h2 id="section">穷则思变</h2>
+
+<p>经过观察，貌似我打英文的速度也不至于那么慢，只是准确率很低，要经常删去打错的，于是乎这样整体速度就还是很慢了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/12/tt.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -540,68 +593,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/08/fix-gnome-settings-daemon-disk-io.html">解决Ubuntu下gnome-settings-daemon高磁盘IO的问题</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-31T18:51:34+08:00" pubdate data-updated="true">2012-08-31</time>
-        
-         | <a href="/2012/08/fix-gnome-settings-daemon-disk-io.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近在用Ubuntu的时候，总是发现用着用着整台电脑就卡死了，什么都动不了，然后硬盘灯一直处于常亮状态。几次艰难地打开shell，发现都是gnome-settings-daemon一直在读写硬盘。这个究竟是什么问题呢？</p>
-
-<p>strace一下，看看，这个进程在干啥。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>console  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="gp">cedricporter@cedricporter-Lenovo:~/projects/CaptchaSystem$</span> sudo strace -p 2207
-</span><span class="line"><span class="go">[sudo] password for cedricporter: </span>
-</span><span class="line"><span class="go">Process 2207 attached - interrupt to quit</span>
-</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/b6c1d4f6fff0b536652c83081e5233e1.png&quot;, {st_mode=S_IFREG|0600, st_size=5398, ...}) = 0</span>
-</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/739ea0e4eabe22c5b551156fc3ff93da.png&quot;, {st_mode=S_IFREG|0600, st_size=6059, ...}) = 0</span>
-</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/2aac704bfd3d3a865f66e5c3ee2ba80a.png&quot;, {st_mode=S_IFREG|0600, st_size=6362, ...}) = 0</span>
-</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/5dbe53248aa8a41612137100a315e076.png&quot;, {st_mode=S_IFREG|0600, st_size=6260, ...}) = 0</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>出来的结果就像刷屏一样，全部都是lstat的系统调用，读取的都是.thumbnails下面的图片。</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/08/fix-gnome-settings-daemon-disk-io.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -759,6 +750,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/12/tt.html">由TT引发的思考</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
       </li>
     
@@ -772,10 +767,6 @@
     
       <li class="post">
         <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
       </li>
     
   </ul>

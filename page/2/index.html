@@ -9,7 +9,11 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="在网易实习时，上班一定要开着泡泡，不过泡泡貌似在Linux会严重地水土不服，所以只能装一个虚拟机来解决这个问题。借助VirtualBox的无缝模式，我们在一定程度上可以缓解这个问题。但是我平时会在多个虚拟桌面。如果恰巧不幸，我长时间没有切换到泡泡所在的虚拟桌面时， &hellip;">
+  <meta name="description" content="最近在用Ubuntu的时候，总是发现用着用着整台电脑就卡死了，什么都动不了，然后硬盘灯一直处于常亮状态。几次艰难地打开shell，发现都是gnome-settings-daemon一直在读写硬盘。这个究竟是什么问题呢？ strace一下，看看，这个进程在干啥。 console 1
+2
+3
+4
+5 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +85,68 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/08/fix-gnome-settings-daemon-disk-io.html">解决Ubuntu下gnome-settings-daemon高磁盘IO的问题</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-31T18:51:34+08:00" pubdate data-updated="true">2012-08-31</time>
+        
+         | <a href="/2012/08/fix-gnome-settings-daemon-disk-io.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近在用Ubuntu的时候，总是发现用着用着整台电脑就卡死了，什么都动不了，然后硬盘灯一直处于常亮状态。几次艰难地打开shell，发现都是gnome-settings-daemon一直在读写硬盘。这个究竟是什么问题呢？</p>
+
+<p>strace一下，看看，这个进程在干啥。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>console  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="gp">cedricporter@cedricporter-Lenovo:~/projects/CaptchaSystem$</span> sudo strace -p 2207
+</span><span class="line"><span class="go">[sudo] password for cedricporter: </span>
+</span><span class="line"><span class="go">Process 2207 attached - interrupt to quit</span>
+</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/b6c1d4f6fff0b536652c83081e5233e1.png&quot;, {st_mode=S_IFREG|0600, st_size=5398, ...}) = 0</span>
+</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/739ea0e4eabe22c5b551156fc3ff93da.png&quot;, {st_mode=S_IFREG|0600, st_size=6059, ...}) = 0</span>
+</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/2aac704bfd3d3a865f66e5c3ee2ba80a.png&quot;, {st_mode=S_IFREG|0600, st_size=6362, ...}) = 0</span>
+</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/5dbe53248aa8a41612137100a315e076.png&quot;, {st_mode=S_IFREG|0600, st_size=6260, ...}) = 0</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>出来的结果就像刷屏一样，全部都是lstat的系统调用，读取的都是.thumbnails下面的图片。</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/08/fix-gnome-settings-daemon-disk-io.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -598,51 +664,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/06/python-function-default-parameter.html">谈谈Python函数的默认参数</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-14T05:10:31+08:00" pubdate data-updated="true">2012-06-14</time>
-        
-         | <a href="/2012/06/python-function-default-parameter.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Python中很奇葩的一个地方是它的函数的默认参数的值，仅仅在def语句执行的时候计算一次。这会导致什么问题呢？</p>
-
-<h2 id="section">奇葩的例子</h2>
-
-<p>我们来看一个例子：</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/06/python-function-default-parameter.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -802,6 +823,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/12/tt.html">由TT引发的思考</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
       </li>
     
@@ -815,10 +840,6 @@
     
       <li class="post">
         <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
       </li>
     
   </ul>

@@ -9,8 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="发现到了现在，我还是除了一些基本的状态码之外， 其他状态码都不是很熟悉，于是找了些状态码过来记录一下，也当做备忘了。 下面的拿Vim把返回码处理成表格还加了颜色，哈哈，果然用Vim就是像刷屏一样。配合宏真是无敌了！ 100
-Continue 初始的请求已经接受，客户应当继续发送请求的其余部分 &hellip;">
+  <meta name="description" content="学完编译原理已经一年了，也有半年被因为学其他东西而没空继续深入学习编译原理。 现在终于有机会继续学习了。 首先回顾下，编译原理考试第一题的答案。就是翻译的步骤。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +81,55 @@ Continue 初始的请求已经接受，客户应当继续发送请求的其余�
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/intermediate-code-generation.html">编译原理知识回顾——中间代码生成</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-19T21:23:35+08:00" pubdate data-updated="true">2012-02-19</time>
+        
+         | <a href="/2012/02/intermediate-code-generation.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>学完编译原理已经一年了，也有半年被因为学其他东西而没空继续深入学习编译原理。</p>
+
+<p>现在终于有机会继续学习了。</p>
+
+<p>首先回顾下，编译原理考试第一题的答案。就是翻译的步骤。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/02/image4.png"><img src="http://everet.org/wp-content/uploads/2012/02/image_thumb4.png" alt="image" /></a></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/02/intermediate-code-generation.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -561,67 +609,6 @@ Accepted</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/02/access-svn-with-git.html">使用Git访问SVN</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-01T03:33:29+08:00" pubdate data-updated="true">2012-02-01</time>
-        
-         | <a href="/2012/02/access-svn-with-git.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>想必大家都使用过Subversion吧，也想必大家都对SVN这种脱离了网络和服务器就寸步难行的工作方式嗤之以鼻吧。使用SVN我们看个log首要联网。</p>
-
-<p>在服务器在因特网的情况下，网速让使用SVN变成一件十分蛋疼的事情。因为SVN事事都要联网，没有网络就无法工作，这个是集中式版本控制器十分大的缺陷。</p>
-
-<p>好在后来Linus在BitMover在收回开源社区的BitKeeper这款分布式版本控制器的授权后，开发了Git。这款Linus又一力作又再次改变了世界。</p>
-
-<p>Git有个很好的功能就是可以访问SVN服务器。这点也让我们这些SVN的使用者也稍稍改善了SVN的用户体验。</p>
-
-<p>Git可以将版本先提交（commit）到本地的分支，到时机成熟之时再一次推送（push）到远程服务器。而且查看历史也不需要联网了，因为Git默认会把整个SVN版本库都克隆下来。</p>
-
-<p>像我们使用Google Code来托管我们的开源代码时，我们可以在上面创建SVN的版本库，Git版本库貌似访问不了，没办法。</p>
-
-<p>Google Code对一个项目有4GB的空间，有wiki等等，还可以上传文件供用户下载，这个非常的好。</p>
-
-<p>例如，我的vim和emacs的配置我放到了 <a href="http://code.google.com/p/et-vim-setting/">http://code.google.com/p/et-vim-setting/</a></p>
-
-<p>我们可以使用如下命令克隆我们的Google Code上的项目。</p>
-
-<p><code>git svn clone --username cedricporter@gmail.com -s https://et-vim-setting.googlecode.com/svn vim_setting</code></p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/02/access-svn-with-git.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -781,6 +768,10 @@ Accepted</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/12/tt.html">由TT引发的思考</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
       </li>
     
@@ -794,10 +785,6 @@ Accepted</p>
     
       <li class="post">
         <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
       </li>
     
   </ul>

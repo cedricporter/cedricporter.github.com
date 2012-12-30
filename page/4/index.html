@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="LL(1) 何为LL(1)？通俗来说就是向前看一个词法单元的自顶向下解析器。两个L都代表left-to-right，第一个L表示解析器按“从左到右”的顺序解析输入内容；第二个L表示下降解析时也是按“从左到右”的顺序遍历子节点。而(1)表示它使用一个向前看 词法单元。 &hellip;">
+  <meta name="description" content="Spark简介 Spark 解析器与 EBNF 语法有一些共同之处，但它将解析／处理过程分成了比传统的 EBNF 语法所允许的更小的组件。Spark 的优点在于，它对整个过程中每一步操作的控制都进行了微调，还提供了将定制代码插入到过程中的能力。 Spark的最新版是10年前发布的，真是非常的长寿， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/05/python-spark-calculator.html">Python使用spark模块构造计算器</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-16T06:24:58+08:00" pubdate data-updated="true">2012-05-16</time>
+        
+         | <a href="/2012/05/python-spark-calculator.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2 id="spark">Spark简介</h2>
+
+<p>Spark 解析器与 EBNF 语法有一些共同之处，但它将解析／处理过程分成了比传统的 EBNF 语法所允许的更小的组件。Spark 的优点在于，它对整个过程中每一步操作的控制都进行了微调，还提供了将定制代码插入到过程中的能力。</p>
+
+<p>Spark的最新版是10年前发布的，真是非常的长寿，可见设计精良。其中的采用的设计模式有Reflection Pattern、Visitor Pattern、Pipes and Filters Pattern和Strategy Pattern。</p>
+
+<h2 id="spark-1">初识Spark</h2>
+
+<p>第一次知道Spark这个模块是在IBM的网站<a href="http://everet.org/2012/05/python-spark-calculator.html#reference-everet-3">[3]</a>上看到的。</p>
+
+<p>第一次激起我学习这个模块的兴趣是在看Python源码的时候，发现Python的编译器是用The Zephyr Abstract Syntax Description Language(Parser/Python.asdl)来定义的语法，然后通过(Parser/asdl.py、Parser/asdl_c.py、Parser/spark.py)根据Parser/Python.asdl生成C语言解析器。其中仅用了1000多行就实现了一个yacc。这个是非常地强大。</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/05/python-spark-calculator.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -589,62 +640,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/05/pythonchallenge.html">发现一个很好玩的Python网站</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-02T10:09:57+08:00" pubdate data-updated="true">2012-05-02</time>
-        
-         | <a href="/2012/05/pythonchallenge.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.pythonchallenge.com/">http://www.pythonchallenge.com/</a></p>
-
-<p>又是一个解题过关的网站，不过这次题目是Python的，有兴趣的同学们一起上吧。</p>
-
-<p>豆瓣的介绍：</p>
-
-<blockquote>
-  <p>来玩pythonchallenge吧，理由如下：
-0、Tim Peters的理由：”I’ve been using Python since 1991, and while I’ve always enjoyed it, I have to confess this is the most Python fun I’ve had this century! Excellent work. Thank you!”
-1、沈大仙的理由：”说到这里, 想起我们部门新来两位同事, 在使用 Python 做项目之前, 先沉下心来做了两周的 Python Challenge, 把 Python 模了个透, 结果两周后程序写出来相当漂亮, 甚至让我这种老牌 Python 程序员跌破眼镜, 与我周围的同事立马有了境界上的区分。”
-2、给你的理由：能在短时间内完成全部33题，这可以证明你很聪明。
-3、自己的理由：俺连滚带爬好不容易做到了第27题，沮丧地看到了自己的笨，但从好处想，这至少可以证明俺有毅力，嘿嘿。
-4、自私的理由：憋死在第27题，等老大们来给个提示拉俺一把吧。</p>
-</blockquote>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/05/pythonchallenge.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -804,6 +799,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/12/tt.html">由TT引发的思考</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
       </li>
     
@@ -817,10 +816,6 @@
     
       <li class="post">
         <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="SimpleParse是一款非常简洁的Python解析模板，可以自己定义EBNF文法，然后SimpleParse会输出结构化的。 SimpleParse的介绍可以见，http://www.ibm.com/developerworks/cn/linux/sdk/python/charm-23/ &hellip;">
+  <meta name="description" content="OGRE（Object-Oriented Graphics Rendering Engine，即：面向对象图形渲染引擎）是一个用C++开发的面向场景、非常灵活的3D引擎，它旨在让开发人员更容易、更直接地利用硬件加速的3D图形系统开发应用。这个类库隐藏了底层系统库（如： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,83 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/03/python-parse-ogre-configuration-file.html">神奇的Python：解析OGRE配置文件</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-17T03:19:52+08:00" pubdate data-updated="true">2012-03-17</time>
+        
+         | <a href="/2012/03/python-parse-ogre-configuration-file.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote>
+  <p>OGRE（Object-Oriented Graphics Rendering Engine，即：面向对象图形渲染引擎）是一个用C++开发的面向场景、非常灵活的3D引擎，它旨在让开发人员更容易、更直接地利用硬件加速的3D图形系统开发应用。这个类库隐藏了底层系统库（如：Direct3D和OpenGL）的所有细节，提供了一个基于世界对象和其他直观类的接口。 译者注:ogre在英文中意为：食人魔鬼, 怪物, 象鬼的人，故其LOGO是一个怪物头。</p>
+</blockquote>
+
+<p>以上引用自百度百科。</p>
+
+<p>OGRE的很多东西都通过配置文件来控制，这样会很灵活。</p>
+
+<p>配置文件的例子如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="ini"><span class="line"><span class="k">[Bootstrap]</span>
+</span><span class="line"><span class="na">Zip</span><span class="o">=</span><span class="s">../media/packs/OgreCore.zip</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># Resource locations to be added to the default path</span>
+</span><span class="line"><span class="k">[General]</span>
+</span><span class="line"><span class="na">FileSystem</span><span class="o">=</span><span class="s">../media</span>
+</span><span class="line"><span class="na">FileSystem</span><span class="o">=</span><span class="s">../media/fonts</span>
+</span><span class="line"><span class="na">FileSystem</span><span class="o">=</span><span class="s">../media/sounds</span>
+</span><span class="line"><span class="na">Zip</span><span class="o">=</span><span class="s">../media/packs/ogretestmap.zip</span>
+</span><span class="line"><span class="na">Zip</span><span class="o">=</span><span class="s">../media/packs/skybox.zip</span>
+</span><span class="line"><span class="c">#Zip=../media/packs/chiropteraDM.pk3</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>它分了section，在section下有许多配置语句，也就是一些赋值语句。</p>
+
+<p>其配置文件的文法类似如下：</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/03/python-parse-ogre-configuration-file.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -581,55 +658,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/02/intermediate-code-generation.html">编译原理知识回顾——中间代码生成</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-19T21:23:35+08:00" pubdate data-updated="true">2012-02-19</time>
-        
-         | <a href="/2012/02/intermediate-code-generation.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>学完编译原理已经一年了，也有半年被因为学其他东西而没空继续深入学习编译原理。</p>
-
-<p>现在终于有机会继续学习了。</p>
-
-<p>首先回顾下，编译原理考试第一题的答案。就是翻译的步骤。</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/02/image4.png"><img src="http://everet.org/wp-content/uploads/2012/02/image_thumb4.png" alt="image" /></a></p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/02/intermediate-code-generation.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -789,6 +817,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/12/tt.html">由TT引发的思考</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
       </li>
     
@@ -802,10 +834,6 @@
     
       <li class="post">
         <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
       </li>
     
   </ul>

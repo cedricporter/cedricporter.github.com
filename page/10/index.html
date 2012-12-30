@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="好吧，最近又被人骂说我用筷子没文化没传统，于是记录一下用筷子有什么禁忌。学习一下中国的传统文化。 中国人使用筷子用餐是从远古流传下来的，古时又称其为“箸”，日常生活当中对筷子的运用是非常有讲究的。一般我们在使用筷子时，正确的使用方法讲究得是用右手执筷，大拇指和食指捏住筷子的上端， &hellip;">
+  <meta name="description" content="Python是一个非常简洁优雅的语言，库非常的丰富。在图像处理方面，有个PIL（Python Imaging Library ），这个是一个应用上手非常简单的Python的图像处理库。 PIL的下载地址可以在 http://pypi.python.org/pypi/PIL 找到。 手册在 http &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,76 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/01/pil-start.html">Python进行图像处理——开篇</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-25T06:46:08+08:00" pubdate data-updated="true">2012-01-25</time>
+        
+         | <a href="/2012/01/pil-start.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Python是一个非常简洁优雅的语言，库非常的丰富。在图像处理方面，有个PIL（Python Imaging Library ），这个是一个应用上手非常简单的Python的图像处理库。</p>
+
+<p>PIL的下载地址可以在 <a href="http://pypi.python.org/pypi/PIL">http://pypi.python.org/pypi/PIL</a> 找到。</p>
+
+<p>手册在 <a href="http://www.pythonware.com/library/pil/handbook/index.htm">http://www.pythonware.com/library/pil/handbook/index.htm</a> ，这里有非常详细的教程。</p>
+
+<p>我们安装完PIL后，可以在Python交互解释器很中输入：  import Image</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb.png" alt="image" /></a></p>
+
+<p>如果没有发生错误，这说明安装完成了。我们输入以下代码，将会打开一幅图像。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="kn">import</span> <span class="nn">Image</span>
+</span><span class="line">
+</span><span class="line"><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;yun.jpg&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="k">print</span> <span class="n">img</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%d</span><span class="s"> * </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">mode</span>
+</span><span class="line"><span class="n">new_img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+</span><span class="line"><span class="n">new_img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&quot;new_yun.jpg&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="n">new_img</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/01/pil-start.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -776,6 +846,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/12/tt.html">由TT引发的思考</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
       </li>
     
@@ -789,10 +863,6 @@
     
       <li class="post">
         <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a>
       </li>
     
   </ul>
