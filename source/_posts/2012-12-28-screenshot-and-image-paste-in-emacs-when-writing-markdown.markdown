@@ -142,7 +142,7 @@ opinion. "
  * [my-octopress-settings.el](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/plugins/configs/my-octopress-settings.el)
 
 ## 终
-经过九九八十一式终于打完收工，现在又凌晨3点多了。想起我们的[冯华君](http://tech.sina.com.cn/i/csj/2012-12-23/23407914396.shtml)师兄，31岁就收到乔布斯的Offer Letter去找教主了，我不禁心里怕怕的，还是早点休息吧。身体是革命的本钱啊。
+经过九九八十一式终于打完收工，现在又凌晨3点多了。想起我们的[冯华君](http://huajun.w18.net/)师兄，31岁就收到乔布斯的Offer Letter去找教主了，我不禁心里怕怕的，还是早点休息吧。身体是革命的本钱啊。
 
 
 
