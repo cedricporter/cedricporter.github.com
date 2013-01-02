@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="TT是一个很古老的打字软件，还运行在DOS下，能够存活这么多年实属不易。对于这么一个DOS程序，它的优势也起来了。因为DOSBox的跨平台，于是TT也可以跨平台了。 这多么像以前我们小学的用DOS的电脑里面的东西，突然想起以前的LOGO语言和打的雷电也是这种感觉。好吧，其实我也不是那么怀旧， &hellip;">
+  <meta name="description" content="今天屠文翔同学问了我一个在PIL中获取像素操作的问题，我想也没想就说道可以使用getpixel和putpixel操作像素，因为我之前一直也是使用这两个API。过了一会，屠文翔同学问我是否用过load()这个API，我直接就说这个不是操作像素的。我之前在浏览PIL源码的时候，经常会见到调用这个函数， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/01/keep-learning.html">Keep Learning</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-03T00:14:00+08:00" pubdate data-updated="true">2013-01-03</time>
+        
+         | <a href="/2013/01/keep-learning.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天<a href="http://www.kidsang.com/">屠文翔</a>同学问了我一个在PIL中获取像素操作的问题，我想也没想就说道可以使用getpixel和putpixel操作像素，因为我之前一直也是使用这两个API。过了一会，<a href="http://www.kidsang.com/">屠文翔</a>同学问我是否用过load()这个API，我直接就说这个不是操作像素的。我之前在浏览PIL源码的时候，经常会见到调用这个函数，不过都只是纯调用，<code>self.load()</code>，连返回值都不获取。也没仔细看，就认为这个仅仅是装载数据。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2013/01/keep-learning.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -548,51 +591,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/09/chrome-ramdisk.html">[优化]将Chrome的数据放置到内存中去</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-11T17:52:46+08:00" pubdate data-updated="true">2012-09-11</time>
-        
-         | <a href="/2012/09/chrome-ramdisk.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我现在使用的一台电脑的硬盘速度非常慢，Chrome有时也会对硬盘读写也会让机器发生顿卡，真是悲剧。所以我决定将Chrome经常读写的数据放置到内存中以提高响应速度。 Chrome的数据文件主要有用户配置文件以及磁盘缓存文件。在Ubuntu下就分别放置在~/.config/google-chrome以及~/.cache/google-chrome下面。 在Linux下，ramdisk直接就有了，直接拿来用就可以了，而在Windows下需要安装一些程序来创建ramdisk。我们来看看Linux下怎么做。 在Linux下，/dev/shm目录就是映射到了内存，所有写的东西都是直接写到了内存里面，不过这个目录不是持久的，断电就没了。</p>
-
-<h2 id="hack">Hack</h2>
-
-<p>我们的想法是，开机的时候将Chrome的数据文件全部放到/dev/shm下面，然后中间所有的读写都是在/dev/shm里面完成，因为都是在内存里面完成，所以速度会非常快。</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/09/chrome-ramdisk.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -660,6 +658,12 @@
 				<a href="/page/10">10</a>
 			
 		
+			
+			
+			
+				<a href="/page/11">11</a>
+			
+		
 		
 			<a class="next" href="/page/2/">Next &rarr;</a>
 		
@@ -678,21 +682,21 @@
 <section>
   <h1>Tags</h1>
   <ul class="tag-cloud">
-    <a style="font-size: 113%" href="/tag/android/">Android</a>
-<a style="font-size: 132%" href="/tag/apache/">Apache</a>
+    <a style="font-size: 112%" href="/tag/android/">Android</a>
+<a style="font-size: 131%" href="/tag/apache/">Apache</a>
 <a style="font-size: 80%" href="/tag/boost/">Boost</a>
 <a style="font-size: 80%" href="/tag/bugzilla/">Bugzilla</a>
-<a style="font-size: 178%" href="/tag/c-/">C++</a>
-<a style="font-size: 132%" href="/tag/captcha/">Captcha</a>
+<a style="font-size: 177%" href="/tag/c-/">C++</a>
+<a style="font-size: 131%" href="/tag/captcha/">Captcha</a>
 <a style="font-size: 164%" href="/tag/clover/">Clover</a>
-<a style="font-size: 113%" href="/tag/datastructure/">DataStructure</a>
+<a style="font-size: 112%" href="/tag/datastructure/">DataStructure</a>
 <a style="font-size: 80%" href="/tag/design/">Design</a>
-<a style="font-size: 132%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 131%" href="/tag/emacs/">Emacs</a>
 <a style="font-size: 80%" href="/tag/english/">English</a>
-<a style="font-size: 172%" href="/tag/git/">Git</a>
+<a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
-<a style="font-size: 113%" href="/tag/gitweb/">Gitweb</a>
-<a style="font-size: 178%" href="/tag/image-processing/">Image Processing</a>
+<a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
+<a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
 <a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
 <a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
@@ -700,25 +704,26 @@
 <a style="font-size: 80%" href="/tag/lisp/">Lisp</a>
 <a style="font-size: 80%" href="/tag/markdown/">Markdown</a>
 <a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
-<a style="font-size: 132%" href="/tag/mysql/">Mysql</a>
+<a style="font-size: 131%" href="/tag/mysql/">Mysql</a>
 <a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
-<a style="font-size: 156%" href="/tag/ogre/">OGRE</a>
+<a style="font-size: 155%" href="/tag/ogre/">OGRE</a>
 <a style="font-size: 80%" href="/tag/octopress/">Octopress</a>
-<a style="font-size: 132%" href="/tag/php/">PHP</a>
+<a style="font-size: 131%" href="/tag/php/">PHP</a>
+<a style="font-size: 80%" href="/tag/pil/">PIL</a>
 <a style="font-size: 250%" href="/tag/python/">Python</a>
 <a style="font-size: 80%" href="/tag/qq/">QQ</a>
 <a style="font-size: 80%" href="/tag/ruby/">Ruby</a>
 <a style="font-size: 80%" href="/tag/svn/">SVN</a>
-<a style="font-size: 113%" href="/tag/scar/">Scar</a>
-<a style="font-size: 113%" href="/tag/tortoisegit/">TortoiseGit</a>
+<a style="font-size: 112%" href="/tag/scar/">Scar</a>
+<a style="font-size: 112%" href="/tag/tortoisegit/">TortoiseGit</a>
 <a style="font-size: 164%" href="/tag/ubuntu/">Ubuntu</a>
 <a style="font-size: 145%" href="/tag/ultrademo/">UltraDemo</a>
 <a style="font-size: 80%" href="/tag/vpn/">VPN</a>
-<a style="font-size: 113%" href="/tag/vim/">Vim</a>
-<a style="font-size: 113%" href="/tag/wpf/">WPF</a>
+<a style="font-size: 112%" href="/tag/vim/">Vim</a>
+<a style="font-size: 112%" href="/tag/wpf/">WPF</a>
 <a style="font-size: 188%" href="/tag/web/">Web</a>
 <a style="font-size: 164%" href="/tag/wordpress/">Wordpress</a>
-<a style="font-size: 172%" href="/tag/compile/">compile</a>
+<a style="font-size: 171%" href="/tag/compile/">compile</a>
 <a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
 <a style="font-size: 80%" href="/tag/ppp/">ppp</a>
 <a style="font-size: 80%" href="/tag/pptpd/">pptpd</a>
@@ -750,6 +755,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/keep-learning.html">Keep Learning</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/12/tt.html">由TT引发的思考</a>
       </li>
     
@@ -763,10 +772,6 @@
     
       <li class="post">
         <a href="/2012/12/debug-nginx.html">调试Nginx</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
       </li>
     
   </ul>

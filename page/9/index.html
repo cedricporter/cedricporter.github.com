@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="想必大家都使用过Subversion吧，也想必大家都对SVN这种脱离了网络和服务器就寸步难行的工作方式嗤之以鼻吧。使用SVN我们看个log首要联网。 在服务器在因特网的情况下，网速让使用SVN变成一件十分蛋疼的事情。因为SVN事事都要联网，没有网络就无法工作，这个是集中式版本控制器十分大的缺陷。 &hellip;">
+  <meta name="description" content="在Android有许多ssh的工具，其中ConnectBot就是一款有趣方便的工具。 我们可以使用它来远程管理我们的主机。 ConnectBot的主界面如下： 我们可以把我们的密钥复制到SD卡根目录，然后在ConnectBot里面导入，然后点击密钥右边的那个锁的图标使其变为绿色就可以了。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,59 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/android-controls-computer.html">在Android管理远程主机</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-05T03:21:39+08:00" pubdate data-updated="true">2012-02-05</time>
+        
+         | <a href="/2012/02/android-controls-computer.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在Android有许多ssh的工具，其中ConnectBot就是一款有趣方便的工具。</p>
+
+<p>我们可以使用它来远程管理我们的主机。</p>
+
+<p>ConnectBot的主界面如下：</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/02/screenshot-1328349833982.png"><img src="http://everet.org/wp-content/uploads/2012/02/screenshot-1328349833982_thumb.png" alt="screenshot-1328349833982" /></a></p>
+
+<p>我们可以把我们的密钥复制到SD卡根目录，然后在ConnectBot里面导入，然后点击密钥右边的那个锁的图标使其变为绿色就可以了。然后我们就可以无密码登录远程主机了。</p>
+
+<p>下图是我登录了远程主机的截图：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/02/android-controls-computer.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -577,160 +630,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/01/pil-brief-intro.html">Python进行图像处理——PIL简介</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-25T07:31:43+08:00" pubdate data-updated="true">2012-01-25</time>
-        
-         | <a href="/2012/01/pil-brief-intro.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>PIL中包括Image，ImageEnhance，ImageGrab等。</p>
-
-<h2 id="image">Image</h2>
-
-<p>Image模块仅用一个类来表示PIL中的图像，并提供了许多工厂函数，不同类型的图像可以使用统一的接口进行处理。</p>
-
-<p><a href="http://www.pythonware.com/library/pil/handbook/image.htm">http://www.pythonware.com/library/pil/handbook/image.htm</a></p>
-
-<h3 id="section">主要函数（可以顾名思义，这里主要有个提纲，方便记忆）有：</h3>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">**Image.new(mode, size)** =&gt; image
-</span><span class="line">
-</span><span class="line">**Image.new(mode, size, color)** =&gt; image
-</span><span class="line">
-</span><span class="line">**Image.open(infile)** =&gt; image
-</span><span class="line">
-</span><span class="line">**Image.open(infile, mode)** =&gt; image
-</span><span class="line">
-</span><span class="line">**Image.blend(image1, image2, alpha)** =&gt; image&lt;!-- more --&gt;
-</span><span class="line">
-</span><span class="line">**im.convert(mode)** =&gt; image
-</span><span class="line">
-</span><span class="line">**im.convert(mode, matrix)** =&gt; image
-</span><span class="line">
-</span><span class="line">**im.copy()** =&gt; image
-</span><span class="line">
-</span><span class="line">**im.crop(box)** =&gt; image
-</span><span class="line">
-</span><span class="line">**im.paste(image, box)**
-</span><span class="line">
-</span><span class="line">**im.paste(colour, box)**
-</span><span class="line">
-</span><span class="line">**im.paste(image, box, mask)**
-</span><span class="line">
-</span><span class="line">**im.paste(colour, box, mask)**
-</span><span class="line">
-</span><span class="line">**im.resize(size)** =&gt; image
-</span><span class="line">
-</span><span class="line">**im.resize(size, filter)** =&gt; image
-</span><span class="line">
-</span><span class="line">**im.save(outfile, _options..._)**
-</span><span class="line">
-</span><span class="line">**im.save(outfile, format, _options..._)**
-</span><span class="line">
-</span><span class="line">**im.seek(frame)**   可用于gif
-</span><span class="line">
-</span><span class="line">**im.split()** =&gt; sequence    RGB通道分离
-</span><span class="line">
-</span><span class="line">**im.transpose(method)** =&gt; image</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h2 id="imageenhance">ImageEnhance</h2>
-
-<p>图像增强，锐化，对比度，亮度的处理。</p>
-
-<p><a href="http://www.pythonware.com/library/pil/handbook/imageenhance.htm">http://www.pythonware.com/library/pil/handbook/imageenhance.htm</a></p>
-
-<h2 id="imagegrab">ImageGrab</h2>
-
-<p>ImageGrab模块可以进行屏幕截图。也可以复制剪切板中的图像。不过手册说仅仅适用于Windows。</p>
-
-<p><a href="http://www.pythonware.com/library/pil/handbook/imagegrab.htm">http://www.pythonware.com/library/pil/handbook/imagegrab.htm</a></p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">**ImageGrab.grab()** =&gt; image
-</span><span class="line">
-</span><span class="line">**ImageGrab.grab(bbox)** =&gt; image
-</span><span class="line">
-</span><span class="line">**ImageGrab.grabclipboard()** =&gt; image or list of strings or None</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h2 id="imagedraw">ImageDraw</h2>
-
-<p>可以画2D图。</p>
-
-<p><a href="http://www.pythonware.com/library/pil/handbook/imagedraw.htm">http://www.pythonware.com/library/pil/handbook/imagedraw.htm</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -800,6 +699,12 @@
 				<a href="/page/10">10</a>
 			
 		
+			
+			
+			
+				<a href="/page/11">11</a>
+			
+		
 		
 			<a class="next" href="/page/10/">Next &rarr;</a>
 		
@@ -818,21 +723,21 @@
 <section>
   <h1>Tags</h1>
   <ul class="tag-cloud">
-    <a style="font-size: 113%" href="/tag/android/">Android</a>
-<a style="font-size: 132%" href="/tag/apache/">Apache</a>
+    <a style="font-size: 112%" href="/tag/android/">Android</a>
+<a style="font-size: 131%" href="/tag/apache/">Apache</a>
 <a style="font-size: 80%" href="/tag/boost/">Boost</a>
 <a style="font-size: 80%" href="/tag/bugzilla/">Bugzilla</a>
-<a style="font-size: 178%" href="/tag/c-/">C++</a>
-<a style="font-size: 132%" href="/tag/captcha/">Captcha</a>
+<a style="font-size: 177%" href="/tag/c-/">C++</a>
+<a style="font-size: 131%" href="/tag/captcha/">Captcha</a>
 <a style="font-size: 164%" href="/tag/clover/">Clover</a>
-<a style="font-size: 113%" href="/tag/datastructure/">DataStructure</a>
+<a style="font-size: 112%" href="/tag/datastructure/">DataStructure</a>
 <a style="font-size: 80%" href="/tag/design/">Design</a>
-<a style="font-size: 132%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 131%" href="/tag/emacs/">Emacs</a>
 <a style="font-size: 80%" href="/tag/english/">English</a>
-<a style="font-size: 172%" href="/tag/git/">Git</a>
+<a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
-<a style="font-size: 113%" href="/tag/gitweb/">Gitweb</a>
-<a style="font-size: 178%" href="/tag/image-processing/">Image Processing</a>
+<a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
+<a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
 <a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
 <a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
@@ -840,25 +745,26 @@
 <a style="font-size: 80%" href="/tag/lisp/">Lisp</a>
 <a style="font-size: 80%" href="/tag/markdown/">Markdown</a>
 <a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
-<a style="font-size: 132%" href="/tag/mysql/">Mysql</a>
+<a style="font-size: 131%" href="/tag/mysql/">Mysql</a>
 <a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
-<a style="font-size: 156%" href="/tag/ogre/">OGRE</a>
+<a style="font-size: 155%" href="/tag/ogre/">OGRE</a>
 <a style="font-size: 80%" href="/tag/octopress/">Octopress</a>
-<a style="font-size: 132%" href="/tag/php/">PHP</a>
+<a style="font-size: 131%" href="/tag/php/">PHP</a>
+<a style="font-size: 80%" href="/tag/pil/">PIL</a>
 <a style="font-size: 250%" href="/tag/python/">Python</a>
 <a style="font-size: 80%" href="/tag/qq/">QQ</a>
 <a style="font-size: 80%" href="/tag/ruby/">Ruby</a>
 <a style="font-size: 80%" href="/tag/svn/">SVN</a>
-<a style="font-size: 113%" href="/tag/scar/">Scar</a>
-<a style="font-size: 113%" href="/tag/tortoisegit/">TortoiseGit</a>
+<a style="font-size: 112%" href="/tag/scar/">Scar</a>
+<a style="font-size: 112%" href="/tag/tortoisegit/">TortoiseGit</a>
 <a style="font-size: 164%" href="/tag/ubuntu/">Ubuntu</a>
 <a style="font-size: 145%" href="/tag/ultrademo/">UltraDemo</a>
 <a style="font-size: 80%" href="/tag/vpn/">VPN</a>
-<a style="font-size: 113%" href="/tag/vim/">Vim</a>
-<a style="font-size: 113%" href="/tag/wpf/">WPF</a>
+<a style="font-size: 112%" href="/tag/vim/">Vim</a>
+<a style="font-size: 112%" href="/tag/wpf/">WPF</a>
 <a style="font-size: 188%" href="/tag/web/">Web</a>
 <a style="font-size: 164%" href="/tag/wordpress/">Wordpress</a>
-<a style="font-size: 172%" href="/tag/compile/">compile</a>
+<a style="font-size: 171%" href="/tag/compile/">compile</a>
 <a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
 <a style="font-size: 80%" href="/tag/ppp/">ppp</a>
 <a style="font-size: 80%" href="/tag/pptpd/">pptpd</a>
@@ -890,6 +796,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/keep-learning.html">Keep Learning</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/12/tt.html">由TT引发的思考</a>
       </li>
     
@@ -903,10 +813,6 @@
     
       <li class="post">
         <a href="/2012/12/debug-nginx.html">调试Nginx</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[EverET.org]]></title>
   <link href="http://everet.org/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2013-01-02T00:57:30+08:00</updated>
+  <updated>2013-01-03T00:55:12+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -12,6 +12,92 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Keep Learning]]></title>
+    <link href="http://everet.org/2013/01/keep-learning.html"/>
+    <updated>2013-01-03T00:14:00+08:00</updated>
+    <id>http://everet.org/2013/01/keep-learning</id>
+    <content type="html"><![CDATA[<p>今天<a href="http://www.kidsang.com/">屠文翔</a>同学问了我一个在PIL中获取像素操作的问题，我想也没想就说道可以使用getpixel和putpixel操作像素，因为我之前一直也是使用这两个API。过了一会，<a href="http://www.kidsang.com/">屠文翔</a>同学问我是否用过load()这个API，我直接就说这个不是操作像素的。我之前在浏览PIL源码的时候，经常会见到调用这个函数，不过都只是纯调用，<code>self.load()</code>，连返回值都不获取。也没仔细看，就认为这个仅仅是装载数据。</p>
+
+<!-- more -->
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="c">##</span>
+</span><span class="line"><span class="c"># Allocates storage for the image and loads the pixel data.  In</span>
+</span><span class="line"><span class="c"># normal cases, you don&#39;t need to call this method, since the</span>
+</span><span class="line"><span class="c"># Image class automatically loads an opened image when it is</span>
+</span><span class="line"><span class="c"># accessed for the first time.</span>
+</span><span class="line"><span class="c">#</span>
+</span><span class="line"><span class="c"># @return An image access object.</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">    <span class="s">&quot;Explicitly load pixel data.&quot;</span>
+</span><span class="line">    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">im</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">dirty</span><span class="p">:</span>
+</span><span class="line">        <span class="c"># realize palette</span>
+</span><span class="line">        <span class="nb">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">im</span><span class="o">.</span><span class="n">putpalette</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">getdata</span><span class="p">())</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">dirty</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="s">&quot;RGB&quot;</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">rawmode</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class="line">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;transparency&quot;</span><span class="p">):</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">im</span><span class="o">.</span><span class="n">putpalettealpha</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s">&quot;transparency&quot;</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="s">&quot;RGBA&quot;</span>
+</span><span class="line">    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">im</span><span class="p">:</span>
+</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">im</span><span class="o">.</span><span class="n">pixel_access</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">readonly</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>于是乎就自以为是地认为，load()不是用于操作像素的。然后<a href="http://www.kidsang.com/">屠文翔</a>同学发来一条链接<a href="http://effbot.org/zone/pil-pixel-access.htm">Pixel Access Objects</a>，顺带说了一句，“时代进步了“。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">pix</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># get pixel value</span>
+</span><span class="line"><span class="k">print</span> <span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># put pixel value</span>
+</span><span class="line"><span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>嗯，确实，时代进步了，我老了，如果我不保持学习，所拥有的知识很多将会过时，甚至成为错误。</p>
+
+<p>再仔细一看，这篇文章是2005年写的，新特性在1.1.6就加入了PIL，而我用的是1.1.7。</p>
+
+<p>现在就说明一个问题，我自以为掌握了某些知识，其实是没有掌握的，而且其中甚至还有误解在里面。所以，对于”已经掌握的“知识，还需要经常温习，考证是否正确理解、是否全部掌握、是否慢慢遗忘。</p>
+
+<h2 id="keep-learning">Keep Learning</h2>
+
+<p>又想起一句话：<strong>学历代表过去，能力代表现在，学习力代表未来</strong>。</p>
+
+<p>对于在IT这个瞬息万变的行业，不能保持学习的兴趣与激情，迟早会被无情地淘汰。当然，除了学习，还要保持谦虚，保持低调，毕竟人总是会犯错的。如果自己很装逼地说什么就是什么，最后却发现自己错了，那岂不丢脸丢到家了。低调与谦虚，加上高效学习，2013年，加油！！！</p>
+
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2013/01/keep-learning.html">http://everet.org/2013/01/keep-learning.html</a>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[由TT引发的思考]]></title>
@@ -2358,23 +2444,6 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 </ol>
 
  <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/captcha-around-us.html">http://everet.org/2012/07/captcha-around-us.html</a>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[VirtualBox的无缝模式]]></title>
-    <link href="http://everet.org/2012/07/virtualbox-seamless.html"/>
-    <updated>2012-07-05T05:50:03+08:00</updated>
-    <id>http://everet.org/2012/07/virtualbox-seamless</id>
-    <content type="html"><![CDATA[<p>这周开始了去实习了，伙食比饭堂好多了，而且还不用米，真幸福啊。不过不好的地方是，公司里要用专用的即时通讯工具，而且要保持工作时间内时时在线。更悲剧的是，它木有Linux版，宇哥说他wine后聊天窗是乱码，这个真是悲剧啊。</p>
-
-<p>无奈，宇哥说vbox有个seamless mode（无缝模式），可以将虚拟机里面的系统的桌面隐藏起来，然后Windows下的应用程序就可以和Linux下的程序看起来像一样的了。一试，好神奇啊～～这样虽然性能损失大一点，但是至少可以方便地使用即时通讯工具啦～</p>
-
-<p><strong>下面是Ubuntu和XP在一起～</strong><!-- more --></p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/fullscreen.png"><img src="http://everet.org/wp-content/uploads/2012/07/fullscreen.png" alt="" /></a></p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-04-212105.png"><img src="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-04-212105.png" alt="" /></a></p>
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/virtualbox-seamless.html">http://everet.org/2012/07/virtualbox-seamless.html</a>]]></content>
   </entry>
   
 </feed>
