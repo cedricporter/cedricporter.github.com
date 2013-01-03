@@ -10,6 +10,7 @@ categories:
 tags:
 - Python
 - Image Processing
+- PIL
 ---
 
 [EffectLab](http://everet.org/2012/07/effectlab.html)也是一个基于PIL的Python的图像库，目的是为了提供更多的特效处理以及更快的测试。

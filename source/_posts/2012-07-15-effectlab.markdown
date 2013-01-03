@@ -10,6 +10,7 @@ categories:
 tags:
 - Python
 - Image Processing
+- PIL
 ---
 
 EffectLab是使用Python编写的一个快速测试图像处理特效的实验库，EffectLab目前基于PIL。方便测试图像处理算法。
