@@ -9,7 +9,14 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="在Android有许多ssh的工具，其中ConnectBot就是一款有趣方便的工具。 我们可以使用它来远程管理我们的主机。 ConnectBot的主界面如下： 我们可以把我们的密钥复制到SD卡根目录，然后在ConnectBot里面导入，然后点击密钥右边的那个锁的图标使其变为绿色就可以了。 &hellip;">
+  <meta name="description" content="书的示例代码在 http://pix.cs.olemiss.edu/csci561/prg561.1.html 我在Ubuntu 10.10上编译会出现错误如下错误 1
+2
+3
+4
+5
+6
+tcpservpoll01.c: In function ‘main’:
+tcpservpoll01.c: &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +88,68 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/unix-network-programming-compile-on-ubuntu.html">《Unix网络编程》的代码在Ubuntu上编译</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-07T01:44:10+08:00" pubdate data-updated="true">2012-02-07</time>
+        
+         | <a href="/2012/02/unix-network-programming-compile-on-ubuntu.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>书的示例代码在 <a href="http://pix.cs.olemiss.edu/csci561/prg561.1.html">http://pix.cs.olemiss.edu/csci561/prg561.1.html</a></p>
+
+<p>我在Ubuntu 10.10上编译会出现错误如下错误</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">tcpservpoll01.c: In function ‘main’:
+</span><span class="line">tcpservpoll01.c:13: error: ‘OPEN_MAX’ undeclared (first use in this function)
+</span><span class="line">tcpservpoll01.c:13: error: (Each undeclared identifier is reported only once
+</span><span class="line">tcpservpoll01.c:13: error: for each function it appears in.)
+</span><span class="line">tcpservpoll01.c:13: warning: unused variable ‘client’
+</span><span class="line">make: *** [tcpservpoll01.o] Error 1</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>解决方案是去定义一下OPEN_MAX它。</p>
+
+<p>我们在unp.h里面加上</p>
+
+<p><code>#define OPEN_MAX 1024</code></p>
+
+<p>就好了。</p>
+
+<p>设为1024的原因见 <a href="http://blog.chinaunix.net/space.php?uid=23242876&amp;do=blog&amp;id=2480261">http://blog.chinaunix.net/space.php?uid=23242876&amp;do=blog&amp;id=2480261</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -583,53 +652,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/01/python-ogre-start.html">Python与OGRE之开篇</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-27T05:02:52+08:00" pubdate data-updated="true">2012-01-27</time>
-        
-         | <a href="/2012/01/python-ogre-start.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>OGRE是什么？百度百科给的解释是：“OGRE（Object-Oriented Graphics Rendering Engine，即：面向对象图形渲染引擎）是一个用C++开发的面向场景、非常灵活的3D引擎，它旨在让开发人员更容易、更直接地利用硬件加速的3D图形系统开发应用。这个类库隐藏了底层系统库（如：Direct3D和OpenGL）的所有细节，提供了一个基于世界对象和其他直观类的接口。 译者注:ogre在英文中意为：食人魔鬼, 怪物, 象鬼的人，故其LOGO是一个怪物头。”</p>
-
-<p>Python是什么？“Python是一种面向对象、直译式计算机程序设计语言，由<a href="http://baike.baidu.com/view/2975166.htm">Guido van Rossum</a>于1989年底发明， 第一个公开发行版发行于1991年。Python语法简捷而清晰，具有丰富和强大的类库。它常被昵称为胶水语言，它能够很轻松的把用其他语言制作的各种模块（尤其是C/C++）轻松地联结在一起。常见的一种应用情形是，使用python快速生成程序的原型（有时甚至是程序的最终界面），然后对其中有特别要求的部分，用更合适的语言改写，比如3D游戏中的图形渲染模块，速度要求非常高，就可以用C++重写。”摘自百度百科。</p>
-
-<h2 id="pythonogre">Python+OGRE=？</h2>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/01/python-ogre-start.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -796,6 +818,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/keep-learning.html">Keep Learning</a>
       </li>
     
@@ -809,10 +835,6 @@
     
       <li class="post">
         <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/debug-nginx.html">调试Nginx</a>
       </li>
     
   </ul>

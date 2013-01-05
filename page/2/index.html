@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="我现在使用的一台电脑的硬盘速度非常慢，Chrome有时也会对硬盘读写也会让机器发生顿卡，真是悲剧。所以我决定将Chrome经常读写的数据放置到内存中以提高响应速度。 Chrome的数据文件主要有用户配置文件以及磁盘缓存文件。在Ubuntu下就分别放置在~/.config/google- &hellip;">
+  <meta name="description" content="11月了，没想到10月份竟然木有写博客。这几天在迁移服务器，时间不赶，就慢慢弄，顺便记录一下一些技巧。 首先，远程ssh登录到服务器，可能中途会出现网络断掉或者超时，这时候ssh里面就打不了字了，就只能关闭再重新连接。如果我们用vim编辑一个文件到了一半的话，就会蛋疼地多了一个swp。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,70 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/11/screen-on-ssh.html">Screen在ssh远程登录中的使用</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-01T09:29:12+08:00" pubdate data-updated="true">2012-11-01</time>
+        
+         | <a href="/2012/11/screen-on-ssh.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>11月了，没想到10月份竟然木有写博客。这几天在迁移服务器，时间不赶，就慢慢弄，顺便记录一下一些技巧。</p>
+
+<p>首先，远程ssh登录到服务器，可能中途会出现网络断掉或者超时，这时候ssh里面就打不了字了，就只能关闭再重新连接。如果我们用vim编辑一个文件到了一半的话，就会蛋疼地多了一个swp。那么如果我们希望在重新连接回去的时候，可以回到之前的工作状态，我们应该怎么办呢？答案是借助screen。</p>
+
+<p>对于screen的使用就不再罗嗦了。具体可以参看后面的参考资料中提供的链接。</p>
+
+<h2 id="section">一些技巧</h2>
+
+<p>下面可能会与诸位使用习惯有所冲突，请见谅。</p>
+
+<h3 id="ctrla">把ctrl+a还给我</h3>
+
+<p>首先，screen的命令的前缀是ctrl+a，进入screen后，ctrl+a就成了命令前缀了。我经常使用ctrl+a跳到行首，ctrl+e跳到行尾，所以需要修改一下前缀，否则ctrl+a跳到行首这个习惯就得改了。我们在家目录下面创建一个文件<strong>～/.screenrc</strong>。然后在里面写上</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">escape ^Zz
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后就把前缀改成ctrl+z了，如果需要暂停程序的话，就用ctrl+z z来暂停。这样ctrl+a就回来了。</p>
+
+<h3 id="section-1">偷懒</h3>
+
+<p>每次打screen真麻烦，我们在<strong>～/.bashrc</strong>中加上</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/11/screen-on-ssh.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -609,57 +673,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/07/captcha-around-us.html">我们身边的验证码技术</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-09T06:47:01+08:00" pubdate data-updated="true">2012-07-09</time>
-        
-         | <a href="/2012/07/captcha-around-us.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>验证码大家几乎经常都会碰到，不过很多时候，我们都仅仅只是输入完事，很少去思考验证码其背后的东西。验证码的英文名叫<strong>CAPTCHA</strong>，全称为<strong>Completely Automated Public Turing test to tell Computers and Humans Apart</strong>（<strong>全自动区分计算机和人类的图灵测试</strong>）。验证码提供一个区分人与机器的手段，主要目的是将机器人拒之门外。</p>
-
-<p>现在的各种网络服务已经成为我们生活的重要的组成部分，像各种社交网站，购物网站，网上银行，投票，论坛等服务，为我们的带来的极大的便利。然而，这些系统都在遭受着恶意程序的滥用。所以，验证码系统用于阻挡这些恶意程序。</p>
-
-<h2 id="captcha">验证码CAPTCHA存在的意义</h2>
-
-<p>现在，每天有2亿的验证码CAPTCHA被人类识别出来。我们可利用其解决一些计算机难以处理或者耗费大量人力的问题。目前，像Google的<a href="http://www.google.com/recaptcha/aboutus">reCAPTCHA</a>项目，就是利用验证码来数字化图书和报纸。而像一些广告公司将广告融入了验证码，让人们在输入验证码的时候输入广告中的特定部分，但是这种验证码的样本必然会比较少，因为较难产生大量的广告验证码，所以很容易被破解。</p>
-
-<p>因为CAPTCHA的需求量十分巨大，所以CAPTCHA需要能够自动产生并且评估正确性。此外，人类必须要能够快速地识别并输入验证码，否则容易惹恼用户以至于用户流失。对于CAPTCHA，可以引入人工智能领域的难题，来使现有技术短期无法成功破解。如果一种CAPTCHA没有被破解，那么就有一个可以区分人类和计算机的方法。如果CAPTCHA被破解了，那么一个人工智能的问题也就随之解决了。</p>
-
-<h2 id="captcha---more---">验证码CAPTCHA的困境</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/07/captcha-around-us.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -826,6 +839,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/keep-learning.html">Keep Learning</a>
       </li>
     
@@ -839,10 +856,6 @@
     
       <li class="post">
         <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/debug-nginx.html">调试Nginx</a>
       </li>
     
   </ul>

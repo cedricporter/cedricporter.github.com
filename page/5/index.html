@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="每个程序都拥有自己的生命，每个程序都应该拥有自己的帮助文档。一个好的帮助文档可以让一个程序的寿命延长。当然，有了一个好的帮助文档还不够，还需要友好快捷的帮助方式。 Shell 我们在shell下可以使用各种小工具，像ls，ps，grep等，当我们需要查看ls的帮助，可以是键入man ls， &hellip;">
+  <meta name="description" content="混合语言策略可以汲取各语言之所长，让开发更加敏捷。混合语言策略在在应用得当时可以让程序更加优雅。 在《Unix编程艺术》中，Raymond说道： 混合语言是一种知识密集型（而不是编码密集型）的编程。要让它能够工作，我们不仅应该具备相当数量的多种语言应用知识， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,68 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/05/cpp-python.html">C++与Python混合编程</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-04T05:21:46+08:00" pubdate data-updated="true">2012-05-04</time>
+        
+         | <a href="/2012/05/cpp-python.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>混合语言策略可以汲取各语言之所长，让开发更加敏捷。混合语言策略在在应用得当时可以让程序更加优雅。</p>
+
+<p>在《Unix编程艺术》中，Raymond说道：</p>
+
+<blockquote>
+  <p>混合语言是一种知识密集型（而不是编码密集型）的编程。要让它能够工作，我们不仅应该具备相当数量的多种语言应用知识，并且还需要具备能够判断这些语言在什么地方最适合、以及怎样把他们组合在一起的潜经验。</p>
+</blockquote>
+
+<p>在混合语言编程中，我们遇到的第一个问题是如何需要让他们可以互相调用。也就是像C++可以调用Python的函数、Python又可以调用C++的函数。</p>
+
+<p>对于C++和Python的混合编程主要有两种方式。</p>
+
+<ol>
+  <li>
+    <p>将C++写的模块编译成动态链接库，然后由Python主程序使用。这种一般是单方向的使用。</p>
+  </li>
+  <li>
+    <p>用C++主程序调用Python。然后Python中可以使用C++主程序的函数。</p>
+  </li>
+</ol>
+
+<p>对于第一种方式非常简单，我们在此就不讨论了。我们将着重讨论第二种方式。</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/05/cpp-python.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -561,49 +623,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/03/vim-table.html">又一个Vim速查表</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-31T08:33:18+08:00" pubdate data-updated="true">2012-03-31</time>
-        
-         | <a href="/2012/03/vim-table.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>图片非常的大，请耐心等候~~</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/03/vim-table.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -770,6 +789,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/keep-learning.html">Keep Learning</a>
       </li>
     
@@ -783,10 +806,6 @@
     
       <li class="post">
         <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/debug-nginx.html">调试Nginx</a>
       </li>
     
   </ul>

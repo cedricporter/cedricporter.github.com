@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="可能很多初学者对于数据库没有什么概念。 对于MySQL来说，其下可以有很多个数据库，可以使用 CREATE DATABASE database_name; 来建数据库。 我们还可以对不同的数据库对不同的用户设置权限。 然后我们可以选择当前操作的数据库，然后在其下建表 CREATE TABLE &hellip;">
+  <meta name="description" content="今天在光驱位装了块硬盘，于是想在弄过几块硬盘看看到了Z盘会发生什么事情。 最后发现到了Z盘后，就识别不了新的硬盘了。Windows果然弱爆了。 今天贡献硬盘的有洪科，晓彬，钦杰，桐文，谢谢他们啊~~ 见证历史的图!!">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/6-hard-disk-is-installed-to-the-computer.html">给电脑装了6块硬盘后</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-21T09:09:29+08:00" pubdate data-updated="true">2012-02-21</time>
+        
+         | <a href="/2012/02/6-hard-disk-is-installed-to-the-computer.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天在光驱位装了块硬盘，于是想在弄过几块硬盘看看到了Z盘会发生什么事情。</p>
+
+<p>最后发现到了Z盘后，就识别不了新的硬盘了。Windows果然弱爆了。</p>
+
+<p>今天贡献硬盘的有洪科，晓彬，钦杰，桐文，谢谢他们啊~~</p>
+
+<p>见证历史的图!!</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/02/6-hard-disk-is-installed-to-the-computer.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -559,68 +606,6 @@ Accepted</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/02/unix-network-programming-compile-on-ubuntu.html">《Unix网络编程》的代码在Ubuntu上编译</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-07T01:44:10+08:00" pubdate data-updated="true">2012-02-07</time>
-        
-         | <a href="/2012/02/unix-network-programming-compile-on-ubuntu.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>书的示例代码在 <a href="http://pix.cs.olemiss.edu/csci561/prg561.1.html">http://pix.cs.olemiss.edu/csci561/prg561.1.html</a></p>
-
-<p>我在Ubuntu 10.10上编译会出现错误如下错误</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">tcpservpoll01.c: In function ‘main’:
-</span><span class="line">tcpservpoll01.c:13: error: ‘OPEN_MAX’ undeclared (first use in this function)
-</span><span class="line">tcpservpoll01.c:13: error: (Each undeclared identifier is reported only once
-</span><span class="line">tcpservpoll01.c:13: error: for each function it appears in.)
-</span><span class="line">tcpservpoll01.c:13: warning: unused variable ‘client’
-</span><span class="line">make: *** [tcpservpoll01.o] Error 1</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>解决方案是去定义一下OPEN_MAX它。</p>
-
-<p>我们在unp.h里面加上</p>
-
-<p><code>#define OPEN_MAX 1024</code></p>
-
-<p>就好了。</p>
-
-<p>设为1024的原因见 <a href="http://blog.chinaunix.net/space.php?uid=23242876&amp;do=blog&amp;id=2480261">http://blog.chinaunix.net/space.php?uid=23242876&amp;do=blog&amp;id=2480261</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -787,6 +772,10 @@ Accepted</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/keep-learning.html">Keep Learning</a>
       </li>
     
@@ -800,10 +789,6 @@ Accepted</p>
     
       <li class="post">
         <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/debug-nginx.html">调试Nginx</a>
       </li>
     
   </ul>

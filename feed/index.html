@@ -4,7 +4,7 @@
   <title><![CDATA[EverET.org]]></title>
   <link href="http://everet.org/feed" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2013-01-03T13:14:59+08:00</updated>
+  <updated>2013-01-05T17:22:03+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -12,6 +12,55 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Chrome Edit With Emacs]]></title>
+    <link href="http://everet.org/2013/01/chrome-edit-with-emacs.html"/>
+    <updated>2013-01-05T16:46:00+08:00</updated>
+    <id>http://everet.org/2013/01/chrome-edit-with-emacs</id>
+    <content type="html"><![CDATA[<p>大家在浏览器写长篇的东西时，有没觉得那个纯文本编辑框弱爆了？反正我是这么觉得。像Github、<a href="http://stackoverflow.com/editing-help">stackoverflow</a>、Wiki等都支持Markdown，对于这种有语法的文本，最好就是用个语法高亮自动排版的编辑器编辑。</p>
+
+<p>在Firefox有<a href="https://addons.mozilla.org/zh-cn/firefox/addon/its-all-text/">It’s All Text!</a>这个插件，可以调用外部编辑器。</p>
+
+<p>而在Chrome里面，也有插件，可以调用外部的Emacs进行编辑，而且可以根据规则自动选择模式，非常方便。它的名字叫<a href="http://www.emacswiki.org/emacs/Edit_with_Emacs">Edit With Emacs</a>。</p>
+
+<p>安装完插件后，Chrome所有的大Textbox都会出现一个蓝色的edit按钮，一按，就可以用Emacs编辑里面的内容了。</p>
+
+<p><img src="http://everet.org/imgs/2013-01-05-chrome-edit-with-emacs.markdown_20130105_170235_21731e8F.png" /></p>
+
+<!-- more -->
+
+<p>我们可以通过修改<code>edit-server-url-major-mode-alist</code>这个Association List<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>来添加规则，如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="cl"><span class="line"><span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;edit-server</span> <span class="no">nil</span> <span class="no">t</span><span class="p">)</span> <span class="p">(</span><span class="nv">daemonp</span><span class="p">))</span>
+</span><span class="line"><span class="c1">;  (setq edit-server-new-frame nil)</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">edit-server-start</span><span class="p">))</span>
+</span><span class="line">
+</span><span class="line"><span class="p">(</span><span class="k">setq</span> <span class="nv">edit-server-url-major-mode-alist</span>
+</span><span class="line">      <span class="o">&#39;</span><span class="p">((</span><span class="s">&quot;github\\.com&quot;</span> <span class="o">.</span> <span class="nv">markdown-mode</span><span class="p">)</span>
+</span><span class="line">	<span class="p">(</span><span class="s">&quot;i\\.everet\\.org&quot;</span> <span class="o">.</span> <span class="nv">moinmoin-mode</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Edit With Emacs的工作原理是在Emacs里面开一个服务器，监听9292端口，然后Chrome插件将文本POST到Emacs里面编辑，编辑完再返回回去。</p>
+
+<p>不过它的Emacs端在编辑中文url的textbox会有bug（因为中文在url中被转义成了%xx%xx这种形式，这个%在format的时候没转义好，于是format的时候就SB了），提交了issue不过作者暂时没理，我们自己注释掉<code>edit-server-find-or-create-edit-buffer</code>下面的<code>edit-server-log</code>就行了（diff：<a href="https://github.com/cedricporter/vim-emacs-setting/commit/a3069e50fd3bce90ca46be6ba784e47cd9d198ca#emacs/.emacs.d/plugins/edit-server.el">edit-server.el</a>）。</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="http://www.gnu.org/software/emacs/manual/html_node/elisp/Association-Lists.html">Association Lists</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2013/01/chrome-edit-with-emacs.html">http://everet.org/2013/01/chrome-edit-with-emacs.html</a>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Keep Learning]]></title>
@@ -2360,90 +2409,6 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 </ol>
 
  <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/effectlab.html">http://everet.org/2012/07/effectlab.html</a>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[我们身边的验证码技术]]></title>
-    <link href="http://everet.org/2012/07/captcha-around-us.html"/>
-    <updated>2012-07-09T06:47:01+08:00</updated>
-    <id>http://everet.org/2012/07/captcha-around-us</id>
-    <content type="html"><![CDATA[<p>验证码大家几乎经常都会碰到，不过很多时候，我们都仅仅只是输入完事，很少去思考验证码其背后的东西。验证码的英文名叫<strong>CAPTCHA</strong>，全称为<strong>Completely Automated Public Turing test to tell Computers and Humans Apart</strong>（<strong>全自动区分计算机和人类的图灵测试</strong>）。验证码提供一个区分人与机器的手段，主要目的是将机器人拒之门外。</p>
-
-<p>现在的各种网络服务已经成为我们生活的重要的组成部分，像各种社交网站，购物网站，网上银行，投票，论坛等服务，为我们的带来的极大的便利。然而，这些系统都在遭受着恶意程序的滥用。所以，验证码系统用于阻挡这些恶意程序。</p>
-
-<h2 id="captcha">验证码CAPTCHA存在的意义</h2>
-
-<p>现在，每天有2亿的验证码CAPTCHA被人类识别出来。我们可利用其解决一些计算机难以处理或者耗费大量人力的问题。目前，像Google的<a href="http://www.google.com/recaptcha/aboutus">reCAPTCHA</a>项目，就是利用验证码来数字化图书和报纸。而像一些广告公司将广告融入了验证码，让人们在输入验证码的时候输入广告中的特定部分，但是这种验证码的样本必然会比较少，因为较难产生大量的广告验证码，所以很容易被破解。</p>
-
-<p>因为CAPTCHA的需求量十分巨大，所以CAPTCHA需要能够自动产生并且评估正确性。此外，人类必须要能够快速地识别并输入验证码，否则容易惹恼用户以至于用户流失。对于CAPTCHA，可以引入人工智能领域的难题，来使现有技术短期无法成功破解。如果一种CAPTCHA没有被破解，那么就有一个可以区分人类和计算机的方法。如果CAPTCHA被破解了，那么一个人工智能的问题也就随之解决了。</p>
-
-<h2 id="captcha---more---">验证码CAPTCHA的困境<!-- more --></h2>
-
-<p>计算机程序可以一天24小时不间断运行，即使是在较低的识别率也可以在较短的时间内大量穿越CAPTCHA系统。所以CAPACHA的识别率需要低于0.01%才可以有效地阻挡自动化的恶意程序的攻击。当然，也可以通过IP辅助来限制一台机器的尝试次数。</p>
-
-<h2 id="captcha-1">CAPTCHA的类型</h2>
-
-<p>CAPTCHA主要分成3类——文本、图像和声音。</p>
-
-<h3 id="text-based-captcha">文本验证码（Text-based CAPTCHA)</h3>
-
-<p>文本验证码方便计算机自动地大量产生，是目前应用最多的最广泛的技术。文本验证码主要靠图像变形和添加噪声。</p>
-
-<p>文本验证码破解难点主要在于字符的分割和识别。其中字符分割是破解文本验证码的关键。主要步骤是：第一步，分割字符，第二步，单个字符识别，其中单个字符的识别在现有的机器学习算法下可以很容易的识别。</p>
-
-<p>所以防范对文本验证码的攻击的关键在于加大字符分割的难度。像Google等公司的验证码[5]都是粘连在一起，分割难度大。</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-08-223255.png"><img src="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-08-223255.png" alt="" /></a></p>
-
-<p>验证码识别的主要流程一般都较为固定。</p>
-
-<h4 id="section">识别流程</h4>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/2.png"><img src="http://everet.org/wp-content/uploads/2012/07/2.png" alt="" /></a></p>
-
-<h4 id="section-1">分割</h4>
-
-<p>下图为垂直投影字符分割[7]</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/Selection_012.png"><img src="http://everet.org/wp-content/uploads/2012/07/Selection_012.png" alt="" /></a></p>
-
-<h3 id="image-based-captcha">图像验证码（Image-based CAPTCHA）</h3>
-
-<p>图像验证码基于图像分类、目标识别、场景理解等问题，一般情况下比文本验证码更加难以破解，但是现有的图像验证码需要庞大的图像数据库，而且无法大规模产生。更糟糕的是，一旦数据库被公布，算法不功自破。[6]</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-08-224238.png"><img src="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-08-224238.png" alt="" /></a></p>
-
-<h3 id="sound-based-captcha">声音验证码（Sound-based CAPTCHA）</h3>
-
-<p>声音验证码以随机间隔播放随机选择的一个或多个人播报的数字字母，再添加背景噪声。声音验证码容易收到机器学习算法的攻击。而且相对于视觉上的验证码，用户友好性更低。对于字母的声音，可能农村地区的少部分群体会因为对于字母发音不熟悉而导致无法理解，而无法通过测试。</p>
-
-<h2 id="section-2">参考资料</h2>
-
-<ol>
-  <li>
-    <p>Jeff Yan, Ahmad Salah El Ahmad, <strong>A Low-cost Attack on a Microsoft CAPTCHA</strong></p>
-  </li>
-  <li>
-    <p>李秋洁 茅耀斌 王执铨, <strong>CAPTCHA技术研究综述</strong></p>
-  </li>
-  <li>
-    <p>Prof. (Mrs.) A.A. Chandavale,  Prof. Dr.A.M. Sapkal, Dr.R.M.Jalnekar, <strong>Algorithm To Break Visual CAPTCHA</strong></p>
-  </li>
-  <li>
-    <p>Shujun Li, S. Amier Haider Shah, …,   <strong>Breaking e-Banking CAPTCHAs</strong></p>
-  </li>
-  <li>
-    <p>Ibrahim Furkan Ince, Ilker Yengin, Yucel Batu Salman, <strong>DESIGNING CAPTCHA ALGORITHM: SPLITTING AND ROTATING</strong></p>
-  </li>
-  <li>
-    <p>Michele Merler (mm3233), Jacquilene Jacob (jj2442),  <strong>BREAKING AN IMAGE BASED CAPTCHA</strong></p>
-  </li>
-  <li>
-    <p>Shih-Yu Huang, Yeuan-Kuen Lee, Graeme Bell and Zhan-he Ou, <strong>An Efficient Segmentation Algorithm for CAPTCHAs with Line Cluttering and Character Warping</strong></p>
-  </li>
-</ol>
-
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/captcha-around-us.html">http://everet.org/2012/07/captcha-around-us.html</a>]]></content>
   </entry>
   
 </feed>

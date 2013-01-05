@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="在Python，默认的整数是long型的，也就是机器字长，32位的最大有符号整数为0x7fffffff，64位最大有符号整数为0x7fffffffffffffff。 而在Python，支持任意大整数的运算，也就是，当我们的long型整数（在Python对象中type为int）溢出的时候， &hellip;">
+  <meta name="description" content="第一次见到注释中的TODO是在用VS自动生成MFC框架的时候，里面自动生成的函数可能会有一句注释： // TODO Fix this function. 很久以前以为这仅仅是给人看的，原来，它也可以在VS里面开启一个TastList窗口，显示代码中所有的TODO（代办事项）。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,62 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/05/todo-fixme-xxx-in-comment.html">注释中的TODO、FIXME、XXX</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-16T20:58:10+08:00" pubdate data-updated="true">2012-05-16</time>
+        
+         | <a href="/2012/05/todo-fixme-xxx-in-comment.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>第一次见到注释中的TODO是在用VS自动生成MFC框架的时候，里面自动生成的函数可能会有一句注释：</p>
+
+<blockquote>
+  <p>// TODO Fix this function.</p>
+</blockquote>
+
+<p>很久以前以为这仅仅是给人看的，原来，它也可以在VS里面开启一个TastList窗口，显示代码中所有的TODO（代办事项）。然后我们就可以方便地在TaskList中看到代码中哪些东西还需要我们完成。这个在其他的开发环境也有类似的功能。</p>
+
+<p>在Python源码中，主要有三个特殊的注释：TODO、FIXME、XXX。</p>
+
+<h2 id="todo">TODO</h2>
+
+<p>说明还有工作需要做，COMMENT简要地描述还有什么工作要做。</p>
+
+<blockquote>
+  <p>/* TODO: C speedup not implemented for sort_keys */</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/05/todo-fixme-xxx-in-comment.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -556,68 +612,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/05/cpp-python.html">C++与Python混合编程</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-04T05:21:46+08:00" pubdate data-updated="true">2012-05-04</time>
-        
-         | <a href="/2012/05/cpp-python.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>混合语言策略可以汲取各语言之所长，让开发更加敏捷。混合语言策略在在应用得当时可以让程序更加优雅。</p>
-
-<p>在《Unix编程艺术》中，Raymond说道：</p>
-
-<blockquote>
-  <p>混合语言是一种知识密集型（而不是编码密集型）的编程。要让它能够工作，我们不仅应该具备相当数量的多种语言应用知识，并且还需要具备能够判断这些语言在什么地方最适合、以及怎样把他们组合在一起的潜经验。</p>
-</blockquote>
-
-<p>在混合语言编程中，我们遇到的第一个问题是如何需要让他们可以互相调用。也就是像C++可以调用Python的函数、Python又可以调用C++的函数。</p>
-
-<p>对于C++和Python的混合编程主要有两种方式。</p>
-
-<ol>
-  <li>
-    <p>将C++写的模块编译成动态链接库，然后由Python主程序使用。这种一般是单方向的使用。</p>
-  </li>
-  <li>
-    <p>用C++主程序调用Python。然后Python中可以使用C++主程序的函数。</p>
-  </li>
-</ol>
-
-<p>对于第一种方式非常简单，我们在此就不讨论了。我们将着重讨论第二种方式。</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/05/cpp-python.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -784,6 +778,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/keep-learning.html">Keep Learning</a>
       </li>
     
@@ -797,10 +795,6 @@
     
       <li class="post">
         <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/debug-nginx.html">调试Nginx</a>
       </li>
     
   </ul>

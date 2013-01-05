@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="这周开始了去实习了，伙食比饭堂好多了，而且还不用米，真幸福啊。不过不好的地方是，公司里要用专用的即时通讯工具，而且要保持工作时间内时时在线。更悲剧的是，它木有Linux版，宇哥说他wine后聊天窗是乱码，这个真是悲剧啊。 无奈，宇哥说vbox有个seamless mode（无缝模式）， &hellip;">
+  <meta name="description" content="验证码大家几乎经常都会碰到，不过很多时候，我们都仅仅只是输入完事，很少去思考验证码其背后的东西。验证码的英文名叫CAPTCHA，全称为Completely Automated Public Turing test to tell Computers and Humans Apart（ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/07/captcha-around-us.html">我们身边的验证码技术</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-09T06:47:01+08:00" pubdate data-updated="true">2012-07-09</time>
+        
+         | <a href="/2012/07/captcha-around-us.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>验证码大家几乎经常都会碰到，不过很多时候，我们都仅仅只是输入完事，很少去思考验证码其背后的东西。验证码的英文名叫<strong>CAPTCHA</strong>，全称为<strong>Completely Automated Public Turing test to tell Computers and Humans Apart</strong>（<strong>全自动区分计算机和人类的图灵测试</strong>）。验证码提供一个区分人与机器的手段，主要目的是将机器人拒之门外。</p>
+
+<p>现在的各种网络服务已经成为我们生活的重要的组成部分，像各种社交网站，购物网站，网上银行，投票，论坛等服务，为我们的带来的极大的便利。然而，这些系统都在遭受着恶意程序的滥用。所以，验证码系统用于阻挡这些恶意程序。</p>
+
+<h2 id="captcha">验证码CAPTCHA存在的意义</h2>
+
+<p>现在，每天有2亿的验证码CAPTCHA被人类识别出来。我们可利用其解决一些计算机难以处理或者耗费大量人力的问题。目前，像Google的<a href="http://www.google.com/recaptcha/aboutus">reCAPTCHA</a>项目，就是利用验证码来数字化图书和报纸。而像一些广告公司将广告融入了验证码，让人们在输入验证码的时候输入广告中的特定部分，但是这种验证码的样本必然会比较少，因为较难产生大量的广告验证码，所以很容易被破解。</p>
+
+<p>因为CAPTCHA的需求量十分巨大，所以CAPTCHA需要能够自动产生并且评估正确性。此外，人类必须要能够快速地识别并输入验证码，否则容易惹恼用户以至于用户流失。对于CAPTCHA，可以引入人工智能领域的难题，来使现有技术短期无法成功破解。如果一种CAPTCHA没有被破解，那么就有一个可以区分人类和计算机的方法。如果CAPTCHA被破解了，那么一个人工智能的问题也就随之解决了。</p>
+
+<h2 id="captcha---more---">验证码CAPTCHA的困境</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/07/captcha-around-us.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -575,62 +626,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/05/todo-fixme-xxx-in-comment.html">注释中的TODO、FIXME、XXX</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-16T20:58:10+08:00" pubdate data-updated="true">2012-05-16</time>
-        
-         | <a href="/2012/05/todo-fixme-xxx-in-comment.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>第一次见到注释中的TODO是在用VS自动生成MFC框架的时候，里面自动生成的函数可能会有一句注释：</p>
-
-<blockquote>
-  <p>// TODO Fix this function.</p>
-</blockquote>
-
-<p>很久以前以为这仅仅是给人看的，原来，它也可以在VS里面开启一个TastList窗口，显示代码中所有的TODO（代办事项）。然后我们就可以方便地在TaskList中看到代码中哪些东西还需要我们完成。这个在其他的开发环境也有类似的功能。</p>
-
-<p>在Python源码中，主要有三个特殊的注释：TODO、FIXME、XXX。</p>
-
-<h2 id="todo">TODO</h2>
-
-<p>说明还有工作需要做，COMMENT简要地描述还有什么工作要做。</p>
-
-<blockquote>
-  <p>/* TODO: C speedup not implemented for sort_keys */</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/05/todo-fixme-xxx-in-comment.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -797,6 +792,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/keep-learning.html">Keep Learning</a>
       </li>
     
@@ -810,10 +809,6 @@
     
       <li class="post">
         <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/debug-nginx.html">调试Nginx</a>
       </li>
     
   </ul>

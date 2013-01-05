@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="今天屠文翔同学问了我一个在PIL中获取像素操作的问题，我想也没想就说道可以使用getpixel和putpixel操作像素，因为我之前一直也是使用这两个API。过了一会，屠文翔同学问我是否用过load()这个API，我直接就说这个不是操作像素的。我之前在浏览PIL源码的时候，经常会见到调用这个函数， &hellip;">
+  <meta name="description" content="大家在浏览器写长篇的东西时，有没觉得那个纯文本编辑框弱爆了？反正我是这么觉得。像Github、stackoverflow、Wiki等都支持Markdown，对于这种有语法的文本，最好就是用个语法高亮自动排版的编辑器编辑。 在Firefox有It’s All Text!这个插件，可以调用外部编辑器 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-05T16:46:00+08:00" pubdate data-updated="true">2013-01-05</time>
+        
+         | <a href="/2013/01/chrome-edit-with-emacs.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>大家在浏览器写长篇的东西时，有没觉得那个纯文本编辑框弱爆了？反正我是这么觉得。像Github、<a href="http://stackoverflow.com/editing-help">stackoverflow</a>、Wiki等都支持Markdown，对于这种有语法的文本，最好就是用个语法高亮自动排版的编辑器编辑。</p>
+
+<p>在Firefox有<a href="https://addons.mozilla.org/zh-cn/firefox/addon/its-all-text/">It’s All Text!</a>这个插件，可以调用外部编辑器。</p>
+
+<p>而在Chrome里面，也有插件，可以调用外部的Emacs进行编辑，而且可以根据规则自动选择模式，非常方便。它的名字叫<a href="http://www.emacswiki.org/emacs/Edit_with_Emacs">Edit With Emacs</a>。</p>
+
+<p>安装完插件后，Chrome所有的大Textbox都会出现一个蓝色的edit按钮，一按，就可以用Emacs编辑里面的内容了。</p>
+
+<p><img src="/imgs/2013-01-05-chrome-edit-with-emacs.markdown_20130105_170235_21731e8F.png" /></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2013/01/chrome-edit-with-emacs.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -527,70 +578,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/11/screen-on-ssh.html">Screen在ssh远程登录中的使用</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-01T09:29:12+08:00" pubdate data-updated="true">2012-11-01</time>
-        
-         | <a href="/2012/11/screen-on-ssh.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>11月了，没想到10月份竟然木有写博客。这几天在迁移服务器，时间不赶，就慢慢弄，顺便记录一下一些技巧。</p>
-
-<p>首先，远程ssh登录到服务器，可能中途会出现网络断掉或者超时，这时候ssh里面就打不了字了，就只能关闭再重新连接。如果我们用vim编辑一个文件到了一半的话，就会蛋疼地多了一个swp。那么如果我们希望在重新连接回去的时候，可以回到之前的工作状态，我们应该怎么办呢？答案是借助screen。</p>
-
-<p>对于screen的使用就不再罗嗦了。具体可以参看后面的参考资料中提供的链接。</p>
-
-<h2 id="section">一些技巧</h2>
-
-<p>下面可能会与诸位使用习惯有所冲突，请见谅。</p>
-
-<h3 id="ctrla">把ctrl+a还给我</h3>
-
-<p>首先，screen的命令的前缀是ctrl+a，进入screen后，ctrl+a就成了命令前缀了。我经常使用ctrl+a跳到行首，ctrl+e跳到行尾，所以需要修改一下前缀，否则ctrl+a跳到行首这个习惯就得改了。我们在家目录下面创建一个文件<strong>～/.screenrc</strong>。然后在里面写上</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">escape ^Zz
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>然后就把前缀改成ctrl+z了，如果需要暂停程序的话，就用ctrl+z z来暂停。这样ctrl+a就回来了。</p>
-
-<h3 id="section-1">偷懒</h3>
-
-<p>每次打screen真麻烦，我们在<strong>～/.bashrc</strong>中加上</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/11/screen-on-ssh.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -755,6 +742,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/keep-learning.html">Keep Learning</a>
       </li>
     
@@ -768,10 +759,6 @@
     
       <li class="post">
         <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/debug-nginx.html">调试Nginx</a>
       </li>
     
   </ul>
