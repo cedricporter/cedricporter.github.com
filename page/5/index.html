@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="混合语言策略可以汲取各语言之所长，让开发更加敏捷。混合语言策略在在应用得当时可以让程序更加优雅。 在《Unix编程艺术》中，Raymond说道： 混合语言是一种知识密集型（而不是编码密集型）的编程。要让它能够工作，我们不仅应该具备相当数量的多种语言应用知识， &hellip;">
+  <meta name="description" content="在Windows调试Python解释器还是非常方便的，因为有强大的VS。 不过在Linux下可能有点不那么顺畅。但是稍微设置一下还是可以很方便地调试的。我们来看看在Ubuntu下怎么做。 获取源码 在Ubuntu下获取Python2.7的源码非常方便，只需要使用apt-get就可以轻松取得。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,74 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/05/compile-debug-python-in-ubuntu.html">在Ubuntu下编译调试版的Python</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-05T04:38:05+08:00" pubdate data-updated="true">2012-05-05</time>
+        
+         | <a href="/2012/05/compile-debug-python-in-ubuntu.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在Windows调试Python解释器还是非常方便的，因为有强大的VS。</p>
+
+<p>不过在Linux下可能有点不那么顺畅。但是稍微设置一下还是可以很方便地调试的。我们来看看在Ubuntu下怎么做。</p>
+
+<h2 id="section">获取源码</h2>
+
+<p>在Ubuntu下获取Python2.7的源码非常方便，只需要使用apt-get就可以轻松取得。在Shell下输入</p>
+
+<blockquote>
+  <p>apt-get source python2.7</p>
+</blockquote>
+
+<p>即可以将Python的源码下载到当前目录。</p>
+
+<p>然后我们就可以得到一个tar.gz的压缩包。</p>
+
+<h2 id="section-1">编译</h2>
+
+<p>我们进入源码文件夹后输入</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">./configure
+</span><span class="line">make</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后就可以编译得到python。</p>
+
+<p>当然，此时的Python不是调试版的，如果要编译调试版的Python，就需要再做一些东西。首先我们可以Google一下怎么做，貌似很多都是引用了源码README的一段话：</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/05/compile-debug-python-in-ubuntu.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -568,61 +636,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/04/anti-hotlink.html">“反盗链”与反“反盗链”</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-11T10:19:17+08:00" pubdate data-updated="true">2012-04-11</time>
-        
-         | <a href="/2012/04/anti-hotlink.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>现在很多大网站都有了图片反盗链，于是有时候在某些论坛或者博客就会遇到些“此图片仅限于…用户之间交流与沟通”的图片，这真是无法理喻。</p>
-
-<h2 id="section">反盗链</h2>
-
-<p>引用一段话：来自<a href="http://www.ningoo.net/html/2007/get_away_from_photo_defense.html">http://www.ningoo.net/html/2007/get_away_from_photo_defense.html</a></p>
-
-<blockquote>
-  <p>这里忍不住再次提起这茬，是在<a href="http://9.douban.com/">豆瓣九点</a>看blog的时候，时不时冒出一副“此图片仅限于…用户之间交流与沟通”的图片出来，一个字，烦。不让看你干脆将所有的img直接过滤掉不显示就好了，还TMD放这么恶心的一个东西来刺激我的眼睛，要知道我眼睛本来就不太灵光，还好心脏不错，不然搞不好弄出人命官司。Blog和网页有啥区别？我想区别就在于我可以通过rss聚合阅读而不必要跑到blogger的网站上去吧。要是你输出的东西这不能看，那仅限于，那还搞个屁的rss。</p>
-</blockquote>
-
-<p>图片防盗链，请离blog远点。呼吁所有的blogger，离图片防盗链的XX网站远点，不然，你们的内容再好，也只能敬而远之了。</p>
-
-<p>这个我深有同感。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/04/anti-hotlink.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -731,6 +744,7 @@
 <a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
 <a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
+<a style="font-size: 80%" href="/tag/http/">HTTP</a>
 <a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
 <a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
@@ -759,6 +773,7 @@
 <a style="font-size: 188%" href="/tag/web/">Web</a>
 <a style="font-size: 164%" href="/tag/wordpress/">Wordpress</a>
 <a style="font-size: 171%" href="/tag/compile/">compile</a>
+<a style="font-size: 80%" href="/tag/curl/">curl</a>
 <a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
 <a style="font-size: 80%" href="/tag/ppp/">ppp</a>
 <a style="font-size: 80%" href="/tag/pptpd/">pptpd</a>
@@ -790,6 +805,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/http-status-206-partial-content.html">[学习HTTP] 206 Partial Content</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
       </li>
     
@@ -803,10 +822,6 @@
     
       <li class="post">
         <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
       </li>
     
   </ul>

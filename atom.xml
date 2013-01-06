@@ -4,7 +4,7 @@
   <title><![CDATA[EverET.org]]></title>
   <link href="http://everet.org/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2013-01-05T18:27:23+08:00</updated>
+  <updated>2013-01-06T11:46:46+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -12,6 +12,153 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[学习HTTP] 206 Partial Content]]></title>
+    <link href="http://everet.org/2013/01/http-status-206-partial-content.html"/>
+    <updated>2013-01-06T10:31:00+08:00</updated>
+    <id>http://everet.org/2013/01/http-status-206-partial-content</id>
+    <content type="html"><![CDATA[<p>俺在把博客放在Github后，除了发现Github的Web Server将Cache-Control设置为max-age=86400外，还发现一个有趣的地方。Chrome在对于MP3文件的访问，Github返回的都是<code>206 Partial Content</code>，后来发现，原来Chrome在请求MP3的时候，会在请求头带上<code>Range: bytes=0-</code>。</p>
+
+<p>对于2xx的返回码，都是成功的，不过常见的基本都是200，206到时挺少见滴，于是俺决定看看206究竟有什么特别的地方。</p>
+
+<p>rfc2616日：对于206的定义是请求<strong>必须</strong>包含<code>Range</code>头来标示我们想要的范围，于是这也就说明Chrome访问MP3的时候因为加了<code>Range</code>头，于是被返回了206。</p>
+
+<p>我们来看一下下面的例子：用curl请求<a href="http://everet.org/2013/01/chrome-edit-with-emacs.html">http://everet.org/2013/01/chrome-edit-with-emacs.html</a>，返回<code>200 OK</code>，其中<code>Content-Length: 15845</code>。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>curl --head http://everet.org/2013/01/chrome-edit-with-emacs.html
+</span><span class="line">HTTP/1.1 200 OK
+</span><span class="line">Server: GitHub.com
+</span><span class="line">Date: Sun, 06 Jan 2013 02:47:09 GMT
+</span><span class="line">Content-Type: text/html
+</span><span class="line">Content-Length: 15845
+</span><span class="line">Last-Modified: Sat, 05 Jan 2013 10:30:34 GMT
+</span><span class="line">Connection: keep-alive
+</span><span class="line">Expires: Mon, 07 Jan 2013 02:47:09 GMT
+</span><span class="line">Cache-Control: max-age<span class="o">=</span>86400
+</span><span class="line">Accept-Ranges: bytes
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>那根据rfc2616的说法，是不是加上<code>Range</code>后，Web Server就会返回<code>206 Partial Content</code>了呢？我们来通过telnet试一试：</p>
+
+<!-- more -->
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>telnet everet.org www
+</span><span class="line">Trying 204.232.175.78...
+</span><span class="line">Connected to everet.org.
+</span><span class="line">Escape character is <span class="s1">&#39;^]&#39;</span>.
+</span><span class="line">GET /2013/01/chrome-edit-with-emacs.html HTTP/1.1
+</span><span class="line">Host: everet.org
+</span><span class="line">Range: <span class="nv">bytes</span><span class="o">=</span>0-100
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">HTTP/1.1 206 Partial Content
+</span><span class="line">Server: GitHub.com
+</span><span class="line">Date: Sun, 06 Jan 2013 03:20:05 GMT
+</span><span class="line">Content-Type: text/html
+</span><span class="line">Content-Length: 101
+</span><span class="line">Last-Modified: Sat, 05 Jan 2013 10:30:34 GMT
+</span><span class="line">Connection: keep-alive
+</span><span class="line">Expires: Mon, 07 Jan 2013 03:20:05 GMT
+</span><span class="line">Cache-Control: max-age<span class="o">=</span>86400
+</span><span class="line">Content-Range: bytes 0-100/15845
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">&lt;!DOCTYPE html&gt;
+</span><span class="line">&lt;!--<span class="o">[</span><span class="k">if </span>IEMobile 7 <span class="o">]</span>&gt;&lt;html <span class="nv">class</span><span class="o">=</span><span class="s2">&quot;no-js iem7&quot;</span>&gt;&lt;!<span class="o">[</span>endif<span class="o">]</span>--&gt;
+</span><span class="line">&lt;!--<span class="o">[</span><span class="k">if </span>lt IE 9<span class="o">]</span>&gt;&lt;html cl
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>可以看到，服务器返回了100个字节的字符。为了方便测试，我们使用curl来尝试分块下载。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>curl http://everet.org/2013/01/chrome-edit-with-emacs.html -o a.html
+</span><span class="line"><span class="nv">$ </span>curl --header <span class="s2">&quot;Range: bytes=0-10000&quot;</span> http://everet.org/2013/01/chrome-edit-with-emacs.html -o p1
+</span><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+</span><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed
+</span><span class="line">  100 10001  100 10001    0     0  13227      0 --:--:-- --:--:-- --:--:-- 20451
+</span><span class="line"><span class="nv">$ </span>curl --header <span class="s2">&quot;Range: bytes=10001-&quot;</span> http://everet.org/2013/01/chrome-edit-with-emacs.html -o p2
+</span><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+</span><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed
+</span><span class="line">  100  5844  100  5844    0     0   7778      0 --:--:-- --:--:-- --:--:-- 12175
+</span><span class="line"><span class="nv">$ </span>cat p1 p2 &gt; b.html
+</span><span class="line"><span class="nv">$ </span>diff a.html b.html
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们将原始页面下载回命名为a.html。然后通过增加<code>Range</code>这个header来下载<code>0-10000</code>为p1，以及<code>10001-</code>下载剩余部分为p2。然后合并p1、p2为b.html。通过<code>diff a.html b.html</code>发现a.html和b.html内容完全一样。</p>
+
+<p>嗯，正如我们所想的那样，加上<code>Range</code>后可以下载指定部分的内容，相应地服务器会返回<code>206 Partial Content</code>。</p>
+
+<h2 id="range">Range范围的例子</h2>
+<p>这个例子是rfc2616里面的，首先假定entity-body长度为10000。</p>
+
+<ul>
+  <li>获取前500个字节 (byte offsets 0-499, inclusive):  bytes=0-499</li>
+  <li>获取第二个500字节 (byte offsets 500-999, inclusive): bytes=500-999</li>
+  <li>获取最后500字节 (byte offsets 9500-9999, inclusive): bytes=-500</li>
+  <li>获取最后500字节 bytes=9500-</li>
+  <li>第一个和最后一个字节 (bytes 0 and 9999):  bytes=0-0,-1</li>
+  <li>Several legal but not canonical specifications of the second 500
+bytes (byte offsets 500-999, inclusive):
+ bytes=500-600,601-999
+ bytes=500-700,601-999</li>
+</ul>
+
+<h2 id="section">总结</h2>
+<p>我们可以通过<code>Range</code>和<code>206 Partial Content</code>来分块获取一个大文件。在offset有效的时候，Web Server会返回206，否则会返回<code>416 Requested Range Not Satisfiable</code>。</p>
+
+<h2 id="section-1">扩展阅读</h2>
+<ul>
+  <li><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">Status Code Definitions</a></li>
+  <li><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.35">Range</a></li>
+</ul>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2013/01/http-status-206-partial-content.html">http://everet.org/2013/01/http-status-206-partial-content.html</a>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Chrome Edit With Emacs]]></title>
@@ -2321,94 +2468,6 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
   </ol>
 </div>
  <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/captcha-recognition.html">http://everet.org/2012/07/captcha-recognition.html</a>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Python图像处理特效库EffectLab]]></title>
-    <link href="http://everet.org/2012/07/effectlab.html"/>
-    <updated>2012-07-16T01:10:04+08:00</updated>
-    <id>http://everet.org/2012/07/effectlab</id>
-    <content type="html"><![CDATA[<p>EffectLab是使用Python编写的一个快速测试图像处理特效的实验库，EffectLab目前基于PIL。方便测试图像处理算法。</p>
-
-<p>EffectLab正在处于开发过程中（其实几天前才开始），日后会逐渐增加更多的特效。 目前特效处理用纯Python实现，这个运行速度十分地缓慢，所以后期会用C把部分特效重写。</p>
-
-<p>我本人挺喜欢做图像处理的，想将EffectLab作为我们在两年前编写的图像处理程序<a href="http://everet.org/2012/01/imagination-factory.html">Imagination Factory</a>的生命的延续。我想知道Photoshop里面的那些工具的究竟是怎么实现的，也非常感谢仔华给我一个与图像处理和安全相关的任务啊～因为目前做的一个东西的一部分需要进行些图像处理，于是决定将图像处理部分拆分出作为独立的图像特效库EffectLab来维护。</p>
-
-<p>目前特效都设计为过滤器，接受一张图像和输出一张图像。不同的过滤器可以组合在一起形成新的特效过滤器。Unix的管道过滤器的思想真是美好啊。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">new_effect</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">img</span><span class="p">:</span> <span class="n">effect_a</span><span class="p">(</span><span class="n">effect_b</span><span class="p">(</span><span class="n">effect_c</span><span class="p">(</span><span class="n">img</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>源码请见Github: <a href="https://github.com/cedricporter/EffectLab/downloads">https://github.com/cedricporter/EffectLab/downloads</a></p>
-
-<h2 id="section">目前实现的效果</h2>
-
-<p>左边为原图，右边为处理后的图片。</p>
-
-<h3 id="section-1">镜头变形效果[1]</h3>
-
-<p>首先将图像映射到长宽取值范围都为[-1, 1]，然后从<a href="http://zh.wikipedia.org/zh/%E7%AC%9B%E5%8D%A1%E5%84%BF%E5%9D%90%E6%A0%87%E7%B3%BB">笛卡尔坐标系</a>映射到<a href="http://zh.wikipedia.org/wiki/%E6%9E%81%E5%9D%90%E6%A0%87%E7%B3%BB">极坐标系</a>。然后我们就可以控制<img src="http://upload.wikimedia.org/wikipedia/zh/math/4/b/4/4b43b0aee35624cd95b910189b3dc231.png" alt="r" />（半径坐标）和<img src="http://upload.wikimedia.org/wikipedia/zh/math/5/0/d/50d91f80cbb8feda1d10e167107ad1ff.png" alt="\theta" />（角坐标、极角或<a href="http://zh.wikipedia.org/wiki/%E6%96%B9%E4%BD%8D%E8%A7%92">方位角</a>，有时也表示为<img src="http://upload.wikimedia.org/wikipedia/zh/math/7/f/2/7f20aa0b3691b496aec21cf356f63e04.png" alt="\phi" />或<img src="http://upload.wikimedia.org/wikipedia/zh/math/e/3/5/e358efa489f58062f10dd7316b65649e.png" alt="t" />）。</p>
-
-<p><strong>r = r ^ 2</strong></p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">effect</span> <span class="o">=</span> <span class="n">RadianFormulaEffect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="p">(</span><span class="n">r</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">phi</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<!-- more -->
-<p><a href="http://everet.org/wp-content/uploads/2012/07/5.jpg"><img src="http://everet.org/wp-content/uploads/2012/07/5.jpg" alt="" /></a></p>
-
-<p><strong>r = sqrt(r)</strong></p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">effect</span> <span class="o">=</span> <span class="n">RadianFormulaEffect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">phi</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/1.jpg"><img src="http://everet.org/wp-content/uploads/2012/07/1.jpg" alt="" /></a></p>
-
-<p><strong>x = math.sin(x * math.pi / 2)</strong>
-<strong>y = math.sin(y * math.pi / 2)</strong></p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">effect</span> <span class="o">=</span> <span class="n">LensWarpEffect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">sin</span><span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/4.jpg"><img src="http://everet.org/wp-content/uploads/2012/07/4.jpg" alt="" /></a></p>
-
-<h3 id="section-2">局部变形效果（液化）[2]</h3>
-
-<p>这个是Photoshop里面的液化效果。就是将照片作为液体胶泥一样，然后可以任意推动来变形。</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-163959.png"><img src="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-163959.png" alt="" /></a></p>
-
-<p>对于这个公式另开一片文章讲解。</p>
-
-<p>下图鼠标起点圆心为(130, 120)，鼠标终点为(130, 50)，圆半径为100.也就是向上拖动。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">effect</span> <span class="o">=</span> <span class="n">LocalWarpEffect</span><span class="p">((</span><span class="mi">130</span><span class="p">,</span> <span class="mi">120</span><span class="p">),</span> <span class="p">(</span><span class="mi">130</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/6.jpg"><img src="http://everet.org/wp-content/uploads/2012/07/6.jpg" alt="" /></a></p>
-
-<h2 id="section-3">参考资料</h2>
-
-<ol>
-  <li>
-    <p><a href="http://paulbourke.net/miscellaneous/imagewarp/">Image warping / distortion</a></p>
-  </li>
-  <li>
-    <p>Andreas Gustafsson, <strong>Interactive Image Warping</strong></p>
-  </li>
-</ol>
-
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/effectlab.html">http://everet.org/2012/07/effectlab.html</a>]]></content>
   </entry>
   
 </feed>

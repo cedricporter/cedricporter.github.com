@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="大家在浏览器写长篇的东西时，有没觉得那个纯文本编辑框弱爆了？反正我是这么觉得。像Github、stackoverflow、Wiki等都支持Markdown，对于这种有语法的文本，最好就是用个语法高亮自动排版的编辑器编辑。 在Firefox有It’s All Text!这个插件，可以调用外部编辑器 &hellip;">
+  <meta name="description" content="俺在把博客放在Github后，除了发现Github的Web Server将Cache-Control设置为max-age=86400外，还发现一个有趣的地方。Chrome在对于MP3文件的访问，Github返回的都是206 Partial Content，后来发现， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,81 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/01/http-status-206-partial-content.html">[学习HTTP] 206 Partial Content</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-06T10:31:00+08:00" pubdate data-updated="true">2013-01-06</time>
+        
+         | <a href="/2013/01/http-status-206-partial-content.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>俺在把博客放在Github后，除了发现Github的Web Server将Cache-Control设置为max-age=86400外，还发现一个有趣的地方。Chrome在对于MP3文件的访问，Github返回的都是<code>206 Partial Content</code>，后来发现，原来Chrome在请求MP3的时候，会在请求头带上<code>Range: bytes=0-</code>。</p>
+
+<p>对于2xx的返回码，都是成功的，不过常见的基本都是200，206到时挺少见滴，于是俺决定看看206究竟有什么特别的地方。</p>
+
+<p>rfc2616日：对于206的定义是请求<strong>必须</strong>包含<code>Range</code>头来标示我们想要的范围，于是这也就说明Chrome访问MP3的时候因为加了<code>Range</code>头，于是被返回了206。</p>
+
+<p>我们来看一下下面的例子：用curl请求<a href="http://everet.org/2013/01/chrome-edit-with-emacs.html">http://everet.org/2013/01/chrome-edit-with-emacs.html</a>，返回<code>200 OK</code>，其中<code>Content-Length: 15845</code>。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>curl --head http://everet.org/2013/01/chrome-edit-with-emacs.html
+</span><span class="line">HTTP/1.1 200 OK
+</span><span class="line">Server: GitHub.com
+</span><span class="line">Date: Sun, 06 Jan 2013 02:47:09 GMT
+</span><span class="line">Content-Type: text/html
+</span><span class="line">Content-Length: 15845
+</span><span class="line">Last-Modified: Sat, 05 Jan 2013 10:30:34 GMT
+</span><span class="line">Connection: keep-alive
+</span><span class="line">Expires: Mon, 07 Jan 2013 02:47:09 GMT
+</span><span class="line">Cache-Control: max-age<span class="o">=</span>86400
+</span><span class="line">Accept-Ranges: bytes
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>那根据rfc2616的说法，是不是加上<code>Range</code>后，Web Server就会返回<code>206 Partial Content</code>了呢？我们来通过telnet试一试：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2013/01/http-status-206-partial-content.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -531,53 +606,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-07T00:06:51+08:00" pubdate data-updated="true">2012-11-07</time>
-        
-         | <a href="/2012/11/multi-user-nginx-php-server.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>趁这段时间有空，换成Xen的VPS，系统装了Ubuntu 12.04。决定重新配置一下服务器，另外将Web Server从Apache换成Nginx。</p>
-
-<h2 id="section">目标</h2>
-
-<p>搭建一个前端为nginx支持多用户的php虚拟主机。每个站点可以跑在不同的权限的用户下，一个站点被黑的时候希望不要影响到另一个站点，或者一个同学也不要可以随意访问到别的同学的内容。</p>
-
-<h2 id="more---">行动</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/11/multi-user-nginx-php-server.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -684,6 +712,7 @@
 <a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
 <a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
+<a style="font-size: 80%" href="/tag/http/">HTTP</a>
 <a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
 <a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
@@ -712,6 +741,7 @@
 <a style="font-size: 188%" href="/tag/web/">Web</a>
 <a style="font-size: 164%" href="/tag/wordpress/">Wordpress</a>
 <a style="font-size: 171%" href="/tag/compile/">compile</a>
+<a style="font-size: 80%" href="/tag/curl/">curl</a>
 <a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
 <a style="font-size: 80%" href="/tag/ppp/">ppp</a>
 <a style="font-size: 80%" href="/tag/pptpd/">pptpd</a>
@@ -743,6 +773,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/http-status-206-partial-content.html">[学习HTTP] 206 Partial Content</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
       </li>
     
@@ -756,10 +790,6 @@
     
       <li class="post">
         <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
       </li>
     
   </ul>

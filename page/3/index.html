@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="验证码大家几乎经常都会碰到，不过很多时候，我们都仅仅只是输入完事，很少去思考验证码其背后的东西。验证码的英文名叫CAPTCHA，全称为Completely Automated Public Turing test to tell Computers and Humans Apart（ &hellip;">
+  <meta name="description" content="EffectLab是使用Python编写的一个快速测试图像处理特效的实验库，EffectLab目前基于PIL。方便测试图像处理算法。 EffectLab正在处于开发过程中（其实几天前才开始），日后会逐渐增加更多的特效。 目前特效处理用纯Python实现，这个运行速度十分地缓慢， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,77 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/07/effectlab.html">Python图像处理特效库EffectLab</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-16T01:10:04+08:00" pubdate data-updated="true">2012-07-16</time>
+        
+         | <a href="/2012/07/effectlab.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>EffectLab是使用Python编写的一个快速测试图像处理特效的实验库，EffectLab目前基于PIL。方便测试图像处理算法。</p>
+
+<p>EffectLab正在处于开发过程中（其实几天前才开始），日后会逐渐增加更多的特效。 目前特效处理用纯Python实现，这个运行速度十分地缓慢，所以后期会用C把部分特效重写。</p>
+
+<p>我本人挺喜欢做图像处理的，想将EffectLab作为我们在两年前编写的图像处理程序<a href="http://everet.org/2012/01/imagination-factory.html">Imagination Factory</a>的生命的延续。我想知道Photoshop里面的那些工具的究竟是怎么实现的，也非常感谢仔华给我一个与图像处理和安全相关的任务啊～因为目前做的一个东西的一部分需要进行些图像处理，于是决定将图像处理部分拆分出作为独立的图像特效库EffectLab来维护。</p>
+
+<p>目前特效都设计为过滤器，接受一张图像和输出一张图像。不同的过滤器可以组合在一起形成新的特效过滤器。Unix的管道过滤器的思想真是美好啊。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">new_effect</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">img</span><span class="p">:</span> <span class="n">effect_a</span><span class="p">(</span><span class="n">effect_b</span><span class="p">(</span><span class="n">effect_c</span><span class="p">(</span><span class="n">img</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>源码请见Github: <a href="https://github.com/cedricporter/EffectLab/downloads">https://github.com/cedricporter/EffectLab/downloads</a></p>
+
+<h2 id="section">目前实现的效果</h2>
+
+<p>左边为原图，右边为处理后的图片。</p>
+
+<h3 id="section-1">镜头变形效果[1]</h3>
+
+<p>首先将图像映射到长宽取值范围都为[-1, 1]，然后从<a href="http://zh.wikipedia.org/zh/%E7%AC%9B%E5%8D%A1%E5%84%BF%E5%9D%90%E6%A0%87%E7%B3%BB">笛卡尔坐标系</a>映射到<a href="http://zh.wikipedia.org/wiki/%E6%9E%81%E5%9D%90%E6%A0%87%E7%B3%BB">极坐标系</a>。然后我们就可以控制<img src="http://upload.wikimedia.org/wikipedia/zh/math/4/b/4/4b43b0aee35624cd95b910189b3dc231.png" alt="r" />（半径坐标）和<img src="http://upload.wikimedia.org/wikipedia/zh/math/5/0/d/50d91f80cbb8feda1d10e167107ad1ff.png" alt="\theta" />（角坐标、极角或<a href="http://zh.wikipedia.org/wiki/%E6%96%B9%E4%BD%8D%E8%A7%92">方位角</a>，有时也表示为<img src="http://upload.wikimedia.org/wikipedia/zh/math/7/f/2/7f20aa0b3691b496aec21cf356f63e04.png" alt="\phi" />或<img src="http://upload.wikimedia.org/wikipedia/zh/math/e/3/5/e358efa489f58062f10dd7316b65649e.png" alt="t" />）。</p>
+
+<p><strong>r = r ^ 2</strong></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">effect</span> <span class="o">=</span> <span class="n">RadianFormulaEffect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="p">(</span><span class="n">r</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">phi</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/07/effectlab.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -565,67 +636,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/05/quotation.html">语录</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-21T21:42:12+08:00" pubdate data-updated="true">2012-05-21</time>
-        
-         | <a href="/2012/05/quotation.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><strong>吾尝终日而思矣，不如须臾之所学也；吾尝跂而望矣，不如登高之博见也。登高而招，臂非加长也，而见者远；顺风而呼，声非加疾也，而闻者彰。假舆马者，非利足也，而致千里；假舟楫者，非能水也，而绝江河。君子生非异也，善假于物也。</strong></p>
-
-<p>—- 《劝学》</p>
-
-<p><strong>学而不思则罔，思而不学则殆。</strong></p>
-
-<p><strong>温故而知新，可以为师矣。</strong></p>
-
-<p>—- 《论语·为政第二》</p>
-
-<p><strong>学而时习之，不亦说乎？有朋自远方来，不亦乐乎？人不知而不愠，不亦君子乎？</strong></p>
-
-<p>—- 《论语·学而第一》</p>
-
-<p><strong>KISS. Keep It Simple, <a href="http://EverET.org">Stupid</a>.</strong></p>
-
-<p>—- Unkown</p>
-
-<p><strong>A designer knows he has arrived at perfection not when there is no longer anything to add, but when there is no longer any thing to take away.</strong></p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/05/quotation.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -734,6 +744,7 @@
 <a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
 <a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
+<a style="font-size: 80%" href="/tag/http/">HTTP</a>
 <a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
 <a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
@@ -762,6 +773,7 @@
 <a style="font-size: 188%" href="/tag/web/">Web</a>
 <a style="font-size: 164%" href="/tag/wordpress/">Wordpress</a>
 <a style="font-size: 171%" href="/tag/compile/">compile</a>
+<a style="font-size: 80%" href="/tag/curl/">curl</a>
 <a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
 <a style="font-size: 80%" href="/tag/ppp/">ppp</a>
 <a style="font-size: 80%" href="/tag/pptpd/">pptpd</a>
@@ -793,6 +805,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/http-status-206-partial-content.html">[学习HTTP] 206 Partial Content</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
       </li>
     
@@ -806,10 +822,6 @@
     
       <li class="post">
         <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
       </li>
     
   </ul>

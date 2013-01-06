@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="今天在光驱位装了块硬盘，于是想在弄过几块硬盘看看到了Z盘会发生什么事情。 最后发现到了Z盘后，就识别不了新的硬盘了。Windows果然弱爆了。 今天贡献硬盘的有洪科，晓彬，钦杰，桐文，谢谢他们啊~~ 见证历史的图!!">
+  <meta name="description" content="UltraDemo是一款数据结构的实践与演示的平台，可以在上面编写类C的代码。 通过UltraDemo，我们将可以以图形化的信息观察到我们写的数据结构的变化的过程。 UltraDemo是由编译器、汇编解释器和动画框架加上动画组成的平台。可以单步调试，查看内存变量等之外还可以观看动画形式的数据结构， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/ultrademo-interface-rewritten-in-c.html">UltraDemo的界面用C#重写</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-27T23:07:15+08:00" pubdate data-updated="true">2012-02-27</time>
+        
+         | <a href="/2012/02/ultrademo-interface-rewritten-in-c.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>UltraDemo是一款数据结构的实践与演示的平台，可以在上面编写类C的代码。</p>
+
+<p>通过UltraDemo，我们将可以以图形化的信息观察到我们写的数据结构的变化的过程。</p>
+
+<p>UltraDemo是由编译器、汇编解释器和动画框架加上动画组成的平台。可以单步调试，查看内存变量等之外还可以观看动画形式的数据结构，这样可以方便初学者更快地理解各种数据结构。</p>
+
+<p>原来的界面是C++/MFC写的，长得和VS2008差不多，看上去风格挺古老的。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/02/image14.png"><img src="http://everet.org/wp-content/uploads/2012/02/image_thumb14.png" alt="image" /></a></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/02/ultrademo-interface-rewritten-in-c.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -563,49 +614,6 @@ Accepted</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/02/clover-data-structure.html">Clover数据结构</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-07T05:09:44+08:00" pubdate data-updated="true">2012-02-07</time>
-        
-         | <a href="/2012/02/clover-data-structure.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://everet.org/wp-content/uploads/2012/02/fig6.gif"><img src="http://everet.org/wp-content/uploads/2012/02/fig6_thumb.gif" alt="fig6" /></a></p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/02/clover-data-structure.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -714,6 +722,7 @@ Accepted</p>
 <a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
 <a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
+<a style="font-size: 80%" href="/tag/http/">HTTP</a>
 <a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
 <a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
@@ -742,6 +751,7 @@ Accepted</p>
 <a style="font-size: 188%" href="/tag/web/">Web</a>
 <a style="font-size: 164%" href="/tag/wordpress/">Wordpress</a>
 <a style="font-size: 171%" href="/tag/compile/">compile</a>
+<a style="font-size: 80%" href="/tag/curl/">curl</a>
 <a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
 <a style="font-size: 80%" href="/tag/ppp/">ppp</a>
 <a style="font-size: 80%" href="/tag/pptpd/">pptpd</a>
@@ -773,6 +783,10 @@ Accepted</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/http-status-206-partial-content.html">[学习HTTP] 206 Partial Content</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
       </li>
     
@@ -786,10 +800,6 @@ Accepted</p>
     
       <li class="post">
         <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/migrate-from-wordpress-to-octopress.html">From Wordpress to Octopress</a>
       </li>
     
   </ul>
