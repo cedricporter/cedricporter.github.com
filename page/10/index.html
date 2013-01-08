@@ -9,10 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="更详细的教程请见 《Pro Git》http://progit.org/book/zh/ch4-7.html。 安装必备工具 apt-get install git gitweb gitosis 用自己的公钥来初始化Gitosis 1
-2
-3
-root@everet:/var# sudo -H - &hellip;">
+  <meta name="description" content="首先，我们创建好公钥和密钥，如何创建可以参考 http://everet.org/2012/01/management-remote-host.html 。 然后把公钥id_rsa.pub发给Git版本库的管理员。 因为TortoiseGit使用ppk， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,6 +81,57 @@ root@everet:/var# sudo -H - &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/01/tortoisegit-access-gitosis.html">TortoiseGit访问Gitosis搭建的版本库</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-27T23:30:39+08:00" pubdate data-updated="true">2012-01-27</time>
+        
+         | <a href="/2012/01/tortoisegit-access-gitosis.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>首先，我们创建好公钥和密钥，如何创建可以参考 <a href="http://everet.org/2012/01/management-remote-host.html">http://everet.org/2012/01/management-remote-host.html</a> 。</p>
+
+<p>然后把公钥id_rsa.pub发给Git版本库的管理员。</p>
+
+<p>因为TortoiseGit使用ppk，所以我们需要用自己密钥重新创建一个ppk的密钥</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image6.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb6.png" alt="image" /></a></p>
+
+<p>我们首先打开 TortoiseGit 下的 puttygen，然后点击load，把自己密钥加载进来，我们之前创建的密钥，如果没做任何更改，则文件名为id_rsa。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/01/tortoisegit-access-gitosis.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -760,53 +808,6 @@ root@everet:/var# sudo -H - &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/01/low-memory-vps-configuration.html">低内存VPS的配置</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-20T05:36:01+08:00" pubdate data-updated="true">2012-01-20</time>
-        
-         | <a href="/2012/01/low-memory-vps-configuration.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>十几天前和隔壁宿舍的伟大的晓彬同学一起低价购置了一台二手电脑摆在宿舍做服务器，处理器虽然只有1.6Ghz，不过至少也有1G的内存可用。装了Ubuntu Server 11.10，机箱后面只是插了电源和网线，因为木有钱，所有就不买显示器，不过买了也占位置。另外，因为学校是华南地区教育网的接入点，所以我们每人端口都有一个公网的固定IP，这是做服务器的良好条件啊~这个真是太幸福啦~</p>
-
-<p>不过寒假回家了，宿舍的服务器总不能开着吧，到时把宿舍烧了就悲剧了:-( 。于是乎，还是租个虚拟服务器比较靠谱。</p>
-
-<p>在两天前奖学金终于到了，于是便下手买了VPS，原因有很多，主要就是要有一台常开的机器来服务我们这些人类。其实发现有台在国外的VPS确实挺好的，最主要的就是可以提供VPN。自己从零开始搭建服务器，既是机遇也是挑战啊~</p>
-
-<p>好，现在回忆一下如何搭建这个网站。</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/01/low-memory-vps-configuration.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -910,7 +911,7 @@ root@everet:/var# sudo -H - &hellip;">
 <a style="font-size: 164%" href="/tag/clover/">Clover</a>
 <a style="font-size: 112%" href="/tag/datastructure/">DataStructure</a>
 <a style="font-size: 80%" href="/tag/design/">Design</a>
-<a style="font-size: 145%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 155%" href="/tag/emacs/">Emacs</a>
 <a style="font-size: 80%" href="/tag/english/">English</a>
 <a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
@@ -921,7 +922,7 @@ root@everet:/var# sudo -H - &hellip;">
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
 <a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
 <a style="font-size: 207%" href="/tag/linux/">Linux</a>
-<a style="font-size: 112%" href="/tag/lisp/">Lisp</a>
+<a style="font-size: 131%" href="/tag/lisp/">Lisp</a>
 <a style="font-size: 80%" href="/tag/markdown/">Markdown</a>
 <a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
 <a style="font-size: 131%" href="/tag/mysql/">Mysql</a>
@@ -976,6 +977,10 @@ root@everet:/var# sudo -H - &hellip;">
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/customize-emacs-gud-many-windows.html">定制Emacs GDB调试窗口布局</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/http-status-206-partial-content.html">[学习HTTP] 206 Partial Content</a>
       </li>
     
@@ -989,10 +994,6 @@ root@everet:/var# sudo -H - &hellip;">
     
       <li class="post">
         <a href="/2012/12/tt.html">由TT引发的思考</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
       </li>
     
   </ul>

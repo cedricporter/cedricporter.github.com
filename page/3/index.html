@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="EffectLab是使用Python编写的一个快速测试图像处理特效的实验库，EffectLab目前基于PIL。方便测试图像处理算法。 EffectLab正在处于开发过程中（其实几天前才开始），日后会逐渐增加更多的特效。 目前特效处理用纯Python实现，这个运行速度十分地缓慢， &hellip;">
+  <meta name="description" content="对于验证码叙述，可以见上文我们身边的验证码技术。其中我们得知验证码识别流程如下图 第一个主要步骤是数据预处理。 例子 一般的国内的验证都比较喜欢加上噪点，再加上一些干扰线，来扰乱视线。但是这些噪声，对于计算机识别程序来说，基本上没起到什么干扰。 我们来看看下面的验证码，这个是随机选择的15张验证码 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/07/captcha-recognition.html">Python验证码识别之预处理</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-16T03:52:14+08:00" pubdate data-updated="true">2012-07-16</time>
+        
+         | <a href="/2012/07/captcha-recognition.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>对于验证码叙述，可以见上文<a href="http://everet.org/2012/07/captcha-around-us.html">我们身边的验证码技术</a>。其中我们得知验证码识别流程如下图</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/2.png"><img src="http://everet.org/wp-content/uploads/2012/07/2.png" alt="" /></a></p>
+
+<p>第一个主要步骤是数据预处理。</p>
+
+<h2 id="section">例子</h2>
+
+<p>一般的国内的验证都比较喜欢加上噪点，再加上一些干扰线，来扰乱视线。但是这些噪声，对于计算机识别程序来说，基本上没起到什么干扰。</p>
+
+<p>我们来看看下面的验证码，这个是随机选择的15张验证码。左边为原图，右边的为处理过的图片。其中干扰线我们识别出来后用红色将其标记，噪点标红看不清楚我就直接去掉了。</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/07/captcha-recognition.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -579,63 +630,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/05/errno-table.html">Errno表</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-30T09:12:30+08:00" pubdate data-updated="true">2012-05-30</time>
-        
-         | <a href="/2012/05/errno-table.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">粘过来常常看下，以免忘了...
-</span><span class="line">#define EPERM 1  /* Not super-user */
-</span><span class="line">#define ENOENT 2 /* No such file or directory */
-</span><span class="line">#define ESRCH 3  /* No such process */
-</span><span class="line">#define EINTR 4  /* Interrupted system call */
-</span><span class="line">#define EIO 5  /* I/O error */
-</span><span class="line">#define ENXIO 6  /* No such device or address */</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/05/errno-table.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -739,7 +733,7 @@
 <a style="font-size: 164%" href="/tag/clover/">Clover</a>
 <a style="font-size: 112%" href="/tag/datastructure/">DataStructure</a>
 <a style="font-size: 80%" href="/tag/design/">Design</a>
-<a style="font-size: 145%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 155%" href="/tag/emacs/">Emacs</a>
 <a style="font-size: 80%" href="/tag/english/">English</a>
 <a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
@@ -750,7 +744,7 @@
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
 <a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
 <a style="font-size: 207%" href="/tag/linux/">Linux</a>
-<a style="font-size: 112%" href="/tag/lisp/">Lisp</a>
+<a style="font-size: 131%" href="/tag/lisp/">Lisp</a>
 <a style="font-size: 80%" href="/tag/markdown/">Markdown</a>
 <a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
 <a style="font-size: 131%" href="/tag/mysql/">Mysql</a>
@@ -805,6 +799,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/customize-emacs-gud-many-windows.html">定制Emacs GDB调试窗口布局</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/http-status-206-partial-content.html">[学习HTTP] 206 Partial Content</a>
       </li>
     
@@ -818,10 +816,6 @@
     
       <li class="post">
         <a href="/2012/12/tt.html">由TT引发的思考</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
       </li>
     
   </ul>

@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>修正WP-Syntax高亮Python字符串的bug - EverET.org</title>
+  <title>定制Emacs GDB调试窗口布局 - EverET.org</title>
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="SyntaxHighlighter Evolved是wordpress的一个Javascript实现的代码高亮插件，可惜的我的vps网速非常慢，加载一个有代码的页面要等很久才会高亮，这让对读者是非常不友好的，而且不支持rss输出的高亮。于是我想把代码高亮放在服务器这边做好。虽然有人说WP- &hellip;">
+  <meta name="description" content="我们在Emacs中可以方便地使用GDB，具体操作在emacser.com有详细的快捷键的教程。不过我觉得其实GDB的CLI已经很好用了。 Emacs中默认可以方便打开多窗格模式，看起来就很像平时大家用的IDE了。 我们只需要M-x gdb-many-windows就可以打开多窗格了， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://everet.org/2012/06/fix-wp-syntax-python-string-bug.html">
+  <link rel="canonical" href="http://everet.org/2013/01/customize-emacs-gud-many-windows.html">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -84,7 +84,7 @@
   
   <header>
     
-      <h1 class="entry-title">修正WP-Syntax高亮Python字符串的bug</h1>
+      <h1 class="entry-title">定制Emacs GDB调试窗口布局</h1>
     
     
       <p class="meta">
@@ -100,7 +100,7 @@
   
 
 
-<time datetime="2012-06-12T05:33:17+08:00" pubdate data-updated="true">2012-06-12</time>
+<time datetime="2013-01-09T01:06:00+08:00" pubdate data-updated="true">2013-01-09</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -110,59 +110,117 @@
 
 
 <div class="entry-content">
-  <p><strong>SyntaxHighlighter Evolved</strong>是wordpress的一个Javascript实现的代码高亮插件，可惜的我的vps网速非常慢，加载一个有代码的页面要等很久才会高亮，这让对读者是非常不友好的，而且不支持rss输出的高亮。于是我想把代码高亮放在服务器这边做好。虽然有人说WP-Syntax会造成服务器压力大，但是如果我们将文章页面都缓存了，那就不存在WP-Syntax高亮时造成的过多的压力。</p>
+  <p>我们在Emacs中可以方便地使用GDB，具体操作在<a href="http://emacser.com/emacs-gdb.htm">emacser.com</a>有详细的快捷键的教程。不过我觉得其实GDB的CLI已经很好用了。</p>
 
-<p>于是我准备切换到WP-Syntax阵营。不幸的是，我刚刚装上WP-Syntax这个插件，贴上的<a href="http://everet.org/2012/03/ftp-server.html">ftp.py</a>的Python代码，就发现语法高亮出错了！！</p>
+<p>Emacs中默认可以方便打开多窗格模式，看起来就很像平时大家用的IDE了。</p>
 
-<p>我们可以用简单的代码再现一次这个bug。就是在多行’&#8217;’注释时会出现这个bug。<!-- more --></p>
+<p>我们只需要<code>M-x gdb-many-windows</code>就可以打开多窗格了，默认布局如下图：</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/06/Screenshot-from-2012-06-11-211511.png"><img src="http://everet.org/wp-content/uploads/2012/06/Screenshot-from-2012-06-11-211511.png" alt="" /></a></p>
+<p><img src="/imgs/snapshot4_20130109_011149_15479HnD.png" /></p>
 
-<p>好，那我们现在看看如何解决这个bug。</p>
+<p>我们可以看到有6个窗格，其中有GDB命令行、局部变量、源代码、程序输出、栈、断点。功能看上去虽然很强大，不过我常用的只有其中几个，于是就决定开始定制Emacs的GDB调试窗口布局。</p>
 
-<p>我发现问题处在<strong>wp-syntax/geshi/geshi/python.php</strong>这个文件里。</p>
+<!-- more -->
 
-<p>问题出在设置Python字符串的标记时漏了’’‘，我们给他加上就好了。</p>
+<p>我常用的是代码框、输出、GDB命令行以及栈，什么断点、局部变量基本可以在需要的时候用<code>i b</code>，<code>i locals</code>查看就可以了，没必要弄这么小一个窗格占住位置，而且想看的时候还看不完整。</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>php  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<h2 id="section">定制</h2>
+
+<p>于是开始按照我的心意，将其定制成如下这样。</p>
+
+<p><img src="/imgs/snapshot5_20130109_011857_15479UxJ.png" /></p>
+
+<p>这样用起来比较爽，没有不需要的窗格。各位看官也可以根据自己的需要配置。</p>
+
+<p><code>gdb-many-windows</code>的窗口布局是写死在<code>gdb-setup-windows</code>这个函数里面，我们最好的方法就是<code>defadvice</code>这个函数。代码如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="x">//&#39;QUOTEMARKS&#39; =&gt; array(&#39;&quot;&quot;&quot;&#39;, &#39;&quot;&#39;, &quot;&#39;&quot;),</span>
-</span><span class="line"><span class="x">&#39;QUOTEMARKS&#39; =&gt; array(&#39;&quot;&quot;&quot;&#39;, &#39;&quot;&#39;, &quot;&#39;&quot;, &quot;&#39;&#39;&#39;&quot;),</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+</pre></td><td class="code"><pre><code class="cl"><span class="line"><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">gdb-setup-windows</span> <span class="p">(</span><span class="nv">after</span> <span class="nv">my-setup-gdb-windows</span> <span class="nv">activate</span><span class="p">)</span>
+</span><span class="line">  <span class="s">&quot;my gdb UI&quot;</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">gdb-get-buffer-create</span> <span class="ss">&#39;gdb-stack-buffer</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">set-window-dedicated-p</span> <span class="p">(</span><span class="nv">selected-window</span><span class="p">)</span> <span class="no">nil</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">switch-to-buffer</span> <span class="nv">gud-comint-buffer</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">delete-other-windows</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">win0</span> <span class="p">(</span><span class="nv">selected-window</span><span class="p">))</span>
+</span><span class="line">        <span class="p">(</span><span class="nv">win1</span> <span class="p">(</span><span class="nv">split-window</span> <span class="no">nil</span> <span class="no">nil</span> <span class="ss">&#39;left</span><span class="p">))</span>      <span class="c1">;code and output</span>
+</span><span class="line">        <span class="p">(</span><span class="nv">win2</span> <span class="p">(</span><span class="nv">split-window-below</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">*</span> <span class="p">(</span><span class="nv">window-height</span><span class="p">)</span> <span class="mi">2</span><span class="p">)</span> <span class="mi">3</span><span class="p">)))</span>     <span class="c1">;stack</span>
+</span><span class="line">        <span class="p">)</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">select-window</span> <span class="nv">win2</span><span class="p">)</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">gdb-set-window-buffer</span> <span class="p">(</span><span class="nv">gdb-stack-buffer-name</span><span class="p">))</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">select-window</span> <span class="nv">win1</span><span class="p">)</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">set-window-buffer</span>
+</span><span class="line">     <span class="nv">win1</span>
+</span><span class="line">     <span class="p">(</span><span class="k">if</span> <span class="nv">gud-last-last-frame</span>
+</span><span class="line">         <span class="p">(</span><span class="nv">gud-find-file</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">gud-last-last-frame</span><span class="p">))</span>
+</span><span class="line">       <span class="p">(</span><span class="k">if</span> <span class="nv">gdb-main-file</span>
+</span><span class="line">           <span class="p">(</span><span class="nv">gud-find-file</span> <span class="nv">gdb-main-file</span><span class="p">)</span>
+</span><span class="line">         <span class="c1">;; Put buffer list in window if we</span>
+</span><span class="line">         <span class="c1">;; can&#39;t find a source file.</span>
+</span><span class="line">         <span class="p">(</span><span class="nv">list-buffers-noselect</span><span class="p">))))</span>
+</span><span class="line">    <span class="p">(</span><span class="k">setq</span> <span class="nv">gdb-source-window</span> <span class="p">(</span><span class="nv">selected-window</span><span class="p">))</span>
+</span><span class="line">    <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">win3</span> <span class="p">(</span><span class="nv">split-window</span> <span class="no">nil</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">*</span> <span class="p">(</span><span class="nv">window-height</span><span class="p">)</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">4</span><span class="p">))))</span> <span class="c1">;io</span>
+</span><span class="line">      <span class="p">(</span><span class="nv">gdb-set-window-buffer</span> <span class="p">(</span><span class="nv">gdb-get-buffer-create</span> <span class="ss">&#39;gdb-inferior-io</span><span class="p">)</span> <span class="no">nil</span> <span class="nv">win3</span><span class="p">))</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">select-window</span> <span class="nv">win0</span><span class="p">)</span>
+</span><span class="line">    <span class="p">))</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>最后效果如下。</p>
+<p>经过<code>defadvice</code>就可以修改原来定义的函数了，从而我们就可以定制UI了。</p>
 
-<p><a href="http://everet.org/wp-content/uploads/2012/06/Screenshot-from-2012-06-11-211937.png"><img src="http://everet.org/wp-content/uploads/2012/06/Screenshot-from-2012-06-11-211937.png" alt="" /></a></p>
-
-<p>最后向WP-Syntax的作者发了邮件，觉得老外真是负责任，很快就回了邮件。</p>
-
-<p>bug的确切地方是出在了插件使用的GESHI高亮库。不过我看了Python.php的最后一次更新是在08年，觉得还是向WP-Syntax作者报告比较靠谱，毕竟用户大都还是使用WP-Syntax而不是直接面向GESHI。</p>
+<blockquote>
+  <p>Emacs是伪装成编辑器的操作系统～～～</p>
+</blockquote>
 
 
-  <span>本文链接: <a href="http://everet.org/2012/06/fix-wp-syntax-python-string-bug.html">http://everet.org/2012/06/fix-wp-syntax-python-string-bug.html</a></span>
+
+  <span>本文链接: <a href="http://everet.org/2013/01/customize-emacs-gud-many-windows.html">http://everet.org/2013/01/customize-emacs-gud-many-windows.html</a></span>
   <hr/>
     <h3>您可能也喜欢</h3>
     <ul>
     
         <li>
-        <a href="/2012/07/clickcha.html">探索wordpress验证码插件Clickcha</a>
+        <a href="/2012/03/emacs.html">我的Emacs配置</a>
         </li>
     
         <li>
-        <a href="/2012/06/database-migrate-from-syntaxhighlighter-evolved-to-wp-syntax.html">从syntaxhighlighter evolved迁移至wp-syntax</a>
+        <a href="/2012/03/vim.html">我的Vim配置</a>
         </li>
     
         <li>
-        <a href="/2012/07/add-new-grammer-to-python.html">走进Python: 为Python增加新语法</a>
+        <a href="/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">Screenshot And Image Paste in Emacs When Writing Markdown</a>
         </li>
     
         <li>
-        <a href="/2012/06/python-function-default-parameter.html">谈谈Python函数的默认参数</a>
+        <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
         </li>
     
         <li>
-        <a href="/2012/07/effectlab.html">Python图像处理特效库EffectLab</a>
+        <a href="/2012/03/ftp-protocol.html">Mission: FTP Protocol</a>
         </li>
     
     </ul>
@@ -188,7 +246,7 @@
   
 
 
-<time datetime="2012-06-12T05:33:17+08:00" pubdate data-updated="true">2012-06-12</time>
+<time datetime="2013-01-09T01:06:00+08:00" pubdate data-updated="true">2013-01-09</time>
       
 
 <span class="categories">
@@ -203,7 +261,7 @@
 <span class="categories">
   Tags:&nbsp
   
-    <a class='tag' href='/tag/php/'>PHP</a>, <a class='tag' href='/tag/python/'>Python</a>, <a class='tag' href='/tag/wordpress/'>Wordpress</a>
+    <a class='tag' href='/tag/emacs/'>Emacs</a>, <a class='tag' href='/tag/lisp/'>Lisp</a>
   
 </span>
 
@@ -220,10 +278,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/2012/06/ubuntu-mysql-backup.html" title="Previous Post: Ubuntu下自动异地备份数据库">&laquo; Ubuntu下自动异地备份数据库</a>
+        <a class="basic-alignment left" href="/2013/01/http-status-206-partial-content.html" title="Previous Post: [学习HTTP] 206 Partial Content">&laquo; [学习HTTP] 206 Partial Content</a>
       
-      
-        <a class="basic-alignment right" href="/2012/06/python-byte-code.html" title="Next Post: 查看Python字节码">查看Python字节码 &raquo;</a>
       
     </p>
   </footer>
@@ -365,8 +421,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://everet.org/2012/06/fix-wp-syntax-python-string-bug.html';
-        var disqus_url = 'http://everet.org/2012/06/fix-wp-syntax-python-string-bug.html';
+        var disqus_identifier = 'http://everet.org/2013/01/customize-emacs-gud-many-windows.html';
+        var disqus_url = 'http://everet.org/2013/01/customize-emacs-gud-many-windows.html';
         var disqus_script = 'embed.js';
       
     (function () {

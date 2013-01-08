@@ -4,7 +4,7 @@
   <title><![CDATA[EverET.org]]></title>
   <link href="http://everet.org/feed" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2013-01-08T22:45:51+08:00</updated>
+  <updated>2013-01-09T01:37:49+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -12,6 +12,100 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[定制Emacs GDB调试窗口布局]]></title>
+    <link href="http://everet.org/2013/01/customize-emacs-gud-many-windows.html"/>
+    <updated>2013-01-09T01:06:00+08:00</updated>
+    <id>http://everet.org/2013/01/customize-emacs-gud-many-windows</id>
+    <content type="html"><![CDATA[<p>我们在Emacs中可以方便地使用GDB，具体操作在<a href="http://emacser.com/emacs-gdb.htm">emacser.com</a>有详细的快捷键的教程。不过我觉得其实GDB的CLI已经很好用了。</p>
+
+<p>Emacs中默认可以方便打开多窗格模式，看起来就很像平时大家用的IDE了。</p>
+
+<p>我们只需要<code>M-x gdb-many-windows</code>就可以打开多窗格了，默认布局如下图：</p>
+
+<p><img src="http://everet.org/imgs/snapshot4_20130109_011149_15479HnD.png" /></p>
+
+<p>我们可以看到有6个窗格，其中有GDB命令行、局部变量、源代码、程序输出、栈、断点。功能看上去虽然很强大，不过我常用的只有其中几个，于是就决定开始定制Emacs的GDB调试窗口布局。</p>
+
+<!-- more -->
+
+<p>我常用的是代码框、输出、GDB命令行以及栈，什么断点、局部变量基本可以在需要的时候用<code>i b</code>，<code>i locals</code>查看就可以了，没必要弄这么小一个窗格占住位置，而且想看的时候还看不完整。</p>
+
+<h2 id="section">定制</h2>
+
+<p>于是开始按照我的心意，将其定制成如下这样。</p>
+
+<p><img src="http://everet.org/imgs/snapshot5_20130109_011857_15479UxJ.png" /></p>
+
+<p>这样用起来比较爽，没有不需要的窗格。各位看官也可以根据自己的需要配置。</p>
+
+<p><code>gdb-many-windows</code>的窗口布局是写死在<code>gdb-setup-windows</code>这个函数里面，我们最好的方法就是<code>defadvice</code>这个函数。代码如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+</pre></td><td class="code"><pre><code class="cl"><span class="line"><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">gdb-setup-windows</span> <span class="p">(</span><span class="nv">after</span> <span class="nv">my-setup-gdb-windows</span> <span class="nv">activate</span><span class="p">)</span>
+</span><span class="line">  <span class="s">&quot;my gdb UI&quot;</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">gdb-get-buffer-create</span> <span class="ss">&#39;gdb-stack-buffer</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">set-window-dedicated-p</span> <span class="p">(</span><span class="nv">selected-window</span><span class="p">)</span> <span class="no">nil</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">switch-to-buffer</span> <span class="nv">gud-comint-buffer</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">delete-other-windows</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">win0</span> <span class="p">(</span><span class="nv">selected-window</span><span class="p">))</span>
+</span><span class="line">        <span class="p">(</span><span class="nv">win1</span> <span class="p">(</span><span class="nv">split-window</span> <span class="no">nil</span> <span class="no">nil</span> <span class="ss">&#39;left</span><span class="p">))</span>      <span class="c1">;code and output</span>
+</span><span class="line">        <span class="p">(</span><span class="nv">win2</span> <span class="p">(</span><span class="nv">split-window-below</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">*</span> <span class="p">(</span><span class="nv">window-height</span><span class="p">)</span> <span class="mi">2</span><span class="p">)</span> <span class="mi">3</span><span class="p">)))</span>     <span class="c1">;stack</span>
+</span><span class="line">        <span class="p">)</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">select-window</span> <span class="nv">win2</span><span class="p">)</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">gdb-set-window-buffer</span> <span class="p">(</span><span class="nv">gdb-stack-buffer-name</span><span class="p">))</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">select-window</span> <span class="nv">win1</span><span class="p">)</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">set-window-buffer</span>
+</span><span class="line">     <span class="nv">win1</span>
+</span><span class="line">     <span class="p">(</span><span class="k">if</span> <span class="nv">gud-last-last-frame</span>
+</span><span class="line">         <span class="p">(</span><span class="nv">gud-find-file</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">gud-last-last-frame</span><span class="p">))</span>
+</span><span class="line">       <span class="p">(</span><span class="k">if</span> <span class="nv">gdb-main-file</span>
+</span><span class="line">           <span class="p">(</span><span class="nv">gud-find-file</span> <span class="nv">gdb-main-file</span><span class="p">)</span>
+</span><span class="line">         <span class="c1">;; Put buffer list in window if we</span>
+</span><span class="line">         <span class="c1">;; can&#39;t find a source file.</span>
+</span><span class="line">         <span class="p">(</span><span class="nv">list-buffers-noselect</span><span class="p">))))</span>
+</span><span class="line">    <span class="p">(</span><span class="k">setq</span> <span class="nv">gdb-source-window</span> <span class="p">(</span><span class="nv">selected-window</span><span class="p">))</span>
+</span><span class="line">    <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">win3</span> <span class="p">(</span><span class="nv">split-window</span> <span class="no">nil</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">*</span> <span class="p">(</span><span class="nv">window-height</span><span class="p">)</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">4</span><span class="p">))))</span> <span class="c1">;io</span>
+</span><span class="line">      <span class="p">(</span><span class="nv">gdb-set-window-buffer</span> <span class="p">(</span><span class="nv">gdb-get-buffer-create</span> <span class="ss">&#39;gdb-inferior-io</span><span class="p">)</span> <span class="no">nil</span> <span class="nv">win3</span><span class="p">))</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">select-window</span> <span class="nv">win0</span><span class="p">)</span>
+</span><span class="line">    <span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>经过<code>defadvice</code>就可以修改原来定义的函数了，从而我们就可以定制UI了。</p>
+
+<blockquote>
+  <p>Emacs是伪装成编辑器的操作系统～～～</p>
+</blockquote>
+
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2013/01/customize-emacs-gud-many-windows.html">http://everet.org/2013/01/customize-emacs-gud-many-windows.html</a>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[学习HTTP] 206 Partial Content]]></title>
@@ -2406,68 +2500,6 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 <p>clickcha官方demo：<a href="http://clickcha.com/demo/">http://clickcha.com/demo/</a></p>
 
  <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/clickcha.html">http://everet.org/2012/07/clickcha.html</a>]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Python验证码识别之预处理]]></title>
-    <link href="http://everet.org/2012/07/captcha-recognition.html"/>
-    <updated>2012-07-16T03:52:14+08:00</updated>
-    <id>http://everet.org/2012/07/captcha-recognition</id>
-    <content type="html"><![CDATA[<p>对于验证码叙述，可以见上文<a href="http://everet.org/2012/07/captcha-around-us.html">我们身边的验证码技术</a>。其中我们得知验证码识别流程如下图</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/2.png"><img src="http://everet.org/wp-content/uploads/2012/07/2.png" alt="" /></a></p>
-
-<p>第一个主要步骤是数据预处理。</p>
-
-<h2 id="section">例子</h2>
-
-<p>一般的国内的验证都比较喜欢加上噪点，再加上一些干扰线，来扰乱视线。但是这些噪声，对于计算机识别程序来说，基本上没起到什么干扰。</p>
-
-<p>我们来看看下面的验证码，这个是随机选择的15张验证码。左边为原图，右边的为处理过的图片。其中干扰线我们识别出来后用红色将其标记，噪点标红看不清楚我就直接去掉了。<!-- more --></p>
-
-<p>这样的验证码的大部分噪声非常轻易就可以去除。</p>
-
-<p>因此，对于验证码来说，噪点的存在是对于抵抗机器人是毫无意义的，此外，这种长干扰线也是没什么太大的意义的，因为预处理就可以很轻松清除，增加这个只是会让人跟难受。</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/big.png"><img src="http://everet.org/wp-content/uploads/2012/07/big.png" alt="" /></a></p>
-
-<h2 id="section-1">移除噪点</h2>
-
-<p>首先我们来分析一下噪点由什么特性，噪点一般为孤立的点，最多也是会和其他的噪点粘在一起，所以总体来说，噪点相对于其他部分来说是孤立的小群体。</p>
-
-<p>那我们可以对每一个连接在一起的块进行着色，Flood Fill专门干这事的。然后对于字符的块，必然是非常的大，而噪点的块，必然是非常的小。所以我们就可以轻松区分字符和噪点了。</p>
-
-<h2 id="section-2">移除干扰线</h2>
-
-<p>干扰线相对于噪点来说，虽然复杂了一点，但是还是非常的简单。</p>
-
-<p>如何找到干扰线呢？干扰线的搜索问题是具有最优子结构的特性，于是这个问题我们可以用动态规划来解决<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>。</p>
-
-<p>我们可以建立一个打分表，每个像素有一个分数。</p>
-
-<p>动归的方程(如何画公式<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>)为：</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-194236.png"><img src="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-194236.png" alt="" /></a></p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-194246.png"><img src="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-15-194246.png" alt="" /></a></p>
-
-<p>最后，评分最大的极有可能是干扰线。</p>
-
-<p>这个实现起来非常的简单，就不放代码了，以免引起不必要的事端。</p>
-
-<h2 id="section-3">参考资料</h2>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:1">
-      <p>Ryan Fortune, Gary Luu, Peter McMahon, <strong>CS229 Project Report: Cracking CAPTCHAs</strong><a href="#fnref:1" rel="reference">&#8617;</a></p>
-    </li>
-    <li id="fn:2">
-      <p>OpenOffice.org Formula How-To<a href="#fnref:2" rel="reference">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/captcha-recognition.html">http://everet.org/2012/07/captcha-recognition.html</a>]]></content>
   </entry>
   
 </feed>
