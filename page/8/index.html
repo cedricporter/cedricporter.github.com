@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="一直感觉电脑性能的瓶颈在硬盘上，于是就决定加装一个SSD。做法是把光驱卸掉，把硬盘装到硬盘架上插到光驱里面。于是就把最没用的部件从电脑上拆掉了。 我们4个人一起买了镁光的64GB的SSD，里面也只有60GB，又是硬盘厂商经典的计算方法…… 我的主板只支持SATA2的接口，所以读取速度只到250MB &hellip;">
+  <meta name="description" content="Bugzilla是基于Web的通用软件缺陷追踪工具。目前Linux Kernel，Apache，Mozilla，Gnome，KDE，Open Office，Eclipse，Facebook，Nokia，Yahoo! 等等都采用了Bugzilla这个缺陷追踪工具。 这段时间写代码我们的bug &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,66 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/what-bugzilla-is-down.html">What？Bugzilla Is Down</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-28T09:00:13+08:00" pubdate data-updated="true">2012-02-28</time>
+        
+         | <a href="/2012/02/what-bugzilla-is-down.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Bugzilla是基于Web的通用软件缺陷追踪工具。目前Linux Kernel，Apache，Mozilla，Gnome，KDE，Open Office，Eclipse，Facebook，Nokia，Yahoo! 等等都采用了Bugzilla这个缺陷追踪工具。</p>
+
+<p>这段时间写代码我们的bug list都是写在一个txt里面，真是弱爆了……于是想用有效的工具来管理我们的bug。</p>
+
+<p>据说在微软，大家上班第一件事就是打开缺陷追踪工具看看昨天测试人员找出了什么bug，然后开始一天的工作。</p>
+
+<p>确实，只有有效的设计、实现、测试和管理才能保证软件的质量。否则我们的软件都是不堪一击的。</p>
+
+<p>于是偶装了bugzilla来管理我们的一些项目。</p>
+
+<p>在偶改完设置后，Bugzilla就显示“Bugzilla is down”，然后偶就很无语，发现在首页登录都登录不进去了，这要我如何是好。</p>
+
+<p>Google了下，发现访问 <a href="http://bug.everet.org/editparams.cgi">http://bug.everet.org/editparams.cgi</a> 就可以进去修改去设置了。后来发现是我在shutdownhtml的框里填了东西，他就down了。清空它的值就好了。</p>
+
+<p>这真是弱爆了的用户体验啊。不过也怪我没仔细看说明。</p>
+
+<blockquote>
+
+  <h4 id="shutdownhtml">shutdownhtml</h4>
+
+  <pre><code>  If this field is non-empty, then Bugzilla will be completely disabled and this text will be displayed instead of all the Bugzilla pages.
+</code></pre>
+</blockquote>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -550,57 +610,6 @@ Accepted</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/02/server-migration.html">服务器迁移告一段落</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-10T23:23:41+08:00" pubdate data-updated="true">2012-02-10</time>
-        
-         | <a href="/2012/02/server-migration.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>原来的主机是基于Xen的，价格非常的贵，于是现在换了基于OpenVZ的burst.net的主机，性能虽然可能比不上原来的，但是便宜了不少。内存从128MB换成了512MB，不过价格便宜了一半。感觉速度还是<strong>快</strong>了很多很多啊~而且还有原生的<strong>ipv6</strong>的支持，不再需要借助tunnelbreaker，真是校网的救星。</p>
-
-<p>不过想起昨天还真是悲剧，开通了10分钟84就将账号发给我，但是竟然没有ip地址，这真是奇葩啊。于是发了ticket就去闲逛了，我们比他们晚13个小时，他们上午8点上班，也就是我们的晚上9点。于是晚上9点多就有人回复解决了问题，把问题修复了，并且把ip重新发了。然后技术支持很好心的问了还有什么需要帮忙，然后就再顺便帮忙分配了一些ipv6的地址。</p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/02/QQ截图20120210155314.jpg"><img src="http://everet.org/wp-content/uploads/2012/02/QQ截图20120210155314-640x578.jpg" alt="" /></a></p>
-
-<p>于是今天开工迁移了。这次将网站都迁移过去了，等过几天再把Git版本库也迁移过去。</p>
-
-<p>原来的主机用的是nginx（发音同 engine x），换到burst.net后默认就装了apache，于是就决定换回apache了，重新配置了下换成worker模式，感觉和nginx差不多吧。</p>
-
-<p>在如下python写的简单的压力测试下服务器基本也没什么压力。</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/02/server-migration.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -709,7 +718,7 @@ Accepted</p>
 <a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
 <a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
-<a style="font-size: 112%" href="/tag/http/">HTTP</a>
+<a style="font-size: 131%" href="/tag/http/">HTTP</a>
 <a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
 <a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
@@ -770,6 +779,10 @@ Accepted</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/learn-http-chunked.html">[学习HTTP] Transfer-Encoding: chunked</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/customize-emacs-gud-many-windows.html">定制Emacs GDB调试窗口布局</a>
       </li>
     
@@ -783,10 +796,6 @@ Accepted</p>
     
       <li class="post">
         <a href="/2013/01/keep-learning.html">Keep Learning</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/tt.html">由TT引发的思考</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="首先，我们创建好公钥和密钥，如何创建可以参考 http://everet.org/2012/01/management-remote-host.html 。 然后把公钥id_rsa.pub发给Git版本库的管理员。 因为TortoiseGit使用ppk， &hellip;">
+  <meta name="description" content="2012-3-30: 今天我们把视频提交了。也上传了一份。 http://v.youku.com/v_show/id_XMzc0MTAyMDg0.html">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/01/clover-progress.html">Clover进度</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-28T01:31:58+08:00" pubdate data-updated="true">2012-01-28</time>
+        
+         | <a href="/2012/01/clover-progress.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3 id="section">2012-3-30:</h3>
+
+<p>今天我们把视频提交了。也上传了一份。</p>
+
+<p><a href="http://v.youku.com/v_show/id_XMzc0MTAyMDg0.html">http://v.youku.com/v_show/id_XMzc0MTAyMDg0.html</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/01/clover-progress.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -710,104 +755,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/01/management-remote-host.html">管理远程主机的一些技巧分享</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-20T21:11:18+08:00" pubdate data-updated="true">2012-01-20</time>
-        
-         | <a href="/2012/01/management-remote-host.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>对于管理远程主机，我想大家都一般使用ssh吧，在本地是Linux的环境下，那么都是挺方便的，什么都不需要弄就可以用</p>
-
-<p>ssh -l username hostname</p>
-
-<p>来登录远程主机。而在Windows上，虽然有专门的ssh客户端，不过在cygwin里面还是挺亲切的。对于cygwin，我们可以设置在安装的时候选上OpenSSH，这样就可以方便地在Windows上使用ssh了，当然还有很多非常棒的工具可以选择安装，在国内选择163的镜像速度还是挺快的。</p>
-
-<h3 id="ssh">每次登陆都要密码？免口令SSH登陆！</h3>
-
-<p>我们可以创建创建公钥和密钥来实现免口令登陆，公钥放到服务器那里，这样在登陆的时候只要公钥密钥匹配正确就可以不需要输入密码了。</p>
-
-<p>好，现在我们来创建公钥和密钥，我们使用ssh-keygen来生成。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>ssh-keygen
-</span><span class="line">Generating public/private rsa key pair.
-</span><span class="line">Enter file in which to save the key <span class="o">(</span>/home/Cedric Porter/.ssh/id_rsa<span class="o">)</span>:
-</span><span class="line">Enter passphrase <span class="o">(</span>empty <span class="k">for </span>no passphrase<span class="o">)</span>:
-</span><span class="line">Enter same passphrase again:
-</span><span class="line">Your identification has been saved in id_rsa_test.
-</span><span class="line">Your public key has been saved in id_rsa_test.pub.
-</span><span class="line">The key fingerprint is:
-</span><span class="line">60:7c:f3:42:58:57:42:1f:dc:65:e2:05:3d:49:54:02 Cedric Porter@CedricPorter-PC
-</span><span class="line">The key<span class="err">&#39;</span>s randomart image is:
-</span><span class="line">+--<span class="o">[</span> RSA 2048<span class="o">]</span>----+
-</span><span class="line">|        ..+oEo**B|
-</span><span class="line">|     . o . o.o.B.|
-</span><span class="line">|      <span class="o">=</span> +   . . .|
-</span><span class="line">|     . + o       |
-</span><span class="line">|        S .      |
-</span><span class="line">|         .       |
-</span><span class="line">|                 |
-</span><span class="line">|                 |
-</span><span class="line">|                 |
-</span><span class="line">+-----------------+
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>然后我们就在我们的HOME目录下的.ssh目录下创建了公钥密钥对。</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/01/management-remote-host.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -916,7 +863,7 @@
 <a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
 <a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
-<a style="font-size: 112%" href="/tag/http/">HTTP</a>
+<a style="font-size: 131%" href="/tag/http/">HTTP</a>
 <a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
 <a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
@@ -977,6 +924,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/learn-http-chunked.html">[学习HTTP] Transfer-Encoding: chunked</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/customize-emacs-gud-many-windows.html">定制Emacs GDB调试窗口布局</a>
       </li>
     
@@ -990,10 +941,6 @@
     
       <li class="post">
         <a href="/2013/01/keep-learning.html">Keep Learning</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/tt.html">由TT引发的思考</a>
       </li>
     
   </ul>

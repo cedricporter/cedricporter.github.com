@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="防民之口，甚于防川。 引用自百度百科的对于“防民之口，甚于防川”的启示： 中国历史上有很多统治者荒淫无道，但他们又怕人民议论，就采取了压制社会言论的措施，以为可以高枕无忧、平安无事。实际上这是最愚蠢的作法，它不仅使下情无法上达，错误的政策得不到纠正，加剧社会矛盾。更可怕的在于虽然民众口上不说， &hellip;">
+  <meta name="description" content="字符画很好玩，我们来看看怎样将一张图片变成字符画。 我们首先将图片变成黑白的，那么每个像素的取值范围为：0-255. 然后我们将0-255映射到0-14的范围上，然后用如下字符代替： color = ‘MNHQ$OC?7&gt;!:-;.’ 也就是像素为0的点用“M”表示，像素为14的点用“.” &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,59 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/05/python-ascii-art.html">Python根据图片生成字符画</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-07T04:50:19+08:00" pubdate data-updated="true">2012-05-07</time>
+        
+         | <a href="/2012/05/python-ascii-art.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>字符画很好玩，我们来看看怎样将一张图片变成字符画。</p>
+
+<p>我们首先将图片变成黑白的，那么每个像素的取值范围为：0-255.</p>
+
+<p>然后我们将0-255映射到0-14的范围上，然后用如下字符代替：</p>
+
+<p>color = ‘MNHQ$OC?7&gt;!:-;.’</p>
+
+<p>也就是像素为0的点用“M”表示，像素为14的点用“.”表示。</p>
+
+<p>原理非常的简单，我们用Python来编写的话也非常的简单。只要借助PIL，就可以很轻松地在Python中处理图像。</p>
+
+<p>我们来看一段代码：</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/05/python-ascii-art.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -591,57 +644,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/04/ultrademo.html">UltraDemo —— 数据结构实验平台</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-19T04:49:32+08:00" pubdate data-updated="true">2012-04-19</time>
-        
-         | <a href="/2012/04/ultrademo.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>传统数据结构教学中，老师站在讲台上讲课，放着PPT，而学生坐在下面神游。 原因何在？因为学生缺乏实践机会，所以注意力难以集中。</p>
-
-<p>于是UltraDemo诞生了！ UltraDemo提供一个自己动手实践的平台，我们可以在UltraDemo中编程，并且可以对数据结构可视化。 这个是一个编程实践平台，可以在上面写代码，编译，执行，并且可以查看图形化的数据结构。UltraDemo支持单步执行，支持断点，支持查看当前作用域的变量，支持自动执行，支持自动执行速度选择，支持动画。</p>
-
-<p>UltraDemo已经开源～</p>
-
-<p>源码：<a href="https://github.com/cedricporter/UltraDemo">https://github.com/cedricporter/UltraDemo</a></p>
-
-<h2 id="ultrademo">UltraDemo主要提供以下的功能：</h2>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/04/ultrademo.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -750,7 +752,7 @@
 <a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
 <a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
-<a style="font-size: 112%" href="/tag/http/">HTTP</a>
+<a style="font-size: 131%" href="/tag/http/">HTTP</a>
 <a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
 <a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
@@ -811,6 +813,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/learn-http-chunked.html">[学习HTTP] Transfer-Encoding: chunked</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/customize-emacs-gud-many-windows.html">定制Emacs GDB调试窗口布局</a>
       </li>
     
@@ -824,10 +830,6 @@
     
       <li class="post">
         <a href="/2013/01/keep-learning.html">Keep Learning</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/tt.html">由TT引发的思考</a>
       </li>
     
   </ul>

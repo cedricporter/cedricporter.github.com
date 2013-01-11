@@ -4,7 +4,7 @@
   <title><![CDATA[EverET.org]]></title>
   <link href="http://everet.org/feed" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2013-01-09T10:23:40+08:00</updated>
+  <updated>2013-01-11T20:35:37+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -12,6 +12,143 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[学习HTTP] Transfer-Encoding: chunked]]></title>
+    <link href="http://everet.org/2013/01/learn-http-chunked.html"/>
+    <updated>2013-01-11T15:43:00+08:00</updated>
+    <id>http://everet.org/2013/01/learn-http-chunked</id>
+    <content type="html"><![CDATA[<p>在HTTP/1.1中，如果需要保持连接的话，那么Content-Length是必须要提供的。否则就无法确定此次请求的结束位置。</p>
+
+<p>但是，如果我们要在<em>动态生成的过程中</em>就想发送数据，是无法预先知道报文的长度的，所以也就不可能使用Content-Length来指明body长度。那为啥要边生成边发送呢？假设生成完整数据需要30秒，如果要生成完再发送的话，那么就浪费了这30秒的美好的传输时间了。</p>
+
+<p><strong>那如何边生成边发送呢？</strong></p>
+
+<p>我们可以通过将Transfer-Encoding指定为chunked，来进行分块传输。我们就可以将原本一整块需要说明长度的数据分解成了一小块一小块需要说明长度的数据。就可以边生成边发送了。</p>
+
+<!-- more -->
+
+<p>Chunked Transfer Coding在rfc2616 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 中的文法定义如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="ini"><span class="line"><span class="na">Chunked-Body</span>   <span class="o">=</span> <span class="s">*chunk</span>
+</span><span class="line"><span class="s">                 last-chunk</span>
+</span><span class="line"><span class="s">                 trailer</span>
+</span><span class="line"><span class="s">                 CRLF</span>
+</span><span class="line"><span class="na">chunk</span>          <span class="o">=</span> <span class="s">chunk-size [ chunk-extension ] CRLF</span>
+</span><span class="line"><span class="s">                 chunk-data CRLF</span>
+</span><span class="line"><span class="na">chunk-size</span>     <span class="o">=</span> <span class="s">1*HEX</span>
+</span><span class="line"><span class="na">last-chunk</span>     <span class="o">=</span> <span class="s">1*(&quot;0&quot;) [ chunk-extension ] CRLF</span>
+</span><span class="line"><span class="na">chunk-extension</span><span class="o">=</span> <span class="s">*( &quot;;&quot; chunk-ext-name [ &quot;=&quot; chunk-ext-val ] )</span>
+</span><span class="line"><span class="na">chunk-ext-name</span> <span class="o">=</span> <span class="s">token</span>
+</span><span class="line"><span class="na">chunk-ext-val</span>  <span class="o">=</span> <span class="s">token | quoted-string</span>
+</span><span class="line"><span class="na">chunk-data</span>     <span class="o">=</span> <span class="s">chunk-size(OCTET)</span>
+</span><span class="line"><span class="na">trailer</span>        <span class="o">=</span> <span class="s">*(entity-header CRLF)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>对于每一个chunk，由chunk-size开头，这个是一个<strong>16进制</strong>数字的字符串，用来表示后面将有多长的数据。然后跟着的是数据。这里chunk-size和Content-Length的作用是相似的。最后结束的chunk的chunk-size为<code>0</code>。Chunk可以理解成类似这样的结构体，size指明data的长度:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="k">struct</span> <span class="n">Chunk</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">size</span><span class="p">;</span>
+</span><span class="line">    <span class="kt">char</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="section">测试</h2>
+
+<p>我们用nc<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>作为服务器，看看浏览器的反应如何。通过nc，我们可以直接构造响应。</p>
+
+<p>用nc监听本地8888端口，然后用浏览器访问本地8888端口，然后就可以看到浏览器发来的请求报文（2-11行）。然后我们模仿服务器发回响应（12-22行）。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>使用nc扮演服务器 </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="gp">$</span> nc -lp 8888
+</span><span class="line"><span class="go">GET / HTTP/1.1</span>
+</span><span class="line"><span class="go">Host: localhost:8888</span>
+</span><span class="line"><span class="go">Connection: keep-alive</span>
+</span><span class="line"><span class="go">Cache-Control: max-age=0</span>
+</span><span class="line"><span class="go">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span>
+</span><span class="line"><span class="go">User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.52 Safari/537.17</span>
+</span><span class="line"><span class="go">Accept-Encoding: gzip,deflate,sdch</span>
+</span><span class="line"><span class="go">Accept-Language: zh,zh-CN;q=0.8,en-US;q=0.6,en;q=0.4</span>
+</span><span class="line"><span class="go">Accept-Charset: UTF-8,*;q=0.5</span>
+</span><span class="line">
+</span><span class="line"><span class="go">HTTP/1.1 200 OK</span>
+</span><span class="line"><span class="go">Connection: close</span>
+</span><span class="line"><span class="go">Transfer-Encoding: chunked</span>
+</span><span class="line">
+</span><span class="line"><span class="go">5</span>
+</span><span class="line"><span class="go">12345</span>
+</span><span class="line"><span class="go">A</span>
+</span><span class="line"><span class="go">----------</span>
+</span><span class="line"><span class="go">3</span>
+</span><span class="line"><span class="go">123</span>
+</span><span class="line"><span class="go">0</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>可以看到，Chunked-Body的内容为 <code>5&lt;CRLF&gt;12345&lt;CRLF&gt;A&lt;CRLF&gt;----------&lt;CRLF&gt;3&lt;CRLF&gt;123&lt;CRLF&gt;0&lt;CRLF&gt;</code>，分为一块一块的，最后以<code>0</code>结束。</p>
+
+<p>最后，在浏览器可以看到的内容为<code>12345----------123</code>。</p>
+
+<p>(全文完）</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.6">Transfer Codings</a> <a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>netcat，黑客工具中的瑞士军刀。<a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2013/01/learn-http-chunked.html">http://everet.org/2013/01/learn-http-chunked.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
+  
+    <a class='tag' href='/tag/http/'>HTTP</a>
+  
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[定制Emacs GDB调试窗口布局]]></title>
@@ -104,7 +241,14 @@
   <p>Emacs是伪装成编辑器的操作系统～～～</p>
 </blockquote>
 
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2013/01/customize-emacs-gud-many-windows.html">http://everet.org/2013/01/customize-emacs-gud-many-windows.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2013/01/customize-emacs-gud-many-windows.html">http://everet.org/2013/01/customize-emacs-gud-many-windows.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
+  
+    <a class='tag' href='/tag/emacs/'>Emacs</a>, <a class='tag' href='/tag/lisp/'>Lisp</a>
+  
+]]></content>
   </entry>
   
   <entry>
@@ -251,7 +395,14 @@ bytes (byte offsets 500-999, inclusive):
   <li><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">Status Code Definitions</a></li>
   <li><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.35">Range</a></li>
 </ul>
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2013/01/http-status-206-partial-content.html">http://everet.org/2013/01/http-status-206-partial-content.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2013/01/http-status-206-partial-content.html">http://everet.org/2013/01/http-status-206-partial-content.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
+  
+    <a class='tag' href='/tag/http/'>HTTP</a>, <a class='tag' href='/tag/curl/'>curl</a>
+  
+]]></content>
   </entry>
   
   <entry>
@@ -300,7 +451,14 @@ bytes (byte offsets 500-999, inclusive):
     </li>
   </ol>
 </div>
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2013/01/chrome-edit-with-emacs.html">http://everet.org/2013/01/chrome-edit-with-emacs.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2013/01/chrome-edit-with-emacs.html">http://everet.org/2013/01/chrome-edit-with-emacs.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
+  
+    <a class='tag' href='/tag/chrome/'>Chrome</a>, <a class='tag' href='/tag/emacs/'>Emacs</a>, <a class='tag' href='/tag/lisp/'>Lisp</a>
+  
+]]></content>
   </entry>
   
   <entry>
@@ -386,7 +544,14 @@ bytes (byte offsets 500-999, inclusive):
 
 <p>对于在IT这个瞬息万变的行业，不能保持学习的兴趣与激情，迟早会被无情地淘汰。当然，除了学习，还要保持谦虚，保持低调，毕竟人总是会犯错的。如果自己很装逼地说什么就是什么，最后却发现自己错了，那岂不丢脸丢到家了。低调与谦虚，加上高效学习，2013年，加油！！！</p>
 
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2013/01/keep-learning.html">http://everet.org/2013/01/keep-learning.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2013/01/keep-learning.html">http://everet.org/2013/01/keep-learning.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
+  
+    <a class='tag' href='/tag/image-processing/'>Image Processing</a>, <a class='tag' href='/tag/pil/'>PIL</a>, <a class='tag' href='/tag/python/'>Python</a>
+  
+]]></content>
   </entry>
   
   <entry>
@@ -425,7 +590,9 @@ bytes (byte offsets 500-999, inclusive):
 
 <p>所以，思考清晰下一步，少走一些弯路，这样才是节约时间、对于生命负责的表现啊。</p>
 
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/tt.html">http://everet.org/2012/12/tt.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/tt.html">http://everet.org/2012/12/tt.html</a><br/>
+    
+]]></content>
   </entry>
   
   <entry>
@@ -658,7 +825,14 @@ bytes (byte offsets 500-999, inclusive):
     </li>
   </ol>
 </div>
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
+  
+    <a class='tag' href='/tag/emacs/'>Emacs</a>, <a class='tag' href='/tag/lisp/'>Lisp</a>, <a class='tag' href='/tag/markdown/'>Markdown</a>
+  
+]]></content>
   </entry>
   
   <entry>
@@ -749,7 +923,14 @@ bytes (byte offsets 500-999, inclusive):
     </li>
   </ol>
 </div>
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/migrate-from-wordpress-to-octopress.html">http://everet.org/2012/12/migrate-from-wordpress-to-octopress.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/migrate-from-wordpress-to-octopress.html">http://everet.org/2012/12/migrate-from-wordpress-to-octopress.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
+  
+    <a class='tag' href='/tag/git/'>Git</a>, <a class='tag' href='/tag/octopress/'>Octopress</a>, <a class='tag' href='/tag/python/'>Python</a>, <a class='tag' href='/tag/ruby/'>Ruby</a>, <a class='tag' href='/tag/wordpress/'>Wordpress</a>
+  
+]]></content>
   </entry>
   
   <entry>
@@ -794,7 +975,14 @@ bytes (byte offsets 500-999, inclusive):
 <p>我们可以看到error_log /dev/stdout这样一句，这样可以将输出日志直接打印到标准输出，调试的时候可以实时看到输出。 </p>
 
 <p><img src="http://everet.org/wp-content/uploads/2012/12/wpid-snapshot1-small.png" alt="" /></p>
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/debug-nginx.html">http://everet.org/2012/12/debug-nginx.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/debug-nginx.html">http://everet.org/2012/12/debug-nginx.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
+  
+    <a class='tag' href='/tag/emacs/'>Emacs</a>, <a class='tag' href='/tag/nginx/'>Nginx</a>
+  
+]]></content>
   </entry>
   
   <entry>
@@ -1121,7 +1309,14 @@ bytes (byte offsets 500-999, inclusive):
   <li><a href="http://moinmo.in/EmacsForMoinMoin">Emacs的moinmoin-mode</a></li>
 </ul>
 
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
+  
+    <a class='tag' href='/tag/moinmoin/'>MoinMoin</a>, <a class='tag' href='/tag/nginx/'>Nginx</a>, <a class='tag' href='/tag/python/'>Python</a>, <a class='tag' href='/tag/uwsgi/'>uWSGI</a>
+  
+]]></content>
   </entry>
   
   <entry>
@@ -1138,7 +1333,14 @@ bytes (byte offsets 500-999, inclusive):
 <p>原来，不仅仅是我的手机硬件老了，而是，随着时间的流逝，我们索要的越来越多，最终，超出了大环境的承受能力了。有时候，只要降低一下自己的预期，生活就会很美好了。
 有什么样的能力，就应该过什么样的生活。当然，也可以提高自己的能力。不过现在也没有条件更换硬件，于是也只能有什么样的硬件，用什么样的软件。</p>
 
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/hardware-decide-the-software.html">http://everet.org/2012/12/hardware-decide-the-software.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/12/hardware-decide-the-software.html">http://everet.org/2012/12/hardware-decide-the-software.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
+  
+    <a class='tag' href='/tag/android/'>Android</a>
+  
+]]></content>
   </entry>
   
   <entry>
@@ -1158,7 +1360,9 @@ bytes (byte offsets 500-999, inclusive):
 
 <p>修炼……</p>
 
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/11/vps-host-disappear.html">http://everet.org/2012/11/vps-host-disappear.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/11/vps-host-disappear.html">http://everet.org/2012/11/vps-host-disappear.html</a><br/>
+    
+]]></content>
   </entry>
   
   <entry>
@@ -1397,7 +1601,14 @@ bytes (byte offsets 500-999, inclusive):
   <li><a href="http://rtcamp.com/tutorials/wordpress-nginx-wp-super-cache/">WordPress-Nginx + WP Super cache</a></li>
 </ul>
 
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/11/multi-user-nginx-php-server.html">http://everet.org/2012/11/multi-user-nginx-php-server.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/11/multi-user-nginx-php-server.html">http://everet.org/2012/11/multi-user-nginx-php-server.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
+  
+    <a class='tag' href='/tag/apache/'>Apache</a>, <a class='tag' href='/tag/linux/'>Linux</a>, <a class='tag' href='/tag/nginx/'>Nginx</a>, <a class='tag' href='/tag/php/'>PHP</a>, <a class='tag' href='/tag/wordpress/'>Wordpress</a>
+  
+]]></content>
   </entry>
   
   <entry>
@@ -1470,7 +1681,14 @@ bytes (byte offsets 500-999, inclusive):
   </li>
 </ol>
 
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/11/screen-on-ssh.html">http://everet.org/2012/11/screen-on-ssh.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/11/screen-on-ssh.html">http://everet.org/2012/11/screen-on-ssh.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
+  
+    <a class='tag' href='/tag/linux/'>Linux</a>
+  
+]]></content>
   </entry>
   
   <entry>
@@ -1567,7 +1785,14 @@ bytes (byte offsets 500-999, inclusive):
 <p>好，搞定。</p>
 
 <p>所有文件都在<a href="https://github.com/cedricporter/chrome_cache">https://github.com/cedricporter/chrome_cache</a>，有兴趣同学可以去下载使用一下，不过需要修改一下脚本里面的路径名。</p>
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/09/chrome-ramdisk.html">http://everet.org/2012/09/chrome-ramdisk.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/09/chrome-ramdisk.html">http://everet.org/2012/09/chrome-ramdisk.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
+  
+    <a class='tag' href='/tag/linux/'>Linux</a>, <a class='tag' href='/tag/ubuntu/'>Ubuntu</a>
+  
+]]></content>
   </entry>
   
   <entry>
@@ -1614,7 +1839,14 @@ bytes (byte offsets 500-999, inclusive):
 
 <p>然后就不会自动更新缓存了。 当然也可将这两个值设置小一点，就不会有那么多缓存要扫描了。</p>
 
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io.html">http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io.html">http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
+  
+    <a class='tag' href='/tag/linux/'>Linux</a>, <a class='tag' href='/tag/ubuntu/'>Ubuntu</a>
+  
+]]></content>
   </entry>
   
   <entry>
@@ -1653,7 +1885,14 @@ bytes (byte offsets 500-999, inclusive):
 <p>最后，是下载地址啦：<a href="https://github.com/cedricporter/popo-plugin/tags">https://github.com/cedricporter/popo-plugin/tags</a>。</p>
 
 <p>项目是开源的，有兴趣的同学来一起完善吧～～</p>
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/08/popo-linux.html">http://everet.org/2012/08/popo-linux.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/08/popo-linux.html">http://everet.org/2012/08/popo-linux.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
+  
+    <a class='tag' href='/tag/linux/'>Linux</a>, <a class='tag' href='/tag/python/'>Python</a>
+  
+]]></content>
   </entry>
   
   <entry>
@@ -1896,7 +2135,14 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 
 <p>可见运行速度是原来的<strong>159倍</strong>。</p>
 
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/08/profile-of-effectlab.html">http://everet.org/2012/08/profile-of-effectlab.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/08/profile-of-effectlab.html">http://everet.org/2012/08/profile-of-effectlab.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
+  
+    <a class='tag' href='/tag/image-processing/'>Image Processing</a>, <a class='tag' href='/tag/pil/'>PIL</a>, <a class='tag' href='/tag/python/'>Python</a>
+  
+]]></content>
   </entry>
   
   <entry>
@@ -1911,7 +2157,9 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 <p><a href="http://everet.org/wp-content/uploads/2012/08/asciifull.gif"><img src="http://everet.org/wp-content/uploads/2012/08/asciifull.gif" alt="" /></a></p>
 
 <p><a href="http://everet.org/wp-content/uploads/2012/08/extend.gif"><img src="http://everet.org/wp-content/uploads/2012/08/extend.gif" alt="" /></a></p>
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/08/ascii.html">http://everet.org/2012/08/ascii.html</a>]]></content>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/08/ascii.html">http://everet.org/2012/08/ascii.html</a><br/>
+    
+]]></content>
   </entry>
   
   <entry>
@@ -2391,115 +2639,14 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 
 <p><a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/#id3">[3]</a> By the way, without this code there’s a compiler warning for Python/symtable.c. The compiler notices that theUntil_kind enumeration value isn’t handled in the switch statement of symtable_visit_stmt and complains. It’s always important to check for compiler warnings!</p>
 
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/add-new-grammer-to-python.html">http://everet.org/2012/07/add-new-grammer-to-python.html</a>]]></content>
-  </entry>
+ <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/add-new-grammer-to-python.html">http://everet.org/2012/07/add-new-grammer-to-python.html</a><br/>
+    
+
+  <strong>Tags:</strong>&nbsp
   
-  <entry>
-    <title type="html"><![CDATA[探索wordpress验证码插件Clickcha]]></title>
-    <link href="http://everet.org/2012/07/clickcha.html"/>
-    <updated>2012-07-16T20:42:02+08:00</updated>
-    <id>http://everet.org/2012/07/clickcha</id>
-    <content type="html"><![CDATA[<p>Clickcha是一种新型的图像验证码，只需要用鼠标点击即可以通过验证，虽然对于专门的攻击，这种验证码没什么抵挡能力，但是它还是挺有趣。</p>
-
-<p>对于这种验证码的识别，可以用<a href="http://zh.wikipedia.org/wiki/%E9%9C%8D%E5%A4%AB%E5%8F%98%E6%8D%A2">霍夫变换</a>，就可以方便地找到最圆的圆，以及那些正方形。</p>
-
-<p>Clickcha有提供wordpress插件，很容易就可以和自己的wordpress整合在一起。<!-- more --></p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/challenge-1.png"><img src="http://everet.org/wp-content/uploads/2012/07/challenge-1.png" alt="" /></a></p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/challenge-2.png"><img src="http://everet.org/wp-content/uploads/2012/07/challenge-2.png" alt="" /></a></p>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/07/challenge.png"><img src="http://everet.org/wp-content/uploads/2012/07/challenge.png" alt="" /></a></p>
-
-<p>我们从clickcha的源码中看看这个插件的工作原理。</p>
-
-<h2 id="section">生成验证码</h2>
-
-<p>首先，插件在comment_form过程下增加了钩子，这样就可以将自己的页面的代码插入到评论框下面。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>php  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="x">add_action(&#39;comment_form&#39;, &#39;clickcha_comment_form&#39;, 10);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>其中有一段js，用于验证码token和图片的获取。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>javascript  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">clickcha_token</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;clickchatoken&#39;</span><span class="p">).</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">token</span><span class="p">;</span>
-</span><span class="line">    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;clickcha&#39;</span><span class="p">).</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">&#39;http://api.clickcha.com/challenge?key=&amp;token=&#39;</span> <span class="o">+</span> <span class="nx">token</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="kd">function</span> <span class="nx">clickcha_get_token</span><span class="p">()</span> <span class="p">{</span>
-</span><span class="line">    <span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
-</span><span class="line">    <span class="nx">e</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">&#39;http://api.clickcha.com/token?output=json&amp;key=&amp;rnd=&#39;</span> <span class="o">+</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">();</span>
-</span><span class="line">    <span class="nx">e</span><span class="p">.</span><span class="nx">type</span><span class="o">=</span> <span class="s1">&#39;text/javascript&#39;</span><span class="p">;</span>
-</span><span class="line">    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="nx">clickcha_get_token</span><span class="p">();</span>
-</span><span class="line"><span class="c1">// Firefox&#39;s bfcache workaround</span>
-</span><span class="line"><span class="nb">window</span><span class="p">.</span><span class="nx">onpageshow</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span><span class="k">if</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">persisted</span><span class="p">)</span> <span class="nx">clickcha_get_token</span><span class="p">();};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>在下面这段语句增加引用服务器生成的js。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>javascript  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;clickcha&#39;</span><span class="p">).</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">&#39;http://api.clickcha.com/challenge?key=&amp;token=&#39;</span> <span class="o">+</span> <span class="nx">token</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>clickcha服务器生成的被引用的那段js里面的内容</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>javascript  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">clickcha_token</span><span class="p">(</span><span class="s1">&#39;ww6pGtBKXh_IdBDKVNHYVmeT3fTPDo8pwqCwpUqPIS-ZhYGKhc6SN9TdpZzudXujexPaKfarM57QoTPtd0AqOw&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>服务器clickcha服务器被引用的js里，调用了clickcha_token来设置表单中的token和验证码的图片。</p>
-
-<h2 id="section-1">验证</h2>
-
-<p>插件在评论预处理挂上处理钩子。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>php  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="x">add_action(&#39;preprocess_comment&#39;, &#39;clickcha_comment_post&#39;);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>然后在评论预处理过程向clickcha的服务器发送GET请求验证，如果服务器返回’PASSED’，那么通过验证，否则直接调用wp_die结束处理过程。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>php  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="x">$response=file_get_contents(&#39;http://api.clickcha.com/verify?key=&#39;.$public_key.&#39;&amp;token=&#39;.$_POST[&#39;clickcha_token&#39;].&#39;&amp;private_key=&#39;.$private_key.&#39;&amp;x=&#39;.$_POST[&#39;clickcha_x&#39;].&#39;&amp;y=&#39;.$_POST[&#39;clickcha_y&#39;]);</span>
-</span><span class="line"><span class="x">$result = get_submatch(&#39;|(\w+)|&#39;, $response);</span>
-</span><span class="line"><span class="x">if(!empty($result)) {</span>
-</span><span class="line"><span class="x">    if($result!=&#39;PASSED&#39;) {</span>
-</span><span class="line"><span class="x">        wp_die(&quot;Clickcha verification failed ($result). Please go back and try again.&quot;);</span>
-</span><span class="line"><span class="x">    }</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h2 id="section-2"> 演示</h2>
-
-<p>clickcha官方demo：<a href="http://clickcha.com/demo/">http://clickcha.com/demo/</a></p>
-
- <hr/> <strong>PermaLink:</strong> <a href="http://everet.org/2012/07/clickcha.html">http://everet.org/2012/07/clickcha.html</a>]]></content>
+    <a class='tag' href='/tag/python/'>Python</a>, <a class='tag' href='/tag/compile/'>compile</a>
+  
+]]></content>
   </entry>
   
 </feed>

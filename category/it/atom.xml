@@ -4,7 +4,7 @@
   <title><![CDATA[Category: IT | EverET.org]]></title>
   <link href="http://everet.org/category/it/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2013-01-09T10:23:40+08:00</updated>
+  <updated>2013-01-11T20:35:37+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -12,6 +12,100 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[学习HTTP] Transfer-Encoding: chunked]]></title>
+    <link href="http://everet.org/2013/01/learn-http-chunked.html"/>
+    <updated>2013-01-11T15:43:00+08:00</updated>
+    <id>http://everet.org/2013/01/learn-http-chunked</id>
+    <content type="html"><![CDATA[<p>在HTTP/1.1中，如果需要保持连接的话，那么Content-Length是必须要提供的。否则就无法确定此次请求的结束位置。</p>
+
+<p>但是，如果我们要在<em>动态生成的过程中</em>就想发送数据，是无法预先知道报文的长度的，所以也就不可能使用Content-Length来指明body长度。那为啥要边生成边发送呢？假设生成完整数据需要30秒，如果要生成完再发送的话，那么就浪费了这30秒的美好的传输时间了。</p>
+
+<p><strong>那如何边生成边发送呢？</strong></p>
+
+<p>我们可以通过将Transfer-Encoding指定为chunked，来进行分块传输。我们就可以将原本一整块需要说明长度的数据分解成了一小块一小块需要说明长度的数据。就可以边生成边发送了。</p>
+
+<!-- more -->
+
+<p>Chunked Transfer Coding在rfc2616 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 中的文法定义如下：</p>
+
+<p><code>ini 
+Chunked-Body   = *chunk
+                 last-chunk
+                 trailer
+                 CRLF
+chunk          = chunk-size [ chunk-extension ] CRLF
+                 chunk-data CRLF
+chunk-size     = 1*HEX
+last-chunk     = 1*("0") [ chunk-extension ] CRLF
+chunk-extension= *( ";" chunk-ext-name [ "=" chunk-ext-val ] )
+chunk-ext-name = token
+chunk-ext-val  = token | quoted-string
+chunk-data     = chunk-size(OCTET)
+trailer        = *(entity-header CRLF)
+</code></p>
+
+<p>对于每一个chunk，由chunk-size开头，这个是一个<strong>16进制</strong>数字的字符串，用来表示后面将有多长的数据。然后跟着的是数据。这里chunk-size和Content-Length的作用是相似的。最后结束的chunk的chunk-size为<code>0</code>。Chunk可以理解成类似这样的结构体，size指明data的长度:</p>
+
+<p><code>c
+struct Chunk
+{
+    int size;
+    char *data;
+};
+</code></p>
+
+<h2 id="section">测试</h2>
+
+<p>我们用nc<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>作为服务器，看看浏览器的反应如何。通过nc，我们可以直接构造响应。</p>
+
+<p>用nc监听本地8888端口，然后用浏览器访问本地8888端口，然后就可以看到浏览器发来的请求报文（2-11行）。然后我们模仿服务器发回响应（12-22行）。</p>
+
+<p>``` console 使用nc扮演服务器 
+$ nc -lp 8888
+GET / HTTP/1.1
+Host: localhost:8888
+Connection: keep-alive
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,<em>/</em>;q=0.8
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.52 Safari/537.17
+Accept-Encoding: gzip,deflate,sdch
+Accept-Language: zh,zh-CN;q=0.8,en-US;q=0.6,en;q=0.4
+Accept-Charset: UTF-8,*;q=0.5</p>
+
+<p>HTTP/1.1 200 OK
+Connection: close
+Transfer-Encoding: chunked</p>
+
+<p>5
+12345
+A
+———-
+3
+123
+0</p>
+
+<p>```</p>
+
+<p>可以看到，Chunked-Body的内容为 <code>5&lt;CRLF&gt;12345&lt;CRLF&gt;A&lt;CRLF&gt;----------&lt;CRLF&gt;3&lt;CRLF&gt;123&lt;CRLF&gt;0&lt;CRLF&gt;</code>，分为一块一块的，最后以<code>0</code>结束。</p>
+
+<p>最后，在浏览器可以看到的内容为<code>12345----------123</code>。</p>
+
+<p>(全文完）</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.6">Transfer Codings</a> <a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>netcat，黑客工具中的瑞士军刀。<a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[定制Emacs GDB调试窗口布局]]></title>
@@ -394,61 +488,6 @@ opinion. “
     </li>
   </ol>
 </div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[调试Nginx]]></title>
-    <link href="http://everet.org/2012/12/debug-nginx.html"/>
-    <updated>2012-12-24T07:41:00+08:00</updated>
-    <id>http://everet.org/2012/12/debug-nginx</id>
-    <content type="html"><![CDATA[<h2 id="nginx">为什么调试Nginx</h2>
-
-<p>为什么要调试Nginx，原因多种多样。如果阅读源码的话，开着进程单步走下去不失为一种很好的源码导读方式。 </p>
-
-<h2 id="nginx-1">编译Nginx</h2>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;./configure –prefix<span class="o">=</span>”<span class="nv">$HOME</span>/my-nginx” –with-debug
-</span><span class='line'>  make &amp;amp;&amp;amp; make install&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>当然还要看一下，生成出来的的Makefile是不是有-O优化，如果有的话需要关闭优化，可以看一下根目录下的Makefile以及objs/Makefile。有的话记得需要改成-O0或者直接删掉就好了。 </p>
-
-<!-- more -->
-
-<h2 id="nginx-2">为调试配置Nginx</h2>
-
-<p>然后在$HOME/my-nginx/conf下面就是我们的配置文件了，我们编辑nginx.conf，加上： <br />
-<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>nginx  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='nginx'><span class='line'><span class="k">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s">&lt;p&gt;error_log</span> <span class="s">/dev/stdout</span> <span class="s">debug</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">master_process</span> <span class="no">off</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">daemon</span> <span class="no">off</span><span class="p">;</span><span class="k">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s">&lt;p&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-   我们可以看到error_log /dev/stdout这样一句，这样可以将输出日志直接打印到标准输出，调试的时候可以实时看到输出。 </p>
-
-<p><img src="http://everet.org/wp-content/uploads/2012/12/wpid-snapshot1-small.png" alt="" /></p>
 ]]></content>
   </entry>
   

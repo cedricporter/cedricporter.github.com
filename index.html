@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="我们在Emacs中可以方便地使用GDB，具体操作在emacser.com有详细的快捷键的教程。不过我觉得其实GDB的CLI已经很好用了。 Emacs中默认可以方便打开多窗格模式，看起来就很像平时大家用的IDE了。 我们只需要M-x gdb-many-windows就可以打开多窗格了，默认布局如下图 &hellip;">
+  <meta name="description" content="在HTTP/1.1中，如果需要保持连接的话，那么Content-Length是必须要提供的。否则就无法确定此次请求的结束位置。 但是，如果我们要在动态生成的过程中就想发送数据，是无法预先知道报文的长度的，所以也就不可能使用Content-Length来指明body长度。那为啥要边生成边发送呢？ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,55 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/01/learn-http-chunked.html">[学习HTTP] Transfer-Encoding: Chunked</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-11T15:43:00+08:00" pubdate data-updated="true">2013-01-11</time>
+        
+         | <a href="/2013/01/learn-http-chunked.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在HTTP/1.1中，如果需要保持连接的话，那么Content-Length是必须要提供的。否则就无法确定此次请求的结束位置。</p>
+
+<p>但是，如果我们要在<em>动态生成的过程中</em>就想发送数据，是无法预先知道报文的长度的，所以也就不可能使用Content-Length来指明body长度。那为啥要边生成边发送呢？假设生成完整数据需要30秒，如果要生成完再发送的话，那么就浪费了这30秒的美好的传输时间了。</p>
+
+<p><strong>那如何边生成边发送呢？</strong></p>
+
+<p>我们可以通过将Transfer-Encoding指定为chunked，来进行分块传输。我们就可以将原本一整块需要说明长度的数据分解成了一小块一小块需要说明长度的数据。就可以边生成边发送了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2013/01/learn-http-chunked.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -573,47 +622,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/12/hardware-decide-the-software.html">有什么样的硬件，用什么样的软件</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-04T03:39:17+08:00" pubdate data-updated="true">2012-12-04</time>
-        
-         | <a href="/2012/12/hardware-decide-the-software.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>两年多前买的摩托罗拉的里程碑1代，现在竟然已经无力支撑go桌面这样庞大的软件了。虽然我很喜欢go桌面，但是，现在手机已经无力承担如此重负。确实，什么样的基础就应该过什么样的生活，过高的追求只会让生活变得像一条狗一样，苟延残喘。 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/12/hardware-decide-the-software.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -720,7 +728,7 @@
 <a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
 <a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
-<a style="font-size: 112%" href="/tag/http/">HTTP</a>
+<a style="font-size: 131%" href="/tag/http/">HTTP</a>
 <a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
 <a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
@@ -781,6 +789,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/learn-http-chunked.html">[学习HTTP] Transfer-Encoding: chunked</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/customize-emacs-gud-many-windows.html">定制Emacs GDB调试窗口布局</a>
       </li>
     
@@ -794,10 +806,6 @@
     
       <li class="post">
         <a href="/2013/01/keep-learning.html">Keep Learning</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/tt.html">由TT引发的思考</a>
       </li>
     
   </ul>

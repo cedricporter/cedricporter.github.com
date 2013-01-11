@@ -9,17 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="1
-2
-3
-4
-5
-6
-7
-粘过来常常看下，以免忘了...
-#define EPERM 1 /* Not super-user */
-#define ENOENT 2 /* No such file or directory */
-#define ESRCH 3 /* No such &hellip;">
+  <meta name="description" content="想必大家自己用VPS的时候，可能对人工备份都不那么勤快。但是备份确实十分的重要，当服务器硬盘彻底废了、数据库被骇客篡改，此时备份就显得格外的重要。 特别是对于还承载着别人的VPS，我们更需要做好备份。像屠文翔同学将自己辛苦翻译《Game Engine Architecture》 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,6 +81,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/06/ubuntu-mysql-backup.html">Ubuntu下自动异地备份数据库</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-10T03:57:02+08:00" pubdate data-updated="true">2012-06-10</time>
+        
+         | <a href="/2012/06/ubuntu-mysql-backup.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>想必大家自己用<a href="http://everet.org/2012/06/ubuntu-mysql-backup.html">VPS</a>的时候，可能对人工备份都不那么勤快。但是备份确实十分的重要，当服务器硬盘彻底废了、数据库被骇客篡改，此时备份就显得格外的重要。</p>
+
+<p>特别是对于还承载着别人的VPS，我们更需要做好备份。像<a href="http://www.kidsang.com/">屠文翔同学</a>将自己辛苦翻译《Game Engine Architecture》贴在wordpress博客上，万一哪天服务器的数据库废了，文章找不到了，我该如何面对屠文翔同学啊，所以备份就必不可少了。</p>
+
+<p>我们或许只要一次编程的努力就可以让日后的备份一劳永逸。</p>
+
+<p>嗯，我们可以用脚本将整个数据库dump下来变成文件，放在服务器上作为备份，这样的本地备份万一服务器的数据遭遇了不可恢复的灾难那就悲剧了。所以我们可以寻求异地备份，将备份放置到其他机器上面。</p>
+
+<h2 id="section">异地备份</h2>
+
+<h3 id="more---">方法一</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/06/ubuntu-mysql-backup.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -568,59 +609,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/05/python-ascii-art.html">Python根据图片生成字符画</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-07T04:50:19+08:00" pubdate data-updated="true">2012-05-07</time>
-        
-         | <a href="/2012/05/python-ascii-art.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>字符画很好玩，我们来看看怎样将一张图片变成字符画。</p>
-
-<p>我们首先将图片变成黑白的，那么每个像素的取值范围为：0-255.</p>
-
-<p>然后我们将0-255映射到0-14的范围上，然后用如下字符代替：</p>
-
-<p>color = ‘MNHQ$OC?7&gt;!:-;.’</p>
-
-<p>也就是像素为0的点用“M”表示，像素为14的点用“.”表示。</p>
-
-<p>原理非常的简单，我们用Python来编写的话也非常的简单。只要借助PIL，就可以很轻松地在Python中处理图像。</p>
-
-<p>我们来看一段代码：</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/05/python-ascii-art.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -729,7 +717,7 @@
 <a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
 <a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
-<a style="font-size: 112%" href="/tag/http/">HTTP</a>
+<a style="font-size: 131%" href="/tag/http/">HTTP</a>
 <a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
 <a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
@@ -790,6 +778,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/learn-http-chunked.html">[学习HTTP] Transfer-Encoding: chunked</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/customize-emacs-gud-many-windows.html">定制Emacs GDB调试窗口布局</a>
       </li>
     
@@ -803,10 +795,6 @@
     
       <li class="post">
         <a href="/2013/01/keep-learning.html">Keep Learning</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/tt.html">由TT引发的思考</a>
       </li>
     
   </ul>

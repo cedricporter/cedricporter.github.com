@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="今天小孟师兄要一张贴图做测试，屠文翔同学用Fireworks花了两分钟做了下面的一张图片。但是师兄说要一张颜色相隔的图片，于是Fireworks此时就显得有点力不从心了。于是此时Python就要上场啦。 Fireworks生成的图： 好，下面， &hellip;">
+  <meta name="description" content="今天突然发现，我在中国生存了二十多年，竟然连十二生肖的循序都不知道，于是乎就上网找了下记录一下。 生肖也称属相，是中国和东亚地区的一些民族用来代表年份和人的出生年的十二种动物。生肖的周期为12年。每一人在其出生年都有一种动物作为生肖。十二生肖即鼠、牛、虎、兔、龙、蛇、马、羊、猴、鸡、狗、猪， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,55 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/03/chinese-zodiac.html">十二生肖</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-22T07:50:26+08:00" pubdate data-updated="true">2012-03-22</time>
+        
+         | <a href="/2012/03/chinese-zodiac.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天突然发现，我在中国生存了二十多年，竟然连十二生肖的循序都不知道，于是乎就上网找了下记录一下。</p>
+
+<p>生肖也称属相，是中国和东亚地区的一些民族用来代表年份和人的出生年的十二种动物。生肖的周期为12年。每一人在其出生年都有一种动物作为生肖。十二生肖即鼠、牛、虎、兔、龙、蛇、马、羊、猴、鸡、狗、猪，依次分配于十二地支，是中国民间计算年龄的方法，也是一种古老的纪年法，亦称十二生肖。十二生肖（兽历）广泛流行于亚洲诸民族及东欧和北非的某些国家之中。</p>
+
+<p>来自百度百科。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/03/0d729944c616137e500ffe05.jpg"><img src="http://everet.org/wp-content/uploads/2012/03/0d729944c616137e500ffe05_thumb.jpg" alt="0d729944c616137e500ffe05" /></a></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/03/chinese-zodiac.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -608,66 +657,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/02/what-bugzilla-is-down.html">What？Bugzilla Is Down</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-28T09:00:13+08:00" pubdate data-updated="true">2012-02-28</time>
-        
-         | <a href="/2012/02/what-bugzilla-is-down.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Bugzilla是基于Web的通用软件缺陷追踪工具。目前Linux Kernel，Apache，Mozilla，Gnome，KDE，Open Office，Eclipse，Facebook，Nokia，Yahoo! 等等都采用了Bugzilla这个缺陷追踪工具。</p>
-
-<p>这段时间写代码我们的bug list都是写在一个txt里面，真是弱爆了……于是想用有效的工具来管理我们的bug。</p>
-
-<p>据说在微软，大家上班第一件事就是打开缺陷追踪工具看看昨天测试人员找出了什么bug，然后开始一天的工作。</p>
-
-<p>确实，只有有效的设计、实现、测试和管理才能保证软件的质量。否则我们的软件都是不堪一击的。</p>
-
-<p>于是偶装了bugzilla来管理我们的一些项目。</p>
-
-<p>在偶改完设置后，Bugzilla就显示“Bugzilla is down”，然后偶就很无语，发现在首页登录都登录不进去了，这要我如何是好。</p>
-
-<p>Google了下，发现访问 <a href="http://bug.everet.org/editparams.cgi">http://bug.everet.org/editparams.cgi</a> 就可以进去修改去设置了。后来发现是我在shutdownhtml的框里填了东西，他就down了。清空它的值就好了。</p>
-
-<p>这真是弱爆了的用户体验啊。不过也怪我没仔细看说明。</p>
-
-<blockquote>
-
-  <h4 id="shutdownhtml">shutdownhtml</h4>
-
-  <pre><code>  If this field is non-empty, then Bugzilla will be completely disabled and this text will be displayed instead of all the Bugzilla pages.
-</code></pre>
-</blockquote>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -776,7 +765,7 @@
 <a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
 <a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
-<a style="font-size: 112%" href="/tag/http/">HTTP</a>
+<a style="font-size: 131%" href="/tag/http/">HTTP</a>
 <a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
 <a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
@@ -837,6 +826,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/learn-http-chunked.html">[学习HTTP] Transfer-Encoding: chunked</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/customize-emacs-gud-many-windows.html">定制Emacs GDB调试窗口布局</a>
       </li>
     
@@ -850,10 +843,6 @@
     
       <li class="post">
         <a href="/2013/01/keep-learning.html">Keep Learning</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2012/12/tt.html">由TT引发的思考</a>
       </li>
     
   </ul>

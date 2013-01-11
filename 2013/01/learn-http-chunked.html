@@ -5,15 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>解决Ubuntu下gnome-settings-daemon高磁盘IO的问题 - EverET.org</title>
+  <title>[学习HTTP] Transfer-Encoding: chunked - EverET.org</title>
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="最近在用Ubuntu的时候，总是发现用着用着整台电脑就卡死了，什么都动不了，然后硬盘灯一直处于常亮状态。几次艰难地打开shell，发现都是gnome-settings-daemon一直在读写硬盘。这个究竟是什么问题呢？ strace一下，看看，这个进程在干啥。 console 1
-2
-3
-4
-5 &hellip;">
+  <meta name="description" content="在HTTP/1.1中，如果需要保持连接的话，那么Content-Length是必须要提供的。否则就无法确定此次请求的结束位置。 但是，如果我们要在动态生成的过程中就想发送数据，是无法预先知道报文的长度的，所以也就不可能使用Content-Length来指明body长度。那为啥要边生成边发送呢？ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -22,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io.html">
+  <link rel="canonical" href="http://everet.org/2013/01/learn-http-chunked.html">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -88,7 +84,7 @@
   
   <header>
     
-      <h1 class="entry-title">解决Ubuntu下gnome-settings-daemon高磁盘IO的问题</h1>
+      <h1 class="entry-title">[学习HTTP] Transfer-Encoding: Chunked</h1>
     
     
       <p class="meta">
@@ -104,7 +100,7 @@
   
 
 
-<time datetime="2012-08-31T18:51:34+08:00" pubdate data-updated="true">2012-08-31</time>
+<time datetime="2013-01-11T15:43:00+08:00" pubdate data-updated="true">2013-01-11</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -114,62 +110,141 @@
 
 
 <div class="entry-content">
-  <p>最近在用Ubuntu的时候，总是发现用着用着整台电脑就卡死了，什么都动不了，然后硬盘灯一直处于常亮状态。几次艰难地打开shell，发现都是gnome-settings-daemon一直在读写硬盘。这个究竟是什么问题呢？</p>
+  <p>在HTTP/1.1中，如果需要保持连接的话，那么Content-Length是必须要提供的。否则就无法确定此次请求的结束位置。</p>
 
-<p>strace一下，看看，这个进程在干啥。</p>
+<p>但是，如果我们要在<em>动态生成的过程中</em>就想发送数据，是无法预先知道报文的长度的，所以也就不可能使用Content-Length来指明body长度。那为啥要边生成边发送呢？假设生成完整数据需要30秒，如果要生成完再发送的话，那么就浪费了这30秒的美好的传输时间了。</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>console  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<p><strong>那如何边生成边发送呢？</strong></p>
+
+<p>我们可以通过将Transfer-Encoding指定为chunked，来进行分块传输。我们就可以将原本一整块需要说明长度的数据分解成了一小块一小块需要说明长度的数据。就可以边生成边发送了。</p>
+
+<!-- more -->
+
+<p>Chunked Transfer Coding在rfc2616 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 中的文法定义如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
 <span class="line-number">5</span>
 <span class="line-number">6</span>
 <span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="gp">cedricporter@cedricporter-Lenovo:~/projects/CaptchaSystem$</span> sudo strace -p 2207
-</span><span class="line"><span class="go">[sudo] password for cedricporter: </span>
-</span><span class="line"><span class="go">Process 2207 attached - interrupt to quit</span>
-</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/b6c1d4f6fff0b536652c83081e5233e1.png&quot;, {st_mode=S_IFREG|0600, st_size=5398, ...}) = 0</span>
-</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/739ea0e4eabe22c5b551156fc3ff93da.png&quot;, {st_mode=S_IFREG|0600, st_size=6059, ...}) = 0</span>
-</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/2aac704bfd3d3a865f66e5c3ee2ba80a.png&quot;, {st_mode=S_IFREG|0600, st_size=6362, ...}) = 0</span>
-</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/5dbe53248aa8a41612137100a315e076.png&quot;, {st_mode=S_IFREG|0600, st_size=6260, ...}) = 0</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="ini"><span class="line"><span class="na">Chunked-Body</span>   <span class="o">=</span> <span class="s">*chunk</span>
+</span><span class="line"><span class="s">                 last-chunk</span>
+</span><span class="line"><span class="s">                 trailer</span>
+</span><span class="line"><span class="s">                 CRLF</span>
+</span><span class="line"><span class="na">chunk</span>          <span class="o">=</span> <span class="s">chunk-size [ chunk-extension ] CRLF</span>
+</span><span class="line"><span class="s">                 chunk-data CRLF</span>
+</span><span class="line"><span class="na">chunk-size</span>     <span class="o">=</span> <span class="s">1*HEX</span>
+</span><span class="line"><span class="na">last-chunk</span>     <span class="o">=</span> <span class="s">1*(&quot;0&quot;) [ chunk-extension ] CRLF</span>
+</span><span class="line"><span class="na">chunk-extension</span><span class="o">=</span> <span class="s">*( &quot;;&quot; chunk-ext-name [ &quot;=&quot; chunk-ext-val ] )</span>
+</span><span class="line"><span class="na">chunk-ext-name</span> <span class="o">=</span> <span class="s">token</span>
+</span><span class="line"><span class="na">chunk-ext-val</span>  <span class="o">=</span> <span class="s">token | quoted-string</span>
+</span><span class="line"><span class="na">chunk-data</span>     <span class="o">=</span> <span class="s">chunk-size(OCTET)</span>
+</span><span class="line"><span class="na">trailer</span>        <span class="o">=</span> <span class="s">*(entity-header CRLF)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>出来的结果就像刷屏一样，全部都是lstat的系统调用，读取的都是.thumbnails下面的图片。<!-- more --></p>
+<p>对于每一个chunk，由chunk-size开头，这个是一个<strong>16进制</strong>数字的字符串，用来表示后面将有多长的数据。然后跟着的是数据。这里chunk-size和Content-Length的作用是相似的。最后结束的chunk的chunk-size为<code>0</code>。Chunk可以理解成类似这样的结构体，size指明data的长度:</p>
 
-<p>突然想起这段时间我都在做验证码，在硬盘里面生成了不计其数的验证码图片。去gnome的网站上转了一下，发现原来很多人都遇到这个问题，特别是搞摄影或者经常处理图片的人。</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="k">struct</span> <span class="n">Chunk</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">size</span><span class="p">;</span>
+</span><span class="line">    <span class="kt">char</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>原来gnome-settings-daemon会经常检查缓存是否过期，是否需要删除或者更新，然后就会读一遍缓存中的图片。这个真是悲剧啊。</p>
+<h2 id="section">测试</h2>
 
-<p>于是我在非常卡的情况下，把.thumbnail目录删了，瞬间就不卡了。</p>
+<p>我们用nc<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>作为服务器，看看浏览器的反应如何。通过nc，我们可以直接构造响应。</p>
 
-<h2 id="solution">Solution</h2>
+<p>用nc监听本地8888端口，然后用浏览器访问本地8888端口，然后就可以看到浏览器发来的请求报文（2-11行）。然后我们模仿服务器发回响应（12-22行）。</p>
 
-<p>既然这样，我也就不让它检查缓存了，到时塞爆硬盘我再手动删除缓存算了，不想经常电脑因为硬盘卡住完全动不了。</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>使用nc扮演服务器 </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="gp">$</span> nc -lp 8888
+</span><span class="line"><span class="go">GET / HTTP/1.1</span>
+</span><span class="line"><span class="go">Host: localhost:8888</span>
+</span><span class="line"><span class="go">Connection: keep-alive</span>
+</span><span class="line"><span class="go">Cache-Control: max-age=0</span>
+</span><span class="line"><span class="go">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span>
+</span><span class="line"><span class="go">User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.52 Safari/537.17</span>
+</span><span class="line"><span class="go">Accept-Encoding: gzip,deflate,sdch</span>
+</span><span class="line"><span class="go">Accept-Language: zh,zh-CN;q=0.8,en-US;q=0.6,en;q=0.4</span>
+</span><span class="line"><span class="go">Accept-Charset: UTF-8,*;q=0.5</span>
+</span><span class="line">
+</span><span class="line"><span class="go">HTTP/1.1 200 OK</span>
+</span><span class="line"><span class="go">Connection: close</span>
+</span><span class="line"><span class="go">Transfer-Encoding: chunked</span>
+</span><span class="line">
+</span><span class="line"><span class="go">5</span>
+</span><span class="line"><span class="go">12345</span>
+</span><span class="line"><span class="go">A</span>
+</span><span class="line"><span class="go">----------</span>
+</span><span class="line"><span class="go">3</span>
+</span><span class="line"><span class="go">123</span>
+</span><span class="line"><span class="go">0</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>我们打开gconf-editor，设置下面两个值为-1.
-/desktop/gnome/thumbnail_cache/maximum_age
-/desktop/gnome/thumbnail_cache/maximum_size</p>
+<p>可以看到，Chunked-Body的内容为 <code>5&lt;CRLF&gt;12345&lt;CRLF&gt;A&lt;CRLF&gt;----------&lt;CRLF&gt;3&lt;CRLF&gt;123&lt;CRLF&gt;0&lt;CRLF&gt;</code>，分为一块一块的，最后以<code>0</code>结束。</p>
 
-<p>然后就不会自动更新缓存了。 当然也可将这两个值设置小一点，就不会有那么多缓存要扫描了。</p>
+<p>最后，在浏览器可以看到的内容为<code>12345----------123</code>。</p>
+
+<p>(全文完）</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.6">Transfer Codings</a> <a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>netcat，黑客工具中的瑞士军刀。<a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 
 
-
-  <span>本文链接: <a href="http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io.html">http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io.html</a></span>
+  <span>本文链接: <a href="http://everet.org/2013/01/learn-http-chunked.html">http://everet.org/2013/01/learn-http-chunked.html</a></span>
   <hr/>
     <h3>您可能也喜欢</h3>
     <ul>
-    
-        <li>
-        <a href="/2012/08/profile-of-effectlab.html">对Python图像处理库EffectLab进行性能测试</a>
-        </li>
     
         <li>
         <a href="/2012/03/ftp-protocol.html">Mission: FTP Protocol</a>
         </li>
     
         <li>
-        <a href="/2012/07/add-new-grammer-to-python.html">走进Python: 为Python增加新语法</a>
+        <a href="/2013/01/http-status-206-partial-content.html">[学习HTTP] 206 Partial Content</a>
         </li>
     
         <li>
@@ -177,7 +252,11 @@
         </li>
     
         <li>
-        <a href="/2012/01/gitweb-password.html">给Gitweb加上访问密码，保护我们的私有项目</a>
+        <a href="/2012/03/ftp-server.html">我的FTP Server——ftp.py</a>
+        </li>
+    
+        <li>
+        <a href="/2012/03/ipc-pipe.html">进程间通信：管道pipe一个简单的例子</a>
         </li>
     
     </ul>
@@ -203,12 +282,12 @@
   
 
 
-<time datetime="2012-08-31T18:51:34+08:00" pubdate data-updated="true">2012-08-31</time>
+<time datetime="2013-01-11T15:43:00+08:00" pubdate data-updated="true">2013-01-11</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/category/linux/'>Linux</a>
+    <a class='category' href='/category/it/'>IT</a>
   
 </span>
 
@@ -218,7 +297,7 @@
 <span class="categories">
   Tags:&nbsp
   
-    <a class='tag' href='/tag/linux/'>Linux</a>, <a class='tag' href='/tag/ubuntu/'>Ubuntu</a>
+    <a class='tag' href='/tag/http/'>HTTP</a>
   
 </span>
 
@@ -235,10 +314,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/2012/08/popo-linux.html" title="Previous Post: 网易泡泡的Linux虚拟机宿主提示外挂">&laquo; 网易泡泡的Linux虚拟机宿主提示外挂</a>
+        <a class="basic-alignment left" href="/2013/01/customize-emacs-gud-many-windows.html" title="Previous Post: 定制Emacs GDB调试窗口布局">&laquo; 定制Emacs GDB调试窗口布局</a>
       
-      
-        <a class="basic-alignment right" href="/2012/09/chrome-ramdisk.html" title="Next Post: [优化]将Chrome的数据放置到内存中去">[优化]将Chrome的数据放置到内存中去 &raquo;</a>
       
     </p>
   </footer>
@@ -380,8 +457,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io.html';
-        var disqus_url = 'http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io.html';
+        var disqus_identifier = 'http://everet.org/2013/01/learn-http-chunked.html';
+        var disqus_url = 'http://everet.org/2013/01/learn-http-chunked.html';
         var disqus_script = 'embed.js';
       
     (function () {
