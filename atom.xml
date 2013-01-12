@@ -4,7 +4,7 @@
   <title><![CDATA[EverET.org]]></title>
   <link href="http://everet.org/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2013-01-11T20:35:37+08:00</updated>
+  <updated>2013-01-13T01:49:43+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -20,7 +20,7 @@
     <id>http://everet.org/2013/01/learn-http-chunked</id>
     <content type="html"><![CDATA[<p>在HTTP/1.1中，如果需要保持连接的话，那么Content-Length是必须要提供的。否则就无法确定此次请求的结束位置。</p>
 
-<p>但是，如果我们要在<em>动态生成的过程中</em>就想发送数据，是无法预先知道报文的长度的，所以也就不可能使用Content-Length来指明body长度。那为啥要边生成边发送呢？假设生成完整数据需要30秒，如果要生成完再发送的话，那么就浪费了这30秒的美好的传输时间了。</p>
+<p>但是，如果我们要在<em>动态生成的过程中</em>就想发送数据，是无法预先知道报文的长度的，所以也就不可能使用Content-Length来指明body长度。那为啥要边生成边发送呢？假设生成完整数据需要30秒，如果要生成完再发送的话，那么就浪费了这30秒的美好的传输时间了。chunked就解决了这个难题，只要服务器允许将body逐块发送，并说明每块的大小就可以了。</p>
 
 <p><strong>那如何边生成边发送呢？</strong></p>
 
@@ -98,8 +98,6 @@
 <span class="line-number">18</span>
 <span class="line-number">19</span>
 <span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
 </pre></td><td class="code"><pre><code class="console"><span class="line"><span class="gp">$</span> nc -lp 8888
 </span><span class="line"><span class="go">GET / HTTP/1.1</span>
 </span><span class="line"><span class="go">Host: localhost:8888</span>
@@ -115,25 +113,25 @@
 </span><span class="line"><span class="go">Connection: close</span>
 </span><span class="line"><span class="go">Transfer-Encoding: chunked</span>
 </span><span class="line">
-</span><span class="line"><span class="go">5</span>
-</span><span class="line"><span class="go">12345</span>
 </span><span class="line"><span class="go">A</span>
-</span><span class="line"><span class="go">----------</span>
-</span><span class="line"><span class="go">3</span>
-</span><span class="line"><span class="go">123</span>
+</span><span class="line"><span class="go">This is Ev  </span>
+</span><span class="line"><span class="go">9</span>
+</span><span class="line"><span class="go">erET.org.</span>
 </span><span class="line"><span class="go">0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>可以看到，Chunked-Body的内容为 <code>5&lt;CRLF&gt;12345&lt;CRLF&gt;A&lt;CRLF&gt;----------&lt;CRLF&gt;3&lt;CRLF&gt;123&lt;CRLF&gt;0&lt;CRLF&gt;</code>，分为一块一块的，最后以<code>0</code>结束。</p>
+<p>可以看到，Chunked-Body的内容分为一块一块的，最后以<code>0</code>结束。</p>
 
-<p>最后，在浏览器可以看到的内容为<code>12345----------123</code>。</p>
+<p><img src="http://everet.org/imgs/graphviz/g-3d53e0c03d1fdee01f5616ea23bbf543.svg" /></p>
+
+<p>最后，在浏览器可以看到的内容为<code>This is EverET.org.</code>。</p>
 
 <p>(全文完）</p>
 
 <div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.6">Transfer Codings</a> <a href="#fnref:1" rel="reference">&#8617;</a></p>
+      <p><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.6">Transfer Codings</a> , <a href="http://greenbytes.de/tech/webdav/draft-ietf-httpbis-p1-messaging-13.html#rfc.section.6.2.1">Chunked Transfer Coding</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
     </li>
     <li id="fn:2">
       <p>netcat，黑客工具中的瑞士军刀。<a href="#fnref:2" rel="reference">&#8617;</a></p>
