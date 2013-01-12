@@ -14,4 +14,4 @@ node_modules
 .preview-mode
 .directory
 *~
-
+source/imgs/graphviz
