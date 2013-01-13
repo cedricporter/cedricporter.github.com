@@ -21,10 +21,10 @@ layout: nil
     <link href="{{ site.url }}{{ post.url }}"/>
     <updated>{{ post.date | date_to_xmlschema }}</updated>
     <id>{{ site.url }}{{ post.id }}</id>
-    <content type="html"><![CDATA[{{ post.content | expand_urls: site.url | cdata_escape }} <hr/> <strong>PermaLink:</strong> <a href="{{ site.url }}{{ post.url }}">{{ site.url }}{{ post.url }}</a><br/>
+    <content type="html"><![CDATA[{{ post.content | expand_urls: site.url | cdata_escape }} <hr/> <strong>PermaLink: </strong> <a href="{{ site.url }}{{ post.url }}">{{ site.url }}{{ post.url }}</a><br/>
     {% capture tags %}{% if post %}{{ post.tags | tag_links | size }}{% else %}{{ page.tags | tag_links | size }}{% endif %}{% endcapture %}
 {% unless tags == '0' %}
-  <strong>Tags:</strong>&nbsp
+  <strong>Tags: </strong>
   {% if post %}
     {{ post.tags | tag_links }}
   {% else %}
