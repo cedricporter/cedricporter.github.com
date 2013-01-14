@@ -92,15 +92,10 @@ if __name__ == '__main__':
 
 整个程序的核心都在下面两行，一个是字符的色阶表，一个是映射公式。
 
-
-> 
-
-{% codeblock %}
+{% codeblock lang:python %}
 color = 'MNHQ$OC?7>!:-;.'
 pic_str += color[int(pix[w, h]) * 14 / 255]
 {% endcodeblock %}
-
-
 
 
 效果如下：
