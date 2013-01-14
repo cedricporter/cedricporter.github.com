@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="在HTTP/1.1中，如果需要保持连接的话，那么Content-Length是必须要提供的。否则就无法确定此次请求的结束位置。 但是，如果我们要在动态生成的过程中就想发送数据，是无法预先知道报文的长度的，所以也就不可能使用Content-Length来指明body长度。那为啥要边生成边发送呢？ &hellip;">
+  <meta name="description" content="用Octopress或者直接用Jekyll都会涉及到Markdown。我们在写Markdown的时候，会遇到插入截图或者本地图片的问题。如果我们自己手工写上图片的标记，会非常的麻烦，于是我在前文 在Emacs中插入截图或者本地图片 中讲述如何自动化插入图片，来解决插入的问题。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2013/01/emacs-markdown-display-image.html">让Emacs显示Markdown中的图片</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-14T23:36:00+08:00" pubdate data-updated="true">2013-01-14</time>
+        
+         | <a href="/2013/01/emacs-markdown-display-image.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>用Octopress或者直接用Jekyll都会涉及到Markdown。我们在写Markdown的时候，会遇到插入截图或者本地图片的问题。如果我们自己手工写上图片的标记，会非常的麻烦，于是我在前文 <a href="http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">在Emacs中插入截图或者本地图片</a> 中讲述如何自动化插入图片，来解决插入的问题。</p>
+
+<p>今天我们来看一下如何在Emacs中预览Markdown中的图片。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2013/01/emacs-markdown-display-image.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -573,55 +618,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">MoinMoin+Nginx+uWSGI搭建个人Wiki</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-19T07:14:27+08:00" pubdate data-updated="true">2012-12-19</time>
-        
-         | <a href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2 id="wiki">有博客，为什么还需要Wiki呢？</h2>
-
-<p>有博客，为什么还需要Wiki呢？对于这个问题，我也思考了许久。博客记录的东西很扁平，而且不太适宜记录一些零碎不完整的东西。如果别人订阅了你的博客，你的博客却经常发布一些不完整的内容，这样会严重影响别人的心情。所以我觉得博客适宜将一些比较完整的内容的写在里面。此外，平时在网上看到什么东西，虽然都可以收录到EverNote里面（EverNote里面有提供目录以及标签可以很好地进行分类），但是，EverNote的劣势在于，不方便将知识组织知识，将它们串联在一起。</p>
-
-<p>而在Wiki中知识是以词条形式，词条与词条间可以方便地建立关系。很容易组织成树状结构。</p>
-
-<p>此外，Wiki可以使用轻量标记语言编写，优点是纯文本，容易阅读和编辑，能够让我们的注意力集中于撰写内容而非形式。特别在Emacs或者Vim里面可以方便地半可视化地编写Wiki。我第一次尝试就对其爱不释手，终于可以从Wordpress，Word等SB的需要鼠标辅助编辑的编写过程中解脱了。</p>
-
-<p>于是我又开始物色Wiki，以前有用过PHP实现的Wiki，现在决定找一个Python实现的Wiki，很快就找到了<a href="http://i.everet.org/MoinMoin">MoinMoin</a>，它是一个由Python实现的<a href="http://zh.wikipedia.org/wiki/Wiki">Wiki</a>系统，文件存储，选一种自己喜欢的语言编写的Wiki系统，日后定制起来会方便一些。</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -723,7 +719,7 @@
 <a style="font-size: 164%" href="/tag/clover/">Clover</a>
 <a style="font-size: 112%" href="/tag/datastructure/">DataStructure</a>
 <a style="font-size: 80%" href="/tag/design/">Design</a>
-<a style="font-size: 155%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 164%" href="/tag/emacs/">Emacs</a>
 <a style="font-size: 80%" href="/tag/english/">English</a>
 <a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
@@ -734,13 +730,13 @@
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
 <a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
 <a style="font-size: 207%" href="/tag/linux/">Linux</a>
-<a style="font-size: 131%" href="/tag/lisp/">Lisp</a>
+<a style="font-size: 145%" href="/tag/lisp/">Lisp</a>
 <a style="font-size: 80%" href="/tag/markdown/">Markdown</a>
 <a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
 <a style="font-size: 131%" href="/tag/mysql/">Mysql</a>
 <a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
 <a style="font-size: 155%" href="/tag/ogre/">OGRE</a>
-<a style="font-size: 80%" href="/tag/octopress/">Octopress</a>
+<a style="font-size: 112%" href="/tag/octopress/">Octopress</a>
 <a style="font-size: 131%" href="/tag/php/">PHP</a>
 <a style="font-size: 131%" href="/tag/pil/">PIL</a>
 <a style="font-size: 250%" href="/tag/python/">Python</a>
@@ -789,6 +785,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/emacs-markdown-display-image.html">让Emacs显示Markdown中的图片</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/learn-http-chunked.html">[学习HTTP] Transfer-Encoding: chunked</a>
       </li>
     
@@ -802,10 +802,6 @@
     
       <li class="post">
         <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/01/keep-learning.html">Keep Learning</a>
       </li>
     
   </ul>

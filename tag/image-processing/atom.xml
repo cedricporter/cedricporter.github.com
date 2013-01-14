@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Image Processing | EverET.org]]></title>
   <link href="http://everet.org/tag/image-processing/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2013-01-13T23:58:14+08:00</updated>
+  <updated>2013-01-15T00:20:06+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -627,14 +627,11 @@ Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
 
 <p>整个程序的核心都在下面两行，一个是字符的色阶表，一个是映射公式。</p>
 
-<blockquote>
-
-</blockquote>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>color = ‘MNHQ$OC?7&gt;!:-;.’
-</span><span class='line'>pic_str += color[int(pix[w, h]) * 14 / 255]</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">color</span> <span class="o">=</span> <span class="err">‘</span><span class="n">MNHQ</span><span class="err">$</span><span class="n">OC</span><span class="err">?</span><span class="mi">7</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="err">!</span><span class="p">:</span><span class="o">-</span><span class="p">;</span><span class="o">.</span><span class="err">’</span>
+</span><span class='line'><span class="n">pic_str</span> <span class="o">+=</span> <span class="n">color</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">pix</span><span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">])</span> <span class="o">*</span> <span class="mi">14</span> <span class="o">/</span> <span class="mi">255</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>效果如下：</p>
 

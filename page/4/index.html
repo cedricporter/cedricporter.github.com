@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="想必大家自己用VPS的时候，可能对人工备份都不那么勤快。但是备份确实十分的重要，当服务器硬盘彻底废了、数据库被骇客篡改，此时备份就显得格外的重要。 特别是对于还承载着别人的VPS，我们更需要做好备份。像屠文翔同学将自己辛苦翻译《Game Engine Architecture》 &hellip;">
+  <meta name="description" content="SyntaxHighlighter Evolved是wordpress的一个Javascript实现的代码高亮插件，可惜的我的vps网速非常慢，加载一个有代码的页面要等很久才会高亮，这让对读者是非常不友好的，而且不支持rss输出的高亮。于是我想把代码高亮放在服务器这边做好。虽然有人说WP- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/06/fix-wp-syntax-python-string-bug.html">修正WP-Syntax高亮Python字符串的bug</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-12T05:33:17+08:00" pubdate data-updated="true">2012-06-12</time>
+        
+         | <a href="/2012/06/fix-wp-syntax-python-string-bug.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>SyntaxHighlighter Evolved</strong>是wordpress的一个Javascript实现的代码高亮插件，可惜的我的vps网速非常慢，加载一个有代码的页面要等很久才会高亮，这让对读者是非常不友好的，而且不支持rss输出的高亮。于是我想把代码高亮放在服务器这边做好。虽然有人说WP-Syntax会造成服务器压力大，但是如果我们将文章页面都缓存了，那就不存在WP-Syntax高亮时造成的过多的压力。</p>
+
+<p>于是我准备切换到WP-Syntax阵营。不幸的是，我刚刚装上WP-Syntax这个插件，贴上的<a href="http://everet.org/2012/03/ftp-server.html">ftp.py</a>的Python代码，就发现语法高亮出错了！！</p>
+
+<p>我们可以用简单的代码再现一次这个bug。就是在多行’&#8217;’注释时会出现这个bug。</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/06/fix-wp-syntax-python-string-bug.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -552,63 +597,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/05/favorite-books.html">我喜欢的那些书</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-10T07:40:15+08:00" pubdate data-updated="true">2012-05-10</time>
-        
-         | <a href="/2012/05/favorite-books.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2 id="cc">C/C++</h2>
-
-<p><strong>深度搜索C++对象模型</strong></p>
-
-<p>讲述了C++背后许多鲜为人知的东西。看完后或许会对C++的对象模型有所感慨。</p>
-
-<p><strong>STL源码剖析</strong></p>
-
-<p>STL的设计思想非常值得学习。像内存池和各种通用的接口等思想都要细细品味。</p>
-
-<p><strong>C专家编程</strong></p>
-
-<p>有很多好的技巧。</p>
-
-<p><strong>Effective C++</strong></p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/05/favorite-books.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -712,7 +700,7 @@
 <a style="font-size: 164%" href="/tag/clover/">Clover</a>
 <a style="font-size: 112%" href="/tag/datastructure/">DataStructure</a>
 <a style="font-size: 80%" href="/tag/design/">Design</a>
-<a style="font-size: 155%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 164%" href="/tag/emacs/">Emacs</a>
 <a style="font-size: 80%" href="/tag/english/">English</a>
 <a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
@@ -723,13 +711,13 @@
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
 <a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
 <a style="font-size: 207%" href="/tag/linux/">Linux</a>
-<a style="font-size: 131%" href="/tag/lisp/">Lisp</a>
+<a style="font-size: 145%" href="/tag/lisp/">Lisp</a>
 <a style="font-size: 80%" href="/tag/markdown/">Markdown</a>
 <a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
 <a style="font-size: 131%" href="/tag/mysql/">Mysql</a>
 <a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
 <a style="font-size: 155%" href="/tag/ogre/">OGRE</a>
-<a style="font-size: 80%" href="/tag/octopress/">Octopress</a>
+<a style="font-size: 112%" href="/tag/octopress/">Octopress</a>
 <a style="font-size: 131%" href="/tag/php/">PHP</a>
 <a style="font-size: 131%" href="/tag/pil/">PIL</a>
 <a style="font-size: 250%" href="/tag/python/">Python</a>
@@ -778,6 +766,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/emacs-markdown-display-image.html">让Emacs显示Markdown中的图片</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/learn-http-chunked.html">[学习HTTP] Transfer-Encoding: chunked</a>
       </li>
     
@@ -791,10 +783,6 @@
     
       <li class="post">
         <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/01/keep-learning.html">Keep Learning</a>
       </li>
     
   </ul>

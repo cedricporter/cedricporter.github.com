@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Emacs | EverET.org]]></title>
   <link href="http://everet.org/tag/emacs/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2013-01-13T23:58:14+08:00</updated>
+  <updated>2013-01-15T00:20:06+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -12,6 +12,73 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[让Emacs显示Markdown中的图片]]></title>
+    <link href="http://everet.org/2013/01/emacs-markdown-display-image.html"/>
+    <updated>2013-01-14T23:36:00+08:00</updated>
+    <id>http://everet.org/2013/01/emacs-markdown-display-image</id>
+    <content type="html"><![CDATA[<p>用Octopress或者直接用Jekyll都会涉及到Markdown。我们在写Markdown的时候，会遇到插入截图或者本地图片的问题。如果我们自己手工写上图片的标记，会非常的麻烦，于是我在前文 <a href="http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">在Emacs中插入截图或者本地图片</a> 中讲述如何自动化插入图片，来解决插入的问题。</p>
+
+<p>今天我们来看一下如何在Emacs中预览Markdown中的图片。</p>
+
+<!-- more -->
+
+<p>虽然我们已经解决了插入图片不便，但我们有时看到这一串一串的文本图片标记或许有些许蛋疼，于是预览一下图片，此时又是Emacs展示其强大的时候了。</p>
+
+<p>Emacs中有<code>iimage-mode</code>可以方便地让我们显示图片，是Emacs自带的。当然如果想在buffer中插入图片我们甚至可以直接调用<code>insert-image</code> <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>往buffer中插入图片。我想Vim里面如果要显示图片一定相当相当蛋疼吧，哈哈。Emacs用户真幸福。</p>
+
+<h2 id="section">实现</h2>
+<p>好，又到了动手的时候了，让我们卷起袖子准备开工！</p>
+
+<p>``` cl iimage settings https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/plugins/configs/my-iimage-settings.el my-iimage-settings.el
+;; 
+(require ‘iimage)</p>
+
+<p>(add-hook ‘info-mode-hook ‘iimage-mode)
+(add-hook ‘markdown-mode-hook ‘(lambda()
+				 (define-key markdown-mode-map
+				   (kbd “<f12>") 'turn-on-iimage-mode)))</f12></p>
+
+<p>(setq iimage-mode-image-search-path ‘(list “.” “..”))</p>
+
+<p>;; for octopress
+(add-to-list ‘iimage-mode-image-regex-alist ; match: {% img xxx %}
+	     (cons (concat “{% img /?\(“
+			   iimage-mode-image-filename-regex
+			   “\) %}”) 1))
+(add-to-list ‘iimage-mode-image-regex-alist ; match: <img src="/xxx" alt="xxx" />
+	     (cons (concat “!\<a href="http://everet.org/\\(wp-content/&quot;
+			   iimage-mode-image-filename-regex" title="\\))">.<em>?\](/\(“
+			   iimage-mode-image-filename-regex
+			   “\))”) 1))
+;; 兼容以前在wordpress添加的图片
+(add-to-list ‘iimage-mode-image-regex-alist ; match: <img src="http://everet.org/xxx" alt="xxx" />
+	     (cons (concat “!\[.</em>?\</a> 1))
+;; 			 <br />
+```</p>
+
+<p>我们首先设置一下图片搜索路径<code>iimage-mode-image-search-path</code>，可以根据实际需要进行设置。对于Octopress的目录结构，我将其设置为当前以及上一级目录<code>(list "." "..")</code>。</p>
+
+<p>然后，我们来设置图片的正则表达式，iimage会将文本中满足的正则表达式提取出来替换成图片。对于插入到<code>iimage-mode-image-regex-alist</code>中的正则表达式，为一个点对<code>(REGEXP . NUM)</code>。为什么是这样呢？因为正则表达式中可能会有很多级的括号，通过<code>NUM</code>我们可以指定取哪一个group的内容为图片路径，像NUM为0的时候取得是整个表达式的值，这个有疑问的话可以问一下Google大神。</p>
+
+<p>最后，我们设置在<code>markdown-mode</code>中<code>F12</code>为开关图片显示。</p>
+
+<h2 id="section-1">效果</h2>
+
+<p><img src="/imgs/snapshot7<em>20130115</em>000417_4317rhI.png"></p>
+
+<h2 id="footnote">Footnote</h2>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="http://www.gnu.org/software/emacs/manual/html_node/elisp/Showing-Images.html">Showing Images</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[定制Emacs GDB调试窗口布局]]></title>
@@ -347,38 +414,6 @@ opinion. “
    我们可以看到error_log /dev/stdout这样一句，这样可以将输出日志直接打印到标准输出，调试的时候可以实时看到输出。 </p>
 
 <p><img src="http://everet.org/wp-content/uploads/2012/12/wpid-snapshot1-small.png" alt="" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[我的Emacs配置]]></title>
-    <link href="http://everet.org/2012/03/emacs.html"/>
-    <updated>2012-03-26T03:29:23+08:00</updated>
-    <id>http://everet.org/2012/03/emacs</id>
-    <content type="html"><![CDATA[<p>原来一直想用Vim来写东西，不过Vim的出生就被定义为做一个编辑器。他的职责就是做好一个编辑器，Vim也不愧为编辑器之神，他确实是非常棒的编辑器。在Unix中，几乎每个工具都是设计为只做一件事，所以我也不想勉为其难将Vim变成一个好用的IDE。</p>
-
-<p>俺曾经尝试使用vim-gdb把gdb嵌入vim，不过用户体验是在让人无法接受，于是就放弃了。</p>
-
-<p>于是只能投身神的编辑器、伪装成编辑器的操作系统——Emacs。</p>
-
-<p>不过俺还是喜欢vim的按键风格，所以俺装了evil，把Emacs变成了超强版的Vim。</p>
-
-<p>代码提示就不说了，Emacs下很轻易就可以做到转到定义处，重构等等。</p>
-
-<p>好的工具是敏捷开发的必要前提啊~又想起了一句古诗：君子性非异也，善假于物也。</p>
-
-<p>俺的Emacs配置请见：<a href="https://github.com/cedricporter/vim-emacs-setting">https://github.com/cedricporter/vim-emacs-setting</a></p>
-
-<p>配置效果如下：<!-- more --></p>
-
-<h3 id="python">写Python</h3>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/03/QQ截图20120325190039.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ截图20120325190039.png" alt="" /></a></p>
-
-<h3 id="c">写C</h3>
-
-<p><a href="http://everet.org/wp-content/uploads/2012/03/QQ截图20120325190144.png"><img src="http://everet.org/wp-content/uploads/2012/03/QQ截图20120325190144.png" alt="" /></a></p>
-
 ]]></content>
   </entry>
   

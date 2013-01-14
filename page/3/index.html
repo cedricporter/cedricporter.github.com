@@ -9,7 +9,7 @@
   <meta name="author" content="Stupid ET">
 
   
-  <meta name="description" content="Clickcha是一种新型的图像验证码，只需要用鼠标点击即可以通过验证，虽然对于专门的攻击，这种验证码没什么抵挡能力，但是它还是挺有趣。 对于这种验证码的识别，可以用霍夫变换，就可以方便地找到最圆的圆，以及那些正方形。 Clickcha有提供wordpress插件， &hellip;">
+  <meta name="description" content="原文地址：http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/ 译文地址：http://everet.org/2012/07/add-new-grammer-to- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,103 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/07/add-new-grammer-to-python.html">走进Python: 为Python增加新语法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-26T05:43:28+08:00" pubdate data-updated="true">2012-07-26</time>
+        
+         | <a href="/2012/07/add-new-grammer-to-python.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>原文地址：</strong><a href="http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/">http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/</a></p>
+
+<p><strong>译文地址：</strong><a href="http://everet.org/2012/07/add-new-grammer-to-python.html">http://everet.org/2012/07/add-new-grammer-to-python.html</a></p>
+
+<p><strong>译者：</strong><a href="http://EverET.org">Stupid ET</a></p>
+
+<p>翻译得比较仓储，里面会有些语句不通顺，请见谅，日后会慢慢重构。
+修改后的Python请见：<a href="https://github.com/cedricporter/python2.7-mod/tags">https://github.com/cedricporter/python2.7-mod/tags</a> ，在Ubuntu下可以正常编译。</p>
+
+<hr />
+
+<p>本文的目的是试图更好地理解Python的前端是如何工作的。如果我们仅仅是阅读文档和源代码，那么可能有点无聊，所以我将亲手实践：为Python添加一个until语句。</p>
+
+<p>这篇文章中的所有的编码,是针对最新的Py3k分支<a href="http://code.python.org/hg/branches/py3k/">Python Mercurial repository mirror</a>。</p>
+
+<h3 id="until">until语句</h3>
+
+<p>有些语言，像Ruby，拥有until语句，用来补充while语句 (until num == 0 等价与 while num != 0)。在Ruby总，我可以这样写：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">num</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class="line"><span class="n">until</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span> <span class="n">do</span>
+</span><span class="line">  <span class="n">puts</span> <span class="n">num</span>
+</span><span class="line">  <span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span>
+</span><span class="line"><span class="n">end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>它会输出</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="mi">3</span>
+</span><span class="line"><span class="mi">2</span>
+</span><span class="line"><span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>所以,我想要添加一个类似的功能到Python。也就是说,能够写成这样:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">num</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class="line"><span class="n">until</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class="line">  <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span><span class="line">  <span class="n">num</span> <span class="o">-=</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/07/add-new-grammer-to-python.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -579,51 +676,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/06/fix-wp-syntax-python-string-bug.html">修正WP-Syntax高亮Python字符串的bug</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-12T05:33:17+08:00" pubdate data-updated="true">2012-06-12</time>
-        
-         | <a href="/2012/06/fix-wp-syntax-python-string-bug.html#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><strong>SyntaxHighlighter Evolved</strong>是wordpress的一个Javascript实现的代码高亮插件，可惜的我的vps网速非常慢，加载一个有代码的页面要等很久才会高亮，这让对读者是非常不友好的，而且不支持rss输出的高亮。于是我想把代码高亮放在服务器这边做好。虽然有人说WP-Syntax会造成服务器压力大，但是如果我们将文章页面都缓存了，那就不存在WP-Syntax高亮时造成的过多的压力。</p>
-
-<p>于是我准备切换到WP-Syntax阵营。不幸的是，我刚刚装上WP-Syntax这个插件，贴上的<a href="http://everet.org/2012/03/ftp-server.html">ftp.py</a>的Python代码，就发现语法高亮出错了！！</p>
-
-<p>我们可以用简单的代码再现一次这个bug。就是在多行’&#8217;’注释时会出现这个bug。</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/06/fix-wp-syntax-python-string-bug.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
 	<div class="pagination">
@@ -727,7 +779,7 @@
 <a style="font-size: 164%" href="/tag/clover/">Clover</a>
 <a style="font-size: 112%" href="/tag/datastructure/">DataStructure</a>
 <a style="font-size: 80%" href="/tag/design/">Design</a>
-<a style="font-size: 155%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 164%" href="/tag/emacs/">Emacs</a>
 <a style="font-size: 80%" href="/tag/english/">English</a>
 <a style="font-size: 171%" href="/tag/git/">Git</a>
 <a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
@@ -738,13 +790,13 @@
 <a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
 <a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
 <a style="font-size: 207%" href="/tag/linux/">Linux</a>
-<a style="font-size: 131%" href="/tag/lisp/">Lisp</a>
+<a style="font-size: 145%" href="/tag/lisp/">Lisp</a>
 <a style="font-size: 80%" href="/tag/markdown/">Markdown</a>
 <a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
 <a style="font-size: 131%" href="/tag/mysql/">Mysql</a>
 <a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
 <a style="font-size: 155%" href="/tag/ogre/">OGRE</a>
-<a style="font-size: 80%" href="/tag/octopress/">Octopress</a>
+<a style="font-size: 112%" href="/tag/octopress/">Octopress</a>
 <a style="font-size: 131%" href="/tag/php/">PHP</a>
 <a style="font-size: 131%" href="/tag/pil/">PIL</a>
 <a style="font-size: 250%" href="/tag/python/">Python</a>
@@ -793,6 +845,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2013/01/emacs-markdown-display-image.html">让Emacs显示Markdown中的图片</a>
+      </li>
+    
+      <li class="post">
         <a href="/2013/01/learn-http-chunked.html">[学习HTTP] Transfer-Encoding: chunked</a>
       </li>
     
@@ -806,10 +862,6 @@
     
       <li class="post">
         <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/01/keep-learning.html">Keep Learning</a>
       </li>
     
   </ul>
