@@ -4,7 +4,7 @@
   <title><![CDATA[Category: IT | EverET.org]]></title>
   <link href="http://everet.org/category/it/atom.xml" rel="self"/>
   <link href="http://everet.org/"/>
-  <updated>2013-01-15T00:20:06+08:00</updated>
+  <updated>2013-01-15T00:25:15+08:00</updated>
   <id>http://everet.org/</id>
   <author>
     <name><![CDATA[Stupid ET]]></name>
@@ -24,7 +24,7 @@
 
 <!-- more -->
 
-<p>虽然我们已经解决了插入图片不便，但我们有时看到这一串一串的文本图片标记或许有些许蛋疼，于是预览一下图片，此时又是Emacs展示其强大的时候了。</p>
+<p>虽然我们已经解决了插入图片不便，但我们有时看到这一串一串的文本图片标记或许有些许蛋疼，于是想预览一下图片，此时又是Emacs展示其强大的时候了。</p>
 
 <p>Emacs中有<code>iimage-mode</code>可以方便地让我们显示图片，是Emacs自带的。当然如果想在buffer中插入图片我们甚至可以直接调用<code>insert-image</code> <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>往buffer中插入图片。我想Vim里面如果要显示图片一定相当相当蛋疼吧，哈哈。Emacs用户真幸福。</p>
 
