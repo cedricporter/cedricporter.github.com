@@ -48,34 +48,34 @@ $solarized: light;
 // change the background colors
 //
 html {
-  background: #ddd !important;
+  background: #fdf6e3 !important;
 }
 body {
   > div {
-    background: #eee !important;
+    background: #fdf6e3 !important;
     > div {
-      background: #eee !important;
+      background: #fdf6e3 !important;
       }
   }
 }
-$main-bg: #eeeeee !default;
-$page-bg: #eeeeee !default;
+$main-bg: #fdf6e3 !default;
+$page-bg: #fdf6e3 !default;
 
 
 // ////////////////////////////////////////
 // change the header colors
 //
-$header-bg: #eee;
+$header-bg: #fdf6e3;
 $title-color: #000000 !default;
 $text-color: #333 !default;
 $text-color-light: #777 !default;
-$subtitle-color: darken($header-bg, 58);
+$subtitle-color: #333; //darken($header-bg, 58);
 
 
 // ////////////////////////////////////////
 // change the nav bar
 //
-$nav-bg: #eee;
+$nav-bg: #fdf6e3;
 $nav-bg-front: #eee;
 $nav-bg-back: #eee;
 $nav-color: darken($nav-bg, 78) !default;
@@ -91,7 +91,7 @@ $nav-border-right: lighten($nav-bg, 7) !default;
 // change the footer
 //
 $footer-color: #888 !default;
-$footer-bg: #eee !default;
+$footer-bg: #fdf6e3 !default;
 $footer-bg-front: #eee !default;
 $footer-bg-back: #eee !default;
 $footer-color: darken($footer-bg, 38) !default;

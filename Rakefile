@@ -72,6 +72,18 @@ task :watch do
   [jekyllPid, compassPid].each { |pid| Process.wait(pid) }
 end
 
+desc "change root to /"
+task :change_to_root do
+  puts "## change root to / in _config.yml ##"
+  `sed -i "s/root: http:\\/\\/everet.org\\//root: \\//g" _config.yml`
+end
+
+desc "change root to http://everet.org/"
+task :change_to_everet do
+  puts "## change root to http://everet.org/ in _config.yml ##"
+  `sed -i "s/root: \\//root: http:\\/\\/everet.org\\//g" _config.yml`
+end  
+
 desc "preview the site in a web browser"
 task :preview do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
@@ -88,6 +100,11 @@ task :preview do
 
   [jekyllPid, compassPid, rackupPid].each { |pid| Process.wait(pid) }
 end
+
+desc "My preview"
+task :my_preview => [:change_to_root, :generate, :change_to_everet, :preview] do
+end
+  
 
 # usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")
 desc "Begin a new post in #{source_dir}/#{posts_dir}"
