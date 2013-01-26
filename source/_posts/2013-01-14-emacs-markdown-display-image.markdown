@@ -19,7 +19,7 @@ Emacs中有`iimage-mode`可以方便地让我们显示图片，是Emacs自带的
 ## 实现
 好，又到了动手的时候了，让我们卷起袖子准备开工！
 
-``` cl iimage settings https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/plugins/configs/my-iimage-settings.el my-iimage-settings.el
+``` cl iimage settings https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-iimage-settings.el my-iimage-settings.el
 ;; {% raw %}
 (require 'iimage)
 
@@ -44,7 +44,7 @@ Emacs中有`iimage-mode`可以方便地让我们显示图片，是Emacs自带的
 	     (cons (concat "!\\[.*?\\](http://everet.org/\\(wp-content/"
 			   iimage-mode-image-filename-regex
 			   "\\))") 1))
-;; {% endraw %}			   
+;; {% endraw %}
 ```
 
 我们首先设置一下图片搜索路径`iimage-mode-image-search-path`，可以根据实际需要进行设置。对于Octopress的目录结构，我将其设置为当前以及上一级目录`(list "." "..")`。

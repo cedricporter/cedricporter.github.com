@@ -59,7 +59,7 @@ Octopress首选博客语言是Markdown。于是又是Emacs大显身手的时候�
 
 首先是截图，这个直接在网上找到了实现[^2]，然后根据需求进行修改：
 
-``` cl 
+``` cl
 ;; {% raw %}
 (defun my-screenshot (dir_path)
   "Take a screenshot and save it to dir_path path.
@@ -83,7 +83,7 @@ opinion. "
     (if arg
 	(insert "![](" url ")")
       (insert "{% img " url " %}"))))
-;; {% endraw %}	  
+;; {% endraw %}
 ```
 
 然后是从剪切版Clipboard插入图片，这个找不到，于是只能自己写了哎。Lisp水平太差，写了好久...囧。
@@ -138,8 +138,8 @@ opinion. "
 
 所有代码请见以下两个文件：[^3]
 
- * [my-functions.el](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/plugins/configs/my-functions.el)
- * [my-octopress-settings.el](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/plugins/configs/my-octopress-settings.el)
+ * [my-functions.el](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-functions.el)
+ * [my-octopress-settings.el](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-octopress-settings.el)
 
 ## 终
 经过九九八十一式终于打完收工，现在又凌晨3点多了。想起我们的[冯华君](http://huajun.w18.net/)师兄，31岁就收到乔布斯的Offer Letter去找教主了，我不禁心里怕怕的，还是早点休息吧。身体是革命的本钱啊。

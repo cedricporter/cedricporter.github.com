@@ -82,7 +82,7 @@ desc "change root to http://everet.org/"
 task :change_to_everet do
   puts "## change root to http://everet.org/ in _config.yml ##"
   `sed -i "s/root: \\//root: http:\\/\\/everet.org\\//g" _config.yml`
-end  
+end
 
 desc "preview the site in a web browser"
 task :preview do
@@ -102,9 +102,9 @@ task :preview do
 end
 
 desc "My preview"
-task :my_preview => [:change_to_root, :generate, :change_to_everet, :preview] do
+task :my_preview => [:change_to_root, :generate, :preview, :change_to_everet] do
 end
-  
+
 
 # usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")
 desc "Begin a new post in #{source_dir}/#{posts_dir}"
@@ -232,7 +232,7 @@ desc "turn off lsi"
 task :turn_off_lsi do
   puts "## Turn off lsi in _config.yml ##"
   `sed -i "s/lsi: true/lsi: false/g" _config.yml`
-end  
+end
 
 ##############
 # Deploying  #
@@ -252,7 +252,7 @@ task :deploy do
 end
 
 desc "Generate website and deploy"
-task :gen_deploy => [:turn_on_lsi, :integrate, :generate, :deploy, :turn_off_lsi] do
+task :gen_deploy => [:change_to_everet, :turn_on_lsi, :integrate, :generate, :deploy, :turn_off_lsi] do
 end
 
 desc "copy dot files for deployment"
@@ -331,7 +331,7 @@ task :setup_github_pages, :repo do |t, args|
   if args.repo
     repo_url = args.repo
   else
-    puts "Enter the read/write url for your repository" 
+    puts "Enter the read/write url for your repository"
     puts "(For example, 'git@github.com:your_username/your_username.github.com)"
     repo_url = get_stdin("Repository url: ")
   end
