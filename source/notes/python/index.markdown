@@ -1,0 +1,26 @@
+---
+layout: page
+title: "Python笔记"
+date: 2013-02-07 23:27
+comments: true
+sharing: true
+footer: true
+---
+
+## URL encoding/decoding
+
+``` python
+>>> s = u'1234567890-/:;()$&@".,?!\'[]{}#%^*+=_\|~<>\u20ac\xa3\xa5\u2022.,?!\''
+>>> urllib2.quote(s.encode("utf8"))
+'1234567890-/%3A%3B%28%29%24%26%40%22.%2C%3F%21%27%5B%5D%7B%7D%23%25%5E%2A%2B%3D_%5C%7C%7E%3C%3E%E2%82%AC%C2%A3%C2%A5%E2%80%A2.%2C%3F%21%27'
+```
+
+Remember that you will need to both unquote() and decode() this to print it out properly if you're debugging or whatever.
+
+``` python
+>>> print urllib2.unquote(urllib2.quote(s.encode("utf8")))
+1234567890-/:;()$&@".,?!'[]{}#%^*+=_\|~<>â‚¬Â£Â¥â€¢.,?!'
+>>> # oops, nasty Â means we've got a utf8 byte stream being treated as an ascii stream
+>>> print urllib2.unquote(urllib2.quote(s.encode("utf8"))).decode("utf8")
+1234567890-/:;()$&@".,?!'[]{}#%^*+=_\|~<>€£¥•.,?!'
+```

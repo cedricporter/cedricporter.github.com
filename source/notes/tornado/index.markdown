@@ -1,0 +1,34 @@
+---
+layout: page
+title: "Tornado"
+date: 2013-02-08 11:42
+comments: true
+sharing: true
+footer: true
+---
+
+## 异步验证
+在Tornado中异步验证。不是用两个装饰器，而是通过回调链。[async](http://stackoverflow.com/questions/4938902/tornado-asynchronous-handler )
+
+{% highlight python %}
+class MyHandler(BaseHandler):
+  @tornado.web.asynchronous
+  def get(self):
+    self._authenticate(self.on_auth)
+
+  def on_auth(self):
+    self.write('example')
+    self.finish()
+
+class BaseHandler(tornado.web.RequestHandler):
+  def _get_current_user(self, callback):
+    def query_cb(self, doc):
+      if doc:
+        callback()
+      else:
+        # Not authenticated
+    database.get(username='test', password='t3st', callback=query_cb)
+
+  def _authenticate(self, callback):
+    self._get_current_user(callback)
+{% endhighlight %}

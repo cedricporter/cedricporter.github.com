@@ -45,7 +45,7 @@ titlecase: true       # Converts page and post titles to titlecase
 
 tag_dir: tag
 
-lsi: true
+lsi: false
 
 # list each of the sidebar modules you want to include, in the order you want them to appear.
 # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
