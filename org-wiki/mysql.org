@@ -1,0 +1,109 @@
+#+TITLE: MySQL学习笔记
+#+OPTIONS: H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
+
+* MyISAM
+  MyISAM: 它是基于传统的ISAM类型,ISAM是Indexed Sequential Access Method (有索引的 顺序访问方法) 的缩写,它是存储记录和文件的标准方法.与其他存储引擎比较,MyISAM具有检查和修复表格的大多数工具. MyISAM表格可以被压缩,而且它们支持全文搜索.它们不是事务安全的,而且也不支持外键。如果事物回滚将造成不完全回滚，不具有原子性。如果执行大量 的SELECT， INSERT，MyISAM是更好的选择。
+
+  创建表时如果不指定type则默认为MyISAM，不支持事务。
+
+  MyISAM仅支持表级锁，用户在操作MyISAM表时，select，update，delete，insert语句都会给表自动加锁，如果加锁以后的表满足insert并发的情况下，可以在表的尾部插入新的数据。也可以通过lock table命令来锁表，这样操作主要是可以模仿事务，但是消耗非常大，一般只在实验演示中使用。
+
+  myisam属于堆表
+  
+  myisam在磁盘存储上有三个文件，每个文件名以表名开头，扩展名指出文件类型。
+  
+  - .frm 用于存储表的定义
+  - .MYD 用于存放数据
+  - .MYI 用于存放表索引
+  
+  
+* InnoDB
+  InnoDB:这种类型是事务安全的.它与BDB类型具有相同的特性,它们还支持外键.InnoDB表格速度很快.具有比BDB还丰富的特性,因此如果需要一个事务安全的存储引擎,建议使用它.如果你的数据执行大量的INSERT或UPDATE,出于性能方面的考虑，应该使用InnoDB表, 对于支持事物的InnoDB类型的标，影响速度的主要原因是AUTOCOMMIT默认设置是打开的，而且程序没有显式调用BEGIN 开始事务，导致每插入一条都自动Commit，严重影响了速度。可以在执行sql前调用begin，多条sql形成一个事物（即使autocommit打 开也可以），将大大提高性能。
+
+  InnoDB:支持事务安全的引擎，支持外键、行锁、事务是他的最大特点。Innodb最初是由innobase Oy公司开发，2006年5月由oracle公司并购，目前innodb采用双授权，一个是GPL授权，一个是商业授权。如果有大量的update和insert，建议使用InnoDB,特别是针对多个并发和QPS较高的情况。
+
+  Innodb支持事务和行级锁，是innodb的最大特色。
+  
+  事务的ACID属性：Atomicity, Consistent, Isolation, Durable。
+  
+  并发事务带来的几个问题：更新丢失，脏读，不可重复读，幻读。
+  
+  事务隔离级别：未提交读(Read uncommitted)，已提交读(Read committed)，可重复读(Repeatable read)，可序列化(Serializable)。
+
+  四种隔离级别的比较
+  
+  
+  | 隔离级别                   | 读数据一致性                   | 脏读 | 不可重复读 | 幻读 |
+  |----------------------------+--------------------------------+------+------------+------|
+  | 为提交读(read uncommitted) | 最低级别，不读物理上顺坏的数据 | 是   | 是         | 是   |
+  | 已提交读(read committed)   | 语句级                         | 否   | 是         | 是   |
+  | 可重复读(Repeatable red)   | 事务级                         | 否   | 否         | 是   |
+  | 可序列化(Serializable)     | 最高级别，事务级               | 否   | 否         | 否   |
+
+  Innodb的行锁模式有以下几种：共享锁，排他锁，意向共享锁(表锁)，意向排他锁(表锁)，间隙锁。
+
+  注意：当语句没有使用索引，innodb不能确定操作的行，这个时候就使用的意向锁，也就是表锁
+
+  innodb属于索引组织表
+  
+  innodb有两种存储方式，共享表空间存储和多表空间存储
+  
+  两种存储方式的表结构和myisam一样，以表名开头，扩展名是.frm。
+  
+  如果使用共享表空间，那么所有表的数据文件和索引文件都保存在一个表空间里，一个表空间可以有多个文件，通过innodb_data_file_path和innodb_data_home_dir参数设置共享表空间的位置和名字，一般共享表空间的名字叫ibdata1-n。
+  
+  如果使用多表空间，那么每个表都有一个表空间文件用于存储每个表的数据和索引，文件名以表名开头，以.ibd为扩展名。  
+  
+  
+* MyISAM vs InnoDB
+  任何一种表都不是万能的，只有恰当的针对业务类型来选择合适的表类型，才能最大的发挥MySQL的性能优势。
+  
+  InnoDB 中不保存表的具体行数，也就是说，执行select count(*) from table时，InnoDB要扫描一遍整个表来计算有多少行，但是MyISAM只要简单的读出保存好的行数即可。注意的是，当count(*)语句包含 where条件时，两种表的操作是一样的。
+  
+  对于AUTO_INCREMENT类型的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中，可以和其他字段一起建立联合索引。
+  
+  另外，InnoDB表的行锁也不是绝对的，假如在执行一个SQL语句时MySQL不能确定要扫描的范围，InnoDB表同样会锁全表，例如update table set num=1 where name like “%aaa%”
+
+  MyISAM类型的表强调的是性能，其执行数度比InnoDB类型更快，但是不提供事务支持，而InnoDB提供事务支持已经外部键等高级数据库功能。这 样就可以根据数据表不同的用处使用不同的存储类型。
+
+** delete from table
+   使用这条命令时，innodb不会从新建立表，而是一条一条的删除数据，在innodb上如果要清空保存有大量数据的表，最好不要使用这个命令。(推荐使用truncate table，不过需要用户有drop此表的权限)
+
+** 索引保存位置
+   myisam的索引以表名+.MYI文件分别保存。
+   
+   innodb的索引和数据一起保存在表空间里。
+
+   
+* 索引
+
+** MYISAM
+   MyISAM引擎使用B+Tree作为索引结构，叶节点的data域存放的是数据记录的地址。
+   
+** InnoDB
+   虽然InnoDB也使用B+Tree作为索引结构，但具体实现方式却与MyISAM截然不同。
+
+   第一个重大区别是InnoDB的数据文件本身就是索引文件。从上文知道，MyISAM索引文件和数据文件是分离的，索引文件仅保存数据记录的地址。而在InnoDB中，表数据文件本身就是按B+Tree组织的一个索引结构，这棵树的叶节点data域保存了完整的数据记录。这个索引的key是数据表的主键，因此InnoDB表数据文件本身就是主索引。
+
+   叶节点包含了完整的数据记录。这种索引叫做聚集索引。因为InnoDB的数据文件本身要按主键聚集，所以InnoDB要求表必须有主键（MyISAM可以没有），如果没有显式指定，则MySQL系统会自动选择一个可以唯一标识数据记录的列作为主键，如果不存在这种列，则MySQL自动为InnoDB表生成一个隐含字段作为主键，这个字段长度为6个字节，类型为长整形。
+
+
+   既然索引可以加快查询速度，那么是不是只要是查询语句需要，就建上索引？答案是否定的。因为索引虽然加快了查询速度，但索引也是有代价的：索引文件本身要消耗存储空间，同时索引会加重插入、删除和修改记录时的负担，另外，MySQL在运行时也要消耗资源维护索引，因此索引并不是越多越好。
+
+   
+   
+* Misc
+  1. 可以用 show create table tablename 命令看表的引擎类型。
+  2. 尽量将多个语句绑到一个事务中，进行提交，避免多次提交导致的数据库开销。
+  3. 默认innodb是开启自动提交的，如果你按照myisam的使用方法来编写代码页不会存在错误，只是性能会很低。
+  4. 对不支持事务的表做start/commit操作没有任何效果，在执行commit前已经提交。
+  5. 任何一种表都不是万能的，只用恰当的针对业务类型来选择合适的表类型，才能最大的发挥MySQL的性能优势。     
+
+
+  
+* 资料来源
+  1. [[http://www.mysqlops.com/2011/12/09/myisam%25E5%2592%258Cinnodb%25E5%25AF%25B9%25E6%25AF%2594%25E8%25AF%25A6%25E8%25A7%25A3.html][MySQL数据库存储引擎MyISAM和InnoDB的对比详解]]
+  2. [[http://blog.codinglabs.org/articles/theory-of-mysql-index.html][MySQL索引背后的数据结构及算法原理]]
+
+    

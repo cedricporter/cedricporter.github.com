@@ -1,0 +1,30 @@
+#+TITLE: Coffeescript
+#+STARTUP: noindent
+#+OPTIONS: H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+
+* func
+  `-> "Hello, ET!"`
+
+* jQuery & ajax
+
+  #+BEGIN_SRC coffee
+  $ ?= require 'jquery' # For Node.js compatibility
+
+  $(document).ready ->
+          # Basic Examples
+          $.get '/', (data) ->
+                  $('body').append "Successfully got the page."
+
+          $.post '/',
+                  userName: 'John Doe'
+                  favoriteFlavor: 'Mint'
+                  (data) -> $('body').append "Successfully posted to the page."
+
+          # Advanced Settings
+          $.ajax '/',
+                  type: 'GET'
+                  dataType: 'html' error: (jqXHR, textStatus, errorThrown) ->
+                          $('body').append "AJAX Error: #{textStatus}"
+                  success: (data, textStatus, jqXHR) ->
+                          $('body').append "Successful AJAX call: #{data}"
+  #+END_SRC

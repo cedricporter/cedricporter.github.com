@@ -1,0 +1,13 @@
+#+TITLE: Linux
+
+
+* ssh自动发送心跳
+  #+BEGIN_SRC sh
+    # 打开
+    sudo vim /etc/ssh/sshd_config
+    # 添加
+    ClientAliveInterval 30
+    ClientAliveCountMax 6
+  #+END_SRC
+
+  [[http://roclinux.cn/?p%3D2643][rsync]]
