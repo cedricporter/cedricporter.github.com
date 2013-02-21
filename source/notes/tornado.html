@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Tornado笔记</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Tornado笔记"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="author" content="Hua Liang [Stupid ET]"/>
+<link rel="stylesheet" type="text/css" href="css/default.css" />
+</head>
+<body>
+<div id="content">
+<h1 class="title">Tornado笔记</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 异步验证</a></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 异步验证</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+在Tornado中异步验证。不是用两个装饰器，而是通过回调链。<a href="http://stackoverflow.com/questions/4938902/tornado-asynchronous-handler" >async</a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #f0dfaf; font-weight: bold;">class</span> <span style="color: #7cb8bb;">MyHandler</span>(BaseHandler):
+    <span style="color: #7cb8bb;">@tornado.web.asynchronous</span>
+    <span style="color: #f0dfaf; font-weight: bold;">def</span> <span style="color: #8cd0d3;">get</span>(<span style="color: #f0dfaf; font-weight: bold;">self</span>):
+        <span style="color: #f0dfaf; font-weight: bold;">self</span>._authenticate(<span style="color: #f0dfaf; font-weight: bold;">self</span>.on_auth)
+
+  <span style="color: #f0dfaf; font-weight: bold;">def</span> <span style="color: #8cd0d3;">on_auth</span>(<span style="color: #f0dfaf; font-weight: bold;">self</span>):
+      <span style="color: #f0dfaf; font-weight: bold;">self</span>.write(<span style="color: #cc9393;">'example'</span>)
+      <span style="color: #f0dfaf; font-weight: bold;">self</span>.finish()
+
+<span style="color: #f0dfaf; font-weight: bold;">class</span> <span style="color: #7cb8bb;">BaseHandler</span>(tornado.web.RequestHandler):
+    <span style="color: #f0dfaf; font-weight: bold;">def</span> <span style="color: #8cd0d3;">_get_current_user</span>(<span style="color: #f0dfaf; font-weight: bold;">self</span>, callback):
+        <span style="color: #f0dfaf; font-weight: bold;">def</span> <span style="color: #8cd0d3;">query_cb</span>(<span style="color: #f0dfaf; font-weight: bold;">self</span>, doc):
+            <span style="color: #f0dfaf; font-weight: bold;">if</span> doc:
+                callback()
+            <span style="color: #f0dfaf; font-weight: bold;">else</span>:
+                <span style="color: #afd8af;"># </span><span style="color: #afd8af;">Not authenticated</span>
+        database.get(username=<span style="color: #cc9393;">'test'</span>, password=<span style="color: #cc9393;">'t3st'</span>, callback=query_cb)
+
+  <span style="color: #f0dfaf; font-weight: bold;">def</span> <span style="color: #8cd0d3;">_authenticate</span>(<span style="color: #f0dfaf; font-weight: bold;">self</span>, callback):
+      <span style="color: #f0dfaf; font-weight: bold;">self</span>._get_current_user(callback)
+</pre>
+</div>
+</div>
+</div>
+
+</div><div id="postamble">
+<a href="http://EverET.org/notes/">Notes</a><hr/><p class="author">Author: Hua Liang [Stupid ET]</p>
+<p class="date">Date: 2013-02-21 22:27:36 Thursday<p>
+</div>
+</body>
+</html>

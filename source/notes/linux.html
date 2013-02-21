@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Linux</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Linux"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="author" content="Hua Liang [Stupid ET]"/>
+<link rel="stylesheet" type="text/css" href="css/default.css" />
+</head>
+<body>
+<div id="content">
+<h1 class="title">Linux</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. ssh自动发送心跳</a></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> ssh自动发送心跳</h2>
+<div class="outline-text-2" id="text-1">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #afd8af;"># </span><span style="color: #afd8af;">&#25171;&#24320;</span>
+sudo vim /etc/ssh/sshd_config
+<span style="color: #afd8af;"># </span><span style="color: #afd8af;">&#28155;&#21152;</span>
+ClientAliveInterval 30
+ClientAliveCountMax 6
+</pre>
+</div>
+
+<p>
+<a href="http://roclinux.cn/?p=2643" >rsync</a>
+</p>
+</div>
+</div>
+
+</div><div id="postamble">
+<a href="http://EverET.org/notes/">Notes</a><hr/><p class="author">Author: Hua Liang [Stupid ET]</p>
+<p class="date">Date: 2013-02-21 22:27:36 Thursday<p>
+</div>
+</body>
+</html>

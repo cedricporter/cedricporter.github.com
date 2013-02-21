@@ -312,6 +312,8 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 - `C-M-h` 标记一个函数定义
 - `C-h C-a` about-emacs
 - `C-x C-+` and `C-x C--` to increase or decrease the buffer text font size
+- `C-x C-v` or `M-x find-alternate-file`
+- `C-x C-t` 交换两行。可以用来调整python中import
 
 
 ## 终 ##

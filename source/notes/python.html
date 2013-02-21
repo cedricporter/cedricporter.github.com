@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Python</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Python"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="author" content="Hua Liang [Stupid ET]"/>
+<link rel="stylesheet" type="text/css" href="css/default.css" />
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. URL encoding/decoding</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> URL encoding/decoding</h2>
+<div class="outline-text-2" id="text-1">
+<div class="org-src-container">
+
+<pre class="src src-python">&gt;&gt;&gt; <span style="color: #dfaf8f;">s</span> = u<span style="color: #cc9393;">'1234567890-/:;()$&amp;@".,?!\'[]{}#%^*+=_\|~&lt;&gt;\u20ac\xa3\xa5\u2022.,?!\''</span>
+&gt;&gt;&gt; urllib2.quote(s.encode(<span style="color: #cc9393;">"utf8"</span>))
+<span style="color: #cc9393;">'1234567890-/%3A%3B%28%29%24%26%40%22.%2C%3F%21%27%5B%5D%7B%7D%23%25%5E%2A%2B%3D_%5C%7C%7E%3C%3E%E2%82%AC%C2%A3%C2%A5%E2%80%A2.%2C%3F%21%27'</span>
+</pre>
+</div>
+
+<p>
+Remember that you will need to both unquote() and decode() this to print it out properly if you're debugging or whatever.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">&gt;&gt;&gt; <span style="color: #f0dfaf; font-weight: bold;">print</span> urllib2.unquote(urllib2.quote(s.encode(<span style="color: #cc9393;">"utf8"</span>)))
+1234567890-/:;()$&amp;@<span style="color: #cc9393;">".,?!'[]{}#%^*+=_\|~&lt;&gt;&#226;&#8218;&#172;&#194;&#163;&#194;&#165;&#226;&#8364;&#162;.,?!'</span>
+<span style="color: #cc9393;">&gt;&gt;&gt; # oops, nasty &#194; means we've got a utf8 byte stream being treated as an ascii stream</span>
+<span style="color: #cc9393;">&gt;&gt;&gt; print urllib2.unquote(urllib2.quote(s.encode("</span>utf8<span style="color: #cc9393;">"))).decode("</span>utf8<span style="color: #cc9393;">")</span>
+<span style="color: #cc9393;">1234567890-/:;()$&amp;@"</span>.,?!<span style="color: #cc9393;">'[]{}#%^*+=_\|~&lt;&gt;&#8364;&#163;&#165;&#8226;.,?!'</span>
+</pre>
+</div>
+</div>
+</div>
+
+</div><div id="postamble">
+<a href="http://EverET.org/notes/">Notes</a><hr/><p class="author">Author: Hua Liang [Stupid ET]</p>
+<p class="date">Date: 2013-02-21 22:27:36 Thursday<p>
+</div>
+</body>
+</html>

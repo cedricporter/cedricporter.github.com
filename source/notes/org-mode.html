@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>我的Org-Mode笔记</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="我的Org-Mode笔记"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="author" content="Hua Liang [Stupid ET]"/>
+<link rel="stylesheet" type="text/css" href="css/default.css" />
+</head>
+<body>
+<div id="content">
+<h1 class="title">我的Org-Mode笔记</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 文档结构</a>
+<ul>
+<li><a href="#sec-1-1">1.1. 切换可见性</a></li>
+<li><a href="#sec-1-2">1.2. 移动</a></li>
+<li><a href="#sec-1-3">1.3. 编辑文档结构</a></li>
+<li><a href="#sec-1-4">1.4. Sparse trees</a></li>
+<li><a href="#sec-1-5">1.5. Plain lists</a></li>
+<li><a href="#sec-1-6">1.6. Drawers</a></li>
+<li><a href="#sec-1-7">1.7. 脚注</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. Markup</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 结构化标记元素</a>
+<ul>
+<li><a href="#sec-2-1-1">2.1.1. 文档标题</a></li>
+<li><a href="#sec-2-1-2">2.1.2. 目录</a></li>
+<li><a href="#sec-2-1-3">2.1.3. 在第一个headline前的文本</a></li>
+<li><a href="#sec-2-1-4">2.1.4. 强调以及等宽字体</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Miscellaneous</a>
+<ul>
+<li><a href="#sec-3-1">3.1. 模板</a></li>
+<li><a href="#sec-3-2">3.2. 多用途的C-c C-c</a></li>
+<li><a href="#sec-3-3">3.3. 编辑block</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Export</a>
+<ul>
+<li><a href="#sec-4-1">4.1. Export Options</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 文档结构</h2>
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> 切换可见性</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li><b>&lt;TAB&gt;</b> (org-cycle)
+<pre class="example">
+,-&gt; FOLDED -&gt; CHILDREN -&gt; SUBTREE --.
+'-----------------------------------'
+</pre>
+</li>
+<li><b>S-&lt;TAB&gt;</b> (org-global-cycle)
+</li>
+<li><b>C-u &lt;TAB&gt;</b>
+<pre class="example">
+,-&gt; OVERVIEW -&gt; CONTENTS -&gt; SHOW ALL --.
+'--------------------------------------'
+</pre>
+</li>
+<li><b>C-u C-u C-u &lt;TAB&gt;</b> (show-all)
+</li>
+<li><b>C-c C-k</b> (show-branches)
+</li>
+<li><b>C-c C-x v</b> (org-copy-visible)
+</li>
+<li>其他
+
+<p>
+When Emacs first visits an Org file, the global state is set to
+OVERVIEW, i.e. only the top level headlines are visible.  This can be
+configured through the variable `org-startup-folded', or on a per-file
+basis by adding one of the following lines anywhere in the buffer:
+</p>
+<pre class="example">
+,     #+STARTUP: overview
+,     #+STARTUP: content
+,     #+STARTUP: showall
+,     #+STARTUP: showeverything
+</pre>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> 移动</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li><b>C-c C-n</b> Next heading
+</li>
+<li><b>C-c C-p</b> Previous heading
+</li>
+<li><b>C-c C-f</b> Next heading same level，下一个同级标题
+</li>
+<li><b>C-c C-b</b> Previous heading same level
+</li>
+<li><b>C-c C-u</b> Backward to higher level heading，回到更高级的标题
+</li>
+<li><b>C-c C-j</b> Jump to a different place
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> 编辑文档结构</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li><b>&lt;TAB&gt;</b> demote entry and back to initial level
+</li>
+<li><b>C-&lt;RET&gt;</b> Just like `M-&lt;RET&gt;', except when adding a new heading below the
+current heading, the new heading is placed after the body instead
+of before it.
+</li>
+<li><b>C-c *</b> Turn a normal line into a headline.
+</li>
+<li><b>C-c ^</b> Sort same-level entries.
+</li>
+<li><b>C-c C-x C-w</b> Kill subtree
+</li>
+<li><b>C-c C-x C-y</b> Yank subtree
+</li>
+<li><b>C-c C-x M-w</b> Copy subtree
+</li>
+<li><b>C-S-&lt;RET&gt;</b> Insert new TODO. Like <b>C-&lt;RET&gt;</b>
+</li>
+<li><b>M-&lt;left&gt;</b> Promote heading
+</li>
+<li><b>M-&lt;RET&gt;</b> Insert new heading with same level as current
+</li>
+<li><b>M-&lt;right&gt;</b> Demote heading
+</li>
+<li><b>M-S-&lt;down&gt;</b> Move subtree down
+</li>
+<li><b>M-S-&lt;left&gt;</b> Promote subtree
+</li>
+<li><b>M-S-&lt;RET&gt;</b> Insert new TODO with same level as current heading.
+</li>
+<li><b>M-S-&lt;right&gt;</b> Demote subtree
+</li>
+<li><b>M-S-&lt;up&gt;</b> Move subtree up
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Sparse trees</h3>
+<div class="outline-text-3" id="text-1-4">
+<ul class="org-ul">
+<li><b>C-c / r</b> Prompts for a regexp and show a sparse tree with all matches.
+Highlight disappear when edit or press C-c C-c.
+</li>
+<li><b>M-g n</b> or <b>M-g M-n</b> Jump to the next sparse tree
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Plain lists</h3>
+<div class="outline-text-3" id="text-1-5">
+<ul class="org-ul">
+<li><b>C-c -</b> 切换列表项的前缀类型（- + * 1. 1)）
+</li>
+<li><b>C-c C-*</b> 将列表变成当前headline
+</li>
+<li><b>C-c C-c</b> toggle the state of the checkbox.
+</li>
+<li><b>M-&lt;up&gt;</b> Move the item including subitems up.
+</li>
+<li><b>M-S-&lt;RET&gt;</b> Insert a new item with a checkboxes
+</li>
+<li><b>S-&lt;left&gt;</b> 切换列表项的前缀类型
+</li>
+<li><b>S-&lt;up&gt;</b> Jump to the previous item in the current list.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Drawers</h3>
+<div class="outline-text-3" id="text-1-6">
+<ul class="org-ul">
+<li><b>C-c C-z</b> 添加一个有时间的笔记
+</li>
+<li>Note taken on <span class="timestamp-wrapper"><span class="timestamp">[2012-12-20 Thu 16:21]</span></span> <br/>
+     I don't know what is this&hellip;
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> 脚注</h3>
+<div class="outline-text-3" id="text-1-7">
+<pre class="example">
+The Org homepage[fn:1] now looks a lot better than it used to.
+...
+[fn:1] The link is: http://orgmode.org
+</pre>
+<ul class="org-ul">
+<li><b>C-c C-x f</b> 创建脚注或者跟随脚注跳转
+</li>
+<li><b>C-u C-x C-x f</b> 调整脚注
+</li>
+<li><b>C-c C-c</b> 跳转
+</li>
+<li><b>C-c C-o</b> 跳转
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Markup</h2>
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 结构化标记元素</h3>
+<div id="outline-container-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> 文档标题</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+导出的时候会用到。
+</p>
+<pre class="example">
+,     #+TITLE: This is the title of the document
+</pre>
+</div>
+</div>
+
+<div id="outline-container-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2"><span class="section-number-4">2.1.2</span> 目录</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p>
+目录会自动插入到最前面。可以定制：
+</p>
+<pre class="example">
+,     #+OPTIONS: toc:2          (only to two levels in TOC)
+,     #+OPTIONS: toc:nil        (no TOC at all)
+</pre>
+</div>
+</div>
+
+<div id="outline-container-2-1-3" class="outline-4">
+<h4 id="sec-2-1-3"><span class="section-number-4">2.1.3</span> 在第一个headline前的文本</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<p>
+如果需要在最前面加上什么东西，可以通过#+TEXT构造：
+</p>
+<pre class="example">
+,     #+OPTIONS: skip:t
+,     #+TEXT: This text will go before the *first* headline.
+,     #+TEXT: [ TABLE-OF-CONTENTS ]
+,     #+TEXT: This goes between the table of contents and the *first* headline
+</pre>
+</div>
+</div>
+
+<div id="outline-container-2-1-4" class="outline-4">
+<h4 id="sec-2-1-4"><span class="section-number-4">2.1.4</span> 强调以及等宽字体</h4>
+<div class="outline-text-4" id="text-2-1-4">
+<pre class="example">
+*bold*, /italic/ _underlined_ =code= ~verbatim~ +strike-through+
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Miscellaneous</h2>
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 模板</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+要插入模板可以先输入一个“&lt;”，然后加上seletor：
+</p>
+<pre class="example">
+`s'     `#+begin_src     ... #+end_src'
+`e'     `#+begin_example ... #+end_example'
+`q'     `#+begin_quote   ... #+end_quote'
+`v'     `#+begin_verse   ... #+end_verse'
+`c'     `#+begin_center  ... #+end_center'
+`l'     `#+begin_latex   ... #+end_latex'
+`L'     `#+latex:'
+`h'     `#+begin_html    ... #+end_html'
+`H'     `#+html:'
+`a'     `#+begin_ascii   ... #+end_ascii'
+`A'     `#+ascii:'
+`i'     `#+index:' line
+`I'     `#+include:' line
+</pre>
+</div>
+</div>
+
+<div id="outline-container-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> 多用途的C-c C-c</h3>
+<div class="outline-text-3" id="text-3-2">
+<ul class="org-ul">
+<li>关闭高亮
+</li>
+<li>重新对齐表格
+</li>
+<li>对表格应用公式
+</li>
+<li>跳到footnote的另一边
+</li>
+<li>勾选checkbox
+</li>
+<li>给有序列表重新编号
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> 编辑block</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+=C-c '= 可以根据模式来编辑。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Export</h2>
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Export Options</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+<a href="http://orgmode.org/manual/Export-options.html#Export-options" >http://orgmode.org/manual/Export-options.html#Export-options</a>
+</p>
+</div>
+</div>
+</div>
+
+</div><div id="postamble">
+<a href="http://EverET.org/notes/">Notes</a><hr/><p class="author">Author: Hua Liang [Stupid ET]</p>
+<p class="date">Date: 2013-02-21 22:27:36 Thursday<p>
+</div>
+</body>
+</html>
