@@ -1,9 +1,10 @@
-#+TITLE: My Wiki
+#+TITLE: Wiki of Stupid ET
 
    + [[file:coffeescript.org][Coffeescript]]
    + [[file:git.org][Git笔记]]
    + [[file:linux.org][Linux]]
    + [[file:mysql.org][MySQL学习笔记]]
+   + [[file:org-mode.org][Org-Mode]]
    + [[file:python.org][Python]]
    + [[file:tornado.org][Tornado笔记]]
-   + [[file:org-mode.org][我的Org-Mode笔记]]
+   + [[file:harmonica.org][口琴]]
