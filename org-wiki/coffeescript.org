@@ -1,9 +1,10 @@
 #+TITLE: Coffeescript
 #+STARTUP: noindent
-#+OPTIONS: H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 
 * func
-  `-> "Hello, ET!"`
+  #+BEGIN_SRC coffee
+    -> "Hello, ET!"
+  #+END_SRC
 
 * jQuery & ajax
 

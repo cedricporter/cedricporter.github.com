@@ -5,6 +5,7 @@
    + [[file:linux.org][Linux]]
    + [[file:index.org][My Wiki]]
    + [[file:mysql.org][MySQL学习笔记]]
+   + [[file:org-mode.org][Org-Mode]]
    + [[file:python.org][Python]]
    + [[file:tornado.org][Tornado笔记]]
-   + [[file:org-mode.org][我的Org-Mode笔记]]
+   + [[file:harmonica.org][口琴]]
