@@ -15,3 +15,4 @@ node_modules
 .directory
 *~
 source/imgs/graphviz
+/org-wiki/sitemap.org

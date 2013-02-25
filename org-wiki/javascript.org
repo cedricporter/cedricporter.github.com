@@ -1,0 +1,29 @@
+#+TITLE: Javascript
+
+* 面向对象
+  构造函数和其他函数的唯一区别，就在于调用它们的方式不同。
+
+  任何函数，只要通过new来调用，那它都可以作为构造函数。
+
+* 原型模式
+
+  我们创建的每一个函数都有一个prototype属性，是一个指针。
+
+  使用原型对象的好处是可以让所有的对象实例共享它所包含的属性和方法。也就是说，我们不在构造函数中定义对象实例的信息，而是将信息直接添加到原型对象中。
+
+  这里的对象模型和其他语言也比较类似。
+
+  #+BEGIN_SRC javascript
+    function Person() {
+    }
+
+    Person.prototype.name = "Stupid ET";
+    Person.prototype.age = 22;
+    Person.prototype.job = "Software Engineer";
+    Person.prototype.speak = function () {
+        console.log(this.name);
+    };
+
+    var p1 = new Person();
+    p1.speak();
+  #+END_SRC
