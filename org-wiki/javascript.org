@@ -1,4 +1,6 @@
 #+TITLE: Javascript
+#+HTML_LINK_UP: index.html
+#+HTML_LINK_HOME: index.html
 
 * 面向对象
   构造函数和其他函数的唯一区别，就在于调用它们的方式不同。
@@ -27,3 +29,7 @@
     var p1 = new Person();
     p1.speak();
   #+END_SRC
+
+
+
+

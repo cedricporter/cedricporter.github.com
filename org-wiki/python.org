@@ -1,4 +1,6 @@
 #+TITLE: Python
+#+HTML_LINK_UP: index.html
+#+HTML_LINK_HOME: index.html
 
 * URL encoding/decoding
 
@@ -17,3 +19,7 @@ Remember that you will need to both unquote() and decode() this to print it out 
   >>> print urllib2.unquote(urllib2.quote(s.encode("utf8"))).decode("utf8")
   1234567890-/:;()$&@".,?!'[]{}#%^*+=_\|~<>€£¥•.,?!'
 #+END_SRC
+
+
+
+

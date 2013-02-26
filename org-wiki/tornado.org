@@ -1,4 +1,6 @@
 #+TITLE: Tornado笔记
+#+HTML_LINK_UP: index.html
+#+HTML_LINK_HOME: index.html
 
 
 * 异步验证
@@ -26,3 +28,7 @@
       def _authenticate(self, callback):
           self._get_current_user(callback)
   #+END_SRC
+
+
+
+

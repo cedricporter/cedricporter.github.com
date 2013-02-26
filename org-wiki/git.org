@@ -1,4 +1,6 @@
 #+TITLE: Git笔记
+#+HTML_LINK_UP: index.html
+#+HTML_LINK_HOME: index.html
 
 
 * git 恢复单个文件
@@ -7,3 +9,7 @@
   #+BEGIN_SRC sh
   $ git checkout -- hello.rb
   #+END_SRC
+
+
+
+

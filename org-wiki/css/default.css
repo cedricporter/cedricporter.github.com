@@ -14,7 +14,7 @@ p.verse { margin-left: 3% }
 pre, tt, code {
     font-family: "Bitstream Vera Sans Mono", Menlo, "DejaVu Sans Mono", monaco, "Courier New", Courier,
     monospace;
-    background:transparent; color:inherit; 
+    background:transparent; color:inherit;
 }
 
 body, input, textarea, #content, #content input, #content textarea {
@@ -58,6 +58,10 @@ textarea { overflow-x: auto; }
 			       font-weight:bold; }
 
 
+#org-div-home-and-up a {
+    font-size: 12px;
+    font-weight: bold;
+}
 
 .bold-italic {
     /* bold-italic */
@@ -2461,4 +2465,3 @@ body {
     /* yas/field-highlight-face */
     background-color: #696969;
 }
-

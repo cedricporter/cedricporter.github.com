@@ -1,4 +1,6 @@
 #+TITLE: Org-Mode
+#+HTML_LINK_UP: index.html
+#+HTML_LINK_HOME: index.html
 #+STARTUP: noindent
 
 * 文档结构
@@ -149,3 +151,7 @@
 * Export
 ** Export Options
    http://orgmode.org/manual/Export-options.html#Export-options
+
+
+
+
