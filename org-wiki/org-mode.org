@@ -142,16 +142,14 @@
    - 勾选checkbox
    - 给有序列表重新编号
 
+* Misc
 ** 编辑block
    - C-c '
      可以根据模式来编辑。
-
-
+** 打开链接
+   - C-c C-o
+     可以在浏览器中打开链接。
 
 * Export
 ** Export Options
    http://orgmode.org/manual/Export-options.html#Export-options
-
-
-
-

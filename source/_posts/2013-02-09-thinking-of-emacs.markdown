@@ -199,6 +199,53 @@ emacsclient -c -a=""
 
 不过，我觉得Desktop的Emacs不需要连接Daemon，因为Desktop的Emacs只需要开一次就好了。Daemon会有一些奇葩的问题，例如session似乎就没法保存。使用Daemon主要是为了提高开启速度，这个在Terminal中经常开关Emacs编辑文件时就很重要。而在desktop就开一次的情况就显得没什么了。
 
+
+### 辅助插件 ###
+
+#### Helm
+
+Helm可以方便地帮助我们找到想要的buffer、文件。而且看上去也很酷。
+
+{% img /imgs/snapshot23_20130227_104506_4247DHx.png %}
+
+#### smex
+
+smex提供了更好的M-x体验。它让M-x变成了像ido一样，可以实时提供补全。让M-x更加快速。
+
+{% img /imgs/snapshot24_20130227_104955_42471QA.png %}
+
+#### session
+
+配合desktop可以保存我们上一次的工作状态。也就是重新打开Emacs的时候，会变成上次关闭的状态。
+
+#### undo-tree ####
+
+Emacs的undo非常诡异，只有undo，没有redo。如果要redo，那只有undo undo。
+
+Emacs可以帮你所有的修改记录都保存下来，我们可以肆意地修改、undo完修改，各种修改，我们都可以回到曾经的状态。这个是其他编辑器难以做到的。
+
+undo-tree可以将所有的状态用树状结构绘制出来。然后我们轻松地可以找到我们需要的状态。
+
+我们按`C-x u`可以进入undo-tree-visualizer-mode, 然后 `p`、`n` 上下移动，在分支之前 `b`、`f` 左右切换，`t` 显示时间戳，选定需要的状态后， `q`退出。这是主要的操作，其它的自己摸索好了…… [^10]
+
+### 宏 ###
+
+#### 录制 ####
+
+开始录制宏，用`C-x (`； 结束录制宏，用`C-x )`；
+
+#### 使用 ####
+
+用`C-x e`来使用宏。可以利用`C-u`来重复使用100次这个宏，即命令`C-u 100 C-x e`。
+`C-x e e e ...`将宏重复。
+
+#### 保存宏 ####
+
+1. 为宏命名：`M-x name-last-kbd-macro`。
+1. 在配置文件的某个地方输入`M-x insert-kbd-macro`。
+1. 然后就可以通过`M-x`调用了。
+
+
 ## eshell ##
 
 eshell是用lisp实现的shell，具有跨平台、支持tramp、与Emacs水乳交融等等优点。
@@ -228,6 +275,8 @@ alias gs git status
 Eshell有个挺好的教程：[A Complete Guide to Mastering Eshell](http://www.masteringemacs.org/articles/2010/12/13/complete-guide-mastering-eshell/)。
 
 
+
+
 ## TRAMP ##
 
 TRAMP的全写为：Transparent Remote (file) Access, Multiple Protocol。在TRAMP的帮助下，我们可以很容易做到无缝编辑远程文件。
@@ -248,9 +297,22 @@ dired是Emacs自带的文件管理系统，能够和tramp无缝配合使用。
 
 当按下`)`就可以显示详细信息了。
 
+## 调试Emacs扩展 ##
+
+有时候Emacs的插件会出现各种问题，我们就需要进行调试了。
+
+如果我们希望在出现错误的时候能够自动进入调试模式，那我们可以`M-x toggle-debug-on-error`。
+
+如果有时候Emacs卡住没有反应，但是按`C-g`能够恢复的话，那说明可能是进入了死循环。我们可以在之前打开`M-x toggle-debug-on-quit`，然后在我们按`C-g`的时候就可以调试当前正在运行的elisp。
+
+那有时候我们需要在某个elisp函数设置断点的话，我们可以通过`M-x debug-on-entry [funcname]`来为某个函数设置断点。取消断点可以通过`M-x cancel-debug-on-entry`。
+
+在我们进入调试模式的时候，按`d`可以单步，`q`退出，`e`执行lisp。
+
+详细：[Debugger Commands](http://www.gnu.org/software/emacs/manual/html_node/elisp/Debugger-Commands.html)
+
 
 ## Development ##
-
 
 ### autocomplete ###
 
@@ -303,7 +365,42 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 像Emacs中的开发辅助插件还有很多，比较重型的有cedet(Collection of Emacs Development Environment Tools)、ecb(Emacs Code Browser)等等，都是有效的工具，可以帮助我们提高工作效率。
 
 
+
+## 帮助 ##
+
+如果在使用Emacs的过程中遇到什么问题，可以求助于Emacs的帮助系统。
+
+### C-h t
+打开 Emacs 的入门教程，
+
+### C-h k
+让Emacs告诉你某个快捷键是什么作用。首先按下`C-h k`，然后按下我们的快捷键。就可以打开帮助了，于此同时，我们还可以看到我们的按键的是如何表示的。
+
+### C-h b
+查看按键绑定
+
+### C-h K
+注意这次是大写的 K 。对于 Emacs的一些内部命令，除了Elisp源代码中提供的文档以外，还有一个专门的 Info 文档进行了系统的介绍。C-h K 就是定位到 Info 文档中描述该命令的位置。
+
+### C-h f
+查看某个函数的文档。建议绑定一个快捷键，这样我们把光标放到某个函数的上面，一按快捷键就可以打开这个函数的文档了。
+
+### C-h v
+查看某个变量的文档。
+
+### C-h m
+当开当前mode的帮助。这里挺详细的对于当前可以快捷键的描述。
+
+### ... C-h
+当我们不能完整记得某些快捷键的时候，可以按下前缀后，再按下`C-h`。就可以看到以这个前缀开始的快捷键有哪些。
+
+### C-h a 更模糊的查找
+有些时候我们只知道一个关键字，这个时候可以用 `C-h a` 来通过正则表达式来查找命令名。Emacs 会列出所有匹配的命令以及一个简短的文档，并可以通过点击链接定位到该命令的详细文档。
+
+
 ## Misc ##
+
+### 一些快捷键 ###
 
 - `M-&` 异步运行一个shell命令
 - `M-:` 运行一句lisp
@@ -314,13 +411,26 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 - `C-x C-+` and `C-x C--` to increase or decrease the buffer text font size
 - `C-x C-v` or `M-x find-alternate-file`
 - `C-x C-t` 交换两行。可以用来调整python中import
+- `C-u M-=` 计算整个缓冲区的行数、字数和单词数
+- `M-g M-g linenum` 跳到某行，同vim中的`[linenum]G`
 
+### 中文输入法 ###
+
+在英文版的系统里面，一般情况下Emacs打开切换中文输入法，此时我们只需要修改LC_CTYPE环境变量就好了。
+
+可以在~/.profile最后加上一句
+
+```
+export LC_CTYPE="zh_CN.UTF-8"
+```
 
 ## 终 ##
 
 写了好几天，发现还有挺多东西没写的，Emacs博大精深，还需要自己慢慢摸索。这里纯当为我的记忆做个快照，让以后的我可以看到在2013年初时，Emacs在我眼中的形象。
 
 如果你阅读到了这里，非常感谢你的耐心，感谢你看完了我如此长篇的唠叨。祝你在2013年效率大大提高～
+
+如果你有兴趣，可以浏览一下[我的Emacs配置文件](https://github.com/cedricporter/vim-emacs-setting/tree/master/emacs)。
 
 
 ## 有趣的Emacs知识分享
@@ -348,3 +458,5 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 [^8]: <http://www.emacswiki.org/HighlightParentheses>
 
 [^9]: <http://cx4a.org/software/auto-complete/>
+
+[^10]: <http://linuxtoy.org/archives/emacs-undo-tree.html>

@@ -30,6 +30,10 @@
     p1.speak();
   #+END_SRC
 
-
-
-
+* 自动滚动
+  #+BEGIN_SRC javascript
+    function pageScroll() {
+        window.scrollBy(0, 50); // horizontal and vertical scroll increments
+        scrolldelay = setTimeout('pageScroll()', 100); // scrolls every 100 milliseconds
+    }
+  #+END_SRC

@@ -67,3 +67,234 @@
     sed -i "s/^-----//" *.org
     sed -i "s/^\(Time-stamp: .*\)//" *.org
   #+END_SRC
+
+* Core Dump
+
+** ulimit
+   Ubuntu 默认为 ulimit -c 0, 表示不產生 core dump, 所以要先執行 ulimit -c unlimited 允許產生 core dump。
+
+   #+BEGIN_SRC sh
+     # 查看
+     ulimit -a
+     # 设置
+     ulimit -c unlimited
+   #+END_SRC
+
+   只对当前shell进程有效。
+
+
+** Core Filename
+   #+BEGIN_SRC sh
+     echo "core.%e.%p.%t" | sudo tee /proc/sys/kernel/core_pattern
+   #+END_SRC
+
+** GDB调试
+   gdb [exec file] [core file]
+
+* Grub
+  #+BEGIN_SRC sh
+    # 更新一下启动项目
+    sudo update-grub
+    # 安装到/dev/sda的第0扇区
+    grub-install /dev/sda
+  #+END_SRC
+
+* ack
+  #+BEGIN_SRC sh
+    alias ack='ACK_PAGER_COLOR="less -x4SRFX" /usr/bin/ack-grep -a'
+  #+END_SRC
+
+  From: [[http://shuttlethread.com/blog/useful-ack-defaults][Giving ack a bit extra do-what-I-mean]]
+
+  #+BEGIN_SRC sh
+    ack --color -a -i ctrl | less -R
+  #+END_SRC
+
+* tmux
+  对我来说它比screen优越的地方是,它允许你在一个terminal上窗口上分割成多个tty,这样可以充分利用屏幕而不用来回切换。
+
+  C-b ? 查看帮助。
+
+  C-b : lsk -t emacs-copy
+
+  :setw synchronize-panes
+
+** 視窗取回
+   #+BEGIN_SRC sh
+     screen -r
+     tmux attach
+   #+END_SRC
+
+** 視窗取回 by session name
+   #+BEGIN_SRC sh
+     screen -r session-name
+     tmux attach -t session-id
+   #+END_SRC
+
+** 視窗開啟自訂 session-name
+   #+BEGIN_SRC sh
+     screen -S session-name
+     tmux new -s session-name # ex: tmux new -s irc
+   #+END_SRC
+
+** 列出所有 session
+   #+BEGIN_SRC sh
+     screen -ls
+     tmux ls # tmux list-sessions
+   #+END_SRC
+
+
+** Keybindings
+   - Ctrl-b c Create new window
+   - Ctrl-b d Detach current client
+   - Ctrl-b l Move to previously selected window
+   - Ctrl-b n Move to the next window
+   - Ctrl-b p Move to the previous window
+   - Ctrl-b & Kill the current window
+   - Ctrl-b , Rename the current window
+   - Ctrl-b % Split the current window into two panes
+   - Ctrl-b q Show pane numbers (used to switch between panes)
+   - Ctrl-b o Switch to the next pane
+   - Ctrl-b ? List all keybindings
+
+   - Ctrl-b n (Move to the next window)
+   - Ctrl-b p (Move to the previous window)
+   - Ctrl-b l (Move to the previously selected window)
+   - Ctrl-b w (List all windows / window numbers)
+   - Ctrl-b <window number> (Move to the specified window number, the default bindings are from 0 – 9)
+
+   - Ctrl-b % (Split the window vertically)
+   - Ctrl-b : “split-window” (Split window horizontally)
+   - Ctrl-b o (Goto next pane)
+   - Ctrl-b q (Show pane numbers, when the numbers show up type the key to goto that pane)
+   - Ctrl-b { (Move the current pane left)
+   - Ctrl-b } (Move the current pane right)
+
+   - Ctrl-b <space> which will toggle through the different layouts
+
+** 按键
+   #+BEGIN_SRC sh
+     Ctrl+b  #激活控制台；此时以下按键生效
+     系统操作
+         ?   #列出所有快捷键；按q返回
+         d   #脱离当前会话；这样可以暂时返回Shell界面，输入tmux attach能够重新进入之前的会话
+         D   #选择要脱离的会话；在同时开启了多个会话时使用
+         Ctrl+z  #挂起当前会话
+         r   #强制重绘未脱离的会话
+         s   #选择并切换会话；在同时开启了多个会话时使用
+         :   #进入命令行模式；此时可以输入支持的命令，例如kill-server可以关闭服务器
+         [   #进入复制模式；此时的操作与vi/emacs相同，按q/Esc退出
+         ~   #列出提示信息缓存；其中包含了之前tmux返回的各种提示信息
+     窗口操作
+         c   #创建新窗口
+         &   #关闭当前窗口
+         数字键 #切换至指定窗口
+         p   #切换至上一窗口
+         n   #切换至下一窗口
+         l   #在前后两个窗口间互相切换
+         w   #通过窗口列表切换窗口
+         ,   #重命名当前窗口；这样便于识别
+         .   #修改当前窗口编号；相当于窗口重新排序
+         f   #在所有窗口中查找指定文本
+     面板操作
+         ”   #将当前面板平分为上下两块
+         %   #将当前面板平分为左右两块
+         x   #关闭当前面板
+         !   #将当前面板置于新窗口；即新建一个窗口，其中仅包含当前面板
+         Ctrl+方向键    #以1个单元格为单位移动边缘以调整当前面板大小
+         Alt+方向键 #以5个单元格为单位移动边缘以调整当前面板大小
+         Space   #在预置的面板布局中循环切换；依次包括even-horizontal、even-vertical、main-horizontal、main-vertical、tiled
+         q   #显示面板编号
+         o   #在当前窗口中选择下一面板
+         方向键 #移动光标以选择面板
+         {   #向前置换当前面板
+         }   #向后置换当前面板
+         Alt+o   #逆时针旋转当前窗口的面板
+         Ctrl+o  #顺时针旋转当前窗口的面板
+   #+END_SRC
+
+** Automatically start tmux on SSH login
+   tmux is a terminal multiplexer, much like screen. Here is how to start it on SSH login (adapted from the script for screen at http://taint.org/wk/RemoteLoginAutoScreen):
+
+   #+BEGIN_SRC sh
+     if [ "$PS1" != "" -a "${STARTED_TMUX:-x}" = x -a "${SSH_TTY:-x}" != x ]
+     then
+         STARTED_TMUX=1; export STARTED_TMUX
+         sleep 1
+         ( (tmux has-session -t remote && tmux attach-session -t remote) || (tmux new-session -s remote) ) && exit 0
+         echo "tmux failed to start"
+     fi
+   #+END_SRC
+
+   Put it somewhere in your .bashrc. This will make all SSH logins default to the same session (remote). If you close the final window in that session, the session will be closed and all the clients connected to that session will exit. You can attach the client to another session by using attach-session.
+
+** 资料
+   [[http://blog.longwin.com.tw/2011/04/tmux-learn-screen-config-2011/][Tmux 教學 + Screen 到 Tmux 的無痛轉換]]
+
+   [[http://apc999.blogspot.com/2011/04/tmux-screen.html][tmux: 更好的screen]]
+
+   [[http://blog.hawkhost.com/2010/06/28/tmux-the-terminal-multiplexer/][TMUX – The Terminal Multiplexer (Part 1)]]
+
+   [[http://blog.hawkhost.com/2010/07/02/tmux-%25E2%2580%2593-the-terminal-multiplexer-part-2/][TMUX – The Terminal Multiplexer (Part 2)]]
+
+   [[http://www.lampbo.org/others/opensource/tmux-multi-terminal-manager-usage-detail.html][多终端管理器tmux使用详解]]
+
+   [[http://hjkl.me/tool/2012/05/31/tmux-how-to.html][tmux介绍]]
+
+   [[http://tonkersten.com/2011/07/104-switching-to-tmux/][Switching to tmux]]
+
+* 256 Colors Termial
+  #+BEGIN_SRC sh
+    tput colors
+    # output 8
+
+    sudo apt-get install ncurses-term
+  #+END_SRC
+
+
+  编辑 ~/.bashrc。
+  #+BEGIN_SRC sh
+    export TERM=xterm-256color
+  #+END_SRC
+
+  Save the changes, then force Bash to reload the configuration file:
+
+  #+BEGIN_SRC sh
+    source ~/.bashrc
+    tput colors
+    # output 256
+  #+END_SRC
+
+** Show colors in bash
+   #+BEGIN_SRC sh
+     for code in {0..255}; do echo -e "\e[38;05;${code}m $code: Test"; done
+   #+END_SRC
+
+* 给man上色
+  #+BEGIN_SRC sh
+    sudo apt-get install most
+
+    export MANPAGER="/usr/bin/most -s"
+  #+END_SRC
+
+* powerline-shell
+  https://github.com/milkbikis/powerline-shell
+
+* autojump
+  https://github.com/joelthelion/autojump
+
+* Chrome
+  Chrome在Linux下通过环境变量选择语言。
+
+  #+BEGIN_SRC sh
+    # 将Chrome切换到中文版了。
+    export LANG="zh_CN.UTF-8"
+
+    # 保存文件框使用GTK
+    NO_CHROME_KDE_FILE_DIALOG=1
+  #+END_SRC
+
+* timezone
+  #+BEGIN_SRC sh
+    dpkg-reconfigure tzdata
+  #+END_SRC

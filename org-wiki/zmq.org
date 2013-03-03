@@ -1,0 +1,62 @@
+#+TITLE: ZMQ
+#+HTML_LINK_UP: index.html
+#+HTML_LINK_HOME: index.html
+
+* Basic
+  #+BEGIN_SRC sh
+    sudo pip install pyzmq
+  #+END_SRC
+
+  - tcp://hostname:port sockets let us do "regular" TCP networking
+  - inproc://name sockets let us do in-process networking (inter-thread/greenlet) with the same code we'd use for TCP networking
+  - ipc:///tmp/filename sockets use UNIX domain sockets for inter-process communication
+  - pgm://interface:address:port and epgm://interface:address:port use the OpenPGM library to support multicast over IP (pgm) and over UDP (epgm). Due to the nature of multicast, the pgm and epgm transports can only be used with PUB/SUB socket types (more on this below).
+
+  [[http://blog.pythonisito.com/2012/08/distributed-systems-with-zeromq.html][Distributed Systems with ZeroMQ]]
+
+* Work with Tornado
+  [[http://zeromq.github.com/pyzmq/eventloop.html][Eventloops and PyZMQ]]
+
+  With PyZMQ’s ioloop, you can use zmq sockets in any tornado application. You must first install PyZMQ’s IOLoop, with the ioloop.install() function:
+
+  #+BEGIN_SRC python
+    from zmq.eventloop import ioloop
+    ioloop.install()
+  #+END_SRC
+
+* Messaging Patterns
+** PAIR
+   zmq.PAIR
+   像常规sockets。
+
+** Client/Server
+   zmq.REQ, zmq.REP
+
+   Request/Reply pattern.
+
+   ZMQ REQ sockets can connect to many servers.
+
+   - socket zmq.REQ will block on send unless it has successfully received a reply back.
+   - socket zmq.REP will block on recv unless it has received a request.
+
+** Publish/Subscribe
+   zmq.SUB, zmq.PUB
+
+   能够同时connect到多个Server，也就是同时从多个Server接受消息。
+
+   #+BEGIN_SRC python
+     context = zmq.Context()
+     socket = context.socket(zmq.SUB)
+
+     # 仅仅接受topicfilter消息
+     topicfilter = "10001"
+     socket.setsockopt(zmq.SUBSCRIBE, topicfilter)
+   #+END_SRC
+
+** Push/Pull
+   Push and Pull sockets let you distribute messages to multiple workers, arranged in a pipeline. A Push socket will distribute sent messages to its Pull clients evenly. This is equivalent to producer/consumer model but the results computed by consumer are not sent upstream but downstream to another pull/consumer socket.
+
+
+
+* 资料
+  - [[https://learning-0mq-with-pyzmq.readthedocs.org/en/latest/pyzmq/patterns/patterns.html][ØMQ Messaging Patterns]]

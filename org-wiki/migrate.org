@@ -1,0 +1,14 @@
+#+TITLE: 服务器迁移
+#+HTML_LINK_UP: index.html
+#+HTML_LINK_HOME: index.html
+
+* 数据文件
+  在/home目录下面的所有的用户文件的数据。
+
+* 数据库
+  整个直接dump过去就好了。
+
+  #+BEGIN_SRC sh
+    mysqldump -u root -p --all-databases > all.sql
+    mysql -u root -p < all.sql
+  #+END_SRC

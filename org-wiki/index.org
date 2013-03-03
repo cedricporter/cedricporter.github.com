@@ -7,4 +7,7 @@
   #+INCLUDE: "sitemap.org"
 
 * About
+  这个部分是由Emacs的org-mode生成的，在使用一段时间的org-mode后，发现会比用markdown书写起来更加顺手，主要是因为，Emacs的org-mode的功能更加丰富。
+
+* Link
   My Blog: [[http://EverET.org][EverET.org]]
