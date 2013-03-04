@@ -298,3 +298,6 @@
   #+BEGIN_SRC sh
     dpkg-reconfigure tzdata
   #+END_SRC
+
+* Screen Brightness
+  Edit /etc/rc.local, and add =echo 0 > /sys/class/backlight/acpi_video0/brightness=

@@ -1,7 +1,37 @@
 #+TITLE: MySQL学习笔记
 #+HTML_LINK_UP: index.html
 #+HTML_LINK_HOME: index.html
-#+OPTIONS: H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+#+OPTIONS: H:3 num:t toc:nil \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
+* 基本命令
+** 创建用户
+   #+BEGIN_SRC sql
+     CREATE USER `cedricporter`@`localhost` IDENTIFIED BY 'p@$$W0rd';
+   #+END_SRC
+** 删除用户
+   #+BEGIN_SRC sql
+     DROP USER `cedricporter`@`localhost`;
+   #+END_SRC
+** 查看权限
+   #+BEGIN_SRC sql
+     SHOW GRANTS FOR `cedricporter`@`localhost`;
+   #+END_SRC
+** 授予权限
+   #+BEGIN_SRC sql
+     GRANT SELECT ON yagra.* TO `cedricporter`@`localhost`;
+   #+END_SRC
+** 删除权限
+   #+BEGIN_SRC sql
+     REVOKE SELECT ON yagra.* FROM `cedricporter`@`localhost`;
+   #+END_SRC
+** 修改密码
+   #+BEGIN_SRC sql
+     SET PASSWORD FOR `cedricporter`@`localhost` = Password('n3w p@$$w0rd');
+   #+END_SRC
+   修改自己的密码，只要：
+   #+BEGIN_SRC sql
+     SET PASSWORD = Password('n3w p@$$w0rd');
+   #+END_SRC
 
 
 * MyISAM
@@ -107,9 +137,3 @@
 * 资料来源
   1. [[http://www.mysqlops.com/2011/12/09/myisam%25E5%2592%258Cinnodb%25E5%25AF%25B9%25E6%25AF%2594%25E8%25AF%25A6%25E8%25A7%25A3.html][MySQL数据库存储引擎MyISAM和InnoDB的对比详解]]
   2. [[http://blog.codinglabs.org/articles/theory-of-mysql-index.html][MySQL索引背后的数据结构及算法原理]]
-
-
-
-
-
-

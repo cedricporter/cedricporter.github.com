@@ -1,0 +1,7 @@
+#+TITLE: Joke
+#+HTML_LINK_UP: index.html
+#+HTML_LINK_HOME: index.html
+
+—— 你有没有时间简史？
+
+—— 我哪有时间捡代谢产物啊

@@ -107,5 +107,8 @@
 
    如果遵循这些守则，在 Subversion 上工作还可以接受。然而，如果能迁徙到真正的 Git 服务器，则能为团队带来更多好处。
 
+* 取消git add
+  To undo =git add .= ，use =git reset= 。
+
 * 资料
   [[http://rogerdudler.github.com/git-guide/index.zh.html][git - 简易指南]]

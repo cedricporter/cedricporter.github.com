@@ -18,10 +18,8 @@ tags: [Nginx]
 
 修改`/etc/crontab`，加上下面一行
 
-`* * * * * root ps -C nginx || (nginx -t && service nginx restart)`
+`* * * * * root ps -C nginx > /dev/null 2>&1 || (nginx -t && service nginx restart)`
 
 每分钟检查一次nginx进程还有没有，没有就重启它。
 
 好，最后运行`service cron restart`让crontab生效。
-
-

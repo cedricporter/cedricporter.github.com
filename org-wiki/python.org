@@ -28,3 +28,14 @@
      name = form.getfirst("name")
      namelist = form.getlist("name")
    #+END_SRC
+
+* MySQL
+  插入datetime
+  #+BEGIN_SRC python
+    time.strftime('%Y-%m-%d %H:%M:%S')
+  #+END_SRC
+
+** Commit
+   MySQLdb的autocommit是默认关闭的，[[http://www.python.org/dev/peps/pep-0249/][PEP 249 -- Python Database API Specification v2.0]]推荐我们要显示地commit或者rollback。
+
+   记得在哪本书里面看到，一次commit或者rollback意味着下一个事务的开始，如果我们没有指定begin的话。
