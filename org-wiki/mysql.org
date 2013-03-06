@@ -32,6 +32,33 @@
    #+BEGIN_SRC sql
      SET PASSWORD = Password('n3w p@$$w0rd');
    #+END_SRC
+** 修改外键
+   #+BEGIN_SRC sql
+     alter table yagra_image drop foreign key yagra_image_ibfk_1;
+     alter table yagra_image add foreign key (user_id) references yagra_user(ID) on update cascade on delete cascade;
+   #+END_SRC
+** 修改字段属性
+   #+BEGIN_SRC sql
+     alter table yagra_image change image_id image_id bigint(20) unsigned not null auto_increment;
+   #+END_SRC
+
+* FAQ
+
+** errno: 150
+   我在建立外键的时候遇到这个问题，纠结了几十分钟，真是浪费时间，发现问题出在两个键的类型不一致。我的一个表的类型是bigint(20) unsigned，没有注意到unsigned。
+
+   #+BEGIN_EXAMPLE
+     ERROR 1005 (HY000): Can't create table 'yagra.yagra_image' (errno: 150)
+   #+END_EXAMPLE
+
+   1. The two tables must be ENGINE=InnoDB.
+   2. The two tables must have the same charset.
+   3. The PK column(s) in the parent table and the FK column(s) must be the same data type.
+   4. The PK column(s) in the parent table and the FK column(s), if they have a define collation type, must have the same collation type;
+   5. If there is data already in the foreign key table, the FK column value(s) must match values in the parent table PK columns.
+   6. And the child table cannot be a temporary table.
+
+   [[http://stackoverflow.com/questions/1457305/mysql-creating-tables-with-foreign-keys-giving-errno-150][MySQL Creating tables with Foreign Keys giving errno: 150]]
 
 
 * MyISAM

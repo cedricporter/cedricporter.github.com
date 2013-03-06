@@ -1,6 +1,7 @@
 #+TITLE: Python
 #+HTML_LINK_UP: index.html
 #+HTML_LINK_HOME: index.html
+#+OPTIONS: ^:{}
 
 * URL encoding/decoding
 
@@ -39,3 +40,34 @@
    MySQLdb的autocommit是默认关闭的，[[http://www.python.org/dev/peps/pep-0249/][PEP 249 -- Python Database API Specification v2.0]]推荐我们要显示地commit或者rollback。
 
    记得在哪本书里面看到，一次commit或者rollback意味着下一个事务的开始，如果我们没有指定begin的话。
+
+* 根据字符串import
+  #+BEGIN_SRC python
+    def import_object(name):
+        """Imports an object by name.
+
+        import_object('x.y.z') is equivalent to 'from x.y import z'.
+
+        >>> import tornado.escape
+        >>> import_object('tornado.escape') is tornado.escape
+        True
+        >>> import_object('tornado.escape.utf8') is tornado.escape.utf8
+        True
+        """
+        parts = name.split('.')
+        obj = __import__('.'.join(parts[:-1]), None, None, [parts[-1]], 0)
+        return getattr(obj, parts[-1])
+  #+END_SRC
+  这个是在Tornado源码中看到的，觉得挺好用的。
+
+  其中用到了__import__这个函数
+
+  #+BEGIN_EXAMPLE
+    __import__(name, globals={}, locals={}, fromlist=[], level=-1) -> module
+  #+END_EXAMPLE
+
+  如果fromlist为空，那么会返回第一层包，例如os.path会返回os。如果非空，就返回之后的一个部分，如path。
+
+  [[http://stackoverflow.com/questions/211100/pythons-import-doesnt-work-as-expected][Python's __import__ doesn't work as expected]]
+
+  [[http://stackoverflow.com/questions/2724260/why-does-pythons-import-require-fromlist][Why does Python's __import__ require fromlist?]]

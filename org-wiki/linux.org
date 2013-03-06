@@ -301,3 +301,64 @@
 
 * Screen Brightness
   Edit /etc/rc.local, and add =echo 0 > /sys/class/backlight/acpi_video0/brightness=
+
+* xrandr
+  命令都可以进行TAB补全，所以参数不知道怎么打就狂TAB就好了。
+
+  打开外接显示器(最高分辨率)，与笔记本液晶屏幕显示同样内容（克隆）
+  #+BEGIN_SRC sh
+  xrandr --output VGA --same-as LVDS --auto
+  #+END_SRC
+
+  打开外接显示器(分辨率为1024x768)，与笔记本液晶屏幕显示同样内容（克隆）
+
+  #+BEGIN_SRC sh
+  xrandr --output VGA --same-as LVDS --mode 1024x768
+  #+END_SRC
+
+  打开外接显示器(最高分辨率)，设置为右侧扩展屏幕
+  #+BEGIN_SRC sh
+  xrandr --output VGA --right-of LVDS --auto
+  #+END_SRC
+
+  关闭外接显示器
+  #+BEGIN_SRC sh
+  xrandr --output VGA --off
+  #+END_SRC
+
+  打开外接显示器，同时关闭笔记本液晶屏幕（只用外接显示器工作）
+  #+BEGIN_SRC sh
+  xrandr --output VGA --auto --output LVDS --off
+  #+END_SRC
+
+  关闭外接显示器，同时打开笔记本液晶屏幕 (只用笔记本液晶屏)
+  #+BEGIN_SRC sh
+  xrandr --output VGA --off --output LVDS --auto
+  #+END_SRC
+
+  From: http://baiba.net/blog/?action=show&id=71
+
+* Postfix
+  #+BEGIN_EXAMPLE
+    smtplib.SMTPSenderRefused: (552, '5.3.4 Message size exceeds fixed limit', 'root@everet.org')
+  #+END_EXAMPLE
+
+  在/etc/postfix/main.cf中加上:
+  #+BEGIN_EXAMPLE
+    message_size_limit = 102400000
+  #+END_EXAMPLE
+  这个是100MB，可以通过
+  #+BEGIN_SRC sh
+    sudo postconf message_size_limit
+  #+END_SRC
+  查看限额。
+
+* 查看CPU核数
+  #+BEGIN_SRC sh
+    grep -c "model name" /proc/cpuinfo
+  #+END_SRC
+
+* uptime
+  uptime有三个值，分别代表1分钟、5分钟、15分钟的负载。2个CPU表明系统负荷可以达到2.0，此时每个CPU都达到100%的工作量。推广开来，n个CPU的电脑，可接受的系统负荷最大为n.0。
+
+  [[http://www.ruanyifeng.com/blog/2011/07/linux_load_average_explained.html][理解Linux系统负荷]]

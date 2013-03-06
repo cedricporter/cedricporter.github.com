@@ -110,5 +110,24 @@
 * 取消git add
   To undo =git add .= ，use =git reset= 。
 
+* 在服务器部署Git
+  可以使用一些Git软件如Gitosis。
+
+  不过也可以直接运行：
+  #+BEGIN_SRC sh
+    git clone --bare my_project my_project.git
+    # same as cp -Rf my_project/.git my_project.git
+
+    # by ssh
+    scp -r my_project.git user@git.example.com:/opt/git
+    git clone user@git.example.com:/opt/git/my_project.git
+
+
+  #+END_SRC
+
+  如果某个 SSH 用户对 /opt/git/my_project.git 目录有写权限，那他就有推送权限。
+
+  [[http://git-scm.com/book/zh/%25E6%259C%258D%25E5%258A%25A1%25E5%2599%25A8%25E4%25B8%258A%25E7%259A%2584-Git-%25E5%259C%25A8%25E6%259C%258D%25E5%258A%25A1%25E5%2599%25A8%25E4%25B8%258A%25E9%2583%25A8%25E7%25BD%25B2-Git][服务器上的 Git - 在服务器上部署 Git]]
+
 * 资料
   [[http://rogerdudler.github.com/git-guide/index.zh.html][git - 简易指南]]
