@@ -41,6 +41,20 @@
 
    记得在哪本书里面看到，一次commit或者rollback意味着下一个事务的开始，如果我们没有指定begin的话。
 
+** Last Inserted Id
+   获取最后一次插入的id
+   #+BEGIN_SRC python
+     conn = MySQLdb(host...)
+
+     c = conn.cursor()
+     c.execute("INSERT INTO...")
+     newID = c.lastrowid
+   #+END_SRC
+
+   [[http://stackoverflow.com/questions/706755/how-do-you-safely-and-efficiently-get-the-row-id-after-an-insert-with-mysql-usin][How do you safely and efficiently get the row id after an insert with mysql using MySQLdb in python? ]]
+
+   [[http://stackoverflow.com/questions/2548493/in-python-after-i-insert-into-mysqldb-how-do-i-get-the-id][In Python, after I INSERT Into mysqldb, how do I get the “id”?]]
+
 * 根据字符串import
   #+BEGIN_SRC python
     def import_object(name):
