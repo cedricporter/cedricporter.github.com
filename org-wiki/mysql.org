@@ -1,6 +1,6 @@
 #+TITLE: MySQL学习笔记
-#+HTML_LINK_UP: index.html
-#+HTML_LINK_HOME: index.html
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
 #+OPTIONS: H:3 num:t toc:nil \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
 * 基本命令

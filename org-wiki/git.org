@@ -1,6 +1,6 @@
 #+TITLE: Git笔记
-#+HTML_LINK_UP: index.html
-#+HTML_LINK_HOME: index.html
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
 
 
 * git 恢复单个文件
@@ -95,7 +95,7 @@
      git branch opera remotes/opera
      git checkout opera
      # or
-     git checkout -b opera remotes/opera
+     git checkout -b opera refs/remotes/opera
    #+END_SRC
 
    然后，如果要把 opera 分支并入 trunk （本地的 master 分支），可以使用普通的 git merge。不过最好提供一条描述提交的信息（通过 -m），否则这次合并的记录是 Merge branch opera ，而不是任何有用的东西。
@@ -128,7 +128,8 @@
 
      # merge `merging_branch_foo` into `master`
      git co master
-     git merge merging_branch_foo # --squash to create single commit
+     # git merge merging_branch_foo  # --squash to create single commit
+     git merge --no-ff # no fast-forward. This will force git to create a merge commit, which can then be dcommitted to svn.
 
      # commit changes to svn
      git svn dcommit
@@ -136,6 +137,31 @@
      # (optionally) delete `merging_branch_foo`
      git branch -D merging_branch_foo
    #+END_SRC
+
+   [[http://stackoverflow.com/questions/2835791/git-svn-reset-tracking-for-master][git-svn: reset tracking for master]]
+
+** 删除远程SVN分支
+   Currently, it is not possible to delete an SVN branch using git-svn. But it is easy to delete the branch using SVN, without even having to check it out. So simply type
+
+   #+BEGIN_SRC sh
+     svn rm $URL/branches/the_branch
+   #+END_SRC
+
+   Please note that deleting a Subversion branch does not cause it to be deleted from the git-svn repository. (This is intentional, because deleting a Subversion branch does not cause any information loss, whereas deleting a git branch causes its existence to be forgotten following the next git garbage collection.) So if you want the remote SVN branch to be deleted from your git repository, you have to do it manually:
+
+   #+BEGIN_SRC sh
+     git branch -D -r the_branch
+     rm -rf .git/svn/the_branch
+   #+END_SRC
+
+   To delete a git branch that corresponds to a Subversion tag, the commands are slightly different:
+
+   #+BEGIN_SRC sh
+     git branch -D -r tags/the_tag
+     rm -rf .git/svn/tags/the_tag
+   #+END_SRC
+
+   [[http://stackoverflow.com/questions/1839606/delete-a-svn-branch-via-git][Delete a svn-Branch via git?]]
 
 ** Git-Svn 总结
    git svn 工具集在当前不得不使用 Subversion 服务器或者开发环境要求使用 Subversion 服务器的时候格外有用。不妨把它看成一个跛脚的 Git，然而，你还是有可能在转换过程中碰到一些困惑你和合作者们的迷题。为了避免麻烦，试着遵守如下守则：

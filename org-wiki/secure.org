@@ -1,0 +1,13 @@
+#+TITLE: 安全
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* nonce
+  nonce可以防止replay攻击，例如给某人转账100次。
+
+  [[http://stackoverflow.com/questions/2250263/csrf-protection-by-storing-nonce-in-session-variable-and-form][CSRF protection by storing nonce in Session variable and form]]
+
+* CSRF token
+  可以存放在session中，例如session["csrf_token"]，然后在每一个form提交的时候都要进行判断。
+
+  [[http://stackoverflow.com/questions/5691492/csrf-tokens-vs-nonce-confusion-are-they-the-same][CSRF tokens vs Nonce confusion - are they the same?]]

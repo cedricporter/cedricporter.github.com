@@ -1,6 +1,6 @@
 #+TITLE: Linux
-#+HTML_LINK_UP: index.html
-#+HTML_LINK_HOME: index.html
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
 
 * ssh自动发送心跳
   #+BEGIN_SRC sh
@@ -362,3 +362,11 @@
   uptime有三个值，分别代表1分钟、5分钟、15分钟的负载。2个CPU表明系统负荷可以达到2.0，此时每个CPU都达到100%的工作量。推广开来，n个CPU的电脑，可接受的系统负荷最大为n.0。
 
   [[http://www.ruanyifeng.com/blog/2011/07/linux_load_average_explained.html][理解Linux系统负荷]]
+
+* 解压.tar.xz
+  #+BEGIN_SRC sh
+    tar Jxvf xxx.tar.xz
+  #+END_SRC
+
+* nethogs
+  查看网络流量被哪些进程占用。

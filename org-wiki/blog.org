@@ -1,6 +1,6 @@
 #+TITLE: blog
-#+HTML_LINK_UP: index.html
-#+HTML_LINK_HOME: index.html
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
 
 * Git自动生成
   [[http://phoenixsec.org/Web/2012/08/29/deploy-jekyll-on-vps/][Deploy Jekyll on VPS]]

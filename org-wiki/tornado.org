@@ -1,6 +1,6 @@
 #+TITLE: Tornado笔记
-#+HTML_LINK_UP: index.html
-#+HTML_LINK_HOME: index.html
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
 
 
 * 异步验证

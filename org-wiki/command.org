@@ -1,0 +1,48 @@
+#+TITLE: command.org
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* 有趣的command
+  #+BEGIN_SRC sh
+    # list only directories in reverse order
+    ls -ltrhd */
+
+    # Batch rename and number files
+    # The '1' in '%01d' changes the amounts of digits in the integer, eg. 1 vs 0001.
+    count='1'; for i in *.jpg; do mv $i $(printf '%01d'.jpg $count); (( count++ )); done
+    # or
+    # This command will take the files in a directory, rename them, and then number them from 1...N.
+    find . -name '*.jpg' | awk 'BEGIN{ a=0 }{ printf "mv %s name%01d.jpg\n", $0, a++ }' | bash
+
+    # Check if *hardware* is 32bit or 64bit
+    grep " lm " /proc/cpuinfo > /dev/null && echo "64-bit" || echo "32-bit"
+    # or
+    uname -m
+
+    # list directories only
+    ls -F | grep /
+    # or
+    ls -d */
+
+    # list directory in chronological order, most recent files at end of list
+    ls -qaltr
+
+    # Extract text from picture [OCR reader]
+    gocr -i ~/Screenshot.png
+
+    # Let you vanish in the (bash) history.
+    export HISTFILE=/dev/null
+    # or
+    export HISTSIZE=0
+
+    # Reload all sysctl variables without reboot
+    /sbin/sysctl -p
+
+    # Sort contents of a directory with human readable output
+    du -hs * | sort -h
+
+    # Find files with size over 100MB and output with better lay-out
+    find . -type f -size +100M
+  #+END_SRC
+
+  http://www.commandlinefu.com/commands/browse

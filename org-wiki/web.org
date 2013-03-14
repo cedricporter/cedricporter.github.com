@@ -1,6 +1,6 @@
 #+TITLE: Web相关
-#+HTML_LINK_UP: index.html
-#+HTML_LINK_HOME: index.html
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
 
 * 如何移除Cookie
   设置一个过去的时间，然后就expired了。

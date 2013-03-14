@@ -1,6 +1,6 @@
 #+TITLE: Python
-#+HTML_LINK_UP: index.html
-#+HTML_LINK_HOME: index.html
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
 #+OPTIONS: ^:{}
 
 * URL encoding/decoding
@@ -55,6 +55,10 @@
 
    [[http://stackoverflow.com/questions/2548493/in-python-after-i-insert-into-mysqldb-how-do-i-get-the-id][In Python, after I INSERT Into mysqldb, how do I get the “id”?]]
 
+** mysql_config not found
+   #+BEGIN_SRC sh
+     apt-get install python-dev libmysqld-dev
+   #+END_SRC
 * 根据字符串import
   #+BEGIN_SRC python
     def import_object(name):
@@ -85,3 +89,54 @@
   [[http://stackoverflow.com/questions/211100/pythons-import-doesnt-work-as-expected][Python's __import__ doesn't work as expected]]
 
   [[http://stackoverflow.com/questions/2724260/why-does-pythons-import-require-fromlist][Why does Python's __import__ require fromlist?]]
+
+* 生成合法的用户名
+  [[http://stackoverflow.com/questions/295135/turn-a-string-into-a-valid-filename-in-python][Turn a string into a valid filename in Python]]
+
+  #+BEGIN_SRC python
+    import string
+    valid_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
+
+    print valid_chars
+    # '-_.() abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+
+    filename = "This Is a (valid) - filename%$&$ .txt"
+    print ''.join(c for c in filename if c in valid_chars)
+    # 'This Is a (valid) - filename .txt'
+  #+END_SRC
+
+* 获取文件的修改时间
+  #+BEGIN_SRC python
+    import os
+    import stat
+    import datetime
+
+    def get_modified_time(filename):
+        f = os.stat(filename)
+        modified = datetime.datetime.fromtimestamp(f[stat.ST_MTIME])
+        return modified
+  #+END_SRC
+
+* 转换时间为Web响应头的gmt时间
+  #+BEGIN_SRC python
+    import email.utils
+    import calendar
+    import time
+    import os
+    import datetime
+    import stat
+
+    f = os.stat(filename)
+    modified = datetime.datetime.fromtimestamp(f[stat.ST_MTIME])
+    gmt = calendar.timegm(modified.utctimetuple())
+    time_string = email.utils.formatdate(gmt, localtime=False, usegmt=True)
+  #+END_SRC
+
+  从字符串转回datetime
+
+  #+BEGIN_SRC python
+    date_tuple = email.utils.parsedate(time_string)
+    if_since = datetime.datetime.fromtimestamp(time.mktime(date_tuple))
+  #+END_SRC
+
+  timestamp就是一个大浮点数。

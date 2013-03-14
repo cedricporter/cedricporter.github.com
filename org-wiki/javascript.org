@@ -1,6 +1,6 @@
 #+TITLE: Javascript
-#+HTML_LINK_UP: index.html
-#+HTML_LINK_HOME: index.html
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
 
 * 面向对象
   构造函数和其他函数的唯一区别，就在于调用它们的方式不同。
@@ -37,3 +37,17 @@
         scrolldelay = setTimeout('pageScroll()', 100); // scrolls every 100 milliseconds
     }
   #+END_SRC
+
+* 阻止某些字符的输入
+  #+BEGIN_SRC javascript
+    $('input').bind('keypress', function (event) {
+        var regex = new RegExp("^[a-zA-Z0-9]+$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+            event.preventDefault();
+            return false;
+        }
+    });
+  #+END_SRC
+
+  [[http://stackoverflow.com/questions/895659/how-do-i-block-or-restrict-special-characters-from-input-fields-with-jquery][how do i block or restrict special characters from input fields with jquery?]]

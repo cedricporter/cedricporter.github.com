@@ -1,4 +1,4 @@
---- 
+---
 categories: []
 comments: true
 layout: page
@@ -8,11 +8,14 @@ tags: []
 title: 关于我
 type: page
 ---
+
 鄙人小菜，于华南理工大学主修软件工程，已在此度过3年多的人生。
+
+从小学开始沿用的英文名 Cedric Porter，英文昵称 Stupid ET。
 
 爱好探险，摄影，和计算机。喜欢实现自己的想法~
 
-喜欢C++和Python，目前主要在学习Ruby...
+喜欢C++和Python，目前主要在学习Web相关内容...
 
 对于摄影，大部分照片都置于我的QQ空间里，因已积累了多年照片与评论，遂不愿再换。
 
@@ -22,6 +25,7 @@ type: page
  * [我的vim、emacs和vs的配置文件](https://github.com/cedricporter/vim-emacs-setting)
 
 ### 联系我
+
 **Email:** <mailto:et@everet.org>
 
 

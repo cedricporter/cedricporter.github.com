@@ -1,6 +1,6 @@
 #+TITLE: Joke
-#+HTML_LINK_UP: index.html
-#+HTML_LINK_HOME: index.html
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
 
 —— 你有没有时间简史？
 
