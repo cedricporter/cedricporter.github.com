@@ -1,0 +1,6 @@
+#+TITLE: Emacs
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* global
+  http://www.gnu.org/software/global/download.html

@@ -370,3 +370,38 @@
 
 * nethogs
   查看网络流量被哪些进程占用。
+
+* 登录密码错误延迟
+  Edit the /etc/pam.d/common-auth file as follows.
+
+  #+BEGIN_SRC text
+    # As of pam 1.0.1-6, this file is managed by pam-auth-update by default.
+    # To take advantage of this, it is recommended that you configure any
+    # local modules either before or after the default block, and use
+    # pam-auth-update to manage selection of other modules.  See
+    # pam-auth-update(8) for details.
+
+    # here are the per-package modules (the "Primary" block)
+    auth    [success=1 default=ignore]      pam_unix.so nullok_secure nodelay
+    # here's the fallback if no module succeeds
+    auth    requisite                       pam_deny.so
+    # prime the stack with a positive return value if there isn't one already;
+    # this avoids us returning an error just because nothing sets a success code
+    # since the modules above will each just jump around
+    auth    required                        pam_permit.so
+    # and here are more per-package modules (the "Additional" block)
+    # end of pam-auth-update config
+  #+END_SRC
+
+* sar
+  #+BEGIN_SRC sh
+    dpkg-reconfigure sysstat
+  #+END_SRC
+
+  配置sysstat，或者编辑/etc/default/sysstat中ENABLED的值为false或者true。
+
+  然后
+
+  #+BEGIN_SRC sh
+    service sysstat start
+  #+END_SRC

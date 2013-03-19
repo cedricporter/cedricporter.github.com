@@ -1,0 +1,201 @@
+#+TITLE: gdb
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* 保存断点
+  #+BEGIN_EXAMPLE
+  save breakpoints <filename>
+  #+END_EXAMPLE
+
+* 常用命令
+  #+BEGIN_EXAMPLE
+    i b : info break
+    i program : program info
+    i locals
+    i args
+    i catch
+    l : list
+    l <linenum>
+    l <func>
+    <ret> : repeat last command
+    b 16 : break 16
+    b <func> : break  func
+    b make_ <tab> : completion
+    r : run
+    n : next
+    c : continue
+    p <var>
+    bt : backtrace
+    bt <n> : top n level
+    q : quit
+    shell <cmd> : run command in shell
+    f <n> : frame <n>
+    up <n> :
+    down <n>
+    set listsize <count> : 设置一次显示源代码的行数。
+    disassemble <func>
+    i line <filename>:<func>
+    p /<formant> <expr>
+    p /x <expr> : 16进制
+    return : 强制返回
+    call : 强制调用
+    jump <>
+    signal <num>
+    set var p=1
+    whatis <var>
+    set print pretty on
+    set print array on
+
+  #+END_EXAMPLE
+
+* 开启
+  #+BEGIN_EXAMPLE
+    1. gdb <program>
+       program也就是你的执行文件，一般在当然目录下。
+    1. gdb <program> core
+       用gdb同时调试一个运行程序和core文件，core是程序非法执行后core dump后产生的文件。
+    1. gdb <program> <PID>
+       如果你的程序是一个服务程序，那么你可以指定这个服务程序运行时的进程ID。gdb会自动attach上去，并调试他。program应该在PATH环境变量中搜索得到。
+  #+END_EXAMPLE
+
+* 断点
+  #+BEGIN_EXAMPLE
+    break <function>
+        在进入指定函数时停住。C++中可以使用class::function或function(type,type)格式来指定函数名。
+
+    break <linenum>
+        在指定行号停住。
+
+    break +offset
+    break -offset
+        在当前行号的前面或后面的offset行停住。offiset为自然数。
+
+    break filename:linenum
+        在源文件filename的linenum行处停住。
+
+    break filename:function
+        在源文件filename的function函数的入口处停住。
+
+    break *address
+        在程序运行的内存地址处停住。
+
+    break
+        break命令没有参数时，表示在下一条指令处停住。
+
+    break ... if <condition>
+        ...可以是上述的参数，condition表示条件，在条件成立时停住。比如在循环境体中，可以设置break if i=100，表示当i为100时停住程序。
+
+    tbreak
+
+    rbreak <regexp>
+
+    查看断点时，可使用info命令，如下所示：（注：n表示断点号）
+    info breakpoints [n]
+    info break [n]
+  #+END_EXAMPLE
+
+* Watch Points
+  观察点一般来观察某个表达式（变量也是一种表达式）的值是否有变化了，如果有变化，马上停住程序。我们有下面的几种方法来设置观察点：
+
+  #+BEGIN_EXAMPLE
+    watch <expr>
+        为表达式（变量）expr设置一个观察点。一量表达式值有变化时，马上停住程序。
+
+    rwatch <expr>
+        当表达式（变量）expr被读时，停住程序。
+
+    awatch <expr>
+        当表达式（变量）的值被读或被写时，停住程序。
+
+    info watchpoints
+        列出当前所设置了的所有观察点。
+  #+END_EXAMPLE
+
+* Array
+  你可以使用GDB的“@”操作符，“@”的左边是第一个内存的地址的值，“@”的右边则你你想查看内存的长度。例如，你的程序中有这样的语句：
+
+  #+BEGIN_SRC c
+    int *array = (int *) malloc (len * sizeof (int));
+  #+END_SRC
+
+  于是，在GDB调试过程中，你可以以如下命令显示出这个动态数组的取值：
+
+  #+BEGIN_EXAMPLE
+    p *array@len
+  #+END_EXAMPLE
+
+* Output Format
+  #+BEGIN_EXAMPLE
+    x  按十六进制格式显示变量。
+    d  按十进制格式显示变量。
+    u  按十六进制格式显示无符号整型。
+    o  按八进制格式显示变量。
+    t  按二进制格式显示变量。
+    a  按十六进制格式显示变量。
+    c  按字符格式显示变量。
+    f  按浮点数格式显示变量。
+  #+END_EXAMPLE
+
+  #+BEGIN_EXAMPLE
+    (gdb) p i
+    $21 = 101
+
+    (gdb) p/a i
+    $22 = 0x65
+
+    (gdb) p/c i
+    $23 = 101 'e'
+
+    (gdb) p/f i
+    $24 = 1.41531145e-43
+
+    (gdb) p/x i
+    $25 = 0x65
+
+    (gdb) p/t i
+    $26 = 1100101
+  #+END_EXAMPLE
+
+
+* display
+  你可以设置一些自动显示的变量，当程序停住时，或是在你单步跟踪时，这些变量会自动显示。相关的GDB命令是display。
+
+  #+BEGIN_EXAMPLE
+    display <expr>
+    display/<fmt> <expr>
+    display/<fmt> <addr>
+  #+END_EXAMPLE
+
+  你可以使用examine命令（简写是x）来查看内存地址中的值。
+
+* info
+  #+BEGIN_EXAMPLE
+    info（简写i）：
+    info break：显示断点信息，下面断点部分详述。
+    (gdb)info break
+    info local：显示当前函数中的局部变量信息。
+    (gdb)info local
+    info var：系那是所有的全局和静态变量名称。
+    (gdb)info var
+    info func：显示所有的函数名称。
+    (gdb)info func
+    info prog：显示被调试程序的执行状态。
+    (gdb)info prog
+    info files：显示被调试文件的详细信息。
+    (gdb)info files
+    whatis：显示变量的类型
+    如程序中定义struct timeval var；
+    (gdb) whatis var
+    type = struct timeval
+    ptype：比whatis的功能更强，它可以提供一个结构的定义
+
+    (gdb)ptype var
+    type = struct timeval{
+    __time_t tv_sec;
+    __suseconds_t tv_usec;
+    }
+
+  #+END_EXAMPLE
+
+
+  载自：http://blog.csdn.net/haoel/article/details/2880
