@@ -413,6 +413,7 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 - `C-x C-t` 交换两行。可以用来调整python中import
 - `C-u M-=` 计算整个缓冲区的行数、字数和单词数
 - `M-g M-g linenum` 跳到某行，同vim中的`[linenum]G`
+- `C-u M-! date` 插入当前时间
 
 ### 中文输入法 ###
 

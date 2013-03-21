@@ -23,10 +23,13 @@ tags:
 
 好的工具是敏捷开发的必要前提啊~又想起了一句古诗：君子性非异也，善假于物也。
 
-俺的Emacs配置请见：[https://github.com/cedricporter/vim-emacs-setting](https://github.com/cedricporter/vim-emacs-setting)
+俺的最新的Emacs配置请见：[https://github.com/cedricporter/vim-emacs-setting](https://github.com/cedricporter/vim-emacs-setting)
 
 配置效果如下：<!-- more -->
 
+
+Update：2013-03-21
+以下是比较老的截图了，现在的配置已经完全变样了。
 
 ### 写Python
 

@@ -7,6 +7,70 @@
   save breakpoints <filename>
   #+END_EXAMPLE
 
+* .gdbinit
+  #+BEGIN_SRC sh
+    # breakpoints
+    source my-break
+
+    # step which step over specific functions
+    source skip-log.py
+    alias ss = step-skip-func
+  #+END_SRC
+
+* python controll gdb
+  #+BEGIN_SRC python
+    def StepSkipLogFunc():
+        gdb.execute("step")
+        if gdb.newest_frame().name().startswith("ngx_log_"):
+            gdb.execute("finish")
+
+
+    class HelloWorld (gdb.Command):
+        """Greet the whole world."""
+
+        def __init__ (self):
+            super (HelloWorld, self).__init__ ("hello-world", gdb.COMMAND_USER)
+
+        def invoke (self, arg, from_tty):
+            print "Hello, World!"
+
+
+    HelloWorld ()
+
+
+    class StepSkipFunc(gdb.Command):
+        "Skip specific functions when step"
+
+        SkipFuncList = [
+            "ngx_array_",
+            "ngx_hash_",
+            "ngx_http_conf_",
+            "ngx_list_",
+            "ngx_log_",
+            "ngx_palloc",
+            "ngx_pcalloc",
+            "ngx_pnalloc",
+            "ngx_strstr",
+        ]
+
+        def __init__(self):
+            super(StepSkipFunc, self).__init__("step-skip-func", gdb.COMMAND_USER)
+
+        def invoke(self, arg, from_tty):
+            gdb.execute("step", to_string=True)
+            for skip_func in self.SkipFuncList:
+                func_name = gdb.newest_frame().name()
+                # print 'debug: current func: %s, skip: %s' % (func_name, skip_func)
+                if skip_func in func_name:
+                    gdb.execute("finish", to_string=True)
+                    # gdb.execute("step", to_string=True)
+                    print 'skip function: ', func_name
+                    break
+
+
+    StepSkipFunc()
+  #+END_SRC
+
 * 常用命令
   #+BEGIN_EXAMPLE
     i b : info break

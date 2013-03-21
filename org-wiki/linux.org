@@ -368,6 +368,10 @@
     tar Jxvf xxx.tar.xz
   #+END_SRC
 
+* 解压7z
+  #+BEGIN_SRC sh
+    7z x filename.7z  
+  #+END_SRC
 * nethogs
   查看网络流量被哪些进程占用。
 
@@ -405,3 +409,62 @@
   #+BEGIN_SRC sh
     service sysstat start
   #+END_SRC
+
+** 基本命令
+   #+BEGIN_SRC sh
+     # 表示每60秒输出一次，共输出5次
+     sar 60 5 
+   #+END_SRC
+
+   
+** 保存到文件
+   #+BEGIN_SRC sh
+     # save
+     sar 60 5 -o sys_info
+     # read
+     sar -f sys_info
+   #+END_SRC
+
+** 多核处理器
+   有一个选项-P，就是用来为多核处理器而设计的。
+   #+BEGIN_EXAMPLE
+     -b：报告I/O使用情况以及传输速率。（只适用于2.5及之前的内核，所以新内核有可能不支持这个选项）
+     
+     -B：报告“页”使用情况
+     
+     -c：报告进程创建情况
+     
+     -d：报告每一个块设备的使用情况
+     （当你使用时，你会发现在DEV列有类似dev1-7格式的字符串，
+     其中1代表设备的主序号，n代表设备的从序号，
+     而且rd_sec/s列和wr_sec/s列的单位都是512bytes，也就是512B，也就是0.5KB）
+     
+     -I：汇报中断情况
+     
+     -n：汇报网络情况
+     
+     -P：设定CPU
+     
+     -q：汇报队列长度和负载信息
+     
+     -r：汇报内存和交换区使用情况
+     
+     -R：汇报内存情况
+     
+     -u：汇报CPU使用情况
+     
+     -v：汇报i节点、文件和其他内核表信息
+     
+     -w：汇报系统上下文切换情况
+     
+     -x：可以针对某个特定PID给出统计信息，
+     可以直接指定进程ID号；
+     也可以指定为SELF，这样就是检测sar进程本身；
+     如果设定为ALL，则表示汇报所有系统进程信息。
+     
+     -X：汇报特定PID的子进程的信息
+     
+     -y：设定TTY设备的信息。   
+   #+END_EXAMPLE
+
+   

@@ -4,3 +4,9 @@
 
 * global
   http://www.gnu.org/software/global/download.html
+
+* flymake
+  #+BEGIN_SRC makefile
+    check-syntax:
+            gcc $(CPPFLAGS) -Wall -Wextra -pedantic -fsyntax-only $(CHK_SOURCES)
+  #+END_SRC

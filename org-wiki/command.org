@@ -46,3 +46,12 @@
   #+END_SRC
 
   http://www.commandlinefu.com/commands/browse
+
+* 其他
+  #+BEGIN_SRC sh
+    # 创建目录
+    mkdir {1..50}
+    
+    # 创建文件
+    touch {1..50}
+  #+END_SRC
