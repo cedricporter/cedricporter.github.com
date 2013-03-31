@@ -1,6 +1,7 @@
 #+TITLE: FAQ
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
+#+OPTIONS: ^:{}
 
 
 * 自旋锁
@@ -14,3 +15,52 @@
   后来发现，我的程序并没有进行read，就直接write数据了。ab认为没有人读取管道里面的数据，就直接close了。于是就报了这个异常。
 
   搞了一个下午，竟然是这个问题唉。
+
+* signal blocked accept
+  #+BEGIN_SRC c
+    #include <sys/socket.h>
+
+    /* ... */
+
+    for (;;)
+    {
+        if ((connfd = accept(listenfd, (struct sockaddr *)&peeraddr, &peerlen)) < 0)
+        {
+            if (EINTR != errno)
+                printf("accept error: %s", strerror(errno));
+            continue;
+        }
+    }
+  #+END_SRC
+
+
+* reaper all child
+  #+BEGIN_SRC c
+    /* clean up dead children */
+    static void sig_chld(int sig)
+    {
+        int status, pid;
+
+        while (0 < (pid = waitpid(-1, &status, WNOHANG)))
+            printf("Child process %d exited with status %d\n", pid, status);
+    }
+
+    struct sigaction sa;
+    sa.sa_handler = &sig_chld;
+    sa.sa_flags = SA_NOCLDSTOP;
+
+    sigaction(SIGCHLD, &sa, NULL);
+  #+END_SRC
+
+* connect什么时候返回
+  TCP有三次握手，connect会等到自己的SYN的ACK为之才会返回，这意味着，至少等待一个到服务器的RTT时间。
+
+  
+* 非阻塞accept没有新连接是返回什么？
+  返回-1，然后errno为EWOULDBLOCK。
+
+* vimium在qq邮箱只在一个frame里面有用
+  原来用gf可以跳到下一个frame里面，自己真是弱爆了。
+
+  [[https://github.com/philc/vimium][vimium]]
+  

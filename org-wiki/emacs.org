@@ -2,11 +2,27 @@
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
 
+* 按键绑定
+
+** 全局
+   - *M-f12*
+     woman
+   - *C-x C-=*
+     放大缩小
+
+** cc-mode
+   - *C-x t*
+     切换头文件和c
+   - *C-.*
+     跳转到定义
+   - *C-,*
+     跳回
+
 * global
   http://www.gnu.org/software/global/download.html
 
 * flymake
   #+BEGIN_SRC makefile
     check-syntax:
-            gcc $(CPPFLAGS) -Wall -Wextra -pedantic -fsyntax-only $(CHK_SOURCES)
+            $(C_COMPILE) $(C_DEPENDENCIES) -Wall -Wextra -Wno-unused-parameter -pedantic -fsyntax-only $(CHK_SOURCES)
   #+END_SRC

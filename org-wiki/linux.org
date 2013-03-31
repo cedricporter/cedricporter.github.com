@@ -294,6 +294,11 @@
     NO_CHROME_KDE_FILE_DIALOG=1
   #+END_SRC
 
+** 插件
+   #+BEGIN_EXAMPLE
+   chrome://plugins
+   #+END_EXAMPLE
+
 * timezone
   #+BEGIN_SRC sh
     dpkg-reconfigure tzdata
@@ -370,7 +375,7 @@
 
 * 解压7z
   #+BEGIN_SRC sh
-    7z x filename.7z  
+    7z x filename.7z
   #+END_SRC
 * nethogs
   查看网络流量被哪些进程占用。
@@ -413,10 +418,10 @@
 ** 基本命令
    #+BEGIN_SRC sh
      # 表示每60秒输出一次，共输出5次
-     sar 60 5 
+     sar 60 5
    #+END_SRC
 
-   
+
 ** 保存到文件
    #+BEGIN_SRC sh
      # save
@@ -429,42 +434,105 @@
    有一个选项-P，就是用来为多核处理器而设计的。
    #+BEGIN_EXAMPLE
      -b：报告I/O使用情况以及传输速率。（只适用于2.5及之前的内核，所以新内核有可能不支持这个选项）
-     
+
      -B：报告“页”使用情况
-     
+
      -c：报告进程创建情况
-     
+
      -d：报告每一个块设备的使用情况
      （当你使用时，你会发现在DEV列有类似dev1-7格式的字符串，
      其中1代表设备的主序号，n代表设备的从序号，
      而且rd_sec/s列和wr_sec/s列的单位都是512bytes，也就是512B，也就是0.5KB）
-     
+
      -I：汇报中断情况
-     
+
      -n：汇报网络情况
-     
+
      -P：设定CPU
-     
+
      -q：汇报队列长度和负载信息
-     
+
      -r：汇报内存和交换区使用情况
-     
+
      -R：汇报内存情况
-     
+
      -u：汇报CPU使用情况
-     
+
      -v：汇报i节点、文件和其他内核表信息
-     
+
      -w：汇报系统上下文切换情况
-     
+
      -x：可以针对某个特定PID给出统计信息，
      可以直接指定进程ID号；
      也可以指定为SELF，这样就是检测sar进程本身；
      如果设定为ALL，则表示汇报所有系统进程信息。
-     
+
      -X：汇报特定PID的子进程的信息
-     
-     -y：设定TTY设备的信息。   
+
+     -y：设定TTY设备的信息。
    #+END_EXAMPLE
 
+
+* 源代码统计
+  #+BEGIN_SRC sh
+    cloc
+  #+END_SRC
+
+* autotools
+  1. http://www.lugod.org/presentations/autotools/presentation/autotools.pdf
+  2. http://www.laruence.com/2009/11/18/1154.html
+
+** Summary
+   1. Create sources, “Makefile.am”
+   2. `autoscan`
+   3. Rename “configure.scan” to “configure.ac”
+   4. `autoheader`
+   5. Add AM_INIT_AUTOMAKE to “configure.ac”
+   6. `aclocal`
+   7. `automake ­­add­missing ­­copy`
+   8. `autoconf`
+   9. `./configure`
+   10. `make`
+   11. `make install`
+
+** If you modify your source...
+   1. Run `autoscan` again
+   2. Compare configure.scan with configure.ac. And update configure.ac
+   3. Run `autoreconf`
+
+* awk
+** 制定变量
+   #+BEGIN_SRC sh
+     nmap -sP -PR $1 | awk -v my_ip=$2 '/^Nmap scan report for/ {if ($5 != my_ip) print $5}' | ./arpkill.py
+     
+     # You can pass shell variables to awk using the -v option:
+     n1=5
+     n2=10
+     echo | awk -v x=$n1 -v y=$n2 -f program.awk
+     
+     # awk program
+     BEGIN{ans=x+y}
+     {print ans}
+     END{}
+   #+END_SRC
    
+** demo
+   #+BEGIN_SRC sh
+     awk '$9 == 500 ' /var/log/httpd/access.log
+     awk '$9 == 500 {print} ' /var/log/httpd/access.log
+     awk '$9 == 500 {print $0} ' /var/log/httpd/access.log
+     
+     awk '/tom|jerry|vivek/' /etc/passwd
+     
+     awk -F':' '{ print $1 }' /etc/passwd | sort
+     
+     # Print 1st Line From File
+     awk "NR==1{print;exit}" /etc/resolv.conf
+     awk "NR==$line{print;exit}" /etc/resolv.conf
+     
+     # You get the sum of all the numbers in a column:
+     awk '{total += $1} END {print total}' earnings.txt
+     
+     # List your top 10 favorite commands:
+     history | awk '{print $2}' | sort | uniq -c | sort -rn | head
+   #+END_SRC

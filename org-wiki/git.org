@@ -194,5 +194,22 @@
 
   [[http://git-scm.com/book/zh/%25E6%259C%258D%25E5%258A%25A1%25E5%2599%25A8%25E4%25B8%258A%25E7%259A%2584-Git-%25E5%259C%25A8%25E6%259C%258D%25E5%258A%25A1%25E5%2599%25A8%25E4%25B8%258A%25E9%2583%25A8%25E7%25BD%25B2-Git][服务器上的 Git - 在服务器上部署 Git]]
 
+* Proxy
+
+** unset proxy
+   #+BEGIN_SRC sh
+     git config --global --unset core.gitproxy
+   #+END_SRC
+
+** git协议的代理
+   #+BEGIN_SRC sh
+     export GIT_PROXY_COMMAND="~/bin/proxy-wrapper"
+   #+END_SRC
+
+* submodule
+  #+BEGIN_SRC sh
+    git submodule add git://github.com/chneukirchen/rack.git rack
+  #+END_SRC
+
 * 资料
   [[http://rogerdudler.github.com/git-guide/index.zh.html][git - 简易指南]]

@@ -7,3 +7,64 @@
     worker_processes     2;
     worker_cpu_affinity 01 10;
   #+END_EXAMPLE
+
+* accept
+  In ngx_event_accept.c
+
+  #+BEGIN_SRC c
+    s = accept(lc->fd, (struct sockaddr *) sa, &socklen);
+    
+    if (s == -1)
+    {
+        err = ngx_socket_errno;
+    
+        if (err == NGX_EAGAIN) {
+            ngx_log_debug0(NGX_LOG_DEBUG_EVENT, ev->log, err,
+                           "accept() not ready");
+            return;
+        }
+    
+        level = NGX_LOG_ALERT;
+    
+        if (err == NGX_ECONNABORTED) {
+            level = NGX_LOG_ERR;
+    
+        } else if (err == NGX_EMFILE || err == NGX_ENFILE) {
+            level = NGX_LOG_CRIT;
+        }
+    
+        ngx_log_error(level, ev->log, err, "accept() failed");
+    
+        if (err == NGX_ECONNABORTED) {
+            if (ngx_event_flags & NGX_USE_KQUEUE_EVENT) {
+                ev->available--;
+            }
+    
+            if (ev->available) {
+                continue;
+            }
+        }
+    
+        if (err == NGX_EMFILE || err == NGX_ENFILE) {
+            if (ngx_disable_accept_events((ngx_cycle_t *) ngx_cycle)
+                != NGX_OK)
+            {
+                return;
+            }
+    
+            if (ngx_use_accept_mutex) {
+                if (ngx_accept_mutex_held) {
+                    ngx_shmtx_unlock(&ngx_accept_mutex);
+                    ngx_accept_mutex_held = 0;
+                }
+    
+                ngx_accept_disabled = 1;
+    
+            } else {
+                ngx_add_timer(ev, ecf->accept_mutex_delay);
+            }
+        }
+    
+        return;
+    }
+  #+END_SRC

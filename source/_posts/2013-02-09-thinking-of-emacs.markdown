@@ -414,6 +414,13 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 - `C-u M-=` 计算整个缓冲区的行数、字数和单词数
 - `M-g M-g linenum` 跳到某行，同vim中的`[linenum]G`
 - `C-u M-! date` 插入当前时间
+- `M-@` mark-word，连续按连续mark单词。
+- `M-x ping`
+- `M-x telnet`
+- `M-x dig`
+- `M-x ifconfig`
+- `C-x C-q` 开关read-only-mode，在dired-mode中可以进入修改模式，可以批量修改文件名。
+
 
 ### 中文输入法 ###
 
