@@ -140,3 +140,75 @@
   #+END_SRC
 
   timestamp就是一个大浮点数。
+
+* 多进程
+  http://docs.python.org/2/library/multiprocessing.html
+
+** 基本
+   #+BEGIN_SRC python
+     from multiprocessing import Process
+
+     def f(name):
+         print 'hello', name
+
+     if __name__ == '__main__':
+         p = Process(target=f, args=('bob',))
+         p.start()
+         p.join()
+   #+END_SRC
+** 共享数据
+
+*** Queues
+    #+BEGIN_SRC python
+      from multiprocessing import Process, Queue
+
+      def f(q):
+          q.put([42, None, 'hello'])
+
+      if __name__ == '__main__':
+          q = Queue()
+          p = Process(target=f, args=(q,))
+          p.start()
+          print q.get()    # prints "[42, None, 'hello']"
+          p.join()
+    #+END_SRC
+
+*** Pipes
+    #+BEGIN_SRC python
+      from multiprocessing import Process, Pipe
+
+      def f(conn):
+          conn.send([42, None, 'hello'])
+          conn.close()
+
+      if __name__ == '__main__':
+          parent_conn, child_conn = Pipe()
+          p = Process(target=f, args=(child_conn,))
+          p.start()
+          print parent_conn.recv()   # prints "[42, None, 'hello']"
+          p.join()
+    #+END_SRC
+
+*** Lock
+    #+BEGIN_SRC python
+      from multiprocessing import Process, Lock
+
+      def f(l, i):
+          l.acquire()
+          print 'hello world', i
+          l.release()
+
+      if __name__ == '__main__':
+          lock = Lock()
+
+          for num in range(10):
+              Process(target=f, args=(lock, num)).start()
+    #+END_SRC
+
+* autopy
+** 安装
+   用pip安装autopy的时候，出现这个“X11/extensions/XTest.h: No such file or directory”。
+
+   #+BEGIN_SRC sh
+     sudo apt-get install libxtst-dev
+   #+END_SRC
