@@ -2,6 +2,13 @@
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
 
+* 多进程
+  #+BEGIN_SRC sh
+    set follow-fork-mode parent
+    set follow-fork-mode child
+    set follow-fork-mode ask
+  #+END_SRC
+
 * 保存断点
   #+BEGIN_EXAMPLE
   save breakpoints <filename>

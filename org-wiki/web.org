@@ -4,3 +4,27 @@
 
 * 如何移除Cookie
   设置一个过去的时间，然后就expired了。
+
+* bind: Address already in use
+  #+BEGIN_SRC c
+    int on = 1;
+    if((setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on))) < 0)
+    {
+        perror("setsockopt failed");
+        exit(EXIT_FAILURE);
+    }
+  #+END_SRC
+
+* read
+** 阻塞模式
+   在read的时候，没有可读的数据时，就会阻塞。如果收到对方发送的fin，那么read将会返回0。
+
+* write buffer size
+  if you want see your buffer size in terminal, you can take a look at =/proc/sys/net/ipv4/tcp_rmem= (for read) and =/proc/sys/net/ipv4/tcp_wmem= (for write), they contain three numbers, which are *minimum*, *default* and *maximum* memory size values (in byte), respectively.
+
+* non block socket
+  #+BEGIN_SRC c
+    int flags = fcntl(sockfd, F_GETFL, 0);
+    if (flags < 0) exit(EXIT_FAILURE);
+    fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
+  #+END_SRC

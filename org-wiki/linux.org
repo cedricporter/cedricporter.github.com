@@ -536,3 +536,10 @@
      # List your top 10 favorite commands:
      history | awk '{print $2}' | sort | uniq -c | sort -rn | head
    #+END_SRC
+
+* zsh
+  #+BEGIN_SRC sh
+    cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+    
+    chsh -s /bin/zsh  
+  #+END_SRC
