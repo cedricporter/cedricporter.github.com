@@ -1,0 +1,6 @@
+#+TITLE: misc
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* 各种颜色
+  http://web.njit.edu/~kevin/rgb.txt.html
