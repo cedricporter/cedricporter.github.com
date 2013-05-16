@@ -1,6 +1,7 @@
 #+TITLE: Web相关
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
+#+OPTIONS: ^:{}
 
 * 如何移除Cookie
   设置一个过去的时间，然后就expired了。
@@ -28,3 +29,34 @@
     if (flags < 0) exit(EXIT_FAILURE);
     fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
   #+END_SRC
+
+* read
+  我们在accept后，创建了一个新的文件描述符connfd，然后如果此时，客户端关闭了连接，我们调用read将会返回0还是-1呢？这个问题必须要考虑好。
+
+** block read
+   这里通过O_RDONLY打开的文件，在read的时候会阻塞，真是怪异。
+
+   #+BEGIN_SRC c
+     if ((file_fd = open(filename, O_RDONLY) == -1))
+     {
+         perror("open");
+         return;
+     }
+
+     while ((rdsize = read(file_fd, r->buffer, MAXLINE)) > 0)
+         ;
+   #+END_SRC
+
+   突然发现，if的括号扩错了，就变成了
+   #+BEGIN_SRC c
+     file_fd = (open(filename, O_RDONLY) == -1)
+   #+END_SRC
+
+   真是悲了个剧。
+
+* Too many open files
+  这次打开文件没有关闭，然后在accept的时候就提示Too many open files。
+
+* 内存泄露
+  今天发现我释放request的对象时候直接使用的是free，而没有使用其析构函数。所以导致其中的et_string没有被释放，于是用ab跑1000000个连接，瞬间就内存占用很高了。
+  修改了释放函数，内存就一直保持不变了。

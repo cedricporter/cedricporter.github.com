@@ -211,5 +211,15 @@
     git submodule add git://github.com/chneukirchen/rack.git rack
   #+END_SRC
 
+* 丢失commit
+  在用git-svn或者某些外部程序调用git的时候，有时候会导致git丢失一些log。但是丢失log并不带代表是丢失commit，我们只需要找回以前的commit就行了。
+
+  利用reflog，我们很容易可以找到所有的commit，然后我们就可以将master之类的游标reset到我们想要去到的commit。
+
+  #+BEGIN_SRC sh
+    git reflog
+    git reset --hard 1e35a3
+  #+END_SRC
+
 * 资料
   [[http://rogerdudler.github.com/git-guide/index.zh.html][git - 简易指南]]

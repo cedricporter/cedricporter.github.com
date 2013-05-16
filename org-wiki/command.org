@@ -204,6 +204,9 @@
     column -s, -t < somefile.csv | less -#2 -N -S
     # or
     cvstool readable filename | view -
+
+    # rm not match
+    ls | grep -v ".sql" | xargs rm
   #+END_SRC
 
   http://www.commandlinefu.com/commands/browse
@@ -296,4 +299,11 @@
     apt-get moo
 
     for i in "Welcome!" "Every body," "I'm Hua Liang."; do; xcowsay $i ; done;
+  #+END_SRC
+
+* mount
+  #+BEGIN_SRC sh
+    # 重新挂载为读写，在Ubuntu的recovery的root模式下，
+    # 将只读权限修改位可读。
+    mount -o rw,remount /
   #+END_SRC

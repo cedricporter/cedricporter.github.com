@@ -122,7 +122,7 @@
 * 开启
   #+BEGIN_EXAMPLE
     1. gdb <program>
-       program也就是你的执行文件，一般在当然目录下。
+       program也就是你的执行文件，一般在当前目录下。
     1. gdb <program> core
        用gdb同时调试一个运行程序和core文件，core是程序非法执行后core dump后产生的文件。
     1. gdb <program> <PID>
@@ -270,3 +270,23 @@
 
 
   载自：http://blog.csdn.net/haoel/article/details/2880
+
+* 在emacs中如何以root权限使用gdb调试程序
+  由于M-x命令中使用sudo输入密码无效，需要配置为允许用户sudo gdb免密码
+  #+BEGIN_SRC sh
+    visudo
+  #+END_SRC
+
+  #+BEGIN_EXAMPLE
+    # Allow user to sudo gdb without password
+    用户 ALL=NOPASSWD: /usr/bin/gdb
+
+  #+END_EXAMPLE
+
+  使用root权限启动gdb
+
+  M-x gdb
+
+  sudo gdb <program> <pid> --annotate=3
+
+  From: [[http://blog.kankanan.com/posts/2013/03/30_5728emacs4e2d59824f554ee5root674396504f7f7528gdb8c038bd57a0b5e8f.html][在emacs中如何以root权限使用gdb调试程序]]

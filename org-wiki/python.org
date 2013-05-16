@@ -212,3 +212,12 @@
    #+BEGIN_SRC sh
      sudo apt-get install libxtst-dev
    #+END_SRC
+
+* 合并两个dict
+  #+BEGIN_SRC python
+    d1 = {1:1, 2:2}
+    d2 = {1:1, 3:3}
+    d1.update(d2)
+    print d1
+    # {1: 1, 2: 2, 3: 3}
+  #+END_SRC

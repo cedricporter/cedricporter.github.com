@@ -1,0 +1,12 @@
+#+TITLE: zencoding.org
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* Example
+  #+BEGIN_EXAMPLE
+    div#name.one.two
+  #+END_EXAMPLE
+  and follow that with the zen-coding plugin keystroke (CMD+E in TextMate), the plugin will reformat the line as:
+  #+BEGIN_EXAMPLE
+  <div id="name" class="one two"></div>
+  #+END_EXAMPLE
