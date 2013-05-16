@@ -2,11 +2,32 @@
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
 
+* 简介
+  #+BEGIN_EXAMPLE
+    zen-coding includes an entirely new angle to writing markup, and it facilitates the feature by letting you write HTML based on CSS selectors. It’s so simple it’s confusing at first. I think it’s best explained by doing a quick before and after.
+  #+END_EXAMPLE
+
+  https://github.com/rooney/zencoding
+
 * Example
   #+BEGIN_EXAMPLE
     div#name.one.two
   #+END_EXAMPLE
   and follow that with the zen-coding plugin keystroke (CMD+E in TextMate), the plugin will reformat the line as:
+
+  #+BEGIN_SRC html
+    <div id="name" class="one two"></div>
+  #+END_SRC
+
+* form
   #+BEGIN_EXAMPLE
-  <div id="name" class="one two"></div>
+    form>input type=text name=username+input type=password name=password+input type=submit
   #+END_EXAMPLE
+
+  #+BEGIN_SRC html
+    <form>
+      <input type="text" name="username"/>
+      <input type="password" name="password"/>
+      <input type="submit"/>
+    </form>
+  #+END_SRC
