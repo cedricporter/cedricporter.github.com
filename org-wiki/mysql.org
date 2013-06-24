@@ -42,6 +42,12 @@
      alter table yagra_image change image_id image_id bigint(20) unsigned not null auto_increment;
    #+END_SRC
 
+** 查询语句太宽
+   #+BEGIN_SRC sql
+     SELECT * FROM product \G;
+   #+END_SRC
+   对于查询结果太宽的，可以在后面加上\G。
+
 * FAQ
 
 ** errno: 150
@@ -149,7 +155,7 @@
 
 
    既然索引可以加快查询速度，那么是不是只要是查询语句需要，就建上索引？答案是否定的。因为索引虽然加快了查询速度，但索引也是有代价的：索引文件本身要消耗存储空间，同时索引会加重插入、删除和修改记录时的负担，另外，MySQL在运行时也要消耗资源维护索引，因此索引并不是越多越好。
-
+p
 
 
 * Misc

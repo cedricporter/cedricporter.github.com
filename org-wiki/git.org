@@ -221,5 +221,10 @@
     git reset --hard 1e35a3
   #+END_SRC
 
+* 对比分支之间的区别
+  #+BEGIN_SRC sh
+    git diff --name-status master..file_buffer  
+  #+END_SRC
+
 * 资料
   [[http://rogerdudler.github.com/git-guide/index.zh.html][git - 简易指南]]

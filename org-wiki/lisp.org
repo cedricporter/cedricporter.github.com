@@ -1,0 +1,8 @@
+#+TITLE: Lisp
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+这里记录一下Emacs Lisp的语法，许多东西如果不记录一下，可能在需要的时候，就难以找到曾经解决过的问题的答案。
+
+* Loop
+  
