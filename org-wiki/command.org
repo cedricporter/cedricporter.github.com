@@ -4,9 +4,6 @@
 
 * 有趣的command
   #+BEGIN_SRC sh
-    # list only directories in reverse order
-    ls -ltrhd */
-
     # Batch rename and number files
     # The '1' in '%01d' changes the amounts of digits in the integer, eg. 1 vs 0001.
     count='1'; for i in *.jpg; do mv $i $(printf '%01d'.jpg $count); (( count++ )); done
@@ -19,13 +16,6 @@
     # or
     uname -m
 
-    # list directories only
-    ls -F | grep /
-    # or
-    ls -d */
-
-    # list directory in chronological order, most recent files at end of list
-    ls -qaltr
 
     # Extract text from picture [OCR reader]
     gocr -i ~/Screenshot.png
@@ -38,8 +28,6 @@
     # Reload all sysctl variables without reboot
     /sbin/sysctl -p
 
-    # Sort contents of a directory with human readable output
-    du -hs * | sort -h
 
     # Find files with size over 100MB and output with better lay-out
     find . -type f -size +100M
@@ -207,6 +195,15 @@
 
     # rm not match
     ls | grep -v ".sql" | xargs rm
+
+    # report what type of file it is.
+    file ‹filename›
+
+    # search man pages.
+    apropos ‹string›
+
+    # generate the output of ‹cmd› and use it in your whole command.
+    ls -l `which more`
   #+END_SRC
 
   http://www.commandlinefu.com/commands/browse
@@ -307,3 +304,115 @@
     # 将只读权限修改位可读。
     mount -o rw,remount /
   #+END_SRC
+
+* 文件浏览
+** tree
+   #+BEGIN_EXAMPLE
+     -L ‹level› → specify depth.
+     -P ‹pattern› → using wildcard to match file names to limit listing. ⁖ *html to show only html files.
+     -d → show dirs only.
+     -r → reverse order.
+     -t → sort output my last modification time.
+     --dirsfirst → list dir before files.
+     --filelimit ‹n› → don't go into dir that's more than ‹n› files.
+     -F → display file type indicator. ⁖ “/” for dir, “*” for executable, etc.
+     -p → show file perm and type.
+     -h → print file size in human readable format.
+   #+END_EXAMPLE
+
+** ls
+   #+BEGIN_SRC sh
+     # list only directories in reverse order
+     ls -ltrhd */
+
+     # list directories only
+     ls -F | grep /
+     # or
+     ls -d */
+
+     # list directory in chronological order, most recent files at end of list
+     ls -qaltr
+   #+END_SRC
+
+** du
+   #+BEGIN_SRC sh
+     # Sort contents of a directory with human readable output
+     du -hs * | sort -h
+
+     # How to find the size of a dir?
+     du -sh ‹dir_name›
+
+     # How to find the size of all top-level subdirs?
+     # for human readable format and sorted.
+     du -h -d1 | sort -h
+     #For raw byte count, do
+     du -d1 | sort -n
+   #+END_SRC
+
+   一些参数
+   #+BEGIN_EXAMPLE
+     -s = do not calculate size of subdirectories.
+     -d ‹n› = calculate all size of subdirs to depth ‹n›. -d 1 would be all the first level subdirs.
+     Human readable forms. (kilo, mega, giga)
+
+     -h = human readable form; in binary units.
+     --si = human readable form; in metric units.
+   #+END_EXAMPLE
+
+* apt-get
+  #+BEGIN_SRC sh
+    apt-cache search ‹name› # find package ‹name› for install by “apt-get”
+    apt-cache show ‹name›   # describe package ‹name›
+    apt-get install ‹name›  # install a new program. (usually used with sudo in front)
+    apt-get remove ‹name›   # remove (un-install) a program.
+    apt-get purge ‹name›    # remove a program and its config files.
+    dpkg -l # list all installed packages
+  #+END_SRC
+
+
+* htop
+** View
+   #+BEGIN_EXAMPLE
+     M ⇒ Sort by memory usage.
+     P ⇒ Sort by processor usage.
+     T ⇒ Sort by time.
+     F6 or > ⇒ Select field for sorting. The sort field is indicated by a highlight in the header.
+     F4 or I ⇒ Invert sort order.
+     F5 or t ⇒ Tree view toggle.
+     +, - ⇒ expand/collapse subtree.
+     u ⇒ Show only processes owned by a specified user.
+     K ⇒ Show/hide kernel threads.
+     H ⇒ Show/hide user threads.
+   #+END_EXAMPLE
+
+** Search Processes
+   #+BEGIN_EXAMPLE
+     F3 or / ⇒ Incremental process search by name.
+     Type number to start incremental search on PID
+   #+END_EXAMPLE
+
+** Mark Processes
+   #+BEGIN_EXAMPLE
+     Space ⇒ mark a process. (you can kill all marked processes later)
+     U ⇒ unmark all.
+   #+END_EXAMPLE
+
+** Actions
+   #+BEGIN_EXAMPLE
+     F9 or k ⇒ Kill marked processes or current process.
+     F7 or ] ⇒ Increase selected process priority.
+     F8 or [ ⇒ Decrease selected process priority.
+   #+END_EXAMPLE
+
+** Misc
+   #+BEGIN_EXAMPLE
+     s ⇒ Trace process system calls: if strace(1) is installed, pressing this key will attach it to the currently selected process, presenting a live update of system calls issued by the process.
+     l ⇒ Display open files for a process
+     F2 or S ⇒ Setup screen. There you can configure meters displayed on the top side of the screen, as well as set various display options, choose among color schemes and select the layout of the displayed columns.
+     a ⇒ (on multiprocessor machines) Set CPU affinity: mark which CPUs a process is allowed to use.
+     F ⇒ “Follow” process: if the sort order causes the currently selected process to move in the list, make the selection bar follow it. This is useful for monitoring a process: this way, you can keep a process always visible on screen. When a movement key is used, “follow” loses effect.
+     【Ctrl+L】 Refresh: redraw screen and recalculate values.
+     F10 or q ⇒ Quit
+   #+END_EXAMPLE
+
+   http://xahlee.info/linux/linux_monitor_processes_htop.html
