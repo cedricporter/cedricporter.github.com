@@ -1,0 +1,4 @@
+#+TITLE: cygwin.org
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+

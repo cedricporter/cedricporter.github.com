@@ -26,3 +26,27 @@
     check-syntax:
             $(C_COMPILE) $(C_DEPENDENCIES) -Wall -Wextra -Wno-unused-parameter -pedantic -fsyntax-only $(CHK_SOURCES)
   #+END_SRC
+
+* 在Windows上的使用
+  我们可以使用cygwin中的Emacs，这样Emacs可以更加正常地运行。因为Emacs会依赖需要外部的Unix程序。
+
+  我们安装cygwin中的emacs-w32，然后就OK了。
+
+**  启动Emacs
+    创建一个快捷方式，在里面填上：
+    #+BEGIN_EXAMPLE
+      C:\cygwin\bin\run.exe /usr/bin/emacs    
+    #+END_EXAMPLE
+
+    然后就可以直接打开cygwin中的Emacs了。至于配置文件，就放在cygwin中的家目录中，之后的东西就和*nix一样了。
+
+** 在cygwin中的环境变量
+   #+BEGIN_SRC lisp
+     (setenv "PATH"
+             (concat
+              "C:/cygwin/usr/local/bin" ";"
+              "C:/cygwin/usr/bin" ";"
+              "C:/cygwin/bin" ";"
+              (getenv "PATH")
+              ))
+   #+END_SRC
