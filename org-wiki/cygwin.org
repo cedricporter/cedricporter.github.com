@@ -3,28 +3,39 @@
 #+LINK_HOME: index.html
 
 * apt-cyg
-  
+
 ** 安装
    #+BEGIN_SRC sh
      wget http://apt-cyg.googlecode.com/svn/trunk/apt-cyg
      chmod +x apt-cyg
-     mv apt-cyg /usr/local/bin/   
+     mv apt-cyg /usr/local/bin/
    #+END_SRC
 
-   
+
 ** 修改源和下载目录
    #+BEGIN_SRC diff
      -mirror=ftp://mirror.mcs.anl.gov/pub/cygwin
      -cache=/setup
      +mirror=http://mirrors.163.com/cygwin
      +cache=/cygdrive/c/Users/Cedric\ Porter/Downloads/cygwin
-     
+
    #+END_SRC
 
-   
+
 ** 使用cygwinports源
    #+BEGIN_SRC sh
-     apt-cyg -m ftp://ftp.cygwinports.org/pub/cygwinports find php   
+     apt-cyg -m ftp://ftp.cygwinports.org/pub/cygwinports find php
    #+END_SRC
 
    参考：[[http://zengrong.net/post/1792.htm][Cygwin的包管理器：apt-cyg]]
+
+* fix curl ssl
+  #+BEGIN_SRC sh
+    # fix curl
+    pushd /usr/ssl/certs
+    curl http://curl.haxx.se/ca/cacert.pem | awk 'split_after==1{n++;split_after=0} /-----END CERTIFICATE-----/ {split_after=1} {print > "cert" n ".pem"}'
+    c_rehash
+
+    # fix wget
+    ln -sT /usr/ssl /etc/ssl
+  #+END_SRC
