@@ -4,3 +4,20 @@
 
 * Git自动生成
   [[http://phoenixsec.org/Web/2012/08/29/deploy-jekyll-on-vps/][Deploy Jekyll on VPS]]
+
+* 在其他电脑写octopress
+  #+BEGIN_SRC sh
+    git clone git@github.com:[Yourname]/[yourname].github.com.git octopress
+    cd octopress
+    
+    git checkout -b source origin/source
+    
+    git remote add octopress https://github.com/imathis/octopress.git
+    
+    git clone git@github.com:[Yourname]/[yourname].github.com.git _deploy
+    
+    ;: install bundles
+    gem install bundler
+    bundle install
+    rake install  
+  #+END_SRC
