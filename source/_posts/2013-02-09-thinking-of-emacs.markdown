@@ -420,6 +420,9 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 - `M-x dig`
 - `M-x ifconfig`
 - `C-x C-q` 开关read-only-mode，在dired-mode中可以进入修改模式，可以批量修改文件名。
+- `C-h C` 查看当前文件的编码
+- `C-x <RET> f utf-8` （set-buffer-file-coding-system），设置当前buffer的文件的编码
+- `c-u M-! date` 插入当前时间
 
 
 ### 中文输入法 ###

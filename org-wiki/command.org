@@ -10,40 +10,40 @@
     # or
     # This command will take the files in a directory, rename them, and then number them from 1...N.
     find . -name '*.jpg' | awk 'BEGIN{ a=0 }{ printf "mv %s name%01d.jpg\n", $0, a++ }' | bash
-
+    
     # Check if *hardware* is 32bit or 64bit
     grep " lm " /proc/cpuinfo > /dev/null && echo "64-bit" || echo "32-bit"
     # or
     uname -m
-
-
+    
+    
     # Extract text from picture [OCR reader]
     gocr -i ~/Screenshot.png
-
+    
     # Let you vanish in the (bash) history.
     export HISTFILE=/dev/null
     # or
     export HISTSIZE=0
-
+    
     # Reload all sysctl variables without reboot
     /sbin/sysctl -p
-
-
+    
+    
     # Find files with size over 100MB and output with better lay-out
     find . -type f -size +100M
-
+    
     # Open Port Check
     netstat -an | grep --color -i -E 'listen|listening'
-
+    
     # Generate password
     tr -dc 'A-Za-z0-9!@#$%^&*' < /dev/urandom | fold -w 12 | head -n 1
-
+    
     # http://superuser.com/questions/133313/can-i-speed-up-cygwins-fork
     while (true); do date --utc; done | uniq -c
-
+    
     # Serve current directory tree at http://$HOSTNAME:8000/
     python -m SimpleHTTPServer
-
+    
     # Place the argument of the most recent command on the shell
     # When typing out long arguments, such as:
     # cp file.txt /var/www/wp-content/uploads/2009/03/
@@ -51,43 +51,43 @@
     # cd 'ALT+.'
     # would put '/var/www/wp-content/uploads/2009/03/ as my argument. Keeping pressing 'ALT+.' to cycle through arguments of your commands starting from most recent to oldest. This can save a ton of typing.
     'ALT+.' or '<ESC> .'
-
+    
     # currently mounted filesystems in nice layout
     mount | column -t
-
+    
     # start a tunnel from some machine's port 80 to your local post 2001
     # now you can acces the website by going to http://localhost:2001/
     ssh -N -L2001:localhost:80 somemachine
-
+    
     # Execute a command at a given time
     echo "ls -l" | at midnight
-
+    
     # Lists all listening ports together with the PID of the associated process
     # The PID will only be printed if you're holding a root equivalent ID.
     netstat -tlnp
-
+    
     # output your microphone to a remote computer's speaker
     # This will output the sound from your microphone port to the ssh target computer's speaker port. The sound quality is very bad, so you will hear a lot of hissing.
     dd if=/dev/dsp | ssh -c arcfour -C username@host dd of=/dev/dsp
-
+    
     # Runs previous command replacing foo by bar every time that foo appears
     !!:gs/foo/bar
-
+    
     # Quick access to the ascii table.
     man ascii
-
+    
     # Mount a temporary ram partition
     # Makes a partition in ram which is useful if you need a temporary working space as read/write access is fast.
     # Be aware that anything saved in this partition will be gone after your computer is turned off.
     mount -t tmpfs tmpfs /mnt -o size=1024m
-
+    
     # Get your external IP address
     curl ifconfig.me
     curl ifconfig.me/ip             # IP Adress
     curl ifconfig.me/host           # Remote Host
     curl ifconfig.me/ua             # User Agent
     curl ifconfig.me/port           # Port
-
+    
     # Download an entire website
     # -p parameter tells wget to include all files, including images.
     # -e robots=off you don't want wget to obey by the robots.txt file
@@ -98,25 +98,25 @@
     # -b continues wget after logging out.
     # -o $HOME/wget_log.txt logs the output
     wget --random-wait -r -p -e robots=off -U mozilla http://www.scut.edu.cn
-
+    
     # Jump to a directory, execute a command and jump back to current dir
     (cd /tmp && ls)
-
+    
     # SSH connection through host in the middle
     ssh -t reachable_host ssh unreachable_host
-
+    
     # Make 'less' behave like 'tail -f'.
     # Using +F will put less in follow mode. This works similar to 'tail -f'. To stop scrolling, use the interrupt. Then you'll get the normal benefits of less (scroll, etc.).
     # Pressing SHIFT-F will resume the 'tailling'.
     less +F somelogfile
-
+    
     # Simulate typing
     # This will output the characters at 10 per second.
     echo "You can simulate on-screen typing just like in the movies" | pv -qL 10
-
+    
     # List of commands you use most often
     history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
-
+    
     # Push your present working directory to a stack that you can pop later
     # If are a Bash user and you are in a directory and need to go else where for a while but don't want to lose where you were, use pushd instead of cd.
     # cd /home/complicated/path/.I/dont/want/to/forget
@@ -124,40 +124,40 @@
     # cd thing/in/tmp
     # popd (returns you to /home/complicated/path/.I/dont/want/to/forget)
     pushd /tmp
-
+    
     # Put a console clock in top right corner
     while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-29));date;tput rc;done &
-
+    
     # Set CDPATH to ease navigation
     # CDPATH tells the cd command to look in this colon-separated list of directories for your destination. My preferred order are 1) the current directory, specified by the empty string between the = and the first colon, 2) the parent directory (so that I can cd lib instead of cd ../lib), 3) my home directory, and 4) my ~/projects directory.
     CDPATH=:..:~:~/projects
-
+    
     # Delete all files in a folder that don't match a certain file extension
     # Deletes all files in a folder that are NOT *.foo, *.bar or *.baz files. Edit the pattern inside the brackets as you like.
     rm !(*.foo|*.bar|*.baz)
-
+    
     # escape any command aliases
     # e.g. if rm is aliased for 'rm -i', you can escape the alias by prepending a backslash:
     # rm [file] # WILL prompt for confirmation per the alias
     # \rm [file] # will NOT prompt for confirmation per the default behavior of the command
     \[command]
-
+    
     # save command output to image
     ifconfig | convert label:@- ip.png
-
+    
     # Matrix Style
     tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"
-
+    
     # quickly rename a file
     mv filename.{old,new}
-
+    
     # Display which distro is installed
     cat /etc/issue
-
+    
     # Copy your SSH public key on a remote machine for passwordless login - the easy way
     ssh-copy-id username@hostname
     ssh-copy-id '-p 1990 root@ras.everet.org' # you need to quote if you don't use a standard port
-
+    
     # Insert the last command without the last argument (bash)
     # /usr/sbin/ab2 -f TLS1 -S -n 1000 -c 100 -t 2 http://www.google.com/
     # then
@@ -165,45 +165,47 @@
     # is the same as
     # /usr/sbin/ab2 -f TLS1 -S -n 1000 -c 100 -t 2 http://www.commandlinefu.com/
     !:-
-
+    
     # Show File System Hierarchy
     # Curious about differences between /bin, /usr/bin, and /usr/local/bin? What should be in the /sbin dir? Try this command to find out.
     # Tested against Red Hat & OS X
     man hier
-
-
+    
+    
     # Easily search running processes (alias).
     alias 'psg'='ps ax | grep '
-
+    
     # replace spaces in filenames with underscores
     rename 'y/ /_/' *
-
+    
     # Run a file system check on your next boot.
     # The empty file /forcefsck causes the file system check fsck to be run next time you boot up, after which it will be removed.
     # This works too:
     # sudo >/forcefsck
     sudo touch /forcefsck
-
+    
     # To print a specific line from a file
     # You can get one specific line during any procedure. Very interesting to be used when you know what line you want.
     sed -n 5p <file>
-
+    
     # 查看cvs
     column -s, -t < somefile.csv | less -#2 -N -S
     # or
     cvstool readable filename | view -
-
+    
     # rm not match
     ls | grep -v ".sql" | xargs rm
-
+    
     # report what type of file it is.
     file ‹filename›
-
+    
     # search man pages.
     apropos ‹string›
-
+    
     # generate the output of ‹cmd› and use it in your whole command.
     ls -l `which more`
+    
+    nohup [command] > /dev/null 2>&1 &
   #+END_SRC
 
   http://www.commandlinefu.com/commands/browse
