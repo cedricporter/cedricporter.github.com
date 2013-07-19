@@ -9,15 +9,18 @@
   #+BEGIN_SRC sh
     git clone git@github.com:[Yourname]/[yourname].github.com.git octopress
     cd octopress
-    
+
     git checkout -b source origin/source
-    
+
     git remote add octopress https://github.com/imathis/octopress.git
-    
+
     git clone git@github.com:[Yourname]/[yourname].github.com.git _deploy
-    
+
     ;: install bundles
     gem install bundler
     bundle install
-    rake install  
+    rake install
+
+    # 更新
+    git pull origin source
   #+END_SRC
