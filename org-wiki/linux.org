@@ -504,35 +504,35 @@
 ** 制定变量
    #+BEGIN_SRC sh
      nmap -sP -PR $1 | awk -v my_ip=$2 '/^Nmap scan report for/ {if ($5 != my_ip) print $5}' | ./arpkill.py
-     
+
      # You can pass shell variables to awk using the -v option:
      n1=5
      n2=10
      echo | awk -v x=$n1 -v y=$n2 -f program.awk
-     
+
      # awk program
      BEGIN{ans=x+y}
      {print ans}
      END{}
    #+END_SRC
-   
+
 ** demo
    #+BEGIN_SRC sh
      awk '$9 == 500 ' /var/log/httpd/access.log
      awk '$9 == 500 {print} ' /var/log/httpd/access.log
      awk '$9 == 500 {print $0} ' /var/log/httpd/access.log
-     
+
      awk '/tom|jerry|vivek/' /etc/passwd
-     
+
      awk -F':' '{ print $1 }' /etc/passwd | sort
-     
+
      # Print 1st Line From File
      awk "NR==1{print;exit}" /etc/resolv.conf
      awk "NR==$line{print;exit}" /etc/resolv.conf
-     
+
      # You get the sum of all the numbers in a column:
      awk '{total += $1} END {print total}' earnings.txt
-     
+
      # List your top 10 favorite commands:
      history | awk '{print $2}' | sort | uniq -c | sort -rn | head
    #+END_SRC
@@ -540,6 +540,51 @@
 * zsh
   #+BEGIN_SRC sh
     cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
-    
-    chsh -s /bin/zsh  
+
+    chsh -s /bin/zsh
   #+END_SRC
+
+* swap
+** 创建swap分区
+   #+BEGIN_SRC sh
+     sudo swapoff -a # 停止所有的swap分区
+     sudo fdisk /dev/sda
+     # t -> 82(Linux swap)
+     sudo mkswap /dev/sda4
+     sudo swapon /dev/sda4
+     # Edit /etc/fstab
+     # /dev/sda4 swap swap defaults 0 0
+
+   #+END_SRC
+
+** 文件swap
+   #+BEGIN_SRC sh
+     sudo dd if=/dev/zero of=/root/swapfile bs=4M count=1024
+
+     sudo mkswap /root/swapfile #建立swap的文件系统
+
+     sudo swapon /root/swapfile #启用swap文件
+
+     # Edit /etc/fstab
+     # /root/swapfile swap swap defaults 0 0
+   #+END_SRC
+
+* grub
+
+** grub rescue
+   首先在rescue界面中尝试启动normal版本的grub
+   #+BEGIN_SRC sh
+     ls
+     # 然后遍历每个分区，找到有/boot/grub的分区
+     ls (hd0, 0)/boot/grub
+     set root=(hd0,2)
+     set prefix=(hd0,2)/boot/grub/i386-pc
+     insmod normal.mod
+     normal
+   #+END_SRC
+
+   然后进入到Linux中：
+   #+BEGIN_SRC sh
+     sudo update-grub
+     sudo grub-install /dev/sda
+   #+END_SRC
