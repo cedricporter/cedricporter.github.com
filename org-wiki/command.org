@@ -56,7 +56,7 @@
     mount | column -t
 
     # start a tunnel from some machine's port 80 to your local post 2001
-    # now you can acces the website by going to http://localhost:2001/
+    # now you can access the website by going to http://localhost:2001/
     ssh -N -L2001:localhost:80 somemachine
 
     # Execute a command at a given time
@@ -101,9 +101,6 @@
 
     # Jump to a directory, execute a command and jump back to current dir
     (cd /tmp && ls)
-
-    # SSH connection through host in the middle
-    ssh -t reachable_host ssh unreachable_host
 
     # Make 'less' behave like 'tail -f'.
     # Using +F will put less in follow mode. This works similar to 'tail -f'. To stop scrolling, use the interrupt. Then you'll get the normal benefits of less (scroll, etc.).
@@ -153,10 +150,6 @@
 
     # Display which distro is installed
     cat /etc/issue
-
-    # Copy your SSH public key on a remote machine for passwordless login - the easy way
-    ssh-copy-id username@hostname
-    ssh-copy-id '-p 1990 root@ras.everet.org' # you need to quote if you don't use a standard port
 
     # Insert the last command without the last argument (bash)
     # /usr/sbin/ab2 -f TLS1 -S -n 1000 -c 100 -t 2 http://www.google.com/
@@ -231,11 +224,6 @@
 
     # 创建文件
     touch {1..50}
-  #+END_SRC
-
-* 一句话创建sock5代理
-  #+BEGIN_SRC sh
-    ssh -qfnNT -D 127.0.0.1:3389 -l root -p 1990 ipv6.everet.org
   #+END_SRC
 
 * 快速为ip绑定域名
@@ -416,3 +404,10 @@
    #+END_EXAMPLE
 
    http://xahlee.info/linux/linux_monitor_processes_htop.html
+
+* 语法高亮的cat
+  #+BEGIN_SRC sh
+    # http://stackoverflow.com/questions/7851134/syntax-highlighting-colorizing-cat
+    sudo apt-get install python-pygments
+    alias ccat='pygmentize -g'
+  #+END_SRC

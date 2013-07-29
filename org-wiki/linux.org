@@ -588,3 +588,73 @@
      sudo update-grub
      sudo grub-install /dev/sda
    #+END_SRC
+
+* ssh
+** 原理
+   bla bla
+
+** 生成公私钥
+   #+BEGIN_SRC sh
+     ssh-keygen -t ras -C "home"
+   #+END_SRC
+
+** 复制公钥
+   #+BEGIN_SRC sh
+     # Copy your SSH public key on a remote machine for passwordless login - the easy way
+     ssh-copy-id -i id_rsa_work username@hostname
+     ssh-copy-id '-p 1990 root@ras.everet.org' # you need to quote if you don't use a standard port
+
+     ssh username@hostname 'mkdir -p .ssh && cat >> .ssh/authorized_keys' < ~/.ssh/id_rsa.pub
+   #+END_SRC
+
+** 查看指纹
+  #+BEGIN_SRC sh
+    ssh-keygen -l
+  #+END_SRC
+
+** 直接执行命令
+   #+BEGIN_SRC sh
+     ssh username@hostname "free -m"
+   #+END_SRC
+
+** 一句话创建sock5代理
+   #+BEGIN_SRC sh
+     ssh -qfnNT -D 127.0.0.1:3389 -l root -p 1990 ipv6.everet.org
+   #+END_SRC
+
+** 通过中间服务器连接另一台服务器
+   #+BEGIN_SRC sh
+     # SSH connection through host in the middle
+     ssh -t reachable_host ssh unreachable_host
+   #+END_SRC
+
+** Agent Forwards
+   如果我们有三台计算机：home-pc、server-1和server-2。我们从home-pc通过ssh登录到server-1，然后，我们需要从server-1登录到server-2。我们可以怎么做呢？
+   #+BEGIN_SRC sh
+     ssh -A username@hostname
+   #+END_SRC
+
+** 打印调试信息
+   #+BEGIN_SRC sh
+     ssh -v username@hostname
+   #+END_SRC
+
+* swap ctrl and caps lock
+**  On Debian GNU/Linux (console-setup method, newer)
+    To make CAPS LOCK another control key, edit the file /etc/default/keyboard and change the line which reads
+
+    #+BEGIN_EXAMPLE
+      XKBOPTIONS="ctrl:nocaps"                # Some people prefer "ctrl:swapcaps"
+
+      sudo dpkg-reconfigure -phigh console-setup
+    #+END_EXAMPLE
+
+
+* 关闭图形界面
+  #+BEGIN_SRC sh
+    /etc/init.d/gdm3 stop
+
+    update-rc.d gdm3 -f remove
+
+    # /etc/init.d/gdm3 start
+  #+END_SRC
