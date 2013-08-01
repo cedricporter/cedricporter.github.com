@@ -27,7 +27,7 @@ ssh-keygen -t rsa -C "cedricporter@home" -f ~/.ssh/id_rsa_home
 ssh-keygen -t rsa -C "cedricporter@work" -f ~/.ssh/id_rsa_work
 ```
 
-然后我们需要将私钥加入到ssh-agent中。
+然后我们需要将私钥加入到ssh-agent中。这个我们在每次开机的时候都需要输入passphrase将私钥解密。
 
 ``` sh
 ssh-add ~/.ssh/id_rsa_home
@@ -38,7 +38,9 @@ ssh-add ~/.ssh/id_rsa_work
 
 ``` sh
 ssh-copy-id -i id_rsa_home root@everet.org
+# 如果端口不是默认端口
 ssh-copy-id '-p 9999 root@everet.org'
+# 等价于下面的命令
 ssh -l root -p 9999 everet.org 'mkdir -p .ssh && cat >> .ssh/authorized_keys' < ~/.ssh/id_rsa_home.pub
 ```
 
@@ -58,11 +60,11 @@ ssh -l root -p 9999 everet.org 'mkdir -p .ssh && cat >> .ssh/authorized_keys' < 
 1. 在从server-1登录到server-2的过程中，输入密码。
 1. 我们可以通过在server-1下面放一个server-2配对的私钥，然后就不用输入密码。
 
-这个是我以前的做法，我直接在server-1下面创建了一对公私钥，然后把公钥复制到server-2，然后在server-1登陆server-2就不用输入密码了。不过这样如果私钥有用passphase加密的话，那还是需要输入密码。
+这个是我以前的做法，我直接在server-1下面创建了一对公私钥，然后把公钥复制到server-2，然后在server-1登陆server-2就不用输入密码了。不过这样如果私钥有用passphrase加密的话，那还是需要输入密码。
 
 但在看了[An Illustrated Guide to SSH Agent Forwarding](http://www.unixwiz.net/techtips/ssh-agent-forwarding.html)这篇文章后，我发现我真是一个SB。原来使用Agent Forwarding可以非常好地解决这个问题。
 
-Agent Forwarding是一个非常有用的功能。让我们通过跳板机连上另一台服务器的时候，可以省去我们再次在跳板机中输入passphase的过程。通过Agent Forwarding，我们在server-1登录到server-2的时候，server-2会将challenge发送到server-1，然后server-1会将它发回到home-pc，然后home-pc的ssh-agent会将解密后的私钥用来验证，然后完成验证。这个链不管有多长，只要路径上一直保持打开Agent Forwarding，随后的级联登陆都不需要输入passphrase。
+Agent Forwarding是一个非常有用的功能。让我们通过跳板机连上另一台服务器的时候，可以省去我们再次在跳板机中输入passphrase的过程。通过Agent Forwarding，我们在server-1登录到server-2的时候，server-2会将challenge发送到server-1，然后server-1会将它发回到home-pc，然后home-pc的ssh-agent会将解密后的私钥用来验证，然后完成验证。这个链不管有多长，只要路径上一直保持打开Agent Forwarding，随后的级联登陆都不需要输入passphrase。
 
 我们可以通过加上“-A”这个参数来启用Agent Forwarding，不过这个有一定的安全风险。就是ssh-agent所用的unix socket是放在/tmp目录下面的，只要有root权限就可以冒充你登陆。总结，使用Agent Forwarding的好处在于，中间的跳板机不需要有任何私钥也可以让登陆免密码输入。坏处在跳板机的上面，root权限的用户可以通过agent创建的unix socket登陆。
 

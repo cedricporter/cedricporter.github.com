@@ -1,0 +1,13 @@
+#+TITLE: shell
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* for
+  #+BEGIN_SRC sh
+    bash_completion_list=("/etc/bash_completion.d/igor"
+        "/etc/bash_completion.d/ack-grep"
+    )
+    for f in $bash_completion_list; do
+        [[ -s $f ]] && source $f;
+    done
+  #+END_SRC

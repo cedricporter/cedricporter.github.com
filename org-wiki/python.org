@@ -59,6 +59,7 @@
    #+BEGIN_SRC sh
      apt-get install python-dev libmysqld-dev
    #+END_SRC
+
 * 根据字符串import
   #+BEGIN_SRC python
     def import_object(name):

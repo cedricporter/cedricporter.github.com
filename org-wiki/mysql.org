@@ -1,4 +1,4 @@
-#+TITLE: MySQL学习笔记
+#+TITLE: MySQL
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
 #+OPTIONS: H:3 num:t toc:nil \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
@@ -47,6 +47,14 @@
      SELECT * FROM product \G;
    #+END_SRC
    对于查询结果太宽的，可以在后面加上\G。
+
+** 查看数据库信息
+   #+BEGIN_SRC sql
+     status;
+     show create database test;
+     show variables like 'character_set_%';
+     show variables like 'collation_%';
+   #+END_SRC
 
 * FAQ
 
@@ -159,11 +167,10 @@ p
 
 
 * Misc
-  1. 可以用 show create table tablename 命令看表的引擎类型。
-  2. 尽量将多个语句绑到一个事务中，进行提交，避免多次提交导致的数据库开销。
-  3. 默认innodb是开启自动提交的，如果你按照myisam的使用方法来编写代码页不会存在错误，只是性能会很低。
-  4. 对不支持事务的表做start/commit操作没有任何效果，在执行commit前已经提交。
-  5. 任何一种表都不是万能的，只用恰当的针对业务类型来选择合适的表类型，才能最大的发挥MySQL的性能优势。
+  1. 尽量将多个语句绑到一个事务中，进行提交，避免多次提交导致的数据库开销。
+  1. 默认innodb是开启自动提交的，如果你按照myisam的使用方法来编写代码页不会存在错误，只是性能会很低。
+  1. 对不支持事务的表做start/commit操作没有任何效果，在执行commit前已经提交。
+  1. 任何一种表都不是万能的，只用恰当的针对业务类型来选择合适的表类型，才能最大的发挥MySQL的性能优势。
 
 
 
