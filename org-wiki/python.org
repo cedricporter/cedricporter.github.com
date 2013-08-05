@@ -3,6 +3,14 @@
 #+LINK_HOME: index.html
 #+OPTIONS: ^:{}
 
+* 资料
+  1. [[http://www.python.org/dev/peps/pep-0333/][PEP 333 -- Python Web Server Gateway Interface v1.0]]([[http://codeplayer.blogbus.com/files/1139476043.html][翻译]])
+  2. [[http://www.python.org/dev/peps/pep-0008/][PEP 8 -- Style Guide for Python Code]]
+  3. [[http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html][Code Like a Pythonista: Idiomatic Python]]
+  4. [[http://www.python.org/dev/peps/pep-0318/][PEP 318 -- Decorators for Functions and Methods]]
+  5. [[http://scotdoyle.com/python-epoll-howto.html][How To Use Linux epoll with Python]]
+  6. [[http://feilong.me/2011/01/recommended-entries-for-you-to-master-python][学好Python必读的几篇文章]]
+
 * URL encoding/decoding
 
 #+BEGIN_SRC python
@@ -54,6 +62,16 @@
    [[http://stackoverflow.com/questions/706755/how-do-you-safely-and-efficiently-get-the-row-id-after-an-insert-with-mysql-usin][How do you safely and efficiently get the row id after an insert with mysql using MySQLdb in python? ]]
 
    [[http://stackoverflow.com/questions/2548493/in-python-after-i-insert-into-mysqldb-how-do-i-get-the-id][In Python, after I INSERT Into mysqldb, how do I get the “id”?]]
+
+** DictCursor
+   #+BEGIN_SRC python
+     import MySQLdb
+     import MySQLdb.cursors
+
+     myDb = MySQLdb.connect(user='user', passwd='password', db='db_name', cursorclass=MySQLdb.cursors.DictCursor)
+     myCurs = myDb.cursor()
+     myCurs.execute("SELECT columna, columnb FROM tablea")
+   #+END_SRC
 
 ** mysql_config not found
    #+BEGIN_SRC sh

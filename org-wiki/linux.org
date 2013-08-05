@@ -675,3 +675,39 @@
     netmask 255.255.255.0
     network 192.168.56.0
   #+END_EXAMPLE
+
+* 杀进程
+  kill -9， 这个强大和危险的命令迫使进程在运行时突然终止，进程在结束后不能自我清理。危害是导致系统资源无法正常释放，一般不推荐使用，除非其他办法都无效。
+  当使用此命令时，一定要通过ps -ef确认没有剩下任何僵尸进程。只能通过终止父进程来消除僵尸进程。如果僵尸进程被init收养，问题就比较严重了。杀死init进程意味着关闭系统。
+  如果系统中有僵尸进程，并且其父进程是init，而且僵尸进程占用了大量的系统资源，那么就需要在某个时候重启机器以清除进程表了。
+  #+BEGIN_SRC sh
+    pgrep emacs
+    pidof emacs
+    pkill emacs
+    killall emacs
+  #+END_SRC
+
+  from: [[http://blog.csdn.net/ithomer/article/details/9402431][Linux kill, killall, kill -9]]
+
+* 查找
+** which
+   只能查可执行文件和别名(alias) ，并在PATH变量里面寻找
+
+** whereis
+   只能查二进制文件（含可执行文件）、说明文档，源文件等，从linux文件数据库（/var/lib/slocate/slocate.db 或 /var/lib/mlocate/mlocate.db）寻找，所以有可能找到刚刚删除，或者没有发现新建的文件
+
+** locate
+   在数据库里查找，数据库大至每天更新一次，文件名是部分匹配（见 3 locate passwd 的结果：opasswd）
+
+** find
+   最强大，什么都能查，根据条件查找文件，在硬盘上查找，效率很低
+
+   from: [[http://blog.csdn.net/ithomer/article/details/9391279][Linux下which、whereis、locate、find 区别]]
+
+* 重定向
+  #+BEGIN_SRC sh
+    python proxy.py > /dev/null 2>&1
+  #+END_SRC
+
+  - cmd >a 2>a 相当于使用了FD1、FD2两个互相竞争使用文件 a 的管道；
+  - cmd >a 2>&1 只使用了一个管道FD1，但已经包括了stdout和stderr。从IO效率上来讲，cmd >a 2>&1的效率更高。

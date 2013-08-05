@@ -1,0 +1,8 @@
+#+TITLE: uwsgi.org
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* 自动reload
+  #+BEGIN_EXAMPLE
+    可以使用uwsgi的 touch-reload=文件目录
+  #+END_EXAMPLE

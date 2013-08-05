@@ -223,7 +223,12 @@
 
 * 对比分支之间的区别
   #+BEGIN_SRC sh
-    git diff --name-status master..file_buffer  
+    git diff --name-status master..file_buffer
+  #+END_SRC
+
+* 设置个人信息
+  #+BEGIN_SRC sh
+    git config [--global] user.email "me@here.com"
   #+END_SRC
 
 * 资料
