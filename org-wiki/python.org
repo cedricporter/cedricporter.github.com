@@ -66,11 +66,10 @@
 ** DictCursor
    #+BEGIN_SRC python
      import MySQLdb
-     import MySQLdb.cursors
+     from MySQLdb.cursors import DictCursor
 
-     myDb = MySQLdb.connect(user='user', passwd='password', db='db_name', cursorclass=MySQLdb.cursors.DictCursor)
-     myCurs = myDb.cursor()
-     myCurs.execute("SELECT columna, columnb FROM tablea")
+     c = db.cursor(DictCursor)
+     c.execute("SELECT * FROM user")
    #+END_SRC
 
 ** mysql_config not found
