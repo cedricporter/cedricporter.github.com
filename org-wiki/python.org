@@ -38,7 +38,7 @@
      namelist = form.getlist("name")
    #+END_SRC
 
-* MySQL
+* MySQLdb
   插入datetime
   #+BEGIN_SRC python
     time.strftime('%Y-%m-%d %H:%M:%S')
