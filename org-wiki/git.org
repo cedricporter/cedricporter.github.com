@@ -231,5 +231,10 @@
     git config [--global] user.email "me@here.com"
   #+END_SRC
 
+* Enable Colourful git diff
+  #+BEGIN_SRC sh
+    git config --global color.diff auto
+  #+END_SRC
+
 * 资料
   [[http://rogerdudler.github.com/git-guide/index.zh.html][git - 简易指南]]

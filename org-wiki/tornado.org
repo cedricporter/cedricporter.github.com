@@ -3,6 +3,25 @@
 #+LINK_HOME: index.html
 
 
+* Hello, world
+  #+BEGIN_SRC python
+    import tornado.ioloop
+    import tornado.web
+
+    class MainHandler(tornado.web.RequestHandler):
+        def get(self):
+            self.write("Hello, world")
+
+    application = tornado.web.Application([
+        (r"/", MainHandler),
+    ])
+
+    if __name__ == "__main__":
+        application.listen(8888)
+        tornado.ioloop.IOLoop.instance().start()
+  #+END_SRC
+
+
 * 异步验证
   在Tornado中异步验证。不是用两个装饰器，而是通过回调链。[[http://stackoverflow.com/questions/4938902/tornado-asynchronous-handler][async]]
 
@@ -28,7 +47,3 @@
       def _authenticate(self, callback):
           self._get_current_user(callback)
   #+END_SRC
-
-
-
-

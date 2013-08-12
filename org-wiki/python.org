@@ -10,6 +10,7 @@
   4. [[http://www.python.org/dev/peps/pep-0318/][PEP 318 -- Decorators for Functions and Methods]]
   5. [[http://scotdoyle.com/python-epoll-howto.html][How To Use Linux epoll with Python]]
   6. [[http://feilong.me/2011/01/recommended-entries-for-you-to-master-python][学好Python必读的几篇文章]]
+  7. [[https://github.com/kennethreitz/grequests][grequests]]
 
 * URL encoding/decoding
 
@@ -68,6 +69,8 @@
      import MySQLdb
      from MySQLdb.cursors import DictCursor
 
+     db = MySQLdb.connect(cursorclass=MySQLdb.cursors.DictCursor)
+     # or
      c = db.cursor(DictCursor)
      c.execute("SELECT * FROM user")
    #+END_SRC
@@ -238,4 +241,13 @@
     d1.update(d2)
     print d1
     # {1: 1, 2: 2, 3: 3}
+  #+END_SRC
+
+* 查看字符串编码
+  #+BEGIN_SRC python
+    import urllib
+    rawdata = urllib.urlopen('http://www.google.cn/').read()
+
+    import chardet
+    chardet.detect(rawdata)
   #+END_SRC
