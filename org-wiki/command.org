@@ -4,6 +4,8 @@
 
 * 有趣的command
   #+BEGIN_SRC sh
+    pwd | xclip -i -sel clip
+
     # Batch rename and number files
     # The '1' in '%01d' changes the amounts of digits in the integer, eg. 1 vs 0001.
     count='1'; for i in *.jpg; do mv $i $(printf '%01d'.jpg $count); (( count++ )); done
@@ -197,6 +199,9 @@
 
     # generate the output of ‹cmd› and use it in your whole command.
     ls -l `which more`
+
+    # 批量修改拓展名
+    zmv '(*).html' '$1.tmpl'
   #+END_SRC
 
   http://www.commandlinefu.com/commands/browse

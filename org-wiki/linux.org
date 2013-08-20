@@ -68,6 +68,8 @@
     sed -i "s/^\(#+TITLE:\(.*\)\)/\1\n#+HTML_LINK_UP: index.html\n#+HTML_LINK_HOME: index.html/" *.org
     sed -i "s/^-----//" *.org
     sed -i "s/^\(Time-stamp: .*\)//" *.org
+    # 修改文件内的.html为.tmpl
+    sed -i "s/\.html/.tmpl/g" *.tmpl
   #+END_SRC
 
 * Core Dump
@@ -713,3 +715,26 @@
 
   - cmd >a 2>a 相当于使用了FD1、FD2两个互相竞争使用文件 a 的管道；
   - cmd >a 2>&1 只使用了一个管道FD1，但已经包括了stdout和stderr。从IO效率上来讲，cmd >a 2>&1的效率更高。
+
+* 配置新环境
+  http://www.bash2zsh.com/zsh_refcard/refcard.pdf
+
+** shell
+   #+BEGIN_SRC sh
+     apt-get install zsh
+     curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+   #+END_SRC
+
+** config
+   #+BEGIN_SRC sh
+     git clone https://github.com/cedricporter/vim-emacs-setting.git ~/vim-emacs-setting
+     (cd ~/vim-emacs-setting && ./install.sh)
+   #+END_SRC
+
+** emacs
+   #+BEGIN_SRC sh
+     apt-get build-dep emacs
+     wget http://ftpmirror.gnu.org/emacs/emacs-24.3.tar.gz
+     tar zxvf emacs-24.3.tar.gz
+     (cd emacs-24.3 && ./configure --prefix="$HOME/my-emacs" && make -j4 && make install)
+   #+END_SRC

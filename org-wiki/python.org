@@ -11,6 +11,7 @@
   5. [[http://scotdoyle.com/python-epoll-howto.html][How To Use Linux epoll with Python]]
   6. [[http://feilong.me/2011/01/recommended-entries-for-you-to-master-python][学好Python必读的几篇文章]]
   7. [[https://github.com/kennethreitz/grequests][grequests]]
+  8. [[http://docs.python-guide.org/en/latest/][The Hitchhiker’s Guide to Python!]]
 
 * URL encoding/decoding
 
@@ -79,6 +80,28 @@
    #+BEGIN_SRC sh
      apt-get install python-dev libmysqld-dev
    #+END_SRC
+
+** 逻辑error
+   #+BEGIN_EXAMPLE
+     mysql> set autocommit = 0;             │mysql> set autocommit = 0;
+     Query OK, 0 rows affected (0.00 sec)   │Query OK, 0 rows affected (0.00 sec)
+                                            │
+     mysql> insert into user values ("Stupid│mysql> select * from user;
+      ET");                                 │Empty set (0.00 sec)
+     Query OK, 1 row affected (0.03 sec)    │
+                                            │mysql>
+     mysql> commit;                         │mysql>
+     Query OK, 0 rows affected (0.02 sec)   │mysql>
+                                            │mysql>
+     mysql> select * from user where name = │mysql> select * from user where name =
+     "Stupid ET";                           │ "Stupid ET";
+     +-----------+                          │Empty set (0.00 sec)
+     | name      |                          │
+     +-----------+                          │mysql>
+     | Stupid ET |                          │
+     +-----------+                          │
+     1 row in set (0.00 sec)                │
+   #+END_EXAMPLE
 
 * 根据字符串import
   #+BEGIN_SRC python
@@ -251,3 +274,15 @@
     import chardet
     chardet.detect(rawdata)
   #+END_SRC
+
+* Jinja2
+** 传递函数给Jinja2
+   #+BEGIN_SRC python
+     from jinja2 import Environment
+     env = Environment()
+     env.globals['foo'] = lambda: "foobar"
+     env.from_string('{% macro bar() %}{{ foo() }}{% endmacro %}{{ bar() }}').render()
+   #+END_SRC
+
+** 实践
+   1. https://bitbucket.org/plurk/solace
