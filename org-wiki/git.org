@@ -253,3 +253,9 @@
    8. *rm -rf path_to_submodule*
 
    From: [[http://stackoverflow.com/questions/1260748/how-do-i-remove-a-git-submodule][How do I remove a Git submodule?]]
+
+* 删除远程tags
+  #+BEGIN_SRC sh
+    git tag -d v1.0
+    git push --delete origin v1.0
+  #+END_SRC

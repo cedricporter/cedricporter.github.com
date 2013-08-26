@@ -738,3 +738,43 @@
      tar zxvf emacs-24.3.tar.gz
      (cd emacs-24.3 && ./configure --prefix="$HOME/my-emacs" && make -j4 && make install)
    #+END_SRC
+
+* 加密文件
+** with password
+*** gpg
+    #+BEGIN_SRC sh
+      # 加密
+      gpg -c myfinancial.info.txt
+
+      # 解密
+      gpg myfinancial.info.txt.gpg
+      gpg myfinancial.info.gpg –o financial.info.txt
+    #+END_SRC
+    from: [[http://www.cyberciti.biz/tips/linux-how-to-encrypt-and-decrypt-files-with-a-password.html][Linux: HowTo Encrypt And Decrypt Files With A Password]]
+
+*** openssl
+    #+BEGIN_SRC sh
+      openssl enc -aes-256-cbc -in my.pdf -out mydata.enc
+
+      openssl enc -aes-256-cbc -d -in mydata.enc -out mydecrypted.pdf
+    #+END_SRC
+
+**** with base64
+     #+BEGIN_SRC sh
+       cat test | openssl enc -aes-256-cbc | base64 > b.txt
+       cat b.txt | base64 -d | openssl enc -aes-256-cbc -d
+     #+END_SRC
+
+** use rsa
+   #+BEGIN_SRC sh
+     # Convert RSA public key and private key to PEM format:
+     openssl rsa -in ~/.ssh/id_rsa -outform pem > id_rsa.pem
+     openssl rsa -in ~/.ssh/id_rsa -pubout -outform pem > id_rsa.pub.pem
+
+     # Encrypting a file with your public key:
+     openssl rsautl -encrypt -pubin -inkey id_rsa.pub.pem -in file.txt -out file.enc
+
+     # Decrypting the file with your private key:
+     openssl rsautl -decrypt -inkey id_rsa.pem -in file.enc -out file.txt
+   #+END_SRC
+   from: [[http://unix.stackexchange.com/questions/27005/encrypting-file-only-with-ssh-priv-key][Encrypting file only with SSH -priv-key?]]

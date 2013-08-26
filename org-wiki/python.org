@@ -12,6 +12,12 @@
   6. [[http://feilong.me/2011/01/recommended-entries-for-you-to-master-python][学好Python必读的几篇文章]]
   7. [[https://github.com/kennethreitz/grequests][grequests]]
   8. [[http://docs.python-guide.org/en/latest/][The Hitchhiker’s Guide to Python!]]
+  9. [[http://www.python.org/workshops/1997-10/proceedings/savikko.html][Design Patterns in Python]]
+  10. http://docs.pylint.org/features.html
+  11. http://docs.pylint.org/faq.html#is-there-a-way-to-disable-a-message-for-a-particular-module-only
+
+* web framework
+  1. [[http://bottlepy.org/docs/dev-cn/][bottle]]
 
 * URL encoding/decoding
 
