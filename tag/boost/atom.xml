@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: Boost | EverET.org]]></title>
+  <link href="http://everet.org/tag/boost/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2013-01-15T00:25:15+08:00</updated>
+  <id>http://everet.org/</id>
+  <author>
+    <name><![CDATA[Stupid ET]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[我们的游戏 Scar]]></title>
+    <link href="http://everet.org/2012/01/scar.html"/>
+    <updated>2012-01-22T08:24:18+08:00</updated>
+    <id>http://everet.org/2012/01/scar</id>
+    <content type="html"><![CDATA[<p>Scar，中文名：伤疤，是我们的<strong>《计算机图形学》</strong>和<strong>《IT项目管理》</strong>的大作业。虽然不想做的很大，但是最后我们写了4万多行代码。发现也是挺大的。</p>
+
+<h2 id="section"><strong>简介</strong></h2>
+
+<p><strong>我们花费的时间：4个月（9.14 – 12.14），这个是由屠文翔同学辛劳得出的粗略统计。</strong></p>
+
+<ul>
+  <li>
+    <p>验证准备阶段：9月14日 – 9月21日</p>
+  </li>
+  <li>
+    <p>设计阶段：9月22日 – 10月18日</p>
+  </li>
+  <li>
+    <p>构建阶段：10月19日 – 11月16日</p>
+  </li>
+  <li>
+    <p>赶工阶段：12月6日 – 12月14日</p>
+  </li>
+</ul>
+
+<p><strong>参与人数：7人（其中编外2人）</strong></p>
+
+<ul>
+  <li>
+    <p>项目经理：屠文翔</p>
+  </li>
+  <li>
+    <p>开发人员：华亮、杨旭瑜、杨成熙、谢骏飞 、林剑飞、陈存腾</p>
+  </li>
+</ul>
+
+<p><strong>总代码量：42437行</strong></p>
+
+<ul>
+  <li>
+    <p>这个是我们非常努力得到的，记得那段时间我也基本持续几个月每天两三点睡，课也不上，去上了也是大家带着笔记本一起在教室后面写代码。</p>
+  </li>
+  <li>
+    <p>我们的项目是开源的，遵循<a href="http://www.mozilla.org/MPL/">Mozilla Public License 1.1</a>协议，托管在Google Code上。<a href="http://code.google.com/p/opengl-scut/">http://code.google.com/p/opengl-scut/</a>。</p>
+  </li>
+</ul>
+
+<!-- more -->
+
+<p><strong>完成情况：基本完成</strong></p>
+
+<ul>
+  <li>
+    <p>基地、战场等场景的构建</p>
+  </li>
+  <li>
+    <p>模拟太空飞行的全方位角度旋转操控 锁定、开火等一系列逻辑</p>
+  </li>
+  <li>
+    <p>局域网联机数据传输</p>
+  </li>
+  <li>
+    <p>绚丽的画面，友好的UI 优秀的用户体验，强烈的代入感</p>
+  </li>
+  <li>
+    <p>AI框架和一个简单的电脑AI实例</p>
+  </li>
+</ul>
+
+<h2 id="section-1"><strong>游戏截图</strong></h2>
+
+<p>游戏加载画面</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/loading1.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/loading1-1024x575.jpg" alt="" /></a></p>
+
+<p>由空间站跃迁到战场的过程</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/222.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/222.jpg" alt="" /></a></p>
+
+<p>在星门战斗</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/22.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/22.jpg" alt="" /></a></p>
+
+<h2 id="scar">Scar所使用的技术</h2>
+
+<p>我们选用C++和Python作为我们的开发语言。对于Scar这款游戏，我们选择了Irrlicht游戏引擎，Irrlicht它由C++实现，相比起OGRE，它更加简单轻巧。在开发过程中，我们汲取WPF的思想，自己开发了一套界面库，可以使用Python描述界面，进行界面描述和组装，比起WPF，我们可以在Python中编写消息响应函数，虽然界面库并不完善，但是我们还是用它艰难地完成了开发。</p>
+
+<p>对于线程库我们使用Boost，这样我们可以得到简单的编程抽象，并且可以方便地实现跨平台。</p>
+
+<p>对于C++和Python交互，我们也使用Boost.Python来实现，直接使用Python解释器提供的C接口开发速度是十分低效，所以我们选择了Boost.Python库。这样可以轻易地实现C++与Python交互，Python可以使用C++的类和函数，C++也可以使用Python的类和函数。这样我们将可变的东西都尽量用Python来写，这样更加灵活，开发过程中也不需要编译，也可以加快开发速度。</p>
+
+<p>对于网络的开发，我们使用Boost.asio库，Boost.asio是一个异步IO库，也提供了高层的抽象。也可以加快我们的开发速度。</p>
+
+<h2 id="scar-1">Scar的设计</h2>
+
+<p>我们的部分类的类图，点击看大图。分辨率为7771*1645，如果需要观看请下载到电脑上。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/类图.png">http://everet.org/wp-content/uploads/2012/01/类图.png</a></p>
+
+<h3 id="section-2">内存管理</h3>
+
+<p>在C/C++程序员中，最容易出现的问题就是内存管理的失误，其中出现频率最高的错误就是内存泄露，分配内存后忘记释放了。在C++中，我们可以使用智能指针来实现自动的内存管理，其核心思想都是引用计数器。其中典型代表有STL的auto_ptr，但是auto_ptr实在有太多缺陷。而Boost库中的shared_ptr，相比起auto_ptr就强大很多，而且，在C++0x的标准中，shared_ptr已经正式进入了C++的标准。虽然使用智能指针可以让程序员省去自己管理内存的麻烦，但是智能指针在循环引用时也会导致内存泄露（所以像Python中，垃圾回收器会每隔一段时间扫描循环引用。如果仅仅靠引用计数，还是会导致内存泄露。）</p>
+
+<p>对于内存管理，Irrlicht（鬼火）采用手工管理的引用计数器。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>cpp  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">class</span> <span class="nc">IReferenceCounted</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'><span class="k">public</span><span class="o">:</span>
+</span><span class='line'>    <span class="n">IReferenceCounted</span><span class="p">()</span> <span class="o">:</span> <span class="n">ReferenceCounter</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">virtual</span> <span class="o">~</span><span class="n">IReferenceCounted</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>    <span class="p">}</span>
+</span><span class='line'>    <span class="kt">bool</span> <span class="n">drop</span><span class="p">()</span> <span class="k">const</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// someone is doing bad reference counting.</span>
+</span><span class='line'>        <span class="n">_IRR_DEBUG_BREAK_IF</span><span class="p">(</span><span class="n">ReferenceCounter</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>        <span class="o">--</span><span class="n">ReferenceCounter</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ReferenceCounter</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="k">delete</span> <span class="k">this</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">s32</span> <span class="n">getReferenceCount</span><span class="p">()</span> <span class="k">const</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">ReferenceCounter</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span> <span class="k">private</span><span class="o">:</span>
+</span><span class='line'><span class="k">mutable</span> <span class="n">s32</span> <span class="n">ReferenceCounter</span><span class="p">;</span> <span class="p">};</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>对于所有的类，都从IReferenceCounted派生出来，这样我们就可以方便地管理我们对象的内存。</p>
+
+<p>当我们创建的对象被引用时，我们调用grab()，它会为这个对象的引用技术加1，当我们不需要对它引用时，则调用drop()，当引用计数ReferenceCounter减为0时，对象所占的内存会被释放。</p>
+
+<p>我个人觉得这种方法比使用智能指针更可靠，不会被智能指针所玩弄。</p>
+
+<h3 id="section-3">一些设计</h3>
+
+<p>在Irrlicht中，所有的在场景中出现的物体都是派生自ISceneNode，它提供了场景节点的一个基本抽象。所有的场景节点都是挂载在一个抽象的根节点Root上，如下图：</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/QQ截图20120123160921.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/QQ截图20120123160921.jpg" alt="" /></a></p>
+
+<p>在引用计数方面，父节点对子节点引用，子节点不对父节点引用，所以不存在环，就避免了循环引用。</p>
+
+<h5 id="section-4">一些设计模式：</h5>
+
+<p>而场景节点仅仅保存了顶点信息和一些变换信息，并没有描述其行为的代码。所以Irrlicht中有ISceneNodeAnimator，它作为“行为”独立于ISceneNode，可以动态注册到场景节点中，方便地增加或者修改节点的行为。这是一种策略模式（Strategy），将行为独立于对象可以方便地动态地更改对象的行为，也可以将行为复用。</p>
+
+<p>像自旋转，围绕一个中心绕圈，直线自动，跟随行为等等都是非常常用的经典行为，像这些行为就应该只是被编写一次，所以用策略模式将行为提取出来是非常好的解决方案。像游戏中，主角修改技能等等都可以使用策略模式解决。</p>
+
+<p>对于Irrlicht这款游戏引擎，它底层支持DirectX，OpenGL和软件渲染。并且可以非常方便地切换不同的渲染方式。在这里，Irrlicht采用工厂模式（Factory）可以很好地解决切换底层渲染库的灵活性问题。</p>
+
+<p>当然，对于一款游戏引擎，单例模式（Singleton ）必不可少，因为像引擎的抽象，资源管理器这些一般都是全局的，使用单例模式可以保证只是创建了一个唯一的一个实例，并且提供了访问全局变量的绿色通道。在《Effective C++》中的条款04就说道，单例模式还有一个很有用的用途，就是确定对象被使用前已先被初始化。</p>
+
+<p>当然还有观察者模式等等解决通知问题的模式。</p>
+
+<h2 id="section-5">总结</h2>
+
+<p>为什么有这篇总结：在大二学期末在和我们的《软件软件需求分析与建模》的老师刘艳霞交流中，她对我们说：期末考试并不意味着一门课的结束，你们假期回家应该要总结每一门课，写下自己感想。我觉得很有道理，总结过去，启示未来。对于自己犯的错误予以改正，对于他人犯错误，有则改之无则加勉。</p>
+
+<blockquote>
+  <p><strong>Those who cannot remember the past are condemned to repeat it.</strong></p>
+</blockquote>
+
+<blockquote>
+
+  <p><strong>—— George Santayana</strong></p>
+
+</blockquote>
+
+<p>上面那句话是黄翰老师在算法课上讲解动态规划时PPT上的一句话，不仅揭示了DP的核心思想，还蕴含了我们的生活的真谛。</p>
+
+<p>好！</p>
+
+<p><strong>下面为屠文翔同学总结大家的总结得到的总结。</strong></p>
+
+<ul>
+  <li>
+    <p>沟通、协作是项目成功的基础。</p>
+  </li>
+  <li>
+    <p>不要把计划定得太大，尤其是在时间不够的情况下。</p>
+  </li>
+  <li>
+    <p>第一步是需求，第二步是骨架系统。</p>
+  </li>
+  <li>
+    <p>简单的事情往往比它看上去的要复杂。</p>
+  </li>
+  <li>
+    <p>有时候人要被别人刀在身后捅着才会继续走。</p>
+  </li>
+</ul>
+
+<p><strong>Scar部分文档</strong>：</p>
+
+<ul>
+  <li>
+    <p><a href="http://everet.org/wp-content/uploads/2012/01/9月15日-游戏背景及历史.docx">9月15日-游戏背景及历史</a></p>
+  </li>
+  <li>
+    <p><a href="http://everet.org/wp-content/uploads/2012/01/团队协议.docx">团队协议</a></p>
+  </li>
+  <li>
+    <p><a href="http://everet.org/wp-content/uploads/2012/01/范围声明.docx">范围声明</a></p>
+  </li>
+  <li>
+    <p><a href="http://everet.org/wp-content/uploads/2012/01/里程碑报告.doc">里程碑报告</a></p>
+  </li>
+</ul>
+
+<p>更全文档请参见：<a href="http://code.google.com/p/opengl-scut/">http://code.google.com/p/opengl-scut/</a></p>
+
+<h3 id="section-6"><strong>对于我个人：</strong></h3>
+
+<p><em>**</em>虽然项目停滞已经一段时间了，但是还是想总结一下这个学期做的东西。尽管做了一个学期的图形学大作业，但是我还是对计算机图形学还是一窍不通，对于IT项目管理，课也没上过，所以也不知讲了啥。不过在项目管理方面，还是得到了屠文翔同学许多教诲。</p>
+
+<p><strong>对于IT项目管理的总结：</strong></p>
+
+<p>首先是时间管理，在一个软件项目中，最难做到的就是估计项目完成时间，做进度计划。所以项目往往难以按时按量完成。因为我们学期末需要答辩，所以我们在期末前必须完成。当然最后我们按时完成了，不过得到的是赶工的删减版，还没有设计剧情，只有局域网对战功能。</p>
+
+<p>其次是成本管理，我们都是免费劳动力，所以成本除了电费和伙食费之外也没啥。不过真实的项目中，项目经理手中的资源是有限的，换句话说，钱是有限的。这么多的钱需要花到程序员的工资中，还需要花到其他杂七杂八的地方。因为钱有限，所以不能全部雇佣高级程序员，因为成本高，而初级程序员的水平一般，还需要培训，势必增加时间成本，这是一个需要仔细权衡的地方。</p>
+
+<p>对于风险，我们存在很多，首先就是课余时间较少，项目复杂，需要大量的时间进行开发。其次是技术风险，我们在大三一开学时啥都不懂，全部需要从零开始学习图形学，Irrlicht游戏引擎，Boost库。最后还有，游戏特效和美工需要大量的人力，难以估计能否按时完成。</p>
+
+<p><strong>现在我们来回顾一下IT项目管理。</strong></p>
+
+<p>IT项目管理中的三个重要的管理为范围管理，时间管理和成本管理。</p>
+
+<p>何为项目成功？即满足范围、时间和成本这三个目标的同时还让了项目发起人满意。在《IT项目管理》一书中说道：在美国，拥有一个由人才组成的团队更重要，而在中国，搞好关系管理更重要。这可能就是中国特色的项目管理吧。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/图片2.png"><img src="http://everet.org/wp-content/uploads/2012/01/图片2.png" alt="" /></a></p>
+
+<p>一个项目开始时，要做些什么？</p>
+
+<p><strong>首先是Project Charter（项目章程）</strong>，项目章程包含关键的项目信息，并由Stakeholder（利益相关者）共同签字，都是由大老板签字，如果项目过程中，有需要什么帮助可以拿着他们的签字去向他们申请，嘿嘿。</p>
+
+<p><strong>第二是Kick-off Meeting（启动会议）</strong>，在这个会议利益相关者们可以相互见面，回顾项目的目标，讨论未来的计划，这个在Scar中，我们有启动会议，记得好像是在知识产权课上，我们溜到了旁边的教室。</p>
+
+<p><strong>第三是Project Planning（制定项目计划）</strong>。</p>
+
+<p>项目计划的目的是在执行过程中有个指导，知道什么时候该做什么，是否延期了等等。但是制定项目计划是一个非常难的事情，因为计划总是赶不上变化。就像我们高三时，想必大家都制定了许多美好而详细的复习计划，但是真正按计划实施的还是占非常少数。</p>
+
+<p>在制定项目计划过程中，我们需要团队协议（Team Contract），就像君子协定，大家签了就要花时间和精力去做。我们需要范围说明（Project Scope Statement），阐述我们需要做什么，做到怎么样。还需要一个非常重要的东西——工作分解结构（Work Breakdown Structure, WBS），如下图为WBS和甘特图。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/图片1.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/图片1-640x338.jpg" alt="" /></a></p>
+
+<p>在WBS，我们将工作分解成细粒度的工作包，可以方便我们计划时间和分配任务。当然还有很多像网络图甘特图等等的工具可以方便我们做计划。</p>
+
+<p><strong>最后，IT项目管理有9大知识领域和5大过程组构成</strong>：</p>
+
+<p>9大知识领域：范围管理、时间管理、成本管理、质量管理、人力资源管理、沟通管理、风险管理、采购管理、项目集成管理；</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/图片1.png"><img src="http://everet.org/wp-content/uploads/2012/01/图片1-640x339.png" alt="" /></a></p>
+
+<p>5大过程组：启动，计划，执行，监控，收尾。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/图片2.jpg"><img src="http://everet.org/wp-content/uploads/2012/01/图片2-640x323.jpg" alt="" /></a></p>
+
+<p>最后的对于项目管理的看法纯属个人观点，存在诸多错漏，请指正。</p>
+
+<p>有关IT项目管理的图片来自《IT项目管理》第六版，Kathy Schwalbe一书。</p>
+
+<p>（全文完）</p>
+]]></content>
+  </entry>
+  
+</feed>

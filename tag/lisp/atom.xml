@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: Lisp | EverET.org]]></title>
+  <link href="http://everet.org/tag/lisp/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2013-01-15T00:25:15+08:00</updated>
+  <id>http://everet.org/</id>
+  <author>
+    <name><![CDATA[Stupid ET]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[让Emacs显示Markdown中的图片]]></title>
+    <link href="http://everet.org/2013/01/emacs-markdown-display-image.html"/>
+    <updated>2013-01-14T23:36:00+08:00</updated>
+    <id>http://everet.org/2013/01/emacs-markdown-display-image</id>
+    <content type="html"><![CDATA[<p>用Octopress或者直接用Jekyll都会涉及到Markdown。我们在写Markdown的时候，会遇到插入截图或者本地图片的问题。如果我们自己手工写上图片的标记，会非常的麻烦，于是我在前文 <a href="http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">在Emacs中插入截图或者本地图片</a> 中讲述如何自动化插入图片，来解决插入的问题。</p>
+
+<p>今天我们来看一下如何在Emacs中预览Markdown中的图片。</p>
+
+<!-- more -->
+
+<p>虽然我们已经解决了插入图片不便，但我们有时看到这一串一串的文本图片标记或许有些许蛋疼，于是想预览一下图片，此时又是Emacs展示其强大的时候了。</p>
+
+<p>Emacs中有<code>iimage-mode</code>可以方便地让我们显示图片，是Emacs自带的。当然如果想在buffer中插入图片我们甚至可以直接调用<code>insert-image</code> <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>往buffer中插入图片。我想Vim里面如果要显示图片一定相当相当蛋疼吧，哈哈。Emacs用户真幸福。</p>
+
+<h2 id="section">实现</h2>
+<p>好，又到了动手的时候了，让我们卷起袖子准备开工！</p>
+
+<p>``` cl iimage settings https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/plugins/configs/my-iimage-settings.el my-iimage-settings.el
+;; 
+(require ‘iimage)</p>
+
+<p>(add-hook ‘info-mode-hook ‘iimage-mode)
+(add-hook ‘markdown-mode-hook ‘(lambda()
+				 (define-key markdown-mode-map
+				   (kbd “<f12>") 'turn-on-iimage-mode)))</f12></p>
+
+<p>(setq iimage-mode-image-search-path ‘(list “.” “..”))</p>
+
+<p>;; for octopress
+(add-to-list ‘iimage-mode-image-regex-alist ; match: {% img xxx %}
+	     (cons (concat “{% img /?\(“
+			   iimage-mode-image-filename-regex
+			   “\) %}”) 1))
+(add-to-list ‘iimage-mode-image-regex-alist ; match: <img src="/xxx" alt="xxx" />
+	     (cons (concat “!\<a href="http://everet.org/\\(wp-content/&quot;
+			   iimage-mode-image-filename-regex" title="\\))">.<em>?\](/\(“
+			   iimage-mode-image-filename-regex
+			   “\))”) 1))
+;; 兼容以前在wordpress添加的图片
+(add-to-list ‘iimage-mode-image-regex-alist ; match: <img src="http://everet.org/xxx" alt="xxx" />
+	     (cons (concat “!\[.</em>?\</a> 1))
+;; 			 <br />
+```</p>
+
+<p>我们首先设置一下图片搜索路径<code>iimage-mode-image-search-path</code>，可以根据实际需要进行设置。对于Octopress的目录结构，我将其设置为当前以及上一级目录<code>(list "." "..")</code>。</p>
+
+<p>然后，我们来设置图片的正则表达式，iimage会将文本中满足的正则表达式提取出来替换成图片。对于插入到<code>iimage-mode-image-regex-alist</code>中的正则表达式，为一个点对<code>(REGEXP . NUM)</code>。为什么是这样呢？因为正则表达式中可能会有很多级的括号，通过<code>NUM</code>我们可以指定取哪一个group的内容为图片路径，像NUM为0的时候取得是整个表达式的值，这个有疑问的话可以问一下Google大神。</p>
+
+<p>最后，我们设置在<code>markdown-mode</code>中<code>F12</code>为开关图片显示。</p>
+
+<h2 id="section-1">效果</h2>
+
+<p><img src="/imgs/snapshot7<em>20130115</em>000417_4317rhI.png"></p>
+
+<h2 id="footnote">Footnote</h2>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="http://www.gnu.org/software/emacs/manual/html_node/elisp/Showing-Images.html">Showing Images</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[定制Emacs GDB调试窗口布局]]></title>
+    <link href="http://everet.org/2013/01/customize-emacs-gud-many-windows.html"/>
+    <updated>2013-01-09T01:06:00+08:00</updated>
+    <id>http://everet.org/2013/01/customize-emacs-gud-many-windows</id>
+    <content type="html"><![CDATA[<p>我们在Emacs中可以方便地使用GDB，具体操作在<a href="http://emacser.com/emacs-gdb.htm">emacser.com</a>有详细的快捷键的教程。不过我觉得其实GDB的CLI已经很好用了。</p>
+
+<p>Emacs中默认可以方便打开多窗格模式，看起来就很像平时大家用的IDE了。</p>
+
+<p>我们只需要<code>M-x gdb-many-windows</code>就可以打开多窗格了，默认布局如下图：</p>
+
+<p><img src="/imgs/snapshot4<em>20130109</em>011149_15479HnD.png"></p>
+
+<p>我们可以看到有6个窗格，其中有GDB命令行、局部变量、源代码、程序输出、栈、断点。功能看上去虽然很强大，不过我常用的只有其中几个，于是就决定开始定制Emacs的GDB调试窗口布局。</p>
+
+<!-- more -->
+
+<p>我常用的是代码框、输出、GDB命令行以及栈，什么断点、局部变量基本可以在需要的时候用<code>i b</code>，<code>i locals</code>查看就可以了，没必要弄这么小一个窗格占住位置，而且想看的时候还看不完整。</p>
+
+<h2 id="section">定制</h2>
+
+<p>于是开始按照我的心意，将其定制成如下这样。</p>
+
+<p><img src="/imgs/snapshot5<em>20130109</em>011857_15479UxJ.png"></p>
+
+<p>这样用起来比较爽，没有不需要的窗格。各位看官也可以根据自己的需要配置。</p>
+
+<p><code>gdb-many-windows</code>的窗口布局是写死在<code>gdb-setup-windows</code>这个函数里面，我们最好的方法就是<code>defadvice</code>这个函数。代码如下：</p>
+
+<p><code>cl
+(defadvice gdb-setup-windows (after my-setup-gdb-windows activate)
+  "my gdb UI"
+  (gdb-get-buffer-create 'gdb-stack-buffer)
+  (set-window-dedicated-p (selected-window) nil)
+  (switch-to-buffer gud-comint-buffer)
+  (delete-other-windows)
+  (let ((win0 (selected-window))        
+        (win1 (split-window nil nil 'left))      ;code and output
+        (win2 (split-window-below (/ (* (window-height) 2) 3)))     ;stack
+        )
+    (select-window win2)
+    (gdb-set-window-buffer (gdb-stack-buffer-name))
+    (select-window win1)
+    (set-window-buffer
+     win1
+     (if gud-last-last-frame
+         (gud-find-file (car gud-last-last-frame))
+       (if gdb-main-file
+           (gud-find-file gdb-main-file)
+         ;; Put buffer list in window if we
+         ;; can't find a source file.
+         (list-buffers-noselect))))
+    (setq gdb-source-window (selected-window))
+    (let ((win3 (split-window nil (/ (* (window-height) 3) 4)))) ;io
+      (gdb-set-window-buffer (gdb-get-buffer-create 'gdb-inferior-io) nil win3))
+    (select-window win0)
+    ))
+</code></p>
+
+<p>经过<code>defadvice</code>就可以修改原来定义的函数了，从而我们就可以定制UI了。</p>
+
+<blockquote>
+  <p>Emacs是伪装成编辑器的操作系统～～～</p>
+</blockquote>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Chrome Edit With Emacs]]></title>
+    <link href="http://everet.org/2013/01/chrome-edit-with-emacs.html"/>
+    <updated>2013-01-05T16:46:00+08:00</updated>
+    <id>http://everet.org/2013/01/chrome-edit-with-emacs</id>
+    <content type="html"><![CDATA[<p>大家在浏览器写长篇的东西时，有没觉得那个纯文本编辑框弱爆了？反正我是这么觉得。像Github、<a href="http://stackoverflow.com/editing-help">stackoverflow</a>、Wiki等都支持Markdown，对于这种有语法的文本，最好就是用个语法高亮自动排版的编辑器编辑。</p>
+
+<p>在Firefox有<a href="https://addons.mozilla.org/zh-cn/firefox/addon/its-all-text/">It’s All Text!</a>这个插件，可以调用外部编辑器。</p>
+
+<p>而在Chrome里面，也有插件，可以调用外部的Emacs进行编辑，而且可以根据规则自动选择模式，非常方便。它的名字叫<a href="http://www.emacswiki.org/emacs/Edit_with_Emacs">Edit With Emacs</a>。</p>
+
+<p>安装完插件后，Chrome所有的大Textarea都会出现一个蓝色的edit按钮，一按，就可以用Emacs编辑里面的内容了。</p>
+
+<p><img src="/imgs/2013-01-05-chrome-edit-with-emacs.markdown<em>20130105</em>170235_21731e8F.png"></p>
+
+<!-- more -->
+
+<p>我们可以通过修改<code>edit-server-url-major-mode-alist</code>这个Association List<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>来添加网址规则，如下：</p>
+
+<p>``` cl
+(when (and (require ‘edit-server nil t) (daemonp))
+;  (setq edit-server-new-frame nil)
+  (edit-server-start))</p>
+
+<p>(setq edit-server-url-major-mode-alist
+      ‘((“github\.com” . markdown-mode)
+	(“i\.everet\.org” . moinmoin-mode)))
+```</p>
+
+<p>Edit With Emacs的工作原理是在Emacs里面开一个服务器，监听9292端口，然后Chrome插件将文本POST到Emacs里面编辑，编辑完再返回回去。</p>
+
+<p>不过它的Emacs端在编辑中文url的textarea会有bug（因为中文在url中被转义成了%xx%xx这种形式，这个%在format的时候没转义好，于是format的时候就SB了），提交了issue不过作者暂时没理，我们自己注释掉<code>edit-server-find-or-create-edit-buffer</code>下面的<code>edit-server-log</code>就行了（diff：<a href="https://github.com/cedricporter/vim-emacs-setting/commit/a3069e50fd3bce90ca46be6ba784e47cd9d198ca#emacs/.emacs.d/plugins/edit-server.el">edit-server.el</a>）。</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="http://www.gnu.org/software/emacs/manual/html_node/elisp/Association-Lists.html">Association Lists</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Screenshot And Image Paste in Emacs When Writing Markdown]]></title>
+    <link href="http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html"/>
+    <updated>2012-12-28T03:36:00+08:00</updated>
+    <id>http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown</id>
+    <content type="html"><![CDATA[<p>Octopress首选博客语言是Markdown。于是又是Emacs大显身手的时候了。</p>
+
+<p>在用Markdown写东西的时候，我想最蛋疼的应该就是插入图片了。</p>
+
+<p>正常的插入截图的步骤可能为：</p>
+
+<ol>
+  <li>打开截图程序截图</li>
+  <li>保存截图到Octopress的制定目录中</li>
+  <li>然后在Markdown中写上图片的url的地址</li>
+</ol>
+
+<p>这样一次两次还可以接受，如果长期这样是在让人受不了。对于我这种懒人，首先就要偷懒，让Emacs帮我们做这些事情。</p>
+
+<h2 id="section">功能演示</h2>
+
+<h3 id="section-1">截图</h3>
+<p>我们按下<code>C-c</code> <code>C-s</code> <code>s</code>就开始截图了，截完图后，会自动保存到我们指定的目录，例如我的是<code>~/octopress/source/imgs/</code>。</p>
+
+<p>下面这张图是用Emacs截图自动插入的：
+<img src="/imgs/2012-12-28-screenshot-and-image-paste-in-emacs-when-use-markdown.markdown<em>20121228</em>021049_6910Rbg.png">
+用起来感觉很爽，按下快捷键，一截图，唰一下就出来一段代码。</p>
+
+<!-- more -->
+
+<h3 id="section-2">插入本地图片</h3>
+<p>对于本地硬盘里面的图片的插入，我们可以先在文件浏览器（例如Dolphin）中选中要插入的图片，然后复制图片。回到Emacs中，按下<code>C-c</code> <code>C-s</code> <code>i</code>插入我们的图片。</p>
+
+<p>这里会发生什么事情呢？我很无聊地让Emacs将图片复制到<code>~/octopress/source/imgs/</code>中，然后插入图片在url中地址。</p>
+
+<p>下面是自动插入的图片。
+<img class="right" src="/imgs/emacs<em>20121228</em>015008_69103GU.jpg"></p>
+
+<blockquote>
+  <p>What Emacs does to your keyboard?<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+</blockquote>
+
+<h2 id="section-3">实现</h2>
+<p>上面都是在介绍功能，现在我们来看一下如何实现。</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>其实也就是写Emacs Lisp。我自从实习回来就基本没怎么写过代码了，今天难得写一下Lisp，顿时觉得神清气爽啊-_-</td>
+      <td> </td>
+      <td>。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>我们可以看到第一张截图，默认插入的图片格式是<code> {% img url %} </code>，这个是Octopress的Tag，可以方便地定制图片的样式。如果需要插入Markdown格式的图片，可以加上前缀<code>C-u</code>，也就是命令变成<code>C-u</code> <code>C-c</code> <code>C-s</code> <code>s</code>这样。这个快捷键绑定略显麻烦，大家可以自己自己绑定到喜欢的快捷键上。</p>
+
+<p>首先我们需要设置Octopress的信息，包括本地的图片路径，以及在网络上的图片路径：</p>
+
+<p><code>cl
+(setq octopress-image-dir (expand-file-name "~/octopress/source/imgs/"))
+(setq octopress-image-url "/imgs/")
+</code></p>
+
+<p>然后开始写程序：</p>
+
+<p>首先是截图，这个直接在网上找到了实现<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>，然后根据需求进行修改：</p>
+
+<p>``` cl 
+;; 
+(defun my-screenshot (dir_path)
+  “Take a screenshot and save it to dir_path path.
+Return image filename without path so that you can concat with your
+opinion. “
+  (interactive)
+  (let* ((full-file-name
+	  (concat (make-temp-name (concat dir_path (buffer-name) “<em>” (format-time-string “%Y%m%d</em>%H%M%S_”))) “.png”))
+	 (file-name (my-base-name full-file-name))
+	 )
+    (call-process-shell-command “scrot” nil nil nil (concat “-s “ “"” full-file-name “"”))
+    file-name
+    ))</p>
+
+<p>;; Screenshot
+(defun markdown-screenshot (arg)
+  “Take a screenshot for Octopress”
+  (interactive “P”)
+  (let* ((dir_path octopress-image-dir)
+	 (url (concat octopress-image-url (my-screenshot dir_path))))
+    (if arg
+	(insert “<img src="&quot; url" alt="" title=")" />
+      (insert “{% img “ url “ %}”))))
+;; 	<br />
+```</p>
+
+<p>然后是从剪切版Clipboard插入图片，这个找不到，于是只能自己写了哎。Lisp水平太差，写了好久…囧。</p>
+
+<p>``` cl
+;; 
+;; base on http://emacswiki.org/emacs/CopyAndPaste
+(defun get-clipboard-contents-as-string ()
+    “Return the value of the clipboard contents as a string.”
+    (let ((x-select-enable-clipboard t))
+      (or (x-cut-buffer-or-selection-value)
+          x-last-selected-text-clipboard)))</p>
+
+<p>(defun copy-file-from-clipboard-to-path (dst-dir)
+  “copy file to desired path from clipboard”
+  (interactive)
+  (let* ((full-file-name) (file-name) (ext) (new-file-name))
+    (setq full-file-name (get-clipboard-contents-as-string))
+    (if (eq (search “file://” full-file-name) 0)
+	(progn
+	  (setq full-file-name (substring full-file-name 7))
+	  (setq file-name (my-base-name full-file-name))
+	  (setq ext (concat “.” (file-name-extension file-name)))
+	  (setq new-file-name
+		(concat (make-temp-name
+			 (concat (substring file-name 0
+					    (search “.” file-name :from-end t))
+				 (format-time-string “<em>%Y%m%d</em>%H%M%S_”))) ext))
+	  (setq new-full-file-name (concat dst-dir new-file-name))
+	  (copy-file full-file-name new-full-file-name)
+	  new-file-name
+	  )
+      )))</p>
+
+<p>;; Insert Image From Clip Board
+(defun markdown-insert-image-from-clipboard (arg)
+  “Insert an image from clipboard and copy it to disired path”
+  (interactive “P”)
+  (let ((url (concat octopress-image-url (copy-file-from-clipboard-to-path octopress-image-dir))))
+    (if arg
+	(insert “<img src="&quot; url" alt="" title=")" />
+      (insert “{% img “ url “ %}”))))
+;; 
+```</p>
+
+<p>最后就是设置按键绑定了：</p>
+
+<p><code>cl
+(define-key markdown-mode-map (kbd "C-c C-s s") 'markdown-screenshot)
+(define-key markdown-mode-map (kbd "C-c C-s i") 'markdown-insert-image-from-clipboard)
+</code></p>
+
+<p>所有代码请见以下两个文件：<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup></p>
+
+<ul>
+  <li><a href="https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/plugins/configs/my-functions.el">my-functions.el</a></li>
+  <li><a href="https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/plugins/configs/my-octopress-settings.el">my-octopress-settings.el</a></li>
+</ul>
+
+<h2 id="section-4">终</h2>
+<p>经过九九八十一式终于打完收工，现在又凌晨3点多了。想起我们的<a href="http://huajun.w18.net/">冯华君</a>师兄，31岁就收到乔布斯的Offer Letter去找教主了，我不禁心里怕怕的，还是早点休息吧。身体是革命的本钱啊。</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="http://jbarillari.blogspot.com/2010/07/what-emacs-does-to-your-keyboard.html">http://jbarillari.blogspot.com/2010/07/what-emacs-does-to-your-keyboard.html</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p><a href="http://lists.gnu.org/archive/html/emacs-orgmode/2011-07/msg01292.html">http://lists.gnu.org/archive/html/emacs-orgmode/2011-07/msg01292.html</a> <a href="http://dreamrunner.org/wiki/public_html/Emacs/org-mode.html">http://dreamrunner.org/wiki/public_html/Emacs/org-mode.html</a><a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p><a href="https://github.com/cedricporter/vim-emacs-setting">我的Emacs配置文件</a><a href="#fnref:3" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: Design | EverET.org]]></title>
+  <link href="http://everet.org/tag/design/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2013-01-15T00:25:15+08:00</updated>
+  <id>http://everet.org/</id>
+  <author>
+    <name><![CDATA[Stupid ET]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[论程序之帮助文档]]></title>
+    <link href="http://everet.org/2012/05/help.html"/>
+    <updated>2012-05-03T08:35:31+08:00</updated>
+    <id>http://everet.org/2012/05/help</id>
+    <content type="html"><![CDATA[<p>每个程序都拥有自己的生命，每个程序都应该拥有自己的帮助文档。一个好的帮助文档可以让一个程序的寿命延长。当然，有了一个好的帮助文档还不够，还需要友好快捷的帮助方式。</p>
+
+<h2 id="shell">Shell</h2>
+
+<p>我们在shell下可以使用各种小工具，像ls，ps，grep等，当我们需要查看ls的帮助，可以是键入man ls，至于什么是man，我们可以输入man man，就可以看到man的帮助了。</p>
+
+<p>这给用户提供了一种统一而便捷的帮助接口。</p>
+
+<h2 id="vim">Vim</h2>
+
+<p>Vim的帮助主要是通过:help， 例如，可以输入:help x，查看x按键的帮助。如果不指定主题，:help默认打开一个总揽的帮助窗口。</p>
+
+<h2 id="python">Python</h2>
+
+<p>Python交互式解释器除了python自带的，还有一个非常好用的交互环境是iPython，ipython - Tools for Interactive Computing in Python。</p>
+
+<p>Python的文档是和对象绑定在一起的，每个对象都有一个__doc__的属性，我们可以通过这个属性查看这个对象的文档，例如print str.<strong>doc</strong>，当然，如果我们需要更详细的帮助文档，我们可以help(str)，查看str的帮助。如果我们想了解一下os模块，我们可以键入help(os)，就可以看到关于os的详细的帮助文档。</p>
+
+<p>Python是个神奇的语言，交互解释器也是一个神奇的环境。</p>
+
+<h2 id="emacs">Emacs</h2>
+
+<p>emacs里面有非常详细的各种文档，我们可以是用 Ctrl+h    i   g 打开它，然后阅读帮助文档。</p>
+
+<p>例如，我们想知道emacs的调试工具的使用，我们可以键入  Ctrl+h   i   g   (emacs) Debuggers   RET  ，然后就可以看到像gdb，pdb的帮助手册。这个是非常方面的。</p>
+
+<p>如果我们想知道某个按键具体是做什么的，我们可以 Ctrl+h   k ，然后按下按键，例如 Ctrl+x   Ctrl+f  ,就会打开如下的帮助：<!-- more --></p>
+
+<blockquote>
+  <p>C-x C-f runs the command ido-find-file, which is an interactive
+compiled Lisp function.</p>
+</blockquote>
+
+<p>It is bound to, C-x C-f,.</p>
+
+<p>(ido-find-file)</p>
+
+<p>Edit file with name obtained via minibuffer.
+The file is displayed according to `ido-default-file-method’ – the
+default is to show it in the same window, unless it is already
+visible in another frame.
+。。。。。。</p>
+
+<p>再例如，我们想知道 Ctrl+c 开头，开头的按键的有哪些，我们可以输入 Ctrl+c   Ctrl+h ，然后就可以看到Ctrl+c开头的按键们的帮助。</p>
+
+<p>这是一种非常友好的帮助功能。此外，如果我们对某些函数不是很熟悉，我们可以按下 Ctrl+h   f ，然后输入函数名，就可以看到这个函数的帮助。</p>
+
+<h2 id="section">总结</h2>
+
+<p>像这种级别的帮助方式，在其他软件是很难找到的。其他软件的一般做法是有一个快捷键表，然后我们就要自己去那个表找对应的快捷键查看帮助（Eclipse就是一个很好的例子），这样软件实现起来相对容易一些，但是对于用户是不友好的，浪费用户时间和打击用户学习的兴趣。</p>
+
+<p>记得很久以前的Windows对话框，在最大化最小化关闭按钮旁边会有一个?的按钮，我们点了那个按钮，接着去点其他东西就可以查看那个东西的帮助，这个是对于GUI一个很棒的帮助方式。</p>
+
+<p>对于一个友好的帮助方式，总是可以让用户轻易的找到想知道的按键，按钮，功能的帮助文档，例如提供搜索，通过help(XXX)，man XXX或者Ctrl+h，“？”按钮等手段直接找到当前功能及周边功能的帮助。而一个差劲的帮助方式，是强迫用户自己去一个巨大的手册里自己寻找帮助。</p>
+
+<p>当然，要做到一个友好的帮助方式，我们在程序设计的时候就必须得考虑用户帮助的问题。</p>
+
+<p>例如更好地建立功能与帮助手册之间的关系，如何找到功能对应的快捷键，如何找到快捷键对应的功能，如何找到功能相关的其他功能的帮助，如果动态添加了模块，这些模块的帮助文档如何自动加入到当前的帮助环境中，这些问题都值得我们仔细斟酌。</p>
+
+<p>如果不提前考虑好对于帮助的扩展，那么在后期强加进去帮助方式容易会打乱代码的结构。</p>
+
+<p>所有的帮助信息都应该在用户需要的时候自动出现。</p>
+]]></content>
+  </entry>
+  
+</feed>

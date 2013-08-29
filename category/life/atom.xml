@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Life | EverET.org]]></title>
+  <link href="http://everet.org/category/life/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2013-01-15T00:25:15+08:00</updated>
+  <id>http://everet.org/</id>
+  <author>
+    <name><![CDATA[Stupid ET]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Keep Learning]]></title>
+    <link href="http://everet.org/2013/01/keep-learning.html"/>
+    <updated>2013-01-03T00:14:00+08:00</updated>
+    <id>http://everet.org/2013/01/keep-learning</id>
+    <content type="html"><![CDATA[<p>今天<a href="http://www.kidsang.com/">屠文翔</a>同学问了我一个在PIL中获取像素操作的问题，我想也没想就说道可以使用getpixel和putpixel操作像素，因为我之前一直也是使用这两个API。过了一会，<a href="http://www.kidsang.com/">屠文翔</a>同学问我是否用过load()这个API，我直接就说这个不是操作像素的。我之前在浏览PIL源码的时候，经常会见到调用这个函数，不过都只是纯调用，<code>self.load()</code>，连返回值都不获取。也没仔细看，就认为这个仅仅是装载数据。</p>
+
+<!-- more -->
+
+<p>``` python
+##
+# Allocates storage for the image and loads the pixel data.  In
+# normal cases, you don’t need to call this method, since the
+# Image class automatically loads an opened image when it is
+# accessed for the first time.
+#
+# @return An image access object.</p>
+
+<p>def load(self):
+    “Explicitly load pixel data.”
+    if self.im and self.palette and self.palette.dirty:
+        # realize palette
+        apply(self.im.putpalette, self.palette.getdata())
+        self.palette.dirty = 0
+        self.palette.mode = “RGB”
+        self.palette.rawmode = None
+        if self.info.has_key(“transparency”):
+            self.im.putpalettealpha(self.info[“transparency”], 0)
+            self.palette.mode = “RGBA”
+    if self.im:
+        return self.im.pixel_access(self.readonly)
+```</p>
+
+<p>于是乎就自以为是地认为，load()不是用于操作像素的。然后<a href="http://www.kidsang.com/">屠文翔</a>同学发来一条链接<a href="http://effbot.org/zone/pil-pixel-access.htm">Pixel Access Objects</a>，顺带说了一句，“时代进步了“。</p>
+
+<p>``` python
+pix = im.load()</p>
+
+<h1 id="get-pixel-value">get pixel value</h1>
+<p>print pix[x, y]</p>
+
+<h1 id="put-pixel-value">put pixel value</h1>
+<p>pix[x, y] = value
+```</p>
+
+<p>嗯，确实，时代进步了，我老了，如果我不保持学习，所拥有的知识很多将会过时，甚至成为错误。</p>
+
+<p>再仔细一看，这篇文章是2005年写的，新特性在1.1.6就加入了PIL，而我用的是1.1.7。</p>
+
+<p>现在就说明一个问题，我自以为掌握了某些知识，其实是没有掌握的，而且其中甚至还有误解在里面。所以，对于”已经掌握的“知识，还需要经常温习，考证是否正确理解、是否全部掌握、是否慢慢遗忘。</p>
+
+<h2 id="keep-learning">Keep Learning</h2>
+
+<p>又想起一句话：<strong>学历代表过去，能力代表现在，学习力代表未来</strong>。</p>
+
+<p>对于在IT这个瞬息万变的行业，不能保持学习的兴趣与激情，迟早会被无情地淘汰。当然，除了学习，还要保持谦虚，保持低调，毕竟人总是会犯错的。如果自己很装逼地说什么就是什么，最后却发现自己错了，那岂不丢脸丢到家了。低调与谦虚，加上高效学习，2013年，加油！！！</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[由TT引发的思考]]></title>
+    <link href="http://everet.org/2012/12/tt.html"/>
+    <updated>2012-12-30T13:34:00+08:00</updated>
+    <id>http://everet.org/2012/12/tt</id>
+    <content type="html"><![CDATA[<p>TT是一个很古老的打字软件，还运行在DOS下，能够存活这么多年实属不易。对于这么一个DOS程序，它的优势也起来了。因为DOSBox的跨平台，于是TT也可以跨平台了。</p>
+
+<p><img src="/imgs/snapshot2<em>20121230</em>133903_4556ydQ.png"></p>
+
+<p>这多么像以前我们小学的用DOS的电脑里面的东西，突然想起以前的LOGO语言和打的雷电也是这种感觉。好吧，其实我也不是那么怀旧，如果不是去实习，也不会遇到一个如此奇葩的程序。蓝色背景绿色前景，这个我在实习的时候经常会在新入职的童鞋们的电脑上看的这样的搭配。他们都在练TT，而且不练到60 WPM就不能转正，这还是真是压力巨大。</p>
+
+<p>为了以后节省一点打字时间，我也开始练习TT，虽然在之前的几个月都有练TT，但是发现除了对于数字和特殊符号熟悉了一些外，没有什么进步，一直都维持在40+ WPM，离60还有很大的距离。虽然我练的时间比较少，但是也不至于这样基本没进步吧。难道我一辈子都要维持在这种龟速了。</p>
+
+<h2 id="section">穷则思变</h2>
+
+<p>经过观察，貌似我打英文的速度也不至于那么慢，只是准确率很低，要经常删去打错的，于是乎这样整体速度就还是很慢了。</p>
+
+<!-- more -->
+
+<p>举个例子，如果每打5个字母，就打错3个，那么假如在按下了16个字母键，实际的产出就只有4个字母，而且还要搭上6个退格，也就是总共按下了22个按键。</p>
+
+<p>而如果完全可以不打错的话，就只需要按下4个字母键就可以达到同样的效果。</p>
+
+<p>所以，即便按得很快的人的按键速度是打得慢但是准确的人的2倍，打字速度也不到准确的人的一半。</p>
+
+<p>这就像一个人往前走5步，就发现走错了3步，然后往回退，然后再走五步又发现错了3步，如此周而复始，但头来其实都没走多远。</p>
+
+<p>所以对于我，提高准确率，少做些无用功，或许是提高速度的有效方法。</p>
+
+<h2 id="section-1">根本问题</h2>
+<p>我想，这本质的问题在于：<strong>鲁莽前进</strong>。</p>
+
+<p>就像平时写代码的时候，有时可能会为了速度，不思考就直接开工。如果走错了，到头来最后其实也是看似花了很多时间，却产出很少，大量的时间都在各种重构甚至架构修改上面。</p>
+
+<p>所以，思考清晰下一步，少走一些弯路，这样才是节约时间、对于生命负责的表现啊。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[From Wordpress to Octopress]]></title>
+    <link href="http://everet.org/2012/12/migrate-from-wordpress-to-octopress.html"/>
+    <updated>2012-12-25T20:49:00+08:00</updated>
+    <id>http://everet.org/2012/12/migrate-from-wordpress-to-octopress</id>
+    <content type="html"><![CDATA[<h2 id="section">为什么</h2>
+<p>为什么离开Wordpress选择Octopress？ 在Google中搜索Wordpress+Octopress就会找到整版整版的从Wordpress迁移到Octopress的博文，
+其中有介绍各种迁移的理由，例如Wordpress太臃肿，Octopress可以让我们像黑客一样写博客。</p>
+
+<p>这些都太高雅了，我只是不喜欢PHP那一坨一坨文明用语一样的代码，这样改起来的时候实在是让人蛋疼。而Octopress是Ruby写的，于是可以借机学习一下<em>Ruby</em>（<strong>这个是主要原因</strong>）。</p>
+
+<!-- more -->
+
+<h2 id="wordpress">对于Wordpress的看法</h2>
+<p>Wordpress可以让我们在浏览器写东西，也可以用客户端来写，例如Windows Live Writer、Emacs + org2blog<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>。
+当我们在其他人电脑，没有客户端的时候，一样可以打开浏览器写。Wordpress既可以是胖客户端，又可以是瘦客户端。
+而且Wordpress架构设计灵活，插件主题丰富。用户体验好，也可以用Markdown、org等等其他语言来写。对于静态化，装个WP-Super-Cache插件就可以将所有文章静态化了，而且静态化的程度是可以控制的。</p>
+
+<h3 id="section-1">缺点</h3>
+<ol>
+  <li>是PHP写的，用MySQL，这两个东西一下就占了一堆内存。对于我们这些穷苦人民的VPS十分不友好。</li>
+  <li>不联网就没法预览最终效果。</li>
+</ol>
+
+<h2 id="octopress">对于Octopress的看法</h2>
+<p>对于Octopress的优点网上也有一堆一堆的评论，我也就不太多说了。我们来看看我觉得的缺点：</p>
+
+<h3 id="section-2">缺点</h3>
+<ol>
+  <li>Octopress是一个胖客户端的博客系统，在写博客前，你需要安装Git、Ruby等等东西，然后把环境调教好，才能开始写东西。</li>
+  <li>如果去到别人的电脑，或者是Windows的话，那么写个博客都会非常的蛋疼。</li>
+  <li>相对缺乏插件与主题。</li>
+  <li>发布一篇文章就要重建整个博客，慢。</li>
+</ol>
+
+<h3 id="section-3">优点</h3>
+<blockquote>
+  <p>Octopress is jekyll with Batteries included.</p>
+</blockquote>
+
+<p>直接就是用Markdown语法，不用纠结org还是markdown。
+可以方便地离线预览文章<code>rake preview</code>。</p>
+
+<h3 id="misc">Misc</h3>
+<p>Octopress默认的markdown引擎是rdiscount，这个实在是让人难以接受，连footnote都不支持。于是果断换成了kramdown<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>。kramdown支持footnote，甚至LaTex<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>。</p>
+
+<h2 id="section-4">其他</h2>
+
+<h3 id="section-5">写博客的三个阶段</h3>
+<p>之前看过阮一峰写的一篇文章<a href="http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html">github Pages和Jekyll入门</a>，里面有讲到，喜欢写博客的人，会经历三个阶段：</p>
+
+<blockquote>
+  <p>第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费空间来写。
+第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。
+第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。</p>
+</blockquote>
+
+<p>好吧，我觉得独立博客的管理确实挺麻烦的，加上刚刚经历买了1年的VPS没到一个月，主机商就跑路的悲剧后，就愈发觉得自己负责可靠性等各种东西的维护确实挺麻烦的。就先暂时放在Github上面，日后再自己管理。</p>
+
+<p>放在Github上面有个坏处是，对于页面都有缓存：<code>Cache-Control: max-age=86400</code>，也就是有一整天缓存时间，如果一天内有访问过这个页面的浏览器不刷新的话就直接从cache里面取了。不过应该也没什么大碍，基本不会一天更新好几次。而且除了自己也没什么人访问。</p>
+
+<h3 id="emacs">Emacs</h3>
+<p>Emacs既可以方便地写Wordpress也可以写Octopress。
+<img src="/imgs/emacs-user-at-work.jpg" alt="Emacs User At Work" /><sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup></p>
+
+<h3 id="ruby">Ruby</h3>
+<p>这段时间看了Ruby，发现竟然可以比Python更加优美，我想，日后，可能也会有很多人从Python流向Ruby，就像曾经人们从Perl流向Python一样。</p>
+
+<p>这就是江山代有才人出，长江后浪推前浪啊。事物总是在进步着。</p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="https://github.com/punchagan/org2blog">https://github.com/punchagan/org2blog</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p><a href="http://kramdown.rubyforge.org/index.html">http://kramdown.rubyforge.org/index.html</a><a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p><a href="http://yanping.me/cn/blog/2012/03/10/octopress-with-latex/">在Octopress中使用LaTeX</a><a href="#fnref:3" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:4">
+      <p><a href="http://batsov.com/articles/2011/11/11/blogging-like-a-hacker-evolution/">http://batsov.com/articles/2011/11/11/blogging-like-a-hacker-evolution/</a><a href="#fnref:4" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[有什么样的硬件，用什么样的软件]]></title>
+    <link href="http://everet.org/2012/12/hardware-decide-the-software.html"/>
+    <updated>2012-12-04T03:39:17+08:00</updated>
+    <id>http://everet.org/2012/12/hardware-decide-the-software</id>
+    <content type="html"><![CDATA[<p>两年多前买的摩托罗拉的里程碑1代，现在竟然已经无力支撑go桌面这样庞大的软件了。虽然我很喜欢go桌面，但是，现在手机已经无力承担如此重负。确实，什么样的基础就应该过什么样的生活，过高的追求只会让生活变得像一条狗一样，苟延残喘。 <!-- more -->
+里程碑的硬件已经强过以前我家的电脑了，以前我的台式机只有650MHz的CPU，64M的内存，9GB的硬盘，但都可以轻松跑Win 2k，再跑个VC也绰绰有余。而现在的一台手机，CPU超频到了800MHz，内存256MB，跑一个桌面就卡到爆炸，其他东西就都不用用了。这个是为什么呢？果然，无论有多少硬件资源，都会被平庸的程序员挥霍干净。</p>
+
+<p>人们在拥有的时候永远不会懂得珍惜啊！ 现在的程序员能不能提高一下性能，节约一下资源的消耗啊？！
+手机卡到爆炸，于是乎重新刷了CyanogenMod在11月22日放出的的rom，我的桌面又从go桌面回到了ADW。虽然每次ADW都被我直接忽视而装上go，但这次，我决定用一下它。突然发现，速度有了质的飞跃。开完程序回到桌面发现桌面没有被kill掉，这是多么的让人欣慰啊。</p>
+
+<p>原来，不仅仅是我的手机硬件老了，而是，随着时间的流逝，我们索要的越来越多，最终，超出了大环境的承受能力了。有时候，只要降低一下自己的预期，生活就会很美好了。
+有什么样的能力，就应该过什么样的生活。当然，也可以提高自己的能力。不过现在也没有条件更换硬件，于是也只能有什么样的硬件，用什么样的软件。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[VPS主机商跑路了]]></title>
+    <link href="http://everet.org/2012/11/vps-host-disappear.html"/>
+    <updated>2012-11-30T18:35:31+08:00</updated>
+    <id>http://everet.org/2012/11/vps-host-disappear</id>
+    <content type="html"><![CDATA[<p>刚刚切换到风云主机没一个月，而且还是年付的，没想到月底风云主机就倒闭了，A大也跑路了。在收到风云主机的邮件时，风云主机的官网vpswind.com也打不开了，邮件发了也没人回，付款看样子也讨不回来了。不过，好在A大在倒闭前的26号还发了邮件说要倒闭了，言下之意就是要我们自己备份好，然后自己卷卷铺盖走人，也给了几天时间备份数据。</p>
+
+<p>不得不说，风云主机的VPS性价比还是挺不错的，只是没有考虑到倒闭问题。所以，高性价比还是有风险的，而且一旦发生意外，那么所谓的高性价比马上就变得子虚乌有了。<!-- more --></p>
+
+<p>先不说这次事件带来的经济损失，但是还是有许多其他可以思考的地方。</p>
+
+<p>这是我第一次近距离接触一个IT公司的倒闭，在迁移到风云主机前，专门看过A大一些信息，他曾经在dia和xehost，然后出来自己干。没想到自己干没到一年，就倒闭了。所以创业还是有风险的，有时候有些人失败就可能落下个名声扫地，永远都爬不起来了。自己干，自己做老大，固然拥有了工作上时间的自由，但可能失去的是自己的更多的时间以及稍不注意，失去的可能是自己的健康。</p>
+
+<p>看到现在许许多多的人想自己创业，我想，终究其中的多数会像风云主机一样如同昙花一现，留下的只是少数的强者。创业要的除了技术之外的能力，还有很多很多……</p>
+
+<p>修炼……</p>
+
+]]></content>
+  </entry>
+  
+</feed>

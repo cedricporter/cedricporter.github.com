@@ -1,0 +1,681 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>MoinMoin+Nginx+uWSGI搭建个人Wiki - EverET.org</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="有博客，为什么还需要Wiki呢？ 有博客，为什么还需要Wiki呢？对于这个问题，我也思考了许久。博客记录的东西很扁平，而且不太适宜记录一些零碎不完整的东西。如果别人订阅了你的博客，你的博客却经常发布一些不完整的内容，这样会严重影响别人的心情。所以我觉得博客适宜将一些比较完整的内容的写在里面。此外 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="EverET.org" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-28529727-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">EverET.org</a></h1>
+  
+    <h2>好记性不如烂笔头</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:everet.org" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/my-works">Works</a></li>
+  <li><a href="http://414112390.qzone.qq.com/#!app=4" target="_blank">Albums</a></li>
+  <li><a href="/liuyana">Msg Board</a></li>
+  <li><a href="/about-me">About Me</a></li>
+  <li><a href="http://github.com/cedricporter">et@github</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">MoinMoin+Nginx+uWSGI搭建个人Wiki</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-19T07:14:27+08:00" pubdate data-updated="true">2012-12-19</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content">
+  <h2 id="wiki">有博客，为什么还需要Wiki呢？</h2>
+
+<p>有博客，为什么还需要Wiki呢？对于这个问题，我也思考了许久。博客记录的东西很扁平，而且不太适宜记录一些零碎不完整的东西。如果别人订阅了你的博客，你的博客却经常发布一些不完整的内容，这样会严重影响别人的心情。所以我觉得博客适宜将一些比较完整的内容的写在里面。此外，平时在网上看到什么东西，虽然都可以收录到EverNote里面（EverNote里面有提供目录以及标签可以很好地进行分类），但是，EverNote的劣势在于，不方便将知识组织知识，将它们串联在一起。</p>
+
+<p>而在Wiki中知识是以词条形式，词条与词条间可以方便地建立关系。很容易组织成树状结构。</p>
+
+<p>此外，Wiki可以使用轻量标记语言编写，优点是纯文本，容易阅读和编辑，能够让我们的注意力集中于撰写内容而非形式。特别在Emacs或者Vim里面可以方便地半可视化地编写Wiki。我第一次尝试就对其爱不释手，终于可以从Wordpress，Word等SB的需要鼠标辅助编辑的编写过程中解脱了。</p>
+
+<p>于是我又开始物色Wiki，以前有用过PHP实现的Wiki，现在决定找一个Python实现的Wiki，很快就找到了<a href="http://i.everet.org/MoinMoin">MoinMoin</a>，它是一个由Python实现的<a href="http://zh.wikipedia.org/wiki/Wiki">Wiki</a>系统，文件存储，选一种自己喜欢的语言编写的Wiki系统，日后定制起来会方便一些。<!-- more --></p>
+
+<p>我的Wiki：<a href="http://i.everet.org/">http://i.everet.org</a></p>
+
+<p>这个Wiki是我前段时间在这个性能忒差的服务器上面搭建的，今天终于把配置过程写下来，希望能给有需要的同学多一份参考。</p>
+
+<p>前端依旧是Nginx，后端用uWSGI处理Python。Nginx可以很好的转发。</p>
+
+<h2 id="nginx">Nginx的配置</h2>
+
+<h3 id="install">Install</h3>
+
+<blockquote>
+
+</blockquote>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># apt-get install python-software-properties
+</span><span class="line"># apt-add-repository ppa:nginx/stable
+</span><span class="line"># apt-get update
+</span><span class="line"># apt-get install nginx-full</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们在/etc/nginx/sites-available文件夹里面新建一个文件wiki.everet.org，然后链接到sites-enables。就可以运行nginx -t &amp;&amp; service nginx reload:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>nginx  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+</pre></td><td class="code"><pre><code class="nginx"><span class="line"><span class="k">server</span> <span class="p">{</span>
+</span><span class="line">    <span class="kn">server_name</span> <span class="s">i.everet.org</span> <span class="s">wiki.everet.org</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">access_log</span>  <span class="s">/var/log/nginx/wiki.everet.org.access.log</span><span class="p">;</span>
+</span><span class="line">    <span class="kn">error_log</span> <span class="s">/var/log/nginx/wiki.everet.org.error.org</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">include</span> <span class="s">uwsgi_params</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">uwsgi_pass</span> <span class="s">unix:///var/run/uwsgi_wiki.sock</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">uwsgi_param</span> <span class="s">UWSGI_PYHOME</span> <span class="s">/var/www/moinmoin/python-env/</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">uwsgi_param</span> <span class="s">UWSGI_CHDIR</span> <span class="s">/var/www/moinmoin/wiki/</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">uwsgi_param</span> <span class="s">UWSGI_SCRIPT</span> <span class="s">moin_wsgi</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">location</span> <span class="p">=</span> <span class="s">/google7a32e07f62c143af.html</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">rewrite</span> <span class="s">^/</span> <span class="s">/moin_static195/google7a32e07f62c143af.html</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">location</span> <span class="s">^~</span> <span class="s">/moin_static195/</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">alias</span> <span class="s">/var/www/moinmoin/python-env/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">add_header</span> <span class="s">Cache-Control</span> <span class="s">public</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">expires</span> <span class="s">1M</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="python">Python</h2>
+
+<p>在这里，我们需要借助一个程序virtualenv，它可以创建一个干净的Python运行环境。其实Python核心就是一个解释器，然后外加许多包，也就是所谓的“电池”。如果我们自己编译Python的话，可以选择生成一个静态链接的Python可执行文件，就可以拿着这个解释器文件走了。</p>
+
+<p>而virtualenv做的事情就是将Python解释器以及一些需要的包复制到我们指定的地方，已经创建一些方便设置环境变量的脚本。当我们有程序需要不同版本的模块或者某些不兼容的模块时，就可以借助于virtualenv。</p>
+
+<p>Virtualenv会生成一个包含Python可执行程序的目录，里面也会包含标准库。</p>
+
+<p>此外，我们需要运行bin目录下面的activate，它会修改当前的环境变量。</p>
+
+<p>activate这个脚本做的事情就是将新的Python可执行的路径加入到环境变量PATH最前面。然后清空PYTHONHOME这个环境变量。</p>
+
+<blockquote>
+
+</blockquote>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># mkdir -p /var/www/moinmoin
+</span><span class="line"># virtualenv /var/www/moinmoin/python-env
+</span><span class="line"># . /var/www/moinmoin/python-env/bin/activate</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>运行完activate后，环境变量就改了，我们可以看到提示符已经改变了。然后我们进行后续工作。</p>
+
+<h2 id="moinmoin">MoinMoin</h2>
+
+<p>然后现在安装moinmoin</p>
+
+<blockquote>
+
+</blockquote>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">(python-env) # python setup.py install</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后将安装目录的wiki文件夹下面的data与uderlay目录复制出来，放到/var/www/moinmoin/wiki。然后将wiki/config目录下的wikiconfig.py以及wiki/server/moin.wsgi改名moin_wsgi.py复制到/var/www/moinmoin/wiki目录下面，然后/var/www/moinmoin/wiki目录结构如下：</p>
+
+<blockquote>
+
+</blockquote>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">root@ubuntu:/var/www/moinmoin/wiki# tree -L 1
+</span><span class="line">.
+</span><span class="line">├── data
+</span><span class="line">├── moin_wsgi.py
+</span><span class="line">├── underlay
+</span><span class="line">└── wikiconfig.py
+</span><span class="line">
+</span><span class="line">2 directories, 2 files</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后将wiki目录修改属主为uwsgi。</p>
+
+<blockquote>
+
+</blockquote>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># chown uwsgi:uwsgi /var/www/moinmoin/wiki -R</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="uwsgi">uWSGI</h2>
+
+<h3 id="install-1">Install</h3>
+
+<p>安装最新的lts版的uwsgi，不过在此之前，需要安装python-dev才能够正确编译。</p>
+
+<blockquote>
+
+</blockquote>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># sudo apt-get install python-dev build-essential
+</span><span class="line">(python-env) # pip install http://projects.unbit.it/downloads/uwsgi-lts.tar.gz</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我们还在virtualenv的环境变量下，uwsgi会被安装到/var/www/moinmoin/python-env/bin下面，就一个文件uwsgi。</p>
+
+<h3 id="autostart">Autostart</h3>
+
+<p>我们现在来为uwsgi编写开机启动：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c"># /etc/init.d/uwsgi</span>
+</span><span class="line"><span class="c">#</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">daemon</span><span class="o">=</span>/var/www/moinmoin/python-env/bin/uwsgi
+</span><span class="line"><span class="nv">pid</span><span class="o">=</span>/var/run/uwsgi.pid
+</span><span class="line"><span class="nv">args</span><span class="o">=</span><span class="s2">&quot;-x /etc/uwsgi/uwsgi.xml&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
+</span><span class="line">    start<span class="o">)</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;Starting uwsgi&quot;</span>
+</span><span class="line">        start-stop-daemon -p <span class="nv">$pid</span> --start --exec <span class="nv">$daemon</span> -- <span class="nv">$args</span>
+</span><span class="line">        ;;
+</span><span class="line">    stop<span class="o">)</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;Stopping script uwsgi&quot;</span>
+</span><span class="line">        start-stop-daemon --signal INT -p <span class="nv">$pid</span> --stop <span class="nv">$daemon</span> -- <span class="nv">$args</span>
+</span><span class="line">        ;;
+</span><span class="line">    restart<span class="o">)</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;Restarting uwsgi&quot;</span>
+</span><span class="line">        start-stop-daemon --signal INT -p <span class="nv">$pid</span> --stop <span class="nv">$daemon</span> -- <span class="nv">$args</span>
+</span><span class="line">        sleep 2
+</span><span class="line">        start-stop-daemon -p <span class="nv">$pid</span> --start --exec <span class="nv">$daemon</span> -- <span class="nv">$args</span>
+</span><span class="line">        ;;
+</span><span class="line">    reload<span class="o">)</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;Reloading conf&quot;</span>
+</span><span class="line">        <span class="nb">kill</span> -HUP <span class="k">$(</span>cat <span class="nv">$pid</span><span class="k">)</span>
+</span><span class="line">        ;;
+</span><span class="line">    *<span class="o">)</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;Usage: /etc/init.d/uwsgi {start|stop|restart|reload}&quot;</span>
+</span><span class="line">        <span class="nb">exit </span>1
+</span><span class="line">        ;;
+</span><span class="line"><span class="k">esac</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="config">Config</h3>
+
+<p>/etc/uwsgi/uwsgi.xml内容如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>xml  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="xml"><span class="line"><span class="nt">&lt;uwsgi&gt;</span>
+</span><span class="line">    <span class="nt">&lt;socket&gt;</span>/var/run/uwsgi_wiki.sock<span class="nt">&lt;/socket&gt;</span>
+</span><span class="line">    <span class="nt">&lt;uid&gt;</span>uwsgi<span class="nt">&lt;/uid&gt;</span>
+</span><span class="line">    <span class="nt">&lt;gid&gt;</span>uwsgi<span class="nt">&lt;/gid&gt;</span>
+</span><span class="line">    <span class="nt">&lt;master-as-root/&gt;</span>
+</span><span class="line">    <span class="nt">&lt;reload-on-as&gt;</span>128<span class="nt">&lt;/reload-on-as&gt;</span>
+</span><span class="line">    <span class="nt">&lt;touch-reload&gt;</span>/var/www/moinmoin/wiki/wikiconfig.py<span class="nt">&lt;/touch-reload&gt;</span>
+</span><span class="line">    <span class="nt">&lt;master/&gt;</span>
+</span><span class="line">    <span class="nt">&lt;processes&gt;</span>3<span class="nt">&lt;/processes&gt;</span>
+</span><span class="line">    <span class="nt">&lt;no-site/&gt;</span>
+</span><span class="line">    <span class="nt">&lt;vhost/&gt;</span>
+</span><span class="line">    <span class="nt">&lt;memory-report/&gt;</span>
+</span><span class="line">    <span class="nt">&lt;pidfile&gt;</span>/var/run/uwsgi.pid<span class="nt">&lt;/pidfile&gt;</span>
+</span><span class="line">    <span class="nt">&lt;daemonize&gt;</span>/var/log/uwsgi.log<span class="nt">&lt;/daemonize&gt;</span>
+</span><span class="line"><span class="nt">&lt;/uwsgi&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ul>
+  <li>其中reload-on-as是指内存消耗达到128就重新加载过进程。</li>
+  <li>touch-reload是指wikiconfig.py被修改就重新加载进程。</li>
+  <li>master-as-root是指master进程uid为root，这样才有足够权限在/var/run中创建socket。</li>
+</ul>
+
+<p>其他参数就没什么特别的了。</p>
+
+<h3 id="add-user">Add User</h3>
+
+<p>添加用户</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># adduser --system --no-create-home --disabled-login --disabled-password --group uwsgi
+</span><span class="line"># touch /var/log/uwsgi.log
+</span><span class="line"># chown uwsgi:uwsgi /var/log/uwsgi.log</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="run">Run</h3>
+
+<p>加到开机启动，然后运行uwsgi服务。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c"># update-rc.d uwsgi defaults</span>
+</span><span class="line"><span class="c"># service uwsgi start</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="section">扩展阅读</h2>
+
+<ul>
+  <li><a href="http://uwsgi-docs.readthedocs.org/en/latest/Nginx.html#dynamic-apps">UWSGI_SCRIPT</a></li>
+  <li><a href="https://uwsgi-docs.readthedocs.org/en/latest/Vars.html?highlight=%20UWSGI_CHDIR">uwsgi protocol magic variables</a></li>
+  <li><a href="http://moinmo.in/EmacsForMoinMoin">Emacs的moinmoin-mode</a></li>
+</ul>
+
+
+
+  <span>本文链接: <a href="http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html</a></span>
+  <hr/>
+    <h3>您可能也喜欢</h3>
+    <ul>
+    
+        <li>
+        <a href="/2012/01/low-memory-vps-configuration.html">低内存VPS的配置</a>
+        </li>
+    
+        <li>
+        <a href="/2012/03/ftp-server.html">我的FTP Server——ftp.py</a>
+        </li>
+    
+        <li>
+        <a href="/2012/11/multi-user-nginx-php-server.html">配置多用户的虚拟主机</a>
+        </li>
+    
+        <li>
+        <a href="/2012/09/chrome-ramdisk.html">[优化]将Chrome的数据放置到内存中去</a>
+        </li>
+    
+        <li>
+        <a href="/2012/03/ftp-protocol.html">Mission: FTP Protocol</a>
+        </li>
+    
+    </ul>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stupid ET</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-19T07:14:27+08:00" pubdate data-updated="true">2012-12-19</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/category/it/'>IT</a>
+  
+</span>
+
+
+      
+
+<span class="categories">
+  Tags:&nbsp
+  
+    <a class='tag' href='/tag/moinmoin/'>MoinMoin</a>, <a class='tag' href='/tag/nginx/'>Nginx</a>, <a class='tag' href='/tag/python/'>Python</a>, <a class='tag' href='/tag/uwsgi/'>uWSGI</a>
+  
+</span>
+
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/12/hardware-decide-the-software.html" title="Previous Post: 有什么样的硬件，用什么样的软件">&laquo; 有什么样的硬件，用什么样的软件</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/12/debug-nginx.html" title="Next Post: 调试Nginx">调试Nginx &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>Cedric Porter is Stupid ET.</p>
+  <p>EverET.org is provided by Stupid ET.</p>
+</section>
+<section>
+  <h1>Tags</h1>
+  <ul class="tag-cloud">
+    <a style="font-size: 112%" href="/tag/android/">Android</a>
+<a style="font-size: 131%" href="/tag/apache/">Apache</a>
+<a style="font-size: 80%" href="/tag/boost/">Boost</a>
+<a style="font-size: 80%" href="/tag/bugzilla/">Bugzilla</a>
+<a style="font-size: 177%" href="/tag/c-/">C++</a>
+<a style="font-size: 131%" href="/tag/captcha/">Captcha</a>
+<a style="font-size: 80%" href="/tag/chrome/">Chrome</a>
+<a style="font-size: 164%" href="/tag/clover/">Clover</a>
+<a style="font-size: 112%" href="/tag/datastructure/">DataStructure</a>
+<a style="font-size: 80%" href="/tag/design/">Design</a>
+<a style="font-size: 164%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 80%" href="/tag/english/">English</a>
+<a style="font-size: 171%" href="/tag/git/">Git</a>
+<a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
+<a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
+<a style="font-size: 131%" href="/tag/http/">HTTP</a>
+<a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
+<a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
+<a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
+<a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
+<a style="font-size: 207%" href="/tag/linux/">Linux</a>
+<a style="font-size: 145%" href="/tag/lisp/">Lisp</a>
+<a style="font-size: 80%" href="/tag/markdown/">Markdown</a>
+<a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
+<a style="font-size: 131%" href="/tag/mysql/">Mysql</a>
+<a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
+<a style="font-size: 155%" href="/tag/ogre/">OGRE</a>
+<a style="font-size: 112%" href="/tag/octopress/">Octopress</a>
+<a style="font-size: 131%" href="/tag/php/">PHP</a>
+<a style="font-size: 131%" href="/tag/pil/">PIL</a>
+<a style="font-size: 250%" href="/tag/python/">Python</a>
+<a style="font-size: 80%" href="/tag/qq/">QQ</a>
+<a style="font-size: 80%" href="/tag/ruby/">Ruby</a>
+<a style="font-size: 80%" href="/tag/svn/">SVN</a>
+<a style="font-size: 112%" href="/tag/scar/">Scar</a>
+<a style="font-size: 112%" href="/tag/tortoisegit/">TortoiseGit</a>
+<a style="font-size: 164%" href="/tag/ubuntu/">Ubuntu</a>
+<a style="font-size: 145%" href="/tag/ultrademo/">UltraDemo</a>
+<a style="font-size: 80%" href="/tag/vpn/">VPN</a>
+<a style="font-size: 112%" href="/tag/vim/">Vim</a>
+<a style="font-size: 112%" href="/tag/wpf/">WPF</a>
+<a style="font-size: 183%" href="/tag/web/">Web</a>
+<a style="font-size: 164%" href="/tag/wordpress/">Wordpress</a>
+<a style="font-size: 171%" href="/tag/compile/">compile</a>
+<a style="font-size: 80%" href="/tag/curl/">curl</a>
+<a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
+<a style="font-size: 80%" href="/tag/ppp/">ppp</a>
+<a style="font-size: 80%" href="/tag/pptpd/">pptpd</a>
+<a style="font-size: 80%" href="/tag/rsync/">rsync</a>
+<a style="font-size: 80%" href="/tag/sendmail/">sendmail</a>
+<a style="font-size: 80%" href="/tag/ssh/">ssh</a>
+<a style="font-size: 80%" href="/tag/uwsgi/">uWSGI</a>
+<a style="font-size: 80%" href="/tag/virtual-memory/">virtual memory</a>
+
+  </ul>
+</section>
+<section>
+  <h1>Friends</h1>
+    <a href="http://www.kidsang.com/" target="_blank">树桑小朋友的自留地</a>
+    | <a href="http://xiaoxia.org/" target="_blank">XIAOXIA[PG]</a>
+    | <a href="http://huanghuachao.cn/" target="_blank">Richard Huang's Blog</a>
+    | <a href="http://jiafei.org/" target="_blank">jiafei</a>
+    | <a href="http://xuyufish.com/" target="_blank">Fish</a>
+    | <a href="http://zhke.name/" target="_blank">汗青-home</a>
+    | <a href="http://www.dorgel.net/blog" target="_blank">Dorgel&#039;s Blog</a>
+    | <a href="http://spead.everet.org" title="俊杰的空间" target="_blank">Spead&#039;s Blog</a>
+</section>
+<section>
+  <h1>Recent Comments</h1>
+  <div id="dsq-recentcomments" class="dsq-widget"><script type="text/javascript" src="http://disqus.com/forums/everet/recent_comments_widget.js?hide_avatars=0&num_items=5&excerpt_length=100"></script></div>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/emacs-markdown-display-image.html">让Emacs显示Markdown中的图片</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/learn-http-chunked.html">[学习HTTP] Transfer-Encoding: chunked</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/customize-emacs-gud-many-windows.html">定制Emacs GDB调试窗口布局</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/http-status-206-partial-content.html">[学习HTTP] 206 Partial Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html';
+        var disqus_url = 'http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,587 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Screenshot And Image Paste in Emacs When Writing Markdown - EverET.org</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="Octopress首选博客语言是Markdown。于是又是Emacs大显身手的时候了。 在用Markdown写东西的时候，我想最蛋疼的应该就是插入图片了。 正常的插入截图的步骤可能为： 打开截图程序截图 保存截图到Octopress的制定目录中 然后在Markdown中写上图片的url的地址 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="EverET.org" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-28529727-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">EverET.org</a></h1>
+  
+    <h2>好记性不如烂笔头</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:everet.org" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/my-works">Works</a></li>
+  <li><a href="http://414112390.qzone.qq.com/#!app=4" target="_blank">Albums</a></li>
+  <li><a href="/liuyana">Msg Board</a></li>
+  <li><a href="/about-me">About Me</a></li>
+  <li><a href="http://github.com/cedricporter">et@github</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Screenshot and Image Paste in Emacs When Writing Markdown</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-28T03:36:00+08:00" pubdate data-updated="true">2012-12-28</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content">
+  <p>Octopress首选博客语言是Markdown。于是又是Emacs大显身手的时候了。</p>
+
+<p>在用Markdown写东西的时候，我想最蛋疼的应该就是插入图片了。</p>
+
+<p>正常的插入截图的步骤可能为：</p>
+
+<ol>
+  <li>打开截图程序截图</li>
+  <li>保存截图到Octopress的制定目录中</li>
+  <li>然后在Markdown中写上图片的url的地址</li>
+</ol>
+
+<p>这样一次两次还可以接受，如果长期这样是在让人受不了。对于我这种懒人，首先就要偷懒，让Emacs帮我们做这些事情。</p>
+
+<h2 id="section">功能演示</h2>
+
+<h3 id="section-1">截图</h3>
+<p>我们按下<code>C-c</code> <code>C-s</code> <code>s</code>就开始截图了，截完图后，会自动保存到我们指定的目录，例如我的是<code>~/octopress/source/imgs/</code>。</p>
+
+<p>下面这张图是用Emacs截图自动插入的：
+<img src="/imgs/2012-12-28-screenshot-and-image-paste-in-emacs-when-use-markdown.markdown_20121228_021049_6910Rbg.png" />
+用起来感觉很爽，按下快捷键，一截图，唰一下就出来一段代码。</p>
+
+<!-- more -->
+
+<h3 id="section-2">插入本地图片</h3>
+<p>对于本地硬盘里面的图片的插入，我们可以先在文件浏览器（例如Dolphin）中选中要插入的图片，然后复制图片。回到Emacs中，按下<code>C-c</code> <code>C-s</code> <code>i</code>插入我们的图片。</p>
+
+<p>这里会发生什么事情呢？我很无聊地让Emacs将图片复制到<code>~/octopress/source/imgs/</code>中，然后插入图片在url中地址。</p>
+
+<p>下面是自动插入的图片。
+<img class="right" src="/imgs/emacs_20121228_015008_69103GU.jpg" /></p>
+
+<blockquote>
+  <p>What Emacs does to your keyboard?<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+</blockquote>
+
+<h2 id="section-3">实现</h2>
+<p>上面都是在介绍功能，现在我们来看一下如何实现。</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>其实也就是写Emacs Lisp。我自从实习回来就基本没怎么写过代码了，今天难得写一下Lisp，顿时觉得神清气爽啊-_-</td>
+      <td> </td>
+      <td>。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>我们可以看到第一张截图，默认插入的图片格式是<code> {% img url %} </code>，这个是Octopress的Tag，可以方便地定制图片的样式。如果需要插入Markdown格式的图片，可以加上前缀<code>C-u</code>，也就是命令变成<code>C-u</code> <code>C-c</code> <code>C-s</code> <code>s</code>这样。这个快捷键绑定略显麻烦，大家可以自己自己绑定到喜欢的快捷键上。</p>
+
+<p>首先我们需要设置Octopress的信息，包括本地的图片路径，以及在网络上的图片路径：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="cl"><span class="line"><span class="p">(</span><span class="k">setq</span> <span class="nv">octopress-image-dir</span> <span class="p">(</span><span class="nv">expand-file-name</span> <span class="s">&quot;~/octopress/source/imgs/&quot;</span><span class="p">))</span>
+</span><span class="line"><span class="p">(</span><span class="k">setq</span> <span class="nv">octopress-image-url</span> <span class="s">&quot;/imgs/&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后开始写程序：</p>
+
+<p>首先是截图，这个直接在网上找到了实现<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>，然后根据需求进行修改：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+</pre></td><td class="code"><pre><code class="cl"><span class="line"><span class="c1">;; </span>
+</span><span class="line"><span class="p">(</span><span class="nb">defun</span> <span class="nv">my-screenshot</span> <span class="p">(</span><span class="nv">dir_path</span><span class="p">)</span>
+</span><span class="line">  <span class="s">&quot;Take a screenshot and save it to dir_path path.</span>
+</span><span class="line"><span class="s">Return image filename without path so that you can concat with your</span>
+</span><span class="line"><span class="s">opinion. &quot;</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">full-file-name</span>
+</span><span class="line">	  <span class="p">(</span><span class="nv">concat</span> <span class="p">(</span><span class="nv">make-temp-name</span> <span class="p">(</span><span class="nv">concat</span> <span class="nv">dir_path</span> <span class="p">(</span><span class="nv">buffer-name</span><span class="p">)</span> <span class="s">&quot;_&quot;</span> <span class="p">(</span><span class="nv">format-time-string</span> <span class="s">&quot;%Y%m%d_%H%M%S_&quot;</span><span class="p">)))</span> <span class="s">&quot;.png&quot;</span><span class="p">))</span>
+</span><span class="line">	 <span class="p">(</span><span class="nv">file-name</span> <span class="p">(</span><span class="nv">my-base-name</span> <span class="nv">full-file-name</span><span class="p">))</span>
+</span><span class="line">	 <span class="p">)</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">call-process-shell-command</span> <span class="s">&quot;scrot&quot;</span> <span class="no">nil</span> <span class="no">nil</span> <span class="no">nil</span> <span class="p">(</span><span class="nv">concat</span> <span class="s">&quot;-s &quot;</span> <span class="s">&quot;\&quot;&quot;</span> <span class="nv">full-file-name</span> <span class="s">&quot;\&quot;&quot;</span><span class="p">))</span>
+</span><span class="line">    <span class="nv">file-name</span>
+</span><span class="line">    <span class="p">))</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">;; Screenshot</span>
+</span><span class="line"><span class="p">(</span><span class="nb">defun</span> <span class="nv">markdown-screenshot</span> <span class="p">(</span><span class="nv">arg</span><span class="p">)</span>
+</span><span class="line">  <span class="s">&quot;Take a screenshot for Octopress&quot;</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">interactive</span> <span class="s">&quot;P&quot;</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">dir_path</span> <span class="nv">octopress-image-dir</span><span class="p">)</span>
+</span><span class="line">	 <span class="p">(</span><span class="nv">url</span> <span class="p">(</span><span class="nv">concat</span> <span class="nv">octopress-image-url</span> <span class="p">(</span><span class="nv">my-screenshot</span> <span class="nv">dir_path</span><span class="p">))))</span>
+</span><span class="line">    <span class="p">(</span><span class="k">if</span> <span class="nv">arg</span>
+</span><span class="line">	<span class="p">(</span><span class="nv">insert</span> <span class="s">&quot;![](&quot;</span> <span class="nv">url</span> <span class="s">&quot;)&quot;</span><span class="p">)</span>
+</span><span class="line">      <span class="p">(</span><span class="nv">insert</span> <span class="s">&quot;{% img &quot;</span> <span class="nv">url</span> <span class="s">&quot; %}&quot;</span><span class="p">))))</span>
+</span><span class="line"><span class="c1">;; 	  </span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后是从剪切版Clipboard插入图片，这个找不到，于是只能自己写了哎。Lisp水平太差，写了好久…囧。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+</pre></td><td class="code"><pre><code class="cl"><span class="line"><span class="c1">;; </span>
+</span><span class="line"><span class="c1">;; base on http://emacswiki.org/emacs/CopyAndPaste</span>
+</span><span class="line"><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-clipboard-contents-as-string</span> <span class="p">()</span>
+</span><span class="line">    <span class="s">&quot;Return the value of the clipboard contents as a string.&quot;</span>
+</span><span class="line">    <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">x-select-enable-clipboard</span> <span class="no">t</span><span class="p">))</span>
+</span><span class="line">      <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nv">x-cut-buffer-or-selection-value</span><span class="p">)</span>
+</span><span class="line">          <span class="nv">x-last-selected-text-clipboard</span><span class="p">)))</span>
+</span><span class="line">
+</span><span class="line"><span class="p">(</span><span class="nb">defun</span> <span class="nv">copy-file-from-clipboard-to-path</span> <span class="p">(</span><span class="nv">dst-dir</span><span class="p">)</span>
+</span><span class="line">  <span class="s">&quot;copy file to desired path from clipboard&quot;</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">full-file-name</span><span class="p">)</span> <span class="p">(</span><span class="nv">file-name</span><span class="p">)</span> <span class="p">(</span><span class="nv">ext</span><span class="p">)</span> <span class="p">(</span><span class="nv">new-file-name</span><span class="p">))</span>
+</span><span class="line">    <span class="p">(</span><span class="k">setq</span> <span class="nv">full-file-name</span> <span class="p">(</span><span class="nv">get-clipboard-contents-as-string</span><span class="p">))</span>
+</span><span class="line">    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">eq</span> <span class="p">(</span><span class="nb">search</span> <span class="s">&quot;file://&quot;</span> <span class="nv">full-file-name</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class="line">	<span class="p">(</span><span class="k">progn</span>
+</span><span class="line">	  <span class="p">(</span><span class="k">setq</span> <span class="nv">full-file-name</span> <span class="p">(</span><span class="nv">substring</span> <span class="nv">full-file-name</span> <span class="mi">7</span><span class="p">))</span>
+</span><span class="line">	  <span class="p">(</span><span class="k">setq</span> <span class="nv">file-name</span> <span class="p">(</span><span class="nv">my-base-name</span> <span class="nv">full-file-name</span><span class="p">))</span>
+</span><span class="line">	  <span class="p">(</span><span class="k">setq</span> <span class="nv">ext</span> <span class="p">(</span><span class="nv">concat</span> <span class="s">&quot;.&quot;</span> <span class="p">(</span><span class="nv">file-name-extension</span> <span class="nv">file-name</span><span class="p">)))</span>
+</span><span class="line">	  <span class="p">(</span><span class="k">setq</span> <span class="nv">new-file-name</span>
+</span><span class="line">		<span class="p">(</span><span class="nv">concat</span> <span class="p">(</span><span class="nv">make-temp-name</span>
+</span><span class="line">			 <span class="p">(</span><span class="nv">concat</span> <span class="p">(</span><span class="nv">substring</span> <span class="nv">file-name</span> <span class="mi">0</span>
+</span><span class="line">					    <span class="p">(</span><span class="nb">search</span> <span class="s">&quot;.&quot;</span> <span class="nv">file-name</span> <span class="ss">:from-end</span> <span class="no">t</span><span class="p">))</span>
+</span><span class="line">				 <span class="p">(</span><span class="nv">format-time-string</span> <span class="s">&quot;_%Y%m%d_%H%M%S_&quot;</span><span class="p">)))</span> <span class="nv">ext</span><span class="p">))</span>
+</span><span class="line">	  <span class="p">(</span><span class="k">setq</span> <span class="nv">new-full-file-name</span> <span class="p">(</span><span class="nv">concat</span> <span class="nv">dst-dir</span> <span class="nv">new-file-name</span><span class="p">))</span>
+</span><span class="line">	  <span class="p">(</span><span class="nv">copy-file</span> <span class="nv">full-file-name</span> <span class="nv">new-full-file-name</span><span class="p">)</span>
+</span><span class="line">	  <span class="nv">new-file-name</span>
+</span><span class="line">	  <span class="p">)</span>
+</span><span class="line">      <span class="p">)))</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">;; Insert Image From Clip Board</span>
+</span><span class="line"><span class="p">(</span><span class="nb">defun</span> <span class="nv">markdown-insert-image-from-clipboard</span> <span class="p">(</span><span class="nv">arg</span><span class="p">)</span>
+</span><span class="line">  <span class="s">&quot;Insert an image from clipboard and copy it to disired path&quot;</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">interactive</span> <span class="s">&quot;P&quot;</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">url</span> <span class="p">(</span><span class="nv">concat</span> <span class="nv">octopress-image-url</span> <span class="p">(</span><span class="nv">copy-file-from-clipboard-to-path</span> <span class="nv">octopress-image-dir</span><span class="p">))))</span>
+</span><span class="line">    <span class="p">(</span><span class="k">if</span> <span class="nv">arg</span>
+</span><span class="line">	<span class="p">(</span><span class="nv">insert</span> <span class="s">&quot;![](&quot;</span> <span class="nv">url</span> <span class="s">&quot;)&quot;</span><span class="p">)</span>
+</span><span class="line">      <span class="p">(</span><span class="nv">insert</span> <span class="s">&quot;{% img &quot;</span> <span class="nv">url</span> <span class="s">&quot; %}&quot;</span><span class="p">))))</span>
+</span><span class="line"><span class="c1">;; </span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>最后就是设置按键绑定了：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="cl"><span class="line"><span class="p">(</span><span class="nv">define-key</span> <span class="nv">markdown-mode-map</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c C-s s&quot;</span><span class="p">)</span> <span class="ss">&#39;markdown-screenshot</span><span class="p">)</span>
+</span><span class="line"><span class="p">(</span><span class="nv">define-key</span> <span class="nv">markdown-mode-map</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c C-s i&quot;</span><span class="p">)</span> <span class="ss">&#39;markdown-insert-image-from-clipboard</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>所有代码请见以下两个文件：<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup></p>
+
+<ul>
+  <li><a href="https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/plugins/configs/my-functions.el">my-functions.el</a></li>
+  <li><a href="https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/plugins/configs/my-octopress-settings.el">my-octopress-settings.el</a></li>
+</ul>
+
+<h2 id="section-4">终</h2>
+<p>经过九九八十一式终于打完收工，现在又凌晨3点多了。想起我们的<a href="http://huajun.w18.net/">冯华君</a>师兄，31岁就收到乔布斯的Offer Letter去找教主了，我不禁心里怕怕的，还是早点休息吧。身体是革命的本钱啊。</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="http://jbarillari.blogspot.com/2010/07/what-emacs-does-to-your-keyboard.html">http://jbarillari.blogspot.com/2010/07/what-emacs-does-to-your-keyboard.html</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p><a href="http://lists.gnu.org/archive/html/emacs-orgmode/2011-07/msg01292.html">http://lists.gnu.org/archive/html/emacs-orgmode/2011-07/msg01292.html</a> <a href="http://dreamrunner.org/wiki/public_html/Emacs/org-mode.html">http://dreamrunner.org/wiki/public_html/Emacs/org-mode.html</a><a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p><a href="https://github.com/cedricporter/vim-emacs-setting">我的Emacs配置文件</a><a href="#fnref:3" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+  <span>本文链接: <a href="http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html</a></span>
+  <hr/>
+    <h3>您可能也喜欢</h3>
+    <ul>
+    
+        <li>
+        <a href="/2012/03/vim.html">我的Vim配置</a>
+        </li>
+    
+        <li>
+        <a href="/2013/01/emacs-markdown-display-image.html">让Emacs显示Markdown中的图片</a>
+        </li>
+    
+        <li>
+        <a href="/2012/03/ftp-server.html">我的FTP Server——ftp.py</a>
+        </li>
+    
+        <li>
+        <a href="/2013/01/customize-emacs-gud-many-windows.html">定制Emacs GDB调试窗口布局</a>
+        </li>
+    
+        <li>
+        <a href="/2012/01/gitweb-password.html">给Gitweb加上访问密码，保护我们的私有项目</a>
+        </li>
+    
+    </ul>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stupid ET</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-28T03:36:00+08:00" pubdate data-updated="true">2012-12-28</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/category/it/'>IT</a>, <a class='category' href='/category/my-code/'>My Code</a>
+  
+</span>
+
+
+      
+
+<span class="categories">
+  Tags:&nbsp
+  
+    <a class='tag' href='/tag/emacs/'>Emacs</a>, <a class='tag' href='/tag/lisp/'>Lisp</a>, <a class='tag' href='/tag/markdown/'>Markdown</a>
+  
+</span>
+
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/12/migrate-from-wordpress-to-octopress.html" title="Previous Post: From Wordpress to Octopress">&laquo; From Wordpress to Octopress</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/12/tt.html" title="Next Post: 由TT引发的思考">由TT引发的思考 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>Cedric Porter is Stupid ET.</p>
+  <p>EverET.org is provided by Stupid ET.</p>
+</section>
+<section>
+  <h1>Tags</h1>
+  <ul class="tag-cloud">
+    <a style="font-size: 112%" href="/tag/android/">Android</a>
+<a style="font-size: 131%" href="/tag/apache/">Apache</a>
+<a style="font-size: 80%" href="/tag/boost/">Boost</a>
+<a style="font-size: 80%" href="/tag/bugzilla/">Bugzilla</a>
+<a style="font-size: 177%" href="/tag/c-/">C++</a>
+<a style="font-size: 131%" href="/tag/captcha/">Captcha</a>
+<a style="font-size: 80%" href="/tag/chrome/">Chrome</a>
+<a style="font-size: 164%" href="/tag/clover/">Clover</a>
+<a style="font-size: 112%" href="/tag/datastructure/">DataStructure</a>
+<a style="font-size: 80%" href="/tag/design/">Design</a>
+<a style="font-size: 164%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 80%" href="/tag/english/">English</a>
+<a style="font-size: 171%" href="/tag/git/">Git</a>
+<a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
+<a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
+<a style="font-size: 131%" href="/tag/http/">HTTP</a>
+<a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
+<a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
+<a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
+<a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
+<a style="font-size: 207%" href="/tag/linux/">Linux</a>
+<a style="font-size: 145%" href="/tag/lisp/">Lisp</a>
+<a style="font-size: 80%" href="/tag/markdown/">Markdown</a>
+<a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
+<a style="font-size: 131%" href="/tag/mysql/">Mysql</a>
+<a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
+<a style="font-size: 155%" href="/tag/ogre/">OGRE</a>
+<a style="font-size: 112%" href="/tag/octopress/">Octopress</a>
+<a style="font-size: 131%" href="/tag/php/">PHP</a>
+<a style="font-size: 131%" href="/tag/pil/">PIL</a>
+<a style="font-size: 250%" href="/tag/python/">Python</a>
+<a style="font-size: 80%" href="/tag/qq/">QQ</a>
+<a style="font-size: 80%" href="/tag/ruby/">Ruby</a>
+<a style="font-size: 80%" href="/tag/svn/">SVN</a>
+<a style="font-size: 112%" href="/tag/scar/">Scar</a>
+<a style="font-size: 112%" href="/tag/tortoisegit/">TortoiseGit</a>
+<a style="font-size: 164%" href="/tag/ubuntu/">Ubuntu</a>
+<a style="font-size: 145%" href="/tag/ultrademo/">UltraDemo</a>
+<a style="font-size: 80%" href="/tag/vpn/">VPN</a>
+<a style="font-size: 112%" href="/tag/vim/">Vim</a>
+<a style="font-size: 112%" href="/tag/wpf/">WPF</a>
+<a style="font-size: 183%" href="/tag/web/">Web</a>
+<a style="font-size: 164%" href="/tag/wordpress/">Wordpress</a>
+<a style="font-size: 171%" href="/tag/compile/">compile</a>
+<a style="font-size: 80%" href="/tag/curl/">curl</a>
+<a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
+<a style="font-size: 80%" href="/tag/ppp/">ppp</a>
+<a style="font-size: 80%" href="/tag/pptpd/">pptpd</a>
+<a style="font-size: 80%" href="/tag/rsync/">rsync</a>
+<a style="font-size: 80%" href="/tag/sendmail/">sendmail</a>
+<a style="font-size: 80%" href="/tag/ssh/">ssh</a>
+<a style="font-size: 80%" href="/tag/uwsgi/">uWSGI</a>
+<a style="font-size: 80%" href="/tag/virtual-memory/">virtual memory</a>
+
+  </ul>
+</section>
+<section>
+  <h1>Friends</h1>
+    <a href="http://www.kidsang.com/" target="_blank">树桑小朋友的自留地</a>
+    | <a href="http://xiaoxia.org/" target="_blank">XIAOXIA[PG]</a>
+    | <a href="http://huanghuachao.cn/" target="_blank">Richard Huang's Blog</a>
+    | <a href="http://jiafei.org/" target="_blank">jiafei</a>
+    | <a href="http://xuyufish.com/" target="_blank">Fish</a>
+    | <a href="http://zhke.name/" target="_blank">汗青-home</a>
+    | <a href="http://www.dorgel.net/blog" target="_blank">Dorgel&#039;s Blog</a>
+    | <a href="http://spead.everet.org" title="俊杰的空间" target="_blank">Spead&#039;s Blog</a>
+</section>
+<section>
+  <h1>Recent Comments</h1>
+  <div id="dsq-recentcomments" class="dsq-widget"><script type="text/javascript" src="http://disqus.com/forums/everet/recent_comments_widget.js?hide_avatars=0&num_items=5&excerpt_length=100"></script></div>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/emacs-markdown-display-image.html">让Emacs显示Markdown中的图片</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/learn-http-chunked.html">[学习HTTP] Transfer-Encoding: chunked</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/customize-emacs-gud-many-windows.html">定制Emacs GDB调试窗口布局</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/http-status-206-partial-content.html">[学习HTTP] 206 Partial Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html';
+        var disqus_url = 'http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

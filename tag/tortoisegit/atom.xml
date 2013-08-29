@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: TortoiseGit | EverET.org]]></title>
+  <link href="http://everet.org/tag/tortoisegit/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2013-01-15T00:25:15+08:00</updated>
+  <id>http://everet.org/</id>
+  <author>
+    <name><![CDATA[Stupid ET]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[TortoiseGit访问Gitosis搭建的版本库]]></title>
+    <link href="http://everet.org/2012/01/tortoisegit-access-gitosis.html"/>
+    <updated>2012-01-27T23:30:39+08:00</updated>
+    <id>http://everet.org/2012/01/tortoisegit-access-gitosis</id>
+    <content type="html"><![CDATA[<p>首先，我们创建好公钥和密钥，如何创建可以参考 <a href="http://everet.org/2012/01/management-remote-host.html">http://everet.org/2012/01/management-remote-host.html</a> 。</p>
+
+<p>然后把公钥id_rsa.pub发给Git版本库的管理员。</p>
+
+<p>因为TortoiseGit使用ppk，所以我们需要用自己密钥重新创建一个ppk的密钥</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image6.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb6.png" alt="image" /></a></p>
+
+<p>我们首先打开 TortoiseGit 下的 puttygen，然后点击load，把自己密钥加载进来，我们之前创建的密钥，如果没做任何更改，则文件名为id_rsa。</p>
+
+<!-- more -->
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image7.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb7.png" alt="image" /></a></p>
+
+<p>然后选中我们的密钥id_rsa。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image8.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb8.png" alt="image" /></a></p>
+
+<p>然后就有</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image9.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb9.png" alt="image" /></a></p>
+
+<p>然后我们保存新的ppk的密钥。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image10.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb10.png" alt="image" /></a></p>
+
+<p>接着，我们装载我们的密钥，我们打开Pageant。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image11.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb11.png" alt="image" /></a></p>
+
+<p>选择 Add Key。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image12.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb12.png" alt="image" /></a></p>
+
+<p>在弹出的浏览框中选择我们刚刚生成的ppk扩展名的密钥。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image13.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb13.png" alt="image" /></a></p>
+
+<p>然后就OK了。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image14.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb14.png" alt="image" /></a></p>
+
+<p>2012年2月26日补充：</p>
+
+<p>Git克隆版本库：</p>
+
+<p><strong>加载密钥：</strong></p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/11.png"><img src="http://everet.org/wp-content/uploads/2012/01/11.png" alt="" /></a></p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/22.png"><img src="http://everet.org/wp-content/uploads/2012/01/22.png" alt="" /></a></p>
+
+<p>OK</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/33.png"><img src="http://everet.org/wp-content/uploads/2012/01/33.png" alt="" /></a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ubuntu使用Gitosis搭建Git服务器，Windows客户端支持中文]]></title>
+    <link href="http://everet.org/2012/01/gitosis-in-ubuntu.html"/>
+    <updated>2012-01-27T06:27:05+08:00</updated>
+    <id>http://everet.org/2012/01/gitosis-in-ubuntu</id>
+    <content type="html"><![CDATA[<p>更详细的教程请见 《Pro Git》<a href="http://progit.org/book/zh/ch4-7.html">http://progit.org/book/zh/ch4-7.html</a>。</p>
+
+<h3 id="section">安装必备工具</h3>
+
+<p><code>apt-get install git gitweb gitosis</code></p>
+
+<p>用自己的公钥来初始化Gitosis</p>
+
+<p><code>console
+root@everet:/var# sudo -H -u git gitosis-init &lt; /tmp/authorized_keys
+Initialized empty Git repository in /home/git/repositories/gitosis-admin.git/
+Reinitialized existing Git repository in /home/git/repositories/gitosis-admin.git/
+</code></p>
+
+<p>对该仓库中的<code>post-update</code> 脚本加上可执行权限</p>
+
+<p><code>root@everet:/home/git/repositories/gitosis-admin.git/hooks # chmod 755 post-update</code></p>
+
+<h3 id="gitosis-">克隆 Gitosis 的控制仓库</h3>
+
+<p><code>$ git clone git@everet.org:gitosis-admin.git</code></p>
+
+<p>这会得到一个名为 <code>gitosis-admin</code> 的工作目录，主要由两部分组成：</p>
+
+<!-- more -->
+
+<p>``` console
+Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/everet
+$ cd gitosis-admin/</p>
+
+<p>Cedric Porter@CedricPorter-PC /cygdrive/h/Coding/everet/gitosis-admin
+$ find .
+./gitosis.conf
+./keydir
+./keydir/cedricporter@ET.pub
+```</p>
+
+<p>如果我们要增加工程：clover，我们可以修改gitosis.conf</p>
+
+<p>``` console
+$ cat gitosis.conf
+[gitosis]</p>
+
+<p>[group gitosis-admin]
+writable = gitosis-admin
+members = cedricporter@ET</p>
+
+<p>[group clover]
+writable = clover
+members = cedricporter@ET
+```</p>
+
+<p>修改完后，提交并推送到服务器。</p>
+
+<p>``` console
+$ git commit -am ‘add project clover’
+[master 3d0dd1b] add project clover
+Committer: U-CedricPorter-PC\Cedric Porter &lt;Cedric Porter@CedricPorter-PC.(none)&gt;</p>
+
+<p>$ git push
+```</p>
+
+<h2 id="windows">Windows客户端</h2>
+
+<p>如果我们使用cygwin的git，那么就不会存在任何任何中文乱码问题。</p>
+
+<p>如果我们使用TortoiseGit，我们可以安装一个utf-8的git，下载地址 <a href="http://tmurakam.org/git/">http://tmurakam.org/git/</a> 。</p>
+
+<p>然后再装TortoiseGit <a href="http://code.google.com/p/tortoisegit/downloads/list">http://code.google.com/p/tortoisegit/downloads/list</a>，那么它会自动得到git的路径，否则，我们自己去TortoiseGit的设置中设置Git的路径。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image4.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb4.png" alt="image" /></a></p>
+
+<p>此时，除了我们在资源管理器无法直接看到用符号标记的修改的中文文件名的文件，我们只能在右键的”Check for modifications“查看正确的被修的文件，因为在资源管理器中的中文文件名的文件的标记的基本是错误的。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/01/image5.png"><img src="http://everet.org/wp-content/uploads/2012/01/image_thumb5.png" alt="image" /></a></p>
+]]></content>
+  </entry>
+  
+</feed>

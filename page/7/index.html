@@ -1,0 +1,876 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>EverET.org</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="管道是进程间通信的有力的武器.记得初中时在写Windows的后门的时候,也是开了一个匿名的管道和cmd进行交互.今天终于在Linux上写了下管道. 在Linux下，两个程序之间传递数据的最简单的方法就是使用popen和pclose两个函数了。但它们都是需要启动一个shell。这个成本略高啊。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://everet.org/page/7/index.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="EverET.org" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-28529727-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">EverET.org</a></h1>
+  
+    <h2>好记性不如烂笔头</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:everet.org" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/my-works">Works</a></li>
+  <li><a href="http://414112390.qzone.qq.com/#!app=4" target="_blank">Albums</a></li>
+  <li><a href="/liuyana">Msg Board</a></li>
+  <li><a href="/about-me">About Me</a></li>
+  <li><a href="http://github.com/cedricporter">et@github</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/03/ipc-pipe.html">进程间通信：管道pipe一个简单的例子</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-22T09:54:56+08:00" pubdate data-updated="true">2012-03-22</time>
+        
+         | <a href="/2012/03/ipc-pipe.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>管道是进程间通信的有力的武器.记得初中时在写Windows的后门的时候,也是开了一个匿名的管道和cmd进行交互.今天终于在Linux上写了下管道.</p>
+
+<p>在Linux下，两个程序之间传递数据的最简单的方法就是使用popen和pclose两个函数了。但它们都是需要启动一个shell。这个成本略高啊。</p>
+
+<p>于是我们可以使用底层的pipe函数。通过这个函数，我们在两个程序之间传递数据而不需要启动一个shell来解释请求的命令。</p>
+
+<p>原型是:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">#include &lt;unistd.h&gt;
+</span><span class="line">
+</span><span class="line">int pipe(int file_descriptor[2]);</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>参数是一个由两个整型的文件描述符组成的数组的指针。成功返回0，失败返回-1，并设置errno来表面失败的原因。</p>
+
+<p>两个文件描述符以特殊的方式连接起来。写到file_descriptor[1]的所有数据都可以从file_descriptor[0]中读回来。数据基于先进先出FIFO的原则。</p>
+
+<p>我们使用read和write来访问数据。</p>
+
+<p>管道有一些内置的缓冲区，它在write和read调用之间保存数据。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/03/ipc-pipe.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/03/chinese-zodiac.html">十二生肖</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-22T07:50:26+08:00" pubdate data-updated="true">2012-03-22</time>
+        
+         | <a href="/2012/03/chinese-zodiac.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天突然发现，我在中国生存了二十多年，竟然连十二生肖的循序都不知道，于是乎就上网找了下记录一下。</p>
+
+<p>生肖也称属相，是中国和东亚地区的一些民族用来代表年份和人的出生年的十二种动物。生肖的周期为12年。每一人在其出生年都有一种动物作为生肖。十二生肖即鼠、牛、虎、兔、龙、蛇、马、羊、猴、鸡、狗、猪，依次分配于十二地支，是中国民间计算年龄的方法，也是一种古老的纪年法，亦称十二生肖。十二生肖（兽历）广泛流行于亚洲诸民族及东欧和北非的某些国家之中。</p>
+
+<p>来自百度百科。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/03/0d729944c616137e500ffe05.jpg"><img src="http://everet.org/wp-content/uploads/2012/03/0d729944c616137e500ffe05_thumb.jpg" alt="0d729944c616137e500ffe05" /></a></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/03/chinese-zodiac.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/03/python-image-cell.html">Python进行图像处理——生成交替颜色的格子图</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-22T03:46:24+08:00" pubdate data-updated="true">2012-03-22</time>
+        
+         | <a href="/2012/03/python-image-cell.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天小孟师兄要一张贴图做测试，屠文翔同学用Fireworks花了两分钟做了下面的一张图片。但是师兄说要一张颜色相隔的图片，于是Fireworks此时就显得有点力不从心了。于是此时Python就要上场啦。</p>
+
+<p>Fireworks生成的图：</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/03/rects.png"><img src="http://everet.org/wp-content/uploads/2012/03/rects_thumb.png" alt="rects" /></a></p>
+
+<p>好，下面，我们来用Python的PIL库来敏捷地生成一个颜色相隔的格子图。只需要10行代码。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/03/python-image-cell.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/03/evernote-clearly.html">一款期待已久的Chrome插件——Evernote Clearly</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T21:45:51+08:00" pubdate data-updated="true">2012-03-18</time>
+        
+         | <a href="/2012/03/evernote-clearly.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Evernote Clearly是Chrome的一款插件。Evernote的各种产品我的超喜欢，确实很贴心啊~特别是Evernote的笔记，比有道笔记，Microsoft OneNote都强多了。</p>
+
+<p>它的介绍如下：</p>
+
+<blockquote>
+  <p>Clearly makes blog posts, articles and webpages clean and easy to read. Save them to Evernote to read them anywhere.</p>
+</blockquote>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/03/image2.png"><img src="http://everet.org/wp-content/uploads/2012/03/image_thumb2.png" alt="image" /></a></p>
+
+<p>它可以将网页以另外的风格显示出来，而且还可以自定义风格。</p>
+
+<p>举个例子，下图是 <a href="http://www.w3.org/Protocols/rfc959/4_FileTransfer.html">http://www.w3.org/Protocols/rfc959/4_FileTransfer.html</a> 在Evernote Clearly下的观看模式，很明显就舒服很多了，原页面是白刷刷的一片左对齐的文字，真让人蛋疼。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/03/evernote-clearly.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/03/ftp-protocol.html">Mission: FTP Protocol</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T08:54:17+08:00" pubdate data-updated="true">2012-03-18</time>
+        
+         | <a href="/2012/03/ftp-protocol.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>FTP协议以前我用得挺少的，网络课上刘孜文老师曰FTP协议过时也就跳过了。不过现在FTP用得还是挺多的，所以决定围观下FTP。</p>
+
+<p>刘孜文老师的经典名言是：我所学到的东西都不是从课堂上得来的。这点我挺赞同的。</p>
+
+<p>刘孜文老师超强悍，中科院的博士，2个月看完了Linux内核的代码。</p>
+
+<p>记得第一节课他说可以不用去上课，只要自己学就好了，于是偶深入贯彻刘老师的话，所以就一学期也没去上网络课了。</p>
+
+<p>课下的时间都花在Scar上，网络也没仔细研究过，悲剧了，现在开始要好好补下才行了。</p>
+
+<h2 id="ftp">以下的内容是关于FTP协议的。</h2>
+
+<p>HTTP和FTP都是文件传输协议,他们都运行在TCP之上.</p>
+
+<p>最显著的区别在于FTP使用两个并行的TCP连接,一个是控制连接(control connection),一个是数据连接(data connection).通常控制连接使用21端口.</p>
+
+<p>因为FTP协议使用一个分离的控制连接,所以我们也称FTP的控制信息是带外(out-of-band)传送的。而HTTP协议在TCP连接中发送请求和响应首部行来控制，所以HTTP也可以说是带内（in-band)发送控制信息。</p>
+
+<p>FTP服务器必须在整个会话中保存用户的状态信息，也就是说要保存用户的权限信息，远程目录树的当前位置。而HTTP协议则是无状态的，要通过cookie来保存用户状态。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/03/ftp-protocol.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/03/how-to-become-a-hacker.html">[分享]How to Become a Hacker——如何成为黑客</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T05:51:15+08:00" pubdate data-updated="true">2012-03-18</time>
+        
+         | <a href="/2012/03/how-to-become-a-hacker.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>作者：<a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#101;&#115;&#114;&#064;&#115;&#110;&#097;&#114;&#107;&#046;&#116;&#104;&#121;&#114;&#115;&#117;&#115;&#046;&#099;&#111;&#109;">&#069;&#114;&#105;&#099;&#032;&#083;&#116;&#101;&#118;&#101;&#110;&#032;&#082;&#097;&#121;&#109;&#111;&#110;&#100;</a></p>
+
+<p>译者 ： <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#112;&#114;&#097;&#119;&#110;&#095;&#108;&#105;&#117;&#064;&#102;&#111;&#120;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;">刘海粟</a>   （此文部分内容参考<a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#108;&#101;&#101;&#107;&#097;&#119;&#111;&#064;&#104;&#111;&#116;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;">&#075;&#101;&#110;&#032;&#076;&#101;&#101;</a> 前辈的<a href="http://www.angelfire.com/ok/leekawo/hackersim.htm">译文</a> ）</p>
+
+<p>本文的PDF文档可以从<a href="http://download.csdn.net/source/2940137">这里</a> 获得。</p>
+
+<p><img src="http://everet.org/wp-content/uploads/2012/03/4540017_12933565089XHX.jpg" alt="" /></p>
+
+<h2 id="section">为何有此文章?</h2>
+
+<p>身为《<a href="http://www.catb.org/jargon/">黑客辞典</a> 》<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 和其他一些知名文档的作者, 我常收到热心的网络新人的电子邮件, 问及“如何可以成为一名神奇的黑客？”。 早在1996年我便注意到，好像还没有任何一个“常见问题”或者网络文档论述过这个重要的问题，于是我决定撰写此文。我相信很多黑客都在考虑我现在考虑的这些问题。然而，我并不认为我在这个问题上是唯一的权威，如果你不认同下面读到的这些内容，那请你写下你的看法。</p>
+
+<p>如果你正在阅读离线文档，那么你可以在<a href="http://catb.org/~esr/faqs/hacker-howto.html">这里</a> 找到本文的最新版。</p>
+
+<p>本文的装饰物——这个五点九宫图被称为“滑翔机”。在一款令无数黑客痴迷的名为“生命游戏”<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> 的数学仿真游戏中，这个简单的图案蕴含着令人吃惊的特性。我认为它是一个能够彰显黑客本质的图形徽章——抽象，起初在表面上有些神秘，但自身拥有一个具有错综复的逻辑性的入口通向整个世界。在<a href="http://catb.org/~esr/hacker-emblem/">这里</a> 可以了解更多关于滑翔机徽章的信息。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/03/how-to-become-a-hacker.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/03/python-parse-ogre-configuration-file.html">神奇的Python：解析OGRE配置文件</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-17T03:19:52+08:00" pubdate data-updated="true">2012-03-17</time>
+        
+         | <a href="/2012/03/python-parse-ogre-configuration-file.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote>
+  <p>OGRE（Object-Oriented Graphics Rendering Engine，即：面向对象图形渲染引擎）是一个用C++开发的面向场景、非常灵活的3D引擎，它旨在让开发人员更容易、更直接地利用硬件加速的3D图形系统开发应用。这个类库隐藏了底层系统库（如：Direct3D和OpenGL）的所有细节，提供了一个基于世界对象和其他直观类的接口。 译者注:ogre在英文中意为：食人魔鬼, 怪物, 象鬼的人，故其LOGO是一个怪物头。</p>
+</blockquote>
+
+<p>以上引用自百度百科。</p>
+
+<p>OGRE的很多东西都通过配置文件来控制，这样会很灵活。</p>
+
+<p>配置文件的例子如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="ini"><span class="line"><span class="k">[Bootstrap]</span>
+</span><span class="line"><span class="na">Zip</span><span class="o">=</span><span class="s">../media/packs/OgreCore.zip</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># Resource locations to be added to the default path</span>
+</span><span class="line"><span class="k">[General]</span>
+</span><span class="line"><span class="na">FileSystem</span><span class="o">=</span><span class="s">../media</span>
+</span><span class="line"><span class="na">FileSystem</span><span class="o">=</span><span class="s">../media/fonts</span>
+</span><span class="line"><span class="na">FileSystem</span><span class="o">=</span><span class="s">../media/sounds</span>
+</span><span class="line"><span class="na">Zip</span><span class="o">=</span><span class="s">../media/packs/ogretestmap.zip</span>
+</span><span class="line"><span class="na">Zip</span><span class="o">=</span><span class="s">../media/packs/skybox.zip</span>
+</span><span class="line"><span class="c">#Zip=../media/packs/chiropteraDM.pk3</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>它分了section，在section下有许多配置语句，也就是一些赋值语句。</p>
+
+<p>其配置文件的文法类似如下：</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/03/python-parse-ogre-configuration-file.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/03/the-format-grammer.html">神奇的Python:格式化UltraDemo的文法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-16T04:17:39+08:00" pubdate data-updated="true">2012-03-16</time>
+        
+         | <a href="/2012/03/the-format-grammer.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>SimpleParse是一款非常简洁的Python解析模板，可以自己定义EBNF文法，然后SimpleParse会输出结构化的。</p>
+
+<p>SimpleParse的介绍可以见，<a href="http://www.ibm.com/developerworks/cn/linux/sdk/python/charm-23/index.html">http://www.ibm.com/developerworks/cn/linux/sdk/python/charm-23/index.html</a>，我也是从IBM的网站上看到这个神奇的模块的。</p>
+
+<p>我们有如下的UltraDemo的文法，这个是我们之前写在word文档里面的。</p>
+
+<p>他们很乱，于是我们要对其进行格式化。</p>
+
+<p>不幸的是，我们没有现成的工具可以格式化它，所以我们要自己定制一个小工具来完成我们的任务。</p>
+
+<p>此时我们可以借助SimpleParse。</p>
+
+<p>下面的原始的文法，很乱是不是：</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/03/the-format-grammer.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/03/clover-save-file.html">Clover折纸数据结构的文件保存</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-11T08:49:53+08:00" pubdate data-updated="true">2012-03-11</time>
+        
+         | <a href="/2012/03/clover-save-file.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Clover的数据结构是由面层，边层和点层所组成。</p>
+
+<h2 id="section">面层</h2>
+
+<p>面层是一棵二叉树外加一个面组用于实现重叠的面的拾取和避免Z-Buffer失效。当发生折叠的时候，肯定至少有一个面会被分割成为两个面，所以二叉树的叶子增加两个节点，叶子更新，渲染层也需要更新。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/03/facetree.png"><img src="http://everet.org/wp-content/uploads/2012/03/facetree_thumb.png" alt="facetree" /></a></p>
+
+<h2 id="section-1"></h2>
+
+<h2 id="section-2">边层</h2>
+
+<p>边层是二叉树组成的森林，</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/03/facetree1.png"><img src="http://everet.org/wp-content/uploads/2012/03/facetree_thumb1.png" alt="facetree" /></a></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/03/clover-save-file.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/03/bret-victor-inventing-on-principle.html">Bret Victor - Inventing on Principle</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-10T21:28:55+08:00" pubdate data-updated="true">2012-03-10</time>
+        
+         | <a href="/2012/03/bret-victor-inventing-on-principle.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>苹果<a href="http://worrydream.com/">Bret Victor</a>的Inventing on Principle演讲，确实有很大的冲击力。</p>
+
+<p>技术是可以改变人类的思维方式，改变世界的。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+	<div class="pagination">
+		
+			<a class="prev" href="/page/6/">&larr; Prev</a>
+		
+		
+			
+			
+				
+			
+			
+				<a href="/">1</a>
+			
+		
+			
+			
+			
+				<a href="/page/2">2</a>
+			
+		
+			
+			
+			
+				<a href="/page/3">3</a>
+			
+		
+			
+			
+			
+				<a href="/page/4">4</a>
+			
+		
+			
+			
+			
+				<a href="/page/5">5</a>
+			
+		
+			
+			
+			
+				<a href="/page/6">6</a>
+			
+		
+			
+			
+			
+				<span style="font-size: 150%; ">7</span>
+			
+		
+			
+			
+			
+				<a href="/page/8">8</a>
+			
+		
+			
+			
+			
+				<a href="/page/9">9</a>
+			
+		
+			
+			
+			
+				<a href="/page/10">10</a>
+			
+		
+			
+			
+			
+				<a href="/page/11">11</a>
+			
+		
+		
+			<a class="next" href="/page/8/">Next &rarr;</a>
+		
+	</div>
+    
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>Cedric Porter is Stupid ET.</p>
+  <p>EverET.org is provided by Stupid ET.</p>
+</section>
+<section>
+  <h1>Tags</h1>
+  <ul class="tag-cloud">
+    <a style="font-size: 112%" href="/tag/android/">Android</a>
+<a style="font-size: 131%" href="/tag/apache/">Apache</a>
+<a style="font-size: 80%" href="/tag/boost/">Boost</a>
+<a style="font-size: 80%" href="/tag/bugzilla/">Bugzilla</a>
+<a style="font-size: 177%" href="/tag/c-/">C++</a>
+<a style="font-size: 131%" href="/tag/captcha/">Captcha</a>
+<a style="font-size: 80%" href="/tag/chrome/">Chrome</a>
+<a style="font-size: 164%" href="/tag/clover/">Clover</a>
+<a style="font-size: 112%" href="/tag/datastructure/">DataStructure</a>
+<a style="font-size: 80%" href="/tag/design/">Design</a>
+<a style="font-size: 164%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 80%" href="/tag/english/">English</a>
+<a style="font-size: 171%" href="/tag/git/">Git</a>
+<a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
+<a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
+<a style="font-size: 131%" href="/tag/http/">HTTP</a>
+<a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
+<a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
+<a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
+<a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
+<a style="font-size: 207%" href="/tag/linux/">Linux</a>
+<a style="font-size: 145%" href="/tag/lisp/">Lisp</a>
+<a style="font-size: 80%" href="/tag/markdown/">Markdown</a>
+<a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
+<a style="font-size: 131%" href="/tag/mysql/">Mysql</a>
+<a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
+<a style="font-size: 155%" href="/tag/ogre/">OGRE</a>
+<a style="font-size: 112%" href="/tag/octopress/">Octopress</a>
+<a style="font-size: 131%" href="/tag/php/">PHP</a>
+<a style="font-size: 131%" href="/tag/pil/">PIL</a>
+<a style="font-size: 250%" href="/tag/python/">Python</a>
+<a style="font-size: 80%" href="/tag/qq/">QQ</a>
+<a style="font-size: 80%" href="/tag/ruby/">Ruby</a>
+<a style="font-size: 80%" href="/tag/svn/">SVN</a>
+<a style="font-size: 112%" href="/tag/scar/">Scar</a>
+<a style="font-size: 112%" href="/tag/tortoisegit/">TortoiseGit</a>
+<a style="font-size: 164%" href="/tag/ubuntu/">Ubuntu</a>
+<a style="font-size: 145%" href="/tag/ultrademo/">UltraDemo</a>
+<a style="font-size: 80%" href="/tag/vpn/">VPN</a>
+<a style="font-size: 112%" href="/tag/vim/">Vim</a>
+<a style="font-size: 112%" href="/tag/wpf/">WPF</a>
+<a style="font-size: 183%" href="/tag/web/">Web</a>
+<a style="font-size: 164%" href="/tag/wordpress/">Wordpress</a>
+<a style="font-size: 171%" href="/tag/compile/">compile</a>
+<a style="font-size: 80%" href="/tag/curl/">curl</a>
+<a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
+<a style="font-size: 80%" href="/tag/ppp/">ppp</a>
+<a style="font-size: 80%" href="/tag/pptpd/">pptpd</a>
+<a style="font-size: 80%" href="/tag/rsync/">rsync</a>
+<a style="font-size: 80%" href="/tag/sendmail/">sendmail</a>
+<a style="font-size: 80%" href="/tag/ssh/">ssh</a>
+<a style="font-size: 80%" href="/tag/uwsgi/">uWSGI</a>
+<a style="font-size: 80%" href="/tag/virtual-memory/">virtual memory</a>
+
+  </ul>
+</section>
+<section>
+  <h1>Friends</h1>
+    <a href="http://www.kidsang.com/" target="_blank">树桑小朋友的自留地</a>
+    | <a href="http://xiaoxia.org/" target="_blank">XIAOXIA[PG]</a>
+    | <a href="http://huanghuachao.cn/" target="_blank">Richard Huang&#8217;s Blog</a>
+    | <a href="http://jiafei.org/" target="_blank">jiafei</a>
+    | <a href="http://xuyufish.com/" target="_blank">Fish</a>
+    | <a href="http://zhke.name/" target="_blank">汗青-home</a>
+    | <a href="http://www.dorgel.net/blog" target="_blank">Dorgel&#039;s Blog</a>
+    | <a href="http://spead.everet.org" title="俊杰的空间" target="_blank">Spead&#039;s Blog</a>
+</section>
+<section>
+  <h1>Recent Comments</h1>
+  <div id="dsq-recentcomments" class="dsq-widget"><script type="text/javascript" src="http://disqus.com/forums/everet/recent_comments_widget.js?hide_avatars=0&num_items=5&excerpt_length=100"></script></div>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/emacs-markdown-display-image.html">让Emacs显示Markdown中的图片</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/learn-http-chunked.html">[学习HTTP] Transfer-Encoding: chunked</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/customize-emacs-gud-many-windows.html">定制Emacs GDB调试窗口布局</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/http-status-206-partial-content.html">[学习HTTP] 206 Partial Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

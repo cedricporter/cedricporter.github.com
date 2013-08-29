@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>python自动下载人人所有好友的相册 - EverET.org</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="很久很久以前写的自动抓取自己人人相册的python代码，从我的其他的博客复制过来，作为开篇。用途貌似只有备份一下自己和好友的相册。最新的代码请参见https://github.com/cedricporter/renren。 于是今天修改了专门针对人人网的备份工具，增加了自动抓取所有好友的功能， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://everet.org/2012/01/python-automatically-download-all-albums-of-all-your-friends.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="EverET.org" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-28529727-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">EverET.org</a></h1>
+  
+    <h2>好记性不如烂笔头</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:everet.org" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/my-works">Works</a></li>
+  <li><a href="http://414112390.qzone.qq.com/#!app=4" target="_blank">Albums</a></li>
+  <li><a href="/liuyana">Msg Board</a></li>
+  <li><a href="/about-me">About Me</a></li>
+  <li><a href="http://github.com/cedricporter">et@github</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Python自动下载人人所有好友的相册</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-19T04:09:27+08:00" pubdate data-updated="true">2012-01-19</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content">
+  <p>很久很久以前写的自动抓取自己人人相册的python代码，从我的其他的博客复制过来，作为开篇。用途貌似只有备份一下自己和好友的相册。最新的代码请参见<a href="https://github.com/cedricporter/renren">https://github.com/cedricporter/renren</a>。</p>
+
+<hr />
+
+<p>于是今天修改了专门针对人人网的备份工具，增加了自动抓取所有好友的功能，然后去他们的空间，把他（她）们的相册都下载回来（比较适合较多美女朋友的同学们..）…</p>
+
+<p>昨天发的文章有很多标签结果太长了，于是很悲剧地，修改的时候腾讯居然不给提交，XXXXX（省略一万字…）</p>
+
+<p>人人网是个很类似facebook的东东….为什么会很类似，因为中国特色….</p>
+
+<p>转入正题，因为怕以后忘了，所以写下来记录一下…<!-- more --></p>
+
+<p>好，第一点是名词解释。</p>
+
+<p>爬虫是神马？</p>
+
+<p>根据百度百科有： “网络爬虫（又被称为网页蜘蛛，网络机器人，在FOAF社区中间，更经常的称为网页追逐者），是一种按照一定的规则，自动的抓取万维网信息的程序或者脚本。…….传统爬虫从一个或若干初始网页的URL开始，获得初始网页上的URL，在抓取网页的过程中，不断从当前页面上抽取新的URL放入队列,直到满足系统的一定停止条件。”</p>
+
+<p>偶针对人人做了一些特化（换句话说拿到其他网站就没用了），人人网要访问首先得有个帐号，也就是说要先登录，然后服务器就可以根据session或cookie来判断你在其他页面的登录情况，而对人人cookie就好了。当然，我们在一个浏览器登录，在另一个浏览器也可能还得要再登录一下，因为一般情况下他们不共享cookie，除非专门去读某个浏览器的cookie。于是爬虫要爬人人，首先要登录…..然后保存cookie。</p>
+
+<p>浏览器与服务器之间通讯主要都是Http协议，方法主要有GET和POST，（据《深入理解计算机系统》说，GET方法占了99%的HTTP请求。），GET方法主要向服务器发送比较短的数据，主要将参数写到URL里面，而POST方法则可以发送比较长的数据，例如发这篇文章的话，则是用了POST。想我们可以用”Telnet www.google.com 80”，然后键入”Get /”就可以可以收到和我们在浏览器打上”http://www.google.com/”同样的东西。爬虫也一样，就是不断地GET，POST……</p>
+
+<p>要抓取所有好友的所有可见的相册有两种方法，一种是人工一个好友一个好友一个相册一个相册地下，另一种就是就给计算机让它自己去爬….因为我比较懒，所以选择第二种方法。</p>
+
+<p>又到了“要怎么怎么样，首先怎么怎么样”的句式了～</p>
+
+<p>要获取所有好友，可以在登录的情况下访问http://friend.renren.com/myfriendlistx.do，如果有用浏览器登录的话，好友会被javascript分成很多页显示。在网页的某段javascript中有个变量叫friends，保存所有好友的信息，里面都是{“id”:254905709,”vip”:false,”selected”:true,”mo”:true,”name”:”\u5b89\u8feaAndy”,”head”:”http:\/\/hdn.xnimg.cn\/photos\/hdn321\/20110612\/1600\/h_tiny_zFLc_715e000281932f76.jpg”,”groups”:[“\u534e\u5357\u7406\u5de5\u5927\u5b66”]}这种元组，从这里，我们可以获取所有好友的id。</p>
+
+<p>要获取某个人的所有相册，可以访问http://www.renren.com/profile.do?id=（某人的id）&amp;v=photo_ajax&amp;undefined，这个是怎么找出来的呢？我们登录一个人的主页时，然后点击相册，这个页面并没有刷新，只是由AJAX替换了页面的一部分，它就是去Get那个路径，就返回了网页的一部分代码过来，替换掉现在的。所以我们也可以去Get那个路径，就可以获得包含所有相册id的页面。</p>
+
+<p>要获取一个相册里面的所有照片，这个要靠人人的一个Bug了，很无意发现的，你可以打开别人相册的排序照片的页面。在排序的页面，一个相册所有的照片都列出来了，通过正则表达式，我们就可以拿到每张照片的id。排序的页面为http://photo.renren.com/photo/（某人的id）/album-（相册id）/reorder。</p>
+
+<p>经过了三句“要怎么怎么样，首先怎么怎么样”，我们拿到了所有好友的id，所有好友的所有相册的id，和所有好友的所有相册的所有照片的id。为什么都是id呢？这个个人觉得用一个整数作为数据库元组的主码，性能会高些，而且对于一个32位整数，只占4字节，就可以标识4294967296个东西了。加上在客户与服务器之间传送id也方便。</p>
+
+<p>拥有这些id我们可以做什么，目前什么都做不了，我们访问http://photo.renren.com/photo/（某人的id）/photo-（相片id）就可以在网页中代码中发现AJAX返回的一段代码代码中有一句”largeurl”:”http:\/\/fmn.rrimg.com\/fmn049\/20110621\/1520\/p_large_S5jA_37eb000165dc5c3f.jpg”，这就是一张照片的真正地址了，然后我们把里面的”&#8221;给删掉就可以下载了。</p>
+
+<p>好，于是我们就可以这样写出一个残缺不全的爬虫了……….对于人人的新鲜事，可以把一个页面的url抓出来筛选后放到一个优先队列里，再从优先队列里选一个最优的进入，重复上一步，直到队列为空或者其他情况….呃，传说中的中文伪代码….</p>
+
+
+
+  <span>本文链接: <a href="http://everet.org/2012/01/python-automatically-download-all-albums-of-all-your-friends.html">http://everet.org/2012/01/python-automatically-download-all-albums-of-all-your-friends.html</a></span>
+  <hr/>
+    <h3>您可能也喜欢</h3>
+    <ul>
+    
+        <li>
+        <a href="/2012/01/conflict-in-life.html">传统文化中最矛盾的两句话是什么？</a>
+        </li>
+    
+        <li>
+        <a href="/2012/01/chopsticks.html">中国人使用筷子的十二种忌讳</a>
+        </li>
+    
+        <li>
+        <a href="/2012/03/chinese-zodiac.html">十二生肖</a>
+        </li>
+    
+        <li>
+        <a href="/2012/02/6-hard-disk-is-installed-to-the-computer.html">给电脑装了6块硬盘后</a>
+        </li>
+    
+        <li>
+        <a href="/2012/03/vim-table.html">又一个Vim速查表</a>
+        </li>
+    
+    </ul>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stupid ET</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-19T04:09:27+08:00" pubdate data-updated="true">2012-01-19</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/category/my-code/'>My Code</a>
+  
+</span>
+
+
+      
+
+<span class="categories">
+  Tags:&nbsp
+  
+    <a class='tag' href='/tag/python/'>Python</a>
+  
+</span>
+
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/2012/01/after-returning-home-into-a-tragedy-railway-telecom.html" title="Next Post: 回家后，电信变成悲剧的铁通">回家后，电信变成悲剧的铁通 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>Cedric Porter is Stupid ET.</p>
+  <p>EverET.org is provided by Stupid ET.</p>
+</section>
+<section>
+  <h1>Tags</h1>
+  <ul class="tag-cloud">
+    <a style="font-size: 112%" href="/tag/android/">Android</a>
+<a style="font-size: 131%" href="/tag/apache/">Apache</a>
+<a style="font-size: 80%" href="/tag/boost/">Boost</a>
+<a style="font-size: 80%" href="/tag/bugzilla/">Bugzilla</a>
+<a style="font-size: 177%" href="/tag/c-/">C++</a>
+<a style="font-size: 131%" href="/tag/captcha/">Captcha</a>
+<a style="font-size: 80%" href="/tag/chrome/">Chrome</a>
+<a style="font-size: 164%" href="/tag/clover/">Clover</a>
+<a style="font-size: 112%" href="/tag/datastructure/">DataStructure</a>
+<a style="font-size: 80%" href="/tag/design/">Design</a>
+<a style="font-size: 164%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 80%" href="/tag/english/">English</a>
+<a style="font-size: 171%" href="/tag/git/">Git</a>
+<a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
+<a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
+<a style="font-size: 131%" href="/tag/http/">HTTP</a>
+<a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
+<a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
+<a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
+<a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
+<a style="font-size: 207%" href="/tag/linux/">Linux</a>
+<a style="font-size: 145%" href="/tag/lisp/">Lisp</a>
+<a style="font-size: 80%" href="/tag/markdown/">Markdown</a>
+<a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
+<a style="font-size: 131%" href="/tag/mysql/">Mysql</a>
+<a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
+<a style="font-size: 155%" href="/tag/ogre/">OGRE</a>
+<a style="font-size: 112%" href="/tag/octopress/">Octopress</a>
+<a style="font-size: 131%" href="/tag/php/">PHP</a>
+<a style="font-size: 131%" href="/tag/pil/">PIL</a>
+<a style="font-size: 250%" href="/tag/python/">Python</a>
+<a style="font-size: 80%" href="/tag/qq/">QQ</a>
+<a style="font-size: 80%" href="/tag/ruby/">Ruby</a>
+<a style="font-size: 80%" href="/tag/svn/">SVN</a>
+<a style="font-size: 112%" href="/tag/scar/">Scar</a>
+<a style="font-size: 112%" href="/tag/tortoisegit/">TortoiseGit</a>
+<a style="font-size: 164%" href="/tag/ubuntu/">Ubuntu</a>
+<a style="font-size: 145%" href="/tag/ultrademo/">UltraDemo</a>
+<a style="font-size: 80%" href="/tag/vpn/">VPN</a>
+<a style="font-size: 112%" href="/tag/vim/">Vim</a>
+<a style="font-size: 112%" href="/tag/wpf/">WPF</a>
+<a style="font-size: 183%" href="/tag/web/">Web</a>
+<a style="font-size: 164%" href="/tag/wordpress/">Wordpress</a>
+<a style="font-size: 171%" href="/tag/compile/">compile</a>
+<a style="font-size: 80%" href="/tag/curl/">curl</a>
+<a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
+<a style="font-size: 80%" href="/tag/ppp/">ppp</a>
+<a style="font-size: 80%" href="/tag/pptpd/">pptpd</a>
+<a style="font-size: 80%" href="/tag/rsync/">rsync</a>
+<a style="font-size: 80%" href="/tag/sendmail/">sendmail</a>
+<a style="font-size: 80%" href="/tag/ssh/">ssh</a>
+<a style="font-size: 80%" href="/tag/uwsgi/">uWSGI</a>
+<a style="font-size: 80%" href="/tag/virtual-memory/">virtual memory</a>
+
+  </ul>
+</section>
+<section>
+  <h1>Friends</h1>
+    <a href="http://www.kidsang.com/" target="_blank">树桑小朋友的自留地</a>
+    | <a href="http://xiaoxia.org/" target="_blank">XIAOXIA[PG]</a>
+    | <a href="http://huanghuachao.cn/" target="_blank">Richard Huang's Blog</a>
+    | <a href="http://jiafei.org/" target="_blank">jiafei</a>
+    | <a href="http://xuyufish.com/" target="_blank">Fish</a>
+    | <a href="http://zhke.name/" target="_blank">汗青-home</a>
+    | <a href="http://www.dorgel.net/blog" target="_blank">Dorgel&#039;s Blog</a>
+    | <a href="http://spead.everet.org" title="俊杰的空间" target="_blank">Spead&#039;s Blog</a>
+</section>
+<section>
+  <h1>Recent Comments</h1>
+  <div id="dsq-recentcomments" class="dsq-widget"><script type="text/javascript" src="http://disqus.com/forums/everet/recent_comments_widget.js?hide_avatars=0&num_items=5&excerpt_length=100"></script></div>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/emacs-markdown-display-image.html">让Emacs显示Markdown中的图片</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/learn-http-chunked.html">[学习HTTP] Transfer-Encoding: chunked</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/customize-emacs-gud-many-windows.html">定制Emacs GDB调试窗口布局</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/http-status-206-partial-content.html">[学习HTTP] 206 Partial Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://everet.org/2012/01/python-automatically-download-all-albums-of-all-your-friends.html';
+        var disqus_url = 'http://everet.org/2012/01/python-automatically-download-all-albums-of-all-your-friends.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
