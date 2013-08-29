@@ -9,7 +9,7 @@ tags: [Emacs, Lisp]
 
 By：[Stupid ET](http://EverET.org/about-me)
 
-Emacs在1975年就诞生了，想必比现在绝大多数程序员都要老。现在最新的Emacs已经是24.3.50.7，为了获取最新的特性，我的Emacs都是自己编译最新的开发版。Emacs其实是一个Lisp解释器，有着和Lisp纠缠不清的关系，[我](http://EverET.org/about-me)想这与Richard Stallman本人和MIT人工智能实验室有些许关系。Emacs许多逻辑都是用elisp写的。而所有的配置都可以用elisp编写。
+Emacs在1975年就诞生了，想必比现在绝大多数程序员都要老。现在最新的Emacs已经是24.3.50.7，<del>为了获取最新的特性，我的Emacs都是自己编译最新的开发版</del>（在24.3正式版出了后就使用正式版了，正式版更为稳定）。Emacs其实是一个Lisp解释器，有着和Lisp纠缠不清的关系，[我](http://EverET.org/about-me)想这与Richard Stallman本人和MIT人工智能实验室有些许关系。Emacs许多逻辑都是用elisp写的。而所有的配置都可以用elisp编写。
 
 我曾经是一个忠实的Vim用户，不过后来接触了Emacs后就欲罢不能，其中一个重要的原因是Lisp。用Emacs可以让我们有一个很好的机会去学习和使用Lisp。
 
@@ -402,32 +402,33 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 
 ### 一些快捷键 ###
 
-- `M-&` 异步运行一个shell命令
-- `M-:` 运行一句lisp
-- `M-z` 删除到某个字符，同Vim的`df`
-- `M-h` 标记一段
 - `C-M-h` 标记一个函数定义
 - `C-h C-a` about-emacs
-- `C-x C-+` and `C-x C--` to increase or decrease the buffer text font size
-- `C-x C-v` or `M-x find-alternate-file`
-- `C-x C-t` 交换两行。可以用来调整python中import
-- `C-u M-=` 计算整个缓冲区的行数、字数和单词数
-- `M-g M-g linenum` 跳到某行，同vim中的`[linenum]G`
+- `C-h C` 查看当前文件的编码
 - `C-u M-! date` 插入当前时间
+- `C-u M-=` 计算整个缓冲区的行数、字数和单词数
+- `C-x <RET> f utf-8` （set-buffer-file-coding-system），设置当前buffer的文件的编码
+- `C-x C-+` and `C-x C--` to increase or decrease the buffer text font size
+- `C-x C-q` 开关read-only-mode，在dired-mode中可以进入修改模式，可以批量修改文件名。
+- `C-x C-t` 交换两行。可以用来调整python中import
+- `C-x C-v` or `M-x find-alternate-file` 重新打开当前文件，在高亮后者插件出了bug可以用这个命令重新加载。
+- `C-x z` 重复上一条命令。可以一直按`z`不断执行，非常方便！
+- `M-&` 异步运行一个shell命令
+- `M-:` 运行一句lisp
 - `M-@` mark-word，连续按连续mark单词。
-- `M-x ping`
-- `M-x telnet`
+- `M-g M-g linenum` 跳到某行，同vim中的`[linenum]G`
+- `M-h` 标记一段
 - `M-x dig`
 - `M-x ifconfig`
-- `C-x C-q` 开关read-only-mode，在dired-mode中可以进入修改模式，可以批量修改文件名。
-- `C-h C` 查看当前文件的编码
-- `C-x <RET> f utf-8` （set-buffer-file-coding-system），设置当前buffer的文件的编码
+- `M-x ping`
+- `M-x telnet`
+- `M-z` 删除到某个字符，同Vim的`df`
 - `c-u M-! date` 插入当前时间
 
 
 ### 中文输入法 ###
 
-在英文版的系统里面，一般情况下Emacs打开切换中文输入法，此时我们只需要修改LC_CTYPE环境变量就好了。
+在英文版的系统里面，一般情况下Emacs可能打不开中文输入法，此时我们需要修改LC_CTYPE环境变量就好了。
 
 可以在~/.profile最后加上一句
 

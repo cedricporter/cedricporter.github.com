@@ -1,4 +1,4 @@
-#+TITLE: MySQL学习笔记
+#+TITLE: MySQL
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
 #+OPTIONS: H:3 num:t toc:nil \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
@@ -47,6 +47,52 @@
      SELECT * FROM product \G;
    #+END_SRC
    对于查询结果太宽的，可以在后面加上\G。
+
+** 查看数据库信息
+   #+BEGIN_SRC sql
+     status;
+     show create database test;
+     show create table employee;
+     show index from employee;
+     show variables like 'character_set_%';
+     show variables like 'collation_%';
+     show processlist;
+
+     -- 获取InnoDB行锁争用情况
+     show status like 'innodb_row_lock%';
+   #+END_SRC
+
+* InnoDB锁
+  1. 共享锁（S）：允许一个事务去读一行，阻止其他事务获得相同数据集的排他锁。
+  2. 排他锁（X)：允许获得排他锁的事务更新数据，阻止其他事务取得相同数据集的共享读锁和排他写锁。
+  3. 意向共享锁（IS）：事务打算给数据行加行共享锁，事务在给一个数据行加共享锁前必须先取得该表的IS锁。
+  4. 意向排他锁（IX）：事务打算给数据行加行排他锁，事务在给一个数据行加排他锁前必须先取得该表的IX锁。
+
+  另外，为了允许行锁和表锁共存，实现多粒度锁机制，InnoDB还有两种内部使用的意向锁（Intention Locks），这两种意向锁都是表锁。
+
+  如果一个事务请求的锁模式与当前的锁兼容，InnoDB就将请求的锁授予该事务；反之，如果两者不兼容，该事务就要等待锁释放。
+
+  意向锁是InnoDB自动加的，不需用户干预。
+
+  对于UPDATE、DELETE和INSERT语句，InnoDB会自动给涉及数据集加排他锁（X)；
+  对于普通SELECT语句，InnoDB不会加任何锁；事务可以通过以下语句显示给记录集加共享锁或排他锁。
+
+  1. 共享锁（IS）：
+     #+BEGIN_SRC sql
+       SELECT * FROM table_name WHERE ... LOCK IN SHARE MODE
+     #+END_SRC
+  2. 排他锁（IX)：
+     #+BEGIN_SRC sql
+       SELECT * FROM table_name WHERE ... FOR UPDATE
+     #+END_SRC
+
+  InnoDB行锁是通过给索引上的*索引项*加锁来实现的，这一点MySQL与Oracle不同，后者是通过在数据块中对相应数据行加锁来实现的。InnoDB这种行锁实现特点意味着：只有通过索引条件检索数据，InnoDB才使用行级锁，否则，InnoDB将使用表锁！
+
+  From: [[http://blog.chinaunix.net/uid-24111901-id-2627857.html][Innodb锁机制]]
+
+  资料：[[http://dev.mysql.com/doc/refman/5.5/en/innodb-lock-modes.html][InnoDB Lock Modes]]
+
+
 
 * FAQ
 
@@ -159,14 +205,14 @@ p
 
 
 * Misc
-  1. 可以用 show create table tablename 命令看表的引擎类型。
-  2. 尽量将多个语句绑到一个事务中，进行提交，避免多次提交导致的数据库开销。
-  3. 默认innodb是开启自动提交的，如果你按照myisam的使用方法来编写代码页不会存在错误，只是性能会很低。
-  4. 对不支持事务的表做start/commit操作没有任何效果，在执行commit前已经提交。
-  5. 任何一种表都不是万能的，只用恰当的针对业务类型来选择合适的表类型，才能最大的发挥MySQL的性能优势。
+  1. 尽量将多个语句绑到一个事务中，进行提交，避免多次提交导致的数据库开销。
+  1. 默认innodb是开启自动提交的，如果你按照myisam的使用方法来编写代码页不会存在错误，只是性能会很低。
+  1. 对不支持事务的表做start/commit操作没有任何效果，在执行commit前已经提交。
+  1. 任何一种表都不是万能的，只用恰当的针对业务类型来选择合适的表类型，才能最大的发挥MySQL的性能优势。
 
 
 
 * 资料来源
   1. [[http://www.mysqlops.com/2011/12/09/myisam%25E5%2592%258Cinnodb%25E5%25AF%25B9%25E6%25AF%2594%25E8%25AF%25A6%25E8%25A7%25A3.html][MySQL数据库存储引擎MyISAM和InnoDB的对比详解]]
   2. [[http://blog.codinglabs.org/articles/theory-of-mysql-index.html][MySQL索引背后的数据结构及算法原理]]
+  3. [[http://dev.mysql.com/doc/refman/5.5/en/error-messages-client.html][错误码]]

@@ -3,6 +3,22 @@
 #+LINK_HOME: index.html
 #+OPTIONS: ^:{}
 
+* 资料
+  1. [[http://www.python.org/dev/peps/pep-0333/][PEP 333 -- Python Web Server Gateway Interface v1.0]]([[http://codeplayer.blogbus.com/files/1139476043.html][翻译]])
+  2. [[http://www.python.org/dev/peps/pep-0008/][PEP 8 -- Style Guide for Python Code]]
+  3. [[http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html][Code Like a Pythonista: Idiomatic Python]]
+  4. [[http://www.python.org/dev/peps/pep-0318/][PEP 318 -- Decorators for Functions and Methods]]
+  5. [[http://scotdoyle.com/python-epoll-howto.html][How To Use Linux epoll with Python]]
+  6. [[http://feilong.me/2011/01/recommended-entries-for-you-to-master-python][学好Python必读的几篇文章]]
+  7. [[https://github.com/kennethreitz/grequests][grequests]]
+  8. [[http://docs.python-guide.org/en/latest/][The Hitchhiker’s Guide to Python!]]
+  9. [[http://www.python.org/workshops/1997-10/proceedings/savikko.html][Design Patterns in Python]]
+  10. http://docs.pylint.org/features.html
+  11. http://docs.pylint.org/faq.html#is-there-a-way-to-disable-a-message-for-a-particular-module-only
+
+* web framework
+  1. [[http://bottlepy.org/docs/dev-cn/][bottle]]
+
 * URL encoding/decoding
 
 #+BEGIN_SRC python
@@ -30,7 +46,7 @@
      namelist = form.getlist("name")
    #+END_SRC
 
-* MySQL
+* MySQLdb
   插入datetime
   #+BEGIN_SRC python
     time.strftime('%Y-%m-%d %H:%M:%S')
@@ -55,10 +71,44 @@
 
    [[http://stackoverflow.com/questions/2548493/in-python-after-i-insert-into-mysqldb-how-do-i-get-the-id][In Python, after I INSERT Into mysqldb, how do I get the “id”?]]
 
+** DictCursor
+   #+BEGIN_SRC python
+     import MySQLdb
+     from MySQLdb.cursors import DictCursor
+
+     db = MySQLdb.connect(cursorclass=MySQLdb.cursors.DictCursor)
+     # or
+     c = db.cursor(DictCursor)
+     c.execute("SELECT * FROM user")
+   #+END_SRC
+
 ** mysql_config not found
    #+BEGIN_SRC sh
      apt-get install python-dev libmysqld-dev
    #+END_SRC
+
+** 逻辑error
+   #+BEGIN_EXAMPLE
+     mysql> set autocommit = 0;             │mysql> set autocommit = 0;
+     Query OK, 0 rows affected (0.00 sec)   │Query OK, 0 rows affected (0.00 sec)
+                                            │
+     mysql> insert into user values ("Stupid│mysql> select * from user;
+      ET");                                 │Empty set (0.00 sec)
+     Query OK, 1 row affected (0.03 sec)    │
+                                            │mysql>
+     mysql> commit;                         │mysql>
+     Query OK, 0 rows affected (0.02 sec)   │mysql>
+                                            │mysql>
+     mysql> select * from user where name = │mysql> select * from user where name =
+     "Stupid ET";                           │ "Stupid ET";
+     +-----------+                          │Empty set (0.00 sec)
+     | name      |                          │
+     +-----------+                          │mysql>
+     | Stupid ET |                          │
+     +-----------+                          │
+     1 row in set (0.00 sec)                │
+   #+END_EXAMPLE
+
 * 根据字符串import
   #+BEGIN_SRC python
     def import_object(name):
@@ -237,3 +287,24 @@
 
         return logger
   #+END_SRC
+
+* 查看字符串编码
+  #+BEGIN_SRC python
+    import urllib
+    rawdata = urllib.urlopen('http://www.google.cn/').read()
+
+    import chardet
+    chardet.detect(rawdata)
+  #+END_SRC
+
+* Jinja2
+** 传递函数给Jinja2
+   #+BEGIN_SRC python
+     from jinja2 import Environment
+     env = Environment()
+     env.globals['foo'] = lambda: "foobar"
+     env.from_string('{% macro bar() %}{{ foo() }}{% endmacro %}{{ bar() }}').render()
+   #+END_SRC
+
+** 实践
+   1. https://bitbucket.org/plurk/solace

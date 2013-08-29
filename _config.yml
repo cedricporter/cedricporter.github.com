@@ -6,7 +6,7 @@ url: http://everet.org
 title: EverET.org
 subtitle: 好记性不如烂笔头
 author: Stupid ET
-simple_search: http://google.com/search
+simple_search: http://www.google.com.hk/search
 description: "I am Cedric Porter [Stupid ET]. My Chinese name is Hua Liang."
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
@@ -25,8 +25,8 @@ email:
 #    Jekyll & Plugins     #
 # ----------------------- #
 
-# If publishing to a subdirectory as in http://site.com/project set 'root: http://everet.org/project'
-root: http://everet.org/
+# If publishing to a subdirectory as in http://site.com/project set 'root: /project'
+root: /
 permalink: /:year/:month/:title.html
 source: source
 destination: public
@@ -63,7 +63,7 @@ page_asides:
 # ----------------------- #
 
 # Github repositories
-github_user: 
+github_user:
 github_repo_count: 0
 github_show_profile_link: true
 github_skip_forks: true

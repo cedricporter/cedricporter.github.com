@@ -4,3 +4,14 @@
 
 * 虚拟桌面
   [[http://dexpot.de/][DEXPOT]]
+
+* open cmd here
+  #+BEGIN_EXAMPLE
+    Windows Registry Editor Version 5.00
+
+    [HKEY_CLASSES_ROOT\folder\shell\cmd]
+    @="CMD here"
+
+    [HKEY_CLASSES_ROOT\folder\shell\cmd\command]
+    @="cmd.exe /k cd %1"
+  #+END_EXAMPLE

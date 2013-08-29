@@ -223,8 +223,39 @@
 
 * 对比分支之间的区别
   #+BEGIN_SRC sh
-    git diff --name-status master..file_buffer  
+    git diff --name-status master..file_buffer
+  #+END_SRC
+
+* 设置个人信息
+  #+BEGIN_SRC sh
+    git config [--global] user.email "me@here.com"
+  #+END_SRC
+
+* Enable Colourful git diff
+  #+BEGIN_SRC sh
+    git config --global color.diff auto
   #+END_SRC
 
 * 资料
   [[http://rogerdudler.github.com/git-guide/index.zh.html][git - 简易指南]]
+
+* submodule
+** delete
+   To remove a submodule you need to:
+
+   1. Delete the relevant section from the *.gitmodules* file.
+   2. Stage the .gitmodules changes *git add .gitmodules*
+   3. Delete the relevant section from *.git/config*.
+   4. Run *git rm --cached path_to_submodule* (no trailing slash).
+   5. Run *rm -rf .git/modules/submodule_name*
+   6. Commit
+   7. Delete the now untracked submodule files
+   8. *rm -rf path_to_submodule*
+
+   From: [[http://stackoverflow.com/questions/1260748/how-do-i-remove-a-git-submodule][How do I remove a Git submodule?]]
+
+* 删除远程tags
+  #+BEGIN_SRC sh
+    git tag -d v1.0
+    git push --delete origin v1.0
+  #+END_SRC

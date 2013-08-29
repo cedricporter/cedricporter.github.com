@@ -9,18 +9,24 @@
   #+BEGIN_SRC sh
     git clone git@github.com:[Yourname]/[yourname].github.com.git octopress
     cd octopress
-
+        
     git checkout -b source origin/source
-
+        
     git remote add octopress https://github.com/imathis/octopress.git
-
-    git clone git@github.com:[Yourname]/[yourname].github.com.git _deploy
-
-    ;: install bundles
-    gem install bundler
+        
+    git pull origin source
+    
+    # under octopress
+    # git clone git@github.com:[Yourname]/[yourname].github.com.git _deploy
+    mkdir _deploy
+    cp -rf .git _deploy
+    (cd _deploy && git checkout master)
+        
+    # install bundles
+    sudo apt-get install rbenv ruby-dev
+    sudo gem install bundler
+    rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
     bundle install
     rake install
-
-    # 更新
-    git pull origin source
+        
   #+END_SRC

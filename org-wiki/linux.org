@@ -13,6 +13,8 @@
 
   [[http://roclinux.cn/?p%3D2643][rsync]]
 
+  连接死掉后：~.
+
 * Patch
   补丁文件里到底存储了哪些信息呢？看看这个例子：
 
@@ -66,6 +68,8 @@
     sed -i "s/^\(#+TITLE:\(.*\)\)/\1\n#+HTML_LINK_UP: index.html\n#+HTML_LINK_HOME: index.html/" *.org
     sed -i "s/^-----//" *.org
     sed -i "s/^\(Time-stamp: .*\)//" *.org
+    # 修改文件内的.html为.tmpl
+    sed -i "s/\.html/.tmpl/g" *.tmpl
   #+END_SRC
 
 * Core Dump
@@ -504,35 +508,35 @@
 ** 制定变量
    #+BEGIN_SRC sh
      nmap -sP -PR $1 | awk -v my_ip=$2 '/^Nmap scan report for/ {if ($5 != my_ip) print $5}' | ./arpkill.py
-     
+
      # You can pass shell variables to awk using the -v option:
      n1=5
      n2=10
      echo | awk -v x=$n1 -v y=$n2 -f program.awk
-     
+
      # awk program
      BEGIN{ans=x+y}
      {print ans}
      END{}
    #+END_SRC
-   
+
 ** demo
    #+BEGIN_SRC sh
      awk '$9 == 500 ' /var/log/httpd/access.log
      awk '$9 == 500 {print} ' /var/log/httpd/access.log
      awk '$9 == 500 {print $0} ' /var/log/httpd/access.log
-     
+
      awk '/tom|jerry|vivek/' /etc/passwd
-     
+
      awk -F':' '{ print $1 }' /etc/passwd | sort
-     
+
      # Print 1st Line From File
      awk "NR==1{print;exit}" /etc/resolv.conf
      awk "NR==$line{print;exit}" /etc/resolv.conf
-     
+
      # You get the sum of all the numbers in a column:
      awk '{total += $1} END {print total}' earnings.txt
-     
+
      # List your top 10 favorite commands:
      history | awk '{print $2}' | sort | uniq -c | sort -rn | head
    #+END_SRC
@@ -540,6 +544,237 @@
 * zsh
   #+BEGIN_SRC sh
     cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
-    
-    chsh -s /bin/zsh  
+
+    chsh -s /bin/zsh
   #+END_SRC
+
+* swap
+** 创建swap分区
+   #+BEGIN_SRC sh
+     sudo swapoff -a # 停止所有的swap分区
+     sudo fdisk /dev/sda
+     # t -> 82(Linux swap)
+     sudo mkswap /dev/sda4
+     sudo swapon /dev/sda4
+     # Edit /etc/fstab
+     # /dev/sda4 swap swap defaults 0 0
+
+   #+END_SRC
+
+** 文件swap
+   #+BEGIN_SRC sh
+     sudo dd if=/dev/zero of=/root/swapfile bs=4M count=1024
+
+     sudo mkswap /root/swapfile #建立swap的文件系统
+
+     sudo swapon /root/swapfile #启用swap文件
+
+     # Edit /etc/fstab
+     # /root/swapfile swap swap defaults 0 0
+   #+END_SRC
+
+* grub
+
+** grub rescue
+   首先在rescue界面中尝试启动normal版本的grub
+   #+BEGIN_SRC sh
+     ls
+     # 然后遍历每个分区，找到有/boot/grub的分区
+     ls (hd0, 0)/boot/grub
+     set root=(hd0,2)
+     set prefix=(hd0,2)/boot/grub/i386-pc
+     insmod normal.mod
+     normal
+   #+END_SRC
+
+   然后进入到Linux中：
+   #+BEGIN_SRC sh
+     sudo update-grub
+     sudo grub-install /dev/sda
+   #+END_SRC
+
+* ssh
+** 原理
+   bla bla
+
+** 生成公私钥
+   #+BEGIN_SRC sh
+     ssh-keygen -t ras -C "home"
+   #+END_SRC
+
+** 复制公钥
+   #+BEGIN_SRC sh
+     # Copy your SSH public key on a remote machine for passwordless login - the easy way
+     ssh-copy-id -i id_rsa_work username@hostname
+     ssh-copy-id '-p 1990 root@ras.everet.org' # you need to quote if you don't use a standard port
+
+     ssh username@hostname 'mkdir -p .ssh && cat >> .ssh/authorized_keys' < ~/.ssh/id_rsa.pub
+   #+END_SRC
+
+** 查看指纹
+  #+BEGIN_SRC sh
+    ssh-keygen -l
+  #+END_SRC
+
+** 直接执行命令
+   #+BEGIN_SRC sh
+     ssh username@hostname "free -m"
+   #+END_SRC
+
+** 一句话创建sock5代理
+   #+BEGIN_SRC sh
+     ssh -qfnNT -D 127.0.0.1:3389 -l root -p 1990 ipv6.everet.org
+   #+END_SRC
+
+** 通过中间服务器连接另一台服务器
+   #+BEGIN_SRC sh
+     # SSH connection through host in the middle
+     ssh -t reachable_host ssh unreachable_host
+   #+END_SRC
+
+** Agent Forwards
+   如果我们有三台计算机：home-pc、server-1和server-2。我们从home-pc通过ssh登录到server-1，然后，我们需要从server-1登录到server-2。我们可以怎么做呢？
+   #+BEGIN_SRC sh
+     ssh -A username@hostname
+   #+END_SRC
+
+** 打印调试信息
+   #+BEGIN_SRC sh
+     ssh -v username@hostname
+   #+END_SRC
+
+* swap ctrl and caps lock
+**  On Debian GNU/Linux (console-setup method, newer)
+    To make CAPS LOCK another control key, edit the file /etc/default/keyboard and change the line which reads
+
+    #+BEGIN_EXAMPLE
+      XKBOPTIONS="ctrl:nocaps"                # Some people prefer "ctrl:swapcaps"
+
+      sudo dpkg-reconfigure -phigh console-setup
+    #+END_EXAMPLE
+
+
+* 关闭图形界面
+  #+BEGIN_SRC sh
+    /etc/init.d/gdm3 stop
+
+    update-rc.d -f gdm3 remove
+
+    # /etc/init.d/gdm3 start
+  #+END_SRC
+
+* 网络设置
+  #+BEGIN_SRC sh
+    vi /etc/network/interfaces
+  #+END_SRC
+
+  #+BEGIN_EXAMPLE
+    auto eth0
+    allow-hotplug eth0
+    iface eth0 inet dhcp
+
+    auto eth1
+    iface eth1 inet static
+    address 192.168.56.56
+    netmask 255.255.255.0
+    network 192.168.56.0
+  #+END_EXAMPLE
+
+* 杀进程
+  kill -9， 这个强大和危险的命令迫使进程在运行时突然终止，进程在结束后不能自我清理。危害是导致系统资源无法正常释放，一般不推荐使用，除非其他办法都无效。
+  当使用此命令时，一定要通过ps -ef确认没有剩下任何僵尸进程。只能通过终止父进程来消除僵尸进程。如果僵尸进程被init收养，问题就比较严重了。杀死init进程意味着关闭系统。
+  如果系统中有僵尸进程，并且其父进程是init，而且僵尸进程占用了大量的系统资源，那么就需要在某个时候重启机器以清除进程表了。
+  #+BEGIN_SRC sh
+    pgrep emacs
+    pidof emacs
+    pkill emacs
+    killall emacs
+  #+END_SRC
+
+  from: [[http://blog.csdn.net/ithomer/article/details/9402431][Linux kill, killall, kill -9]]
+
+* 查找
+** which
+   只能查可执行文件和别名(alias) ，并在PATH变量里面寻找
+
+** whereis
+   只能查二进制文件（含可执行文件）、说明文档，源文件等，从linux文件数据库（/var/lib/slocate/slocate.db 或 /var/lib/mlocate/mlocate.db）寻找，所以有可能找到刚刚删除，或者没有发现新建的文件
+
+** locate
+   在数据库里查找，数据库大至每天更新一次，文件名是部分匹配（见 3 locate passwd 的结果：opasswd）
+
+** find
+   最强大，什么都能查，根据条件查找文件，在硬盘上查找，效率很低
+
+   from: [[http://blog.csdn.net/ithomer/article/details/9391279][Linux下which、whereis、locate、find 区别]]
+
+* 重定向
+  #+BEGIN_SRC sh
+    python proxy.py > /dev/null 2>&1
+  #+END_SRC
+
+  - cmd >a 2>a 相当于使用了FD1、FD2两个互相竞争使用文件 a 的管道；
+  - cmd >a 2>&1 只使用了一个管道FD1，但已经包括了stdout和stderr。从IO效率上来讲，cmd >a 2>&1的效率更高。
+
+* 配置新环境
+  http://www.bash2zsh.com/zsh_refcard/refcard.pdf
+
+** shell
+   #+BEGIN_SRC sh
+     apt-get install zsh
+     curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+   #+END_SRC
+
+** config
+   #+BEGIN_SRC sh
+     git clone https://github.com/cedricporter/vim-emacs-setting.git ~/vim-emacs-setting
+     (cd ~/vim-emacs-setting && ./install.sh)
+   #+END_SRC
+
+** emacs
+   #+BEGIN_SRC sh
+     apt-get build-dep emacs
+     wget http://ftpmirror.gnu.org/emacs/emacs-24.3.tar.gz
+     tar zxvf emacs-24.3.tar.gz
+     (cd emacs-24.3 && ./configure --prefix="$HOME/my-emacs" && make -j4 && make install)
+   #+END_SRC
+
+* 加密文件
+** with password
+*** gpg
+    #+BEGIN_SRC sh
+      # 加密
+      gpg -c myfinancial.info.txt
+
+      # 解密
+      gpg myfinancial.info.txt.gpg
+      gpg myfinancial.info.gpg –o financial.info.txt
+    #+END_SRC
+    from: [[http://www.cyberciti.biz/tips/linux-how-to-encrypt-and-decrypt-files-with-a-password.html][Linux: HowTo Encrypt And Decrypt Files With A Password]]
+
+*** openssl
+    #+BEGIN_SRC sh
+      openssl enc -aes-256-cbc -in my.pdf -out mydata.enc
+
+      openssl enc -aes-256-cbc -d -in mydata.enc -out mydecrypted.pdf
+    #+END_SRC
+
+**** with base64
+     #+BEGIN_SRC sh
+       cat test | openssl enc -aes-256-cbc | base64 > b.txt
+       cat b.txt | base64 -d | openssl enc -aes-256-cbc -d
+     #+END_SRC
+
+** use rsa
+   #+BEGIN_SRC sh
+     # Convert RSA public key and private key to PEM format:
+     openssl rsa -in ~/.ssh/id_rsa -outform pem > id_rsa.pem
+     openssl rsa -in ~/.ssh/id_rsa -pubout -outform pem > id_rsa.pub.pem
+
+     # Encrypting a file with your public key:
+     openssl rsautl -encrypt -pubin -inkey id_rsa.pub.pem -in file.txt -out file.enc
+
+     # Decrypting the file with your private key:
+     openssl rsautl -decrypt -inkey id_rsa.pem -in file.enc -out file.txt
+   #+END_SRC
+   from: [[http://unix.stackexchange.com/questions/27005/encrypting-file-only-with-ssh-priv-key][Encrypting file only with SSH -priv-key?]]

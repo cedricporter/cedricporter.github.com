@@ -4,6 +4,8 @@
 
 * 有趣的command
   #+BEGIN_SRC sh
+    pwd | xclip -i -sel clip
+        
     # Batch rename and number files
     # The '1' in '%01d' changes the amounts of digits in the integer, eg. 1 vs 0001.
     count='1'; for i in *.jpg; do mv $i $(printf '%01d'.jpg $count); (( count++ )); done
@@ -56,7 +58,7 @@
     mount | column -t
     
     # start a tunnel from some machine's port 80 to your local post 2001
-    # now you can acces the website by going to http://localhost:2001/
+    # now you can access the website by going to http://localhost:2001/
     ssh -N -L2001:localhost:80 somemachine
     
     # Execute a command at a given time
@@ -206,6 +208,10 @@
     ls -l `which more`
     
     nohup [command] > /dev/null 2>&1 &
+        
+    # 批量修改拓展名
+    zmv '(*).html' '$1.tmpl'
+        
   #+END_SRC
 
   http://www.commandlinefu.com/commands/browse
@@ -233,11 +239,6 @@
 
     # 创建文件
     touch {1..50}
-  #+END_SRC
-
-* 一句话创建sock5代理
-  #+BEGIN_SRC sh
-    ssh -qfnNT -D 127.0.0.1:3389 -l root -p 1990 ipv6.everet.org
   #+END_SRC
 
 * 快速为ip绑定域名
@@ -418,3 +419,10 @@
    #+END_EXAMPLE
 
    http://xahlee.info/linux/linux_monitor_processes_htop.html
+
+* 语法高亮的cat
+  #+BEGIN_SRC sh
+    # http://stackoverflow.com/questions/7851134/syntax-highlighting-colorizing-cat
+    sudo apt-get install python-pygments
+    alias ccat='pygmentize -g'
+  #+END_SRC
