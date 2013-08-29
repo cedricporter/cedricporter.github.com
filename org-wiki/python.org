@@ -272,6 +272,22 @@
     # {1: 1, 2: 2, 3: 3}
   #+END_SRC
 
+* logging
+  #+BEGIN_SRC python
+    def init_logger(log_filename='log.log'):
+        import logging
+
+        logger = logging.getLogger()
+        formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+
+        hdlr = logging.FileHandler(log_filename)
+        hdlr.setFormatter(formatter)
+        logger.addHandler(hdlr)
+        logger.setLevel(logging.NOTSET)
+
+        return logger
+  #+END_SRC
+
 * 查看字符串编码
   #+BEGIN_SRC python
     import urllib

@@ -404,8 +404,10 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 
 - `C-M-h` 标记一个函数定义
 - `C-h C-a` about-emacs
+- `C-h C` 查看当前文件的编码
 - `C-u M-! date` 插入当前时间
 - `C-u M-=` 计算整个缓冲区的行数、字数和单词数
+- `C-x <RET> f utf-8` （set-buffer-file-coding-system），设置当前buffer的文件的编码
 - `C-x C-+` and `C-x C--` to increase or decrease the buffer text font size
 - `C-x C-q` 开关read-only-mode，在dired-mode中可以进入修改模式，可以批量修改文件名。
 - `C-x C-t` 交换两行。可以用来调整python中import
@@ -421,6 +423,7 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 - `M-x ping`
 - `M-x telnet`
 - `M-z` 删除到某个字符，同Vim的`df`
+- `c-u M-! date` 插入当前时间
 
 
 ### 中文输入法 ###
