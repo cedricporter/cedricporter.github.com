@@ -1,0 +1,890 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>EverET.org</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="一个很2B的求两个List的差集的作为示例 cpp 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14 List&lt;T&gt; Minus&lt;T&gt;(List&lt;T&gt; list1, List&lt;T&gt; list2) { List&lt;T&gt; ret &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://everet.org/page/8/index.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="EverET.org" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-28529727-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">EverET.org</a></h1>
+  
+    <h2>好记性不如烂笔头</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:everet.org" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/my-works">Works</a></li>
+  <li><a href="http://414112390.qzone.qq.com/#!app=4" target="_blank">Albums</a></li>
+  <li><a href="/liuyana">Msg Board</a></li>
+  <li><a href="/about-me">About Me</a></li>
+  <li><a href="http://github.com/cedricporter">et@github</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/03/c-template.html">C#的模板</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-04T07:38:58+08:00" pubdate data-updated="true">2012-03-04</time>
+        
+         | <a href="/2012/03/c-template.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>一个很2B的求两个List的差集的作为示例</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>cpp  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="cpp"><span class="line">        <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Minus</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">list1</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">list2</span><span class="p">)</span>
+</span><span class="line">        <span class="p">{</span>
+</span><span class="line">            <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">ret</span> <span class="o">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line">            <span class="n">foreach</span> <span class="p">(</span><span class="n">T</span> <span class="n">e</span> <span class="n">in</span> <span class="n">list1</span><span class="p">)</span>
+</span><span class="line">            <span class="p">{</span>
+</span><span class="line">                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">list2</span><span class="p">.</span><span class="n">Contains</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+</span><span class="line">                <span class="p">{</span>
+</span><span class="line">                    <span class="n">ret</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">                <span class="p">}</span>
+</span><span class="line">            <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">            <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+</span><span class="line">        <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>当然地球人会这样写:</p>
+
+<blockquote>
+  <p>List<edge> beDeletedEdges = currentEdgeList.Except(originEdgeList).ToList();</edge></p>
+</blockquote>
+
+<p>好吧，我喜欢把C#当Python写……</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/what-bugzilla-is-down.html">What？Bugzilla Is Down</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-28T09:00:13+08:00" pubdate data-updated="true">2012-02-28</time>
+        
+         | <a href="/2012/02/what-bugzilla-is-down.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Bugzilla是基于Web的通用软件缺陷追踪工具。目前Linux Kernel，Apache，Mozilla，Gnome，KDE，Open Office，Eclipse，Facebook，Nokia，Yahoo! 等等都采用了Bugzilla这个缺陷追踪工具。</p>
+
+<p>这段时间写代码我们的bug list都是写在一个txt里面，真是弱爆了……于是想用有效的工具来管理我们的bug。</p>
+
+<p>据说在微软，大家上班第一件事就是打开缺陷追踪工具看看昨天测试人员找出了什么bug，然后开始一天的工作。</p>
+
+<p>确实，只有有效的设计、实现、测试和管理才能保证软件的质量。否则我们的软件都是不堪一击的。</p>
+
+<p>于是偶装了bugzilla来管理我们的一些项目。</p>
+
+<p>在偶改完设置后，Bugzilla就显示“Bugzilla is down”，然后偶就很无语，发现在首页登录都登录不进去了，这要我如何是好。</p>
+
+<p>Google了下，发现访问 <a href="http://bug.everet.org/editparams.cgi">http://bug.everet.org/editparams.cgi</a> 就可以进去修改去设置了。后来发现是我在shutdownhtml的框里填了东西，他就down了。清空它的值就好了。</p>
+
+<p>这真是弱爆了的用户体验啊。不过也怪我没仔细看说明。</p>
+
+<blockquote>
+
+  <h4 id="shutdownhtml">shutdownhtml</h4>
+
+  <pre><code>  If this field is non-empty, then Bugzilla will be completely disabled and this text will be displayed instead of all the Bugzilla pages.
+</code></pre>
+</blockquote>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/the-installation-of-the-ssd-to-the-notebook.html">给笔记本加装了SSD</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-28T00:43:06+08:00" pubdate data-updated="true">2012-02-28</time>
+        
+         | <a href="/2012/02/the-installation-of-the-ssd-to-the-notebook.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>一直感觉电脑性能的瓶颈在硬盘上，于是就决定加装一个SSD。做法是把光驱卸掉，把硬盘装到硬盘架上插到光驱里面。于是就把最没用的部件从电脑上拆掉了。</p>
+
+<p>我们4个人一起买了镁光的64GB的SSD，里面也只有60GB，又是硬盘厂商经典的计算方法……</p>
+
+<p>我的主板只支持SATA2的接口，所以读取速度只到250MB/s就没什么变化了。</p>
+
+<p>我们来看看笔记本里机械硬盘的速度</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/02/the-installation-of-the-ssd-to-the-notebook.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/ultrademo-interface-rewritten-in-c.html">UltraDemo的界面用C#重写</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-27T23:07:15+08:00" pubdate data-updated="true">2012-02-27</time>
+        
+         | <a href="/2012/02/ultrademo-interface-rewritten-in-c.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>UltraDemo是一款数据结构的实践与演示的平台，可以在上面编写类C的代码。</p>
+
+<p>通过UltraDemo，我们将可以以图形化的信息观察到我们写的数据结构的变化的过程。</p>
+
+<p>UltraDemo是由编译器、汇编解释器和动画框架加上动画组成的平台。可以单步调试，查看内存变量等之外还可以观看动画形式的数据结构，这样可以方便初学者更快地理解各种数据结构。</p>
+
+<p>原来的界面是C++/MFC写的，长得和VS2008差不多，看上去风格挺古老的。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/02/image14.png"><img src="http://everet.org/wp-content/uploads/2012/02/image_thumb14.png" alt="image" /></a></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/02/ultrademo-interface-rewritten-in-c.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/6-hard-disk-is-installed-to-the-computer.html">给电脑装了6块硬盘后</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-21T09:09:29+08:00" pubdate data-updated="true">2012-02-21</time>
+        
+         | <a href="/2012/02/6-hard-disk-is-installed-to-the-computer.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天在光驱位装了块硬盘，于是想在弄过几块硬盘看看到了Z盘会发生什么事情。</p>
+
+<p>最后发现到了Z盘后，就识别不了新的硬盘了。Windows果然弱爆了。</p>
+
+<p>今天贡献硬盘的有洪科，晓彬，钦杰，桐文，谢谢他们啊~~</p>
+
+<p>见证历史的图!!</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/02/6-hard-disk-is-installed-to-the-computer.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/some-basic-concepts-of-database.html">数据库的一些基本概念</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-20T08:30:54+08:00" pubdate data-updated="true">2012-02-20</time>
+        
+         | <a href="/2012/02/some-basic-concepts-of-database.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>可能很多初学者对于数据库没有什么概念。</p>
+
+<p>对于MySQL来说，其下可以有很多个数据库，可以使用</p>
+
+<blockquote>
+
+  <p>CREATE DATABASE database_name;</p>
+</blockquote>
+
+<p>来建数据库。</p>
+
+<p>我们还可以对不同的数据库对不同的用户设置权限。</p>
+
+<p>然后我们可以选择当前操作的数据库，然后在其下建表</p>
+
+<blockquote>
+
+  <p>CREATE TABLE table_name;</p>
+</blockquote>
+
+<p>举个例子，我们可以在MySQL下一些数据库：ET，LST，zhke，test。</p>
+
+<p>然后在数据库ET下有两张表User和Product。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/02/some-basic-concepts-of-database.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/intermediate-code-generation.html">编译原理知识回顾——中间代码生成</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-19T21:23:35+08:00" pubdate data-updated="true">2012-02-19</time>
+        
+         | <a href="/2012/02/intermediate-code-generation.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>学完编译原理已经一年了，也有半年被因为学其他东西而没空继续深入学习编译原理。</p>
+
+<p>现在终于有机会继续学习了。</p>
+
+<p>首先回顾下，编译原理考试第一题的答案。就是翻译的步骤。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/02/image4.png"><img src="http://everet.org/wp-content/uploads/2012/02/image_thumb4.png" alt="image" /></a></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/02/intermediate-code-generation.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/the-http-status-code.html">HTTP状态码</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-19T00:44:30+08:00" pubdate data-updated="true">2012-02-19</time>
+        
+         | <a href="/2012/02/the-http-status-code.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>发现到了现在，我还是除了一些基本的状态码之外， 其他状态码都不是很熟悉，于是找了些状态码过来记录一下，也当做备忘了。</p>
+
+<p>下面的拿Vim把返回码处理成表格还加了颜色，哈哈，果然用Vim就是像刷屏一样。配合宏真是无敌了！</p>
+
+<p><strong>100</strong>
+Continue</p>
+
+<p>初始的请求已经接受，客户应当继续发送请求的其余部分</p>
+
+<p><strong>101</strong>
+Switching Protocols</p>
+
+<p>服务器将遵从客户的请求转换到另外一种协议</p>
+
+<p><strong>200</strong>
+OK</p>
+
+<p>一切正常，对GET和POST请求的应答文档跟在后面</p>
+
+<p><strong>201</strong>
+Created</p>
+
+<p>服务器已经创建了文档，Location头给出了它的URL。</p>
+
+<p><strong>202</strong>
+Accepted</p>
+
+<p>已经接受请求，但处理尚未完成。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/02/the-http-status-code.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/python-crawl-jingdong.html">Python抓取京东商城的所有笔记本电脑的参数</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-18T02:53:24+08:00" pubdate data-updated="true">2012-02-18</time>
+        
+         | <a href="/2012/02/python-crawl-jingdong.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近洪爷要写数据挖掘的论文需要些数据，于是俺又有机会做苦力了。昨天刚刚回到学校，晚上就帮洪爷写了个爬虫来爬数据京东商城的笔记本的参数。</p>
+
+<p>为了快速完成，基本原理就是人工找到笔记本的页面。</p>
+
+<p>然后他有22页（Page），编号规则如下：</p>
+
+<p>http://www.360buy.com/products/670-671-672-0-0-0-0-0-0-0-1-1-1.html</p>
+
+<p>http://www.360buy.com/products/670-671-672-0-0-0-0-0-0-0-1-1-%d.html</p>
+
+<p>http://www.360buy.com/products/670-671-672-0-0-0-0-0-0-0-1-1-22.html</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/02/python-crawl-jingdong.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/02/burst-net-transfer.html">两台Burst.Net主机传输文件真快</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-13T21:28:31+08:00" pubdate data-updated="true">2012-02-13</time>
+        
+         | <a href="/2012/02/burst-net-transfer.html#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在两台主机间传数据真快啊，不过也说明是100Mb的网，可惜可惜。</p>
+
+<p>2月8日，burst出了优惠码，我决定用优惠码，有个8折，而且以后都是8折，还好。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/02/image3.png"><img src="http://everet.org/wp-content/uploads/2012/02/image_thumb3.png" alt="image" /></a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+	<div class="pagination">
+		
+			<a class="prev" href="/page/7/">&larr; Prev</a>
+		
+		
+			
+			
+				
+			
+			
+				<a href="/">1</a>
+			
+		
+			
+			
+			
+				<a href="/page/2">2</a>
+			
+		
+			
+			
+			
+				<a href="/page/3">3</a>
+			
+		
+			
+			
+			
+				<a href="/page/4">4</a>
+			
+		
+			
+			
+			
+				<a href="/page/5">5</a>
+			
+		
+			
+			
+			
+				<a href="/page/6">6</a>
+			
+		
+			
+			
+			
+				<a href="/page/7">7</a>
+			
+		
+			
+			
+			
+				<span style="font-size: 150%; ">8</span>
+			
+		
+			
+			
+			
+				<a href="/page/9">9</a>
+			
+		
+			
+			
+			
+				<a href="/page/10">10</a>
+			
+		
+			
+			
+			
+				<a href="/page/11">11</a>
+			
+		
+		
+			<a class="next" href="/page/9/">Next &rarr;</a>
+		
+	</div>
+    
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>Cedric Porter is Stupid ET.</p>
+  <p>EverET.org is provided by Stupid ET.</p>
+</section>
+<section>
+  <h1>Tags</h1>
+  <ul class="tag-cloud">
+    <a style="font-size: 112%" href="/tag/android/">Android</a>
+<a style="font-size: 131%" href="/tag/apache/">Apache</a>
+<a style="font-size: 80%" href="/tag/boost/">Boost</a>
+<a style="font-size: 80%" href="/tag/bugzilla/">Bugzilla</a>
+<a style="font-size: 177%" href="/tag/c-/">C++</a>
+<a style="font-size: 131%" href="/tag/captcha/">Captcha</a>
+<a style="font-size: 80%" href="/tag/chrome/">Chrome</a>
+<a style="font-size: 164%" href="/tag/clover/">Clover</a>
+<a style="font-size: 112%" href="/tag/datastructure/">DataStructure</a>
+<a style="font-size: 80%" href="/tag/design/">Design</a>
+<a style="font-size: 164%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 80%" href="/tag/english/">English</a>
+<a style="font-size: 171%" href="/tag/git/">Git</a>
+<a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
+<a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
+<a style="font-size: 131%" href="/tag/http/">HTTP</a>
+<a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
+<a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
+<a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
+<a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
+<a style="font-size: 207%" href="/tag/linux/">Linux</a>
+<a style="font-size: 145%" href="/tag/lisp/">Lisp</a>
+<a style="font-size: 80%" href="/tag/markdown/">Markdown</a>
+<a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
+<a style="font-size: 131%" href="/tag/mysql/">Mysql</a>
+<a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
+<a style="font-size: 155%" href="/tag/ogre/">OGRE</a>
+<a style="font-size: 112%" href="/tag/octopress/">Octopress</a>
+<a style="font-size: 131%" href="/tag/php/">PHP</a>
+<a style="font-size: 131%" href="/tag/pil/">PIL</a>
+<a style="font-size: 250%" href="/tag/python/">Python</a>
+<a style="font-size: 80%" href="/tag/qq/">QQ</a>
+<a style="font-size: 80%" href="/tag/ruby/">Ruby</a>
+<a style="font-size: 80%" href="/tag/svn/">SVN</a>
+<a style="font-size: 112%" href="/tag/scar/">Scar</a>
+<a style="font-size: 112%" href="/tag/tortoisegit/">TortoiseGit</a>
+<a style="font-size: 164%" href="/tag/ubuntu/">Ubuntu</a>
+<a style="font-size: 145%" href="/tag/ultrademo/">UltraDemo</a>
+<a style="font-size: 80%" href="/tag/vpn/">VPN</a>
+<a style="font-size: 112%" href="/tag/vim/">Vim</a>
+<a style="font-size: 112%" href="/tag/wpf/">WPF</a>
+<a style="font-size: 183%" href="/tag/web/">Web</a>
+<a style="font-size: 164%" href="/tag/wordpress/">Wordpress</a>
+<a style="font-size: 171%" href="/tag/compile/">compile</a>
+<a style="font-size: 80%" href="/tag/curl/">curl</a>
+<a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
+<a style="font-size: 80%" href="/tag/ppp/">ppp</a>
+<a style="font-size: 80%" href="/tag/pptpd/">pptpd</a>
+<a style="font-size: 80%" href="/tag/rsync/">rsync</a>
+<a style="font-size: 80%" href="/tag/sendmail/">sendmail</a>
+<a style="font-size: 80%" href="/tag/ssh/">ssh</a>
+<a style="font-size: 80%" href="/tag/uwsgi/">uWSGI</a>
+<a style="font-size: 80%" href="/tag/virtual-memory/">virtual memory</a>
+
+  </ul>
+</section>
+<section>
+  <h1>Friends</h1>
+    <a href="http://www.kidsang.com/" target="_blank">树桑小朋友的自留地</a>
+    | <a href="http://xiaoxia.org/" target="_blank">XIAOXIA[PG]</a>
+    | <a href="http://huanghuachao.cn/" target="_blank">Richard Huang&#8217;s Blog</a>
+    | <a href="http://jiafei.org/" target="_blank">jiafei</a>
+    | <a href="http://xuyufish.com/" target="_blank">Fish</a>
+    | <a href="http://zhke.name/" target="_blank">汗青-home</a>
+    | <a href="http://www.dorgel.net/blog" target="_blank">Dorgel&#039;s Blog</a>
+    | <a href="http://spead.everet.org" title="俊杰的空间" target="_blank">Spead&#039;s Blog</a>
+</section>
+<section>
+  <h1>Recent Comments</h1>
+  <div id="dsq-recentcomments" class="dsq-widget"><script type="text/javascript" src="http://disqus.com/forums/everet/recent_comments_widget.js?hide_avatars=0&num_items=5&excerpt_length=100"></script></div>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/emacs-markdown-display-image.html">让Emacs显示Markdown中的图片</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/learn-http-chunked.html">[学习HTTP] Transfer-Encoding: chunked</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/customize-emacs-gud-many-windows.html">定制Emacs GDB调试窗口布局</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/http-status-206-partial-content.html">[学习HTTP] 206 Partial Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

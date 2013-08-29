@@ -1,0 +1,2262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[EverET.org]]></title>
+  <link href="http://everet.org/feed" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2013-01-15T00:25:15+08:00</updated>
+  <id>http://everet.org/</id>
+  <author>
+    <name><![CDATA[Stupid ET]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[让Emacs显示Markdown中的图片]]></title>
+    <link href="http://everet.org/2013/01/emacs-markdown-display-image.html"/>
+    <updated>2013-01-14T23:36:00+08:00</updated>
+    <id>http://everet.org/2013/01/emacs-markdown-display-image</id>
+    <content type="html"><![CDATA[<p>用Octopress或者直接用Jekyll都会涉及到Markdown。我们在写Markdown的时候，会遇到插入截图或者本地图片的问题。如果我们自己手工写上图片的标记，会非常的麻烦，于是我在前文 <a href="http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">在Emacs中插入截图或者本地图片</a> 中讲述如何自动化插入图片，来解决插入的问题。</p>
+
+<p>今天我们来看一下如何在Emacs中预览Markdown中的图片。</p>
+
+<!-- more -->
+
+<p>虽然我们已经解决了插入图片不便，但我们有时看到这一串一串的文本图片标记或许有些许蛋疼，于是想预览一下图片，此时又是Emacs展示其强大的时候了。</p>
+
+<p>Emacs中有<code>iimage-mode</code>可以方便地让我们显示图片，是Emacs自带的。当然如果想在buffer中插入图片我们甚至可以直接调用<code>insert-image</code> <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>往buffer中插入图片。我想Vim里面如果要显示图片一定相当相当蛋疼吧，哈哈。Emacs用户真幸福。</p>
+
+<h2 id="section">实现</h2>
+<p>好，又到了动手的时候了，让我们卷起袖子准备开工！</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>iimage settings </span><a href="https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/plugins/configs/my-iimage-settings.el">my-iimage-settings.el</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+</pre></td><td class="code"><pre><code class="cl"><span class="line"><span class="c1">;; </span>
+</span><span class="line"><span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;iimage</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;info-mode-hook</span> <span class="ss">&#39;iimage-mode</span><span class="p">)</span>
+</span><span class="line"><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;markdown-mode-hook</span> <span class="o">&#39;</span><span class="p">(</span><span class="k">lambda</span><span class="p">()</span>
+</span><span class="line">				 <span class="p">(</span><span class="nv">define-key</span> <span class="nv">markdown-mode-map</span>
+</span><span class="line">				   <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;&lt;f12&gt;&quot;</span><span class="p">)</span> <span class="ss">&#39;turn-on-iimage-mode</span><span class="p">)))</span>
+</span><span class="line">
+</span><span class="line"><span class="p">(</span><span class="k">setq</span> <span class="nv">iimage-mode-image-search-path</span> <span class="o">&#39;</span><span class="p">(</span><span class="nb">list</span> <span class="s">&quot;.&quot;</span> <span class="s">&quot;..&quot;</span><span class="p">))</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">;; for octopress</span>
+</span><span class="line"><span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;iimage-mode-image-regex-alist</span> <span class="c1">; match: {% img xxx %}</span>
+</span><span class="line">	     <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nv">concat</span> <span class="s">&quot;{% img /?\\(&quot;</span>
+</span><span class="line">			   <span class="nv">iimage-mode-image-filename-regex</span>
+</span><span class="line">			   <span class="s">&quot;\\) %}&quot;</span><span class="p">)</span> <span class="mi">1</span><span class="p">))</span>
+</span><span class="line"><span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;iimage-mode-image-regex-alist</span> <span class="c1">; match: ![xxx](/xxx)</span>
+</span><span class="line">	     <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nv">concat</span> <span class="s">&quot;!\\[.*?\\](/\\(&quot;</span>
+</span><span class="line">			   <span class="nv">iimage-mode-image-filename-regex</span>
+</span><span class="line">			   <span class="s">&quot;\\))&quot;</span><span class="p">)</span> <span class="mi">1</span><span class="p">))</span>
+</span><span class="line"><span class="c1">;; 兼容以前在wordpress添加的图片</span>
+</span><span class="line"><span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;iimage-mode-image-regex-alist</span> <span class="c1">; match: ![xxx](http://everet.org/xxx)</span>
+</span><span class="line">	     <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nv">concat</span> <span class="s">&quot;!\\[.*?\\](http://everet.org/\\(wp-content/&quot;</span>
+</span><span class="line">			   <span class="nv">iimage-mode-image-filename-regex</span>
+</span><span class="line">			   <span class="s">&quot;\\))&quot;</span><span class="p">)</span> <span class="mi">1</span><span class="p">))</span>
+</span><span class="line"><span class="c1">;; 			   </span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们首先设置一下图片搜索路径<code>iimage-mode-image-search-path</code>，可以根据实际需要进行设置。对于Octopress的目录结构，我将其设置为当前以及上一级目录<code>(list "." "..")</code>。</p>
+
+<p>然后，我们来设置图片的正则表达式，iimage会将文本中满足的正则表达式提取出来替换成图片。对于插入到<code>iimage-mode-image-regex-alist</code>中的正则表达式，为一个点对<code>(REGEXP . NUM)</code>。为什么是这样呢？因为正则表达式中可能会有很多级的括号，通过<code>NUM</code>我们可以指定取哪一个group的内容为图片路径，像NUM为0的时候取得是整个表达式的值，这个有疑问的话可以问一下Google大神。</p>
+
+<p>最后，我们设置在<code>markdown-mode</code>中<code>F12</code>为开关图片显示。</p>
+
+<h2 id="section-1">效果</h2>
+
+<p><img src="http://everet.org/imgs/snapshot7_20130115_000417_4317rhI.png" /></p>
+
+<h2 id="footnote">Footnote</h2>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="http://www.gnu.org/software/emacs/manual/html_node/elisp/Showing-Images.html">Showing Images</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2013/01/emacs-markdown-display-image.html">http://everet.org/2013/01/emacs-markdown-display-image.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/emacs/'>Emacs</a>, <a class='tag' href='/tag/lisp/'>Lisp</a>, <a class='tag' href='/tag/octopress/'>Octopress</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[学习HTTP] Transfer-Encoding: chunked]]></title>
+    <link href="http://everet.org/2013/01/learn-http-chunked.html"/>
+    <updated>2013-01-11T15:43:00+08:00</updated>
+    <id>http://everet.org/2013/01/learn-http-chunked</id>
+    <content type="html"><![CDATA[<p>在HTTP/1.1中，如果需要保持连接的话，那么Content-Length是必须要提供的。否则就无法确定此次请求的结束位置。</p>
+
+<p>但是，如果我们要在<em>动态生成的过程中</em>就想发送数据，是无法预先知道报文的长度的，所以也就不可能使用Content-Length来指明body长度。那为啥要边生成边发送呢？假设生成完整数据需要30秒，如果要生成完再发送的话，那么就浪费了这30秒的美好的传输时间了。chunked就解决了这个难题，只要服务器允许将body逐块发送，并说明每块的大小就可以了。</p>
+
+<p><strong>那如何边生成边发送呢？</strong></p>
+
+<p>我们可以通过将Transfer-Encoding指定为chunked，来进行分块传输。我们就可以将原本一整块需要说明长度的数据分解成了一小块一小块需要说明长度的数据。就可以边生成边发送了。</p>
+
+<!-- more -->
+
+<p>Chunked Transfer Coding在rfc2616 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 中的文法定义如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="ini"><span class="line"><span class="na">Chunked-Body</span>   <span class="o">=</span> <span class="s">*chunk</span>
+</span><span class="line"><span class="s">                 last-chunk</span>
+</span><span class="line"><span class="s">                 trailer</span>
+</span><span class="line"><span class="s">                 CRLF</span>
+</span><span class="line"><span class="na">chunk</span>          <span class="o">=</span> <span class="s">chunk-size [ chunk-extension ] CRLF</span>
+</span><span class="line"><span class="s">                 chunk-data CRLF</span>
+</span><span class="line"><span class="na">chunk-size</span>     <span class="o">=</span> <span class="s">1*HEX</span>
+</span><span class="line"><span class="na">last-chunk</span>     <span class="o">=</span> <span class="s">1*(&quot;0&quot;) [ chunk-extension ] CRLF</span>
+</span><span class="line"><span class="na">chunk-extension</span><span class="o">=</span> <span class="s">*( &quot;;&quot; chunk-ext-name [ &quot;=&quot; chunk-ext-val ] )</span>
+</span><span class="line"><span class="na">chunk-ext-name</span> <span class="o">=</span> <span class="s">token</span>
+</span><span class="line"><span class="na">chunk-ext-val</span>  <span class="o">=</span> <span class="s">token | quoted-string</span>
+</span><span class="line"><span class="na">chunk-data</span>     <span class="o">=</span> <span class="s">chunk-size(OCTET)</span>
+</span><span class="line"><span class="na">trailer</span>        <span class="o">=</span> <span class="s">*(entity-header CRLF)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>对于每一个chunk，由chunk-size开头，这个是一个<strong>16进制</strong>数字的字符串，用来表示后面将有多长的数据。然后跟着的是数据。这里chunk-size和Content-Length的作用是相似的。最后结束的chunk的chunk-size为<code>0</code>。Chunk可以理解成类似这样的结构体，size指明data的长度:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="k">struct</span> <span class="n">Chunk</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">size</span><span class="p">;</span>
+</span><span class="line">    <span class="kt">char</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="section">测试</h2>
+
+<p>我们用nc<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>作为服务器，看看浏览器的反应如何。通过nc，我们可以直接构造响应。</p>
+
+<p>用nc监听本地8888端口，然后用浏览器访问本地8888端口，然后就可以看到浏览器发来的请求报文（2-11行）。然后我们模仿服务器发回响应（12-22行）。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>使用nc扮演服务器 </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="gp">$</span> nc -lp 8888
+</span><span class="line"><span class="go">GET / HTTP/1.1</span>
+</span><span class="line"><span class="go">Host: localhost:8888</span>
+</span><span class="line"><span class="go">Connection: keep-alive</span>
+</span><span class="line"><span class="go">Cache-Control: max-age=0</span>
+</span><span class="line"><span class="go">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span>
+</span><span class="line"><span class="go">User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.52 Safari/537.17</span>
+</span><span class="line"><span class="go">Accept-Encoding: gzip,deflate,sdch</span>
+</span><span class="line"><span class="go">Accept-Language: zh,zh-CN;q=0.8,en-US;q=0.6,en;q=0.4</span>
+</span><span class="line"><span class="go">Accept-Charset: UTF-8,*;q=0.5</span>
+</span><span class="line">
+</span><span class="line"><span class="go">HTTP/1.1 200 OK</span>
+</span><span class="line"><span class="go">Connection: close</span>
+</span><span class="line"><span class="go">Transfer-Encoding: chunked</span>
+</span><span class="line">
+</span><span class="line"><span class="go">A</span>
+</span><span class="line"><span class="go">This is Ev  </span>
+</span><span class="line"><span class="go">9</span>
+</span><span class="line"><span class="go">erET.org.</span>
+</span><span class="line"><span class="go">0</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>可以看到，Chunked-Body的内容分为一块一块的，最后以<code>0</code>结束。</p>
+
+<p><img src="http://everet.org/imgs/graphviz/g-3d53e0c03d1fdee01f5616ea23bbf543.svg" /></p>
+
+<p>最后，在浏览器可以看到的内容为<code>This is EverET.org.</code>。</p>
+
+<p>(全文完）</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.6">Transfer Codings</a> , <a href="http://greenbytes.de/tech/webdav/draft-ietf-httpbis-p1-messaging-13.html#rfc.section.6.2.1">Chunked Transfer Coding</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>netcat，黑客工具中的瑞士军刀。<a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2013/01/learn-http-chunked.html">http://everet.org/2013/01/learn-http-chunked.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/http/'>HTTP</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[定制Emacs GDB调试窗口布局]]></title>
+    <link href="http://everet.org/2013/01/customize-emacs-gud-many-windows.html"/>
+    <updated>2013-01-09T01:06:00+08:00</updated>
+    <id>http://everet.org/2013/01/customize-emacs-gud-many-windows</id>
+    <content type="html"><![CDATA[<p>我们在Emacs中可以方便地使用GDB，具体操作在<a href="http://emacser.com/emacs-gdb.htm">emacser.com</a>有详细的快捷键的教程。不过我觉得其实GDB的CLI已经很好用了。</p>
+
+<p>Emacs中默认可以方便打开多窗格模式，看起来就很像平时大家用的IDE了。</p>
+
+<p>我们只需要<code>M-x gdb-many-windows</code>就可以打开多窗格了，默认布局如下图：</p>
+
+<p><img src="http://everet.org/imgs/snapshot4_20130109_011149_15479HnD.png" /></p>
+
+<p>我们可以看到有6个窗格，其中有GDB命令行、局部变量、源代码、程序输出、栈、断点。功能看上去虽然很强大，不过我常用的只有其中几个，于是就决定开始定制Emacs的GDB调试窗口布局。</p>
+
+<!-- more -->
+
+<p>我常用的是代码框、输出、GDB命令行以及栈，什么断点、局部变量基本可以在需要的时候用<code>i b</code>，<code>i locals</code>查看就可以了，没必要弄这么小一个窗格占住位置，而且想看的时候还看不完整。</p>
+
+<h2 id="section">定制</h2>
+
+<p>于是开始按照我的心意，将其定制成如下这样。</p>
+
+<p><img src="http://everet.org/imgs/snapshot5_20130109_011857_15479UxJ.png" /></p>
+
+<p>这样用起来比较爽，没有不需要的窗格。各位看官也可以根据自己的需要配置。</p>
+
+<p><code>gdb-many-windows</code>的窗口布局是写死在<code>gdb-setup-windows</code>这个函数里面，我们最好的方法就是<code>defadvice</code>这个函数。代码如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+</pre></td><td class="code"><pre><code class="cl"><span class="line"><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">gdb-setup-windows</span> <span class="p">(</span><span class="nv">after</span> <span class="nv">my-setup-gdb-windows</span> <span class="nv">activate</span><span class="p">)</span>
+</span><span class="line">  <span class="s">&quot;my gdb UI&quot;</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">gdb-get-buffer-create</span> <span class="ss">&#39;gdb-stack-buffer</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">set-window-dedicated-p</span> <span class="p">(</span><span class="nv">selected-window</span><span class="p">)</span> <span class="no">nil</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">switch-to-buffer</span> <span class="nv">gud-comint-buffer</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">delete-other-windows</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">win0</span> <span class="p">(</span><span class="nv">selected-window</span><span class="p">))</span>
+</span><span class="line">        <span class="p">(</span><span class="nv">win1</span> <span class="p">(</span><span class="nv">split-window</span> <span class="no">nil</span> <span class="no">nil</span> <span class="ss">&#39;left</span><span class="p">))</span>      <span class="c1">;code and output</span>
+</span><span class="line">        <span class="p">(</span><span class="nv">win2</span> <span class="p">(</span><span class="nv">split-window-below</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">*</span> <span class="p">(</span><span class="nv">window-height</span><span class="p">)</span> <span class="mi">2</span><span class="p">)</span> <span class="mi">3</span><span class="p">)))</span>     <span class="c1">;stack</span>
+</span><span class="line">        <span class="p">)</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">select-window</span> <span class="nv">win2</span><span class="p">)</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">gdb-set-window-buffer</span> <span class="p">(</span><span class="nv">gdb-stack-buffer-name</span><span class="p">))</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">select-window</span> <span class="nv">win1</span><span class="p">)</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">set-window-buffer</span>
+</span><span class="line">     <span class="nv">win1</span>
+</span><span class="line">     <span class="p">(</span><span class="k">if</span> <span class="nv">gud-last-last-frame</span>
+</span><span class="line">         <span class="p">(</span><span class="nv">gud-find-file</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">gud-last-last-frame</span><span class="p">))</span>
+</span><span class="line">       <span class="p">(</span><span class="k">if</span> <span class="nv">gdb-main-file</span>
+</span><span class="line">           <span class="p">(</span><span class="nv">gud-find-file</span> <span class="nv">gdb-main-file</span><span class="p">)</span>
+</span><span class="line">         <span class="c1">;; Put buffer list in window if we</span>
+</span><span class="line">         <span class="c1">;; can&#39;t find a source file.</span>
+</span><span class="line">         <span class="p">(</span><span class="nv">list-buffers-noselect</span><span class="p">))))</span>
+</span><span class="line">    <span class="p">(</span><span class="k">setq</span> <span class="nv">gdb-source-window</span> <span class="p">(</span><span class="nv">selected-window</span><span class="p">))</span>
+</span><span class="line">    <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">win3</span> <span class="p">(</span><span class="nv">split-window</span> <span class="no">nil</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">*</span> <span class="p">(</span><span class="nv">window-height</span><span class="p">)</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">4</span><span class="p">))))</span> <span class="c1">;io</span>
+</span><span class="line">      <span class="p">(</span><span class="nv">gdb-set-window-buffer</span> <span class="p">(</span><span class="nv">gdb-get-buffer-create</span> <span class="ss">&#39;gdb-inferior-io</span><span class="p">)</span> <span class="no">nil</span> <span class="nv">win3</span><span class="p">))</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">select-window</span> <span class="nv">win0</span><span class="p">)</span>
+</span><span class="line">    <span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>经过<code>defadvice</code>就可以修改原来定义的函数了，从而我们就可以定制UI了。</p>
+
+<blockquote>
+  <p>Emacs是伪装成编辑器的操作系统～～～</p>
+</blockquote>
+
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2013/01/customize-emacs-gud-many-windows.html">http://everet.org/2013/01/customize-emacs-gud-many-windows.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/emacs/'>Emacs</a>, <a class='tag' href='/tag/lisp/'>Lisp</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[学习HTTP] 206 Partial Content]]></title>
+    <link href="http://everet.org/2013/01/http-status-206-partial-content.html"/>
+    <updated>2013-01-06T10:31:00+08:00</updated>
+    <id>http://everet.org/2013/01/http-status-206-partial-content</id>
+    <content type="html"><![CDATA[<p>俺在把博客放在Github后，除了发现Github的Web Server将Cache-Control设置为max-age=86400外，还发现一个有趣的地方。Chrome在对于MP3文件的访问，Github返回的都是<code>206 Partial Content</code>，后来发现，原来Chrome在请求MP3的时候，会在请求头带上<code>Range: bytes=0-</code>。</p>
+
+<p>对于2xx的返回码，都是成功的，不过常见的基本都是200，206到时挺少见滴，于是俺决定看看206究竟有什么特别的地方。</p>
+
+<p>rfc2616日：对于206的定义是请求<strong>必须</strong>包含<code>Range</code>头来标示我们想要的范围，于是这也就说明Chrome访问MP3的时候因为加了<code>Range</code>头，于是被返回了206。</p>
+
+<p>我们来看一下下面的例子：用curl请求<a href="http://everet.org/2013/01/chrome-edit-with-emacs.html">http://everet.org/2013/01/chrome-edit-with-emacs.html</a>，返回<code>200 OK</code>，其中<code>Content-Length: 15845</code>。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>curl --head http://everet.org/2013/01/chrome-edit-with-emacs.html
+</span><span class="line">HTTP/1.1 200 OK
+</span><span class="line">Server: GitHub.com
+</span><span class="line">Date: Sun, 06 Jan 2013 02:47:09 GMT
+</span><span class="line">Content-Type: text/html
+</span><span class="line">Content-Length: 15845
+</span><span class="line">Last-Modified: Sat, 05 Jan 2013 10:30:34 GMT
+</span><span class="line">Connection: keep-alive
+</span><span class="line">Expires: Mon, 07 Jan 2013 02:47:09 GMT
+</span><span class="line">Cache-Control: max-age<span class="o">=</span>86400
+</span><span class="line">Accept-Ranges: bytes
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>那根据rfc2616的说法，是不是加上<code>Range</code>后，Web Server就会返回<code>206 Partial Content</code>了呢？我们来通过telnet试一试：</p>
+
+<!-- more -->
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>telnet everet.org www
+</span><span class="line">Trying 204.232.175.78...
+</span><span class="line">Connected to everet.org.
+</span><span class="line">Escape character is <span class="s1">&#39;^]&#39;</span>.
+</span><span class="line">GET /2013/01/chrome-edit-with-emacs.html HTTP/1.1
+</span><span class="line">Host: everet.org
+</span><span class="line">Range: <span class="nv">bytes</span><span class="o">=</span>0-100
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">HTTP/1.1 206 Partial Content
+</span><span class="line">Server: GitHub.com
+</span><span class="line">Date: Sun, 06 Jan 2013 03:20:05 GMT
+</span><span class="line">Content-Type: text/html
+</span><span class="line">Content-Length: 101
+</span><span class="line">Last-Modified: Sat, 05 Jan 2013 10:30:34 GMT
+</span><span class="line">Connection: keep-alive
+</span><span class="line">Expires: Mon, 07 Jan 2013 03:20:05 GMT
+</span><span class="line">Cache-Control: max-age<span class="o">=</span>86400
+</span><span class="line">Content-Range: bytes 0-100/15845
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">&lt;!DOCTYPE html&gt;
+</span><span class="line">&lt;!--<span class="o">[</span><span class="k">if </span>IEMobile 7 <span class="o">]</span>&gt;&lt;html <span class="nv">class</span><span class="o">=</span><span class="s2">&quot;no-js iem7&quot;</span>&gt;&lt;!<span class="o">[</span>endif<span class="o">]</span>--&gt;
+</span><span class="line">&lt;!--<span class="o">[</span><span class="k">if </span>lt IE 9<span class="o">]</span>&gt;&lt;html cl
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>可以看到，服务器返回了100个字节的字符。为了方便测试，我们使用curl来尝试分块下载。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>curl http://everet.org/2013/01/chrome-edit-with-emacs.html -o a.html
+</span><span class="line"><span class="nv">$ </span>curl --header <span class="s2">&quot;Range: bytes=0-10000&quot;</span> http://everet.org/2013/01/chrome-edit-with-emacs.html -o p1
+</span><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+</span><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed
+</span><span class="line">  100 10001  100 10001    0     0  13227      0 --:--:-- --:--:-- --:--:-- 20451
+</span><span class="line"><span class="nv">$ </span>curl --header <span class="s2">&quot;Range: bytes=10001-&quot;</span> http://everet.org/2013/01/chrome-edit-with-emacs.html -o p2
+</span><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+</span><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed
+</span><span class="line">  100  5844  100  5844    0     0   7778      0 --:--:-- --:--:-- --:--:-- 12175
+</span><span class="line"><span class="nv">$ </span>cat p1 p2 &gt; b.html
+</span><span class="line"><span class="nv">$ </span>diff a.html b.html
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们将原始页面下载回命名为a.html。然后通过增加<code>Range</code>这个header来下载<code>0-10000</code>为p1，以及<code>10001-</code>下载剩余部分为p2。然后合并p1、p2为b.html。通过<code>diff a.html b.html</code>发现a.html和b.html内容完全一样。</p>
+
+<p>嗯，正如我们所想的那样，加上<code>Range</code>后可以下载指定部分的内容，相应地服务器会返回<code>206 Partial Content</code>。</p>
+
+<h2 id="range">Range范围的例子</h2>
+<p>这个例子是rfc2616里面的，首先假定entity-body长度为10000。</p>
+
+<ul>
+  <li>获取前500个字节 (byte offsets 0-499, inclusive):  bytes=0-499</li>
+  <li>获取第二个500字节 (byte offsets 500-999, inclusive): bytes=500-999</li>
+  <li>获取最后500字节 (byte offsets 9500-9999, inclusive): bytes=-500</li>
+  <li>获取最后500字节 bytes=9500-</li>
+  <li>第一个和最后一个字节 (bytes 0 and 9999):  bytes=0-0,-1</li>
+  <li>Several legal but not canonical specifications of the second 500
+bytes (byte offsets 500-999, inclusive):
+ bytes=500-600,601-999
+ bytes=500-700,601-999</li>
+</ul>
+
+<h2 id="section">总结</h2>
+<p>我们可以通过<code>Range</code>和<code>206 Partial Content</code>来分块获取一个大文件。在offset有效的时候，Web Server会返回206，否则会返回<code>416 Requested Range Not Satisfiable</code>。</p>
+
+<h2 id="section-1">扩展阅读</h2>
+<ul>
+  <li><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">Status Code Definitions</a></li>
+  <li><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.35">Range</a></li>
+</ul>
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2013/01/http-status-206-partial-content.html">http://everet.org/2013/01/http-status-206-partial-content.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/http/'>HTTP</a>, <a class='tag' href='/tag/curl/'>curl</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Chrome Edit With Emacs]]></title>
+    <link href="http://everet.org/2013/01/chrome-edit-with-emacs.html"/>
+    <updated>2013-01-05T16:46:00+08:00</updated>
+    <id>http://everet.org/2013/01/chrome-edit-with-emacs</id>
+    <content type="html"><![CDATA[<p>大家在浏览器写长篇的东西时，有没觉得那个纯文本编辑框弱爆了？反正我是这么觉得。像Github、<a href="http://stackoverflow.com/editing-help">stackoverflow</a>、Wiki等都支持Markdown，对于这种有语法的文本，最好就是用个语法高亮自动排版的编辑器编辑。</p>
+
+<p>在Firefox有<a href="https://addons.mozilla.org/zh-cn/firefox/addon/its-all-text/">It’s All Text!</a>这个插件，可以调用外部编辑器。</p>
+
+<p>而在Chrome里面，也有插件，可以调用外部的Emacs进行编辑，而且可以根据规则自动选择模式，非常方便。它的名字叫<a href="http://www.emacswiki.org/emacs/Edit_with_Emacs">Edit With Emacs</a>。</p>
+
+<p>安装完插件后，Chrome所有的大Textarea都会出现一个蓝色的edit按钮，一按，就可以用Emacs编辑里面的内容了。</p>
+
+<p><img src="http://everet.org/imgs/2013-01-05-chrome-edit-with-emacs.markdown_20130105_170235_21731e8F.png" /></p>
+
+<!-- more -->
+
+<p>我们可以通过修改<code>edit-server-url-major-mode-alist</code>这个Association List<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>来添加网址规则，如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="cl"><span class="line"><span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;edit-server</span> <span class="no">nil</span> <span class="no">t</span><span class="p">)</span> <span class="p">(</span><span class="nv">daemonp</span><span class="p">))</span>
+</span><span class="line"><span class="c1">;  (setq edit-server-new-frame nil)</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">edit-server-start</span><span class="p">))</span>
+</span><span class="line">
+</span><span class="line"><span class="p">(</span><span class="k">setq</span> <span class="nv">edit-server-url-major-mode-alist</span>
+</span><span class="line">      <span class="o">&#39;</span><span class="p">((</span><span class="s">&quot;github\\.com&quot;</span> <span class="o">.</span> <span class="nv">markdown-mode</span><span class="p">)</span>
+</span><span class="line">	<span class="p">(</span><span class="s">&quot;i\\.everet\\.org&quot;</span> <span class="o">.</span> <span class="nv">moinmoin-mode</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Edit With Emacs的工作原理是在Emacs里面开一个服务器，监听9292端口，然后Chrome插件将文本POST到Emacs里面编辑，编辑完再返回回去。</p>
+
+<p>不过它的Emacs端在编辑中文url的textarea会有bug（因为中文在url中被转义成了%xx%xx这种形式，这个%在format的时候没转义好，于是format的时候就SB了），提交了issue不过作者暂时没理，我们自己注释掉<code>edit-server-find-or-create-edit-buffer</code>下面的<code>edit-server-log</code>就行了（diff：<a href="https://github.com/cedricporter/vim-emacs-setting/commit/a3069e50fd3bce90ca46be6ba784e47cd9d198ca#emacs/.emacs.d/plugins/edit-server.el">edit-server.el</a>）。</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="http://www.gnu.org/software/emacs/manual/html_node/elisp/Association-Lists.html">Association Lists</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2013/01/chrome-edit-with-emacs.html">http://everet.org/2013/01/chrome-edit-with-emacs.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/chrome/'>Chrome</a>, <a class='tag' href='/tag/emacs/'>Emacs</a>, <a class='tag' href='/tag/lisp/'>Lisp</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Keep Learning]]></title>
+    <link href="http://everet.org/2013/01/keep-learning.html"/>
+    <updated>2013-01-03T00:14:00+08:00</updated>
+    <id>http://everet.org/2013/01/keep-learning</id>
+    <content type="html"><![CDATA[<p>今天<a href="http://www.kidsang.com/">屠文翔</a>同学问了我一个在PIL中获取像素操作的问题，我想也没想就说道可以使用getpixel和putpixel操作像素，因为我之前一直也是使用这两个API。过了一会，<a href="http://www.kidsang.com/">屠文翔</a>同学问我是否用过load()这个API，我直接就说这个不是操作像素的。我之前在浏览PIL源码的时候，经常会见到调用这个函数，不过都只是纯调用，<code>self.load()</code>，连返回值都不获取。也没仔细看，就认为这个仅仅是装载数据。</p>
+
+<!-- more -->
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="c">##</span>
+</span><span class="line"><span class="c"># Allocates storage for the image and loads the pixel data.  In</span>
+</span><span class="line"><span class="c"># normal cases, you don&#39;t need to call this method, since the</span>
+</span><span class="line"><span class="c"># Image class automatically loads an opened image when it is</span>
+</span><span class="line"><span class="c"># accessed for the first time.</span>
+</span><span class="line"><span class="c">#</span>
+</span><span class="line"><span class="c"># @return An image access object.</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">    <span class="s">&quot;Explicitly load pixel data.&quot;</span>
+</span><span class="line">    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">im</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">dirty</span><span class="p">:</span>
+</span><span class="line">        <span class="c"># realize palette</span>
+</span><span class="line">        <span class="nb">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">im</span><span class="o">.</span><span class="n">putpalette</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">getdata</span><span class="p">())</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">dirty</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="s">&quot;RGB&quot;</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">rawmode</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class="line">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;transparency&quot;</span><span class="p">):</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">im</span><span class="o">.</span><span class="n">putpalettealpha</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s">&quot;transparency&quot;</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">palette</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="s">&quot;RGBA&quot;</span>
+</span><span class="line">    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">im</span><span class="p">:</span>
+</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">im</span><span class="o">.</span><span class="n">pixel_access</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">readonly</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>于是乎就自以为是地认为，load()不是用于操作像素的。然后<a href="http://www.kidsang.com/">屠文翔</a>同学发来一条链接<a href="http://effbot.org/zone/pil-pixel-access.htm">Pixel Access Objects</a>，顺带说了一句，“时代进步了“。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">pix</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># get pixel value</span>
+</span><span class="line"><span class="k">print</span> <span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># put pixel value</span>
+</span><span class="line"><span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>嗯，确实，时代进步了，我老了，如果我不保持学习，所拥有的知识很多将会过时，甚至成为错误。</p>
+
+<p>再仔细一看，这篇文章是2005年写的，新特性在1.1.6就加入了PIL，而我用的是1.1.7。</p>
+
+<p>现在就说明一个问题，我自以为掌握了某些知识，其实是没有掌握的，而且其中甚至还有误解在里面。所以，对于”已经掌握的“知识，还需要经常温习，考证是否正确理解、是否全部掌握、是否慢慢遗忘。</p>
+
+<h2 id="keep-learning">Keep Learning</h2>
+
+<p>又想起一句话：<strong>学历代表过去，能力代表现在，学习力代表未来</strong>。</p>
+
+<p>对于在IT这个瞬息万变的行业，不能保持学习的兴趣与激情，迟早会被无情地淘汰。当然，除了学习，还要保持谦虚，保持低调，毕竟人总是会犯错的。如果自己很装逼地说什么就是什么，最后却发现自己错了，那岂不丢脸丢到家了。低调与谦虚，加上高效学习，2013年，加油！！！</p>
+
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2013/01/keep-learning.html">http://everet.org/2013/01/keep-learning.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/image-processing/'>Image Processing</a>, <a class='tag' href='/tag/pil/'>PIL</a>, <a class='tag' href='/tag/python/'>Python</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[由TT引发的思考]]></title>
+    <link href="http://everet.org/2012/12/tt.html"/>
+    <updated>2012-12-30T13:34:00+08:00</updated>
+    <id>http://everet.org/2012/12/tt</id>
+    <content type="html"><![CDATA[<p>TT是一个很古老的打字软件，还运行在DOS下，能够存活这么多年实属不易。对于这么一个DOS程序，它的优势也起来了。因为DOSBox的跨平台，于是TT也可以跨平台了。</p>
+
+<p><img src="http://everet.org/imgs/snapshot2_20121230_133903_4556ydQ.png" /></p>
+
+<p>这多么像以前我们小学的用DOS的电脑里面的东西，突然想起以前的LOGO语言和打的雷电也是这种感觉。好吧，其实我也不是那么怀旧，如果不是去实习，也不会遇到一个如此奇葩的程序。蓝色背景绿色前景，这个我在实习的时候经常会在新入职的童鞋们的电脑上看的这样的搭配。他们都在练TT，而且不练到60 WPM就不能转正，这还是真是压力巨大。</p>
+
+<p>为了以后节省一点打字时间，我也开始练习TT，虽然在之前的几个月都有练TT，但是发现除了对于数字和特殊符号熟悉了一些外，没有什么进步，一直都维持在40+ WPM，离60还有很大的距离。虽然我练的时间比较少，但是也不至于这样基本没进步吧。难道我一辈子都要维持在这种龟速了。</p>
+
+<h2 id="section">穷则思变</h2>
+
+<p>经过观察，貌似我打英文的速度也不至于那么慢，只是准确率很低，要经常删去打错的，于是乎这样整体速度就还是很慢了。</p>
+
+<!-- more -->
+
+<p>举个例子，如果每打5个字母，就打错3个，那么假如在按下了16个字母键，实际的产出就只有4个字母，而且还要搭上6个退格，也就是总共按下了22个按键。</p>
+
+<p>而如果完全可以不打错的话，就只需要按下4个字母键就可以达到同样的效果。</p>
+
+<p>所以，即便按得很快的人的按键速度是打得慢但是准确的人的2倍，打字速度也不到准确的人的一半。</p>
+
+<p>这就像一个人往前走5步，就发现走错了3步，然后往回退，然后再走五步又发现错了3步，如此周而复始，但头来其实都没走多远。</p>
+
+<p>所以对于我，提高准确率，少做些无用功，或许是提高速度的有效方法。</p>
+
+<h2 id="section-1">根本问题</h2>
+<p>我想，这本质的问题在于：<strong>鲁莽前进</strong>。</p>
+
+<p>就像平时写代码的时候，有时可能会为了速度，不思考就直接开工。如果走错了，到头来最后其实也是看似花了很多时间，却产出很少，大量的时间都在各种重构甚至架构修改上面。</p>
+
+<p>所以，思考清晰下一步，少走一些弯路，这样才是节约时间、对于生命负责的表现啊。</p>
+
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2012/12/tt.html">http://everet.org/2012/12/tt.html</a><br/>
+    
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Screenshot And Image Paste in Emacs When Writing Markdown]]></title>
+    <link href="http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html"/>
+    <updated>2012-12-28T03:36:00+08:00</updated>
+    <id>http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown</id>
+    <content type="html"><![CDATA[<p>Octopress首选博客语言是Markdown。于是又是Emacs大显身手的时候了。</p>
+
+<p>在用Markdown写东西的时候，我想最蛋疼的应该就是插入图片了。</p>
+
+<p>正常的插入截图的步骤可能为：</p>
+
+<ol>
+  <li>打开截图程序截图</li>
+  <li>保存截图到Octopress的制定目录中</li>
+  <li>然后在Markdown中写上图片的url的地址</li>
+</ol>
+
+<p>这样一次两次还可以接受，如果长期这样是在让人受不了。对于我这种懒人，首先就要偷懒，让Emacs帮我们做这些事情。</p>
+
+<h2 id="section">功能演示</h2>
+
+<h3 id="section-1">截图</h3>
+<p>我们按下<code>C-c</code> <code>C-s</code> <code>s</code>就开始截图了，截完图后，会自动保存到我们指定的目录，例如我的是<code>~/octopress/source/imgs/</code>。</p>
+
+<p>下面这张图是用Emacs截图自动插入的：
+<img src="http://everet.org/imgs/2012-12-28-screenshot-and-image-paste-in-emacs-when-use-markdown.markdown_20121228_021049_6910Rbg.png" />
+用起来感觉很爽，按下快捷键，一截图，唰一下就出来一段代码。</p>
+
+<!-- more -->
+
+<h3 id="section-2">插入本地图片</h3>
+<p>对于本地硬盘里面的图片的插入，我们可以先在文件浏览器（例如Dolphin）中选中要插入的图片，然后复制图片。回到Emacs中，按下<code>C-c</code> <code>C-s</code> <code>i</code>插入我们的图片。</p>
+
+<p>这里会发生什么事情呢？我很无聊地让Emacs将图片复制到<code>~/octopress/source/imgs/</code>中，然后插入图片在url中地址。</p>
+
+<p>下面是自动插入的图片。
+<img class="right" src="http://everet.org/imgs/emacs_20121228_015008_69103GU.jpg" /></p>
+
+<blockquote>
+  <p>What Emacs does to your keyboard?<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+</blockquote>
+
+<h2 id="section-3">实现</h2>
+<p>上面都是在介绍功能，现在我们来看一下如何实现。</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>其实也就是写Emacs Lisp。我自从实习回来就基本没怎么写过代码了，今天难得写一下Lisp，顿时觉得神清气爽啊-_-</td>
+      <td> </td>
+      <td>。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>我们可以看到第一张截图，默认插入的图片格式是<code> {% img url %} </code>，这个是Octopress的Tag，可以方便地定制图片的样式。如果需要插入Markdown格式的图片，可以加上前缀<code>C-u</code>，也就是命令变成<code>C-u</code> <code>C-c</code> <code>C-s</code> <code>s</code>这样。这个快捷键绑定略显麻烦，大家可以自己自己绑定到喜欢的快捷键上。</p>
+
+<p>首先我们需要设置Octopress的信息，包括本地的图片路径，以及在网络上的图片路径：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="cl"><span class="line"><span class="p">(</span><span class="k">setq</span> <span class="nv">octopress-image-dir</span> <span class="p">(</span><span class="nv">expand-file-name</span> <span class="s">&quot;~/octopress/source/imgs/&quot;</span><span class="p">))</span>
+</span><span class="line"><span class="p">(</span><span class="k">setq</span> <span class="nv">octopress-image-url</span> <span class="s">&quot;/imgs/&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后开始写程序：</p>
+
+<p>首先是截图，这个直接在网上找到了实现<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>，然后根据需求进行修改：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+</pre></td><td class="code"><pre><code class="cl"><span class="line"><span class="c1">;; </span>
+</span><span class="line"><span class="p">(</span><span class="nb">defun</span> <span class="nv">my-screenshot</span> <span class="p">(</span><span class="nv">dir_path</span><span class="p">)</span>
+</span><span class="line">  <span class="s">&quot;Take a screenshot and save it to dir_path path.</span>
+</span><span class="line"><span class="s">Return image filename without path so that you can concat with your</span>
+</span><span class="line"><span class="s">opinion. &quot;</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">full-file-name</span>
+</span><span class="line">	  <span class="p">(</span><span class="nv">concat</span> <span class="p">(</span><span class="nv">make-temp-name</span> <span class="p">(</span><span class="nv">concat</span> <span class="nv">dir_path</span> <span class="p">(</span><span class="nv">buffer-name</span><span class="p">)</span> <span class="s">&quot;_&quot;</span> <span class="p">(</span><span class="nv">format-time-string</span> <span class="s">&quot;%Y%m%d_%H%M%S_&quot;</span><span class="p">)))</span> <span class="s">&quot;.png&quot;</span><span class="p">))</span>
+</span><span class="line">	 <span class="p">(</span><span class="nv">file-name</span> <span class="p">(</span><span class="nv">my-base-name</span> <span class="nv">full-file-name</span><span class="p">))</span>
+</span><span class="line">	 <span class="p">)</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">call-process-shell-command</span> <span class="s">&quot;scrot&quot;</span> <span class="no">nil</span> <span class="no">nil</span> <span class="no">nil</span> <span class="p">(</span><span class="nv">concat</span> <span class="s">&quot;-s &quot;</span> <span class="s">&quot;\&quot;&quot;</span> <span class="nv">full-file-name</span> <span class="s">&quot;\&quot;&quot;</span><span class="p">))</span>
+</span><span class="line">    <span class="nv">file-name</span>
+</span><span class="line">    <span class="p">))</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">;; Screenshot</span>
+</span><span class="line"><span class="p">(</span><span class="nb">defun</span> <span class="nv">markdown-screenshot</span> <span class="p">(</span><span class="nv">arg</span><span class="p">)</span>
+</span><span class="line">  <span class="s">&quot;Take a screenshot for Octopress&quot;</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">interactive</span> <span class="s">&quot;P&quot;</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">dir_path</span> <span class="nv">octopress-image-dir</span><span class="p">)</span>
+</span><span class="line">	 <span class="p">(</span><span class="nv">url</span> <span class="p">(</span><span class="nv">concat</span> <span class="nv">octopress-image-url</span> <span class="p">(</span><span class="nv">my-screenshot</span> <span class="nv">dir_path</span><span class="p">))))</span>
+</span><span class="line">    <span class="p">(</span><span class="k">if</span> <span class="nv">arg</span>
+</span><span class="line">	<span class="p">(</span><span class="nv">insert</span> <span class="s">&quot;![](&quot;</span> <span class="nv">url</span> <span class="s">&quot;)&quot;</span><span class="p">)</span>
+</span><span class="line">      <span class="p">(</span><span class="nv">insert</span> <span class="s">&quot;{% img &quot;</span> <span class="nv">url</span> <span class="s">&quot; %}&quot;</span><span class="p">))))</span>
+</span><span class="line"><span class="c1">;; 	  </span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后是从剪切版Clipboard插入图片，这个找不到，于是只能自己写了哎。Lisp水平太差，写了好久…囧。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+</pre></td><td class="code"><pre><code class="cl"><span class="line"><span class="c1">;; </span>
+</span><span class="line"><span class="c1">;; base on http://emacswiki.org/emacs/CopyAndPaste</span>
+</span><span class="line"><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-clipboard-contents-as-string</span> <span class="p">()</span>
+</span><span class="line">    <span class="s">&quot;Return the value of the clipboard contents as a string.&quot;</span>
+</span><span class="line">    <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">x-select-enable-clipboard</span> <span class="no">t</span><span class="p">))</span>
+</span><span class="line">      <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nv">x-cut-buffer-or-selection-value</span><span class="p">)</span>
+</span><span class="line">          <span class="nv">x-last-selected-text-clipboard</span><span class="p">)))</span>
+</span><span class="line">
+</span><span class="line"><span class="p">(</span><span class="nb">defun</span> <span class="nv">copy-file-from-clipboard-to-path</span> <span class="p">(</span><span class="nv">dst-dir</span><span class="p">)</span>
+</span><span class="line">  <span class="s">&quot;copy file to desired path from clipboard&quot;</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">full-file-name</span><span class="p">)</span> <span class="p">(</span><span class="nv">file-name</span><span class="p">)</span> <span class="p">(</span><span class="nv">ext</span><span class="p">)</span> <span class="p">(</span><span class="nv">new-file-name</span><span class="p">))</span>
+</span><span class="line">    <span class="p">(</span><span class="k">setq</span> <span class="nv">full-file-name</span> <span class="p">(</span><span class="nv">get-clipboard-contents-as-string</span><span class="p">))</span>
+</span><span class="line">    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">eq</span> <span class="p">(</span><span class="nb">search</span> <span class="s">&quot;file://&quot;</span> <span class="nv">full-file-name</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class="line">	<span class="p">(</span><span class="k">progn</span>
+</span><span class="line">	  <span class="p">(</span><span class="k">setq</span> <span class="nv">full-file-name</span> <span class="p">(</span><span class="nv">substring</span> <span class="nv">full-file-name</span> <span class="mi">7</span><span class="p">))</span>
+</span><span class="line">	  <span class="p">(</span><span class="k">setq</span> <span class="nv">file-name</span> <span class="p">(</span><span class="nv">my-base-name</span> <span class="nv">full-file-name</span><span class="p">))</span>
+</span><span class="line">	  <span class="p">(</span><span class="k">setq</span> <span class="nv">ext</span> <span class="p">(</span><span class="nv">concat</span> <span class="s">&quot;.&quot;</span> <span class="p">(</span><span class="nv">file-name-extension</span> <span class="nv">file-name</span><span class="p">)))</span>
+</span><span class="line">	  <span class="p">(</span><span class="k">setq</span> <span class="nv">new-file-name</span>
+</span><span class="line">		<span class="p">(</span><span class="nv">concat</span> <span class="p">(</span><span class="nv">make-temp-name</span>
+</span><span class="line">			 <span class="p">(</span><span class="nv">concat</span> <span class="p">(</span><span class="nv">substring</span> <span class="nv">file-name</span> <span class="mi">0</span>
+</span><span class="line">					    <span class="p">(</span><span class="nb">search</span> <span class="s">&quot;.&quot;</span> <span class="nv">file-name</span> <span class="ss">:from-end</span> <span class="no">t</span><span class="p">))</span>
+</span><span class="line">				 <span class="p">(</span><span class="nv">format-time-string</span> <span class="s">&quot;_%Y%m%d_%H%M%S_&quot;</span><span class="p">)))</span> <span class="nv">ext</span><span class="p">))</span>
+</span><span class="line">	  <span class="p">(</span><span class="k">setq</span> <span class="nv">new-full-file-name</span> <span class="p">(</span><span class="nv">concat</span> <span class="nv">dst-dir</span> <span class="nv">new-file-name</span><span class="p">))</span>
+</span><span class="line">	  <span class="p">(</span><span class="nv">copy-file</span> <span class="nv">full-file-name</span> <span class="nv">new-full-file-name</span><span class="p">)</span>
+</span><span class="line">	  <span class="nv">new-file-name</span>
+</span><span class="line">	  <span class="p">)</span>
+</span><span class="line">      <span class="p">)))</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">;; Insert Image From Clip Board</span>
+</span><span class="line"><span class="p">(</span><span class="nb">defun</span> <span class="nv">markdown-insert-image-from-clipboard</span> <span class="p">(</span><span class="nv">arg</span><span class="p">)</span>
+</span><span class="line">  <span class="s">&quot;Insert an image from clipboard and copy it to disired path&quot;</span>
+</span><span class="line">  <span class="p">(</span><span class="nv">interactive</span> <span class="s">&quot;P&quot;</span><span class="p">)</span>
+</span><span class="line">  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">url</span> <span class="p">(</span><span class="nv">concat</span> <span class="nv">octopress-image-url</span> <span class="p">(</span><span class="nv">copy-file-from-clipboard-to-path</span> <span class="nv">octopress-image-dir</span><span class="p">))))</span>
+</span><span class="line">    <span class="p">(</span><span class="k">if</span> <span class="nv">arg</span>
+</span><span class="line">	<span class="p">(</span><span class="nv">insert</span> <span class="s">&quot;![](&quot;</span> <span class="nv">url</span> <span class="s">&quot;)&quot;</span><span class="p">)</span>
+</span><span class="line">      <span class="p">(</span><span class="nv">insert</span> <span class="s">&quot;{% img &quot;</span> <span class="nv">url</span> <span class="s">&quot; %}&quot;</span><span class="p">))))</span>
+</span><span class="line"><span class="c1">;; </span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>最后就是设置按键绑定了：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="cl"><span class="line"><span class="p">(</span><span class="nv">define-key</span> <span class="nv">markdown-mode-map</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c C-s s&quot;</span><span class="p">)</span> <span class="ss">&#39;markdown-screenshot</span><span class="p">)</span>
+</span><span class="line"><span class="p">(</span><span class="nv">define-key</span> <span class="nv">markdown-mode-map</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c C-s i&quot;</span><span class="p">)</span> <span class="ss">&#39;markdown-insert-image-from-clipboard</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>所有代码请见以下两个文件：<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup></p>
+
+<ul>
+  <li><a href="https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/plugins/configs/my-functions.el">my-functions.el</a></li>
+  <li><a href="https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/plugins/configs/my-octopress-settings.el">my-octopress-settings.el</a></li>
+</ul>
+
+<h2 id="section-4">终</h2>
+<p>经过九九八十一式终于打完收工，现在又凌晨3点多了。想起我们的<a href="http://huajun.w18.net/">冯华君</a>师兄，31岁就收到乔布斯的Offer Letter去找教主了，我不禁心里怕怕的，还是早点休息吧。身体是革命的本钱啊。</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="http://jbarillari.blogspot.com/2010/07/what-emacs-does-to-your-keyboard.html">http://jbarillari.blogspot.com/2010/07/what-emacs-does-to-your-keyboard.html</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p><a href="http://lists.gnu.org/archive/html/emacs-orgmode/2011-07/msg01292.html">http://lists.gnu.org/archive/html/emacs-orgmode/2011-07/msg01292.html</a> <a href="http://dreamrunner.org/wiki/public_html/Emacs/org-mode.html">http://dreamrunner.org/wiki/public_html/Emacs/org-mode.html</a><a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p><a href="https://github.com/cedricporter/vim-emacs-setting">我的Emacs配置文件</a><a href="#fnref:3" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html">http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/emacs/'>Emacs</a>, <a class='tag' href='/tag/lisp/'>Lisp</a>, <a class='tag' href='/tag/markdown/'>Markdown</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[From Wordpress to Octopress]]></title>
+    <link href="http://everet.org/2012/12/migrate-from-wordpress-to-octopress.html"/>
+    <updated>2012-12-25T20:49:00+08:00</updated>
+    <id>http://everet.org/2012/12/migrate-from-wordpress-to-octopress</id>
+    <content type="html"><![CDATA[<h2 id="section">为什么</h2>
+<p>为什么离开Wordpress选择Octopress？ 在Google中搜索Wordpress+Octopress就会找到整版整版的从Wordpress迁移到Octopress的博文，
+其中有介绍各种迁移的理由，例如Wordpress太臃肿，Octopress可以让我们像黑客一样写博客。</p>
+
+<p>这些都太高雅了，我只是不喜欢PHP那一坨一坨文明用语一样的代码，这样改起来的时候实在是让人蛋疼。而Octopress是Ruby写的，于是可以借机学习一下<em>Ruby</em>（<strong>这个是主要原因</strong>）。</p>
+
+<!-- more -->
+
+<h2 id="wordpress">对于Wordpress的看法</h2>
+<p>Wordpress可以让我们在浏览器写东西，也可以用客户端来写，例如Windows Live Writer、Emacs + org2blog<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>。
+当我们在其他人电脑，没有客户端的时候，一样可以打开浏览器写。Wordpress既可以是胖客户端，又可以是瘦客户端。
+而且Wordpress架构设计灵活，插件主题丰富。用户体验好，也可以用Markdown、org等等其他语言来写。对于静态化，装个WP-Super-Cache插件就可以将所有文章静态化了，而且静态化的程度是可以控制的。</p>
+
+<h3 id="section-1">缺点</h3>
+<ol>
+  <li>是PHP写的，用MySQL，这两个东西一下就占了一堆内存。对于我们这些穷苦人民的VPS十分不友好。</li>
+  <li>不联网就没法预览最终效果。</li>
+</ol>
+
+<h2 id="octopress">对于Octopress的看法</h2>
+<p>对于Octopress的优点网上也有一堆一堆的评论，我也就不太多说了。我们来看看我觉得的缺点：</p>
+
+<h3 id="section-2">缺点</h3>
+<ol>
+  <li>Octopress是一个胖客户端的博客系统，在写博客前，你需要安装Git、Ruby等等东西，然后把环境调教好，才能开始写东西。</li>
+  <li>如果去到别人的电脑，或者是Windows的话，那么写个博客都会非常的蛋疼。</li>
+  <li>相对缺乏插件与主题。</li>
+  <li>发布一篇文章就要重建整个博客，慢。</li>
+</ol>
+
+<h3 id="section-3">优点</h3>
+<blockquote>
+  <p>Octopress is jekyll with Batteries included.</p>
+</blockquote>
+
+<p>直接就是用Markdown语法，不用纠结org还是markdown。
+可以方便地离线预览文章<code>rake preview</code>。</p>
+
+<h3 id="misc">Misc</h3>
+<p>Octopress默认的markdown引擎是rdiscount，这个实在是让人难以接受，连footnote都不支持。于是果断换成了kramdown<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>。kramdown支持footnote，甚至LaTex<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>。</p>
+
+<h2 id="section-4">其他</h2>
+
+<h3 id="section-5">写博客的三个阶段</h3>
+<p>之前看过阮一峰写的一篇文章<a href="http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html">github Pages和Jekyll入门</a>，里面有讲到，喜欢写博客的人，会经历三个阶段：</p>
+
+<blockquote>
+  <p>第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费空间来写。
+第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。
+第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。</p>
+</blockquote>
+
+<p>好吧，我觉得独立博客的管理确实挺麻烦的，加上刚刚经历买了1年的VPS没到一个月，主机商就跑路的悲剧后，就愈发觉得自己负责可靠性等各种东西的维护确实挺麻烦的。就先暂时放在Github上面，日后再自己管理。</p>
+
+<p>放在Github上面有个坏处是，对于页面都有缓存：<code>Cache-Control: max-age=86400</code>，也就是有一整天缓存时间，如果一天内有访问过这个页面的浏览器不刷新的话就直接从cache里面取了。不过应该也没什么大碍，基本不会一天更新好几次。而且除了自己也没什么人访问。</p>
+
+<h3 id="emacs">Emacs</h3>
+<p>Emacs既可以方便地写Wordpress也可以写Octopress。
+<img src="http://everet.org/imgs/emacs-user-at-work.jpg" alt="Emacs User At Work" /><sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup></p>
+
+<h3 id="ruby">Ruby</h3>
+<p>这段时间看了Ruby，发现竟然可以比Python更加优美，我想，日后，可能也会有很多人从Python流向Ruby，就像曾经人们从Perl流向Python一样。</p>
+
+<p>这就是江山代有才人出，长江后浪推前浪啊。事物总是在进步着。</p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="https://github.com/punchagan/org2blog">https://github.com/punchagan/org2blog</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p><a href="http://kramdown.rubyforge.org/index.html">http://kramdown.rubyforge.org/index.html</a><a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p><a href="http://yanping.me/cn/blog/2012/03/10/octopress-with-latex/">在Octopress中使用LaTeX</a><a href="#fnref:3" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:4">
+      <p><a href="http://batsov.com/articles/2011/11/11/blogging-like-a-hacker-evolution/">http://batsov.com/articles/2011/11/11/blogging-like-a-hacker-evolution/</a><a href="#fnref:4" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2012/12/migrate-from-wordpress-to-octopress.html">http://everet.org/2012/12/migrate-from-wordpress-to-octopress.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/git/'>Git</a>, <a class='tag' href='/tag/octopress/'>Octopress</a>, <a class='tag' href='/tag/python/'>Python</a>, <a class='tag' href='/tag/ruby/'>Ruby</a>, <a class='tag' href='/tag/wordpress/'>Wordpress</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[调试Nginx]]></title>
+    <link href="http://everet.org/2012/12/debug-nginx.html"/>
+    <updated>2012-12-24T07:41:00+08:00</updated>
+    <id>http://everet.org/2012/12/debug-nginx</id>
+    <content type="html"><![CDATA[<h2 id="nginx">为什么调试Nginx</h2>
+
+<p>为什么要调试Nginx，原因多种多样。如果阅读源码的话，开着进程单步走下去不失为一种很好的源码导读方式。 </p>
+
+<h2 id="nginx-1">编译Nginx</h2>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">  ./configure --prefix<span class="o">=</span><span class="s2">&quot;$HOME/my-nginx&quot;</span> --with-debug
+</span><span class="line">  make <span class="o">&amp;&amp;</span> make install
+</span><span class="line">
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>当然还要看一下，生成出来的的Makefile是不是有-O优化，如果有的话需要关闭优化，可以看一下根目录下的Makefile以及objs/Makefile。有的话记得需要改成-O0或者直接删掉就好了。 </p>
+
+<!-- more -->
+
+<h2 id="nginx-2">为调试配置Nginx</h2>
+
+<p>然后在$HOME/my-nginx/conf下面就是我们的配置文件了，我们编辑nginx.conf，加上：   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>nginx  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="nginx"><span class="line">  <span class="k">error_log</span> <span class="s">/dev/stdout</span> <span class="s">debug</span><span class="p">;</span>
+</span><span class="line">  <span class="k">master_process</span> <span class="no">off</span><span class="p">;</span>
+</span><span class="line">  <span class="k">daemon</span> <span class="no">off</span><span class="p">;</span>
+</span><span class="line">
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们可以看到error_log /dev/stdout这样一句，这样可以将输出日志直接打印到标准输出，调试的时候可以实时看到输出。 </p>
+
+<p><img src="http://everet.org/wp-content/uploads/2012/12/wpid-snapshot1-small.png" alt="" /></p>
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2012/12/debug-nginx.html">http://everet.org/2012/12/debug-nginx.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/emacs/'>Emacs</a>, <a class='tag' href='/tag/nginx/'>Nginx</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MoinMoin+Nginx+uWSGI搭建个人Wiki]]></title>
+    <link href="http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html"/>
+    <updated>2012-12-19T07:14:27+08:00</updated>
+    <id>http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi</id>
+    <content type="html"><![CDATA[<h2 id="wiki">有博客，为什么还需要Wiki呢？</h2>
+
+<p>有博客，为什么还需要Wiki呢？对于这个问题，我也思考了许久。博客记录的东西很扁平，而且不太适宜记录一些零碎不完整的东西。如果别人订阅了你的博客，你的博客却经常发布一些不完整的内容，这样会严重影响别人的心情。所以我觉得博客适宜将一些比较完整的内容的写在里面。此外，平时在网上看到什么东西，虽然都可以收录到EverNote里面（EverNote里面有提供目录以及标签可以很好地进行分类），但是，EverNote的劣势在于，不方便将知识组织知识，将它们串联在一起。</p>
+
+<p>而在Wiki中知识是以词条形式，词条与词条间可以方便地建立关系。很容易组织成树状结构。</p>
+
+<p>此外，Wiki可以使用轻量标记语言编写，优点是纯文本，容易阅读和编辑，能够让我们的注意力集中于撰写内容而非形式。特别在Emacs或者Vim里面可以方便地半可视化地编写Wiki。我第一次尝试就对其爱不释手，终于可以从Wordpress，Word等SB的需要鼠标辅助编辑的编写过程中解脱了。</p>
+
+<p>于是我又开始物色Wiki，以前有用过PHP实现的Wiki，现在决定找一个Python实现的Wiki，很快就找到了<a href="http://i.everet.org/MoinMoin">MoinMoin</a>，它是一个由Python实现的<a href="http://zh.wikipedia.org/wiki/Wiki">Wiki</a>系统，文件存储，选一种自己喜欢的语言编写的Wiki系统，日后定制起来会方便一些。<!-- more --></p>
+
+<p>我的Wiki：<a href="http://i.everet.org/">http://i.everet.org</a></p>
+
+<p>这个Wiki是我前段时间在这个性能忒差的服务器上面搭建的，今天终于把配置过程写下来，希望能给有需要的同学多一份参考。</p>
+
+<p>前端依旧是Nginx，后端用uWSGI处理Python。Nginx可以很好的转发。</p>
+
+<h2 id="nginx">Nginx的配置</h2>
+
+<h3 id="install">Install</h3>
+
+<blockquote>
+
+</blockquote>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># apt-get install python-software-properties
+</span><span class="line"># apt-add-repository ppa:nginx/stable
+</span><span class="line"># apt-get update
+</span><span class="line"># apt-get install nginx-full</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们在/etc/nginx/sites-available文件夹里面新建一个文件wiki.everet.org，然后链接到sites-enables。就可以运行nginx -t &amp;&amp; service nginx reload:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>nginx  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+</pre></td><td class="code"><pre><code class="nginx"><span class="line"><span class="k">server</span> <span class="p">{</span>
+</span><span class="line">    <span class="kn">server_name</span> <span class="s">i.everet.org</span> <span class="s">wiki.everet.org</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">access_log</span>  <span class="s">/var/log/nginx/wiki.everet.org.access.log</span><span class="p">;</span>
+</span><span class="line">    <span class="kn">error_log</span> <span class="s">/var/log/nginx/wiki.everet.org.error.org</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">include</span> <span class="s">uwsgi_params</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">uwsgi_pass</span> <span class="s">unix:///var/run/uwsgi_wiki.sock</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">uwsgi_param</span> <span class="s">UWSGI_PYHOME</span> <span class="s">/var/www/moinmoin/python-env/</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">uwsgi_param</span> <span class="s">UWSGI_CHDIR</span> <span class="s">/var/www/moinmoin/wiki/</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">uwsgi_param</span> <span class="s">UWSGI_SCRIPT</span> <span class="s">moin_wsgi</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">location</span> <span class="p">=</span> <span class="s">/google7a32e07f62c143af.html</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">rewrite</span> <span class="s">^/</span> <span class="s">/moin_static195/google7a32e07f62c143af.html</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">location</span> <span class="s">^~</span> <span class="s">/moin_static195/</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">alias</span> <span class="s">/var/www/moinmoin/python-env/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">add_header</span> <span class="s">Cache-Control</span> <span class="s">public</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">expires</span> <span class="s">1M</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="python">Python</h2>
+
+<p>在这里，我们需要借助一个程序virtualenv，它可以创建一个干净的Python运行环境。其实Python核心就是一个解释器，然后外加许多包，也就是所谓的“电池”。如果我们自己编译Python的话，可以选择生成一个静态链接的Python可执行文件，就可以拿着这个解释器文件走了。</p>
+
+<p>而virtualenv做的事情就是将Python解释器以及一些需要的包复制到我们指定的地方，已经创建一些方便设置环境变量的脚本。当我们有程序需要不同版本的模块或者某些不兼容的模块时，就可以借助于virtualenv。</p>
+
+<p>Virtualenv会生成一个包含Python可执行程序的目录，里面也会包含标准库。</p>
+
+<p>此外，我们需要运行bin目录下面的activate，它会修改当前的环境变量。</p>
+
+<p>activate这个脚本做的事情就是将新的Python可执行的路径加入到环境变量PATH最前面。然后清空PYTHONHOME这个环境变量。</p>
+
+<blockquote>
+
+</blockquote>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># mkdir -p /var/www/moinmoin
+</span><span class="line"># virtualenv /var/www/moinmoin/python-env
+</span><span class="line"># . /var/www/moinmoin/python-env/bin/activate</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>运行完activate后，环境变量就改了，我们可以看到提示符已经改变了。然后我们进行后续工作。</p>
+
+<h2 id="moinmoin">MoinMoin</h2>
+
+<p>然后现在安装moinmoin</p>
+
+<blockquote>
+
+</blockquote>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">(python-env) # python setup.py install</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后将安装目录的wiki文件夹下面的data与uderlay目录复制出来，放到/var/www/moinmoin/wiki。然后将wiki/config目录下的wikiconfig.py以及wiki/server/moin.wsgi改名moin_wsgi.py复制到/var/www/moinmoin/wiki目录下面，然后/var/www/moinmoin/wiki目录结构如下：</p>
+
+<blockquote>
+
+</blockquote>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">root@ubuntu:/var/www/moinmoin/wiki# tree -L 1
+</span><span class="line">.
+</span><span class="line">├── data
+</span><span class="line">├── moin_wsgi.py
+</span><span class="line">├── underlay
+</span><span class="line">└── wikiconfig.py
+</span><span class="line">
+</span><span class="line">2 directories, 2 files</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后将wiki目录修改属主为uwsgi。</p>
+
+<blockquote>
+
+</blockquote>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># chown uwsgi:uwsgi /var/www/moinmoin/wiki -R</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="uwsgi">uWSGI</h2>
+
+<h3 id="install-1">Install</h3>
+
+<p>安装最新的lts版的uwsgi，不过在此之前，需要安装python-dev才能够正确编译。</p>
+
+<blockquote>
+
+</blockquote>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># sudo apt-get install python-dev build-essential
+</span><span class="line">(python-env) # pip install http://projects.unbit.it/downloads/uwsgi-lts.tar.gz</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我们还在virtualenv的环境变量下，uwsgi会被安装到/var/www/moinmoin/python-env/bin下面，就一个文件uwsgi。</p>
+
+<h3 id="autostart">Autostart</h3>
+
+<p>我们现在来为uwsgi编写开机启动：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c"># /etc/init.d/uwsgi</span>
+</span><span class="line"><span class="c">#</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">daemon</span><span class="o">=</span>/var/www/moinmoin/python-env/bin/uwsgi
+</span><span class="line"><span class="nv">pid</span><span class="o">=</span>/var/run/uwsgi.pid
+</span><span class="line"><span class="nv">args</span><span class="o">=</span><span class="s2">&quot;-x /etc/uwsgi/uwsgi.xml&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
+</span><span class="line">    start<span class="o">)</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;Starting uwsgi&quot;</span>
+</span><span class="line">        start-stop-daemon -p <span class="nv">$pid</span> --start --exec <span class="nv">$daemon</span> -- <span class="nv">$args</span>
+</span><span class="line">        ;;
+</span><span class="line">    stop<span class="o">)</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;Stopping script uwsgi&quot;</span>
+</span><span class="line">        start-stop-daemon --signal INT -p <span class="nv">$pid</span> --stop <span class="nv">$daemon</span> -- <span class="nv">$args</span>
+</span><span class="line">        ;;
+</span><span class="line">    restart<span class="o">)</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;Restarting uwsgi&quot;</span>
+</span><span class="line">        start-stop-daemon --signal INT -p <span class="nv">$pid</span> --stop <span class="nv">$daemon</span> -- <span class="nv">$args</span>
+</span><span class="line">        sleep 2
+</span><span class="line">        start-stop-daemon -p <span class="nv">$pid</span> --start --exec <span class="nv">$daemon</span> -- <span class="nv">$args</span>
+</span><span class="line">        ;;
+</span><span class="line">    reload<span class="o">)</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;Reloading conf&quot;</span>
+</span><span class="line">        <span class="nb">kill</span> -HUP <span class="k">$(</span>cat <span class="nv">$pid</span><span class="k">)</span>
+</span><span class="line">        ;;
+</span><span class="line">    *<span class="o">)</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;Usage: /etc/init.d/uwsgi {start|stop|restart|reload}&quot;</span>
+</span><span class="line">        <span class="nb">exit </span>1
+</span><span class="line">        ;;
+</span><span class="line"><span class="k">esac</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="config">Config</h3>
+
+<p>/etc/uwsgi/uwsgi.xml内容如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>xml  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="xml"><span class="line"><span class="nt">&lt;uwsgi&gt;</span>
+</span><span class="line">    <span class="nt">&lt;socket&gt;</span>/var/run/uwsgi_wiki.sock<span class="nt">&lt;/socket&gt;</span>
+</span><span class="line">    <span class="nt">&lt;uid&gt;</span>uwsgi<span class="nt">&lt;/uid&gt;</span>
+</span><span class="line">    <span class="nt">&lt;gid&gt;</span>uwsgi<span class="nt">&lt;/gid&gt;</span>
+</span><span class="line">    <span class="nt">&lt;master-as-root/&gt;</span>
+</span><span class="line">    <span class="nt">&lt;reload-on-as&gt;</span>128<span class="nt">&lt;/reload-on-as&gt;</span>
+</span><span class="line">    <span class="nt">&lt;touch-reload&gt;</span>/var/www/moinmoin/wiki/wikiconfig.py<span class="nt">&lt;/touch-reload&gt;</span>
+</span><span class="line">    <span class="nt">&lt;master/&gt;</span>
+</span><span class="line">    <span class="nt">&lt;processes&gt;</span>3<span class="nt">&lt;/processes&gt;</span>
+</span><span class="line">    <span class="nt">&lt;no-site/&gt;</span>
+</span><span class="line">    <span class="nt">&lt;vhost/&gt;</span>
+</span><span class="line">    <span class="nt">&lt;memory-report/&gt;</span>
+</span><span class="line">    <span class="nt">&lt;pidfile&gt;</span>/var/run/uwsgi.pid<span class="nt">&lt;/pidfile&gt;</span>
+</span><span class="line">    <span class="nt">&lt;daemonize&gt;</span>/var/log/uwsgi.log<span class="nt">&lt;/daemonize&gt;</span>
+</span><span class="line"><span class="nt">&lt;/uwsgi&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ul>
+  <li>其中reload-on-as是指内存消耗达到128就重新加载过进程。</li>
+  <li>touch-reload是指wikiconfig.py被修改就重新加载进程。</li>
+  <li>master-as-root是指master进程uid为root，这样才有足够权限在/var/run中创建socket。</li>
+</ul>
+
+<p>其他参数就没什么特别的了。</p>
+
+<h3 id="add-user">Add User</h3>
+
+<p>添加用户</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># adduser --system --no-create-home --disabled-login --disabled-password --group uwsgi
+</span><span class="line"># touch /var/log/uwsgi.log
+</span><span class="line"># chown uwsgi:uwsgi /var/log/uwsgi.log</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="run">Run</h3>
+
+<p>加到开机启动，然后运行uwsgi服务。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c"># update-rc.d uwsgi defaults</span>
+</span><span class="line"><span class="c"># service uwsgi start</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="section">扩展阅读</h2>
+
+<ul>
+  <li><a href="http://uwsgi-docs.readthedocs.org/en/latest/Nginx.html#dynamic-apps">UWSGI_SCRIPT</a></li>
+  <li><a href="https://uwsgi-docs.readthedocs.org/en/latest/Vars.html?highlight=%20UWSGI_CHDIR">uwsgi protocol magic variables</a></li>
+  <li><a href="http://moinmo.in/EmacsForMoinMoin">Emacs的moinmoin-mode</a></li>
+</ul>
+
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html">http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/moinmoin/'>MoinMoin</a>, <a class='tag' href='/tag/nginx/'>Nginx</a>, <a class='tag' href='/tag/python/'>Python</a>, <a class='tag' href='/tag/uwsgi/'>uWSGI</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[有什么样的硬件，用什么样的软件]]></title>
+    <link href="http://everet.org/2012/12/hardware-decide-the-software.html"/>
+    <updated>2012-12-04T03:39:17+08:00</updated>
+    <id>http://everet.org/2012/12/hardware-decide-the-software</id>
+    <content type="html"><![CDATA[<p>两年多前买的摩托罗拉的里程碑1代，现在竟然已经无力支撑go桌面这样庞大的软件了。虽然我很喜欢go桌面，但是，现在手机已经无力承担如此重负。确实，什么样的基础就应该过什么样的生活，过高的追求只会让生活变得像一条狗一样，苟延残喘。 <!-- more -->
+里程碑的硬件已经强过以前我家的电脑了，以前我的台式机只有650MHz的CPU，64M的内存，9GB的硬盘，但都可以轻松跑Win 2k，再跑个VC也绰绰有余。而现在的一台手机，CPU超频到了800MHz，内存256MB，跑一个桌面就卡到爆炸，其他东西就都不用用了。这个是为什么呢？果然，无论有多少硬件资源，都会被平庸的程序员挥霍干净。</p>
+
+<p>人们在拥有的时候永远不会懂得珍惜啊！ 现在的程序员能不能提高一下性能，节约一下资源的消耗啊？！
+手机卡到爆炸，于是乎重新刷了CyanogenMod在11月22日放出的的rom，我的桌面又从go桌面回到了ADW。虽然每次ADW都被我直接忽视而装上go，但这次，我决定用一下它。突然发现，速度有了质的飞跃。开完程序回到桌面发现桌面没有被kill掉，这是多么的让人欣慰啊。</p>
+
+<p>原来，不仅仅是我的手机硬件老了，而是，随着时间的流逝，我们索要的越来越多，最终，超出了大环境的承受能力了。有时候，只要降低一下自己的预期，生活就会很美好了。
+有什么样的能力，就应该过什么样的生活。当然，也可以提高自己的能力。不过现在也没有条件更换硬件，于是也只能有什么样的硬件，用什么样的软件。</p>
+
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2012/12/hardware-decide-the-software.html">http://everet.org/2012/12/hardware-decide-the-software.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/android/'>Android</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[VPS主机商跑路了]]></title>
+    <link href="http://everet.org/2012/11/vps-host-disappear.html"/>
+    <updated>2012-11-30T18:35:31+08:00</updated>
+    <id>http://everet.org/2012/11/vps-host-disappear</id>
+    <content type="html"><![CDATA[<p>刚刚切换到风云主机没一个月，而且还是年付的，没想到月底风云主机就倒闭了，A大也跑路了。在收到风云主机的邮件时，风云主机的官网vpswind.com也打不开了，邮件发了也没人回，付款看样子也讨不回来了。不过，好在A大在倒闭前的26号还发了邮件说要倒闭了，言下之意就是要我们自己备份好，然后自己卷卷铺盖走人，也给了几天时间备份数据。</p>
+
+<p>不得不说，风云主机的VPS性价比还是挺不错的，只是没有考虑到倒闭问题。所以，高性价比还是有风险的，而且一旦发生意外，那么所谓的高性价比马上就变得子虚乌有了。<!-- more --></p>
+
+<p>先不说这次事件带来的经济损失，但是还是有许多其他可以思考的地方。</p>
+
+<p>这是我第一次近距离接触一个IT公司的倒闭，在迁移到风云主机前，专门看过A大一些信息，他曾经在dia和xehost，然后出来自己干。没想到自己干没到一年，就倒闭了。所以创业还是有风险的，有时候有些人失败就可能落下个名声扫地，永远都爬不起来了。自己干，自己做老大，固然拥有了工作上时间的自由，但可能失去的是自己的更多的时间以及稍不注意，失去的可能是自己的健康。</p>
+
+<p>看到现在许许多多的人想自己创业，我想，终究其中的多数会像风云主机一样如同昙花一现，留下的只是少数的强者。创业要的除了技术之外的能力，还有很多很多……</p>
+
+<p>修炼……</p>
+
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2012/11/vps-host-disappear.html">http://everet.org/2012/11/vps-host-disappear.html</a><br/>
+    
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[配置多用户的虚拟主机]]></title>
+    <link href="http://everet.org/2012/11/multi-user-nginx-php-server.html"/>
+    <updated>2012-11-07T00:06:51+08:00</updated>
+    <id>http://everet.org/2012/11/multi-user-nginx-php-server</id>
+    <content type="html"><![CDATA[<p>趁这段时间有空，换成Xen的VPS，系统装了Ubuntu 12.04。决定重新配置一下服务器，另外将Web Server从Apache换成Nginx。</p>
+
+<h2 id="section">目标</h2>
+
+<p>搭建一个前端为nginx支持多用户的php虚拟主机。每个站点可以跑在不同的权限的用户下，一个站点被黑的时候希望不要影响到另一个站点，或者一个同学也不要可以随意访问到别的同学的内容。</p>
+
+<h2 id="more---">行动<!-- more --></h2>
+
+<h3 id="section-1">预备</h3>
+
+<p>首先创建用户，例如user01。我们可以通过</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">adduser user01
+</span><span class="line">mkdir ~user01/www
+</span><span class="line">chown user01:www-data ~user01/www
+</span><span class="line">chmod 750 ~user01/www
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>来添加用户，然后在<strong>~user01</strong>目录下面创建一个文件夹<strong>www</strong>，权限为750。group为www-data，这样，只有user01可以读写，www-data仅能读，其他人无权访问。</p>
+
+<h3 id="php">php</h3>
+
+<p>从php 5.3.5开始就直接内置支持fpm了，建议直接安装php 5.4。使用php-fpm（php Fastcgi Process Manager），目前这样的方式运行php性能貌似是最高的。</p>
+
+<p>php-fpm的配置放在/etc/php5/fpm/pool.d/下面，我们只需要以.conf结尾命名我们的配置文件就行了，具体可以参考默认的www.conf文件。例如下面文件<strong>user01.conf</strong></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>ini  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="ini"><span class="line"><span class="k">[user01]</span>
+</span><span class="line"><span class="na">user</span> <span class="o">=</span> <span class="s">user01</span>
+</span><span class="line"><span class="na">group</span> <span class="o">=</span> <span class="s">user01</span>
+</span><span class="line"><span class="na">listen</span> <span class="o">=</span> <span class="s">/var/run/php5-fpm.user01.sock</span>
+</span><span class="line"><span class="na">pm</span> <span class="o">=</span> <span class="s">dynamic</span>
+</span><span class="line"><span class="na">pm.max_children</span> <span class="o">=</span> <span class="s">5</span>
+</span><span class="line"><span class="na">pm.start_servers</span> <span class="o">=</span> <span class="s">1</span>
+</span><span class="line"><span class="na">pm.min_spare_servers</span> <span class="o">=</span> <span class="s">1</span>
+</span><span class="line"><span class="na">pm.max_spare_servers</span> <span class="o">=</span> <span class="s">3</span>
+</span><span class="line"><span class="na">chdir</span> <span class="o">=</span> <span class="s">/</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>定义了php进程的权限为user01，监听文件为<strong>/var/run/php5-fpm.user01.sock</strong>。
+这里的定义实际上是指的是用<strong>/var/run/php5-fpm.user01.sock</strong>这个来处理php时的权限为<strong>user01</strong>。到此为止，php的配置就完成了。</p>
+
+<h3 id="nginx">nginx</h3>
+
+<p>我们nginx的权限为www-data，这样可以读～user01/www目录的内容，但是不能写。nginx的站点配置比较简单。我们来看一下可以工作的简单的配置：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>nginx  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+</pre></td><td class="code"><pre><code class="nginx"><span class="line"><span class="k">server</span> <span class="p">{</span>
+</span><span class="line">    <span class="kn">server_name</span> <span class="s">user01.everet.org</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">access_log</span>  <span class="s">/var/log/nginx/user01.everet.org.access.log</span><span class="p">;</span>
+</span><span class="line">    <span class="kn">error_log</span>   <span class="s">/var/log/nginx/user01.everet.org.error.log</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">root</span>    <span class="s">/home/user01/www/</span><span class="p">;</span>
+</span><span class="line">    <span class="kn">index</span>   <span class="s">index.php</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="nv">$uri/</span> <span class="s">/index.php?</span><span class="nv">$args</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">location</span> <span class="p">~</span> <span class="sr">.php$</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">include</span> <span class="s">fastcgi_params</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">fastcgi_pass</span> <span class="s">unix:/var/run/php5-fpm.user01.sock</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>也就是当处理到.php结尾的uri时，传递到<strong>/var/run/php5-fpm.user01.sock</strong>这个unix套接字处理，此时的php脚本的权限为user01。如果配置得当，就不会影响到其他用户。</p>
+
+<h3 id="wordpress">wordpress</h3>
+
+<p>我们用php的主要原因是wordpress，wordpress默认情况下非常臃肿，运行缓慢。因为页面基本只是在更新文章或者发表评论才会更新，所以平时不需要总是动态生成页面。对此，WP Super Cache插件可以很好地进行缓存。WP Super Cache有两种缓存模式一种是PHP缓存、另一种是mod_rewrite缓存（我们选择这个），mod_rewrite是生成静态的页面文件，然后通过.htaccess文件控制Apache来rewrite url。例如我们访问<a href="http://everet.org/2012/01/scar.html">http://everet.org/2012/01/scar.html</a>，其中uri为/2012/01/scar.html，进入到Apache通过rewrite后就变成了/wp-content/cache/supercache/everet.org/2012/01/scar.html/index.html，然后就可以读取静态文件返回给浏览器了。如果静态文件存在的话，就不需要经过php处理了，否则就调用php动态生成页面，同时插件还会生成那个页面的静态文件，下次就直接读取那个静态文件。</p>
+
+<p>对于Apache，WP Super Cache插件生成的.htaccess可以很好的工作。然而，对于nginx，我们需要手写配置，以将uri映射的静态文件上面。我们来看一下下面的配置，这个是<a href="http://rtcamp.com/author/rahul-bansal/">Rahul Bansal</a>大牛的配置，我们拿来用一下。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>nginx  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+</pre></td><td class="code"><pre><code class="nginx"><span class="line"><span class="k">server</span> <span class="p">{</span>
+</span><span class="line">    <span class="kn">server_name</span> <span class="s">user01.everet.org</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">access_log</span> 	<span class="s">/var/log/nginx/user01.everet.org.access.log</span><span class="p">;</span>
+</span><span class="line">    <span class="kn">error_log</span> 	<span class="s">/var/log/nginx/user01.everet.org.error.log</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">root</span>	<span class="s">/home/user01/www/</span><span class="p">;</span>
+</span><span class="line">    <span class="kn">index</span>   <span class="s">index.php</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">set</span> <span class="nv">$cache_uri</span> <span class="nv">$request_uri</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">if</span> <span class="s">(</span><span class="nv">$request_method</span> <span class="p">=</span> <span class="s">POST)</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">set</span> <span class="nv">$cache_uri</span> <span class="s">&quot;null</span> <span class="s">cache&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="kn">if</span> <span class="s">(</span><span class="nv">$query_string</span> <span class="s">!=</span> <span class="s">&quot;&quot;)</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">set</span> <span class="nv">$cache_uri</span> <span class="s">&quot;null</span> <span class="s">cache&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">if</span> <span class="s">(</span><span class="nv">$request_uri</span> <span class="p">~</span><span class="sr">*</span> <span class="s">&quot;(/wp-admin/|/xmlrpc.php|/wp-(app|cron|login|register|mail).php|wp-.*.php|/feed/|index.php|wp-comments-popup.php|wp-links-opml.php|wp-locations.php|sitemap(_index)?.xml|[a-z0-9_-]+-sitemap([0-9]+)?.xml)&quot;)</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">set</span> <span class="nv">$cache_uri</span> <span class="s">&quot;null</span> <span class="s">cache&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">if</span> <span class="s">(</span><span class="nv">$http_cookie</span> <span class="p">~</span><span class="sr">*</span> <span class="s">&quot;comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_logged_in&quot;)</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">set</span> <span class="nv">$cache_uri</span> <span class="s">&quot;null</span> <span class="s">cache&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">try_files</span> <span class="s">/wp-content/cache/supercache/</span><span class="nv">$http_host/$cache_uri/index.html</span> <span class="nv">$uri</span> <span class="nv">$uri/</span> <span class="s">/index.php</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">location</span> <span class="p">=</span> <span class="s">/favicon.ico</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">log_not_found</span> <span class="no">off</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">access_log</span> <span class="no">off</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">location</span> <span class="p">=</span> <span class="s">/robots.txt</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">log_not_found</span> <span class="no">off</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">access_log</span> <span class="no">off</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="kn">location</span> <span class="p">~</span> <span class="sr">.php$</span> <span class="p">{</span>
+</span><span class="line">        <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="s">/index.php</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">include</span> <span class="s">fastcgi_params</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">fastcgi_pass</span> <span class="s">unix:/var/run/php5-fpm.user01.sock</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>	
+</span><span class="line">
+</span><span class="line">    <span class="kn">location</span> <span class="p">~</span><span class="sr">*</span> <span class="s">.(ogg|ogv|svg|svgz|oet|otf|woff|mp4|ttf|css|rss|atom|js|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|mp3|bmp|rtf)</span>$ <span class="p">{</span>
+</span><span class="line">        <span class="kn">expires</span> <span class="s">max</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">log_not_found</span> <span class="no">off</span><span class="p">;</span>
+</span><span class="line">        <span class="kn">access_log</span> <span class="no">off</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们来慢慢阅读一下这个配置。首先，<code>set $cache_uri $request_uri</code>就是将请求的uri保存到我们的变量<code>$cache_uri</code>中。然后，如果请求方法是POST（<code>$request_method = POST</code>）、包含请求字符串（<code>$query_string != ""</code>）、请求的uri包含一些特殊的php文件（<code>$request_url ~* "(/wp-admin/|.........</code>）或者登录过评论过（通过cookie判断，<code>$http_cookie ~* "comment_author|w............"</code>），就将<code>$cache_uri</code>设置为’null cache’，这样是让<code>$cache_uri</code>这个字符串变量变成一个无意义的字符串，以让后面拼接出来的路径无意义。</p>
+
+<p>对于 <code>try_files /wp-content/cache/supercache/$http_host/$cache_uri/index.html $uri $uri/ /index.php;</code></p>
+
+<p>这个是依次尝试访问这些文件，成功就直接返回不再继续，如果都找不到就返回最后一个文件/index.php。我们还记得WP Super Cache生成的静态文件结构是<code>/wp-content/cache/supercache/everet.org/2012/01/scar.html/index.html</code>，也就是先尝试WP Super Cache生成的缓存，有就直接返回缓存。</p>
+
+<p>用ab测试了一下，对于缓存后的博客文章的RPS可以到900，还挺快的啊。</p>
+
+<p>另外，对于wordpress的wp-config.php文件，里面写有数据库的帐号和密码，所以我们需要将权限改为600，即只有user01自己能够读写，其他人无权访问。</p>
+
+<h2 id="section-2">参考资料</h2>
+
+<ul>
+  <li><a href="http://rtcamp.com/tutorials/wordpress-nginx-wp-super-cache/">WordPress-Nginx + WP Super cache</a></li>
+</ul>
+
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2012/11/multi-user-nginx-php-server.html">http://everet.org/2012/11/multi-user-nginx-php-server.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/apache/'>Apache</a>, <a class='tag' href='/tag/linux/'>Linux</a>, <a class='tag' href='/tag/nginx/'>Nginx</a>, <a class='tag' href='/tag/php/'>PHP</a>, <a class='tag' href='/tag/wordpress/'>Wordpress</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[screen在ssh远程登录中的使用]]></title>
+    <link href="http://everet.org/2012/11/screen-on-ssh.html"/>
+    <updated>2012-11-01T09:29:12+08:00</updated>
+    <id>http://everet.org/2012/11/screen-on-ssh</id>
+    <content type="html"><![CDATA[<p>11月了，没想到10月份竟然木有写博客。这几天在迁移服务器，时间不赶，就慢慢弄，顺便记录一下一些技巧。</p>
+
+<p>首先，远程ssh登录到服务器，可能中途会出现网络断掉或者超时，这时候ssh里面就打不了字了，就只能关闭再重新连接。如果我们用vim编辑一个文件到了一半的话，就会蛋疼地多了一个swp。那么如果我们希望在重新连接回去的时候，可以回到之前的工作状态，我们应该怎么办呢？答案是借助screen。</p>
+
+<p>对于screen的使用就不再罗嗦了。具体可以参看后面的参考资料中提供的链接。</p>
+
+<h2 id="section">一些技巧</h2>
+
+<p>下面可能会与诸位使用习惯有所冲突，请见谅。</p>
+
+<h3 id="ctrla">把ctrl+a还给我</h3>
+
+<p>首先，screen的命令的前缀是ctrl+a，进入screen后，ctrl+a就成了命令前缀了。我经常使用ctrl+a跳到行首，ctrl+e跳到行尾，所以需要修改一下前缀，否则ctrl+a跳到行首这个习惯就得改了。我们在家目录下面创建一个文件<strong>～/.screenrc</strong>。然后在里面写上</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">escape ^Zz
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后就把前缀改成ctrl+z了，如果需要暂停程序的话，就用ctrl+z z来暂停。这样ctrl+a就回来了。</p>
+
+<h3 id="section-1">偷懒</h3>
+
+<p>每次打screen真麻烦，我们在<strong>～/.bashrc</strong>中加上<!-- more --></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nb">alias </span><span class="nv">sc</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span>
+</span><span class="line"><span class="nb">alias </span><span class="nv">scb</span><span class="o">=</span><span class="s1">&#39;screen -dr normaltask || screen -S normaltask&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>输入<strong>source ~/.bashrc</strong> 就可以用sc来代替screen了。</p>
+
+<p>为了解决断开连接恢复工作状态的问题，我们假定我们的一个窗口叫normaltask。</p>
+
+<p>然后每次登录的时候，输入 scb，就可以恢复到normaltask这个常用窗口之前的任务了。是不是很方便呢？</p>
+
+<h3 id="section-2">补全</h3>
+
+<p>在screen下面的补全很有问题，和bash有明显的区别，只能补全文件名，对于命令的参数的补全就无法补全了。因为screen默认貌似是使用未登录的shell。</p>
+
+<p>所以，我们在<strong>~/.screenrc</strong>加上一句：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">shell -<span class="nv">$SHELL</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>就可以使用bash的补全了。</p>
+
+<h2 id="section-3">参考资料</h2>
+
+<ol>
+  <li>
+    <p><a href="http://blog.longwin.com.tw/2005/11/screen_teach/">screen 教學</a></p>
+  </li>
+  <li>
+    <p><a href="http://hi.baidu.com/willor/item/3b60db19132035fd65eabfab">screen命令</a></p>
+  </li>
+  <li>
+    <p><a href="http://serverfault.com/questions/126009/how-do-i-ask-screen-to-behave-like-a-standard-bash-shell">How do I ask screen to behave like a standard bash shell?</a></p>
+  </li>
+</ol>
+
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2012/11/screen-on-ssh.html">http://everet.org/2012/11/screen-on-ssh.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/linux/'>Linux</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[优化]将Chrome的数据放置到内存中去]]></title>
+    <link href="http://everet.org/2012/09/chrome-ramdisk.html"/>
+    <updated>2012-09-11T17:52:46+08:00</updated>
+    <id>http://everet.org/2012/09/chrome-ramdisk</id>
+    <content type="html"><![CDATA[<p>我现在使用的一台电脑的硬盘速度非常慢，Chrome有时也会对硬盘读写也会让机器发生顿卡，真是悲剧。所以我决定将Chrome经常读写的数据放置到内存中以提高响应速度。 Chrome的数据文件主要有用户配置文件以及磁盘缓存文件。在Ubuntu下就分别放置在~/.config/google-chrome以及~/.cache/google-chrome下面。 在Linux下，ramdisk直接就有了，直接拿来用就可以了，而在Windows下需要安装一些程序来创建ramdisk。我们来看看Linux下怎么做。 在Linux下，/dev/shm目录就是映射到了内存，所有写的东西都是直接写到了内存里面，不过这个目录不是持久的，断电就没了。</p>
+
+<h2 id="hack">Hack</h2>
+
+<p>我们的想法是，开机的时候将Chrome的数据文件全部放到/dev/shm下面，然后中间所有的读写都是在/dev/shm里面完成，因为都是在内存里面完成，所以速度会非常快。<!-- more --> 但是，坏处是，断电的时候，这个文件夹就会清空了。所以我们在关闭Chrome的时候，再将/dev/shm的数据复制到硬盘里面。这样的不足之处是，中间如果电脑突然断电会导致这次打开Chrome做的所有操作都没了，不过这不是大问题，因为只要是登录了的Chrome，都会将配置备份到Google的服务器，所以插件和收藏夹还是比较安全的。如果需要更安全，可以每隔一段时间（例如一两个小时），将/dev/shm的数据复制到硬盘，不过我觉得没什么必要，所以就不定期复制到硬盘。 嗯，那我们要处理的就两个文件夹：一个是用户数据文件夹<strong>~/.config/google-chrome</strong>，那些用户信息，历史记录都在里面；另一个是<strong>~/.cache/google-chrome</strong>，用来保存页面缓存文件。 这两个文件夹都可以通过启动参数设置位置，不过我为了全局性，就是无论从哪里打开chrome都可以享受ramdisk，所以我决定将这两个文件夹重定向到/dev/shm下面。</p>
+
+<h3 id="section">初始化，复制到内存</h3>
+
+<p>我们编写一个开机自启动的脚本。在Ubuntu下，我们可以在系统设置那里增加一个自启动。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c">#!/bin/bash</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;Copies from disk to shm&quot;</span>
+</span><span class="line">cp -rf /home/cedricporter/shm_backup/cedricporter /dev/shm/cedricporter
+</span><span class="line">chown cedricporter /dev/shm/cedricporter
+</span><span class="line">
+</span><span class="line">ln -s /dev/shm/cedricporter/.config/google-chrome ~/.config/google-chrome
+</span><span class="line">ln -s /dev/shm/cedricporter/.cache/google-chrome ~/.cache/google-chrome
+</span><span class="line">
+</span><span class="line">date &gt;&gt; /home/cedricporter/shm_backup/load.log
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>这里做的是，将硬盘里面的Chrome数据文件复制到内存里面，然后建立文件夹链接。</p>
+
+<h3 id="section-1">关闭，写到硬盘</h3>
+
+<p>关闭Chrome后，写到硬盘。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c">#!/bin/bash</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;save from shm to disk&quot;</span>
+</span><span class="line">cp -rf /dev/shm/cedricporter /home/cedricporter/shm_backup
+</span><span class="line">
+</span><span class="line"><span class="nv">file</span><span class="o">=</span>/home/cedricporter/shm_backup/save.log
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;----- Start Saving -----&quot;</span> &gt;&gt; <span class="nv">$file</span>
+</span><span class="line">date &gt;&gt; <span class="nv">$file</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;----- End -----&quot;</span> &gt;&gt; <span class="nv">$file</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="chrome"> 增加关闭Chrome时触发脚本</h3>
+
+<p>我们期望在关闭Chrome的时候，能够调用我们写到硬盘的脚本，来将/dev/shm里面的内容写到硬盘里面，好让下次开机的时候将数据载入到内存中。</p>
+
+<p>我们可以看到我们平时快捷方式调用的Chrome为/opt/google/chrome/google-chrome。我们看一下这个文件，其实是一个shell文件。</p>
+
+<p>其中最后一行为</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nb">exec</span> -a <span class="s2">&quot;$0&quot;</span> <span class="s2">&quot;$HERE/chrome&quot;</span> <span class="s2">&quot;$@&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我不想去修改这个shell文件，所以，我将其重命名为google-chrome.origin，然后新建一个shell文件，命名为google-chrome，内容如下：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c">#!/bin/bash</span>
+</span><span class="line">
+</span><span class="line">/opt/google/chrome/google-chrome.origin <span class="o">&amp;&amp;</span> /home/cedricporter/projects/chrome_cache/chrome_save_to_disk.sh
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>也就是在执行完google-chrome.origin后执行我们的将内存中数据复制到硬盘的脚本。</p>
+
+<p>好，搞定。</p>
+
+<p>所有文件都在<a href="https://github.com/cedricporter/chrome_cache">https://github.com/cedricporter/chrome_cache</a>，有兴趣同学可以去下载使用一下，不过需要修改一下脚本里面的路径名。</p>
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2012/09/chrome-ramdisk.html">http://everet.org/2012/09/chrome-ramdisk.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/linux/'>Linux</a>, <a class='tag' href='/tag/ubuntu/'>Ubuntu</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[解决Ubuntu下gnome-settings-daemon高磁盘IO的问题]]></title>
+    <link href="http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io.html"/>
+    <updated>2012-08-31T18:51:34+08:00</updated>
+    <id>http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io</id>
+    <content type="html"><![CDATA[<p>最近在用Ubuntu的时候，总是发现用着用着整台电脑就卡死了，什么都动不了，然后硬盘灯一直处于常亮状态。几次艰难地打开shell，发现都是gnome-settings-daemon一直在读写硬盘。这个究竟是什么问题呢？</p>
+
+<p>strace一下，看看，这个进程在干啥。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>console  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="gp">cedricporter@cedricporter-Lenovo:~/projects/CaptchaSystem$</span> sudo strace -p 2207
+</span><span class="line"><span class="go">[sudo] password for cedricporter: </span>
+</span><span class="line"><span class="go">Process 2207 attached - interrupt to quit</span>
+</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/b6c1d4f6fff0b536652c83081e5233e1.png&quot;, {st_mode=S_IFREG|0600, st_size=5398, ...}) = 0</span>
+</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/739ea0e4eabe22c5b551156fc3ff93da.png&quot;, {st_mode=S_IFREG|0600, st_size=6059, ...}) = 0</span>
+</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/2aac704bfd3d3a865f66e5c3ee2ba80a.png&quot;, {st_mode=S_IFREG|0600, st_size=6362, ...}) = 0</span>
+</span><span class="line"><span class="go">lstat(&quot;/home/cedricporter/.thumbnails/normal/5dbe53248aa8a41612137100a315e076.png&quot;, {st_mode=S_IFREG|0600, st_size=6260, ...}) = 0</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>出来的结果就像刷屏一样，全部都是lstat的系统调用，读取的都是.thumbnails下面的图片。<!-- more --></p>
+
+<p>突然想起这段时间我都在做验证码，在硬盘里面生成了不计其数的验证码图片。去gnome的网站上转了一下，发现原来很多人都遇到这个问题，特别是搞摄影或者经常处理图片的人。</p>
+
+<p>原来gnome-settings-daemon会经常检查缓存是否过期，是否需要删除或者更新，然后就会读一遍缓存中的图片。这个真是悲剧啊。</p>
+
+<p>于是我在非常卡的情况下，把.thumbnail目录删了，瞬间就不卡了。</p>
+
+<h2 id="solution">Solution</h2>
+
+<p>既然这样，我也就不让它检查缓存了，到时塞爆硬盘我再手动删除缓存算了，不想经常电脑因为硬盘卡住完全动不了。</p>
+
+<p>我们打开gconf-editor，设置下面两个值为-1.
+/desktop/gnome/thumbnail_cache/maximum_age
+/desktop/gnome/thumbnail_cache/maximum_size</p>
+
+<p>然后就不会自动更新缓存了。 当然也可将这两个值设置小一点，就不会有那么多缓存要扫描了。</p>
+
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io.html">http://everet.org/2012/08/fix-gnome-settings-daemon-disk-io.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/linux/'>Linux</a>, <a class='tag' href='/tag/ubuntu/'>Ubuntu</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[网易泡泡的Linux虚拟机宿主提示外挂]]></title>
+    <link href="http://everet.org/2012/08/popo-linux.html"/>
+    <updated>2012-08-21T21:37:22+08:00</updated>
+    <id>http://everet.org/2012/08/popo-linux</id>
+    <content type="html"><![CDATA[<p>在网易实习时，上班一定要开着泡泡，不过泡泡貌似在Linux会严重地水土不服，所以只能装一个虚拟机来解决这个问题。借助<a href="http://everet.org/2012/07/virtualbox-seamless.html">VirtualBox的无缝模式</a>，我们在一定程度上可以缓解这个问题。但是我平时会在多个虚拟桌面。如果恰巧不幸，我长时间没有切换到泡泡所在的虚拟桌面时，那就会有很长时间都不知道有新的泡泡消息。这个无论对人对己都有非常不好的影响。首先，别人无法在第一时间找到我，即便是我开着泡泡；第二，如果有重要通知，我却不幸地没有在泡泡的虚拟桌面时，那就大祸了。<!-- more --></p>
+
+<h2 id="ubuntu4">Ubuntu的4个虚拟桌面</h2>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/08/2012-08-21-112057的屏幕截图.png"><img src="http://everet.org/wp-content/uploads/2012/08/2012-08-21-112057的屏幕截图.png" alt="" /></a></p>
+
+<p>那肿么办呢？</p>
+
+<p>我的想法是，如果虚拟机XP里面的泡泡有收到消息，那么外面的宿主Linux会弹出提示窗口告知我们有新的泡泡消息啦，赶紧冲过去围观吧。</p>
+
+<p>那么具体怎么做呢？</p>
+
+<p>嗯，我的想法是首先在虚拟机XP里面安插一个间谍，如果看到泡泡有新的消息到了，就通知虚拟机外面的Linux说有情报了。那怎么通知呢？我们可以通过HTTP协议来交流吧，这样比较简单，我们在Linux用tornado搭一个服务器，使用pynotify来进行弹窗通知。然后虚拟机XP里面有消息的话，就直接通过HTTP协议通知。好，那我们赶紧开工吧。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/08/tips.png"><img src="http://everet.org/wp-content/uploads/2012/08/tips.png" alt="" /></a></p>
+
+<p>啦啦啦啦啦，看上去可以工作。自从用了这个提示外挂，我再也不用每隔一会儿切换到虚拟机所在虚拟桌面去查看了，^_^，变相提高工作效率，减小了上下文切换的开销。</p>
+
+<p>目前我在Ubuntu与XP下使用，其他的还没试过，不过这个应该都是通用的。使用时先编辑一下windowsplugin.py里面的虚拟机宿主的IP，然后将windowsplugin.py放到Windows的启动项，将notify.py放到Linux的启动项即可。</p>
+
+<p>目前的版本是通过轮询监控泡泡的窗口，将来有空的话我会继续开发后续版本。后续版本将会进行DLL Hook，争取可以拿到新消息内容。加油～～</p>
+
+<h2 id="section">依赖包</h2>
+
+<p>在Linux宿主需要安装libnotify用户飘窗提示，在Windows需要安装win32gui，其中Win32 Python2.7的win32gui已经附在后面的下载地址里面了。</p>
+
+<p>多谢宇哥，我才发现原来在KDE下pynotify已经换了名字了。</p>
+
+<p>最后，是下载地址啦：<a href="https://github.com/cedricporter/popo-plugin/tags">https://github.com/cedricporter/popo-plugin/tags</a>。</p>
+
+<p>项目是开源的，有兴趣的同学来一起完善吧～～</p>
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2012/08/popo-linux.html">http://everet.org/2012/08/popo-linux.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/linux/'>Linux</a>, <a class='tag' href='/tag/python/'>Python</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[对Python图像处理库EffectLab进行性能测试]]></title>
+    <link href="http://everet.org/2012/08/profile-of-effectlab.html"/>
+    <updated>2012-08-15T01:49:37+08:00</updated>
+    <id>http://everet.org/2012/08/profile-of-effectlab</id>
+    <content type="html"><![CDATA[<p><a href="http://everet.org/2012/07/effectlab.html">EffectLab</a>也是一个基于PIL的Python的图像库，目的是为了提供更多的特效处理以及更快的测试。</p>
+
+<p>目前EffectLab可以实现的特效可以围观之前的文章：<a href="http://everet.org/2012/07/effectlab.html">http://everet.org/2012/07/effectlab.html</a>。</p>
+
+<p>古人云：_选择了脚本语言_就要忍受其速度。</p>
+
+<p>但是，有时脚本语言的速度已经慢到了无法形容的地步时，我们就开始考虑性能优化了。</p>
+
+<h2 id="section">寻找性能热点</h2>
+
+<p>Python有一对很好的性能测试工具：cProfile与pstats。</p>
+
+<p>我们来选择一个波浪效果来做测试：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&quot;RGB&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</span><span class="line"><span class="n">wave</span> <span class="o">=</span> <span class="n">GlobalWaveEffect</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+</span><span class="line"><span class="n">test</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&quot;test()&quot;</span><span class="p">,</span> <span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="n">p</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="s">&quot;profile.data&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="n">p</span><span class="o">.</span><span class="n">strip_dirs</span><span class="p">()</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="s">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们可以看到其输出：<!-- more --></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>console  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="go">Tue Aug 14 17:21:10 2012    profile.data</span>
+</span><span class="line">
+</span><span class="line"><span class="go">         417923 function calls (417922 primitive calls) in 0.434 seconds</span>
+</span><span class="line">
+</span><span class="line"><span class="go">   Ordered by: internal time</span>
+</span><span class="line">
+</span><span class="line"><span class="go">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span>
+</span><span class="line"><span class="go">        1    0.150    0.150    0.434    0.434 Effect.py:92(filter)</span>
+</span><span class="line"><span class="go">    80000    0.068    0.000    0.068    0.000 {round}</span>
+</span><span class="line"><span class="go">    40000    0.051    0.000    0.063    0.000 Effect.py:304(transform)</span>
+</span><span class="line"><span class="go">    41889    0.034    0.000    0.034    0.000 {map}</span>
+</span><span class="line"><span class="go">    41890    0.029    0.000    0.042    0.000 Image.py:606(load)</span>
+</span><span class="line"><span class="go">    40000    0.028    0.000    0.091    0.000 Effect.py:317()</span>
+</span><span class="line"><span class="go">    33433    0.025    0.000    0.071    0.000 Image.py:946(getpixel)</span>
+</span><span class="line"><span class="go">    41890    0.013    0.000    0.013    0.000 {built-in method pixel_access}</span>
+</span><span class="line"><span class="go">    40000    0.012    0.000    0.012    0.000 {math.sin}</span>
+</span><span class="line"><span class="go">    33433    0.011    0.000    0.011    0.000 {built-in method getpixel}</span>
+</span><span class="line"><span class="go">     8457    0.008    0.000    0.019    0.000 Image.py:1260(putpixel)</span>
+</span><span class="line"><span class="go">     8457    0.004    0.000    0.004    0.000 {built-in method putpixel}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>可以发现，运行时间最长的函数有<a href="https://github.com/cedricporter/EffectLab/blob/master/EffectLab/Effect.py#L92">第92行的filter</a>，以及<a href="https://github.com/cedricporter/EffectLab/blob/master/EffectLab/Effect.py#L304">第304行的transform</a>。我们可以查看第92行的函数filter，这个函数看上去非常的简短，主要做的是处理每一个像素以及有抗锯齿运算。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+</span><span class="line">    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
+</span><span class="line">    <span class="n">new_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">Effect</span><span class="o">.</span><span class="n">empty_color</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">nband</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+</span><span class="line">    <span class="n">antialias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">antialias</span>
+</span><span class="line">    <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="k">else</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+</span><span class="line">        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bottom</span><span class="p">):</span>
+</span><span class="line">            <span class="n">found</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line">            <span class="n">psum</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="n">nband</span>
+</span><span class="line">
+</span><span class="line">            <span class="c"># anti-alias</span>
+</span><span class="line">            <span class="k">for</span> <span class="n">ai</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">antialias</span><span class="p">):</span>
+</span><span class="line">                <span class="n">_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">ai</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">antialias</span><span class="p">)</span>
+</span><span class="line">                <span class="k">for</span> <span class="n">aj</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">antialias</span><span class="p">):</span>
+</span><span class="line">                    <span class="n">_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">aj</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">antialias</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">                    <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="p">(</span><span class="n">_x</span><span class="p">,</span> <span class="n">_y</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">                    <span class="n">u</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">u</span><span class="p">))</span>
+</span><span class="line">                    <span class="n">v</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+</span><span class="line">                    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">u</span> <span class="o">&lt;</span> <span class="n">width</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">height</span><span class="p">):</span>
+</span><span class="line">                        <span class="k">continue</span>
+</span><span class="line">                    <span class="n">pt</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+</span><span class="line">                    <span class="n">psum</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">psum</span><span class="p">,</span> <span class="n">pt</span><span class="p">)</span>
+</span><span class="line">                    <span class="n">found</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class="line">
+</span><span class="line">            <span class="k">if</span> <span class="n">found</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class="line">                <span class="n">psum</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">div</span><span class="p">,</span> <span class="n">psum</span><span class="p">,</span> <span class="p">(</span><span class="n">found</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">psum</span><span class="p">))</span>
+</span><span class="line">                <span class="n">new_img</span><span class="o">.</span><span class="n">putpixel</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">psum</span><span class="p">))</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="n">new_img</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>以及transform函数：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">delta_w</span><span class="p">,</span> <span class="n">delta_h</span><span class="p">):</span>
+</span><span class="line">    <span class="n">radian</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">xoffset</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="n">delta_w</span>
+</span><span class="line">    <span class="n">offset</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radian</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="n">delta_h</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">offset</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="section-1">解决性能热点</h2>
+
+<p>嗯，这个看上去热点都是纯计算的代码，貌似已经没什么优化的空间了，这时怎么办呢？</p>
+
+<p>鉴于CPython可以非常容易的使用C/C++扩展模块，我们用C语言来实现里面这些纯计算的部分，看看性能有什么提升。</p>
+
+<p>我们用C来实现Filter函数。重新运行cProfile看看，</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>console  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+</pre></td><td class="code"><pre><code class="console"><span class="line"><span class="go">Tue Aug 14 17:38:56 2012    profile.data</span>
+</span><span class="line">
+</span><span class="line"><span class="go">         12 function calls in 0.002 seconds</span>
+</span><span class="line">
+</span><span class="line"><span class="go">   Ordered by: internal time</span>
+</span><span class="line">
+</span><span class="line"><span class="go">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span>
+</span><span class="line"><span class="go">        1    0.002    0.002    0.002    0.002 {EffectLab.EffectLabCore.wave_warp}</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.000    0.000 {built-in method copy}</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:460(_new)</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:740(copy)</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.002    0.002 Effect.py:310(filter)</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.002    0.002 :1()</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:606(load)</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.002    0.002 Effect.py:37(__call__)</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:449(__init__)</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.000    0.000 {built-in method pixel_access}</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.000    0.000 {method &#39;disable&#39; of &#39;_lsprof.Profiler&#39; objects}</span>
+</span><span class="line"><span class="go">        1    0.000    0.000    0.000    0.000 {method &#39;copy&#39; of &#39;dict&#39; objects}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>此时热点函数已经被C语言的模块给替换了。</p>
+
+<p>我们用timeit模块统计一下运行时间，统计代码如下（其中test函数见上面，里面就是调用了波浪处理效果：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="n">t</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="s">&#39;test()&#39;</span><span class="p">,</span> <span class="s">&#39;from __main__ import test&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">N</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class="line"><span class="n">TIMES</span> <span class="o">=</span> <span class="mi">30</span>
+</span><span class="line"><span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">TIMES</span><span class="p">))</span> <span class="o">/</span> <span class="n">N</span> <span class="o">/</span> <span class="n">TIMES</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="s">&#39;ms&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="section-2">结果</h2>
+
+<p>我们来看看运行3轮，每轮运行30次，平均一次的时间是多少。
+Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
+
+<p>C版本平均一次时间为：<strong>1.91 ms</strong></p>
+
+<p>可见运行速度是原来的<strong>159倍</strong>。</p>
+
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2012/08/profile-of-effectlab.html">http://everet.org/2012/08/profile-of-effectlab.html</a><br/>
+    
+
+  <strong>Tags: </strong>
+  
+    <a class='tag' href='/tag/image-processing/'>Image Processing</a>, <a class='tag' href='/tag/pil/'>PIL</a>, <a class='tag' href='/tag/python/'>Python</a>
+  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ASCII码表]]></title>
+    <link href="http://everet.org/2012/08/ascii.html"/>
+    <updated>2012-08-03T06:57:07+08:00</updated>
+    <id>http://everet.org/2012/08/ascii</id>
+    <content type="html"><![CDATA[<p>最近经常用到ASCII码，所以弄一张表过来方便查找。</p>
+
+<!-- more -->
+
+<p><a href="http://everet.org/wp-content/uploads/2012/08/asciifull.gif"><img src="http://everet.org/wp-content/uploads/2012/08/asciifull.gif" alt="" /></a></p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/08/extend.gif"><img src="http://everet.org/wp-content/uploads/2012/08/extend.gif" alt="" /></a></p>
+ <hr/> <strong>PermaLink: </strong> <a href="http://everet.org/2012/08/ascii.html">http://everet.org/2012/08/ascii.html</a><br/>
+    
+]]></content>
+  </entry>
+  
+</feed>

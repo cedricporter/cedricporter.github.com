@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: Python | EverET.org]]></title>
+  <link href="http://everet.org/tag/python/atom.xml" rel="self"/>
+  <link href="http://everet.org/"/>
+  <updated>2013-01-15T00:25:15+08:00</updated>
+  <id>http://everet.org/</id>
+  <author>
+    <name><![CDATA[Stupid ET]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Keep Learning]]></title>
+    <link href="http://everet.org/2013/01/keep-learning.html"/>
+    <updated>2013-01-03T00:14:00+08:00</updated>
+    <id>http://everet.org/2013/01/keep-learning</id>
+    <content type="html"><![CDATA[<p>今天<a href="http://www.kidsang.com/">屠文翔</a>同学问了我一个在PIL中获取像素操作的问题，我想也没想就说道可以使用getpixel和putpixel操作像素，因为我之前一直也是使用这两个API。过了一会，<a href="http://www.kidsang.com/">屠文翔</a>同学问我是否用过load()这个API，我直接就说这个不是操作像素的。我之前在浏览PIL源码的时候，经常会见到调用这个函数，不过都只是纯调用，<code>self.load()</code>，连返回值都不获取。也没仔细看，就认为这个仅仅是装载数据。</p>
+
+<!-- more -->
+
+<p>``` python
+##
+# Allocates storage for the image and loads the pixel data.  In
+# normal cases, you don’t need to call this method, since the
+# Image class automatically loads an opened image when it is
+# accessed for the first time.
+#
+# @return An image access object.</p>
+
+<p>def load(self):
+    “Explicitly load pixel data.”
+    if self.im and self.palette and self.palette.dirty:
+        # realize palette
+        apply(self.im.putpalette, self.palette.getdata())
+        self.palette.dirty = 0
+        self.palette.mode = “RGB”
+        self.palette.rawmode = None
+        if self.info.has_key(“transparency”):
+            self.im.putpalettealpha(self.info[“transparency”], 0)
+            self.palette.mode = “RGBA”
+    if self.im:
+        return self.im.pixel_access(self.readonly)
+```</p>
+
+<p>于是乎就自以为是地认为，load()不是用于操作像素的。然后<a href="http://www.kidsang.com/">屠文翔</a>同学发来一条链接<a href="http://effbot.org/zone/pil-pixel-access.htm">Pixel Access Objects</a>，顺带说了一句，“时代进步了“。</p>
+
+<p>``` python
+pix = im.load()</p>
+
+<h1 id="get-pixel-value">get pixel value</h1>
+<p>print pix[x, y]</p>
+
+<h1 id="put-pixel-value">put pixel value</h1>
+<p>pix[x, y] = value
+```</p>
+
+<p>嗯，确实，时代进步了，我老了，如果我不保持学习，所拥有的知识很多将会过时，甚至成为错误。</p>
+
+<p>再仔细一看，这篇文章是2005年写的，新特性在1.1.6就加入了PIL，而我用的是1.1.7。</p>
+
+<p>现在就说明一个问题，我自以为掌握了某些知识，其实是没有掌握的，而且其中甚至还有误解在里面。所以，对于”已经掌握的“知识，还需要经常温习，考证是否正确理解、是否全部掌握、是否慢慢遗忘。</p>
+
+<h2 id="keep-learning">Keep Learning</h2>
+
+<p>又想起一句话：<strong>学历代表过去，能力代表现在，学习力代表未来</strong>。</p>
+
+<p>对于在IT这个瞬息万变的行业，不能保持学习的兴趣与激情，迟早会被无情地淘汰。当然，除了学习，还要保持谦虚，保持低调，毕竟人总是会犯错的。如果自己很装逼地说什么就是什么，最后却发现自己错了，那岂不丢脸丢到家了。低调与谦虚，加上高效学习，2013年，加油！！！</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[From Wordpress to Octopress]]></title>
+    <link href="http://everet.org/2012/12/migrate-from-wordpress-to-octopress.html"/>
+    <updated>2012-12-25T20:49:00+08:00</updated>
+    <id>http://everet.org/2012/12/migrate-from-wordpress-to-octopress</id>
+    <content type="html"><![CDATA[<h2 id="section">为什么</h2>
+<p>为什么离开Wordpress选择Octopress？ 在Google中搜索Wordpress+Octopress就会找到整版整版的从Wordpress迁移到Octopress的博文，
+其中有介绍各种迁移的理由，例如Wordpress太臃肿，Octopress可以让我们像黑客一样写博客。</p>
+
+<p>这些都太高雅了，我只是不喜欢PHP那一坨一坨文明用语一样的代码，这样改起来的时候实在是让人蛋疼。而Octopress是Ruby写的，于是可以借机学习一下<em>Ruby</em>（<strong>这个是主要原因</strong>）。</p>
+
+<!-- more -->
+
+<h2 id="wordpress">对于Wordpress的看法</h2>
+<p>Wordpress可以让我们在浏览器写东西，也可以用客户端来写，例如Windows Live Writer、Emacs + org2blog<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>。
+当我们在其他人电脑，没有客户端的时候，一样可以打开浏览器写。Wordpress既可以是胖客户端，又可以是瘦客户端。
+而且Wordpress架构设计灵活，插件主题丰富。用户体验好，也可以用Markdown、org等等其他语言来写。对于静态化，装个WP-Super-Cache插件就可以将所有文章静态化了，而且静态化的程度是可以控制的。</p>
+
+<h3 id="section-1">缺点</h3>
+<ol>
+  <li>是PHP写的，用MySQL，这两个东西一下就占了一堆内存。对于我们这些穷苦人民的VPS十分不友好。</li>
+  <li>不联网就没法预览最终效果。</li>
+</ol>
+
+<h2 id="octopress">对于Octopress的看法</h2>
+<p>对于Octopress的优点网上也有一堆一堆的评论，我也就不太多说了。我们来看看我觉得的缺点：</p>
+
+<h3 id="section-2">缺点</h3>
+<ol>
+  <li>Octopress是一个胖客户端的博客系统，在写博客前，你需要安装Git、Ruby等等东西，然后把环境调教好，才能开始写东西。</li>
+  <li>如果去到别人的电脑，或者是Windows的话，那么写个博客都会非常的蛋疼。</li>
+  <li>相对缺乏插件与主题。</li>
+  <li>发布一篇文章就要重建整个博客，慢。</li>
+</ol>
+
+<h3 id="section-3">优点</h3>
+<blockquote>
+  <p>Octopress is jekyll with Batteries included.</p>
+</blockquote>
+
+<p>直接就是用Markdown语法，不用纠结org还是markdown。
+可以方便地离线预览文章<code>rake preview</code>。</p>
+
+<h3 id="misc">Misc</h3>
+<p>Octopress默认的markdown引擎是rdiscount，这个实在是让人难以接受，连footnote都不支持。于是果断换成了kramdown<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>。kramdown支持footnote，甚至LaTex<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>。</p>
+
+<h2 id="section-4">其他</h2>
+
+<h3 id="section-5">写博客的三个阶段</h3>
+<p>之前看过阮一峰写的一篇文章<a href="http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html">github Pages和Jekyll入门</a>，里面有讲到，喜欢写博客的人，会经历三个阶段：</p>
+
+<blockquote>
+  <p>第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费空间来写。
+第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。
+第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。</p>
+</blockquote>
+
+<p>好吧，我觉得独立博客的管理确实挺麻烦的，加上刚刚经历买了1年的VPS没到一个月，主机商就跑路的悲剧后，就愈发觉得自己负责可靠性等各种东西的维护确实挺麻烦的。就先暂时放在Github上面，日后再自己管理。</p>
+
+<p>放在Github上面有个坏处是，对于页面都有缓存：<code>Cache-Control: max-age=86400</code>，也就是有一整天缓存时间，如果一天内有访问过这个页面的浏览器不刷新的话就直接从cache里面取了。不过应该也没什么大碍，基本不会一天更新好几次。而且除了自己也没什么人访问。</p>
+
+<h3 id="emacs">Emacs</h3>
+<p>Emacs既可以方便地写Wordpress也可以写Octopress。
+<img src="/imgs/emacs-user-at-work.jpg" alt="Emacs User At Work" /><sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup></p>
+
+<h3 id="ruby">Ruby</h3>
+<p>这段时间看了Ruby，发现竟然可以比Python更加优美，我想，日后，可能也会有很多人从Python流向Ruby，就像曾经人们从Perl流向Python一样。</p>
+
+<p>这就是江山代有才人出，长江后浪推前浪啊。事物总是在进步着。</p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="https://github.com/punchagan/org2blog">https://github.com/punchagan/org2blog</a><a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p><a href="http://kramdown.rubyforge.org/index.html">http://kramdown.rubyforge.org/index.html</a><a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p><a href="http://yanping.me/cn/blog/2012/03/10/octopress-with-latex/">在Octopress中使用LaTeX</a><a href="#fnref:3" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:4">
+      <p><a href="http://batsov.com/articles/2011/11/11/blogging-like-a-hacker-evolution/">http://batsov.com/articles/2011/11/11/blogging-like-a-hacker-evolution/</a><a href="#fnref:4" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MoinMoin+Nginx+uWSGI搭建个人Wiki]]></title>
+    <link href="http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi.html"/>
+    <updated>2012-12-19T07:14:27+08:00</updated>
+    <id>http://everet.org/2012/12/moinmoin-as-kms-by-nginx-uwsgi</id>
+    <content type="html"><![CDATA[<h2 id="wiki">有博客，为什么还需要Wiki呢？</h2>
+
+<p>有博客，为什么还需要Wiki呢？对于这个问题，我也思考了许久。博客记录的东西很扁平，而且不太适宜记录一些零碎不完整的东西。如果别人订阅了你的博客，你的博客却经常发布一些不完整的内容，这样会严重影响别人的心情。所以我觉得博客适宜将一些比较完整的内容的写在里面。此外，平时在网上看到什么东西，虽然都可以收录到EverNote里面（EverNote里面有提供目录以及标签可以很好地进行分类），但是，EverNote的劣势在于，不方便将知识组织知识，将它们串联在一起。</p>
+
+<p>而在Wiki中知识是以词条形式，词条与词条间可以方便地建立关系。很容易组织成树状结构。</p>
+
+<p>此外，Wiki可以使用轻量标记语言编写，优点是纯文本，容易阅读和编辑，能够让我们的注意力集中于撰写内容而非形式。特别在Emacs或者Vim里面可以方便地半可视化地编写Wiki。我第一次尝试就对其爱不释手，终于可以从Wordpress，Word等SB的需要鼠标辅助编辑的编写过程中解脱了。</p>
+
+<p>于是我又开始物色Wiki，以前有用过PHP实现的Wiki，现在决定找一个Python实现的Wiki，很快就找到了<a href="http://i.everet.org/MoinMoin">MoinMoin</a>，它是一个由Python实现的<a href="http://zh.wikipedia.org/wiki/Wiki">Wiki</a>系统，文件存储，选一种自己喜欢的语言编写的Wiki系统，日后定制起来会方便一些。<!-- more --></p>
+
+<p>我的Wiki：<a href="http://i.everet.org/">http://i.everet.org</a></p>
+
+<p>这个Wiki是我前段时间在这个性能忒差的服务器上面搭建的，今天终于把配置过程写下来，希望能给有需要的同学多一份参考。</p>
+
+<p>前端依旧是Nginx，后端用uWSGI处理Python。Nginx可以很好的转发。</p>
+
+<h2 id="nginx">Nginx的配置</h2>
+
+<h3 id="install">Install</h3>
+
+<blockquote>
+
+</blockquote>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># apt-get install python-software-properties
+</span><span class='line'># apt-add-repository ppa:nginx/stable
+</span><span class='line'># apt-get update
+</span><span class='line'># apt-get install nginx-full</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>我们在/etc/nginx/sites-available文件夹里面新建一个文件wiki.everet.org，然后链接到sites-enables。就可以运行nginx -t &amp;&amp; service nginx reload:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>nginx  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='nginx'><span class='line'><span class="k">server</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">server_name</span> <span class="s">i.everet.org</span> <span class="s">wiki.everet.org</span><span class="p">;</span><span class="kn">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">&lt;pre&gt;&lt;code&gt;access_log</span>  <span class="s">/var/log/nginx/wiki.everet.org.access.log</span><span class="p">;</span>
+</span><span class='line'><span class="kn">error_log</span> <span class="s">/var/log/nginx/wiki.everet.org.error.org</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">include</span> <span class="s">uwsgi_params</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">uwsgi_pass</span> <span class="s">unix:///var/run/uwsgi_wiki.sock</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">uwsgi_param</span> <span class="s">UWSGI_PYHOME</span> <span class="s">/var/www/moinmoin/python-env/</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">uwsgi_param</span> <span class="s">UWSGI_CHDIR</span> <span class="s">/var/www/moinmoin/wiki/</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">uwsgi_param</span> <span class="s">UWSGI_SCRIPT</span> <span class="s">moin_wsgi</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">location</span> <span class="p">=</span> <span class="s">/google7a32e07f62c143af.html</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">rewrite</span> <span class="s">^/</span> <span class="s">/moin_static195/google7a32e07f62c143af.html</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">location</span> <span class="s">^~</span> <span class="s">/moin_static195/</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">alias</span> <span class="s">/var/www/moinmoin/python-env/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">add_header</span> <span class="s">Cache-Control</span> <span class="s">public</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">expires</span> <span class="s">1M</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</code></pre>
+
+<h2 id="python">Python</h2>
+
+<p>在这里，我们需要借助一个程序virtualenv，它可以创建一个干净的Python运行环境。其实Python核心就是一个解释器，然后外加许多包，也就是所谓的“电池”。如果我们自己编译Python的话，可以选择生成一个静态链接的Python可执行文件，就可以拿着这个解释器文件走了。</p>
+
+<p>而virtualenv做的事情就是将Python解释器以及一些需要的包复制到我们指定的地方，已经创建一些方便设置环境变量的脚本。当我们有程序需要不同版本的模块或者某些不兼容的模块时，就可以借助于virtualenv。</p>
+
+<p>Virtualenv会生成一个包含Python可执行程序的目录，里面也会包含标准库。</p>
+
+<p>此外，我们需要运行bin目录下面的activate，它会修改当前的环境变量。</p>
+
+<p>activate这个脚本做的事情就是将新的Python可执行的路径加入到环境变量PATH最前面。然后清空PYTHONHOME这个环境变量。</p>
+
+<blockquote>
+
+</blockquote>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># mkdir -p /var/www/moinmoin
+</span><span class='line'># virtualenv /var/www/moinmoin/python-env
+</span><span class='line'># . /var/www/moinmoin/python-env/bin/activate</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>运行完activate后，环境变量就改了，我们可以看到提示符已经改变了。然后我们进行后续工作。</p>
+
+<h2 id="moinmoin">MoinMoin</h2>
+
+<p>然后现在安装moinmoin</p>
+
+<blockquote>
+
+</blockquote>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(python-env) # python setup.py install</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>然后将安装目录的wiki文件夹下面的data与uderlay目录复制出来，放到/var/www/moinmoin/wiki。然后将wiki/config目录下的wikiconfig.py以及wiki/server/moin.wsgi改名moin_wsgi.py复制到/var/www/moinmoin/wiki目录下面，然后/var/www/moinmoin/wiki目录结构如下：</p>
+
+<blockquote>
+
+</blockquote>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>root@ubuntu:/var/www/moinmoin/wiki# tree -L 1
+</span><span class='line'>.
+</span><span class='line'>├── data
+</span><span class='line'>├── moin_wsgi.py
+</span><span class='line'>├── underlay
+</span><span class='line'>└── wikiconfig.py&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;p>2 directories, 2 files</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>然后将wiki目录修改属主为uwsgi。</p>
+
+<blockquote>
+
+</blockquote>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># chown uwsgi:uwsgi /var/www/moinmoin/wiki -R</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2 id="uwsgi">uWSGI</h2>
+
+<h3 id="install-1">Install</h3>
+
+<p>安装最新的lts版的uwsgi，不过在此之前，需要安装python-dev才能够正确编译。</p>
+
+<blockquote>
+
+</blockquote>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># sudo apt-get install python-dev build-essential
+</span><span class='line'>(python-env) # pip install http://projects.unbit.it/downloads/uwsgi-lts.tar.gz</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>如果我们还在virtualenv的环境变量下，uwsgi会被安装到/var/www/moinmoin/python-env/bin下面，就一个文件uwsgi。</p>
+
+<h3 id="autostart">Autostart</h3>
+
+<p>我们现在来为uwsgi编写开机启动：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># /etc/init.d/uwsgi</span>
+</span><span class='line'><span class="c">#&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;daemon<span class="o">=</span>/var/www/moinmoin/python-env/bin/uwsgi
+</span><span class='line'><span class="nv">pid</span><span class="o">=</span>/var/run/uwsgi.pid
+</span><span class='line'><span class="nv">args</span><span class="o">=</span>”-x /etc/uwsgi/uwsgi.xml”&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;case “<span class="nv">$1</span>” in
+</span><span class='line'>    start<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> “Starting uwsgi”
+</span><span class='line'>        start-stop-daemon -p <span class="nv">$pid</span> –start –exec <span class="nv">$daemon</span> – <span class="nv">$args</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    stop<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> “Stopping script uwsgi”
+</span><span class='line'>        start-stop-daemon –signal INT -p <span class="nv">$pid</span> –stop <span class="nv">$daemon</span> – <span class="nv">$args</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    restart<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> “Restarting uwsgi”
+</span><span class='line'>        start-stop-daemon –signal INT -p <span class="nv">$pid</span> –stop <span class="nv">$daemon</span> – <span class="nv">$args</span>
+</span><span class='line'>        sleep 2
+</span><span class='line'>        start-stop-daemon -p <span class="nv">$pid</span> –start –exec <span class="nv">$daemon</span> – <span class="nv">$args</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    reload<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> “Reloading conf”
+</span><span class='line'>        <span class="nb">kill</span> -HUP <span class="k">$(</span>cat <span class="nv">$pid</span><span class="k">)</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    *<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> “Usage: /etc/init.d/uwsgi <span class="o">{</span>start|stop|restart|reload<span class="o">}</span>”
+</span><span class='line'>        <span class="nb">exit </span>1
+</span><span class='line'>        ;;
+</span><span class='line'><span class="k">esac</span>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;exit 0
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3 id="config">Config</h3>
+
+<p>/etc/uwsgi/uwsgi.xml内容如下：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>xml  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;uwsgi&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;socket&gt;</span>/var/run/uwsgi_wiki.sock<span class="nt">&lt;/socket&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;uid&gt;</span>uwsgi<span class="nt">&lt;/uid&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;gid&gt;</span>uwsgi<span class="nt">&lt;/gid&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;master-as-root</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;reload-on-as&gt;</span>128<span class="nt">&lt;/reload-on-as&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;touch-reload&gt;</span>/var/www/moinmoin/wiki/wikiconfig.py<span class="nt">&lt;/touch-reload&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;master</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;processes&gt;</span>3<span class="nt">&lt;/processes&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;no-site</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;vhost</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;memory-report</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;pidfile&gt;</span>/var/run/uwsgi.pid<span class="nt">&lt;/pidfile&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;daemonize&gt;</span>/var/log/uwsgi.log<span class="nt">&lt;/daemonize&gt;</span>
+</span><span class='line'><span class="nt">&lt;/uwsgi&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<ul>
+  <li>其中reload-on-as是指内存消耗达到128就重新加载过进程。</li>
+  <li>touch-reload是指wikiconfig.py被修改就重新加载进程。</li>
+  <li>master-as-root是指master进程uid为root，这样才有足够权限在/var/run中创建socket。</li>
+</ul>
+
+<p>其他参数就没什么特别的了。</p>
+
+<h3 id="add-user">Add User</h3>
+
+<p>添加用户</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># adduser –system –no-create-home –disabled-login –disabled-password –group uwsgi
+</span><span class='line'># touch /var/log/uwsgi.log
+</span><span class='line'># chown uwsgi:uwsgi /var/log/uwsgi.log</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3 id="run">Run</h3>
+
+<p>加到开机启动，然后运行uwsgi服务。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>bash  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># update-rc.d uwsgi defaults</span>
+</span><span class='line'><span class="c"># service uwsgi start</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2 id="section">扩展阅读</h2>
+
+<ul>
+  <li><a href="http://uwsgi-docs.readthedocs.org/en/latest/Nginx.html#dynamic-apps">UWSGI_SCRIPT</a></li>
+  <li><a href="https://uwsgi-docs.readthedocs.org/en/latest/Vars.html?highlight=%20UWSGI_CHDIR">uwsgi protocol magic variables</a></li>
+  <li><a href="http://moinmo.in/EmacsForMoinMoin">Emacs的moinmoin-mode</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[网易泡泡的Linux虚拟机宿主提示外挂]]></title>
+    <link href="http://everet.org/2012/08/popo-linux.html"/>
+    <updated>2012-08-21T21:37:22+08:00</updated>
+    <id>http://everet.org/2012/08/popo-linux</id>
+    <content type="html"><![CDATA[<p>在网易实习时，上班一定要开着泡泡，不过泡泡貌似在Linux会严重地水土不服，所以只能装一个虚拟机来解决这个问题。借助<a href="http://everet.org/2012/07/virtualbox-seamless.html">VirtualBox的无缝模式</a>，我们在一定程度上可以缓解这个问题。但是我平时会在多个虚拟桌面。如果恰巧不幸，我长时间没有切换到泡泡所在的虚拟桌面时，那就会有很长时间都不知道有新的泡泡消息。这个无论对人对己都有非常不好的影响。首先，别人无法在第一时间找到我，即便是我开着泡泡；第二，如果有重要通知，我却不幸地没有在泡泡的虚拟桌面时，那就大祸了。<!-- more --></p>
+
+<h2 id="ubuntu4">Ubuntu的4个虚拟桌面</h2>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/08/2012-08-21-112057的屏幕截图.png"><img src="http://everet.org/wp-content/uploads/2012/08/2012-08-21-112057的屏幕截图.png" alt="" /></a></p>
+
+<p>那肿么办呢？</p>
+
+<p>我的想法是，如果虚拟机XP里面的泡泡有收到消息，那么外面的宿主Linux会弹出提示窗口告知我们有新的泡泡消息啦，赶紧冲过去围观吧。</p>
+
+<p>那么具体怎么做呢？</p>
+
+<p>嗯，我的想法是首先在虚拟机XP里面安插一个间谍，如果看到泡泡有新的消息到了，就通知虚拟机外面的Linux说有情报了。那怎么通知呢？我们可以通过HTTP协议来交流吧，这样比较简单，我们在Linux用tornado搭一个服务器，使用pynotify来进行弹窗通知。然后虚拟机XP里面有消息的话，就直接通过HTTP协议通知。好，那我们赶紧开工吧。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/08/tips.png"><img src="http://everet.org/wp-content/uploads/2012/08/tips.png" alt="" /></a></p>
+
+<p>啦啦啦啦啦，看上去可以工作。自从用了这个提示外挂，我再也不用每隔一会儿切换到虚拟机所在虚拟桌面去查看了，^_^，变相提高工作效率，减小了上下文切换的开销。</p>
+
+<p>目前我在Ubuntu与XP下使用，其他的还没试过，不过这个应该都是通用的。使用时先编辑一下windowsplugin.py里面的虚拟机宿主的IP，然后将windowsplugin.py放到Windows的启动项，将notify.py放到Linux的启动项即可。</p>
+
+<p>目前的版本是通过轮询监控泡泡的窗口，将来有空的话我会继续开发后续版本。后续版本将会进行DLL Hook，争取可以拿到新消息内容。加油～～</p>
+
+<h2 id="section">依赖包</h2>
+
+<p>在Linux宿主需要安装libnotify用户飘窗提示，在Windows需要安装win32gui，其中Win32 Python2.7的win32gui已经附在后面的下载地址里面了。</p>
+
+<p>多谢宇哥，我才发现原来在KDE下pynotify已经换了名字了。</p>
+
+<p>最后，是下载地址啦：<a href="https://github.com/cedricporter/popo-plugin/tags">https://github.com/cedricporter/popo-plugin/tags</a>。</p>
+
+<p>项目是开源的，有兴趣的同学来一起完善吧～～</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[对Python图像处理库EffectLab进行性能测试]]></title>
+    <link href="http://everet.org/2012/08/profile-of-effectlab.html"/>
+    <updated>2012-08-15T01:49:37+08:00</updated>
+    <id>http://everet.org/2012/08/profile-of-effectlab</id>
+    <content type="html"><![CDATA[<p><a href="http://everet.org/2012/07/effectlab.html">EffectLab</a>也是一个基于PIL的Python的图像库，目的是为了提供更多的特效处理以及更快的测试。</p>
+
+<p>目前EffectLab可以实现的特效可以围观之前的文章：<a href="http://everet.org/2012/07/effectlab.html">http://everet.org/2012/07/effectlab.html</a>。</p>
+
+<p>古人云：_选择了脚本语言_就要忍受其速度。</p>
+
+<p>但是，有时脚本语言的速度已经慢到了无法形容的地步时，我们就开始考虑性能优化了。</p>
+
+<h2 id="section">寻找性能热点</h2>
+
+<p>Python有一对很好的性能测试工具：cProfile与pstats。</p>
+
+<p>我们来选择一个波浪效果来做测试：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="err">“</span><span class="n">RGB</span><span class="err">”</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</span><span class='line'><span class="n">wave</span> <span class="o">=</span> <span class="n">GlobalWaveEffect</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+</span><span class='line'><span class="n">test</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="err">“</span><span class="n">test</span><span class="p">()</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">profile</span><span class="o">.</span><span class="n">data</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="err">“</span><span class="n">profile</span><span class="o">.</span><span class="n">data</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span><span class="o">.</span><span class="n">strip_dirs</span><span class="p">()</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="err">“</span><span class="n">time</span><span class="err">”</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>我们可以看到其输出：<!-- more --></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>console  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="go">Tue Aug 14 17:21:10 2012    profile.data&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">&lt;pre&gt;&lt;code&gt;     417923 function calls (417922 primitive calls) in 0.434 seconds</span>
+</span><span class='line'><span class="go">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">&lt;p&gt;Ordered by: internal time&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">&lt;p&gt;ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span>
+</span><span class='line'><span class="go">        1    0.150    0.150    0.434    0.434 Effect.py:92(filter)</span>
+</span><span class='line'><span class="go">    80000    0.068    0.000    0.068    0.000 {round}</span>
+</span><span class='line'><span class="go">    40000    0.051    0.000    0.063    0.000 Effect.py:304(transform)</span>
+</span><span class='line'><span class="go">    41889    0.034    0.000    0.034    0.000 {map}</span>
+</span><span class='line'><span class="go">    41890    0.029    0.000    0.042    0.000 Image.py:606(load)</span>
+</span><span class='line'><span class="go">    40000    0.028    0.000    0.091    0.000 Effect.py:317()</span>
+</span><span class='line'><span class="go">    33433    0.025    0.000    0.071    0.000 Image.py:946(getpixel)</span>
+</span><span class='line'><span class="go">    41890    0.013    0.000    0.013    0.000 {built-in method pixel_access}</span>
+</span><span class='line'><span class="go">    40000    0.012    0.000    0.012    0.000 {math.sin}</span>
+</span><span class='line'><span class="go">    33433    0.011    0.000    0.011    0.000 {built-in method getpixel}</span>
+</span><span class='line'><span class="go">     8457    0.008    0.000    0.019    0.000 Image.py:1260(putpixel)</span>
+</span><span class='line'><span class="go">     8457    0.004    0.000    0.004    0.000 {built-in method putpixel}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>可以发现，运行时间最长的函数有<a href="https://github.com/cedricporter/EffectLab/blob/master/EffectLab/Effect.py#L92">第92行的filter</a>，以及<a href="https://github.com/cedricporter/EffectLab/blob/master/EffectLab/Effect.py#L304">第304行的transform</a>。我们可以查看第92行的函数filter，这个函数看上去非常的简短，主要做的是处理每一个像素以及有抗锯齿运算。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
+</span><span class='line'>    <span class="n">new_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">Effect</span><span class="o">.</span><span class="n">empty_color</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">nband</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+</span><span class='line'><span class="n">antialias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">antialias</span>
+</span><span class='line'><span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="k">else</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">bottom</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">found</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="n">psum</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="n">nband</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c"># anti-alias</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">ai</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">antialias</span><span class="p">):</span>
+</span><span class='line'>            <span class="n">_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">ai</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">antialias</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">for</span> <span class="n">aj</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">antialias</span><span class="p">):</span>
+</span><span class='line'>                <span class="n">_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">aj</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">antialias</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="p">(</span><span class="n">_x</span><span class="p">,</span> <span class="n">_y</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">u</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">u</span><span class="p">))</span>
+</span><span class='line'>                <span class="n">v</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+</span><span class='line'>                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="n">u</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">width</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="n">v</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">height</span><span class="p">):</span>
+</span><span class='line'>                    <span class="k">continue</span>
+</span><span class='line'>                <span class="n">pt</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+</span><span class='line'>                <span class="n">psum</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">psum</span><span class="p">,</span> <span class="n">pt</span><span class="p">)</span>
+</span><span class='line'>                <span class="n">found</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="n">found</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">psum</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">div</span><span class="p">,</span> <span class="n">psum</span><span class="p">,</span> <span class="p">(</span><span class="n">found</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">psum</span><span class="p">))</span>
+</span><span class='line'>            <span class="n">new_img</span><span class="o">.</span><span class="n">putpixel</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">psum</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">return</span> <span class="n">new_img</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>以及transform函数：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">delta_w</span><span class="p">,</span> <span class="n">delta_h</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">radian</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">xoffset</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="n">delta_w</span>
+</span><span class='line'>    <span class="n">offset</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radian</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="n">delta_h</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">offset</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</code></pre>
+
+<h2 id="section-1">解决性能热点</h2>
+
+<p>嗯，这个看上去热点都是纯计算的代码，貌似已经没什么优化的空间了，这时怎么办呢？</p>
+
+<p>鉴于CPython可以非常容易的使用C/C++扩展模块，我们用C语言来实现里面这些纯计算的部分，看看性能有什么提升。</p>
+
+<p>我们用C来实现Filter函数。重新运行cProfile看看，</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>console  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="go">Tue Aug 14 17:38:56 2012    profile.data&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">&lt;pre&gt;&lt;code&gt;     12 function calls in 0.002 seconds</span>
+</span><span class='line'><span class="go">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">&lt;p&gt;Ordered by: internal time&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">&lt;p&gt;ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span>
+</span><span class='line'><span class="go">        1    0.002    0.002    0.002    0.002 {EffectLab.EffectLabCore.wave_warp}</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 {built-in method copy}</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:460(_new)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:740(copy)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.002    0.002 Effect.py:310(filter)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.002    0.002 :1()</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:606(load)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.002    0.002 Effect.py:37(&lt;strong&gt;call&lt;/strong&gt;)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 Image.py:449(&lt;strong&gt;init&lt;/strong&gt;)</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 {built-in method pixel_access}</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 {method ‘disable’ of ‘_lsprof.Profiler’ objects}</span>
+</span><span class='line'><span class="go">        1    0.000    0.000    0.000    0.000 {method ‘copy’ of ‘dict’ objects}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>此时热点函数已经被C语言的模块给替换了。</p>
+
+<p>我们用timeit模块统计一下运行时间，统计代码如下（其中test函数见上面，里面就是调用了波浪处理效果：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>python  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">t</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="err">‘</span><span class="n">test</span><span class="p">()</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="kn">from</span> <span class="err">&lt;</span><span class="nn">strong</span><span class="err">&gt;</span><span class="nn">main</span><span class="err">&lt;/</span><span class="nn">strong</span><span class="err">&gt;</span> <span class="kn">import</span> <span class="n">test</span><span class="err">’</span><span class="p">)</span>
+</span><span class='line'><span class="n">N</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'><span class="n">TIMES</span> <span class="o">=</span> <span class="mi">30</span>
+</span><span class='line'><span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">TIMES</span><span class="p">))</span> <span class="o">/</span> <span class="n">N</span> <span class="o">/</span> <span class="n">TIMES</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="err">‘</span><span class="n">ms</span><span class="err">’</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2 id="section-2">结果</h2>
+
+<p>我们来看看运行3轮，每轮运行30次，平均一次的时间是多少。
+Python版本的平均一次时间为：<strong>303.63 ms</strong></p>
+
+<p>C版本平均一次时间为：<strong>1.91 ms</strong></p>
+
+<p>可见运行速度是原来的<strong>159倍</strong>。</p>
+
+]]></content>
+  </entry>
+  
+</feed>

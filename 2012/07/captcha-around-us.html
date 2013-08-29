@@ -1,0 +1,438 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>我们身边的验证码技术 - EverET.org</title>
+  <meta name="author" content="Stupid ET">
+
+  
+  <meta name="description" content="验证码大家几乎经常都会碰到，不过很多时候，我们都仅仅只是输入完事，很少去思考验证码其背后的东西。验证码的英文名叫CAPTCHA，全称为Completely Automated Public Turing test to tell Computers and Humans Apart（ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://everet.org/2012/07/captcha-around-us.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="EverET.org" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-28529727-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">EverET.org</a></h1>
+  
+    <h2>好记性不如烂笔头</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:everet.org" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/my-works">Works</a></li>
+  <li><a href="http://414112390.qzone.qq.com/#!app=4" target="_blank">Albums</a></li>
+  <li><a href="/liuyana">Msg Board</a></li>
+  <li><a href="/about-me">About Me</a></li>
+  <li><a href="http://github.com/cedricporter">et@github</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">我们身边的验证码技术</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-09T06:47:01+08:00" pubdate data-updated="true">2012-07-09</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content">
+  <p>验证码大家几乎经常都会碰到，不过很多时候，我们都仅仅只是输入完事，很少去思考验证码其背后的东西。验证码的英文名叫<strong>CAPTCHA</strong>，全称为<strong>Completely Automated Public Turing test to tell Computers and Humans Apart</strong>（<strong>全自动区分计算机和人类的图灵测试</strong>）。验证码提供一个区分人与机器的手段，主要目的是将机器人拒之门外。</p>
+
+<p>现在的各种网络服务已经成为我们生活的重要的组成部分，像各种社交网站，购物网站，网上银行，投票，论坛等服务，为我们的带来的极大的便利。然而，这些系统都在遭受着恶意程序的滥用。所以，验证码系统用于阻挡这些恶意程序。</p>
+
+<h2 id="captcha">验证码CAPTCHA存在的意义</h2>
+
+<p>现在，每天有2亿的验证码CAPTCHA被人类识别出来。我们可利用其解决一些计算机难以处理或者耗费大量人力的问题。目前，像Google的<a href="http://www.google.com/recaptcha/aboutus">reCAPTCHA</a>项目，就是利用验证码来数字化图书和报纸。而像一些广告公司将广告融入了验证码，让人们在输入验证码的时候输入广告中的特定部分，但是这种验证码的样本必然会比较少，因为较难产生大量的广告验证码，所以很容易被破解。</p>
+
+<p>因为CAPTCHA的需求量十分巨大，所以CAPTCHA需要能够自动产生并且评估正确性。此外，人类必须要能够快速地识别并输入验证码，否则容易惹恼用户以至于用户流失。对于CAPTCHA，可以引入人工智能领域的难题，来使现有技术短期无法成功破解。如果一种CAPTCHA没有被破解，那么就有一个可以区分人类和计算机的方法。如果CAPTCHA被破解了，那么一个人工智能的问题也就随之解决了。</p>
+
+<h2 id="captcha---more---">验证码CAPTCHA的困境<!-- more --></h2>
+
+<p>计算机程序可以一天24小时不间断运行，即使是在较低的识别率也可以在较短的时间内大量穿越CAPTCHA系统。所以CAPACHA的识别率需要低于0.01%才可以有效地阻挡自动化的恶意程序的攻击。当然，也可以通过IP辅助来限制一台机器的尝试次数。</p>
+
+<h2 id="captcha-1">CAPTCHA的类型</h2>
+
+<p>CAPTCHA主要分成3类——文本、图像和声音。</p>
+
+<h3 id="text-based-captcha">文本验证码（Text-based CAPTCHA)</h3>
+
+<p>文本验证码方便计算机自动地大量产生，是目前应用最多的最广泛的技术。文本验证码主要靠图像变形和添加噪声。</p>
+
+<p>文本验证码破解难点主要在于字符的分割和识别。其中字符分割是破解文本验证码的关键。主要步骤是：第一步，分割字符，第二步，单个字符识别，其中单个字符的识别在现有的机器学习算法下可以很容易的识别。</p>
+
+<p>所以防范对文本验证码的攻击的关键在于加大字符分割的难度。像Google等公司的验证码[5]都是粘连在一起，分割难度大。</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-08-223255.png"><img src="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-08-223255.png" alt="" /></a></p>
+
+<p>验证码识别的主要流程一般都较为固定。</p>
+
+<h4 id="section">识别流程</h4>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/2.png"><img src="http://everet.org/wp-content/uploads/2012/07/2.png" alt="" /></a></p>
+
+<h4 id="section-1">分割</h4>
+
+<p>下图为垂直投影字符分割[7]</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/Selection_012.png"><img src="http://everet.org/wp-content/uploads/2012/07/Selection_012.png" alt="" /></a></p>
+
+<h3 id="image-based-captcha">图像验证码（Image-based CAPTCHA）</h3>
+
+<p>图像验证码基于图像分类、目标识别、场景理解等问题，一般情况下比文本验证码更加难以破解，但是现有的图像验证码需要庞大的图像数据库，而且无法大规模产生。更糟糕的是，一旦数据库被公布，算法不功自破。[6]</p>
+
+<p><a href="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-08-224238.png"><img src="http://everet.org/wp-content/uploads/2012/07/Screenshot-from-2012-07-08-224238.png" alt="" /></a></p>
+
+<h3 id="sound-based-captcha">声音验证码（Sound-based CAPTCHA）</h3>
+
+<p>声音验证码以随机间隔播放随机选择的一个或多个人播报的数字字母，再添加背景噪声。声音验证码容易收到机器学习算法的攻击。而且相对于视觉上的验证码，用户友好性更低。对于字母的声音，可能农村地区的少部分群体会因为对于字母发音不熟悉而导致无法理解，而无法通过测试。</p>
+
+<h2 id="section-2">参考资料</h2>
+
+<ol>
+  <li>
+    <p>Jeff Yan, Ahmad Salah El Ahmad, <strong>A Low-cost Attack on a Microsoft CAPTCHA</strong></p>
+  </li>
+  <li>
+    <p>李秋洁 茅耀斌 王执铨, <strong>CAPTCHA技术研究综述</strong></p>
+  </li>
+  <li>
+    <p>Prof. (Mrs.) A.A. Chandavale,  Prof. Dr.A.M. Sapkal, Dr.R.M.Jalnekar, <strong>Algorithm To Break Visual CAPTCHA</strong></p>
+  </li>
+  <li>
+    <p>Shujun Li, S. Amier Haider Shah, …,   <strong>Breaking e-Banking CAPTCHAs</strong></p>
+  </li>
+  <li>
+    <p>Ibrahim Furkan Ince, Ilker Yengin, Yucel Batu Salman, <strong>DESIGNING CAPTCHA ALGORITHM: SPLITTING AND ROTATING</strong></p>
+  </li>
+  <li>
+    <p>Michele Merler (mm3233), Jacquilene Jacob (jj2442),  <strong>BREAKING AN IMAGE BASED CAPTCHA</strong></p>
+  </li>
+  <li>
+    <p>Shih-Yu Huang, Yeuan-Kuen Lee, Graeme Bell and Zhan-he Ou, <strong>An Efficient Segmentation Algorithm for CAPTCHAs with Line Cluttering and Character Warping</strong></p>
+  </li>
+</ol>
+
+
+
+  <span>本文链接: <a href="http://everet.org/2012/07/captcha-around-us.html">http://everet.org/2012/07/captcha-around-us.html</a></span>
+  <hr/>
+    <h3>您可能也喜欢</h3>
+    <ul>
+    
+        <li>
+        <a href="/2012/07/captcha-recognition.html">Python验证码识别之预处理</a>
+        </li>
+    
+        <li>
+        <a href="/2012/05/python-grammar.html">Python文法</a>
+        </li>
+    
+        <li>
+        <a href="/2012/07/add-new-grammer-to-python.html">走进Python: 为Python增加新语法</a>
+        </li>
+    
+        <li>
+        <a href="/2012/03/ftp-server.html">我的FTP Server——ftp.py</a>
+        </li>
+    
+        <li>
+        <a href="/2012/03/ftp-protocol.html">Mission: FTP Protocol</a>
+        </li>
+    
+    </ul>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stupid ET</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-09T06:47:01+08:00" pubdate data-updated="true">2012-07-09</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/category/it/'>IT</a>
+  
+</span>
+
+
+      
+
+<span class="categories">
+  Tags:&nbsp
+  
+    <a class='tag' href='/tag/captcha/'>Captcha</a>
+  
+</span>
+
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/07/virtualbox-seamless.html" title="Previous Post: VirtualBox的无缝模式">&laquo; VirtualBox的无缝模式</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/07/effectlab.html" title="Next Post: Python图像处理特效库EffectLab">Python图像处理特效库EffectLab &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>Cedric Porter is Stupid ET.</p>
+  <p>EverET.org is provided by Stupid ET.</p>
+</section>
+<section>
+  <h1>Tags</h1>
+  <ul class="tag-cloud">
+    <a style="font-size: 112%" href="/tag/android/">Android</a>
+<a style="font-size: 131%" href="/tag/apache/">Apache</a>
+<a style="font-size: 80%" href="/tag/boost/">Boost</a>
+<a style="font-size: 80%" href="/tag/bugzilla/">Bugzilla</a>
+<a style="font-size: 177%" href="/tag/c-/">C++</a>
+<a style="font-size: 131%" href="/tag/captcha/">Captcha</a>
+<a style="font-size: 80%" href="/tag/chrome/">Chrome</a>
+<a style="font-size: 164%" href="/tag/clover/">Clover</a>
+<a style="font-size: 112%" href="/tag/datastructure/">DataStructure</a>
+<a style="font-size: 80%" href="/tag/design/">Design</a>
+<a style="font-size: 164%" href="/tag/emacs/">Emacs</a>
+<a style="font-size: 80%" href="/tag/english/">English</a>
+<a style="font-size: 171%" href="/tag/git/">Git</a>
+<a style="font-size: 80%" href="/tag/gitosis/">Gitosis</a>
+<a style="font-size: 112%" href="/tag/gitweb/">Gitweb</a>
+<a style="font-size: 131%" href="/tag/http/">HTTP</a>
+<a style="font-size: 183%" href="/tag/image-processing/">Image Processing</a>
+<a style="font-size: 80%" href="/tag/imagination-factory/">Imagination Factory</a>
+<a style="font-size: 80%" href="/tag/irrlicht/">Irrlicht</a>
+<a style="font-size: 80%" href="/tag/lnmp/">LNMP</a>
+<a style="font-size: 207%" href="/tag/linux/">Linux</a>
+<a style="font-size: 145%" href="/tag/lisp/">Lisp</a>
+<a style="font-size: 80%" href="/tag/markdown/">Markdown</a>
+<a style="font-size: 80%" href="/tag/moinmoin/">MoinMoin</a>
+<a style="font-size: 131%" href="/tag/mysql/">Mysql</a>
+<a style="font-size: 145%" href="/tag/nginx/">Nginx</a>
+<a style="font-size: 155%" href="/tag/ogre/">OGRE</a>
+<a style="font-size: 112%" href="/tag/octopress/">Octopress</a>
+<a style="font-size: 131%" href="/tag/php/">PHP</a>
+<a style="font-size: 131%" href="/tag/pil/">PIL</a>
+<a style="font-size: 250%" href="/tag/python/">Python</a>
+<a style="font-size: 80%" href="/tag/qq/">QQ</a>
+<a style="font-size: 80%" href="/tag/ruby/">Ruby</a>
+<a style="font-size: 80%" href="/tag/svn/">SVN</a>
+<a style="font-size: 112%" href="/tag/scar/">Scar</a>
+<a style="font-size: 112%" href="/tag/tortoisegit/">TortoiseGit</a>
+<a style="font-size: 164%" href="/tag/ubuntu/">Ubuntu</a>
+<a style="font-size: 145%" href="/tag/ultrademo/">UltraDemo</a>
+<a style="font-size: 80%" href="/tag/vpn/">VPN</a>
+<a style="font-size: 112%" href="/tag/vim/">Vim</a>
+<a style="font-size: 112%" href="/tag/wpf/">WPF</a>
+<a style="font-size: 183%" href="/tag/web/">Web</a>
+<a style="font-size: 164%" href="/tag/wordpress/">Wordpress</a>
+<a style="font-size: 171%" href="/tag/compile/">compile</a>
+<a style="font-size: 80%" href="/tag/curl/">curl</a>
+<a style="font-size: 80%" href="/tag/cygwin/">cygwin</a>
+<a style="font-size: 80%" href="/tag/ppp/">ppp</a>
+<a style="font-size: 80%" href="/tag/pptpd/">pptpd</a>
+<a style="font-size: 80%" href="/tag/rsync/">rsync</a>
+<a style="font-size: 80%" href="/tag/sendmail/">sendmail</a>
+<a style="font-size: 80%" href="/tag/ssh/">ssh</a>
+<a style="font-size: 80%" href="/tag/uwsgi/">uWSGI</a>
+<a style="font-size: 80%" href="/tag/virtual-memory/">virtual memory</a>
+
+  </ul>
+</section>
+<section>
+  <h1>Friends</h1>
+    <a href="http://www.kidsang.com/" target="_blank">树桑小朋友的自留地</a>
+    | <a href="http://xiaoxia.org/" target="_blank">XIAOXIA[PG]</a>
+    | <a href="http://huanghuachao.cn/" target="_blank">Richard Huang's Blog</a>
+    | <a href="http://jiafei.org/" target="_blank">jiafei</a>
+    | <a href="http://xuyufish.com/" target="_blank">Fish</a>
+    | <a href="http://zhke.name/" target="_blank">汗青-home</a>
+    | <a href="http://www.dorgel.net/blog" target="_blank">Dorgel&#039;s Blog</a>
+    | <a href="http://spead.everet.org" title="俊杰的空间" target="_blank">Spead&#039;s Blog</a>
+</section>
+<section>
+  <h1>Recent Comments</h1>
+  <div id="dsq-recentcomments" class="dsq-widget"><script type="text/javascript" src="http://disqus.com/forums/everet/recent_comments_widget.js?hide_avatars=0&num_items=5&excerpt_length=100"></script></div>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/emacs-markdown-display-image.html">让Emacs显示Markdown中的图片</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/learn-http-chunked.html">[学习HTTP] Transfer-Encoding: chunked</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/customize-emacs-gud-many-windows.html">定制Emacs GDB调试窗口布局</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/http-status-206-partial-content.html">[学习HTTP] 206 Partial Content</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/chrome-edit-with-emacs.html">Chrome Edit With Emacs</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Stupid ET -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'everet';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://everet.org/2012/07/captcha-around-us.html';
+        var disqus_url = 'http://everet.org/2012/07/captcha-around-us.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
