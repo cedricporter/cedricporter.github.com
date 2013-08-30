@@ -778,3 +778,18 @@
      openssl rsautl -decrypt -inkey id_rsa.pem -in file.enc -out file.txt
    #+END_SRC
    from: [[http://unix.stackexchange.com/questions/27005/encrypting-file-only-with-ssh-priv-key][Encrypting file only with SSH -priv-key?]]
+
+* 修改时区
+  #+BEGIN_SRC sh
+    # Ubuntu:
+    dpkg-reconfigure tzdata
+
+    # Redhat:
+    redhat-config-date
+
+    #CentOS/Fedora:
+    system-config-date
+
+    #FreeBSD/Slackware:
+    tzselect
+  #+END_SRC
