@@ -12,3 +12,12 @@
     mysqldump -u root -p --all-databases > all.sql
     mysql -u root -p < all.sql
   #+END_SRC
+
+* pptp
+  弄了好久，pptpd在启动的时候都卡住了，在/var/log/syslog，一直报：
+
+  #+BEGIN_EXAMPLE
+    Aug 30 02:22:59 everet pptpd[8429]: Long config file line ignored.   
+  #+END_EXAMPLE
+
+  搞了一会，然后去google，发现原来配置文件最后一行一定要留空白行，要不然pptpd就启动不了。
