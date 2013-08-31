@@ -1,0 +1,25 @@
+#+TITLE: temp.org
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* tt color
+  #+BEGIN_SRC python
+    make_color = lambda i: bin(i)[2:].rjust(8, "0") * 4
+
+  #+END_SRC
+
+  http://www.brackeen.com/vga/basics.html
+
+  #+BEGIN_SRC diff
+    375a376,378
+    >                 if (fg == 252645135) {
+    >                     fg = 117901063;
+    >                 }
+    376a380,385
+    >                 if (bg == 33686018) {   // green
+    >                     bg = 0; //;     // 8: 134744072, dark gray
+    >                 }
+    >                 else if (bg == 16843009) { // blue
+    >                     bg = 101058054;        // 6: brown
+    >                 }
+  #+END_SRC
