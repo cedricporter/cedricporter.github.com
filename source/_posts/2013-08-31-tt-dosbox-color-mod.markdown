@@ -108,7 +108,7 @@ assert make_color(10) == 168430090  # light green
 >                 }
 ```
 
-下载patch：[tt-color.patch](/static/tt.patch )
+下载patch：[dosbox-0.74-tt-color.patch](/static/dosbox-0.74-tt-color.patch )
 
 ## 完整流程
 
@@ -118,11 +118,9 @@ assert make_color(10) == 168430090  # light green
 # 下载dosbox源码
 apt-get source dosbox
 # 打补丁
-wget http://EverET.org/static/tt.patch
-cp tt.patch dosbox-0.74/src/hardware/
-cd dosbox-0.74/src/hardware/
-patch vga_draw.cpp tt.patch
-cd ../../
+cd dosbox-0.74
+wget http://EverET.org/static/dosbox-0.74-tt-color.patch
+patch -p0 < dosbox-0.74-tt-color.patch
 # 编译
 ./configure --prefix=$HOME/my-dosbox
 make -j4 && make install

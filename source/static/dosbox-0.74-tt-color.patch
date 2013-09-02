@@ -1,0 +1,19 @@
+--- src/hardware/vga_draw.cpp.old	2013-09-02 12:53:18.469501482 +0800
++++ src/hardware/vga_draw.cpp	2013-09-02 12:54:20.540498714 +0800
+@@ -373,7 +373,16 @@
+ 		Bit32u mask1=TXT_Font_Table[font>>4] & FontMask[col >> 7];
+ 		Bit32u mask2=TXT_Font_Table[font&0xf] & FontMask[col >> 7];
+ 		Bit32u fg=TXT_FG_Table[col&0xf];
++                if (fg == 252645135) {   // 15:white
++                    fg = 117901063;      // 7:light gray
++                }
+ 		Bit32u bg=TXT_BG_Table[col>>4];
++                if (bg == 33686018) {   // 2:green
++                    bg = 0;             // 0:black
++                }
++                else if (bg == 16843009) { // 10:light green
++                    bg = 101058054;        // 6:brown
++                }
+ 		*draw++=(fg&mask1) | (bg&~mask1);
+ 		*draw++=(fg&mask2) | (bg&~mask2);
+ 	}
