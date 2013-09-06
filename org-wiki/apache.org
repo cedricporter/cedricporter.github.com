@@ -1,0 +1,8 @@
+#+TITLE: apache
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* 测试配置
+  #+BEGIN_SRC sh
+    apachectl -t
+  #+END_SRC

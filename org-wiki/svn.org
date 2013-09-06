@@ -1,0 +1,13 @@
+#+TITLE: svn
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* 查看分支
+  #+BEGIN_SRC sh
+    svn ls -v http://mayorat.ursinecorner.ru:8088/svn/Hello/branches/
+  #+END_SRC
+
+* 撤销
+  #+BEGIN_SRC sh
+    svn revert -R .
+  #+END_SRC

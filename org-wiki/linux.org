@@ -613,7 +613,8 @@
 
 ** 查看指纹
   #+BEGIN_SRC sh
-    ssh-keygen -l
+    ssh-keygen -lf /etc/ssh/ssh_host_rsa_key.pub
+    ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub
   #+END_SRC
 
 ** 直接执行命令
