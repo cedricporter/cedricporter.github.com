@@ -2,6 +2,15 @@
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
 
+* chrome
+  chrome的开发环境挺好用的。
+
+** 保存对象
+   #+BEGIN_SRC javascript
+     copy(JSON.stringify(song_list))   
+   #+END_SRC
+   这样就可以将对象复制到内存里面了。
+
 * 面向对象
   构造函数和其他函数的唯一区别，就在于调用它们的方式不同。
 

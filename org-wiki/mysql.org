@@ -210,7 +210,10 @@ p
   1. 对不支持事务的表做start/commit操作没有任何效果，在执行commit前已经提交。
   1. 任何一种表都不是万能的，只用恰当的针对业务类型来选择合适的表类型，才能最大的发挥MySQL的性能优势。
 
-
+** 转换ip
+   #+BEGIN_EXAMPLE
+     select inet_aton("218.107.55.253");   
+   #+END_EXAMPLE
 
 * 资料来源
   1. [[http://www.mysqlops.com/2011/12/09/myisam%25E5%2592%258Cinnodb%25E5%25AF%25B9%25E6%25AF%2594%25E8%25AF%25A6%25E8%25A7%25A3.html][MySQL数据库存储引擎MyISAM和InnoDB的对比详解]]
