@@ -805,7 +805,7 @@
   在公司电脑运行
 
   #+BEGIN_SRC sh
-    ssh user@everet.org -p 22 -L 21990:localhost:9999
+    ssh user@everet.org -p 22 -L 9999:localhost:21990
   #+END_SRC
 
   然后在公司电脑访问localhost:9999就是访问家里面电脑的1990这个端口了。
