@@ -54,6 +54,11 @@ task :generate do
   puts "## Generating Site with Jekyll"
   system "compass compile --css-dir #{source_dir}/stylesheets"
   system "jekyll"
+  
+  if File.exist?(".integrate-status") and File.exist?(".isolate-status")
+    File.delete(".isolate-status")
+    File.delete(".integrate-status")
+  end
 end
 
 desc "Watch the site and regenerate when it changes"
@@ -172,6 +177,8 @@ end
 # usage rake isolate[my-post]
 desc "Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly."
 task :isolate, :filename do |t, args|
+  FileUtils.touch(".isolate-status")
+  File.delete(".integrate-status") if File.exist?(".integrate-status")
   stash_dir = "#{source_dir}/#{stash_dir}"
   FileUtils.mkdir(stash_dir) unless File.exist?(stash_dir)
   Dir.glob("#{source_dir}/#{posts_dir}/*.*") do |post|
@@ -182,6 +189,7 @@ end
 desc "Move all stashed posts back into the posts directory, ready for site generation."
 task :integrate do
   FileUtils.mv Dir.glob("#{source_dir}/#{stash_dir}/*.*"), "#{source_dir}/#{posts_dir}/"
+  FileUtils.touch(".integrate-status")
 end
 
 desc "Clean out caches: .pygments-cache, .gist-cache, .sass-cache"
@@ -245,6 +253,11 @@ task :deploy do
     puts "## Found posts in preview mode, regenerating files ..."
     File.delete(".preview-mode")
     Rake::Task[:generate].execute
+  end
+
+  if File.exist?(".isolate-status")
+    puts "## Isolate status found, exit now!"
+    next
   end
 
   Rake::Task[:copydot].invoke(source_dir, public_dir)
