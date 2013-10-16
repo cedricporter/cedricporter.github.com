@@ -9,22 +9,24 @@
 
 function generateTOC(insertBefore, heading) {
     var container = jQuery("<div id='tocBlock'></div>");
-    var div = jQuery("<ul id='toc'></ul>");
     var content = jQuery(insertBefore).first();
 
-    if (heading != undefined && heading != null) {
-	container.append('<span class="tocHeading">' + heading + '</span>');
-    }
-
     container.toc({
-    	'selectors': 'h1,h2,h3,h4,h5', //elements to use as headings
-    	'container': $(".entry-content"), //element to find all selectors in
-    	'smoothScrolling': true, //enable or disable smooth scrolling on click
-    	'prefix': 'toc', //prefix for anchor tags and class names
-    	'highlightOnScroll': true //add class to heading that is currently in focus
+    	'selectors': 'h1,h2,h3,h4,h5',
+    	'container': $(".entry-content"),
+    	'smoothScrolling': true,
+    	'prefix': 'toc',
+    	'highlightOnScroll': true 
     });
+
+    container.find("a").addClass("disc-like");
     
     // div.tableOfContents(content, {startLevel:2, depth: 5});
-    container.append(div);
     container.insertBefore(insertBefore);
+
+    if (heading != undefined && heading != null) {
+	container.prepend('<span class="tocHeading">' + heading + '</span>');
+    }
+
 }
+
