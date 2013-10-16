@@ -132,6 +132,4 @@ make -j4 && make install
 
 是不是看上去舒服很多呢？
 
-## Footnotes
-
 [^1]: [VGA Basics](http://www.brackeen.com/vga/basics.html )

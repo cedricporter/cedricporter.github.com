@@ -117,6 +117,4 @@ merge完记得最好删除本地的git分支[^1]。
 
 在平时可以使用Git来连接老就的svn版本库，这不失为一种过渡的办法。需要更多的学习Git可以围观[《Git权威指南》](http://book.douban.com/subject/6526452/)，以及[《Pro Git》](http://git-scm.com/book/zh/)。
 
-## Footnotes
-
 [^1]: [Git-与其他系统-Git-与-Subversion#切换当前分支](http://git-scm.com/book/zh/Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F-Git-%E4%B8%8E-Subversion#切换当前分支)

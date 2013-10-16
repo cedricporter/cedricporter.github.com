@@ -5,6 +5,7 @@ date: 2013-02-09 16:05
 comments: true
 categories: IT
 tags: [Emacs, Lisp]
+toc: true
 ---
 
 By：[Stupid ET](http://EverET.org/about-me)
@@ -16,14 +17,6 @@ Emacs在1975年就诞生了，想必比现在绝大多数程序员都要老。�
 我们在Emacs中键入`M-x ielm`就可以打开Emacs Lisp交互解释器。可见，在Emacs中接触到Lisp是多么的容易。
 
 <!-- more -->
-
-## Table Of Content
-
-{:no_toc}
-1. Will be replaced with the ToC, excluding the "Contents" header
-{:toc}
-
-* * * * *
 
 ## 两个常用按键
 
@@ -450,8 +443,6 @@ export LC_CTYPE="zh_CN.UTF-8"
 1. <http://whattheemacsd.com/>
 1. <http://emacsrocks.com/>
 
-
-## Footnotes
 
 [^1]: <http://zh.wikipedia.org/wiki/HHKB>
 

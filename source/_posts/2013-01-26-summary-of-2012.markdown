@@ -134,8 +134,6 @@ Windows是一个闭源的系统，要了解它也只能靠寥寥无几的几本�
 * 希望能够学好英语，能够较为轻松和老外交流（听、说、读、写）
 * 希望可以换一台能够Downhill不散架的山地车
 
-## Footnotes ##
-
 [^1]: <http://irrlicht.sourceforge.net/>
 
 [^2]: <http://www.viemu.com/>

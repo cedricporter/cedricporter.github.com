@@ -21,21 +21,28 @@ subscribe_email:
 # RSS feeds can list your email address if you like
 email:
 
-static_file_prefix: http://everet.b0.upaiyun.com
+# static_file_prefix: http://everet.b0.upaiyun.com
+static_file_prefix: 
 
 # ----------------------- #
 #    Jekyll & Plugins     #
 # ----------------------- #
 
-# If publishing to a subdirectory as in http://site.com/project set 'root: http://everet.org/project'
-root: http://everet.org/
+# If publishing to a subdirectory as in http://site.com/project set 'root: /project'
+root: /
 permalink: /:year/:month/:title.html
 source: source
 destination: public
 plugins: plugins
 code_dir: downloads/code
 category_dir: category
-markdown: kramdown #rdiscount
+# markdown: kramdown
+markdown: rdiscount
+rdiscount:
+  extensions:
+    - footnotes
+    - smart
+    # - autolink
 pygments: false # default python pygments have been replaced by pygments.rb
 
 paginate: 10          # Posts per page on the blog index
@@ -52,7 +59,7 @@ lsi: false
 # list each of the sidebar modules you want to include, in the order you want them to appear.
 # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
 default_asides: [custom/asides/about.html, custom/asides/tags.html, custom/asides/links.html, custom/asides/recent_comments.html, asides/recent_posts.html, asides/github.html, asides/googleplus.html]
-#, asides/twitter.html, asides/delicious.html, asides/pinboard.html, ]
+# default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
 
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
@@ -72,10 +79,6 @@ github_skip_forks: true
 
 # Twitter
 twitter_user:
-twitter_tweet_count: 4
-twitter_show_replies: false
-twitter_follow_button: false
-twitter_show_follower_count: false
 twitter_tweet_button: false
 
 # Google +1
