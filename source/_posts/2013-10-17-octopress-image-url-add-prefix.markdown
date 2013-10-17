@@ -9,7 +9,7 @@ tags: [Octopress, Ruby]
 
 最近把站点的css和js这些页面包含的静态文件都放到了又拍云的cdn里面，现在决定把图片也一起放到cdn里面。
 
-这样vps就仅仅需要提供博客文章html的给用户下载，其他所有的资源浏览器的可以从就近的cdn获取。可以一定程度上站点的打开速度，而且也可以减少vps的压力（不过都是静态文件，也没啥压力-_-）。
+这样vps就仅仅需要提供博客文章html的给用户下载，其他所有的资源浏览器都可以从就近的cdn获取。可以一定程度上加快站点的打开速度，而且也可以减少vps的压力（不过都是静态文件，也没啥压力-_-）。
 
 那如何为图片链接加上cdn的前缀呢？一种比较傻的做法是，手工为文章里面的图片链接都加上cdn的前缀，但是这样如果哪天我修改了cdn的地址，那不是又要把所有的图片的前缀都改一遍？这样也太傻了吧。
 
@@ -51,5 +51,9 @@ static_file_prefix: http://cdn.everet.org
 插入一张今年6月在四川贡嘎转山的照片
 
 {% img /imgs/psb_20131017_211339_11923cq2.jpg %}
+
+## css、js静态文件的cdn前缀配置
+
+对于css、js等静态文件的cdn前缀，我们可以修改`source/_includes/head.html`，将里面js、css的链接前面的{% raw %}`{{ root_url }}`{% endraw %}修改为{% raw %}`{{ site.static_file_prefix }}`{% endraw %}，就可以根据_config.yml里面的`static_file_prefix`来配置这些静态文件的前缀了。
 
 [^1]: [http://octopress.org/docs/plugins/image-tag/](http://octopress.org/docs/plugins/image-tag/)
