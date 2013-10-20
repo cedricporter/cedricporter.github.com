@@ -7,7 +7,7 @@ categories: IT
 tags: [Octopress, Ruby]
 ---
 
-最近把站点的css和js这些页面包含的静态文件都放到了又拍云的cdn里面，现在决定把图片也一起放到cdn里面。
+最近把站点的css和js这些页面包含的静态文件都放到了又拍云[^1]的cdn里面，现在决定把图片也一起放到cdn里面。
 
 这样vps就仅仅需要提供博客文章html的给用户下载，其他所有的资源浏览器都可以从就近的cdn获取。可以一定程度上加快站点的打开速度，而且也可以减少vps的压力（不过都是静态文件，也没啥压力-_-）。
 
@@ -25,7 +25,7 @@ tags: [Octopress, Ruby]
 
 然后在_config.yml里面加上一行：
 
-``` yaml 
+``` yaml
 static_file_prefix: http://cdn.everet.org
 ```
 
@@ -33,9 +33,9 @@ static_file_prefix: http://cdn.everet.org
 
 我们就可以不用手动为每一张图片加上前缀了，而且在需要修改cdn地址或者不用cdn的时候，就只要在_config.yml里面配置一下前缀，然后重新生成站点就好了。这样非常的方便。
 
-当然这里有一个前提，就是要使用Octopress自定义的`{% raw %}{% img %}{% endraw %}`标签[^1]来插入图片。如下
+当然这里有一个前提，就是要使用Octopress自定义的`{% raw %}{% img %}{% endraw %}`标签[^2]来插入图片。如下
 
-{% raw %} 
+{% raw %}
 ``` html
 {% img left /images/hello.jpg Stupid ET #2 %}
 ```
@@ -56,4 +56,6 @@ static_file_prefix: http://cdn.everet.org
 
 对于css、js等静态文件的cdn前缀，我们可以修改`source/_includes/head.html`，将里面js、css的链接前面的{% raw %}`{{ root_url }}`{% endraw %}修改为{% raw %}`{{ site.static_file_prefix }}`{% endraw %}，就可以根据_config.yml里面的`static_file_prefix`来配置这些静态文件的前缀了。
 
-[^1]: [http://octopress.org/docs/plugins/image-tag/](http://octopress.org/docs/plugins/image-tag/)
+[^1]: [又拍云存储](http://upyun.com/)
+
+[^2]: [http://octopress.org/docs/plugins/image-tag/](http://octopress.org/docs/plugins/image-tag/)
