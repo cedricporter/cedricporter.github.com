@@ -19,3 +19,5 @@ source/imgs/graphviz
 source/notes/
 .integrate-status
 .isolate-status
+.\#*
+\#*
