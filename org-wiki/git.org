@@ -264,3 +264,16 @@
     git tag -d v1.0
     git push --delete origin v1.0
   #+END_SRC
+
+* 代理上Github
+  假设我们已经有了socks5代理
+  #+BEGIN_EXAMPLE
+    Host github.com
+        ProxyCommand nc -x 127.0.0.1:8989 -X 5 %h %p  
+  #+END_EXAMPLE
+  
+* 全局忽略
+  #+BEGIN_SRC sh
+    git config --global core.excludesfile '~/.gitignore'  
+  #+END_SRC
+  然后在`~/.gitignore`里面添加全局忽略
