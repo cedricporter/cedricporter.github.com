@@ -11,3 +11,8 @@
   #+BEGIN_SRC sh
     svn revert -R .
   #+END_SRC
+
+* 解决树冲突
+  #+BEGIN_SRC sh
+    svn resolve --accept working tools/ -R
+  #+END_SRC
