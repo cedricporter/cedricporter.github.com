@@ -820,3 +820,8 @@
     cp -L /etc/resolv.conf etc/resolv.conf
   #+END_SRC
   [[http://chaoslawful.info/archives/370][完整的 chroot 过程]]
+
+* 更新一个程序
+  #+BEGIN_SRC sh
+    sudo apt-get install --only-upgrade google-chrome-beta   
+  #+END_SRC
