@@ -16,3 +16,9 @@
   #+BEGIN_SRC sh
     svn resolve --accept working tools/ -R
   #+END_SRC
+
+* 全局忽略
+  #+BEGIN_SRC conf
+    [miscellany]
+    global-ignores = *.o *.lo *.la *.al .libs *.so *.so.[0-9]* *.a *.pyc *.pyo .ropeproject *.rej *~  
+  #+END_SRC
