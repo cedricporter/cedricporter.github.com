@@ -212,10 +212,15 @@ p
 
 ** 转换ip
    #+BEGIN_EXAMPLE
-     select inet_aton("218.107.55.253");   
+     select inet_aton("218.107.55.253");
    #+END_EXAMPLE
 
 * 资料来源
   1. [[http://www.mysqlops.com/2011/12/09/myisam%25E5%2592%258Cinnodb%25E5%25AF%25B9%25E6%25AF%2594%25E8%25AF%25A6%25E8%25A7%25A3.html][MySQL数据库存储引擎MyISAM和InnoDB的对比详解]]
   2. [[http://blog.codinglabs.org/articles/theory-of-mysql-index.html][MySQL索引背后的数据结构及算法原理]]
   3. [[http://dev.mysql.com/doc/refman/5.5/en/error-messages-client.html][错误码]]
+
+* 修改auto_increment
+  #+BEGIN_SRC sql
+    ALTER TABLE users AUTO_INCREMENT = 1001;
+  #+END_SRC
