@@ -1,0 +1,40 @@
+#+TITLE: firefox
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* Pentadactyl
+** Hint
+   - ~;c~ to open its context menu
+   - ~;i~ to open an image
+   - ~;I~ to open an image in new tab
+
+** Page
+   - ~gf~ source code
+   - ~zi~ zoom in
+   - ~zo~ zoom out
+   - ~zz~ zoom to default
+   - ~y~ yank link
+   - ~C-i~ last position
+   - ~C-o~ next position
+   - ~C-6~ last tab
+
+** bookmarks
+   - ~\,b~ list all bookmarks
+   - ~a~ add bookmark
+   - ~A~ add / delete bookmark
+
+** Quickmark
+   - ~M{a-zA-Z0-9}~ add
+   - ~go{}~ quickmark in current tab
+   - ~gn{}~ quickmark in new tab
+   - ~:qmarks~ list
+
+** mode
+   - ~t~ textmode
+   - ~v~ visual
+
+** dialog
+   ~:dia~
+
+** Save
+   ~:mkp[!]~
