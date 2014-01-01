@@ -68,3 +68,18 @@
         return;
     }
   #+END_SRC
+
+* 目录浏览
+  #+BEGIN_EXAMPLE
+    server {
+        listen 80 default_server;
+    
+        server_name localhost;
+        root /home/cedricporter/htdocs;
+    
+        location / {
+            autoindex on;
+            disable_symlinks off;
+        }
+    }
+  #+END_EXAMPLE

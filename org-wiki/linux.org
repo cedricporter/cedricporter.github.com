@@ -794,3 +794,34 @@
     #FreeBSD/Slackware:
     tzselect
   #+END_SRC
+
+* 建立ssh tunnel
+  在家里的电脑运行
+
+  #+BEGIN_SRC sh
+    ssh -N -R 21990:localhost:1990 user@everet.org -p 22
+  #+END_SRC
+
+  在公司电脑运行
+
+  #+BEGIN_SRC sh
+    ssh user@everet.org -p 22 -L 9999:localhost:21990
+  #+END_SRC
+
+  然后在公司电脑访问localhost:9999就是访问家里面电脑的1990这个端口了。
+
+* chroot
+  #+BEGIN_SRC sh
+    cd <new-root-dir>
+    mount -t proc proc proc/
+    mount -t sysfs sys sys/
+    mount -o bind /dev dev/
+    mount -t devpts pts dev/pts/
+    cp -L /etc/resolv.conf etc/resolv.conf
+  #+END_SRC
+  [[http://chaoslawful.info/archives/370][完整的 chroot 过程]]
+
+* 更新一个程序
+  #+BEGIN_SRC sh
+    sudo apt-get install --only-upgrade google-chrome-beta   
+  #+END_SRC

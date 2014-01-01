@@ -17,3 +17,7 @@ node_modules
 source/imgs/graphviz
 /org-wiki/sitemap.org
 source/notes/
+.integrate-status
+.isolate-status
+.\#*
+\#*

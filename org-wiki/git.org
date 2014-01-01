@@ -236,6 +236,11 @@
     git config --global color.diff auto
   #+END_SRC
 
+* 打开git输出颜色
+  #+BEGIN_SRC sh
+    git config --global color.ui true
+  #+END_SRC
+
 * 资料
   [[http://rogerdudler.github.com/git-guide/index.zh.html][git - 简易指南]]
 
@@ -259,3 +264,26 @@
     git tag -d v1.0
     git push --delete origin v1.0
   #+END_SRC
+
+* 代理上Github
+  假设我们已经有了socks5代理
+  #+BEGIN_EXAMPLE
+    Host github.com
+        ProxyCommand nc -x 127.0.0.1:8989 -X 5 %h %p
+  #+END_EXAMPLE
+
+* 全局忽略
+  #+BEGIN_SRC sh
+    git config --global core.excludesfile '~/.gitignore'
+  #+END_SRC
+  然后在`~/.gitignore`里面添加全局忽略
+
+* undo last commit
+  #+BEGIN_SRC sh
+    $ git commit ...              (1)
+    $ git reset --soft "HEAD^"    (2)
+    $ edit                        (3)
+    $ git add ....                (4)
+    $ git commit -c ORIG_HEAD     (5)
+  #+END_SRC
+  [[http://stackoverflow.com/questions/927358/how-to-undo-the-last-git-commit][How to undo the last Git commit?]]

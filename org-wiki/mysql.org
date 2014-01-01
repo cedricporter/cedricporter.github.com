@@ -62,6 +62,34 @@
      show status like 'innodb_row_lock%';
    #+END_SRC
 
+* 更多
+** 查看错误信息
+   #+BEGIN_SRC sql
+     SHOW ENGINE INNODB STATUS \G
+   #+END_SRC
+
+** 在特定列后面加上一列
+   #+BEGIN_SRC sql
+     ALTER TABLE goods_for_exchange
+     ADD COLUMN promotion_exch_score int AFTER exchange_score;
+   #+END_SRC
+
+* Misc
+  1. 尽量将多个语句绑到一个事务中，进行提交，避免多次提交导致的数据库开销。
+  1. 默认innodb是开启自动提交的，如果你按照myisam的使用方法来编写代码页不会存在错误，只是性能会很低。
+  1. 对不支持事务的表做start/commit操作没有任何效果，在执行commit前已经提交。
+  1. 任何一种表都不是万能的，只用恰当的针对业务类型来选择合适的表类型，才能最大的发挥MySQL的性能优势。
+
+** 转换ip
+   #+BEGIN_EXAMPLE
+     select inet_aton("218.107.55.253");
+   #+END_EXAMPLE
+
+* 修改auto_increment
+  #+BEGIN_SRC sql
+    ALTER TABLE users AUTO_INCREMENT = 1001;
+  #+END_SRC
+
 * InnoDB锁
   1. 共享锁（S）：允许一个事务去读一行，阻止其他事务获得相同数据集的排他锁。
   2. 排他锁（X)：允许获得排他锁的事务更新数据，阻止其他事务取得相同数据集的共享读锁和排他写锁。
@@ -202,13 +230,6 @@
 
    既然索引可以加快查询速度，那么是不是只要是查询语句需要，就建上索引？答案是否定的。因为索引虽然加快了查询速度，但索引也是有代价的：索引文件本身要消耗存储空间，同时索引会加重插入、删除和修改记录时的负担，另外，MySQL在运行时也要消耗资源维护索引，因此索引并不是越多越好。
 p
-
-
-* Misc
-  1. 尽量将多个语句绑到一个事务中，进行提交，避免多次提交导致的数据库开销。
-  1. 默认innodb是开启自动提交的，如果你按照myisam的使用方法来编写代码页不会存在错误，只是性能会很低。
-  1. 对不支持事务的表做start/commit操作没有任何效果，在执行commit前已经提交。
-  1. 任何一种表都不是万能的，只用恰当的针对业务类型来选择合适的表类型，才能最大的发挥MySQL的性能优势。
 
 
 

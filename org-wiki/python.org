@@ -87,27 +87,29 @@
      apt-get install python-dev libmysqld-dev
    #+END_SRC
 
-** 逻辑error
-   #+BEGIN_EXAMPLE
-     mysql> set autocommit = 0;             │mysql> set autocommit = 0;
-     Query OK, 0 rows affected (0.00 sec)   │Query OK, 0 rows affected (0.00 sec)
-                                            │
-     mysql> insert into user values ("Stupid│mysql> select * from user;
-      ET");                                 │Empty set (0.00 sec)
-     Query OK, 1 row affected (0.03 sec)    │
-                                            │mysql>
-     mysql> commit;                         │mysql>
-     Query OK, 0 rows affected (0.02 sec)   │mysql>
-                                            │mysql>
-     mysql> select * from user where name = │mysql> select * from user where name =
-     "Stupid ET";                           │ "Stupid ET";
-     +-----------+                          │Empty set (0.00 sec)
-     | name      |                          │
-     +-----------+                          │mysql>
-     | Stupid ET |                          │
-     +-----------+                          │
-     1 row in set (0.00 sec)                │
-   #+END_EXAMPLE
+** 异常
+   #+BEGIN_SRC python
+     import MySQLdb
+     import MySQLdb.constants.CR as CR
+
+     # eg. mysql断线重连
+     def execute(self, query, params=None, **kwargs):
+         retry_time = RETRY_TIMES
+         while retry_time > 0:             # 如果和服务器断开了，进行重连
+             try:
+                 ret = self._execute(query, params, **kwargs)
+                 break
+             except MySQLdb.OperationalError, e:   # timeout or disconnect
+                 err_no, msg = e.args
+                 if err_no != CR.SERVER_GONE_ERROR:   # 与服务器断开了连接
+                     raise
+                 logger.log("database reconnect")
+                 self._reconnect()         # 重连
+                 retry_time -= 1
+                 if retry_time <= 0:
+                     raise
+         return ret
+   #+END_SRC
 
 * 根据字符串import
   #+BEGIN_SRC python

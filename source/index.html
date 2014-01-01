@@ -1,7 +1,5 @@
 ---
 layout: default
-description: I am Cedric Porter [Stupid ET]. A programmer.
-keywords: Hua Liang, Stupid ET, Cedric Porter, python, emacs, web
 ---
 
 <div class="blog-index">
@@ -14,27 +12,26 @@ keywords: Hua Liang, Stupid ET, Cedric Porter, python, emacs, web
   {% endfor %}
   <div class="pagination">
     {% if paginator.total_pages > 1 %}
-	<div class="pagination">
-		{% if paginator.previous_page %}
-			<a class="prev" href="{{paginator.previous_page}}">&larr; Prev</a>
-		{% endif %}
-		{% for page in (1..paginator.total_pages) %}
-			{% capture url %}{{site.pagination_dir}}/page/{{page}}{% endcapture %}
-			{% if page == 1 %}
-				{% assign url = "/" %}
-			{% endif %}
-			{% if page != paginator.page %}
-				<a href="{{url}}">{{page}}</a>
-			{% else %}
-				<span style="font-size: 150%; ">{{page}}</span>
-			{% endif %}
-		{% endfor %}
-		{% if paginator.next_page %}
-			<a class="next" href="{{paginator.next_page}}">Next &rarr;</a>
-		{% endif %}
-	</div>
+      <div class="pagination">
+        {% if paginator.previous_page %}
+          <a class="prev" href="{{paginator.previous_page}}">&larr; Prev</a>
+        {% endif %}
+        {% for page in (1..paginator.total_pages) %}
+          {% capture url %}{{site.pagination_dir}}/page/{{page}}{% endcapture %}
+          {% if page == 1 %}
+            {% assign url = "/" %}
+          {% endif %}
+          {% if page != paginator.page %}
+            <a href="{{url}}">{{page}}</a>
+          {% else %}
+            <span style="font-size: 150%; ">{{page}}</span>
+          {% endif %}
+        {% endfor %}
+        {% if paginator.next_page %}
+          <a class="next" href="{{paginator.next_page}}">Next &rarr;</a>
+        {% endif %}
+      </div>
     {% endif %}
-    
   </div>
 </div>
 <aside class="sidebar">
@@ -44,3 +41,4 @@ keywords: Hua Liang, Stupid ET, Cedric Porter, python, emacs, web
     {% include_array default_asides %}
   {% endif %}
 </aside>
+

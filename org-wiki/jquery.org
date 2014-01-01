@@ -1,0 +1,9 @@
+#+TITLE: jquery
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* 选择器
+** 选择以什么开头的元素  
+   #+BEGIN_SRC javascript
+     $("div[id^=help]")  
+   #+END_SRC

@@ -59,7 +59,8 @@ Octopress默认的markdown引擎是rdiscount，这个实在是让人难以接受
 
 ### Emacs
 Emacs既可以方便地写Wordpress也可以写Octopress。
-![Emacs User At Work](/imgs/emacs-user-at-work.jpg)[^4]
+
+{% img /imgs/emacs-user-at-work.jpg Emacs User At Work %} [^4]
 
 ### Ruby
 这段时间看了Ruby，发现竟然可以比Python更加优美，我想，日后，可能也会有很多人从Python流向Ruby，就像曾经人们从Perl流向Python一样。

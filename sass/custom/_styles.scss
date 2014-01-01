@@ -6,3 +6,20 @@
 /* //$mono:"PT mono", "Courier", "文泉驿微米黑", "Microsoft YaHei", monospace; */
 /* $heading-font-family: "Verdana", 楷体_GB2312, sans-serif; */
 /* $header-title-font-family: "Futura", sans-serif; */
+
+@import "mixins";
+
+.footer-right {
+    float: right;
+    color: #888;
+}
+
+.footnotes {
+    font-size: 13px;
+    line-height: 16px;
+    color: #666;
+
+    p {
+	margin-bottom: 6px;
+    }
+}
