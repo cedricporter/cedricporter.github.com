@@ -74,6 +74,13 @@
      ADD COLUMN promotion_exch_score int AFTER exchange_score;
    #+END_SRC
 
+** 更新datetime中的time
+   #+BEGIN_SRC sql
+     UPDATE auction_info SET end_time=concat(date(end_time), ' 22:00:00') WHERE id >= 13;   
+   #+END_SRC
+   http://stackoverflow.com/questions/1326548/update-only-time-in-a-mysql-datetime-field
+
+   
 * Misc
   1. 尽量将多个语句绑到一个事务中，进行提交，避免多次提交导致的数据库开销。
   1. 默认innodb是开启自动提交的，如果你按照myisam的使用方法来编写代码页不会存在错误，只是性能会很低。
