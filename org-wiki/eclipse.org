@@ -1,0 +1,12 @@
+#+TITLE: eclipse
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* vim
+  add http://vrapper.sourceforge.net/update-site/stable
+
+* Emacs
+  see http://www.mulgasoft.com/emacsplus
+
+* 删除插件
+  Help -> About Eclipse -> Installation details. On the "Installed software" tab click on the software that you wish to uninstall, then click the "Uninstall..." button.

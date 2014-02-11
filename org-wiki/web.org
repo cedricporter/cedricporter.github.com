@@ -3,6 +3,12 @@
 #+LINK_HOME: index.html
 #+OPTIONS: ^:{}
 
+* chrome
+** inspect
+   #+BEGIN_EXAMPLE
+     chrome://inspect/   
+   #+END_EXAMPLE
+
 * 如何移除Cookie
   设置一个过去的时间，然后就expired了。
 

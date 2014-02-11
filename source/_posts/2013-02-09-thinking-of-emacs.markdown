@@ -416,7 +416,8 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 - `M-x ping`
 - `M-x telnet`
 - `M-z` 删除到某个字符，同Vim的`df`
-- `c-u M-! date` 插入当前时间
+- `C-u M-! date` 插入当前时间
+- `C-x C-i` 插入tab
 
 
 ### 中文输入法 ###
