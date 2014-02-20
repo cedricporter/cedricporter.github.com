@@ -92,7 +92,7 @@ index_url = http://pypi.douban.com/simple
 
 ## 结
 
-然后用`python setup.py install`安装的时候，就会使用douban的源了。
+加上配置后`python setup.py install`安装的时候，依赖就会从douban的源下载了。
 
 用setup.cfg的好处是，这样源的配置就可以跟着源码走了。以后在其他机器上面安装的时候也可以用到douban的源。
 
