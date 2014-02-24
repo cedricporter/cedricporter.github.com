@@ -1,0 +1,9 @@
+#+TITLE: mac os x
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* 休眠
+  #+BEGIN_SRC sh
+    pmset -g
+    sudo pmset -a hibernate mode 25
+  #+END_SRC
