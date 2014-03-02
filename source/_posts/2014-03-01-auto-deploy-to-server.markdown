@@ -23,6 +23,7 @@ tags: [Linux, Mac]
 
 这里我写了脚本，可以用来监控项目文件夹，如果有变化，就自动复制到远程服务器：
 
+### For Mac
 ``` bash mac-auto-deploy https://github.com/cedricporter/auto-deploy-by-rsync
 #!/bin/sh
 
@@ -33,7 +34,28 @@ cd "$local" &&
 fswatch . "date +%H:%M:%S && rsync -aztH --exclude '#*' --exclude .git --exclude .svn --progress --rsh='ssh -p32200' . $remote"
 ```
 
-所有的代码都在[https://github.com/cedricporter/auto-deploy-by-rsync](https://github.com/cedricporter/auto-deploy-by-rsync)。需要的同学可以clone下来试试。
+### For Linux
+``` bash auto-deploy-by-rsync https://github.com/cedricporter/auto-deploy-by-rsync
+#!/bin/sh
+
+src=$1
+target=$2
+
+echo "source" $src
+echo "target" $target
+
+inotifywait -mrq --timefmt '%d/%m/%y %H:%M' \
+    --format  '%T %w%f'  \
+    -e modify,delete,create  \
+    --exclude "(#|\.git|\.svn)" ${src} | while read file
+do
+    cd ${src} && rsync -aztH --delete --progress --rsh='ssh -p32200' ${src} ${target}
+    echo "."
+done
+```
+
+所有的代码以及使用说明都在[https://github.com/cedricporter/auto-deploy-by-rsync](https://github.com/cedricporter/auto-deploy-by-rsync)。
+需要的同学可以clone下来试试。
 
 ### 使用
 例如我们在Mac上面，可以在项目的文件夹根目录运行下面的命令。
@@ -43,6 +65,8 @@ fswatch . "date +%H:%M:%S && rsync -aztH --exclude '#*' --exclude .git --exclude
 ```
 
 在上述例子中，mac-auto-deploy会自动检查文件修改，如果修改了就会使用rsync将当前文件夹同步到dev35这台服务器的`~/git/vipbar-b2c`目录中。只要在一开始打开就不用理他了，就只管写代码就好了，觉得需要安装的时候，就在服务器的shell运行一下安装脚本，项目就可以安装好了，就不再需要关注代码的复制了，就像在服务器写代码一样了。
+
+在Linux中一样，使用另一个脚本就好了。
 
 ## Screencast[^2]
 
