@@ -5,7 +5,7 @@
 url: http://everet.org
 title: EverET.org
 subtitle: 好记性不如烂笔头
-author: Stupid ET
+author: 华亮
 simple_search: https://www.google.com.hk/search
 description: "I am Cedric Porter [Stupid ET]. My Chinese name is Hua Liang."
 
@@ -22,7 +22,7 @@ subscribe_email:
 email:
 
 static_file_prefix: http://everet.b0.upaiyun.com
-# static_file_prefix: 
+# static_file_prefix:
 
 # ----------------------- #
 #    Jekyll & Plugins     #
