@@ -119,6 +119,7 @@ port = 7890
 
 [datafolder]
 comment = data rsync between servers
+hosts allow = 2.2.2.2 3.3.3.3
 path = /tmp/datafolder
 uid = vagrant
 gid = vagrant
