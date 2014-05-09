@@ -1,0 +1,5 @@
+#+TITLE: xcode.org
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+
+* 切换头文件
