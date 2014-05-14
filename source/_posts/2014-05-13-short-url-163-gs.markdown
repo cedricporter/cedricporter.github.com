@@ -81,6 +81,12 @@ Server: TornadoServer/3.1.1
 
 最后，代码当然是open source的 -> [url-shorten](https://github.com/cedricporter/url-shorten)。
 
+---------------
+## Update:
+
+2014-05-14
+
+发了第二天就发现163.gs被微博、微信和360屏蔽了，访问就提示存在安全隐患，个人的短网址服务就是被大厂鄙视。真是悲催...
 
 
 
