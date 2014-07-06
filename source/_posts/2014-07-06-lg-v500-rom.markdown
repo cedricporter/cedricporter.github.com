@@ -1,0 +1,89 @@
+---
+layout: post
+title: "LG G Pad 8.3刷欧版Rom"
+date: 2014-07-06 11:37
+comments: true
+categories: IT
+tags: Android
+---
+之前1799买个台国行的LG G Pad 8.3，对于这个品质的平板，觉得价格还是非常公道。不过发现国行的平板里面居然没有google apps，升级到4.4.2后，发现安装进去的google服务都是运行就闪退，非常恼火，最后决定还是刷个机吧。
+
+首先是找了CyanogenMod的cm11的rom，然后如果需要刷rom就需要刷recovery了。
+
+<!-- more -->
+
+然后需要以下这些步骤：
+
+1. root
+2. 刷recovery
+3. 刷机
+
+电脑里面需要装个adb(Android Debug Bridge)，这个去Android官网下个就好了。
+
+## Root
+我们去[xda](http://forum.xda-developers.com/showthread.php?t=2703825)下个root用的包IOroot25r1。解压后，里面有个kk_root.zip。
+
+然后插上手机，打开开发者模式，开启USB调试。在cmd（或者shell）里面输入以下
+
+``` bash
+adb devices
+adb reboot recovery
+# 重启后，在手机的recovery中选择'apply update from adb'
+adb sideload kk_root.zip
+```
+
+然后重启下手机就root好了。
+
+## Recovery
+Root完后，我们就可以开始刷twrp(Team Win Recovery Project)的recovery了。我们先下载[openrecovery-twrp-2.6.3.0-awifi.img](http://techerrata.com/browse/twrp2/awifi)，貌似只有2.6.3能够正常启动。
+
+下载完毕后，我们得到一个img文件，此时，我们shell去到下载目录，将img推送到手机sdcard根目录：
+
+`adb push openrecovery-twrp-2.6.3.0-awifi.img /sdcard/`
+
+接着输入`adb shell`进去手机的shell，。
+
+``` bash
+# 先切换到root
+su
+# 然后刷入recovery
+dd if=/sdcard/openrecovery-twrp-2.6.3.0-awifi.img of=/dev/block/platform/msm_sdcc.1/by-name/recovery
+exit
+```
+
+## 刷机
+
+### CM11
+如果需要刷CM11，可以到[cyanogenmod官网](https://download.cyanogenmod.org/?device=v500)下载rom，记得最好下载snapshot，就是M7，M代表Milestone，相对是个稳定版，nightly玩玩还行，平时用就不建议了。不过cm11的rom不知道为啥，超级不稳定，经常用着用着就自己重启了，而且感觉上性能差一些。
+
+CM11刷完后，还需要另外刷gapps，可以在这里下载[Google_Apps](http://wiki.cyanogenmod.org/w/Google_Apps)。
+
+### LG官方欧版ROM
+对于官方rom，可以到[xda](http://forum.xda-developers.com/showthread.php?t=2707363)下载`LG-V500_KOT49I.V50020B_GB_Stock-BB-Rooted.zip`，这个基于欧版的4.4.2的官方rom稍微修改的。自带了Google Apps。
+
+### 开搞
+
+下载完毕后，将rom推送到手机：
+
+``` bash 
+adb push LG-V500_KOT49I.V50020B_GB_Stock-BB-Rooted.zip /sdcard/
+adb reboot recovery
+```
+
+然后进入到twrp，将手机wipe后，选择install `LG-V500_KOT49I.V50020B_GB_Stock-BB-Rooted.zip`，然后等一会就搞定了。
+
+## 刷完后无限重启?
+
+如果已经刷了导致无限重启，按照如下方法进行工厂重置[^1]：
+1. 将设备关机，注意是关机，不是关闭屏幕，确保设备没有连接到电脑；
+2. 同时按住音量-键与电源键，当LG Logo出现时，放开电源键，仅仅放开电源键；
+3. 现在你同时按住音量+键与电源键，注意，这时音量-键也是按住的；
+4. 当出厂设置（Factory Reset）画面出现时，放开所有的按键；按照屏幕指示操作；
+
+## 后
+
+当中试过用LG的工具，刷官方港版的KDZ文件，不过不知道为啥，我选择了下载的rom，但是刷机的时候，工具还是自动下了个大陆的Rom回来，非常坑爹。有兴趣的同学可以按照下面的链接自己试试。
+
+
+
+[^1]: [http://tieba.baidu.com/p/2834998135](http://tieba.baidu.com/p/2834998135)

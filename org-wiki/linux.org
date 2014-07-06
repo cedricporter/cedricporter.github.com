@@ -2,6 +2,11 @@
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
 
+* 修改用户组
+  #+BEGIN_SRC sh
+    usermod -a -G vboxsf cedricporter
+  #+END_SRC
+
 * ssh自动发送心跳
   #+BEGIN_SRC sh
     # 打开
