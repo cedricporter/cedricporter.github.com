@@ -6,7 +6,7 @@ comments: true
 categories: IT
 tags: Android
 ---
-之前1799买个台国行的LG G Pad 8.3，对于这个品质的平板，觉得价格还是非常公道。不过发现国行的平板里面居然没有google apps，升级到4.4.2后，发现安装进去的google服务都是运行就闪退，非常恼火，最后决定还是刷个机吧。
+之前1799买个台国行的LG G Pad 8.3(LG V500)，对于这个品质的平板，觉得价格还是非常公道。不过发现国行的平板里面居然没有google apps，升级到4.4.2后，发现安装进去的google服务都是运行就闪退，非常恼火，最后决定还是刷个机吧。
 
 首先是找了CyanogenMod的cm11的rom，然后如果需要刷rom就需要刷recovery了。
 
