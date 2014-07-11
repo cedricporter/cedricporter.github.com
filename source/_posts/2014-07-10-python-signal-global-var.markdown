@@ -380,9 +380,6 @@ PyEval_EvalFrameEx(PyFrameObject *f, int throwflag)
             v = POP();
             SETLOCAL(oparg, v);
             goto fast_next_opcode;
-        case JUMP_ABSOLUTE:
-            JUMPTO(oparg);
-            goto fast_next_opcode;
 
         // case ...
         } 
@@ -398,19 +395,19 @@ PyEval_EvalFrameEx(PyFrameObject *f, int throwflag)
 
 ### 那么为啥都是那个时刻调用呢？
 
-我可以告诉你，这个真的是纯属巧合。不过为啥在下面两条指令后，触发signal handler的概率那么高呢？
+我可以告诉你，这个真的是纯属巧合。不过为啥在下面三条指令后，触发signal handler的概率那么高呢？
 
 ```
-[opcode: 93 FOR_ITER]       ; PREDICT(STORE_FAST); goto fast_next_opcode;
+[opcode: 93 FOR_ITER]       ; PREDICT(STORE_FAST); goto fast_next_opcode; 下面还有一条STORE_FAST指令，不过没打印出来
 [opcode: 116 LOAD_GLOBAL]   # 取出全局变量
 -> call signal handler
 ```
 
 如果我们仔细去看`PyEval_EvalFrameEx`主循环中指令的解释，会看到其中会有优化。其中就有`PREDICT`和`fast_next_opcode`[^2]，当`PREDICT`下一条指令成功的时候，会直接goto到下一条指令的处理代码，就不会回到主循环的开头。而`fast_next_opcode`，也跳过了延迟任务的检查。
 
-而我们上面2个指令的执行，是通过加速，中间都是直接goto执行下一条，一直没有回到主循环开始，所以就没有机会检查`_Py_Ticker`和执行`Py_MakePendingCalls`。
+而我们上面三个指令的执行，是通过加速，中间都是直接goto执行下一条，一直没有回到主循环开始，所以就没有机会检查`_Py_Ticker`和执行`Py_MakePendingCalls`。
 
-也就是说，这两条指令执行的过程中，是可以当做一个整体，中间是不会有机会执行`Py_MakePendingCalls`，所以只有当执行完`LOAD_GLOBAL`的时候，才会回到循环开头。
+也就是说，这三条指令执行的过程中，是可以当做一个整体，中间是不会有机会执行`Py_MakePendingCalls`，所以只有当执行完`LOAD_GLOBAL`的时候，才会回到循环开头。
 
 而这段连续的时间，因为sys.stdin迭代器的操作相对非常长，所以signal在这段时间触发设置`_Py_Ticker`为0的概率最大。所以就造成了signal handler好像都在同一个地方执行的假象。
 
