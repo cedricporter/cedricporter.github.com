@@ -425,7 +425,7 @@ PyEval_EvalFrameEx(PyFrameObject *f, int throwflag)
 
 因为时间仓促，语言可能有些混乱，还请见谅。
 
-最后，还是非常佩服伟大的叠哥大神一遇道破天机！！
+最后，还是非常佩服伟大的叠哥大神一语道破天机！！
 
 
 [^1]: 输出的字节码指令是数字，还需要另外翻译一下，如果你用Emacs，可以使用这个[gist](https://gist.github.com/cedricporter/311fbb59e1fb26c4f480)，会自动翻译上面输出的opcode。如果不是，可以自己根据源码中的opcode.py修改一下。
