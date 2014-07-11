@@ -403,7 +403,7 @@ PyEval_EvalFrameEx(PyFrameObject *f, int throwflag)
 ```
 [opcode: 113 JUMP_ABSOLUTE] ; goto fast_next_opcode;
 [opcode: 93 FOR_ITER]       ; PREDICT(STORE_FAST); goto fast_next_opcode;
-[opcode: 116 LOAD_GLOBAL]   # 取出全局变量，这个操作相对来时是非常费时
+[opcode: 116 LOAD_GLOBAL]   # 取出全局变量
 -> call signal handler
 ```
 
