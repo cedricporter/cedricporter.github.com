@@ -1,16 +1,16 @@
 ---
 layout: post
-title: "解决有时Macbook盒盖后不会睡眠的问题"
+title: "解决Macbook盖上屏幕后不会睡眠"
 date: 2014-07-12 10:32
 comments: true
 categories: IT
 tags: [Mac]
 ---
-很久以前，就听到许多人说，用Macbook都是从来不关机，平时都是直接盖上盖子塞到包里。于是我也这样了，不过后来突然发现，塞到包里第二天早上起来开机的时候，就发现Macbook已经关机了。重新开机的时候，就提示系统没有正常关机。
+很久以前，就听到许多人说，用Macbook都是从来不关机，平时都是直接合上屏幕塞到包里。于是我也这样了，不过后来突然发现，塞到包里第二天早上起来开机的时候，就发现Macbook已经关机了。重新开机的时候，就提示系统没有正常关机。
 
 晚上有时候回到家里，将Macbook拿出来，就发现温度非常高。看上去合上盖子后，并没有sleep。
 
-想起很久之前，我都是直接合上盖子就走，不过后来突然就出现了合上盖子塞包里后，过热关机。这个是为什么呢？难道是我升级系统后，系统出了什么bug?
+想起很久之前，我都是直接合上屏幕就走，不过后来突然就出现了合上屏幕塞包里后，过热关机。这个是为什么呢？难道是我升级系统后，系统出了什么bug?
 
 <!-- more -->
 
@@ -99,6 +99,33 @@ No kernel assertions.
 
 找到问题了唉，看来以后小心为妙。
 
+------------
+
+Update: 
+
+2014-07-27 
+
+后来发现，有时候打开虚拟机，`PreventSystemSleep`会变为1，此时合上屏幕后也不会睡眠。所以这个时候，最好还是把虚拟机关掉。
+
+后来发现，即便是关掉了所有会阻止睡眠的程序，没插电而且确定已经睡眠，发现放一个晚上后，还是会自动开机而且会很热，而且掉了很多电。
+
+在shell中输入`syslog -k Sender kernel -k Message Req Wake`，看到茫茫多的
+
+```
+Jul 24 03:29:00 Stupid-ET kernel[0] <Debug>: Wake reason: ?
+```
+
+就是每分钟都Wake一次。仔细看日志，每次都是 sleep 3个小时后，就会开始不停地Wake up，然后reason: ?。不知道为啥，可能Mac OS有bug。那么现在如何解决呢？
+
+现在的主要问题就是：sleep 3个小时后，就不能再自动sleep了。3个小时 = 3600 * 3 = 10800秒。
+
+我们在看pmset的时候，有行`standbydelay 10800`[^1]。看上去可能在尝试写hibernation image的时候出错，导致无法sleep。
+
+```
+standbydelay specifies the delay, in seconds, before writing the hibernation image to disk and powering off memory for Standby.
+```
+
+于是先将该值调大，调到7天`sudo pmset -a standbydelay 604800`，然后就不会醒来了。
 
 
-
+[^1]: [Understanding and choosing between Mac sleep, standby or hibernate](http://www.garron.me/en/mac/macbook-hibernate-sleep-deep-standby.html)
