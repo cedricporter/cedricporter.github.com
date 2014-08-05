@@ -89,15 +89,15 @@ No kernel assertions.
 
 于是看看什么程序用到声音，只有chrome里面开了douban.fm，不过此时没有在播放音乐。然后关闭douban.fm的tab，然后`PreventUserIdleSystemSleep`就变回0了。
 
-看来就是估计我每天听douban.fm惹的祸。
+<del>看来就是估计我每天听douban.fm惹的祸。</del>
 
-于是继续尝试在chrome里面随便打开一个视频网站看视频，发现此时`PreventUserIdleSystemSleep`又变成1了。
+<del>于是继续尝试在chrome里面随便打开一个视频网站看视频，发现此时`PreventUserIdleSystemSleep`又变成1了。</del>
 
-看来应该只要有会播放声音的flash在，就会阻止Macbook睡眠。
+<del>看来应该只要有会播放声音的flash在，就会阻止Macbook睡眠。</del>
 
-另外，想itune，GarageBand等程序开着的时候，也可能会阻止sleep。所以，以后盖屏幕前，先处理掉这些程序，以免发生意外，要不然过热多几次，不知道Macbook会不会就烧坏了-.-
+<del>另外，想itune，GarageBand等程序开着的时候，也可能会阻止sleep。所以，以后盖屏幕前，先处理掉这些程序，以免发生意外，要不然过热多几次，不知道Macbook会不会就烧坏了-.-</del>
 
-找到问题了唉，看来以后小心为妙。
+<del>找到问题了唉，看来以后小心为妙。</del>
 
 ------------
 
