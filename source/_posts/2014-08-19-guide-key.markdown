@@ -1,0 +1,52 @@
+---
+layout: post
+title: "Emacs中的快捷键导师"
+date: 2014-08-19 21:54
+comments: true
+categories: IT
+tags: [Emacs]
+---
+
+Emacs中有很多很多快捷键，多到有时候自己都不知道自己有什么快捷键。
+
+例如org-mode[^1]就有非常多的快捷键，特别是有时候有的快捷键比较长，按了前面的部分，就忘了后面的，虽然可以按`C-h m`来看看当前mode有什么快捷键，不过还是挺麻烦的。
+
+直到遇到了guide-key[^2]，它可以在我们按快捷键的，给我们提供指导。如下图，我在org-mode中，按下`C-c`后，不记得`C-c`后有什么快捷键，然后此时guide-key就弹出提示了。
+
+<!-- more -->
+
+{% img /imgs/QQ20140819-1_20140819_215244_13362inj.png %}
+
+具体配置如下（更多的可以围观[我的el-get配置](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-el-get-settings.el#L60)），可以专门针对一个mode设置提示前缀，更可以高亮其中的一些选项，非常不错。
+
+``` scheme
+(guide-key-mode 1)  ; Enable guide-key-mode
+;; (setq guide-key/idle-delay 0.1)
+
+(defun guide-key/my-hook-function-for-python-mode ()
+  (guide-key/add-local-guide-key-sequence "C-c")
+  (guide-key/add-local-highlight-command-regexp "rope-")
+  (guide-key/add-local-highlight-command-regexp "py-")
+  (guide-key/add-local-highlight-command-regexp "python-"))
+(add-hook 'python-mode-hook 'guide-key/my-hook-function-for-python-mode)
+
+(defun guide-key/my-hook-function-for-org-mode ()
+  (guide-key/add-local-guide-key-sequence "C-c")
+  (guide-key/add-local-guide-key-sequence "C-c C-x")
+  (guide-key/add-local-highlight-command-regexp "org-"))
+(add-hook 'org-mode-hook 'guide-key/my-hook-function-for-org-mode)
+
+(setq guide-key/guide-key-sequence
+      '("C-x r" "C-x 4" "C-x 5" "C-c p"
+	(org-mode "C-c C-x")
+	(outline-minor-mode "C-c @")
+	(markdown-mode "C-c C-a")
+	))
+(setq guide-key/recursive-key-sequence-flag t)
+```
+
+[](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-el-get-settings.el#L60)
+
+[^1]: [http://orgmode.org/](http://orgmode.org/)
+
+[^2]: [https://github.com/kbkbkbkb1/guide-key](https://github.com/kbkbkbkb1/guide-key)
