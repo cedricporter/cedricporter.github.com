@@ -418,6 +418,7 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 - `M-z` 删除到某个字符，同Vim的`df`
 - `C-u M-! date` 插入当前时间
 - `C-q C-i` 插入tab
+- `M-x list-colors-display` 显示Emacs所有的颜色，方便我们来进行配色
 
 
 ### 中文输入法 ###
