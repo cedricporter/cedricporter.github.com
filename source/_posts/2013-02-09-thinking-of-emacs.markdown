@@ -10,21 +10,45 @@ toc: true
 
 By：[Stupid ET](http://EverET.org/about-me)
 
-Emacs在1975年就诞生了，想必比现在绝大多数程序员都要老。现在最新的Emacs已经是24.3.50.7，<del>为了获取最新的特性，我的Emacs都是自己编译最新的开发版</del>（在24.3正式版出了后就使用正式版了，正式版更为稳定）。Emacs其实是一个Lisp解释器，有着和Lisp纠缠不清的关系，[我](http://EverET.org/about-me)想这与Richard Stallman本人和MIT人工智能实验室有些许关系。Emacs许多逻辑都是用elisp写的。而所有的配置都可以用elisp编写。
+Emacs在1975年就诞生了，想必比现在绝大多数程序员都要老。现在最新的Emacs已经是24.3.50.7，<del>为了获取最新的特性，我的Emacs都是自己编译最新的开发版</del>（在24.3正式版出了后就使用正式版了，正式版更为稳定）。Emacs其实是一个Lisp解释器，有着和Lisp纠缠不清的关系，[我](http://everet.org/2013/02/thinking-of-emacs.html)想这与Richard Stallman本人和MIT人工智能实验室有些许关系。Emacs许多逻辑都是用elisp写的。而所有的配置都可以用elisp编写。
+
+<!-- more -->
+
+## 初见
+
+想起很久以前，第一次因为久闻Emacs大名打开了Emacs，看到这界面，不禁吐槽，这不就是一个Notepad吗？完全看不出这货竟然被尊称为「伪装成编辑器的操作系统」啊。
+
+{% img /imgs/QQ20140820-1_20140820_202137_35033BH1.png 540 %}
+
+而且发现完全可以像用Notepad一样使用Emacs-.-。
+
+鉴于众大牛都推荐Emacs，我还是决定尝试一下Emacs。刚开始完全无法忍受着`C-[pnbf]`的上下左右操作方式，找了一下发现有个Evil[^12]插件，装上它Emacs立即拥有Vim的按键绑定，于是Emacs就这么变成了Vim！于是之后的一年我都是怎么用的Emacs。
+
+## 相识
 
 我曾经是一个忠实的Vim用户，不过后来接触了Emacs后就欲罢不能，其中一个重要的原因是Lisp。用Emacs可以让我们有一个很好的机会去学习和使用Lisp。
 
-我们在Emacs中键入`M-x ielm`就可以打开Emacs Lisp交互解释器。可见，在Emacs中接触到Lisp是多么的容易。
+我们在Emacs中键入`M-x ielm`就可以打开Emacs Lisp交互解释器。可见，在Emacs中接触到Lisp是多么的容易[^13]。
 
-<!-- more -->
+{% img /imgs/QQ20140820-3_20140820_220150_35033BOp.png 540 %}
+
+于是随着时间的推移，更多地把玩，开始逐渐对Emacs刮目相看，发现Emacs真的是伪装成编辑器的操作系统。于是调教Emacs成了茶余饭后的消遣活动。
 
 ## 两个常用按键
 
 ### Ctrl
+
+作为一个被称为「Ctrl到死」的编辑器的用户，我们需要好好思考一下Ctrl这个按键。
+
 Emacs的很多按键都需要配合`Ctrl`，而`Ctrl`在US键盘的左下角，按起来手形会比较纠结。所以强烈推荐将`Ctrl`和`Caps Lock`对调。当然如果你有HHKB[^1]就不需要自己去切换了，因为已经物理支持了。于是`Ctrl`就到了左手小拇指的位置。
 
 ### Alt
-在Emacs中的`M`就是我们的`Alt`，因为`Alt`在空格的旁边，所以我们很容易就用左手大拇指按下。而一个非常常用的快捷键`M-x`，我们可以用左手大拇指同时按下这两个按键。就不用将整个手掌卷起来按。
+在Emacs中的`M`就是我们的`Alt`，因为`Alt`在空格的旁边，所以我们很容易就用左手大拇指按下。而一个非常常用的快捷键`M-x`，我们可以用左手大拇指同时按下这两个按键。就不用将整个手掌卷起来按。对于Mac用户，因为Mac的键盘`Alt`在普通键盘的Win键，所以需要调换一下：
+
+``` cl
+(setq mac-option-modifier 'super)
+(setq mac-command-modifier 'meta)
+```
 
 ## 扩展包管理
 
@@ -36,7 +60,7 @@ Emacs里面的扩展多到不计其数，我们如果自己手工安装扩展或
 
 另外，在el-get的帮助下，我们可以很容易将我们的Emacs配置用版本控制器进行管理而不必将那些插件也纳入版本控制。在没有el-get的情况下，我们虽然可以通过忽略文件来忽略那些插件的文件，但是我们如果在一台全新的计算机将配置clone下来的时候，就没有了我们之前安装的插件了。
 
-而有了el-get，这些问题都得到了解决。el-get会在新计算机中自动为我们安装好我们的插件。[^4]
+而有了el-get后，这些问题都得到了解决。el-get会在新计算机中自动为我们下载并安装好我们的插件。我用el-get管理了挺多插件，可以围观[el-get配置](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-el-get-settings.el)。
 
 
 ## 效率
@@ -47,15 +71,30 @@ Emacs里面的扩展多到不计其数，我们如果自己手工安装扩展或
 
 我们可以围观一下这个[screencast for AceJump](http://emacsrocks.com/e10.html)。虽然说Vim的移动速度非常的快，但是Emacs加上Ace Jump之后，光标的移动速度完全不亚于Vim。
 
+#### Multiple cursors
+Sublime Text中引以为傲的多光标编辑，Emacs装个[multiple-cursors.el](https://github.com/magnars/multiple-cursors.el)就可拥有。可以看视频：[Episode 13: multiple-cursors](http://emacsrocks.com/e13.html)。
+
+#### Minimap
+这个也是Sublime Text中另一个引以为傲的功能，Emacs装一个[minimap](https://github.com/dustinlacewell/emacs-minimap)也即可拥有。不过说实话，这个功能感觉貌似没啥意义。
+
+{% img /imgs/QQ20140821-1_20140821_000243_35033PuS.png 600 %}
+
 #### switch-window ####
 
 `C-x o`估计是最常用的快捷键之一了，可以跳到其他window。不过如果在window特别多的时候，狂按`C-x o`估计就是比较让人蛋碎了。于是我们可以借助switch window让`C-x o`变得更加便捷。在window数目大于等于3个的时候，switch window就会给window标上“1,2,3……”，然后可以通过“1,2,3……”来选择window。
 
-{% img /imgs/snapshot18_20130209_200041_3390TAZ.png %}
+{% img /imgs/QQ20140820-5_20140820_221604_35033bi1.png 600 %}
 
 #### windmove ####
 
-想要更加随心所欲地在window间移动，借助windmove[^6]就可以通过上下左右移动了。
+想要更加随心所欲地在window间移动，可以借助windmove[^6]就可以通过上下左右移动了。我设了这些快捷键来移动：
+
+``` cl
+(global-set-key (kbd "C-S-j") 'windmove-down)
+(global-set-key (kbd "C-S-k") 'windmove-up)
+(global-set-key (kbd "C-S-h") 'windmove-left)
+(global-set-key (kbd "C-S-l") 'windmove-right)
+```
 
 #### 快速移动到特定字符 ####
 
@@ -98,23 +137,23 @@ occurence of CHAR."
 (global-set-key (kbd "M-SPC") 'set-mark-command)
 ```
 
-对于标记一块区域，像Vim中，我们可以`vi(`，`vi"`等等就可以标记括号，或者引号里面的内容了。在Emacs中，我们可以享有这种便捷。我们需要借助expand-region[^7]，具体可以围观视频：[Emacs Rocks! Episode 09: expand-region](http://emacsrocks.com/e09.html)。
+对于标记一块区域，像Vim中，我们可以`vi(`，`vi"`等等就可以标记括号，或者引号里面的内容了。在Emacs中，我们可以享有这种便捷。我们需要借助`expand-region`[^7]，具体可以围观视频：[Emacs Rocks! Episode 09: expand-region](http://emacsrocks.com/e09.html)。
 
 而标记一个函数，可以用`C-M-h`。往后标记`C-M-SPC`。
 
 
-### window ###
+### window管理 ###
 
 #### 分割 ####
 
-控制window的快捷键为
+对于非常常用的window分割快捷键默认为
 
 - `C-x 1`：关闭其他window
 - `C-x 2`：在下面分割一个window出来
 - `C-x 3`：在右边创建一个window
 - `C-x 0`: 关闭当前window
 
-这个都有些不太直接，我们将其重新绑定到更快的绑定上。
+这些都有点不太直接，我们将其重新绑定到更快的按键上：
 
 ``` cl
 (global-set-key (kbd "M-1") 'delete-other-windows)
@@ -123,7 +162,7 @@ occurence of CHAR."
 (global-set-key (kbd "M-0") 'delete-window)
 ```
 
-然后就可以缩短了分割window的键程。
+这样就缩短了分割window的键程，畅快许多。
 
 #### 对调buffer ####
 
@@ -144,7 +183,50 @@ occurence of CHAR."
 (global-set-key (kbd "M-9") 'transpose-buffers)
 ```
 
-### eval lisp ###
+更多window布局配置可以围观[window-setting.el](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/window-setting.el)
+
+### UI定制
+
+Emacs的默认界面，见文章第一张图，看起来非常挫。不过幸运的是，Emacs具有超强的可定制性，于是我们可以随心所欲地调整UI。
+
+### 标题栏
+就可以显示当前项目名，当前编辑文件的完整路径。
+
+``` cl
+(setq frame-title-format
+      (list "[" '(:eval (projectile-project-name)) "]" 
+	    " ψωETωψ ◎ "
+	    '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+```
+
+### 顶部tab栏
+
+这个需要装一个叫做tabbar的插件，装完后，就有了顶部的tab栏。具体颜色和形状的配置可以围观：[my-tabbar.el](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-tabbar.el)。
+
+### 左边的行号
+
+没错，不像Vim里面直接`set nu`就可以开启行号，Emacs的行号还需要装个插件来实现。不过庆幸的是，Emacs 22之后都自带了linum插件，只要启用就可以有行号了。
+
+``` cl
+(require 'linum)
+(global-linum-mode t)
+```
+
+### 底部的mode-line
+
+底部的一条显示了很多信息的东西叫做mode-line。默认的非常简单，我们可以对齐进行定制。如果比较懒，可以直接用[emacs-powerline](https://github.com/jonathanchu/emacs-powerline)插件就可以有一个漂亮的powerline。
+
+{% img /imgs/powerline_20140821_002729_35033c4Y.png %}
+
+不过我还是比较喜欢自己定制。
+
+{% img /imgs/QQ20140821-2_20140821_002921_35033pCf.png %}
+
+依次显示文件名、当前编辑状态、滚动状态，当前mode，使用何种版本控制以及分子，最后是当前时间。
+
+具体可以围观：[my-ui.el](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-ui.el)，里面有详细的配置。
+
+### 快速eval lisp ###
 
 我们经常会修改配置文件，一种让配置生效的方法是关闭Emacs，然后重新打开它。不过这也太慢了，如果不是到了迫不得已的情况，我们不需要如此大动干戈来使我们的修改生效。
 
@@ -159,13 +241,13 @@ occurence of CHAR."
 
 然后，我们选择一个区域后，就可以用`C-x C-r`来eval一个选区了。
 
-### Daemon ###
+### 加速打开Emacs：Daemon ###
 
 Emacs使用Client/Server可以大大提高新Emacs的开启速度，所有的client共用server来处理数据。
 
-#### Server ####
+#### 先启动Server ####
 
-首先添加一个开机启动，这个会启动一个Emacs Daemon进程。
+首先添加一个开机启动，这个会启动一个Emacs Daemon进程。可以让其他emacsclient连接到server来编辑。
 
 `emacs --daemon`
 
@@ -180,7 +262,7 @@ alias ec='emacsclient -t -a=""'
 alias se='SUDO_EDITOR="emacsclient -t" sudo -e'
 ```
 
-然后，就可以通过`ec filename`来用emacs编辑文件。开启速度绝对不亚于Vim。
+然后，就可以通过`ec filename`来用emacs编辑文件。即使是有大量配置文件，开启速度也绝对不亚于Vim。因为client不加载任何配置，只是直接连到server。
 
 ##### Desktop #####
 
@@ -190,7 +272,9 @@ alias se='SUDO_EDITOR="emacsclient -t" sudo -e'
 emacsclient -c -a=""
 ```
 
-不过，我觉得Desktop的Emacs不需要连接Daemon，因为Desktop的Emacs只需要开一次就好了。Daemon会有一些奇葩的问题，例如session似乎就没法保存。使用Daemon主要是为了提高开启速度，这个在Terminal中经常开关Emacs编辑文件时就很重要。而在desktop就开一次的情况就显得没什么了。
+不过，我觉得Desktop的Emacs不需要连接Daemon，因为Desktop的Emacs只需要开一次就好了。Daemon会有一些奇葩的问题，例如session似乎就没法保存。
+
+使用Daemon主要是为了提高开启速度，这个在Terminal中经常开关Emacs编辑文件时就很重要。而在Desktop就开一次的情况就显得没什么了。
 
 
 ### 辅助插件 ###
@@ -201,6 +285,8 @@ Helm可以方便地帮助我们找到想要的buffer、文件。而且看上去�
 
 {% img /imgs/snapshot23_20130227_104506_4247DHx.png %}
 
+此外，针对Helm，也有很多插件可以通过Helm显示结果：例如[helm-swoop](https://github.com/ShingoFukuyama/helm-swoop)、helm-ag[^14]、emacs-helm-gtags[^15]等等。
+
 #### smex
 
 smex提供了更好的M-x体验。它让M-x变成了像ido一样，可以实时提供补全。让M-x更加快速。
@@ -209,17 +295,36 @@ smex提供了更好的M-x体验。它让M-x变成了像ido一样，可以实时�
 
 #### session
 
-配合desktop可以保存我们上一次的工作状态。也就是重新打开Emacs的时候，会变成上次关闭的状态。
+配合desktop可以保存我们上一次的工作状态。也就是重新打开Emacs的时候，会变成上次关闭的状态。当然也可以[分项目保存不同的session](http://everet.org/2014/02/emacs-project-manager.html)，这样就和IDE保存工作区一样了。
 
 #### undo-tree ####
 
 Emacs的undo非常诡异，只有undo，没有redo。如果要redo，那只有undo undo。
 
-Emacs可以帮你所有的修改记录都保存下来，我们可以肆意地修改、undo完修改，各种修改，我们都可以回到曾经的状态。这个是其他编辑器难以做到的。
+不过这样的设计，让Emacs的撤销变得异常强大。Emacs可以帮你所有的修改记录都保存下来，我们可以肆意地修改、undo完修改，各种修改，我们都可以回到曾经的状态。这个是其他编辑器难以做到的。
 
-undo-tree可以将所有的状态用树状结构绘制出来。然后我们轻松地可以找到我们需要的状态。
+undo-tree可以将所有的状态用树状结构绘制出来。然后我们轻松地可以找到我们需要的状态，甚至可以diff不同的状态。
 
-我们按`C-x u`可以进入undo-tree-visualizer-mode, 然后 `p`、`n` 上下移动，在分支之前 `b`、`f` 左右切换，`t` 显示时间戳，选定需要的状态后， `q`退出。这是主要的操作，其它的自己摸索好了…… [^10]
+我们按`C-x u`可以进入undo-tree-visualizer-mode, 然后 `p`、`n` 上下移动，在分支之前 `b`、`f` 左右切换，`t` 显示时间戳，`d` 打开diff，选定需要的状态后，`q` 退出。这是主要的操作，其它的自己摸索好了…… [^10]
+
+{% img /imgs/QQ20140820-7_20140820_231214_35033CkM.png 540 %}
+
+#### 更多
+Emacs中还有很多很多非常有用的插件，我这里有一些我在用的，可以围观[el-get配置](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-el-get-settings.el)。
+
+像[Git-timemachine](http://everet.org/2014/08/git-timemachine.html)，就可以直接切换文件的不同版本历史：
+
+{% img /imgs/git-timemachine2.gif %}
+
+还有些比较好用的：
+
+1. [anzu](https://github.com/syohex/emacs-anzu)，这个让搜索、替换变得更友好。
+1. [magit](https://github.com/magit/magit)，在Emacs中方便友好地使用git。
+1. [git-gutter](https://github.com/syohex/emacs-git-gutter)可以实时显示当前文件的diff。
+1. [projectile](https://github.com/bbatsov/projectile)，超好用的项目辅助工具，可以快速在当前项目搜索、打开文件、编译等等。
+1. rainbow-mode，能够把css、html等文件中的颜色直接显示出来。
+1. httpcode，速查http状态码
+1. goto-last-change，顾名思义。
 
 ### 宏 ###
 
@@ -325,7 +430,7 @@ Yasnippet是一个非常强大的模板替换扩展，可以轻松自己定制�
 
 相信大家在网上找到的Emacs Python IDE搭建靠的都是PyMacs和Rope。Rope是一个很强的库，不仅可以用来补全，还可以用来重构等等。
 
-不过Rope的补全速度非常的缓慢，于是我们可以求助一个更强更迅速的补全库jedi[^5]，这是一个异步的补全库，不会阻塞编辑。而且jedi已经对autocomplete有很好的兼容了。安装仅需要`M-x el-get-install jedi`。
+不过Rope的补全速度有些缓慢，于是我们可以求助一个更强更迅速的补全库jedi[^5]，这是一个异步的补全库，不会阻塞编辑。而且jedi已经对autocomplete有很好的兼容了。安装仅需要`M-x el-get-install jedi`。
 
 ### Lisp ###
 
@@ -357,7 +462,15 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 
 像Emacs中的开发辅助插件还有很多，比较重型的有cedet(Collection of Emacs Development Environment Tools)、ecb(Emacs Code Browser)等等，都是有效的工具，可以帮助我们提高工作效率。
 
+对于平时的生活，Emacs可以编辑Chrome里面的内容，例如有时需要发段代码：[Chrome Edit With Emacs](http://everet.org/2013/01/chrome-edit-with-emacs.html)。
 
+对于用Markdown写Blog，Emacs甚至可以直接截图、插入图片：[Screenshot and Image Paste in Emacs When Writing Markdown](http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html)。
+
+插入完图片后，可以直接在Emacs中预览Markdown中的图片：[让Emacs显示Markdown中的图片](http://everet.org/2013/01/emacs-markdown-display-image.html)，这个绝对让其他编辑器望尘莫及。
+
+{% img /imgs/QQ20140820-6_20140820_225855_35033191.png %}
+
+当然像上个网，煮个咖啡，听歌音乐，聊个天，收发个邮件，Emacs都可以轻松做到。
 
 ## 帮助 ##
 
@@ -390,10 +503,13 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 ### C-h a 更模糊的查找
 有些时候我们只知道一个关键字，这个时候可以用 `C-h a` 来通过正则表达式来查找命令名。Emacs 会列出所有匹配的命令以及一个简短的文档，并可以通过点击链接定位到该命令的详细文档。
 
+### 请个快捷键导师
+
+Emacs中有个快捷键导师，可以在你不知道的时候，提示你，可以围观：[Emacs中的快捷键导师](http://everet.org/2014/08/guide-key.html)
 
 ## Misc ##
 
-### 一些快捷键 ###
+### 一些有趣的快捷键 ###
 
 - `C-M-h` 标记一个函数定义
 - `C-h C-a` about-emacs
@@ -404,6 +520,7 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 - `C-x C-+` and `C-x C--` to increase or decrease the buffer text font size
 - `C-x C-q` 开关read-only-mode，在dired-mode中可以进入修改模式，可以批量修改文件名。
 - `C-x C-t` 交换两行。可以用来调整python中import
+- `M-x sort-lines` 排序选中行。
 - `C-x C-v` or `M-x find-alternate-file` 重新打开当前文件，在高亮后者插件出了bug可以用这个命令重新加载。
 - `C-x z` 重复上一条命令。可以一直按`z`不断执行，非常方便！
 - `M-&` 异步运行一个shell命令
@@ -420,6 +537,7 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 - `C-q C-i` 插入tab
 - `M-x list-colors-display` 显示Emacs所有的颜色，方便我们来进行配色
 
+当然还有很多很多，就不再列了。
 
 ### 中文输入法 ###
 
@@ -438,7 +556,7 @@ export LC_CTYPE="zh_CN.UTF-8"
 
 不过这样就会带来一个问题，就是如果我们修改了配置后，还是需要重新编译的。这里在ErgoEmacs[^11]找到了自动重新编译的配置，就是在保存文件的时候检查当前是否为`emacs-lisp-mode`，如果是，那么就编译它。这样我们修改配置的时候，就会自动重新编译了。
 
-``` scheme
+``` cl
 ;; http://ergoemacs.org/emacs/emacs_byte_compile.html
 (defun byte-compile-current-buffer ()
   "`byte-compile' current buffer if it's emacs-lisp-mode and compiled file exists."
@@ -453,17 +571,22 @@ export LC_CTYPE="zh_CN.UTF-8"
 
 ## 终 ##
 
-写了好几天，发现还有挺多东西没写的，Emacs博大精深，还需要自己慢慢摸索。这里纯当为我的记忆做个快照，让以后的我可以看到在2013年初时，Emacs在我眼中的形象。
+写了好<del>几天</del>(几年了)，发现还有挺多东西没写的，Emacs博大精深，还需要自己慢慢摸索。这里纯当为我的记忆做个快照，让以后的我可以看到在2013年初时，Emacs在我眼中的形象。
 
 如果你阅读到了这里，非常感谢你的耐心，感谢你看完了我如此长篇的唠叨。祝你在2013年效率大大提高～
 
 如果你有兴趣，可以浏览一下[我的Emacs配置文件](https://github.com/cedricporter/vim-emacs-setting/tree/master/emacs)。
+
+最后，我也不想挑起Vim和Emacs无谓的口水战。觉得无论是Vim还是Emacs，它的好用程度都是取决于使用者的配置能力，所以好不好用，完全看个人。
 
 
 ## 有趣的Emacs知识分享
 
 1. <http://whattheemacsd.com/>
 1. <http://emacsrocks.com/>
+1. <http://planet.emacsen.org/>
+1. <https://github.com/emacs-tw/awesome-emacs>
+1. 当然还有我的Blog：<http://everet.org/tag/emacs/>
 
 ## Update
 
@@ -478,7 +601,6 @@ export LC_CTYPE="zh_CN.UTF-8"
 
 [^3]: <https://github.com/tkf/emacs-jedi>
 
-[^4]: [我的el-get配置](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-el-get-settings.el)
 
 [^5]: [emacs-jedi](https://github.com/tkf/emacs-jedi)
 
@@ -493,3 +615,11 @@ export LC_CTYPE="zh_CN.UTF-8"
 [^10]: <http://linuxtoy.org/archives/emacs-undo-tree.html>
 
 [^11]: <http://ergoemacs.org/emacs/emacs_byte_compile.html>
+
+[^12]: <http://www.emacswiki.org/emacs/Evil>
+
+[^13]: <http://www.emacswiki.org/emacs/ElispCookbook#toc39>
+
+[^14]: <https://github.com/syohex/emacs-helm-ag>
+
+[^15]: <https://github.com/syohex/emacs-helm-gtags>

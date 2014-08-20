@@ -57,6 +57,6 @@ Emacs中有`iimage-mode`可以方便地让我们显示图片，是Emacs自带的
 
 {% img /imgs/snapshot7_20130115_000417_4317rhI.png %}
 
-## Footnote
+详细配置可以看[my-iimage-settings.el](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-iimage-settings.el)。
 
 [^1]: [Showing Images](http://www.gnu.org/software/emacs/manual/html_node/elisp/Showing-Images.html)
