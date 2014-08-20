@@ -433,7 +433,7 @@ export LC_CTYPE="zh_CN.UTF-8"
 ### 字节码编译
 将我们的el配置编译成字节码，可以加快Emacs的加载速度，特别是在配置文件特别多的时候。
 
-我们去到我们的el配置文件目录，打开`dired`，然后输入`% m`来调用`dired-mark-files-regexp`，然后输入`.el`来标记所有的配置文件，然后按`B`调用`dired-do-byte-compile`，然后就可以把一个目录下面的el一次性编译成`elc`。
+我们去到我们的el配置文件目录，打开`dired`，然后输入`% m`来调用`dired-mark-files-regexp`，然后输入`.el`来标记所有的配置文件，然后按`B`调用`dired-do-byte-compile`，然后就可以把一个目录下面的el一次性编译成`elc`。或者也可以直接`C-u 0 M-x byte-recompile-directory`一次性编译一个目录及其子目录。
 
 不过这样就会带来一个问题，就是如果我们修改了配置后，还是需要重新编译的。这里在ErgoEmacs[^11]找到了自动重新编译的配置，就是在保存文件的时候检查当前是否为`emacs-lisp-mode`，如果是，那么就编译它。这样我们修改配置的时候，就会自动重新编译了。
 
