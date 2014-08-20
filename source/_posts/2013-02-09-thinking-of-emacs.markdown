@@ -468,7 +468,7 @@ export LC_CTYPE="zh_CN.UTF-8"
 
 ### 2014-08-20
 
-1. 更新字节码编译
+1. 更新字节码编译 [diff](https://github.com/cedricporter/cedricporter.github.com/commit/c857d56079e935e03c877d285f9a55610126f706#diff-b200e88495777770f365b922b7fbe419)
 
 
 [^1]: <http://zh.wikipedia.org/wiki/HHKB>
