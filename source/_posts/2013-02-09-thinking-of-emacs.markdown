@@ -430,6 +430,26 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 export LC_CTYPE="zh_CN.UTF-8"
 ```
 
+### 字节码编译
+将我们的el配置编译成字节码，可以加快Emacs的加载速度，特别是在配置文件特别多的时候。
+
+我们去到我们的el配置文件目录，打开`dired`，然后输入`% m`来调用`dired-mark-files-regexp`，然后输入`.el`来标记所有的配置文件，然后按`B`调用`dired-do-byte-compile`，然后就可以把一个目录下面的el一次性编译成`elc`。
+
+不过这样就会带来一个问题，就是如果我们修改了配置后，还是需要重新编译的。这里在ErgoEmacs[^11]找到了自动重新编译的配置，就是在保存文件的时候检查当前是否为`emacs-lisp-mode`，如果是，那么就编译它。这样我们修改配置的时候，就会自动重新编译了。
+
+``` scheme
+;; http://ergoemacs.org/emacs/emacs_byte_compile.html
+(defun byte-compile-current-buffer ()
+  "`byte-compile' current buffer if it's emacs-lisp-mode and compiled file exists."
+  (interactive)
+  (when (and (eq major-mode 'emacs-lisp-mode)
+             (file-exists-p (byte-compile-dest-file buffer-file-name)))
+    (byte-compile-file buffer-file-name)))
+
+(add-hook 'after-save-hook 'byte-compile-current-buffer)
+```
+
+
 ## 终 ##
 
 写了好几天，发现还有挺多东西没写的，Emacs博大精深，还需要自己慢慢摸索。这里纯当为我的记忆做个快照，让以后的我可以看到在2013年初时，Emacs在我眼中的形象。
@@ -443,6 +463,12 @@ export LC_CTYPE="zh_CN.UTF-8"
 
 1. <http://whattheemacsd.com/>
 1. <http://emacsrocks.com/>
+
+## Update
+
+### 2014-08-20
+
+1. 更新字节码编译
 
 
 [^1]: <http://zh.wikipedia.org/wiki/HHKB>
@@ -464,3 +490,5 @@ export LC_CTYPE="zh_CN.UTF-8"
 [^9]: <http://cx4a.org/software/auto-complete/>
 
 [^10]: <http://linuxtoy.org/archives/emacs-undo-tree.html>
+
+[^11]: <http://ergoemacs.org/emacs/emacs_byte_compile.html>
