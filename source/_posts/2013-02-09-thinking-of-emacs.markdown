@@ -2,6 +2,7 @@
 layout: post
 title: "Emacs随想"
 date: 2013-02-09 16:05
+updated: 2014-08-21 10:05
 comments: true
 categories: IT
 tags: [Emacs, Lisp]
@@ -10,11 +11,11 @@ toc: true
 
 By：[Stupid ET](http://EverET.org/about-me)
 
-Emacs在1975年就诞生了，想必比现在绝大多数程序员都要老。现在最新的Emacs已经是24.3.50.7，<del>为了获取最新的特性，我的Emacs都是自己编译最新的开发版</del>（在24.3正式版出了后就使用正式版了，正式版更为稳定）。Emacs其实是一个Lisp解释器，有着和Lisp纠缠不清的关系，[我](http://everet.org/2013/02/thinking-of-emacs.html)想这与Richard Stallman本人和MIT人工智能实验室有些许关系。Emacs许多逻辑都是用elisp写的。而所有的配置都可以用elisp编写。
+Emacs在1975年就诞生了，想必比现在绝大多数程序员都要老。现在最新的Emacs已经是24.3.50.7，<del>为了获取最新的特性，我的Emacs都是自己编译最新的开发版</del>（在24.3正式版出了后就使用正式版了，正式版更为稳定）。Emacs其实是一个Lisp解释器，有着和Lisp纠缠不清的关系，[我](http://everet.org/2013/02/thinking-of-emacs.html)想这与Richard Stallman本人和MIT人工智能实验室有些许关系。Emacs许多逻辑都是用elisp写的。所有的配置也都是用elisp编写。
 
 <!-- more -->
 
-## 初见
+## 0x01 初见
 
 想起很久以前，第一次因为久闻Emacs大名打开了Emacs，看到这界面，不禁吐槽，这不就是一个Notepad吗？完全看不出这货竟然被尊称为「伪装成编辑器的操作系统」啊。
 
@@ -24,7 +25,7 @@ Emacs在1975年就诞生了，想必比现在绝大多数程序员都要老。�
 
 鉴于众大牛都推荐Emacs，我还是决定尝试一下Emacs。刚开始完全无法忍受着`C-[pnbf]`的上下左右操作方式，找了一下发现有个Evil[^12]插件，装上它Emacs立即拥有Vim的按键绑定，于是Emacs就这么变成了Vim！于是之后的一年我都是怎么用的Emacs。
 
-## 相识
+## 0x02 相识
 
 我曾经是一个忠实的Vim用户，不过后来接触了Emacs后就欲罢不能，其中一个重要的原因是Lisp。用Emacs可以让我们有一个很好的机会去学习和使用Lisp。
 
@@ -34,7 +35,7 @@ Emacs在1975年就诞生了，想必比现在绝大多数程序员都要老。�
 
 于是随着时间的推移，更多地把玩，开始逐渐对Emacs刮目相看，发现Emacs真的是伪装成编辑器的操作系统。于是调教Emacs成了茶余饭后的消遣活动。
 
-## 两个常用按键
+## 0x03 两个常用按键
 
 ### Ctrl
 
@@ -50,7 +51,7 @@ Emacs的很多按键都需要配合`Ctrl`，而`Ctrl`在US键盘的左下角，�
 (setq mac-command-modifier 'meta)
 ```
 
-## 扩展包管理
+## 0x04 扩展包管理
 
 Emacs里面的扩展多到不计其数，我们如果自己手工安装扩展或者升级扩展是一件非常麻烦的事情。
 
@@ -63,7 +64,7 @@ Emacs里面的扩展多到不计其数，我们如果自己手工安装扩展或
 而有了el-get后，这些问题都得到了解决。el-get会在新计算机中自动为我们下载并安装好我们的插件。我用el-get管理了挺多插件，可以围观[el-get配置](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-el-get-settings.el)。
 
 
-## 效率
+## 0x05 效率
 
 ### 移动 ###
 
@@ -73,11 +74,6 @@ Emacs里面的扩展多到不计其数，我们如果自己手工安装扩展或
 
 #### Multiple cursors
 Sublime Text中引以为傲的多光标编辑，Emacs装个[multiple-cursors.el](https://github.com/magnars/multiple-cursors.el)就可拥有。可以看视频：[Episode 13: multiple-cursors](http://emacsrocks.com/e13.html)。
-
-#### Minimap
-这个也是Sublime Text中另一个引以为傲的功能，Emacs装一个[minimap](https://github.com/dustinlacewell/emacs-minimap)也即可拥有。不过说实话，这个功能感觉貌似没啥意义。
-
-{% img /imgs/QQ20140821-1_20140821_000243_35033PuS.png 600 %}
 
 #### switch-window ####
 
@@ -185,47 +181,6 @@ occurence of CHAR."
 
 更多window布局配置可以围观[window-setting.el](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/window-setting.el)
 
-### UI定制
-
-Emacs的默认界面，见文章第一张图，看起来非常挫。不过幸运的是，Emacs具有超强的可定制性，于是我们可以随心所欲地调整UI。
-
-### 标题栏
-就可以显示当前项目名，当前编辑文件的完整路径。
-
-``` cl
-(setq frame-title-format
-      (list "[" '(:eval (projectile-project-name)) "]" 
-	    " ψωETωψ ◎ "
-	    '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
-```
-
-### 顶部tab栏
-
-这个需要装一个叫做tabbar的插件，装完后，就有了顶部的tab栏。具体颜色和形状的配置可以围观：[my-tabbar.el](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-tabbar.el)。
-
-### 左边的行号
-
-没错，不像Vim里面直接`set nu`就可以开启行号，Emacs的行号还需要装个插件来实现。不过庆幸的是，Emacs 22之后都自带了linum插件，只要启用就可以有行号了。
-
-``` cl
-(require 'linum)
-(global-linum-mode t)
-```
-
-### 底部的mode-line
-
-底部的一条显示了很多信息的东西叫做mode-line。默认的非常简单，我们可以对齐进行定制。如果比较懒，可以直接用[emacs-powerline](https://github.com/jonathanchu/emacs-powerline)插件就可以有一个漂亮的powerline。
-
-{% img /imgs/powerline_20140821_002729_35033c4Y.png %}
-
-不过我还是比较喜欢自己定制。
-
-{% img /imgs/QQ20140821-2_20140821_002921_35033pCf.png %}
-
-依次显示文件名、当前编辑状态、滚动状态，当前mode，使用何种版本控制以及分子，最后是当前时间。
-
-具体可以围观：[my-ui.el](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-ui.el)，里面有详细的配置。
-
 ### 快速eval lisp ###
 
 我们经常会修改配置文件，一种让配置生效的方法是关闭Emacs，然后重新打开它。不过这也太慢了，如果不是到了迫不得已的情况，我们不需要如此大动干戈来使我们的修改生效。
@@ -276,8 +231,25 @@ emacsclient -c -a=""
 
 使用Daemon主要是为了提高开启速度，这个在Terminal中经常开关Emacs编辑文件时就很重要。而在Desktop就开一次的情况就显得没什么了。
 
+### 宏 ###
 
-### 辅助插件 ###
+#### 录制 ####
+
+开始录制宏，用`C-x (`； 结束录制宏，用`C-x )`；
+
+#### 使用 ####
+
+用`C-x e`来使用宏。可以利用`C-u`来重复使用100次这个宏，即命令`C-u 100 C-x e`。
+`C-x e e e ...`将宏重复。
+
+#### 保存宏 ####
+
+1. 为宏命名：`M-x name-last-kbd-macro`。
+1. 在配置文件的某个地方输入`M-x insert-kbd-macro`。
+1. 然后就可以通过`M-x`调用了。
+
+
+### 更多效率插件 ###
 
 #### Helm
 
@@ -316,6 +288,11 @@ Emacs中还有很多很多非常有用的插件，我这里有一些我在用的
 
 {% img /imgs/git-timemachine2.gif %}
 
+Minimap， 这个也是Sublime Text中另一个经常被提起的特性，Emacs装一个[minimap](https://github.com/dustinlacewell/emacs-minimap)也即可拥有。不过说实话，这个功能感觉貌似没啥意义。
+
+{% img /imgs/QQ20140821-1_20140821_000243_35033PuS.png 600 %}
+
+
 还有些比较好用的：
 
 1. [anzu](https://github.com/syohex/emacs-anzu)，这个让搜索、替换变得更友好。
@@ -326,25 +303,50 @@ Emacs中还有很多很多非常有用的插件，我这里有一些我在用的
 1. httpcode，速查http状态码
 1. goto-last-change，顾名思义。
 
-### 宏 ###
 
-#### 录制 ####
+## 0x06 UI定制
 
-开始录制宏，用`C-x (`； 结束录制宏，用`C-x )`；
+Emacs的默认界面，见文章第一张图，看起来非常挫。不过幸运的是，Emacs具有超强的可定制性，于是我们可以随心所欲地调整UI。
 
-#### 使用 ####
+### 标题栏
+就可以显示当前项目名，当前编辑文件的完整路径。
 
-用`C-x e`来使用宏。可以利用`C-u`来重复使用100次这个宏，即命令`C-u 100 C-x e`。
-`C-x e e e ...`将宏重复。
+``` cl
+(setq frame-title-format
+      (list "[" '(:eval (projectile-project-name)) "]" 
+	    " ψωETωψ ◎ "
+	    '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+```
 
-#### 保存宏 ####
+### 顶部tab栏
 
-1. 为宏命名：`M-x name-last-kbd-macro`。
-1. 在配置文件的某个地方输入`M-x insert-kbd-macro`。
-1. 然后就可以通过`M-x`调用了。
+这个需要装一个叫做tabbar的插件，装完后，就有了顶部的tab栏。具体颜色和形状的配置可以围观：[my-tabbar.el](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-tabbar.el)。
+
+### 左边的行号
+
+没错，不像Vim里面直接`set nu`就可以开启行号，Emacs的行号还需要装个插件来实现。不过庆幸的是，Emacs 22之后都自带了linum插件，只要启用就可以有行号了。
+
+``` cl
+(require 'linum)
+(global-linum-mode t)
+```
+
+### 底部的mode-line
+
+底部的一条显示了很多信息的东西叫做mode-line。默认的非常简单，我们可以对齐进行定制。如果比较懒，可以直接用[emacs-powerline](https://github.com/jonathanchu/emacs-powerline)插件就可以有一个漂亮的powerline。
+
+{% img /imgs/powerline_20140821_002729_35033c4Y.png %}
+
+不过我还是比较喜欢自己定制。
+
+{% img /imgs/QQ20140821-2_20140821_002921_35033pCf.png %}
+
+依次显示文件名、当前编辑状态、滚动状态，当前mode，使用何种版本控制以及分子，最后是当前时间。
+
+具体可以围观：[my-ui.el](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-ui.el)，里面有详细的配置。
 
 
-## eshell ##
+## 0x07 eshell ##
 
 eshell是用lisp实现的shell，具有跨平台、支持tramp、与Emacs水乳交融等等优点。
 
@@ -375,13 +377,13 @@ Eshell有个挺好的教程：[A Complete Guide to Mastering Eshell](http://www.
 
 
 
-## TRAMP ##
+## 0x08 TRAMP ##
 
 TRAMP的全写为：Transparent Remote (file) Access, Multiple Protocol。在TRAMP的帮助下，我们可以很容易做到无缝编辑远程文件。
 
 详细阅读：[Emacs Tramp 详解](http://blog.donews.com/pluskid/archive/2006/05/06/858306.aspx)
 
-## 文件管理dired ##
+## 0x09 文件管理dired ##
 
 dired是Emacs自带的文件管理系统，能够和tramp无缝配合使用。
 
@@ -395,7 +397,7 @@ dired是Emacs自带的文件管理系统，能够和tramp无缝配合使用。
 
 当按下`)`就可以显示详细信息了。
 
-## 调试Emacs扩展 ##
+## 0x0A 调试Emacs扩展 ##
 
 有时候Emacs的插件会出现各种问题，我们就需要进行调试了。
 
@@ -410,7 +412,7 @@ dired是Emacs自带的文件管理系统，能够和tramp无缝配合使用。
 详细：[Debugger Commands](http://www.gnu.org/software/emacs/manual/html_node/elisp/Debugger-Commands.html)
 
 
-## Development ##
+## 0x0B Development ##
 
 ### autocomplete ###
 
@@ -458,9 +460,11 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 (global-highlight-parentheses-mode t)
 ```
 
-### 其他 ###
+### 其他开发辅助插件 ###
 
 像Emacs中的开发辅助插件还有很多，比较重型的有cedet(Collection of Emacs Development Environment Tools)、ecb(Emacs Code Browser)等等，都是有效的工具，可以帮助我们提高工作效率。
+
+## 0x0C 更多Emacs的用途
 
 对于平时的生活，Emacs可以编辑Chrome里面的内容，例如有时需要发段代码：[Chrome Edit With Emacs](http://everet.org/2013/01/chrome-edit-with-emacs.html)。
 
@@ -472,7 +476,7 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 
 当然像上个网，煮个咖啡，听歌音乐，聊个天，收发个邮件，Emacs都可以轻松做到。
 
-## 帮助 ##
+## 0x0D 帮助 ##
 
 如果在使用Emacs的过程中遇到什么问题，可以求助于Emacs的帮助系统。
 
@@ -507,7 +511,7 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 
 Emacs中有个快捷键导师，可以在你不知道的时候，提示你，可以围观：[Emacs中的快捷键导师](http://everet.org/2014/08/guide-key.html)
 
-## Misc ##
+## 0x0E Misc ##
 
 ### 一些有趣的快捷键 ###
 
@@ -569,9 +573,9 @@ export LC_CTYPE="zh_CN.UTF-8"
 ```
 
 
-## 终 ##
+## 0x0F 终 ##
 
-写了好<del>几天</del>(几年了)，发现还有挺多东西没写的，Emacs博大精深，还需要自己慢慢摸索。这里纯当为我的记忆做个快照，让以后的我可以看到在2013年初时，Emacs在我眼中的形象。
+写了好<del>几天</del>(一年多了)，发现还有挺多东西没写的，Emacs博大精深，还需要自己慢慢摸索。这里纯当为我的记忆做个快照，让以后的我可以看到在2013年初时，Emacs在我眼中的形象。
 
 如果你阅读到了这里，非常感谢你的耐心，感谢你看完了我如此长篇的唠叨。祝你在2013年效率大大提高～
 
@@ -580,7 +584,7 @@ export LC_CTYPE="zh_CN.UTF-8"
 最后，我也不想挑起Vim和Emacs无谓的口水战。觉得无论是Vim还是Emacs，它的好用程度都是取决于使用者的配置能力，所以好不好用，完全看个人。
 
 
-## 有趣的Emacs知识分享
+## 0x10 有趣的Emacs知识分享
 
 1. <http://whattheemacsd.com/>
 1. <http://emacsrocks.com/>
@@ -588,7 +592,7 @@ export LC_CTYPE="zh_CN.UTF-8"
 1. <https://github.com/emacs-tw/awesome-emacs>
 1. 当然还有我的Blog：<http://everet.org/tag/emacs/>
 
-## Update
+## 0x11 Update
 
 ### 2014-08-20
 
