@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Emacs随想"
-date: 2013-02-09 16:05
+date: 2014-08-21 16:05
 updated: 2014-08-21 10:05
 comments: true
 categories: IT
@@ -11,17 +11,17 @@ toc: true
 
 By：[Stupid ET](http://EverET.org/about-me)
 
-Emacs在1975年就诞生了，想必比现在绝大多数程序员都要老。现在最新的Emacs已经是24.3.50.7，<del>为了获取最新的特性，我的Emacs都是自己编译最新的开发版</del>（在24.3正式版出了后就使用正式版了，正式版更为稳定）。Emacs其实是一个Lisp解释器，有着和Lisp纠缠不清的关系，[我](http://everet.org/2013/02/thinking-of-emacs.html)想这与Richard Stallman本人和MIT人工智能实验室有些许关系。Emacs许多逻辑都是用elisp写的。所有的配置也都是用elisp编写。
+Emacs在1975年就诞生了，想必比现在绝大多数程序员都要老。现在最新的Emacs已经是24.3.50.7，<del>为了获取最新的特性，我的Emacs都是自己编译最新的开发版</del>（在24.3正式版出了后就使用正式版了，正式版更为稳定）。Emacs其实是一个Lisp解释器，有着和Lisp纠缠不清的关系，[我](http://everet.org/thinking-of-emacs.html)想这与Richard Stallman本人和MIT人工智能实验室有些许关系。Emacs许多逻辑都是用elisp写的。所有的配置也都是用elisp编写。
 
 <!-- more -->
 
 ## 0x01 初见
 
-想起很久以前，第一次因为久闻Emacs大名打开了Emacs，看到这界面，不禁吐槽，这不就是一个Notepad吗？完全看不出这货竟然被尊称为「伪装成编辑器的操作系统」啊。
+想起很久很久以前，第一次因为久闻Emacs大名打开了Emacs，看到这界面，不禁吐槽，这不就是一个Notepad吗？完全看不出这货竟然被尊称为「伪装成编辑器的操作系统」啊。
 
 {% img /imgs/QQ20140820-1_20140820_202137_35033BH1.png 540 %}
 
-而且发现完全可以像用Notepad一样使用Emacs-.-。
+而且发现完全可以像用Notepad一样使用Emacs-.-（想想第一次打开Vim的童鞋们可能连输入都发现没反应）。
 
 鉴于众大牛都推荐Emacs，我还是决定尝试一下Emacs。刚开始完全无法忍受着`C-[pnbf]`的上下左右操作方式，找了一下发现有个Evil[^12]插件，装上它Emacs立即拥有Vim的按键绑定，于是Emacs就这么变成了Vim！于是之后的一年我都是这么用的Emacs。
 
@@ -35,16 +35,16 @@ Emacs在1975年就诞生了，想必比现在绝大多数程序员都要老。�
 
 于是随着时间的推移，更多地把玩，开始逐渐对Emacs刮目相看，发现Emacs真的是「伪装成编辑器的操作系统」。于是调教Emacs成了茶余饭后的消遣活动。
 
-## 0x03 两个常用按键
+## 0x03 两个按键
 
 ### Ctrl
 
 作为一个被称为「Ctrl到死」的编辑器的用户，我们需要好好思考一下Ctrl这个按键。
 
-Emacs的很多按键都需要配合`Ctrl`，而`Ctrl`在US键盘的左下角，按起来手形会比较纠结。所以强烈推荐将`Ctrl`和`Caps Lock`对调。当然如果你有HHKB[^1]就不需要自己去切换了，因为已经物理支持了。于是`Ctrl`就到了左手小拇指的位置。
+Emacs的很多按键都需要配合`Ctrl`，而`Ctrl`在US键盘的左下角，按起来手形会比较纠结。所以强烈推荐将`Ctrl`和`Caps Lock`对调。当然如果你有HHKB[^1]就不需要自己去切换了，因为已经物理支持了。于是`Ctrl`就到了左手小拇指的位置，按起来就非常舒适了。
 
-### Alt
-在Emacs中的`M`就是我们的`Alt`，因为`Alt`在空格的旁边，所以我们很容易就用左手大拇指按下。而一个非常常用的快捷键`M-x`，我们可以用左手大拇指同时按下这两个按键。就不用将整个手掌卷起来按。对于Mac用户，因为Mac的键盘`Alt`在普通键盘的Win键，所以需要调换一下：
+### Meta
+在Emacs中的`M`(Meta)就是我们的`Alt`，因为`Alt`在空格的旁边，所以我们很容易就用左手大拇指按下。而一个非常常用的快捷键`M-x`，我们可以用左手大拇指同时按下这两个按键。就不用将整个手掌卷起来按。对于Mac用户，因为Mac的键盘`Alt`在普通键盘的Win键的位置，所以需要调换一下：
 
 ``` cl
 (setq mac-option-modifier 'super)
@@ -57,23 +57,21 @@ Emacs里面的扩展多到不计其数，我们如果自己手工安装扩展或
 
 对于debian或者ubuntu用户，大家是不是非常喜欢apt-get，只需要敲一条命令，你所需要的软件唰唰唰地就装好了。在Emacs中，我们也有这种便利的包管理——el-get[^2]。
 
-自从有了el-get，我就再也没有自己去手工下载升级那些软件包了，而且，el-get可以很好的处理软件包的依赖。例如我们安装Python的智能补全插件jedi[^3]，就只需要键入`M-x el-get-install jedi`，就可以装好jedi、epc、ctables等等。
+自从有了el-get，我就再也没有自己去手工下载升级那些软件包了，而且，el-get可以很好的处理软件包的依赖。例如我们安装Python的智能补全插件jedi[^3]，就只需要键入`M-x el-get-install jedi`，就可以装好jedi、epc、ctables等等，而且升级也非常方便。
 
-另外，在el-get的帮助下，我们可以很容易将我们的Emacs配置用版本控制器进行管理而不必将那些插件也纳入版本控制。在没有el-get的情况下，我们虽然可以通过忽略文件来忽略那些插件的文件，但是我们如果在一台全新的计算机将配置clone下来的时候，就没有了我们之前安装的插件了。
+另外，在el-get的帮助下，我们可以很容易将我们的Emacs配置用版本控制器进行管理，而不必将那些插件也纳入版本控制。在没有el-get的情况下，我们虽然可以通过忽略文件来忽略那些插件的文件，但是我们如果在一台全新的计算机将配置clone下来的时候，就没有了我们之前安装的插件了。
 
 而有了el-get后，这些问题都得到了解决。el-get会在新计算机中自动为我们下载并安装好我们的插件。我用el-get管理了挺多插件，可以围观[el-get配置](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-el-get-settings.el)。
 
-
 ## 0x05 效率
+
+作为Emacs User，使用效率也是十分重要。Emacs经过扩展后，可以比原版高效非常非常多。
 
 ### 移动 ###
 
 #### Ace Jump ####
 
 我们可以围观一下这个[screencast for AceJump](http://emacsrocks.com/e10.html)。虽然说Vim的移动速度非常的快，但是Emacs加上Ace Jump之后，光标的移动速度完全不亚于Vim。
-
-#### Multiple cursors
-Sublime Text中引以为傲的多光标编辑，Emacs装个[multiple-cursors.el](https://github.com/magnars/multiple-cursors.el)就可拥有。可以看视频：[Episode 13: multiple-cursors](http://emacsrocks.com/e13.html)。
 
 #### switch-window ####
 
@@ -123,6 +121,11 @@ occurence of CHAR."
 
 通过这个，我们可以通过`C-t`加上指定字符向后跳，后者`C-u C-t`向前跳。比如C-t w w w w ...就一直往后跳到后续的w处。类似于Vim中的fw;;;...
 
+### 快速编辑
+Sublime Text中引以为傲的多光标编辑，Emacs装个[multiple-cursors.el](https://github.com/magnars/multiple-cursors.el)就可拥有。
+
+Multiple Cursors让Emacs轻松就可以像Vim的`C-v`列编辑，还有可以更高级的多光标编辑。可以看视频：[Episode 13: multiple-cursors](http://emacsrocks.com/e13.html)。
+
 
 ### 标记Mark ###
 
@@ -133,7 +136,7 @@ occurence of CHAR."
 (global-set-key (kbd "M-SPC") 'set-mark-command)
 ```
 
-对于标记一块区域，像Vim中，我们可以`vi(`，`vi"`等等就可以标记括号，或者引号里面的内容了。在Emacs中，我们可以享有这种便捷。我们需要借助`expand-region`[^7]，具体可以围观视频：[Emacs Rocks! Episode 09: expand-region](http://emacsrocks.com/e09.html)。
+对于标记一块区域，像Vim中，我们可以`vi(`，`vi"`等等就可以标记括号、或者引号里面的内容了。在Emacs中，我们可以享有这种便捷。我们需要借助`expand-region`[^7]，具体可以围观视频：[Emacs Rocks! Episode 09: expand-region](http://emacsrocks.com/e09.html)。
 
 而标记一个函数，可以用`C-M-h`。往后标记`C-M-SPC`。
 
@@ -257,8 +260,6 @@ Helm可以方便地帮助我们找到想要的buffer、文件。而且看上去�
 
 {% img /imgs/snapshot23_20130227_104506_4247DHx.png %}
 
-此外，针对Helm，也有很多插件可以通过Helm显示结果：例如[helm-swoop](https://github.com/ShingoFukuyama/helm-swoop)、helm-ag[^14]、emacs-helm-gtags[^15]等等。
-
 #### smex
 
 smex提供了更好的M-x体验。它让M-x变成了像ido一样，可以实时提供补全。让M-x更加快速。
@@ -267,7 +268,7 @@ smex提供了更好的M-x体验。它让M-x变成了像ido一样，可以实时�
 
 #### session
 
-配合desktop可以保存我们上一次的工作状态。也就是重新打开Emacs的时候，会变成上次关闭的状态。当然也可以[分项目保存不同的session](http://everet.org/2014/02/emacs-project-manager.html)，这样就和IDE保存工作区一样了。
+配合desktop可以保存我们上一次的工作状态。也就是重新打开Emacs的时候，会变成上次关闭的状态。当然也可以[分项目保存不同的session](http://everet.org/emacs-project-manager.html)，这样就和IDE保存工作区一样了。
 
 #### undo-tree ####
 
@@ -282,27 +283,19 @@ undo-tree可以将所有的状态用树状结构绘制出来。然后我们轻�
 {% img /imgs/QQ20140820-7_20140820_231214_35033CkM.png 540 %}
 
 #### 更多
-Emacs中还有很多很多非常有用的插件，我这里有一些我在用的，可以围观[el-get配置](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-el-get-settings.el)。
-
-像[Git-timemachine](http://everet.org/2014/08/git-timemachine.html)，就可以直接切换文件的不同版本历史：
-
-{% img /imgs/git-timemachine2.gif %}
+Emacs中还有很多很多非常有用的插件，我这里有[一些](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-el-get-settings.el)我在用的。
 
 Minimap， 这个也是Sublime Text中另一个经常被提起的特性，Emacs装一个[minimap](https://github.com/dustinlacewell/emacs-minimap)也即可拥有。不过说实话，这个功能感觉貌似没啥意义。
 
 {% img /imgs/QQ20140821-1_20140821_000243_35033PuS.png 600 %}
 
-
 还有些比较好用的：
 
 1. [anzu](https://github.com/syohex/emacs-anzu)，这个让搜索、替换变得更友好。
-1. [magit](https://github.com/magit/magit)，在Emacs中方便友好地使用git。
-1. [git-gutter](https://github.com/syohex/emacs-git-gutter)可以实时显示当前文件的diff。
-1. [projectile](https://github.com/bbatsov/projectile)，超好用的项目辅助工具，可以快速在当前项目搜索、打开文件、编译等等。
-1. rainbow-mode，能够把css、html等文件中的颜色直接显示出来。
-1. httpcode，速查http状态码
-1. goto-last-change，顾名思义。
-
+1. [helm-swoop](https://github.com/ShingoFukuyama/helm-swoop)，直观方便。
+1. ag，比ack更快的搜索工具。
+1. goto-last-change，快速切换到上一个编辑的位置。
+1. [org-mode](http://orgmode.org/)，这个不用说，Emacs中超强大的文本编辑mode，编辑完可以导出各种格式例如pdf、html、word等。我的毕业论文和平时很多东西都是用org-mode写的。我也用org-mode写些[wiki](http://everet.org/notes/)。
 
 ## 0x06 UI定制
 
@@ -313,7 +306,7 @@ Emacs的默认界面，见文章第一张图，看起来非常挫。不过幸运
 
 ``` cl
 (setq frame-title-format
-      (list "[" '(:eval (projectile-project-name)) "]" 
+      (list "[" '(:eval (projectile-project-name)) "]"
 	    " ψωETωψ ◎ "
 	    '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 ```
@@ -321,6 +314,8 @@ Emacs的默认界面，见文章第一张图，看起来非常挫。不过幸运
 ### 顶部tab栏
 
 这个需要装一个叫做tabbar的插件，装完后，就有了顶部的tab栏。具体颜色和形状的配置可以围观：[my-tabbar.el](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-tabbar.el)。
+
+{% img /imgs/QQ20140821-3_20140821_230929_62337yfP.png %}
 
 ### 左边的行号
 
@@ -333,7 +328,7 @@ Emacs的默认界面，见文章第一张图，看起来非常挫。不过幸运
 
 ### 底部的mode-line
 
-底部的一条显示了很多信息的东西叫做mode-line。默认的非常简单，我们可以对齐进行定制。如果比较懒，可以直接用[emacs-powerline](https://github.com/jonathanchu/emacs-powerline)插件就可以有一个漂亮的powerline。
+底部的一条显示了很多信息的东西叫做mode-line。默认的非常简单，我们可以对其进行定制。如果比较懒，可以直接用[emacs-powerline](https://github.com/jonathanchu/emacs-powerline)插件就可以有一个漂亮的powerline。
 
 {% img /imgs/powerline_20140821_002729_35033c4Y.png %}
 
@@ -341,7 +336,7 @@ Emacs的默认界面，见文章第一张图，看起来非常挫。不过幸运
 
 {% img /imgs/QQ20140821-2_20140821_002921_35033pCf.png %}
 
-依次显示文件名、当前编辑状态、滚动状态，当前mode，使用何种版本控制以及分子，最后是当前时间。
+依次显示文件名、当前编辑状态、滚动进度，当前mode，使用何种版本控制以及分支，最后是当前时间。
 
 具体可以围观：[my-ui.el](https://github.com/cedricporter/vim-emacs-setting/blob/master/emacs/.emacs.d/configs/my-ui.el)，里面有详细的配置。
 
@@ -375,8 +370,6 @@ alias gs git status
 Eshell有个挺好的教程：[A Complete Guide to Mastering Eshell](http://www.masteringemacs.org/articles/2010/12/13/complete-guide-mastering-eshell/)。
 
 
-
-
 ## 0x08 TRAMP ##
 
 TRAMP的全写为：Transparent Remote (file) Access, Multiple Protocol。在TRAMP的帮助下，我们可以很容易做到无缝编辑远程文件。
@@ -385,7 +378,7 @@ TRAMP的全写为：Transparent Remote (file) Access, Multiple Protocol。在TRA
 
 ## 0x09 文件管理dired ##
 
-dired是Emacs自带的文件管理系统，能够和tramp无缝配合使用。
+dired是Emacs自带的文件管理系统，能够和Tramp无缝配合使用。
 
 {% img /imgs/snapshot20_20130210_125016_1347768h.png %}
 
@@ -464,23 +457,61 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 
 ### 其他开发辅助插件 ###
 
-像Emacs中的开发辅助插件还有很多，比较重型的有cedet(Collection of Emacs Development Environment Tools)、ecb(Emacs Code Browser)等等，都是有效的工具，可以帮助我们提高工作效率。
+像Emacs中的开发辅助插件还有很多，比较重型的有cedet(Collection of Emacs Development Environment Tools)、ecb(Emacs Code Browser)等等，都是有效的工具，可以帮助我们提高工作效率。另外还有挺多小工具。
+
+1. [magit](https://github.com/magit/magit)，在Emacs中方便友好地使用git。
+1. [git-gutter](https://github.com/syohex/emacs-git-gutter)可以实时显示当前文件的diff。而且可以快速跳到相对于上一次commit修改的部分。
+1. [projectile](https://github.com/bbatsov/projectile)，超好用的项目辅助工具，可以快速在当前项目搜索、打开文件、编译等等。
+1. emacs-helm-gtags[^15]，可以配合gtags快速跳转到定义等。
+1. rainbow-mode，能够把css、html等文件中的颜色直接显示出来。
+1. nginx-mode，可以语法高亮nginx的配置文件。
+1. httpcode，速查http状态码
+
+像[Git-timemachine](http://everet.org/git-timemachine.html)，可以直接查看文件的不同版本历史：
+
+{% img /imgs/git-timemachine2.gif %}
+
 
 ## 0x0C 更多Emacs的用途
 
-对于平时的生活，Emacs可以编辑Chrome里面的内容，例如有时需要发段代码：[Chrome Edit With Emacs](http://everet.org/2013/01/chrome-edit-with-emacs.html)。
+### 编辑Chrome的文本框
+对于平时的生活，Emacs可以编辑Chrome里面的内容，例如有时需要发段代码：[Chrome Edit With Emacs](http://everet.org/chrome-edit-with-emacs.html)。
 
-对于用Markdown写Blog，Emacs甚至可以直接截图、插入图片：[Screenshot and Image Paste in Emacs When Writing Markdown](http://everet.org/2012/12/screenshot-and-image-paste-in-emacs-when-writing-markdown.html)。
+### 写Markdown
 
-插入完图片后，可以直接在Emacs中预览Markdown中的图片：[让Emacs显示Markdown中的图片](http://everet.org/2013/01/emacs-markdown-display-image.html)，这个绝对让其他编辑器望尘莫及。
+对于用Markdown写Blog，Emacs甚至可以直接截图、插入图片：[Screenshot and Image Paste in Emacs When Writing Markdown](http://everet.org/screenshot-and-image-paste-in-emacs-when-writing-markdown.html)。
+
+插入完图片后，可以直接在Emacs中预览Markdown中的图片：[让Emacs显示Markdown中的图片](http://everet.org/emacs-markdown-display-image.html)，这个绝对让其他编辑器望尘莫及。
 
 {% img /imgs/QQ20140820-6_20140820_225855_35033191.png %}
+
+### 字符画
+
+Emacs的`Artist Mode`[^16]可以直接画字符画，按下`M-x artist-mode`就可以用鼠标画字符画图了，
+
+``` text 字符画
+   +--------------------------------------------+
+   |    +-------+                +--------+     |
+   |    |       |                |        |     |
+   |    +-------+    -----       +--------+     |
+   |.               (     )                   ..|
+   |...              -----.                   . |
+   +--------------------X-----------------------+
+               ----/   / \        \-----
+          ----/       /  |              \---
+       --/           /    \
+                   -/      \
+                  /         \
+                 /          |
+                /            \
+```
+
 
 当然像上个网，煮个咖啡，听个音乐，聊个天，收发个邮件，Emacs都可以轻松做到。
 
 ## 0x0D 帮助 ##
 
-如果在使用Emacs的过程中遇到什么问题，可以求助于Emacs的帮助系统。
+如果在使用Emacs的过程中遇到什么问题，可以求助于Emacs强大的帮助系统。
 
 ### C-h t
 打开 Emacs 的入门教程，
@@ -511,7 +542,7 @@ Emacs本来就是一个很好的elisp开发环境。不过Lisp里面的括号非
 
 ### 请个快捷键导师
 
-Emacs中有个快捷键导师，可以在你不知道的时候，提示你，可以围观：[Emacs中的快捷键导师](http://everet.org/2014/08/guide-key.html)
+Emacs中有个快捷键导师，可以在你需要的时候，提示你，可以围观：[Emacs中的快捷键导师](http://everet.org/guide-key.html)
 
 ## 0x0E Misc ##
 
@@ -583,7 +614,7 @@ export LC_CTYPE="zh_CN.UTF-8"
 
 如果你有兴趣，可以浏览一下[我的Emacs配置文件](https://github.com/cedricporter/vim-emacs-setting/tree/master/emacs)。
 
-最后，我也不想挑起Vim和Emacs无谓的口水战。觉得无论是Vim还是Emacs，它的好用程度完全取决于使用者的配置能力，所以好不好用，完全看个人。
+最后，我也不想挑起Vim和Emacs无谓的口水战。其实无论是Vim还是Emacs，它的好用程度完全取决于使用者的配置能力，所以好不好用，完全看个人。
 
 
 ## 0x10 有趣的Emacs知识分享
@@ -594,15 +625,19 @@ export LC_CTYPE="zh_CN.UTF-8"
 1. <https://github.com/emacs-tw/awesome-emacs>
 1. 当然还有我的Blog：<http://everet.org/tag/emacs/>
 
+
 ## 0x11 Update
+
+### 2013-02-09
+第一版。
 
 ### 2014-08-20
 
-1. 更新字节码编译 [diff](https://github.com/cedricporter/cedricporter.github.com/compare/420ca14...6ac5042)
+更新字节码编译 [diff](https://github.com/cedricporter/cedricporter.github.com/compare/420ca14...6ac5042)
 
 ### 2014-08-21
 
-1. 更新大量新内容 [diff](https://github.com/cedricporter/cedricporter.github.com/commit/063be891678559cd7e579416ddb7176b777b2c58)
+更新大量新内容 [diff](https://github.com/cedricporter/cedricporter.github.com/commit/063be891678559cd7e579416ddb7176b777b2c58)
 
 
 [^1]: <http://zh.wikipedia.org/wiki/HHKB>
@@ -633,3 +668,5 @@ export LC_CTYPE="zh_CN.UTF-8"
 [^14]: <https://github.com/syohex/emacs-helm-ag>
 
 [^15]: <https://github.com/syohex/emacs-helm-gtags>
+
+[^16]: <http://www.cinsk.org/emacs/emacs-artist.html>
