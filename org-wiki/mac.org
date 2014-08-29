@@ -10,5 +10,10 @@
 
 * 修改图片分辨率
   #+BEGIN_SRC sh
-    sips -Z 640 *.jpg  
+    sips -Z 640 *.jpg
+  #+END_SRC
+
+* 定期修改密码
+  #+BEGIN_SRC sh
+    sudo defaults write /Library/Preferences/com.apple.loginwindow PasswordExpirationDays NUMBER
   #+END_SRC

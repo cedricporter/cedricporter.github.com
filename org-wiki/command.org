@@ -18,7 +18,6 @@
     # or
     uname -m
 
-
     # Extract text from picture [OCR reader]
     gocr -i ~/Screenshot.png
 
@@ -147,6 +146,10 @@
     # save command output to image
     ifconfig | convert label:@- ip.png
 
+    # Resize Image
+    mogrify -path ~/Pictures/mini -resize "1024x1024>" 2014-08-29*.jpg
+
+
     # Matrix Style
     tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"
 
@@ -214,6 +217,13 @@
 
     # 删掉文件后面的n行
     truncate -s -"$(tail -n1 file | wc -c)" file
+
+    # 查找连接的ip
+    netstat -anp | egrep "(9090|9091)" | grep ESTABLISHED | awk '{ print $5 }' | cut -d: -f 1 | sort -u
+
+    # rehash
+    hash -r  # bash
+    rehash   # zsh
   #+END_SRC
 
   http://www.commandlinefu.com/commands/browse
