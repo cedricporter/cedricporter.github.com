@@ -1,13 +1,66 @@
-#+TITLE: 首页
+#+TITLE: Wiki
 #+OPTIONS: toc:nil num:nil
 
 
-* Notes
+* 编程
+  + [[file:coffeescript.org][Coffeescript]]
+  + [[file:ipython.org][ipython]]
+  + [[file:javascript.org][Javascript]]
+  + [[file:jquery.org][jquery]]
+  + [[file:lisp.org][Lisp]]
+  + [[file:python.org][Python]]
+  + [[file:shell.org][shell]]
 
-#+INCLUDE: "sitemap.org"
+* Web
+  + [[file:apache.org][apache]]
+  + [[file:fed.org][Front End Development]]
+  + [[file:firefox.org][Firefox]]
+  + [[file:mysql.org][MySQL]]
+  + [[file:nginx.org][nginx]]
+  + [[file:tornado.org][Tornado笔记]]
+  + [[file:uwsgi.org][wsgi]]
+  + [[file:web.org][Web相关]]
+  + [[file:zencoding.org][zencoding]]
+  + [[file:zmq.org][ZMQ]]
+
+* 安全
+  + [[file:nmap.org][nmap]]
+  + [[file:secure.org][安全]]
+  + [[file:sqlmap.org][sqlmap]]
+
+* 开发工具
+  + [[file:eclipse.org][eclipse]]
+  + [[file:gdb.org][gdb]]
+  + [[file:git.org][Git笔记]]
+  + [[file:svn.org][svn]]
+  + [[file:xcode.org][Xcode]]
+
+* 技术类
+  + [[file:android.org][Android]]
+  + [[file:emacs.org][Emacs]]
+  + [[file:faq.org][FAQ]]
+  + [[file:linux.org][Linux]]
+  + [[file:mac.org][Mac OS X]]
+  + [[file:org-mode.org][Org-Mode]]
+  + [[file:windows.org][Windows]]
+  + [[file:blog.org][blog]]
+  + [[file:cygwin.org][cygwin]]
+  + [[file:misc.org][misc]]
+  + [[file:protocol.org][协议]]
+  + [[file:command.org][各种有趣的命令]]
+  + [[file:migrate.org][服务器迁移]]
+
+* 生活
+  + [[file:joke.org][Joke]]
+  + [[file:harmonica.org][口琴]]
+
+* 杂
+  + [[file:temp.org][Temp]]
+
 
 * About
   这个部分是由Emacs的org-mode生成的，在使用一段时间的org-mode后，发现会比用markdown书写起来更加顺手，主要是因为，Emacs的org-mode的功能更加丰富。
 
 * Link
-  My Blog: [[http://EverET.org][EverET.org]]
+  - [[file:archives.org][Wiki Archives]]
+  - My Blog: [[http://EverET.org][EverET.org]]

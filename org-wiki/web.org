@@ -2,11 +2,12 @@
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
 #+OPTIONS: ^:{}
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
 * chrome
 ** inspect
    #+BEGIN_EXAMPLE
-     chrome://inspect/   
+     chrome://inspect/
    #+END_EXAMPLE
 
 * 如何移除Cookie

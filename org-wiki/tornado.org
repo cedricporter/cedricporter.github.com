@@ -1,6 +1,7 @@
 #+TITLE: Tornado笔记
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
 
 * Hello, world
@@ -47,3 +48,20 @@
       def _authenticate(self, callback):
           self._get_current_user(callback)
   #+END_SRC
+
+* 大文件上传
+  #+BEGIN_SRC python
+    @tornado.web.stream_request_body
+    class MainHandler(tornado.web.RequestHandler):
+        def prepare(self):
+            print self.request.headers
+
+        def post(self):
+            print 'POST successfully completed.'
+
+        def data_received(self, chunk):
+            print len(chunk)
+  #+END_SRC
+
+* 资料
+  1. [[https://gist.github.com/asimakov/10888897][Tornado server with a pipe in a separate thread]]

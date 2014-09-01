@@ -1,11 +1,12 @@
 #+TITLE: jquery
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
 * 选择器
-** 选择以什么开头的元素  
+** 选择以什么开头的元素
    #+BEGIN_SRC javascript
-     $("div[id^=help]")  
+     $("div[id^=help]")
    #+END_SRC
 
 * 插件

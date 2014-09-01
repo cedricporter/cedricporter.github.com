@@ -1,13 +1,14 @@
 #+TITLE: Javascript
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
 * chrome
   chrome的开发环境挺好用的。
 
 ** 保存对象
    #+BEGIN_SRC javascript
-     copy(JSON.stringify(song_list))   
+     copy(JSON.stringify(song_list))
    #+END_SRC
    这样就可以将对象复制到内存里面了。
 

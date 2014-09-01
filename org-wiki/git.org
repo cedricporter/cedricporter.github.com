@@ -1,6 +1,7 @@
 #+TITLE: Git笔记
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
 
 * git 恢复单个文件

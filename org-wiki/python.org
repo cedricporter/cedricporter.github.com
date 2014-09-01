@@ -1,7 +1,7 @@
 #+TITLE: Python
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
-#+OPTIONS: ^:{}
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
 * 资料
   1. [[http://www.python.org/dev/peps/pep-0333/][PEP 333 -- Python Web Server Gateway Interface v1.0]]([[http://codeplayer.blogbus.com/files/1139476043.html][翻译]])

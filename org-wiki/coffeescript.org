@@ -2,6 +2,7 @@
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
 #+STARTUP: noindent
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
 * func
   #+BEGIN_SRC coffee
@@ -31,7 +32,3 @@
                   success: (data, textStatus, jqXHR) ->
                           $('body').append "Successful AJAX call: #{data}"
   #+END_SRC
-
-
-
-

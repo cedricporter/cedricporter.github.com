@@ -1,6 +1,7 @@
 #+TITLE: nginx
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
 * cpu绑定
   #+BEGIN_EXAMPLE
@@ -8,78 +9,106 @@
     worker_cpu_affinity 01 10;
   #+END_EXAMPLE
 
-* accept
-  In ngx_event_accept.c
+* 配置
+** 301重定向
+   #+BEGIN_EXAMPLE
+     server {
+         server_name www.everet.org;
 
-  #+BEGIN_SRC c
-    s = accept(lc->fd, (struct sockaddr *) sa, &socklen);
-    
-    if (s == -1)
-    {
-        err = ngx_socket_errno;
-    
-        if (err == NGX_EAGAIN) {
-            ngx_log_debug0(NGX_LOG_DEBUG_EVENT, ev->log, err,
-                           "accept() not ready");
-            return;
-        }
-    
-        level = NGX_LOG_ALERT;
-    
-        if (err == NGX_ECONNABORTED) {
-            level = NGX_LOG_ERR;
-    
-        } else if (err == NGX_EMFILE || err == NGX_ENFILE) {
-            level = NGX_LOG_CRIT;
-        }
-    
-        ngx_log_error(level, ev->log, err, "accept() failed");
-    
-        if (err == NGX_ECONNABORTED) {
-            if (ngx_event_flags & NGX_USE_KQUEUE_EVENT) {
-                ev->available--;
-            }
-    
-            if (ev->available) {
-                continue;
-            }
-        }
-    
-        if (err == NGX_EMFILE || err == NGX_ENFILE) {
-            if (ngx_disable_accept_events((ngx_cycle_t *) ngx_cycle)
-                != NGX_OK)
-            {
-                return;
-            }
-    
-            if (ngx_use_accept_mutex) {
-                if (ngx_accept_mutex_held) {
-                    ngx_shmtx_unlock(&ngx_accept_mutex);
-                    ngx_accept_mutex_held = 0;
-                }
-    
-                ngx_accept_disabled = 1;
-    
-            } else {
-                ngx_add_timer(ev, ecf->accept_mutex_delay);
-            }
-        }
-    
-        return;
-    }
-  #+END_SRC
+         rewrite ^(.*) http://everet.org$uri permanent;
+
+         location ~* ^/\d+/\d+/.+\.html$ {
+         rewrite ^/\d+/\d+/(.+\.html)$ /$1 permanent;
+     }
+
+     server {
+         server_name www.5txl.com;
+
+         return 301 $scheme://5txl.com$request_uri;
+     }
+   #+END_EXAMPLE
+
+** cache静态文件
+   #+BEGIN_EXAMPLE
+     location ~* .(ogg|ogv|svg|svgz|oet|otf|woff|mp4|ttf|css|rss|atom|js|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|mp3|bmp|rtf)$ {
+         expires 604800;         # one week
+         log_not_found off;
+         access_log off;
+     }
+   #+END_EXAMPLE
 
 * 目录浏览
   #+BEGIN_EXAMPLE
     server {
         listen 80 default_server;
-    
+
         server_name localhost;
         root /home/cedricporter/htdocs;
-    
+
         location / {
             autoindex on;
             disable_symlinks off;
         }
     }
   #+END_EXAMPLE
+
+* accept
+  In ngx_event_accept.c
+
+  #+BEGIN_SRC c
+    s = accept(lc->fd, (struct sockaddr *) sa, &socklen);
+
+    if (s == -1)
+    {
+        err = ngx_socket_errno;
+
+        if (err == NGX_EAGAIN) {
+            ngx_log_debug0(NGX_LOG_DEBUG_EVENT, ev->log, err,
+                           "accept() not ready");
+            return;
+        }
+
+        level = NGX_LOG_ALERT;
+
+        if (err == NGX_ECONNABORTED) {
+            level = NGX_LOG_ERR;
+
+        } else if (err == NGX_EMFILE || err == NGX_ENFILE) {
+            level = NGX_LOG_CRIT;
+        }
+
+        ngx_log_error(level, ev->log, err, "accept() failed");
+
+        if (err == NGX_ECONNABORTED) {
+            if (ngx_event_flags & NGX_USE_KQUEUE_EVENT) {
+                ev->available--;
+            }
+
+            if (ev->available) {
+                continue;
+            }
+        }
+
+        if (err == NGX_EMFILE || err == NGX_ENFILE) {
+            if (ngx_disable_accept_events((ngx_cycle_t *) ngx_cycle)
+                != NGX_OK)
+            {
+                return;
+            }
+
+            if (ngx_use_accept_mutex) {
+                if (ngx_accept_mutex_held) {
+                    ngx_shmtx_unlock(&ngx_accept_mutex);
+                    ngx_accept_mutex_held = 0;
+                }
+
+                ngx_accept_disabled = 1;
+
+            } else {
+                ngx_add_timer(ev, ecf->accept_mutex_delay);
+            }
+        }
+
+        return;
+    }
+  #+END_SRC

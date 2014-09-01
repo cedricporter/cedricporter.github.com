@@ -1,6 +1,7 @@
 #+TITLE: svn
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
+#+OPTIONS: ^:{}
 
 * 查看分支
   #+BEGIN_SRC sh
@@ -20,5 +21,5 @@
 * 全局忽略
   #+BEGIN_SRC conf
     [miscellany]
-    global-ignores = *.o *.lo *.la *.al .libs *.so *.so.[0-9]* *.a *.pyc *.pyo .ropeproject *.rej *~  
+    global-ignores = *.o *.lo *.la *.al .libs *.so *.so.[0-9]* *.a *.pyc *.pyo .ropeproject *.rej *~
   #+END_SRC

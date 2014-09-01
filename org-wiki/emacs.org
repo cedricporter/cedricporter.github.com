@@ -1,6 +1,8 @@
 #+TITLE: Emacs
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
 
 * 按键绑定
 
@@ -35,7 +37,7 @@
 **  启动Emacs
     创建一个快捷方式，在里面填上：
     #+BEGIN_EXAMPLE
-      C:\cygwin\bin\run.exe /usr/bin/emacs    
+      C:\cygwin\bin\run.exe /usr/bin/emacs
     #+END_EXAMPLE
 
     然后就可以直接打开cygwin中的Emacs了。至于配置文件，就放在cygwin中的家目录中，之后的东西就和*nix一样了。
@@ -50,3 +52,7 @@
               (getenv "PATH")
               ))
    #+END_SRC
+
+* FAQ
+** 斜体中文出现方块
+   ~M-x customize-face RET font-lock-comment-face~ ，将"slant"改为"normal"。

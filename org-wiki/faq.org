@@ -2,6 +2,7 @@
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
 #+OPTIONS: ^:{}
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
 
 * 自旋锁
@@ -55,7 +56,7 @@
 * connect什么时候返回
   TCP有三次握手，connect会等到自己的SYN的ACK为之才会返回，这意味着，至少等待一个到服务器的RTT时间。
 
-  
+
 * 非阻塞accept没有新连接是返回什么？
   返回-1，然后errno为EWOULDBLOCK。
 
@@ -63,4 +64,3 @@
   原来用gf可以跳到下一个frame里面，自己真是弱爆了。
 
   [[https://github.com/philc/vimium][vimium]]
-  

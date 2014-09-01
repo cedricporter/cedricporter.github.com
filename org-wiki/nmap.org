@@ -1,4 +1,4 @@
-#+TITLE: nmap.org
+#+TITLE: nmap
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
 
@@ -6,15 +6,12 @@
   #+BEGIN_SRC sh
     # 其中-A选项用于使用进攻性（Aggressive）方式扫描；-T4指定扫描过程使用的时序（Timing）
     nmap –T4 –A –v targethost
-    
+
     # 在网络寻找所有在线主机
     nmap -sP 192.168.0.*
     # 或者也可用以下命令:
     nmap -sP 192.168.0.0/24
-    
+
     # 使用诱饵扫描方法来扫描主机端口
     sudo nmap -sS 192.168.0.10 -D 192.168.0.2
-    
-    
-    
   #+END_SRC

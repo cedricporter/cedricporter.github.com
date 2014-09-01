@@ -1,6 +1,7 @@
-#+TITLE: android.org
+#+TITLE: Android
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
 * adb
   #+BEGIN_SRC sh
@@ -9,7 +10,7 @@
     ip route show
   #+END_SRC
 
-  
+
 * SharedReferences
   保存在
   #+BEGIN_EXAMPLE

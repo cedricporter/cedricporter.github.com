@@ -1,6 +1,8 @@
-#+TITLE: command.org
+#+TITLE: 各种有趣的命令
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
 
 * 有趣的command
   #+BEGIN_SRC sh
@@ -145,10 +147,6 @@
 
     # save command output to image
     ifconfig | convert label:@- ip.png
-
-    # Resize Image
-    mogrify -path ~/Pictures/mini -resize "1024x1024>" 2014-08-29*.jpg
-
 
     # Matrix Style
     tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"

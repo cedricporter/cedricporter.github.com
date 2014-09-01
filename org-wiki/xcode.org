@@ -1,4 +1,4 @@
-#+TITLE: xcode.org
+#+TITLE: Xcode
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
 

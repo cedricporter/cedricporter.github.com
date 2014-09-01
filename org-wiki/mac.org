@@ -1,6 +1,7 @@
-#+TITLE: mac os x
+#+TITLE: Mac OS X
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
 * 休眠
   #+BEGIN_SRC sh
@@ -11,9 +12,23 @@
 * 修改图片分辨率
   #+BEGIN_SRC sh
     sips -Z 640 *.jpg
+
+    # 批量修改图片尺寸
+    mogrify -path ~/Pictures/mini -resize "1024x1024>" 2014-08-29*.jpg
   #+END_SRC
 
 * 定期修改密码
   #+BEGIN_SRC sh
     sudo defaults write /Library/Preferences/com.apple.loginwindow PasswordExpirationDays NUMBER
   #+END_SRC
+
+* 隐藏顶部信息栏
+  修改Info.plist，加入：
+
+  #+BEGIN_SRC xml
+    <key>LSUIPresentationMode</key>
+    <integer>4</integer>
+  #+END_SRC
+
+  1. [[http://hints.macworld.com/article.php?story%3D20070118003804854][Auto-hide the dock and menubar on a per-app basis]]
+  2. [[https://developer.apple.com/library/ios/documentation/general/Reference/InfoPlistKeyReference/Articles/LaunchServicesKeys.html#//apple_ref/doc/uid/20001431-113616][Launch Services Keys]]

@@ -1,4 +1,4 @@
-#+TITLE: temp.org
+#+TITLE: Temp
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
 

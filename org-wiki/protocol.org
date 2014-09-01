@@ -1,6 +1,7 @@
-#+TITLE: protocol.org
+#+TITLE: 协议
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
 * sock5
   [[http://www.ietf.org/rfc/rfc1928.txt][SOCKS Protocol Version 5]]

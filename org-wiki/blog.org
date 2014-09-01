@@ -1,6 +1,7 @@
 #+TITLE: blog
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
 * Git自动生成
   [[http://phoenixsec.org/Web/2012/08/29/deploy-jekyll-on-vps/][Deploy Jekyll on VPS]]
@@ -9,24 +10,24 @@
   #+BEGIN_SRC sh
     git clone git@github.com:[Yourname]/[yourname].github.com.git octopress
     cd octopress
-        
+
     git checkout -b source origin/source
-        
+
     git remote add octopress https://github.com/imathis/octopress.git
-        
+
     git pull origin source
-    
+
     # under octopress
     # git clone git@github.com:[Yourname]/[yourname].github.com.git _deploy
     mkdir _deploy
     cp -rf .git _deploy
     (cd _deploy && git checkout master)
-        
+
     # install bundles
     sudo apt-get install rbenv ruby-dev
     sudo gem install bundler
     rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
     bundle install
     rake install
-        
+
   #+END_SRC

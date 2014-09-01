@@ -1,7 +1,7 @@
 #+TITLE: MySQL
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
-#+OPTIONS: H:3 num:t toc:nil \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
 * 基本命令
 ** 创建用户
@@ -65,7 +65,7 @@
 ** 清除查询缓存
    #+BEGIN_SRC sql
      RESET QUERY CACHE;
-     FLUSH QUERY CACHE;   
+     FLUSH QUERY CACHE;
    #+END_SRC
 
 * 更多
@@ -82,11 +82,11 @@
 
 ** 更新datetime中的time
    #+BEGIN_SRC sql
-     UPDATE auction_info SET end_time=concat(date(end_time), ' 22:00:00') WHERE id >= 13;   
+     UPDATE auction_info SET end_time=concat(date(end_time), ' 22:00:00') WHERE id >= 13;
    #+END_SRC
    http://stackoverflow.com/questions/1326548/update-only-time-in-a-mysql-datetime-field
 
-   
+
 * Misc
   1. 尽量将多个语句绑到一个事务中，进行提交，避免多次提交导致的数据库开销。
   1. 默认innodb是开启自动提交的，如果你按照myisam的使用方法来编写代码页不会存在错误，只是性能会很低。
