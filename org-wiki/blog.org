@@ -31,3 +31,6 @@
     rake install
 
   #+END_SRC
+
+* liquid语法
+  1. [[https://github.com/Shopify/liquid/wiki/Liquid-for-Designers][Liquid for Designers]]

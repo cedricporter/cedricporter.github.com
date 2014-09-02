@@ -37,6 +37,14 @@
      }
    #+END_EXAMPLE
 
+** expired
+   In addition, it is possible to specify a time of the day using the “@” prefix (0.7.9, 0.6.34):
+
+   #+BEGIN_EXAMPLE
+     expires @15h30m;
+   #+END_EXAMPLE
+
+
 * 目录浏览
   #+BEGIN_EXAMPLE
     server {
