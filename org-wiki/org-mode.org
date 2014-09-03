@@ -153,9 +153,8 @@
 
 * Export
 ** Export Options
-   http://orgmode.org/manual/Export-options.html#Export-options
-
-   [[http://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html][Publishing Org-mode files to HTML]]
+   1. http://orgmode.org/manual/Export-options.html#Export-options
+   2. [[http://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html]]
 
 ** 装扮
    1. [[http://www.seas.upenn.edu/~heqin/academic/sitecreation.html][How to Create This Site]]
