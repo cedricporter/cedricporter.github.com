@@ -3,6 +3,10 @@
 #+LINK_HOME: index.html
 #+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
+* git flow
+  - [[http://fann.im/blog/2012/03/12/git-flow-notes/][Git-flow 使用笔记]]
+  - [[http://www.juvenxu.com/2010/11/28/a-successful-git-branching-model/][一个成功的Git分支模型]]
+  - [[http://ihower.tw/blog/archives/5140][Git flow 開發流程]]
 
 * git 恢复单个文件
   如果你只是要恢复一个文件(修复未提交文件中的错误),如”hello.rb”, 你就要使用 git checkout

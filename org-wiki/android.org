@@ -10,9 +10,15 @@
     ip route show
   #+END_SRC
 
+* ndk
+** Create Bitmap From C++
+   [[http://stackoverflow.com/questions/7677092/creating-an-android-graphics-bitmap-from-c][Creating an android.graphics.Bitmap from C++]]
 
 * SharedReferences
   保存在
   #+BEGIN_EXAMPLE
     /data/data/<package name>/shared_prefs/etcontact.xml
   #+END_EXAMPLE
+
+* wifi密码
+  存放在 ~/data/misc/wifi/wpa_supplicant.conf~ 。

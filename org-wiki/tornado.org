@@ -65,3 +65,4 @@
 
 * 资料
   1. [[https://gist.github.com/asimakov/10888897][Tornado server with a pipe in a separate thread]]
+  2. https://github.com/tornadoweb/tornado/wiki/Links

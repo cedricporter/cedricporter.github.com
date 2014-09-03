@@ -157,7 +157,6 @@
 
    [[http://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html][Publishing Org-mode files to HTML]]
 
-
-* 装扮
-  1. [[http://www.seas.upenn.edu/~heqin/academic/sitecreation.html][How to Create This Site]]
-  2. [[http://thomasf.github.io/solarized-css/][Solarized CSS]]
+** 装扮
+   1. [[http://www.seas.upenn.edu/~heqin/academic/sitecreation.html][How to Create This Site]]
+   2. [[http://thomasf.github.io/solarized-css/][Solarized CSS]]

@@ -10,10 +10,12 @@
   + [[file:lisp.org][Lisp]]
   + [[file:python.org][Python]]
   + [[file:shell.org][shell]]
+  + [[file:gevent.org][gevent]]
 
 * Web
   + [[file:apache.org][apache]]
   + [[file:fed.org][Front End Development]]
+  + [[file:chrome.org][Chrome]]
   + [[file:firefox.org][Firefox]]
   + [[file:mysql.org][MySQL]]
   + [[file:nginx.org][nginx]]
