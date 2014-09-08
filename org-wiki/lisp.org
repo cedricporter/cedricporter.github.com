@@ -5,12 +5,15 @@
 
 这里记录一下Emacs Lisp的语法，许多东西如果不记录一下，可能在需要的时候，就难以找到曾经解决过的问题的答案。
 
+* slime
+  - http://slime-user-manual-cn.readthedocs.org/en/latest/index.html
+
 * Loop
 
-* Common Lisp语法  
+* Common Lisp语法
 ** quote
    Lisp 提供 quote 作爲一種保護表達式不被求值的方式。
-   
+
 * 判读字体是否存在
   #+BEGIN_SRC lisp
     (member "Monaco" (font-family-list))

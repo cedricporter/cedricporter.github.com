@@ -3,6 +3,18 @@
 #+LINK_HOME: index.html
 #+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
+* Log
+  #+BEGIN_SRC python
+    LOG_FORMAT = '[%(asctime)s] [%(levelname)s] %(message)s'
+    LOG_DATE_FMT = '%Y-%m-%d %H:%M:%S'
+
+    handler = logging.FileHandler(logdir + "/" + filename, 'a')
+    formatter = logging.Formatter(LOG_FORMAT, LOG_DATE_FMT)
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.setLevel(logging.DEBUG)
+  #+END_SRC
+
 * 资料
   1. [[http://www.python.org/dev/peps/pep-0333/][PEP 333 -- Python Web Server Gateway Interface v1.0]]([[http://codeplayer.blogbus.com/files/1139476043.html][翻译]])
   2. [[http://www.python.org/dev/peps/pep-0008/][PEP 8 -- Style Guide for Python Code]]

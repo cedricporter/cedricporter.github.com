@@ -212,9 +212,19 @@
    #+END_SRC
 
 * submodule
-  #+BEGIN_SRC sh
-    git submodule add git://github.com/chneukirchen/rack.git rack
-  #+END_SRC
+** 添加
+   #+BEGIN_SRC sh
+     git submodule add git://github.com/chneukirchen/rack.git rack
+   #+END_SRC
+** 删除
+   #+BEGIN_SRC sh
+     git submodule deinit asubmodule
+     git rm asubmodule
+     # Note: asubmodule (no trailing slash)
+     # or, if you want to leave it in your working tree
+     git rm --cached asubmodule
+   #+END_SRC
+   [[http://stackoverflow.com/questions/1260748/how-do-i-remove-a-git-submodule][How do I remove a Git submodule?]]
 
 * 丢失commit
   在用git-svn或者某些外部程序调用git的时候，有时候会导致git丢失一些log。但是丢失log并不带代表是丢失commit，我们只需要找回以前的commit就行了。
@@ -268,6 +278,12 @@
   #+BEGIN_SRC sh
     git tag -d v1.0
     git push --delete origin v1.0
+  #+END_SRC
+
+* 删除远程分支
+  #+BEGIN_SRC sh
+    git push origin --delete <branchName>
+    git push origin :<branchName>
   #+END_SRC
 
 * 代理上Github
