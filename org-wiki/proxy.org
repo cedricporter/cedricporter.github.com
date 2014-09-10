@@ -1,0 +1,10 @@
+#+TITLE: proxy
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
+* proxychain4
+  https://github.com/rofl0r/proxychains-ng
+
+* sock5转http
+  privoxy

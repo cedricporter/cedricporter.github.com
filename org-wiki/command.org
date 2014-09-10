@@ -436,3 +436,22 @@
     sudo apt-get install python-pygments
     alias ccat='pygmentize -g'
   #+END_SRC
+
+* 为图片添加水印
+** 简单水印
+   #+BEGIN_SRC sh
+     convert -fill '#f00' -pointsize 30 -draw "text -10,-30 'EverET.org'" DSC_8240.jpg DSC_8240II.jpg
+   #+END_SRC
+
+** 半透明水印
+   #+BEGIN_SRC sh
+     convert -size 300x50 xc:grey30 -pointsize 20 -gravity center -draw "fill grey70  text 0,0  'EverET.org'" fgnd.png
+     convert -size 300x50 xc:black -pointsize 20 -gravity center -draw "fill white  text  1,1  'EverET.org' text  0,0  'EverET.org' fill black  text -1,-1 'EverET.org'" +matte mask.png
+     composite -compose CopyOpacity  mask.png  fgnd.png stamp.png
+     mogrify -trim +repage stamp.png
+
+     composite -gravity SouthEast -geometry +5+10 stamp.png DSC_8240.jpg DSC_8240II.jpg
+   #+END_SRC
+
+   - [[http://www.sitepoint.com/adding-text-watermarks-with-imagick/][Adding Text Watermarks with Imagick]]
+   - [[http://www.win.tue.nl/~aeb/linux/misc/convert/convert-draw-text.html][Using ImageMagick:convert:draw:text]]
