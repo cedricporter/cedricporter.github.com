@@ -1,0 +1,14 @@
+#+TITLE: redis.org
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
+* DB大小
+  #+BEGIN_SRC sh
+    DBSIZE
+  #+END_SRC
+
+* 模糊查询
+  #+BEGIN_SRC sh
+    redis-cli -s /var/run/redis/redis-163gs.sock KEYS "url:*" | wc -l
+  #+END_SRC

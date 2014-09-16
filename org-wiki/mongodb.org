@@ -1,0 +1,18 @@
+#+TITLE: mongodb
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
+* command
+  #+BEGIN_SRC sh
+    show dbs
+
+    # this switches to the database you want to query
+    use mydb
+
+    # this command will list all collections in the database
+    show collections
+
+    # this will show all documents in the database in a readable format; do the same for each collection in the database
+    db.collectionName.find().pretty()
+  #+END_SRC

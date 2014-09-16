@@ -10,3 +10,9 @@
 
 * 删除插件
   Help -> About Eclipse -> Installation details. On the "Installed software" tab click on the software that you wish to uninstall, then click the "Uninstall..." button.
+
+* Android Private Libraries消失
+  1. Package Explorer -> Right click the project -> Android Tools -> Fix Project Properties.
+  2. Project -> Clean
+
+  然后看看错误输出是什么。一般可能是有两个同样的库存在了，例如android-support-v4.jar。

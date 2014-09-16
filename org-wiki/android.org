@@ -3,12 +3,25 @@
 #+LINK_HOME: index.html
 #+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
+* 编程
+
+** runOnUiThread
+   #+BEGIN_SRC java
+     runOnUiThread(new Runnable() {
+             @Override
+             public void run() {
+                 //Do the changing of UI here
+             }
+         });
+   #+END_SRC
+
 * adb
-  #+BEGIN_SRC sh
-    netcfg
-    ip addr list
-    ip route show
-  #+END_SRC
+** 查看网络信息
+   #+BEGIN_SRC sh
+     netcfg
+     ip addr list
+     ip route show
+   #+END_SRC
 
 * ndk
 ** Create Bitmap From C++
@@ -22,3 +35,16 @@
 
 * wifi密码
   存放在 ~/data/misc/wifi/wpa_supplicant.conf~ 。
+
+* 系统设置
+** 修改屏幕亮度
+   #+BEGIN_SRC sh
+     sqlite3 /data/data/com.android.providers.settings/databases/settings.db
+     update system set value=255 where name='screen_brightness'
+   #+END_SRC
+
+* 知识
+  - [[https://developer.android.com/training/multiple-threads/communicate-ui.html][Communicating with the UI Thread]]
+
+* 下载Google Play上的应用的apk
+  http://apps.evozi.com/apk-downloader/

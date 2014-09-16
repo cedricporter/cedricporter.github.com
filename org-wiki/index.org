@@ -18,6 +18,8 @@
   + [[file:chrome.org][Chrome]]
   + [[file:firefox.org][Firefox]]
   + [[file:mysql.org][MySQL]]
+  + [[file:redis.org][redis]]
+  + [[file:mongodb.org][mongodb]]
   + [[file:nginx.org][nginx]]
   + [[file:tornado.org][Tornado笔记]]
   + [[file:uwsgi.org][wsgi]]

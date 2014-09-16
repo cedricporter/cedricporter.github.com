@@ -455,3 +455,8 @@
 
    - [[http://www.sitepoint.com/adding-text-watermarks-with-imagick/][Adding Text Watermarks with Imagick]]
    - [[http://www.win.tue.nl/~aeb/linux/misc/convert/convert-draw-text.html][Using ImageMagick:convert:draw:text]]
+
+* 检查socks5
+  #+BEGIN_SRC sh
+    curl --socks5 localhost:1080 ifconfig.me/ip
+  #+END_SRC
