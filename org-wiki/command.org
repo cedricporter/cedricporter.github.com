@@ -460,3 +460,20 @@
   #+BEGIN_SRC sh
     curl --socks5 localhost:1080 ifconfig.me/ip
   #+END_SRC
+
+* 同步硬盘数据
+  #+BEGIN_SRC sh
+    rsync -avhH --progress --delete /Directory1/ /Directory2/
+
+    rsync --size-only --ignore-existing -rvhH --progress --delete /Volumes/Photos2/收藏 /Volumes/Photos/
+    rsync --size-only --ignore-existing -rvhH --progress --delete /Volumes/Photos2/照片 /Volumes/Photos/
+
+    rsync -rv --include '*/' --include '*.js' --exclude '*' --prune-empty-dirs Source/ Target/
+  #+END_SRC
+
+* 查看登录数
+  #+BEGIN_SRC sh
+    grep "Sep 16" /var/log/auth.log |grep " Accepted publickey for root" |wc -l
+  #+END_SRC
+
+*
