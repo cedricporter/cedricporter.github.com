@@ -33,7 +33,7 @@ Supervisor，简单来说，就是一个Python写的进程管理器。不仅仅�
 
 ## 安装
 
-非常熟悉的安装方式：`sudo pip install supervisor`，便可以拥有Supervisor，如果没有启动脚本，可以从[这里](https://github.com/cedricporter/supervisor_conf/blob/master/init.d/supervisor)下载一份，放置到`/etc/init.d/`下面便可。
+非常熟悉的安装方式：`sudo pip install supervisor`，便可以拥有Supervisor，如果没有启动脚本，可以从[这里](https://github.com/Supervisor/initscripts)下载一份，放置到`/etc/init.d/`下面便可。
 
 ## 配置
 
