@@ -834,3 +834,8 @@
 
 * 监控
   - [[http://www.vpsee.com/2014/09/linux-performance-tools/][Linux 性能监控、测试、优化工具]]
+
+* 当前shell的fd
+  #+BEGIN_SRC sh
+    ls -l /proc/self/fd
+  #+END_SRC

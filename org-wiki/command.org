@@ -476,4 +476,7 @@
     grep "Sep 16" /var/log/auth.log |grep " Accepted publickey for root" |wc -l
   #+END_SRC
 
-*
+* 删除某种文件
+  #+BEGIN_SRC sh
+    find . -name  "*.xmp" | tr "\n" "\000" | xargs -0 rm
+  #+END_SRC
