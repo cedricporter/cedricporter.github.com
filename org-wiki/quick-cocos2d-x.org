@@ -1,0 +1,19 @@
+#+TITLE: quick-cocos2d-x
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
+* cc函数
+  #+BEGIN_SRC lua
+    -- cc = cc.GameObject.extend()
+    local GameObject = cc.GameObject
+    local ccmt = {}
+    ccmt.__call = function(self, target)
+        if target then
+            return GameObject.extend(target)
+        end
+        printError("cc() - invalid target")
+    end
+    setmetatable(cc, ccmt)
+
+  #+END_SRC

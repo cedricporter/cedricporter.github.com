@@ -5,7 +5,7 @@ require "stringex"
 ## -- Rsync Deploy config -- ##
 # Be sure your public key is listed in your server's ~/.ssh/authorized_keys file
 ssh_user       = "root@everet.org"
-ssh_port       = "19900"
+ssh_port       = "1990"
 document_root  = "/var/www/everet.org"
 rsync_delete   = true
 rsync_args     = ""  # Any extra arguments to pass to rsync
@@ -54,7 +54,7 @@ task :generate do
   puts "## Generating Site with Jekyll"
   system "compass compile --css-dir #{source_dir}/stylesheets"
   system "jekyll"
-  
+
   if File.exist?(".integrate-status") and File.exist?(".isolate-status")
     File.delete(".isolate-status")
     File.delete(".integrate-status")
@@ -292,7 +292,7 @@ desc "deploy public directory to github pages"
 multitask :push do
   puts "## Deploying branch to Github Pages "
   puts "## Pulling any updates from Github Pages "
-  cd "#{deploy_dir}" do 
+  cd "#{deploy_dir}" do
     system "git pull"
   end
   (Dir["#{deploy_dir}/*"]).each { |f| rm_rf(f) }
