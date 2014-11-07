@@ -480,3 +480,8 @@
   #+BEGIN_SRC sh
     find . -name  "*.xmp" | tr "\n" "\000" | xargs -0 rm
   #+END_SRC
+
+* 限制带宽
+  #+BEGIN_SRC sh
+    sudo trickled -d download-bandwidth -u upload-bandwidth command
+  #+END_SRC

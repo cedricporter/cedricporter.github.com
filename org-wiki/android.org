@@ -15,6 +15,12 @@
          });
    #+END_SRC
 
+* UI
+** 背景色半透明
+   #+BEGIN_SRC xml
+     android:background="#CCFFFFFF"
+   #+END_SRC
+
 * adb
 ** 查看网络信息
    #+BEGIN_SRC sh
