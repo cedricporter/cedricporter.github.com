@@ -1,15 +1,12 @@
----
+o---
 comments: true
 date: 2012-01-24 23:31:43
 layout: post
 slug: pil-brief-intro
 title: Python进行图像处理——PIL简介
 wordpress_id: 274
-categories:
-- My Code
-tags:
-- Python
-- Image Processing
+categories: IT
+tags: [Python, Image Processing]
 ---
 
 PIL中包括Image，ImageEnhance，ImageGrab等。

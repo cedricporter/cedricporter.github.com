@@ -4,7 +4,7 @@ title: "Python MySQLdb默认关闭autocommit带来的坑"
 date: 2013-08-20 16:27
 comments: true
 categories: IT
-tags: [Python, mysql]
+tags: [Python, Mysql]
 ---
 
 ## 问题描述

@@ -4,7 +4,7 @@ title: "使用Supervisor简化进程管理工作"
 date: 2014-11-02 10:26
 comments: true
 categories: IT
-tags: [python, supervisor]
+tags: [Python, Supervisor]
 ---
 
 这篇东西想写很久了，拖延症晚期患者-.-，今天终于下决心把它写了吧。

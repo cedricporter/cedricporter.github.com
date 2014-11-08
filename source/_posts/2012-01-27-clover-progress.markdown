@@ -5,8 +5,7 @@ layout: post
 slug: clover-progress
 title: Clover进度
 wordpress_id: 321
-categories:
-- My Code
+categories: IT
 tags:
 - Clover
 - OGRE
@@ -18,7 +17,9 @@ tags:
 
 今天我们把视频提交了。也上传了一份。
 
-[http://v.youku.com/v_show/id_XMzc0MTAyMDg0.html<!-- more -->](http://v.youku.com/v_show/id_XMzc0MTAyMDg0.html)
+<!-- more -->
+
+[http://v.youku.com/v_show/id_XMzc0MTAyMDg0.html](http://v.youku.com/v_show/id_XMzc0MTAyMDg0.html)
 
 
 ### 2012-3-19：
@@ -48,7 +49,7 @@ tags:
 
 我们已经进入第三行了啊~悲剧了啊~~
 
-[![](http://everet.org/wp-content/uploads/2012/01/QQ截图20120312163717.png)<!-- more -->](http://everet.org/wp-content/uploads/2012/01/QQ截图20120312163717.png)
+[![](http://everet.org/wp-content/uploads/2012/01/QQ截图20120312163717.png)](http://everet.org/wp-content/uploads/2012/01/QQ截图20120312163717.png)
 
 
 ### 2012-3-11:
@@ -66,7 +67,7 @@ tags:
 
 现在是下午14:43，Todo List变成这样了。
 
-[![](http://everet.org/wp-content/uploads/2012/01/IMG_0016.jpg)<!-- more -->](http://everet.org/wp-content/uploads/2012/01/IMG_0016.jpg)
+[![](http://everet.org/wp-content/uploads/2012/01/IMG_0016.jpg)](http://everet.org/wp-content/uploads/2012/01/IMG_0016.jpg)
 
 
 ### 2012-3-9：
@@ -80,7 +81,7 @@ ShadowSystem的Undo和Redo基本可以用了，Revert还有点问题。
 
 师兄在实现鼠标拖那张纸。
 
-今天屠文翔同学一起弄ShadowSystem，晚点屠文翔会弄多层纸的交互。<!-- more -->
+今天屠文翔同学一起弄ShadowSystem，晚点屠文翔会弄多层纸的交互。
 
 
 ### 2012-3-8:
@@ -104,7 +105,7 @@ Group还没有顺序，这个问题很严重，会导致绘图的时候面的次
 
 师兄正在主要还是在解决一些复杂的数学问题....
 
-<!-- more -->
+
 
 
 ### 2012-3-6:
@@ -114,31 +115,31 @@ Group还没有顺序，这个问题很严重，会导致绘图的时候面的次
 
 
 
-	
+
   1. 将3维的纸张重新映射回2维的值，得到有折痕的纸。
 
-	
+
   2. 将折痕变成提示折痕
 
-	
+
   3. 脚本引擎的完善
 
-	
+
   4. 自动贴合
 
-	
+
   5. 避免面完全重叠
 
-	
+
   6. 将折纸过程重放，需要深入理解这个数据结构才可以完成
 
-	
+
   7. 保存文件
 
-	
+
   8. 加载文件
 
-	
+
   9. 换贴图
 
 
@@ -153,19 +154,19 @@ Group还没有顺序，这个问题很严重，会导致绘图的时候面的次
 
 
 
-	
+
   * 虽然对于普通用户可能没什么用，但是脚本对于我们测试整个系统有着莫大的帮助。
 
-	
+
   * 而且对于我们的技术分也有提高。
 
-	
+
   * 臆想的效果是：进入脚本折叠模式后，弹出代码框和一个输出框（默认不显示，主要用于提示他的语法错误了），
 
-	
+
   * 然后友好地弹出每个顶点的索引和位置，还需要尽量避免信息框互相遮挡。
 
-	
+
   * 为了解决遮挡问题，我们可以鼠标点击某个顶点，会另外弹出一个特殊的框来显示顶点的信息。
 
 
@@ -230,7 +231,7 @@ RotateFaces(faces, edgeMiddle, 180)
 
 大合照：
 
-<!-- more -->
+
 
  [![](http://everet.org/wp-content/uploads/2012/01/QQ截图20120306141134.png)](http://everet.org/wp-content/uploads/2012/01/QQ截图20120306141134.png)
 
@@ -242,7 +243,7 @@ RotateFaces(faces, edgeMiddle, 180)
 
 [![](http://everet.org/wp-content/uploads/2012/01/未命名2.jpg)](http://everet.org/wp-content/uploads/2012/01/未命名2.jpg)
 
-我们的提交日志，超长的图片:<!-- more -->
+我们的提交日志，超长的图片:
 
 [![](http://everet.org/wp-content/uploads/2012/01/2012-03-05-16-16-07.png)](http://everet.org/wp-content/uploads/2012/01/2012-03-05-16-16-07.png)
 
@@ -261,7 +262,7 @@ RotateFaces(faces, edgeMiddle, 180)
 [![](http://everet.org/wp-content/uploads/2012/01/QQ截图20120304205034.png)](http://everet.org/wp-content/uploads/2012/01/QQ截图20120304205034.png)
 
 
-### <!-- more -->2012-3-3:
+### 2012-3-3:
 
 
 好久没有更新了，猛地发现已将近一个月都没更新了。
@@ -271,7 +272,7 @@ RotateFaces(faces, edgeMiddle, 180)
 [![](http://everet.org/wp-content/uploads/2012/01/QQ截图20120303215309.png)](http://everet.org/wp-content/uploads/2012/01/QQ截图20120303215309.png)
 
 
-### <!-- more -->2012-2-6:
+### 2012-2-6:
 
 
 今天把面分割和折叠写了。
@@ -303,7 +304,7 @@ RotateFaces(faces, edgeMiddle, 180)
 
 所以我要通过一个叫做3ds2mesh的工具把我的立方体3ds转换成mesh
 
-<!-- more -->
+
 
 第二个难题是为立方体贴图
 
@@ -377,7 +378,7 @@ RotateFaces(faces, edgeMiddle, 180)
 
 （密码什么的我会随便乱说么）
 
-<!-- more -->
+
 
 回顾一下今天我做的事
 
@@ -433,17 +434,17 @@ RotateFaces(faces, edgeMiddle, 180)
 
 TODO：
 
-> 
-> 
-	
+>
+>
+
 >   1. 点的拾取和边的拾取。可能要自己写算法拾取，也可能有现成的解决方案。关键得有人去解决这个问题。
-> 
-	
+>
+
 >   2. 动态添加点。这个怎么弄？首先得定位在哪里添加，是打散三角形还是怎样。还是说本来就很多点，这样方便使用物理引擎模拟纸张的弯曲。
-> 
-	
->   3. 光照材质这些外观的东西先忽略...<!-- more -->
-> 
+>
+
+>   3. 光照材质这些外观的东西先忽略...
+>
 
 
 
@@ -477,7 +478,7 @@ TODO：
 
 
 
-> 开工，预期使用Python编码，Git管理。<!-- more -->
+> 开工，预期使用Python编码，Git管理。
 
 进度记录：[http://everet.org/2012/01/clover-progress.html](http://everet.org/2012/01/clover-progress.html)
 
@@ -487,145 +488,145 @@ TODO：
 屠文翔的通知：
 
 
-> 
+>
 
-> 
+>
 > 各位新年好啊
-> 
-> 
+>
+>
 
-> 
+>
 > 春节期间走亲访友外加同学聚会唱k陪女朋友很辛苦吧？
-> 
-> 
+>
+>
 
-> 
-> 现在有个好消息，你们解脱了，因为要开始工作了！<!-- more -->
-> 
-> 
+>
+> 现在有个好消息，你们解脱了，因为要开始工作了！
+>
+>
 
-> 
-> 
+>
+>
 
-> 
+>
 > 首先回顾一下我们要做什么
-> 
-> 
+>
+>
 
-> 
+>
 > 在2月29日之前提交文档(见附件)
-> 
-> 
+>
+>
 
-> 
-> 
+>
+>
 
-> 
+>
 > 然后回顾一下之前我们做了些什么
-> 
-> 
+>
+>
 
-> 
+>
 > 定下来了大方向和技术框架
-> 
-> 
+>
+>
 
-> 
+>
 > 图像引擎使用OGRE
-> 
-> 
+>
+>
 
-> 
+>
 > 界面UI使用CEGUI
-> 
-> 
+>
+>
 
-> 
+>
 > 物理引擎使用Newton
-> 
-> 
+>
+>
 
-> 
+>
 > 骨架系统的一些需求见需求文档（附件2）
-> 
-> 
+>
+>
 
-> 
+>
 > 另外还有就是，华亮和我都已经弄好了OGRE环境，华亮还弄好了PythonOgre的环境，我这边还弄好了CEGUI的环境
-> 
-> 
+>
+>
 
-> 
-> 
+>
+>
 
-> 
-> 
+>
+>
 
-> 
+>
 > 接下来一周内要做的工作
-> 
-> 
+>
+>
 
-> 
+>
 > 首先徐小孟同学要开始配置和熟悉OGRE环境，以及
-> 
-> 
+>
+>
 
-> 
+>
 > 这里是OgreSDK的下载地址，下载1.7.4  [http://www.ogre3d.org/download/sdk](http://www.ogre3d.org/download/sdk)
-> 
-> 
+>
+>
 
-> 
+>
 > 这里是Ogre安装教程 [http://www.ogre3d.org/tikiwiki/Installing+the+Ogre+SDK](http://www.ogre3d.org/tikiwiki/Installing+the+Ogre+SDK)
-> 
-> 
+>
+>
 
-> 
+>
 > 这里是Ogre基础教程 [http://www.ogre3d.org/tikiwiki/Tutorials](http://www.ogre3d.org/tikiwiki/Tutorials)
-> 
-> 
+>
+>
 
-> 
+>
 > 华亮强烈建议我们使用PythonOgre进行开发，PythonOgre是使用Python语言重新封装的Ogre的一个库，使用PythonOgre最大的好处就是不需要编译
-> 
-> 
+>
+>
 
-> 
+>
 > 这里是PythonOgre安装及使用的一些简单教程 [http://everet.org/2012/01/python-ogre-start.html](http://everet.org/2012/01/python-ogre-start.html)
-> 
-> 
+>
+>
 
-> 
+>
 > 华亮还强烈建议这次我们要做到文档完善，结构清晰，注释充分，架构健壮……
-> 
-> 
+>
+>
 
-> 
+>
 > 所以华亮这一周的工作是弄个架构设计文档出来，最好把骨架系统也搭起来。如果遇到需要和大家商量的地方可以在qq上商量。
-> 
-> 
+>
+>
 
-> 
+>
 > 对于我，杨旭瑜和徐小孟，这一周的共同工作则是，安装PythonOgre（对于徐小孟同学，你还要安装原版的OgreSDK），研究Ogre的例子和源码，学习Ogre的设计架构（听说徐小孟同学在写自己的渲染引擎，这点可能对你比较有帮助）；学习Ogre的功能，并留意其中对我们以后的开发用的上的功能。
-> 
-> 
+>
+>
 
-> 
+>
 > 另外，虽然是华亮负责架构，但并不意味这我们可以不用去了解。因为我们是基于Ogre开发，所以可以预见到我们的软件架构和Ogre自身的架构是有许多相似之处的。我建议大家多去关注一下Ogre里面用到的设计模式，如单例模式，工厂模式，这对我们自己以后的发展也很有帮助。
-> 
-> 
+>
+>
 
-> 
-> 
+>
+>
 
-> 
-> 
+>
+>
 
-> 
+>
 > 以上！
-> 
-> 
+>
+>
 
-> 
+>
 > 屠文翔

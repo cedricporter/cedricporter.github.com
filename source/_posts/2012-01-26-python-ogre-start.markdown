@@ -5,11 +5,8 @@ layout: post
 slug: python-ogre-start
 title: Python与OGRE之开篇
 wordpress_id: 282
-categories:
-- My Code
-tags:
-- OGRE
-- Python
+categories: IT
+tags: [OGRE, Python]
 ---
 
 OGRE是什么？百度百科给的解释是：“OGRE（Object-Oriented Graphics Rendering Engine，即：面向对象图形渲染引擎）是一个用C++开发的面向场景、非常灵活的3D引擎，它旨在让开发人员更容易、更直接地利用硬件加速的3D图形系统开发应用。这个类库隐藏了底层系统库（如：Direct3D和OpenGL）的所有细节，提供了一个基于世界对象和其他直观类的接口。 译者注:ogre在英文中意为：食人魔鬼, 怪物, 象鬼的人，故其LOGO是一个怪物头。”
@@ -23,7 +20,7 @@ Python是什么？“Python是一种面向对象、直译式计算机程序设�
 <!-- more -->
 
 
-## 
+##
 
 
 Python+OGRE=开发速度+简介的代码+良好的可读性+可移植性+无需编译+无需内存管理。
@@ -83,7 +80,7 @@ if __name__ == '__main__':
 
 
 
-> 
+>
 
 {% codeblock %}
 # Defines plugins to load

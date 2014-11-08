@@ -4,7 +4,7 @@ title: "shadowsocks的多用户配置"
 date: 2014-11-02 12:04
 comments: true
 categories: IT
-tags: [python,shadowsocks]
+tags: [Python, Shadowsocks]
 ---
 
 Shadowsocks作为一个开源的番羽土啬工具，还是非常不错的。如果我们在大陆外有自己的服务器，那么可以使用Shadowsocks就可以很方便地获得一个可靠的socks5代理。

@@ -5,16 +5,8 @@ layout: post
 slug: scar
 title: 我们的游戏 Scar
 wordpress_id: 176
-categories:
-- My Code
-tags:
-- Boost
-- C++
-- Irrlicht
-- OGRE
-- Python
-- Scar
-- WPF
+categories: IT
+tags: [Boost, C++, Irrlicht, OGRE, Python, Scar, WPF]
 ---
 
 Scar，中文名：伤疤，是我们的**《计算机图形学》**和**《IT项目管理》**的大作业。虽然不想做的很大，但是最后我们写了4万多行代码。发现也是挺大的。
@@ -27,16 +19,16 @@ Scar，中文名：伤疤，是我们的**《计算机图形学》**和**《IT�
 
 
 
-	
+
   * 验证准备阶段：9月14日 – 9月21日
 
-	
+
   * 设计阶段：9月22日 – 10月18日
 
-	
+
   * 构建阶段：10月19日 – 11月16日
 
-	
+
   * 赶工阶段：12月6日 – 12月14日
 
 
@@ -44,10 +36,10 @@ Scar，中文名：伤疤，是我们的**《计算机图形学》**和**《IT�
 
 
 
-	
+
   * 项目经理：屠文翔
 
-	
+
   * 开发人员：华亮、杨旭瑜、杨成熙、谢骏飞 、林剑飞、陈存腾
 
 
@@ -55,10 +47,10 @@ Scar，中文名：伤疤，是我们的**《计算机图形学》**和**《IT�
 
 
 
-	
+
   * 这个是我们非常努力得到的，记得那段时间我也基本持续几个月每天两三点睡，课也不上，去上了也是大家带着笔记本一起在教室后面写代码。
 
-	
+
   * 我们的项目是开源的，遵循[Mozilla Public License 1.1](http://www.mozilla.org/MPL/)协议，托管在Google Code上。[http://code.google.com/p/opengl-scut/](http://code.google.com/p/opengl-scut/)。
 
 
@@ -68,19 +60,19 @@ Scar，中文名：伤疤，是我们的**《计算机图形学》**和**《IT�
 
 
 
-	
+
   * 基地、战场等场景的构建
 
-	
+
   * 模拟太空飞行的全方位角度旋转操控 锁定、开火等一系列逻辑
 
-	
+
   * 局域网联机数据传输
 
-	
+
   * 绚丽的画面，友好的UI 优秀的用户体验，强烈的代入感
 
-	
+
   * AI框架和一个简单的电脑AI实例
 
 
@@ -203,10 +195,10 @@ private:
 
 > **Those who cannot remember the past are condemned to repeat it.**
 
-> 
+>
 > **—— George Santayana**
-> 
-> 
+>
+>
 
 
 
@@ -218,19 +210,19 @@ private:
 
 
 
-	
+
   * 沟通、协作是项目成功的基础。
 
-	
+
   * 不要把计划定得太大，尤其是在时间不够的情况下。
 
-	
+
   * 第一步是需求，第二步是骨架系统。
 
-	
+
   * 简单的事情往往比它看上去的要复杂。
 
-	
+
   * 有时候人要被别人刀在身后捅着才会继续走。
 
 
@@ -238,16 +230,16 @@ private:
 
 
 
-	
+
   * [9月15日-游戏背景及历史](http://everet.org/wp-content/uploads/2012/01/9月15日-游戏背景及历史.docx)
 
-	
+
   * [团队协议](http://everet.org/wp-content/uploads/2012/01/团队协议.docx)
 
-	
+
   * [范围声明](http://everet.org/wp-content/uploads/2012/01/范围声明.docx)
 
-	
+
   * [里程碑报告](http://everet.org/wp-content/uploads/2012/01/里程碑报告.doc)
 
 

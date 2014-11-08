@@ -5,10 +5,8 @@ layout: post
 slug: python-automatically-download-all-albums-of-all-your-friends
 title: python自动下载人人所有好友的相册
 wordpress_id: 54
-categories:
-- My Code
-tags:
-- Python
+categories: IT
+tags: [Python]
 ---
 
 很久很久以前写的自动抓取自己人人相册的python代码，从我的其他的博客复制过来，作为开篇。用途貌似只有备份一下自己和好友的相册。最新的代码请参见[https://github.com/cedricporter/renren](https://github.com/cedricporter/renren)。
@@ -52,5 +50,3 @@ tags:
 拥有这些id我们可以做什么，目前什么都做不了，我们访问http://photo.renren.com/photo/（某人的id）/photo-（相片id）就可以在网页中代码中发现AJAX返回的一段代码代码中有一句"largeurl":"http:\/\/fmn.rrimg.com\/fmn049\/20110621\/1520\/p_large_S5jA_37eb000165dc5c3f.jpg"，这就是一张照片的真正地址了，然后我们把里面的"\"给删掉就可以下载了。
 
 好，于是我们就可以这样写出一个残缺不全的爬虫了..........对于人人的新鲜事，可以把一个页面的url抓出来筛选后放到一个优先队列里，再从优先队列里选一个最优的进入，重复上一步，直到队列为空或者其他情况....呃，传说中的中文伪代码....
-
-
