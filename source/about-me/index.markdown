@@ -18,7 +18,7 @@ type: page
 对于摄影，大部分照片都置于我的QQ空间里，因已积累了多年照片与评论，遂不愿再换。
 
  * [我在github](https://github.com/cedricporter)
- * [我的相册](http://414112390.qzone.qq.com/4)
+ * [我的相册](http://hua.bz)
  * [我喜欢的那些书](http://everet.org/2012/05/favorite-books.html)
  * [我的vim、emacs和vs的配置文件](https://github.com/cedricporter/vim-emacs-setting)
  * [作品](http://everet.org/my-works/)

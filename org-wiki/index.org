@@ -3,17 +3,17 @@
 
 
 * 编程
+  + [[file:lua.org][Lua]]
+  + [[http://everet.org/notes/quick-cocos2d-x/][quick-cocos2d-x api docs]]
+  + [[file:quick-cocos2d-x.org][quick-cocos2d-x]]
+  + [[file:python.org][Python]]
+  + [[file:gevent.org][gevent]]
+  + [[file:shell.org][shell]]
   + [[file:coffeescript.org][Coffeescript]]
   + [[file:ipython.org][ipython]]
   + [[file:javascript.org][Javascript]]
   + [[file:jquery.org][jquery]]
   + [[file:lisp.org][Lisp]]
-  + [[file:python.org][Python]]
-  + [[file:shell.org][shell]]
-  + [[file:gevent.org][gevent]]
-  + [[file:lua.org][lua]]
-  + [[http://everet.org/notes/quick-cocos2d-x/][quick-cocos2d-x api docs]]
-  + [[file:quick-cocos2d-x.org][quick-cocos2d-x]]
 
 * Web
   + [[file:apache.org][apache]]

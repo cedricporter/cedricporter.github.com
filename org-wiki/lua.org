@@ -1,7 +1,146 @@
-#+TITLE: lua.org
+#+TITLE: Lua
 #+LINK_UP: index.html
 #+LINK_HOME: index.html
 #+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
-* 继承
-  ...
+* 类
+** 冒号的作用
+   冒号的作用，在一个方法定义中，添加一个额外的隐藏参数，以及在一个方法调用中添加一个额外的实参。*冒号只是一种语法便利*，并没有引入任何新的东西。
+
+   #+BEGIN_SRC lua
+     function Account.withdraw(self, v)
+     end
+
+     -- 等价于
+
+     function Account:withdraw(v)
+     end
+   #+END_SRC
+
+   以及，在调用的时候，自动添加一个参数。
+
+   #+BEGIN_SRC lua
+     a.withdraw(a, 10)
+
+     -- 等价于
+
+     a:withdraw(10)
+   #+END_SRC
+
+** 原型的实现
+   假如要让b作为a的原型：
+
+   #+BEGIN_SRC lua
+     setmetatable(a, {__index = b})
+   #+END_SRC
+
+   在此之后，a就会在b中查找所有它没有的操作。
+
+   当Lua在table a中找不到函数deposit的时候，就会进一步搜索元表的__index条目。
+
+   #+BEGIN_SRC lua
+     getmetatable(a).__index.deposit()
+   #+END_SRC
+** 创建一个类
+   #+BEGIN_SRC lua
+     local MyClass = {} -- the table representing the class, which will double as the metatable for the instances
+     MyClass.__index = MyClass -- failed table lookups on the instances should fallback to the class table, to get methods
+
+     -- syntax equivalent to "MyClass.new = function..."
+     function MyClass.new(init)
+       local self = setmetatable({}, MyClass)
+       self.value = init
+       return self
+     end
+
+     function MyClass.set_value(self, newval)
+       self.value = newval
+     end
+
+     function MyClass.get_value(self)
+       return self.value
+     end
+
+     local i = MyClass.new(5)
+     -- tbl:name(arg) is a shortcut for tbl.name(tbl, arg), except tbl is evaluated only once
+     print(i:get_value()) --> 5
+     i:set_value(6)
+     print(i:get_value()) --> 6
+
+   #+END_SRC
+   From: [[http://lua-users.org/wiki/ObjectOrientationTutorial][Object Orientation Tutorial]]
+
+   another:
+
+   #+BEGIN_SRC lua
+     Human = {name = 'Human'}
+
+     function Human:new(o)
+         o = o or {}
+         setmetatable(o, self)
+         self.__index = self
+
+         return o
+     end
+
+     function Human:say(what)
+         print(self.name .. ' says ' .. "'" .. what .. "'.")
+     end
+
+     man = Human:new()
+
+     man:say("hello")
+     -- Human says 'hello'.
+   #+END_SRC
+** 扩展一个对象的成员函数
+   #+BEGIN_SRC lua
+     local function extend(target)
+         function target:study(time)
+             self:say("I have studied for " .. time .. " hours.")
+         end
+
+         return target
+     end
+
+     man = extend(man)
+
+     man:study(5)
+     -- Human says 'I have studied for 5 hours.'.
+   #+END_SRC
+** 继承
+   #+BEGIN_SRC lua
+     YoungMan = Human:new{
+         name = 'Young Man',
+         age = 18,
+         school = 'None',
+     }
+
+     yman = YoungMan:new()
+     yman:say("hello, my age is " .. yman.age)
+     -- Young Man says 'hello, my age is 18'.
+   #+END_SRC
+
+* 函数
+  定义：
+  #+BEGIN_SRC lua
+    Lib = {}
+    Lib.foo = function (x, y) return x + y end
+
+    --
+
+    Lib = {
+        foo = function (x, y) return x + y end
+    }
+
+    -- Lua提供另一种语法来定义上面这类非全局函数
+
+    Lib = {}
+    function Lib.foo(x, y)
+        return x + y
+    end
+  #+END_SRC
+
+* 当前模块名
+  #+BEGIN_SRC lua
+    local CURRENT_MODULE_NAME = ...
+  #+END_SRC
