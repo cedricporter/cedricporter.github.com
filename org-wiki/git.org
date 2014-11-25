@@ -308,3 +308,9 @@
     $ git commit -c ORIG_HEAD     (5)
   #+END_SRC
   [[http://stackoverflow.com/questions/927358/how-to-undo-the-last-git-commit][How to undo the last Git commit?]]
+
+* checkout one file from
+  #+BEGIN_SRC sh
+    # checkout from branch develop
+    git checkout develop -- VideoEncoder.cpp
+  #+END_SRC

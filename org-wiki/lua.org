@@ -42,6 +42,8 @@
      getmetatable(a).__index.deposit()
    #+END_SRC
 ** 创建一个类
+   面向对象编程：[[http://lua-users.org/wiki/ObjectOrientedProgramming][Object Oriented Programming]]
+
    #+BEGIN_SRC lua
      local MyClass = {} -- the table representing the class, which will double as the metatable for the instances
      MyClass.__index = MyClass -- failed table lookups on the instances should fallback to the class table, to get methods

@@ -46,7 +46,6 @@
 * 技术类
   + [[file:android.org][Android]]
   + [[file:emacs.org][Emacs]]
-  + [[file:faq.org][FAQ]]
   + [[file:linux.org][Linux]]
   + [[file:mac.org][Mac OS X]]
   + [[file:org-mode.org][Org-Mode]]
@@ -63,6 +62,8 @@
   + [[file:harmonica.org][口琴]]
 
 * 杂
+  + [[file:faq.org][FAQ]]
+  + [[https://github.com/sindresorhus/awesome][各种东西的目录]]
   + [[file:temp.org][Temp]]
 
 

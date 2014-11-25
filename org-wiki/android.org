@@ -15,6 +15,12 @@
          });
    #+END_SRC
 
+** SharedReferences
+   保存在
+   #+BEGIN_EXAMPLE
+     /data/data/<package name>/shared_prefs/etcontact.xml
+   #+END_EXAMPLE
+
 * UI
 ** 背景色半透明
    #+BEGIN_SRC xml
@@ -29,15 +35,74 @@
      ip route show
    #+END_SRC
 
+** 安装/卸载
+   #+BEGIN_SRC sh
+     adb install [-r] [-s] <file>
+   #+END_SRC
+   - ~-r~ 表示重新安装。
+   - ~-s~ 表示安装到sdcard。
+
 * ndk
 ** Create Bitmap From C++
    [[http://stackoverflow.com/questions/7677092/creating-an-android-graphics-bitmap-from-c][Creating an android.graphics.Bitmap from C++]]
 
-* SharedReferences
-  保存在
-  #+BEGIN_EXAMPLE
-    /data/data/<package name>/shared_prefs/etcontact.xml
-  #+END_EXAMPLE
+* ant
+** create project
+   #+BEGIN_SRC sh
+     android create project -n HelloWorld --target android-19 --path HelloWorld --package org.everet.helloworld --activity MainActivity
+   #+END_SRC
+
+** Document
+   #+BEGIN_SRC sh
+     ant clean
+     # Cleans the project. If you include the all target before clean (ant all clean), other projects are also cleaned. For instance if you clean a test project, the tested project is also cleaned.
+
+     # ant debug
+     Builds a debug package. Works on application, library, and test projects and compiles dependencies as needed.
+
+     ant emma debug
+     # Builds a test project while building the tested project with instrumentation turned on. This is used to run tests with code coverage enabled.
+
+     ant release
+     # Builds a release package.
+
+     ant instrument
+     # Builds an instrumented debug package. This is generally called automatically when building a test project with code coverage enabled (with the emma target)
+
+     ant <build_target> install
+     # Builds and installs a package. Using install by itself fails.
+
+     ant installd
+     # Installs an already compiled debug package. This fails if the .apk is not already built.
+
+     ant installr
+     # Installs an already compiled release package. This fails if the .apk is not already built.
+
+     ant installt
+     # Installs an already compiled test package. Also installs the .apk of the tested application. This fails if the .apk is not already built.
+
+     ant installi
+     # Installs an already compiled instrumented package. This is generally not used manually as it's called when installing a test package. This fails if the .apk is not already built.
+
+     ant test
+     # Runs the tests (for test projects). The tested and test .apk files must be previously installed.
+
+     ant debug installt test
+     # Builds a test project and the tested project, installs both .apk files, and runs the tests.
+
+     ant emma debug install test
+     # Builds a test project and the tested project, installs both .apk files, and runs the tests with code coverage enabled.
+
+   #+END_SRC
+
+* 打包
+  1. 使用aapt生成R.java。
+  2. 编译.aidl为.java文件。
+  3. 编译.java为.class。
+  4. 将.class打包生成classes.dex。
+  5. 打包资源（res, assets, AndroidManifest.xml）。
+  6. 生成未签名的apk。
+  7. 使用jarsigner签名apk。
 
 * wifi密码
   存放在 ~/data/misc/wifi/wpa_supplicant.conf~ 。

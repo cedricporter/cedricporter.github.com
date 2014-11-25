@@ -98,6 +98,14 @@
      select inet_aton("218.107.55.253");
    #+END_EXAMPLE
 
+** HOME目录下面的配置
+   添加配置文件： ~\~/.my.conf~
+
+   #+BEGIN_SRC conf
+     [client]
+     user=root
+     password="P@$$W0RD"
+   #+END_SRC
 * 修改auto_increment
   #+BEGIN_SRC sql
     ALTER TABLE users AUTO_INCREMENT = 1001;
