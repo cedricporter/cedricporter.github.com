@@ -99,13 +99,15 @@
    #+END_EXAMPLE
 
 ** HOME目录下面的配置
-   添加配置文件： ~\~/.my.conf~
+   添加配置文件： ~\~/.my.cnf~
 
    #+BEGIN_SRC conf
      [client]
      user=root
      password="P@$$W0RD"
+     database=db_name
    #+END_SRC
+   
 * 修改auto_increment
   #+BEGIN_SRC sql
     ALTER TABLE users AUTO_INCREMENT = 1001;
