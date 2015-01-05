@@ -1,4 +1,4 @@
-o---
+---
 comments: true
 date: 2012-01-24 23:31:43
 layout: post
