@@ -30,6 +30,7 @@
   + [[file:zencoding.org][zencoding]]
   + [[file:zmq.org][ZMQ]]
   + [[file:proxy.org][Proxy]]
+  + [[./saltstack.org][SaltStack]]
 
 * 安全
   + [[file:nmap.org][nmap]]

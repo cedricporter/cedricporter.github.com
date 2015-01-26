@@ -490,3 +490,8 @@
   #+BEGIN_SRC sh
     find . -name "*.java" -exec sh -c "iconv -f GBK -t UTF8 {} > /tmp/iconv.tmp" \; -exec mv /tmp/iconv.tmp '{}' \;
   #+END_SRC
+
+* pip install from github
+  #+BEGIN_SRC sh
+    pip install git+https://github.com/tangentlabs/django-oscar-paypal.git@issue/34/oscar-0.6
+  #+END_SRC

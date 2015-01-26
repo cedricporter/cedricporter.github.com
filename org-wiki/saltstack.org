@@ -1,0 +1,71 @@
+#+TITLE: saltstack
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
+* 安装
+** ubuntu
+   #+BEGIN_SRC sh
+     add-apt-repository ppa:saltstack/salt
+     apt-get update
+     apt-get install salt-master salt-minion
+   #+END_SRC
+
+* 配置
+** minion
+   #+BEGIN_SRC sh
+     vi /etc/salt/minion
+   #+END_SRC
+
+* 命令
+  #+BEGIN_SRC sh
+    salt "*" test.ping
+    salt '*' disk.usage
+    salt '*' sys.doc
+
+    salt '*' cmd.run 'ls -l /etc'
+    salt '*' pkg.install vim
+
+    salt '*' network.interfaces
+  #+END_SRC
+
+* 状态
+** vim
+*** vim.sls
+    #+BEGIN_SRC sh
+      # vi /srv/salt/vim.sls
+    #+END_SRC
+
+    vim.sls
+    #+BEGIN_SRC sh
+      vim:
+        pkg.installed
+
+      /etc/vimrc:
+        file.managed:
+          - source: salt://vimrc
+          - mode: 644
+          - user: root
+          - group: root
+    #+END_SRC
+*** vimrc
+    #+BEGIN_SRC sh
+      vi /srv/salt/vimrc
+    #+END_SRC
+
+    vimrc
+
+    #+BEGIN_SRC vimrc
+      syntax enable
+      set textwidth=79
+      set shiftwidth=4
+      set tabstop=4
+      set expandtab
+      set softtabstop=4
+      set shiftround
+      set fileencodings=utf-8
+      set encoding=utf8
+      set tenc=utf8
+    #+END_SRC
+
+    From: [[http://www.vpsee.com/2013/08/a-system-configuration-management-and-orchestration-tool-saltstack/][系统自动化配置和管理工具 SaltStack]]
