@@ -1,0 +1,48 @@
+#+TITLE: Scrapy.org
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
+* Example
+** First
+   #+BEGIN_SRC python
+     $ pip install scrapy
+     $ cat > myspider.py <<EOF
+
+     from scrapy import Spider, Item, Field
+
+     class Post(Item):
+         title = Field()
+
+     class BlogSpider(Spider):
+         name, start_urls = 'blogspider', ['http://blog.scrapinghub.com']
+
+         def parse(self, response):
+             return [Post(title=e.extract()) for e in response.css("h2 a::text")]
+
+     EOF
+     $ scrapy runspider myspider.py
+   #+END_SRC
+
+** Interactive
+   #+BEGIN_SRC sh
+     scrapy shell -s USER_AGENT="Mozilla/5.0 (Linux; U; Android 2.3; en-us; LG-P930 Build/GRJ90) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1" "http://everet.org"
+
+     scrapy startproject wechat
+
+     # list spider
+     scrapy list
+
+     # run spider
+     scrapy crawl dmoz -o items.json
+
+     # to create a new spider
+     scrapy genspider mydomain mydomain.com
+   #+END_SRC
+
+* Build
+  #+BEGIN_SRC sh
+    sudo apt-get install libxml2-dev
+    sudo apt-get install libxslt1-dev
+    sudo apt-get install python-dev
+  #+END_SRC
