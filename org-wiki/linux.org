@@ -569,14 +569,19 @@
 
 ** 文件swap
    #+BEGIN_SRC sh
-     sudo dd if=/dev/zero of=/root/swapfile bs=4M count=1024
-
-     sudo mkswap /root/swapfile #建立swap的文件系统
-
-     sudo swapon /root/swapfile #启用swap文件
+     cd /var
+     # 生成一个1024MB的文件，1048576 = 1024 * 1024 = 1024K
+     dd if=/dev/zero of=/var/swapfile bs=1024 count=1048576
+     # mkswap可将磁盘分区或文件设为Linux的交换区
+     mkswap /var/swapfile
+     # 启动系统交换区(swap area)
+     swapon /var/swapfile
+     # 显示交换区的使用状况
+     swapon -s
 
      # Edit /etc/fstab
      # /root/swapfile swap swap defaults 0 0
+
    #+END_SRC
 
 * grub
@@ -839,3 +844,5 @@
   #+BEGIN_SRC sh
     ls -l /proc/self/fd
   #+END_SRC
+
+* swap

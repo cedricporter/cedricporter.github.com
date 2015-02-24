@@ -32,14 +32,26 @@
    #+BEGIN_SRC sql
      SET PASSWORD = Password('n3w p@$$w0rd');
    #+END_SRC
+** 用户创建
+   #+BEGIN_SRC sql
+     # 只读
+     GRANT SELECT ON hotgs_data_test.* TO hotgs_reader IDENTIFIED BY 'pwd';
+
+     # 可写
+     GRANT SELECT,UPDATE,INSERT,DELETE,LOCK TABLES ON hotgs_data_test.* TO hotgs_writer IDENTIFIED BY 'pwd';
+   #+END_SRC
+** 删除用户
+   #+BEGIN_SRC sql
+     DROP USER username;
+   #+END_SRC
 ** 修改外键
    #+BEGIN_SRC sql
-     alter table yagra_image drop foreign key yagra_image_ibfk_1;
-     alter table yagra_image add foreign key (user_id) references yagra_user(ID) on update cascade on delete cascade;
+     ALTER TABLE yagra_image DROP FOREIGN KEY yagra_image_ibfk_1;
+     ALTER TABLE yagra_image ADD FOREIGN KEY (user_id) REFERENCES yagra_user(ID) ON UPDATE CASCADE ON DELETE CASCADE;
    #+END_SRC
 ** 修改字段属性
    #+BEGIN_SRC sql
-     alter table yagra_image change image_id image_id bigint(20) unsigned not null auto_increment;
+     ALTER TABLE yagra_image CHANGE image_id image_id bigint(20) unsigned NOT NULL AUTO_INCREMENT;
    #+END_SRC
 
 ** 查询语句太宽
@@ -66,6 +78,12 @@
    #+BEGIN_SRC sql
      RESET QUERY CACHE;
      FLUSH QUERY CACHE;
+   #+END_SRC
+
+** 导出数据库schema
+   #+BEGIN_SRC sh
+     mysqldump -u root -p --no-data dbname > schema.sql
+     mysqldump -u root --no-data dbname | sed 's/ AUTO_INCREMENT=[0-9]*\b//' > schema.sql
    #+END_SRC
 
 * 更多
@@ -107,7 +125,7 @@
      password="P@$$W0RD"
      database=db_name
    #+END_SRC
-   
+
 * 修改auto_increment
   #+BEGIN_SRC sql
     ALTER TABLE users AUTO_INCREMENT = 1001;

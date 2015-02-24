@@ -322,3 +322,9 @@
 
 ** 实践
    1. https://bitbucket.org/plurk/solace
+
+* pip
+  #+BEGIN_SRC sh
+    pip install xxx -i http://pypi.douban.com/simple/
+    pip install -r req.txt -i http://pypi.douban.com/simple/
+  #+END_SRC

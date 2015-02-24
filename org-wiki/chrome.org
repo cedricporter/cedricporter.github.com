@@ -7,3 +7,8 @@
   #+BEGIN_EXAMPLE
     chrome://net-internals/#dns
   #+END_EXAMPLE
+
+* proxy
+  #+BEGIN_SRC sh
+    "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --show-app-list  --proxy-server="SOCKS5://127.0.0.1:7090"
+  #+END_SRC
