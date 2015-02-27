@@ -1,6 +1,6 @@
 #+TITLE: Wiki
 #+OPTIONS: toc:nil num:nil
-
+#+COMMENT: <2015-02-27 23:00:55 Friday by Hua Liang>
 
 * 编程
   + [[file:lua.org][Lua]]

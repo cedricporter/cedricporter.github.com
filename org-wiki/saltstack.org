@@ -26,6 +26,7 @@
     salt '*' cmd.run 'ls -l /etc'
     salt '*' pkg.install vim
     salt "*" pip.install Scrapy
+    salt "*" pip.uninstall Pillow
 
     salt '*' network.interfaces
   #+END_SRC
