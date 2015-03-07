@@ -15,3 +15,8 @@
     # 使用诱饵扫描方法来扫描主机端口
     sudo nmap -sS 192.168.0.10 -D 192.168.0.2
   #+END_SRC
+
+* http-passwd
+  #+BEGIN_SRC sh
+    nmap --script http-passwd --script-args http-passwd.root=/test/ <target>
+  #+END_SRC
