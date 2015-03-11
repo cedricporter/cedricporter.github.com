@@ -11,3 +11,97 @@
         [[ -s $f ]] && source $f;
     done
   #+END_SRC
+
+* test
+  #+BEGIN_SRC sh
+    test condition
+    test condition && true-command
+    test condition || false-command
+    test condition && true-command || false-command
+    test 5 -gt 2 && echo "Yes"
+    test 1 -lt 2 && echo "Yes"
+
+    test 5 -eq 5 && echo Yes || echo No
+    test 5 -eq 15 && echo Yes || echo No
+    test 5 -ne 10 && echo Yes || echo No
+    test -f /etc/resolv.conf && echo "File /etc/resolv.conf found." || echo "File /etc/resolv.conf not found."
+    test -f /etc/resolv1.conf && echo "File /etc/resolv1.conf found." || echo "File /etc/resolv1.conf not found."
+  #+END_SRC
+
+  addition
+
+  #+BEGIN_EXAMPLE
+    `-b file'
+         True if file is a Block special device.
+
+    `-c file'
+         True if file is a Character special device.
+
+    `-d file'
+         True if file is a Directory.
+
+    `-e file'
+         True if file Exists.
+
+    `-f file'
+         True if file is a regular File.
+
+    `-g file'
+         True if file has its set-group-id bit set.
+
+    `-G file'
+         True if file is owned by the current effective group id.
+
+    `-k file'
+         True if file has its "sticky" bit set.
+
+    `-h file'
+    `-L file'
+         True if file is a symbolic Link.
+
+    `-O file'
+         True if file is owned by the current effective user id.
+
+    `-p file'
+         True if file is a named Pipe.
+
+    `-r file'
+         True if file is readable.
+
+    `-S file'
+         True if file is a Socket.
+
+    `-s file'
+         True if file has a Size greater than zero.
+
+    `-t [FD]'
+         True if FD is opened on a terminal.  If FD is omitted, it defaults
+         to 1 (standard output).
+
+    `-u file'
+         True if file has its set-user-id bit set.
+
+    `-w file'
+         True if file is writable.
+
+    `-x file'
+         True if file is executable.
+
+    `file1 -ef file2'
+         True if file1 and file2 have the same device and inode numbers,
+         i.e., if they are hard links to each other.
+
+
+    `-z String'
+         True if the length of String is zero.
+
+    `-n String'
+    `String'
+         True if the length of String is nonzero.
+
+    `String1 = String2'
+         True if the strings are equal.
+
+    `String1 != String2'
+         True if the strings are not equal.
+  #+END_EXAMPLE

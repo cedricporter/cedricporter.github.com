@@ -11,6 +11,17 @@
      apt-get install salt-master salt-minion
    #+END_SRC
 
+** mac
+   #+BEGIN_SRC sh
+     brew install python
+     brew install swig
+     brew install zmq
+
+     pip install salt
+   #+END_SRC
+
+   [[http://docs.saltstack.com/en/latest/topics/tutorials/walkthrough_macosx.html][The MacOS X (Maverick) Developer Step By Step Guide To Salt Installation]]
+
 * 配置
 ** minion
    #+BEGIN_SRC sh
@@ -29,6 +40,10 @@
     salt "*" pip.uninstall Pillow
 
     salt '*' network.interfaces
+
+    salt "vultr.*" state.sls database
+    salt "vultr.*" state.highstate
+    salt "vultr.*" state.highstate test=true
   #+END_SRC
 
 * 状态
