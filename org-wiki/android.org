@@ -42,6 +42,26 @@
    - ~-r~ 表示重新安装。
    - ~-s~ 表示安装到sdcard。
 
+** ADB Server didn't ACK
+   #+BEGIN_EXAMPLE
+     @  ~/.android  % adb devices
+     ,* daemon not running. starting it now on port 5037 *
+     ADB server didn't ACK
+     ,* failed to start daemon *
+     error: cannot connect to daemon
+   #+END_EXAMPLE
+   查看错误输出
+   #+BEGIN_SRC sh
+     adb nodaemon server
+   #+END_SRC
+
 * ndk
 ** Create Bitmap From C++
    [[http://stackoverflow.com/questions/7677092/creating-an-android-graphics-bitmap-from-c][Creating an android.graphics.Bitmap from C++]]
+
+* 性能分析
+  Android Device Monitor
+
+  #+BEGIN_SRC sh
+    $ANDROID_SDK_ROOT/tools/traceview
+  #+END_SRC
