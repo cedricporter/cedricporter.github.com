@@ -66,3 +66,11 @@
    #+END_SRC
 
    from: http://ipython.org/ipython-doc/dev/config/ipython.html
+
+
+* auto import when startup
+  For ipython, there are two ways to achieve this. Both involve ipython's configuration directory which is located in ~\~/.ipython~.
+
+  You can add a startup file to ~\~/.ipython/profile_default/startup/~ .
+
+  All you have to do is place a .py or .ipy file in the ~\~/.ipython/profile_default/startup~ directory and it will automatically be executed. So you could simple place import numpy as np in a simple file and you'll have np in the namespace of your ipython prompt.

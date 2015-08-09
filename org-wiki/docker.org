@@ -31,3 +31,32 @@
    #+BEGIN_SRC sh
      sudo docker run -t -i ubuntu /bin/bash
    #+END_SRC
+
+** run
+   #+BEGIN_SRC sh
+     docker run -m 768M --memory-swap -1 --oom-kill-disable --restart=always -d -p 27017:27017 -v /data/db/mongo:/data/db --hostname="mongodbserver.local" --name quantor_mongo mongo --storageEngine=wiredTiger --auth
+
+     docker run -it --restart=always -d --name quantor_app cedricporter/quantor:supervisor supervisord -c /etc/supervisord.conf
+     docker run -it --restart=always -d --name quantor_app quantor:run_app cron -f
+   #+END_SRC
+
+* stats
+  #+BEGIN_SRC sh
+    docker stats redis1 redis2
+  #+END_SRC
+
+* remove
+  #+BEGIN_SRC sh
+    docker rm $(docker ps -aq)
+
+    # You could use grep to remove all except my-image and ubuntu
+    docker rmi $(docker images | grep -v 'mongo\|cedricporter' | awk {'print $3'})
+  #+END_SRC
+
+* volume
+  #+BEGIN_SRC sh
+    # create data container
+    docker run -v /data/db --name quantor_mongo_data ubuntu:latest true
+    # create mongo container
+    docker run --restart=always -d -p 27017:27017 --volumes-from=quantor_mongo_data --name quantor_mongo mongo --storageEngine=wiredTiger --auth
+  #+END_SRC

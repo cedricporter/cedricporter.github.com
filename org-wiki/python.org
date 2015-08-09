@@ -351,3 +351,54 @@
     pip install xxx -i http://pypi.douban.com/simple/
     pip install -r req.txt -i http://pypi.douban.com/simple/
   #+END_SRC
+
+** install
+   #+BEGIN_SRC sh
+     # Install from tarball on web
+     pip install https://pypi.python.org/packages/source/r/requests/requests-2.3.0.tar.gz
+
+     # Install from local tarball
+     wget https://pypi.python.org/packages/source/r/requests/requests-2.3.0.tar.gz
+     pip install requests-2.3.0.tar.gz
+
+     # Install from local folder
+     tar -zxvf requests-2.3.0.tar.gz
+     cd requests-2.3.0
+     pip install .
+     # You can delete the requests-2.3.0 folder.
+
+
+     # Install from local folder (editable mode)
+     pip install -e .
+     # This installs the package in editable mode. Any changes you make to the code will immediately apply across the system. This is useful if you are the package developer and want to test changes. It also means you won't be delete the folder without breaking the install.
+   #+END_SRC
+
+* print
+  #+BEGIN_SRC python
+    row_format ="{:>15}" * (len(teams_list) + 1)
+    print row_format.format("", *teams_list)
+    for team, row in zip(teams_list, data):
+        print row_format.format(team, *row)
+  #+END_SRC
+
+* debug
+** set_trace
+   #+BEGIN_SRC python
+     from ipdb import set_trace ; set_trace()
+   #+END_SRC
+** debug when except
+   #+BEGIN_SRC python
+     import sys
+
+     class ExceptionHook:
+         instance = None
+
+         def __call__(self, *args, **kwargs):
+             if self.instance is None:
+                 from IPython.core import ultratb
+                 self.instance = ultratb.FormattedTB(mode='Plain',
+                      color_scheme='Linux', call_pdb=1)
+             return self.instance(*args, **kwargs)
+
+     sys.excepthook = ExceptionHook()
+   #+END_SRC

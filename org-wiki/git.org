@@ -314,3 +314,13 @@
     # checkout from branch develop
     git checkout develop -- VideoEncoder.cpp
   #+END_SRC
+
+* empty folder
+  Another way to make a directory stay empty (in the repository) is to create a .gitignore file inside that directory that contains four lines:
+
+  #+BEGIN_SRC sh
+    # Ignore everything in this directory
+    ,*
+    # Except this file
+    !.gitignore
+  #+END_SRC

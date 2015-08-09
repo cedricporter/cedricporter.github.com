@@ -42,3 +42,12 @@
     # SELECT * FROM users LIMIT 10 SKIP 20
     db.users.find().limit(10).skip(20)
   #+END_SRC
+
+* Example
+  #+BEGIN_SRC javascript
+    // slice array
+    db.ma_1d.findOne({}, {"code": 1, "period": 1, "data": {$slice: 2}})
+
+    // limit a, b
+    db.ma_1d.findOne({"code": "600485"}, {"code": 1, "period": 1, "data": {$slice: [-5,5]}})
+  #+END_SRC

@@ -32,3 +32,17 @@
 
   1. [[http://hints.macworld.com/article.php?story%3D20070118003804854][Auto-hide the dock and menubar on a per-app basis]]
   2. [[https://developer.apple.com/library/ios/documentation/general/Reference/InfoPlistKeyReference/Articles/LaunchServicesKeys.html#//apple_ref/doc/uid/20001431-113616][Launch Services Keys]]
+
+* dns
+** check
+   #+BEGIN_SRC sh
+     nslookup www.apple.com 8.8.8.8
+     dig @8.8.8.8 www.apple.com
+   #+END_SRC
+
+
+** reload
+   #+BEGIN_SRC sh
+     sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
+     sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
+   #+END_SRC
