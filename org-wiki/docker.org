@@ -38,6 +38,8 @@
 
      docker run -it --restart=always -d --name quantor_app cedricporter/quantor:supervisor supervisord -c /etc/supervisord.conf
      docker run -it --restart=always -d --name quantor_app quantor:run_app cron -f
+
+     docker run -it --restart=always -d --name quantor_app -p 60001:60001 cedricporter/quantor:shadowsocks supervisord -c /etc/supervisord.conf
    #+END_SRC
 
 * stats

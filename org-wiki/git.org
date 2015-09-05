@@ -324,3 +324,9 @@
     # Except this file
     !.gitignore
   #+END_SRC
+
+* 历史提交
+  #+BEGIN_SRC sh
+    git log -p 0065ee5
+    git log -p -2
+  #+END_SRC

@@ -163,3 +163,16 @@
 
 
    #+END_SRC
+
+* test
+  #+BEGIN_EXAMPLE
+    location ~* ^/static/download/app-(.+)-release.apk2$ {
+        rewrite ^/static/download/app-(.+)-release.apk2$ /static/download/web/index.html?channel=$1;
+    }
+
+    server {
+        location ~* ^/\d+/\d+/.+\.html$ {
+            rewrite ^/\d+/\d+/(.+\.html)$ /$1 permanent;
+        }
+    }
+  #+END_EXAMPLE

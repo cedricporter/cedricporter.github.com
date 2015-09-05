@@ -65,3 +65,68 @@
   #+BEGIN_SRC sh
     $ANDROID_SDK_ROOT/tools/traceview
   #+END_SRC
+
+* keytool
+  #+BEGIN_SRC sh
+    # generate debug key
+    keytool -genkey -v -keystore debug.keystore -alias androiddebugkey -storepass android -keypass android -keyalg RSA -validity 14000
+
+    # test key
+    keytool -genkey -v -keystore test.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+  #+END_SRC
+
+* gradle
+** placeholder
+   #+BEGIN_EXAMPLE
+     # build.gradle
+     android {
+       .. .. ...
+         buildTypes {
+            debug {
+               resValue "string", "google_maps_api_key", "[YOUR DEV KEY]"
+            }
+            release {
+                resValue "string", "google_maps_api_key", "[YOUR PROD KEY]"
+            }
+         }
+       }
+
+   #+END_EXAMPLE
+
+
+   #+BEGIN_SRC java
+     build.gradle
+
+     android {
+       .. .. ...
+         buildTypes {
+            debug {
+               resValue "string", "google_maps_api_key", "[YOUR DEV KEY]"
+            }
+            release {
+                resValue "string", "google_maps_api_key", "[YOUR PROD KEY]"
+            }
+         }
+       }
+     And in your AndroidManifest.xml
+
+     <meta-data
+                 android:name="com.google.android.maps.v2.API_KEY"
+                 android:value="@string/google_maps_api_key"/>
+   #+END_SRC
+
+** 多渠道包
+   #+BEGIN_EXAMPLE
+     productFlavors {
+         GooglePlay {}
+         xiaomi {}
+         umeng {}
+         _360 {}
+         baidu {}
+         wandoujia {}
+     }
+     //批量配置
+     productFlavors.all { flavor ->
+         flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+     }
+   #+END_EXAMPLE
