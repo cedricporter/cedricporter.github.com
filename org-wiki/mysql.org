@@ -91,6 +91,11 @@
      ALTER TABLE person ENGINE = InnoDB;
    #+END_SRC
 
+** show views
+   #+BEGIN_SRC sql
+     SHOW FULL TABLES IN database_name WHERE TABLE_TYPE LIKE 'VIEW';
+   #+END_SRC
+
 * 更多
 ** 查看错误信息
    #+BEGIN_SRC sql
@@ -282,6 +287,21 @@
    既然索引可以加快查询速度，那么是不是只要是查询语句需要，就建上索引？答案是否定的。因为索引虽然加快了查询速度，但索引也是有代价的：索引文件本身要消耗存储空间，同时索引会加重插入、删除和修改记录时的负担，另外，MySQL在运行时也要消耗资源维护索引，因此索引并不是越多越好。
 p
 
+* query log
+  #+BEGIN_SRC sh
+    SET GLOBAL general_log_file = '/tmp/mysql-query.log';
+    SET GLOBAL general_log = 'ON'
+
+    SET GLOBAL slow_query_log = 'ON';
+
+    SET GLOBAL LOG_QUERIES_NOT_USING_INDEXES = 'OFF';
+
+    SET GLOBAL slow_query_log = 'ON';
+    SET GLOBAL long_query_time = 10;
+    SET GLOBAL slow_query_log_file = '/path/to/slow_query.log';
+    FLUSH LOGS;
+
+  #+END_SRC
 
 
 * 资料来源

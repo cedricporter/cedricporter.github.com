@@ -286,6 +286,11 @@
     git push origin :<branchName>
   #+END_SRC
 
+* 更新远程分支列表
+  #+BEGIN_SRC sh
+    git remote update origin --prune
+  #+END_SRC
+
 * 代理上Github
   假设我们已经有了socks5代理
   #+BEGIN_EXAMPLE
@@ -329,4 +334,9 @@
   #+BEGIN_SRC sh
     git log -p 0065ee5
     git log -p -2
+  #+END_SRC
+
+* rebase
+  #+BEGIN_SRC sh
+    git config --global branch.autosetuprebase always
   #+END_SRC

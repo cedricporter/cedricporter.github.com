@@ -36,6 +36,7 @@
    #+BEGIN_SRC sh
      docker run -m 768M --memory-swap -1 --oom-kill-disable --restart=always -d -p 27017:27017 -v /data/db/mongo:/data/db --hostname="mongodbserver.local" --name quantor_mongo mongo --storageEngine=wiredTiger --auth
 
+     # --restart=always 加了这个后会保持开机启动
      docker run -it --restart=always -d --name quantor_app cedricporter/quantor:supervisor supervisord -c /etc/supervisord.conf
      docker run -it --restart=always -d --name quantor_app quantor:run_app cron -f
 
