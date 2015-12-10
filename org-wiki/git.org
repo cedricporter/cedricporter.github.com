@@ -340,3 +340,9 @@
   #+BEGIN_SRC sh
     git config --global branch.autosetuprebase always
   #+END_SRC
+
+* Replace local branch with remote branch entirely
+  #+BEGIN_SRC sh
+    git fetch
+    git reset --hard origin/master
+  #+END_SRC

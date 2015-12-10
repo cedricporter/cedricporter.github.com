@@ -15,6 +15,8 @@
 
     # this will show all documents in the database in a readable format; do the same for each collection in the database
     db.collectionName.find().pretty()
+
+    db.dropDatabase()
   #+END_SRC
 
 * pymongo
@@ -50,4 +52,10 @@
 
     // limit a, b
     db.ma_1d.findOne({"code": "600485"}, {"code": 1, "period": 1, "data": {$slice: [-5,5]}})
+  #+END_SRC
+
+* backup
+  #+BEGIN_SRC sh
+    mongodump --out dbdao
+    mongorestore dbdao
   #+END_SRC

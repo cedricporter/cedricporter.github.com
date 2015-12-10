@@ -141,6 +141,11 @@
      general_log_file = /tmp/mysql-query.log
    #+END_EXAMPLE
 
+** random string
+   #+BEGIN_SRC sql
+     SELECT LEFT(UUID(), 8);
+   #+END_SRC
+
 * 修改auto_increment
   #+BEGIN_SRC sql
     ALTER TABLE users AUTO_INCREMENT = 1001;

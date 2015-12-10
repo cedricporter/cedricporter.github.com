@@ -63,3 +63,8 @@
     # create mongo container
     docker run --restart=always -d -p 27017:27017 --volumes-from=quantor_mongo_data --name quantor_mongo mongo --storageEngine=wiredTiger --auth
   #+END_SRC
+
+* copy file from container to host
+  #+BEGIN_SRC sh
+    docker cp <containerId>:/file/path/within/container /host/path/target
+  #+END_SRC

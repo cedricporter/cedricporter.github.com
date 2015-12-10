@@ -1,0 +1,12 @@
+#+TITLE: celery.org
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
+* 手动启动和重启
+  #+BEGIN_SRC sh
+    celery multi start 1 -A tasks.calculate -Q calculate -c 3 --loglevel=DEBUG --pidfile=/tmp/celery_%n.pid --logfile=/tmp/celery_%n.log
+    celery multi restart 1 --pidfile=/tmp/celery_%n.pid
+    celery multi stop 1 --pidfile=/tmp/celery_%n.pid
+
+  #+END_SRC
