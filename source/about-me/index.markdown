@@ -11,16 +11,10 @@ type: page
 
 鄙人小菜，毕业于华南理工大学软件工程。
 
-目前为一个搞Android的服务端程序员-.- 喜欢C++和Python。
+服务端程序猿-.- 喜欢C++和Python。
 
 爱好探险，摄影，和计算机。喜欢实现自己的想法~
 
-对于摄影，大部分照片都置于我的QQ空间里，因已积累了多年照片与评论，遂不愿再换。
-
- * [我在github](https://github.com/cedricporter)
- * [我的相册](http://hua.bz)
- * [我喜欢的那些书](http://everet.org/2012/05/favorite-books.html)
- * [我的vim、emacs和vs的配置文件](https://github.com/cedricporter/vim-emacs-setting)
  * [作品](http://everet.org/my-works/)
 
 ### 联系我
@@ -34,7 +28,7 @@ type: page
 
 **百度空间** <http://hi.baidu.com/stupidet/>
 
-百度空间因历史悠久，且文章大多是为备忘而转载，所以除了照片没有什么值得留恋。现在用EverNote保存网页，所以不再打理百度空间。
+百度空间因历史悠久，且文章大多是为备忘而转载，所以除了照片没有什么值得留恋。现在用EverNote保存网页，所以不再打理百度空间。百度居然关了空间。。。
 
 **CSDN博客** <http://blog.csdn.net/cedricporter>
 

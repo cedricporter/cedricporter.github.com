@@ -3,29 +3,6 @@
 #+LINK_HOME: index.html
 #+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
-* Install
-** 阿里云
-   #+BEGIN_SRC sh
-     # Stopping Docker and removing docker0
-     sudo service docker stop
-     sudo ip link set dev docker0 down
-     sudo brctl delbr docker0
-
-     # Create our own bridge
-     sudo brctl addbr bridge0
-     sudo ip addr add 192.168.5.1/24 dev bridge0
-     sudo ip link set dev bridge0 up
-
-     # Confirming that our bridge is up and running
-     ip addr show bridge0
-
-     # Tell Docker about it and restart (on Ubuntu)
-     echo 'DOCKER_OPTS="-b=bridge0"' >> /etc/default/docker
-     sudo service docker start
-   #+END_SRC
-
-   From: [[https://docs.docker.com/articles/networking/#bridge-building][Network Configuration]]
-
 * run
 ** start bash
    #+BEGIN_SRC sh
@@ -68,3 +45,26 @@
   #+BEGIN_SRC sh
     docker cp <containerId>:/file/path/within/container /host/path/target
   #+END_SRC
+
+* Install
+** 阿里云
+   #+BEGIN_SRC sh
+     # Stopping Docker and removing docker0
+     sudo service docker stop
+     sudo ip link set dev docker0 down
+     sudo brctl delbr docker0
+
+     # Create our own bridge
+     sudo brctl addbr bridge0
+     sudo ip addr add 192.168.5.1/24 dev bridge0
+     sudo ip link set dev bridge0 up
+
+     # Confirming that our bridge is up and running
+     ip addr show bridge0
+
+     # Tell Docker about it and restart (on Ubuntu)
+     echo 'DOCKER_OPTS="-b=bridge0"' >> /etc/default/docker
+     sudo service docker start
+   #+END_SRC
+
+   From: [[https://docs.docker.com/articles/networking/#bridge-building][Network Configuration]]
