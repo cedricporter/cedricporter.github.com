@@ -860,3 +860,11 @@
     重启rsyslog服务service rsyslog restart；
     重启cron服务service cron restart；
   #+END_EXAMPLE
+
+
+* 获取进程的工作目录
+  #+BEGIN_SRC sh
+    pwdx <PID>
+    lsof -p <PID> | grep cwd
+    readlink -e /proc/<PID>/cwd
+  #+END_SRC
