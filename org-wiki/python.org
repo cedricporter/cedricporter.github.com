@@ -3,6 +3,10 @@
 #+LINK_HOME: index.html
 #+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
+
+* Develop
+  [[https://docs.python.org/devguide/index.html][Python Developer’s Guide]]
+
 * sort list
   #+BEGIN_SRC python
     from operator import itemgetter, attrgetter
@@ -402,3 +406,6 @@
 
      sys.excepthook = ExceptionHook()
    #+END_SRC
+
+* python3 support
+  1. [[http://py3readiness.org/][Python 3 Readiness]]

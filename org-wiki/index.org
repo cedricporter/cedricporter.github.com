@@ -12,6 +12,7 @@
   + [[file:coffeescript.org][Coffeescript]]
   + [[file:ipython.org][ipython]]
   + [[file:javascript.org][Javascript]]
+  + [[file:java.org][Java]]
   + [[file:jquery.org][jquery]]
   + [[file:lisp.org][Lisp]]
 

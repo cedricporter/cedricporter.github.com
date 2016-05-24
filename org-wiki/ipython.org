@@ -3,7 +3,6 @@
 #+LINK_HOME: index.html
 #+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
-
 * autoreload
   #+BEGIN_SRC python
     In [1]: %load_ext autoreload
@@ -22,6 +21,17 @@
   #+END_SRC
 
   from: http://ipython.org/ipython-doc/dev/config/extensions/autoreload.html
+
+* 保存变量
+  下次启动ipython的时候，可以恢复变量。
+  #+BEGIN_SRC python
+    # save
+    l = range(5)
+    %store l
+
+    # restore
+    %store -r
+  #+END_SRC
 
 * 创建配置
   #+BEGIN_SRC sh
