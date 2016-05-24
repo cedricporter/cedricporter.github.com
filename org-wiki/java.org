@@ -6,4 +6,63 @@
 * compile
   #+BEGIN_SRC sh
     javac ExampleProgram.java
+
+    javac -d ./build *.java
+    jar cvf YourJar.jar *
   #+END_SRC
+
+* jpype
+** java
+   JavaClass.java
+   #+BEGIN_SRC java
+     public class JavaClass {
+         public String value = "";
+
+         /**
+          ,* Creates a new JavaClass object.
+          ,*
+          ,* @param value
+          ,*/
+         public JavaClass(String value) {
+             this.value = value;
+         }
+
+         public String getValue() {
+             return this.value;
+         }
+
+         public void setValue(String val) {
+             this.value = val;
+         }
+     }
+   #+END_SRC
+
+   编译
+   #+BEGIN_SRC sh
+     javac JavaClass.java
+   #+END_SRC
+
+** python
+   #+BEGIN_SRC python
+     import jpype
+
+     # start jvm
+     jpype.startJVM('/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home/jre/lib/server/libjvm.dylib', "-ea", "-Djava.class.path=/tmp/")
+
+     jpype.java.lang.System.out.println("Hello World")
+
+
+     util = jpype.JPackage("java.util")
+     al = util.ArrayList()
+     al.add(1)
+     al.add(2)
+     print(al.size())
+
+     # load our class
+     jclass = jpype.JClass("JavaClass")
+     c = jclass("a")
+     print(c.getValue())
+
+     # shutdown jvm
+     jpype.shutdownJVM()
+   #+END_SRC

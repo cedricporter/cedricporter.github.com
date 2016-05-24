@@ -7,6 +7,332 @@
 * Develop
   [[https://docs.python.org/devguide/index.html][Python Developer’s Guide]]
 
+* meta
+** print info
+   - Meta.__new__是用来生成类A的类型对象, 我们可以在调用type.__new__之前更改 dictionary变量来增加/修改/删除新生成类A的成员变量/方法.
+   - Meta.__new__是在生成类A的类型对象后被调用类进行类A的初始化. 第一个参数cls 是已经生成的类A类型对象, 可以通过直接修改cls来修改类的定义, 例如增加成员变量.
+   - Meta.__call__是在生成类A的实例对象时被调用的, 通过调用type.__call__可以 生成该实例对象obj, 之后我们可以直接修改obj来实现实例对象的自定义.
+
+   #+BEGIN_SRC python
+     class Meta(type):
+         def __call__(self):
+             print('Enter Meta.__call__: ', self)
+             obj = type.__call__(self)
+             print('Exit Meta.__call__: ', obj)
+             return obj
+
+         def __new__(metacls, name, bases, dictionary):
+             print('Enter Meta.__new__:', metacls, name, bases, dictionary)
+             newClass = type.__new__(metacls, name, bases, dictionary)
+             print('Exit Meta.__new__: ', newClass)
+             return newClass
+
+         def __init__(cls, name, bases, dictionary):
+             print('Enter Meta.__init__: ', cls, name, bases, dictionary)
+             super(Meta, cls).__init__(name, bases, dictionary)
+             print('Exit Meta.__init__')
+
+     A = Meta('A', (object,), {})
+
+     '''
+     Enter Meta.__new__: <class '__main__.Meta'> A (<class 'object'>,) {}
+     Exit Meta.__new__:  <class '__main__.A'>
+     Enter Meta.__init__:  <class '__main__.A'> A (<class 'object'>,) {}
+     Exit Meta.__init__
+     '''
+   #+END_SRC
+   [[http://xiaocong.github.io/blog/2012/06/12/python-metaclass/][Metaclasses in Python]]
+
+** use type to create class
+   #+BEGIN_SRC python
+     MyClass = type("MyClass", (), {})
+     c = MyClass()
+
+     # create class
+     Foo = type('Foo', (), {'bar':True})
+     # equasl
+     class Foo(object):
+         bar = True
+
+
+     def howdy(self, you):
+         print("Howdy, " + you)
+
+     MyList = type('MyList', (list,), dict(x=42, howdy=howdy))
+
+
+     # inheritance
+     class FooChild(Foo):
+         pass
+
+     FooChild = type('FooChild', (Foo,),{})
+   #+END_SRC
+
+   another: [[http://python-3-patterns-idioms-test.readthedocs.io/en/latest/Metaprogramming.html][Metaprogramming]]
+
+   #+BEGIN_SRC python
+     # Metaprogramming/GreenHouse.py
+
+     class Event(object):
+         events = [] # static
+
+         def __init__(self, action, time):
+             self.action = action
+             self.time = time
+             Event.events.append(self)
+
+         def __lt__ (self, other):
+             "So sort() will compare only on time."
+             return self.time < other.time
+
+         def run(self):
+             print("%.2f: %s" % (self.time, self.action))
+
+         @staticmethod
+         def run_events():
+             Event.events.sort();
+             for e in Event.events:
+                 e.run()
+
+
+     def create_mc(description):
+         "Create subclass using the 'type' metaclass"
+         class_name = "".join(x.capitalize() for x in description.split())
+         def __init__(self, time):
+             Event.__init__(self, description + " [mc]", time)
+         globals()[class_name] = type(class_name, (Event,), dict(__init__ = __init__))
+
+
+     def create_exec(description):
+         "Create subclass by exec-ing a string"
+         class_name = "".join(x.capitalize() for x in description.split())
+         klass = """
+     class %s(Event):
+         def __init__(self, time):
+             Event.__init__(self, "%s [exec]", time)
+     """ % (class_name, description)
+         exec(klass, globals())
+
+     if __name__ == "__main__":
+         descriptions = ["Light on", "Light off", "Water on", "Water off",
+                         "Thermostat night", "Thermostat day", "Ring bell"]
+         initializations = "ThermostatNight(5.00); LightOff(2.00); \
+             WaterOn(3.30); WaterOff(4.45); LightOn(1.00); \
+             RingBell(7.00); ThermostatDay(6.00)"
+         [create_mc(dsc) for dsc in descriptions]
+         exec(initializations, globals())
+         [create_exec(dsc) for dsc in descriptions]
+         exec(initializations, globals())
+         Event.run_events()
+
+     """ Output:
+     1.00: Light on [mc]
+     1.00: Light on [exec]
+     2.00: Light off [mc]
+     2.00: Light off [exec]
+     3.30: Water on [mc]
+     3.30: Water on [exec]
+     4.45: Water off [mc]
+     4.45: Water off [exec]
+     5.00: Thermostat night [mc]
+     5.00: Thermostat night [exec]
+     6.00: Thermostat day [mc]
+     6.00: Thermostat day [exec]
+     7.00: Ring bell [mc]
+     7.00: Ring bell [exec]
+     """
+   #+END_SRC
+
+** use meta
+*** first
+    #+BEGIN_SRC python
+      from six import with_metaclass
+
+
+      class Meta(type):
+          pass
+
+
+      class Base(object):
+          pass
+
+
+      class MyClass(with_metaclass(Meta, Base)):
+          pass
+
+
+      # or
+
+      @add_metaclass(Meta)
+      class MyClass(object):
+          pass
+    #+END_SRC
+
+*** test
+    #+BEGIN_SRC python
+      # Metaprogramming/RegisterLeafClasses.py
+
+      class RegisterLeafClasses(type):
+          def __init__(cls, name, bases, nmspc):
+              super(RegisterLeafClasses, cls).__init__(name, bases, nmspc)
+              if not hasattr(cls, 'registry'):
+                  cls.registry = set()
+              cls.registry.add(cls)
+              cls.registry -= set(bases) # Remove base classes
+
+          # Metamethods, called on class objects:
+          def __iter__(cls):
+              return iter(cls.registry)
+
+          def __str__(cls):
+              if cls in cls.registry:
+                  return cls.__name__
+              return cls.__name__ + ": " + ", ".join([sc.__name__ for sc in cls])
+
+
+      @six.add_metaclass(RegisterLeafClasses)
+      class Color(object):
+          pass
+
+
+      class Blue(Color): pass
+      class Red(Color): pass
+      class Green(Color): pass
+      class Yellow(Color): pass
+      print(Color)
+
+      class PhthaloBlue(Blue): pass
+      class CeruleanBlue(Blue): pass
+      print(Color)
+
+      for c in Color: # Iterate over subclasses
+          print(c, end=", ")
+      print()
+
+
+      @six.add_metaclass(RegisterLeafClasses)
+      class Shape(object):
+          pass
+
+
+      class Round(Shape): pass
+      class Square(Shape): pass
+      class Triangular(Shape): pass
+      class Boxy(Shape): pass
+
+      print(Shape)
+      class Circle(Round): pass
+      class Ellipse(Round): pass
+      print(Shape)
+
+
+      '''
+      Color: Blue, Green, Yellow, Red
+      Color: Yellow, Green, Red, PhthaloBlue, CeruleanBlue
+      Yellow, Green, Red, PhthaloBlue, CeruleanBlue,
+      Shape: Round, Square, Triangular, Boxy
+      Shape: Ellipse, Square, Triangular, Circle, Boxy
+      '''
+    #+END_SRC
+
+*** final class
+    #+BEGIN_SRC python
+      class final(type):
+          def __init__(cls, name, bases, namespace):
+              super(final, cls).__init__(name, bases, namespace)
+              for klass in bases:
+                  if isinstance(klass, final):
+                      raise TypeError(str(klass.__name__) + " is final")
+
+
+      class A(object):
+          pass
+
+      @six.add_metaclass(final)
+      class B(A):
+          pass
+
+
+      print(B.__bases__)
+      print(isinstance(B, final))
+
+      # Produces compile-time error:
+      class C(B):
+          pass
+
+
+      """ Output:
+      (<class '__main__.A'>,)
+      True
+      ...
+      TypeError: B is final
+      """
+    #+END_SRC
+
+
+*** Singleton
+    #+BEGIN_SRC python
+      # Metaprogramming/Singleton.py
+
+      class Singleton(type):
+          instance = None
+          def __call__(cls, *args, **kw):
+              if not cls.instance:
+                   cls.instance = super(Singleton, cls).__call__(*args, **kw)
+              return cls.instance
+
+
+      @six.add_metaclass(Singleton)
+      class ASingleton(object):
+          pass
+
+
+      a = ASingleton()
+      b = ASingleton()
+      assert a is b
+      print(a.__class__.__name__, b.__class__.__name__)
+
+
+      @six.add_metaclass(Singleton)
+      class BSingleton(object):
+          pass
+
+      c = BSingleton()
+      d = BSingleton()
+      assert c is d
+      print(c.__class__.__name__, d.__class__.__name__)
+      assert c is not a
+    #+END_SRC
+
+*** filter
+    #+BEGIN_SRC python
+      sensitive_words_list = ['asshole', 'fuck', 'shit']
+
+      def detect_sensitive_words(string):
+          '''检测敏感词汇'''
+          words_detected = filter(lambda word: word in string.lower(), sensitive_words_list)
+
+          if words_detected:
+              raise NameError('Sensitive words {0} detected in the string "{1}".' \
+                  .format(
+                      ', '.join(map(lambda s: '"%s"' % s, words_detected)),
+                      string
+                  )
+              )
+
+      class CleanerMeta(type):
+
+          def __new__(cls, class_name, bases, attrs):
+              detect_sensitive_words(class_name) # 检查类名
+              map(detect_sensitive_words, attrs.iterkeys()) # 检查属性名
+
+              print "Well done! You are a polite coder!" # 如无异常，输出祝贺消息
+
+              return super(CleanerMeta, cls).__new__(cls, class_name, bases, attrs)
+              # 重要！这行一定不能漏！！这回调用内建的类构造器来构造类，否则定义好的类将会变成 None
+    #+END_SRC
+    [[https://segmentfault.com/a/1190000004426130][Python “黑魔法” 之 Meta Classes]]
+
 * sort list
   #+BEGIN_SRC python
     from operator import itemgetter, attrgetter
@@ -409,3 +735,84 @@
 
 * python3 support
   1. [[http://py3readiness.org/][Python 3 Readiness]]
+
+* bug
+** 1
+   #+BEGIN_SRC python
+     # OK
+     def u():
+         exec("a=2")
+         print(locals()['a'])
+     u()
+
+
+     # OK
+     def u():
+         exec("a=2")
+         a=2
+         print(a)
+     u()
+
+
+     # FAIL
+     def u():
+         exec("a=2")
+         print(locals()['a'])
+         a=2
+     u()
+   #+END_SRC
+** 2
+   [[http://stackoverflow.com/questions/15086040/behaviour-of-exec-function-in-python-2-and-python-3][Behaviour of exec function in Python 2 and Python 3]]
+
+   #+BEGIN_SRC python
+     def u():
+         a=1
+         l=locals()
+         exec("a=2")
+         print(l)
+     u()
+     def u():
+         a=1
+         l=locals()
+         exec("a=2")
+         locals()
+         print(l)
+     u()
+
+     '''
+     {'a': 2, 'l': {...}}
+     {'a': 1, 'l': {...}}
+     '''
+   #+END_SRC
+** 3
+   #+BEGIN_SRC python
+     def u():
+         l=locals()
+         exec("a=2")
+         print(l)
+         print(locals())
+     u()
+     def u():
+         l=locals()
+         exec("a=2")
+         print(l)
+         print(locals())
+         a=1
+     u()
+
+
+     '''
+     {'a': 2, 'l': {...}}
+     {'a': 2, 'l': {...}}
+     {'a': 2, 'l': {...}}
+     {'l': {...}}
+     '''
+   #+END_SRC
+
+* re
+** match number in string
+   #+BEGIN_SRC python
+     re.findall(
+         r"[-+]?\d+[\.]?\d*",
+         "Threshold Crossed: 12 datapoints were greater than or equal to the threshold (12000.0). The most recent datapoints: [199251.0, 180898.0]." )
+   #+END_SRC
