@@ -66,3 +66,12 @@
      # shutdown jvm
      jpype.shutdownJVM()
    #+END_SRC
+
+* IntelliJ调试jpype
+  [[http://stackoverflow.com/questions/21114066/attach-intellij-idea-debugger-to-a-running-java-process][Attach Intellij-IDEA debugger to a running java process]]
+
+  #+BEGIN_EXAMPLE
+    export JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
+  #+END_EXAMPLE
+
+  

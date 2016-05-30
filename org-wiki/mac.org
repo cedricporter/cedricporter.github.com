@@ -39,10 +39,30 @@
      nslookup www.apple.com 8.8.8.8
      dig @8.8.8.8 www.apple.com
    #+END_SRC
-
-
 ** reload
    #+BEGIN_SRC sh
      sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
      sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
+   #+END_SRC
+** search domain
+   如果添加了everet.org到search domain中，那么，查询通过dns查询dev的时候，如果找不到dev，会补全成dev.everet.org，再进行查询。
+
+* route
+** cmd
+   #+BEGIN_SRC sh
+     # debug
+     netstat -nr -f inet
+
+     # show routes
+     netstat -nr
+
+     # add route
+     sudo route add -net 192.168.10 -interface ppp0
+   #+END_SRC
+** auto set
+   /etc/ppp/ip-up
+   #+BEGIN_SRC sh
+     #!/bin/sh
+
+     /sbin/route add -net 192.168.10 -interface $1
    #+END_SRC

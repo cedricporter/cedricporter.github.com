@@ -816,3 +816,18 @@
          r"[-+]?\d+[\.]?\d*",
          "Threshold Crossed: 12 datapoints were greater than or equal to the threshold (12000.0). The most recent datapoints: [199251.0, 180898.0]." )
    #+END_SRC
+
+* 多版本共存
+  [[https://github.com/yyuu/pyenv][pyenv]]
+
+* libs
+  - [[http://dask.pydata.org/en/latest/][Dask]] Dask is a flexible parallel computing library for analytics. [[https://github.com/dask/dask-tutorial][dask-tutorial]]
+
+* pip
+  #+BEGIN_SRC sh
+    cat requirements.txt | grep -v "#" | sed "s/ //g" | xargs pip install
+  #+END_SRC
+
+* 打包
+  [[http://python-packaging.readthedocs.io/en/latest/index.html][How To Package Your Python Code]]
+  [[http://zengrong.net/post/2169.htm][Python 包管理工具解惑]]
