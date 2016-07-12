@@ -43,6 +43,13 @@
 
     # SELECT * FROM users LIMIT 10 SKIP 20
     db.users.find().limit(10).skip(20)
+
+    # SELECT name as b
+    db["contest"].aggregate({$project: {"run-id": "$data.rid", "user": 1, "algorithm-id": 1, "algo-name": "$data.alname", "_id": 0}})
+
+    # select * from users where name like '%m%'
+    db.users.find({"name": /.*m.*/})
+    db.users.find({"name": /m/})
   #+END_SRC
 
 * Example
@@ -62,3 +69,8 @@
 
 * GridFS
   存储大于16MB的文件，[[https://docs.mongodb.com/manual/core/gridfs/][GridFS]]
+
+* shell
+  #+BEGIN_EXAMPLE
+    DBQuery.shellBatchSize = 300
+  #+END_EXAMPLE

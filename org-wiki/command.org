@@ -190,6 +190,7 @@
     # To print a specific line from a file
     # You can get one specific line during any procedure. Very interesting to be used when you know what line you want.
     sed -n 5p <file>
+    sed -e "/print('Opening %s in read-only mode' % self._path)/ s/^#*/#/" -i /srv/env/lib/python3.4/site-packages/pandas/io/pytables.py
 
     # 查看cvs
     column -s, -t < somefile.csv | less -#2 -N -S
@@ -216,12 +217,21 @@
     # 删掉文件后面的n行
     truncate -s -"$(tail -n1 file | wc -c)" file
 
+    truncate file --size 1G
+
     # 查找连接的ip
     netstat -anp | egrep "(9090|9091)" | grep ESTABLISHED | awk '{ print $5 }' | cut -d: -f 1 | sort -u
 
     # rehash
     hash -r  # bash
     rehash   # zsh
+
+    # date
+    date "+%Y-%m-%d %H:%M:%S"
+    docker tag research-hub-prototype docker-hub.docker.com/research-hub:`date "+%Y%m%d-%H%M%S"`
+
+    # watch change
+    watch -n 1 -d 'ps aux | grep kernel'
   #+END_SRC
 
   http://www.commandlinefu.com/commands/browse

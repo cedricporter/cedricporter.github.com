@@ -15,6 +15,7 @@
   + [[file:java.org][Java]]
   + [[file:jquery.org][jquery]]
   + [[file:lisp.org][Lisp]]
+  + [[file:ansible.org][Ansible]]
 
 * Web
   + [[./saltstack.org][SaltStack]]
@@ -51,6 +52,7 @@
   + [[file:android.org][Android]]
   + [[file:emacs.org][Emacs]]
   + [[file:linux.org][Linux]]
+  + [[file:jupyterhub.org][jupyterhub]]
   + [[file:mac.org][Mac OS X]]
   + [[file:org-mode.org][Org-Mode]]
   + [[file:windows.org][Windows]]

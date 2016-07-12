@@ -703,6 +703,13 @@
      # This installs the package in editable mode. Any changes you make to the code will immediately apply across the system. This is useful if you are the package developer and want to test changes. It also means you won't be delete the folder without breaking the install.
    #+END_SRC
 
+** custom
+   #+BEGIN_SRC sh
+     pip install pypiserver
+
+     pypi-server --authenticate=update,download,list -p 12345 -P .htaccess /srv/pypi-public/packages/
+   #+END_SRC
+
 * print
   #+BEGIN_SRC python
     row_format ="{:>15}" * (len(teams_list) + 1)
@@ -735,6 +742,7 @@
 
 * python3 support
   1. [[http://py3readiness.org/][Python 3 Readiness]]
+  2. [[http://python-future.org/compatible_idioms.html][Cheat Sheet: Writing Python 2-3 compatible code]]
 
 * bug
 ** 1
@@ -821,6 +829,7 @@
   [[https://github.com/yyuu/pyenv][pyenv]]
 
 * libs
+  - [[http://traitlets.readthedocs.io/en/stable/index.html][traitlets]] Traitlets is a framework that lets Python classes have attributes with type checking, dynamically calculated default values, and ‘on change’ callbacks.
   - [[http://dask.pydata.org/en/latest/][Dask]] Dask is a flexible parallel computing library for analytics. [[https://github.com/dask/dask-tutorial][dask-tutorial]]
 
 * pip
@@ -831,3 +840,62 @@
 * 打包
   [[http://python-packaging.readthedocs.io/en/latest/index.html][How To Package Your Python Code]]
   [[http://zengrong.net/post/2169.htm][Python 包管理工具解惑]]
+
+* pyenv
+  #+BEGIN_SRC sh
+    pyenv virtualenv 3.3.0 env    #创建一个 Python 版本为 3.3.0 的环境, 环境叫做 env
+    pyenv activate env_name       #激活 env 这个环境, 此时 Python 版本自动变为 3.3.0, 且是独立环境
+    pyenv deactivate              #离开已经激活的环境
+  #+END_SRC
+
+* Scientific
+  [[https://ipgp.github.io/scientific_python_cheat_sheet/][Scientific Python Cheatsheet]]
+
+* force reinstall
+  #+BEGIN_SRC sh
+    pip install -U --no-deps --force-reinstall .
+  #+END_SRC
+
+* interview
+  - https://github.com/taizilongxu/interview_python
+  - https://github.com/MaximAbramchuck/awesome-interview-questions
+
+* 获取函数参数
+
+* profile
+  https://jiffyclub.github.io/snakeviz/
+
+* inspect
+  #+BEGIN_SRC python
+    func = lambda x, y: (x, y)
+    func.__code__.co_argcount
+    func.__code__.co_varnames
+    func.__defaults__
+
+    inspect.getargspec(func)
+  #+END_SRC
+
+* ucs4 or ucs2
+  #+BEGIN_SRC python
+    >>> # When built with --enable-unicode=ucs4:
+    >>> import sys
+    >>> print sys.maxunicode
+    1114111
+
+
+    >>> # When built with --enable-unicode=ucs2:
+    >>> import sys
+    >>> print sys.maxunicode
+    65535
+  #+END_SRC
+
+* Libraries
+  - http://babel.pocoo.org/en/latest/index.html
+  - [[https://github.com/crsmithdev/arrow][Better dates & times for Python]]
+
+* 资料
+  - [[http://pyzh.readthedocs.io/en/latest/Descriptor-HOW-TO-Guide.html][Python描述器引导]]
+  - [[http://pyzh.readthedocs.io/en/latest/awesome-python-libraries.html][让人耳目一新的Python库]]
+  - [[https://github.com/faif/python-patterns][A collection of design patterns and idioms in Python.]]
+  - [[https://gist.github.com/sloria/7001839][The Best of the Best Practices (BOBP) Guide for Python]]
+  - [[https://github.com/vinta/awesome-python#awesome-python][Awesome Python]]

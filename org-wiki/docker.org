@@ -31,6 +31,9 @@
 
     # You could use grep to remove all except my-image and ubuntu
     docker rmi $(docker images | grep -v 'mongo\|cedricporter' | awk {'print $3'})
+
+    # remove untag none images
+    docker rmi `docker images | grep "^<none>" | sed "s/\s\s*/ /g" | cut -d' ' -f3`
   #+END_SRC
 
 * volume

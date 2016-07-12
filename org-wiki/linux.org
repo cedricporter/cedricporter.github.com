@@ -3,6 +3,10 @@
 #+LINK_HOME: index.html
 #+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
+* awesome
+  - [[https://github.com/jlevy/the-art-of-command-line][The Art of Command Line]]
+  - [[https://github.com/alebcay/awesome-shell][Awesome Shell]]
+
 * 修改用户组
   #+BEGIN_SRC sh
     usermod -a -G vboxsf cedricporter
@@ -868,3 +872,78 @@
     lsof -p <PID> | grep cwd
     readlink -e /proc/<PID>/cwd
   #+END_SRC
+
+* ssh
+** no ask
+   chmod 400 ~/.ssh/config
+
+   #+BEGIN_EXAMPLE
+     Host *
+         StrictHostKeyChecking no
+   #+END_EXAMPLE
+
+* autossh
+** cmd
+   #+BEGIN_SRC sh
+     # 反向连接
+     autossh -o "ServerAliveCountMax 9999" -M 0 -NR 12345:localhost:9109 rice@web-proxy-nginx
+   #+END_SRC
+
+** auto start
+*** script
+    #+BEGIN_SRC sh
+      # cat /etc/systemd/system/autossh-messenger-tunnel.service
+      [Unit]
+      Description=AutoSSH tunnel service everythingcli messenger on local port 9109
+      After=network.target
+
+      [Service]
+      Environment="AUTOSSH_GATETIME=0"
+      ExecStart=/usr/bin/autossh -o "ServerAliveCountMax 9999" -M 0 -NR 12345:localhost:9109 rice@web-proxy-nginx
+
+      [Install]
+      WantedBy=multi-user.target
+    #+END_SRC
+*** cmd
+    #+BEGIN_SRC sh
+      # Tell systemd that we have added some stuff:
+      systemctl daemon-reload
+
+      # Start the service
+      systemctl start autossh-mysql-tunnel.service
+
+      # Enable during boot time
+      systemctl enable autossh-mysql-tunnel.service
+    #+END_SRC
+
+    [[https://www.everythingcli.org/ssh-tunnelling-for-fun-and-profit-autossh/][SSH TUNNELLING FOR FUN AND PROFIT: AUTOSSH]]
+*** use password
+    #+BEGIN_SRC sh
+      #!/bin/bash
+
+      HOST="xx.xxx.com" #目标服务器的IP或域名
+      USER="yourname" #用户名
+      PASS="yourpassword" #密码
+      CMD=$@
+
+      VAR=$(expect -c "
+      spawn /usr/bin/autossh -M 2000 -N -v -D 127.0.0.1:7070 $USER@$HOST $CMD
+      match_max 100000
+      expect \"*?assword:*\"
+      send -- \"$PASS\r\"
+      send -- \"\r\"
+      expect eof
+      ")
+      echo "==============="
+      echo "$VAR"
+    #+END_SRC
+* xfs
+  #+BEGIN_SRC sh
+    repquota -ug /home
+
+  #+END_SRC
+* 修改hostname
+** centos
+   #+BEGIN_SRC sh
+     hostnamectl set-hostname <new hostname>   
+   #+END_SRC

@@ -1,0 +1,10 @@
+#+TITLE: jupyterhub.org
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
+* info
+
+* docker spawn
+  - https://github.com/compmodels/jupyterhub
+  - https://github.com/jupyterhub/dockerspawner

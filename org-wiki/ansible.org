@@ -1,0 +1,21 @@
+#+TITLE: Ansible
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
+* prepare
+  #+BEGIN_EXAMPLE
+    @  ~  % cat .ansible.cfg
+    [defaults]
+    hostfile=~/.ansible_hosts
+  #+END_EXAMPLE
+
+* basic
+  #+BEGIN_SRC sh
+    ansible -u root --ask-pass all -m ping
+
+    ansible all -u rice --ask-pass -m command -a uptime
+
+    # sudo
+    ansible all -u rice -s -a "who"
+  #+END_SRC
