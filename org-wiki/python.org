@@ -864,6 +864,16 @@
 
 * profile
   https://jiffyclub.github.io/snakeviz/
+** run
+   #+BEGIN_SRC sh
+     python -m cProfile -o /tmp/profile.out `which rqbacktest` run -f rqbacktest/examples/buy_and_hold.py -s 2013-01-01 -e 2015-01-04 -o /tmp/a.pkl
+   #+END_SRC
+** profile
+   #+BEGIN_SRC python
+     import pstats
+     p = pstats.Stats("/tmp/profile.out")
+     p.strip_dirs().sort_stats("time").print_stats()
+   #+END_SRC
 
 * inspect
   #+BEGIN_SRC python
