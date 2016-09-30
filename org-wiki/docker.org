@@ -29,11 +29,20 @@
   #+BEGIN_SRC sh
     docker rm $(docker ps -aq)
 
+    docker ps -a | grep 'jupyter-' | awk '{print $1}' | xargs --no-run-if-empty docker rm
+    docker ps -a | grep rq-jupyter | grep Exited | awk '{print $1}' | xargs --no-run-if-empty docker rm
+
     # You could use grep to remove all except my-image and ubuntu
     docker rmi $(docker images | grep -v 'mongo\|cedricporter' | awk {'print $3'})
 
     # remove untag none images
     docker rmi `docker images | grep "^<none>" | sed "s/\s\s*/ /g" | cut -d' ' -f3`
+  #+END_SRC
+
+* network
+  #+BEGIN_SRC sh
+    docker network ls
+    docker network create jupyterhub-network
   #+END_SRC
 
 * volume
@@ -42,11 +51,23 @@
     docker run -v /data/db --name quantor_mongo_data ubuntu:latest true
     # create mongo container
     docker run --restart=always -d -p 27017:27017 --volumes-from=quantor_mongo_data --name quantor_mongo mongo --storageEngine=wiredTiger --auth
+
+    docker volume ls
+  #+END_SRC
+
+* entry point
+  #+BEGIN_SRC sh
+    docker run -t -i --entrypoint="/bin/bash" ubuntu
   #+END_SRC
 
 * copy file from container to host
   #+BEGIN_SRC sh
     docker cp <containerId>:/file/path/within/container /host/path/target
+  #+END_SRC
+
+* misc
+  #+BEGIN_SRC sh
+    docker history centos
   #+END_SRC
 
 * Install
@@ -71,3 +92,30 @@
    #+END_SRC
 
    From: [[https://docs.docker.com/articles/networking/#bridge-building][Network Configuration]]
+
+* run without root
+  #+BEGIN_SRC sh
+    sudo groupadd docker
+    sudo gpasswd -a ${USER} docker
+    sudo service docker restart
+
+    # method 2
+    sudo usermod -aG docker your-user
+  #+END_SRC
+
+* 迁移docker目录
+  #+BEGIN_SRC sh
+    docker ps -q | xargs docker kill
+    service docker stop
+    cd /var/lib/docker/devicemapper/mnt
+    umount ./*
+    mv /var/lib/docker $dest
+    ln -s $dest /var/lib/docker
+    service docker start
+  #+END_SRC
+
+* auto start
+  #+BEGIN_SRC sh
+    service docker start
+    chkconfig docker on
+  #+END_SRC

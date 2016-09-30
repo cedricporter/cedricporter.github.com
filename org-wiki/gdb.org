@@ -3,6 +3,21 @@
 #+LINK_HOME: index.html
 #+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
 
+* catch exit
+  #+BEGIN_SRC sh
+    (gdb) b exit
+    (gdb) b _exit
+    (gdb) b abort
+    (gdb) catch syscall 60
+    (gdb) catch syscall 231
+  #+END_SRC
+
+* python
+  #+BEGIN_SRC sh
+    (gdb) info threads
+    (gdb) thread apply all py-list
+  #+END_SRC
+
 * 多进程
   #+BEGIN_SRC sh
     set follow-fork-mode parent

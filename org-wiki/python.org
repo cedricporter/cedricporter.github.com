@@ -909,3 +909,22 @@
   - [[https://github.com/faif/python-patterns][A collection of design patterns and idioms in Python.]]
   - [[https://gist.github.com/sloria/7001839][The Best of the Best Practices (BOBP) Guide for Python]]
   - [[https://github.com/vinta/awesome-python#awesome-python][Awesome Python]]
+  - [[http://quantopian.github.io/talks/NeedForSpeed/slides.html#/][Need for Speed: Using Compressed Data Containers for Faster Backtesting at Scale]]
+
+* conda
+  #+BEGIN_SRC sh
+    # install
+    pip install conda
+
+    # install package
+    conda install numba
+
+    # env
+    conda env list
+    conda create --name quant python
+    source activate quant
+
+    # mirrors
+    conda config --add channels 'https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/'
+    conda config --set show_channel_urls yes
+  #+END_SRC

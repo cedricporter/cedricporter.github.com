@@ -945,5 +945,62 @@
 * 修改hostname
 ** centos
    #+BEGIN_SRC sh
-     hostnamectl set-hostname <new hostname>   
+     hostnamectl set-hostname <new hostname>
    #+END_SRC
+
+* centos
+** systemctl
+*** cmd
+    #+BEGIN_SRC sh
+      systemctl start redis.service
+      systemctl stop redis.service
+      systemctl restart redis.service
+
+      systemctl status redis.service
+
+      # 自启动
+      systemctl enable redis.service
+      systemctl disable redis.service
+    #+END_SRC
+*** service
+    vi /etc/systemd/system/messenger_gunicorn.service
+
+    #+BEGIN_SRC conf
+      [Unit]
+      Description=messenger gunicorn daemon
+      After=network.target
+
+      [Service]
+      User=rice
+      Group=rice
+      WorkingDirectory=/home/rice/projects/deploy-messenger
+      ExecStart=/home/rice/venv/3.5/bin/gunicorn -t 900 -c gunicorn-config.py messenger_app:app
+
+      [Install]
+      WantedBy=multi-user.target
+    #+END_SRC
+
+    systemctl enable messenger_gunicorn.service
+
+* disk speed test
+  #+BEGIN_SRC sh
+    dd if=/dev/zero of=/tmp/output bs=8k count=10k; rm -f /tmp/output
+    dd if=/dev/zero of=/tmp/output bs=100k count=10k; rm -f /tmp/output
+
+    dd if=/dev/zero of=/tmp/output bs=1G count=1; rm -f /tmp/output
+    dd if=/dev/zero of=/tmp/output bs=512 count=1k; rm -f /tmp/output
+  #+END_SRC
+
+* fdisk
+  #+BEGIN_SRC sh
+    fdisk -l
+
+    fdisk /dev/sdb
+    # 对数据盘进行分区。根据提示，依次输入 n，p，1，两次回车，wq，分区就开始了
+
+    mkfs.ext4 /dev/sdb1
+
+    mkdir /mnt_data/
+    mount /dev/sdb1 /mnt_data/
+    /dev/sdb1 /mnt_data/                            ext4    defaults        0 0
+  #+END_SRC
