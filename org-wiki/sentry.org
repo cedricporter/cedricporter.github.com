@@ -1,0 +1,68 @@
+#+TITLE: sentry
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
+* install
+  #+BEGIN_SRC sh
+    docker run -d --name sentry-redis redis
+    docker run -d --name sentry-postgres -e POSTGRES_PASSWORD=secret -e POSTGRES_USER=sentry postgres
+
+    docker run -it --rm sentry config generate-secret-key
+    docker run -it --rm --link sentry-postgres:postgres --link sentry-redis:redis --env SENTRY_SECRET_KEY=secret_key sentry upgrade
+    docker run -d --name my-sentry -p 9090:9000 --link sentry-redis:redis --link sentry-postgres:postgres --env SENTRY_SECRET_KEY=secret_key sentry
+
+    docker run -d --name sentry-celery-beat --link sentry-postgres:postgres --link sentry-redis:redis --env SENTRY_SECRET_KEY=secret_key sentry run cron --pidfile=/tmp/celerybeat-myapp.pid
+    docker run -d --name sentry-celery1 --link sentry-postgres:postgres --link sentry-redis:redis --env SENTRY_SECRET_KEY=secret_key sentry run worker
+  #+END_SRC
+
+* install 2
+  https://docs.sentry.io/server/installation/docker/
+
+  #+BEGIN_SRC sh
+    # redis
+    docker run \
+      --detach \
+      --name sentry-redis \
+      redis:3.2-alpine
+
+
+    # PostgreSQL
+    docker run \
+      --detach \
+      --name sentry-postgres \
+      --env POSTGRES_PASSWORD=secret \
+      --env POSTGRES_USER=sentry \
+      postgres:9.5
+
+
+    # Outbound Email
+    docker run \
+      --detach \
+      --name sentry-smtp \
+      tianon/exim4
+
+
+    # Running Sentry Services
+    export REPOSITORY=sentry
+
+    docker run \
+      --rm ${REPOSITORY} \
+      --help
+
+
+    docker run \
+      --rm ${REPOSITORY} \
+      config generate-secret-key
+
+
+    docker run \
+      --detach \
+      --rm \
+      --link sentry-redis:redis \
+      --link sentry-postgres:postgres \
+      --link sentry-smtp:smtp \
+      --env SENTRY_SECRET_KEY=${SENTRY_SECRET_KEY} \
+      ${REPOSITORY} \
+      <command>
+  #+END_SRC
