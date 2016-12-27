@@ -831,6 +831,11 @@
 * libs
   - [[http://traitlets.readthedocs.io/en/stable/index.html][traitlets]] Traitlets is a framework that lets Python classes have attributes with type checking, dynamically calculated default values, and ‘on change’ callbacks.
   - [[http://dask.pydata.org/en/latest/][Dask]] Dask is a flexible parallel computing library for analytics. [[https://github.com/dask/dask-tutorial][dask-tutorial]]
+  - [[https://github.com/kootenpv/yagmail][yagmail]] yagmail makes sending emails very easy by doing all the magic for you
+  - [[https://github.com/giampaolo/psutil][psutil]] A cross-platform process and system utilities module for Python
+  - [[https://docs.python.org/3/library/struct.html][struct]]
+  - [[https://github.com/Russell91/pythonpy][py]] the swiss army knife of the command line
+  - [[https://github.com/dbcli/mycli][mycli]] A Terminal Client for MySQL with AutoCompletion and Syntax Highlighting.
 
 * pip
   #+BEGIN_SRC sh
@@ -927,4 +932,65 @@
     # mirrors
     conda config --add channels 'https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/'
     conda config --set show_channel_urls yes
+  #+END_SRC
+
+* string format
+  https://pyformat.info/
+  #+BEGIN_SRC python
+    # one two
+    '{} {}'.format('one', 'two')
+    # two one
+    '{1} {0}'.format('one', 'two')
+    # Value conversion
+    # str repr
+    '{0!s} {0!r}'.format(Data())
+    # Align right
+    #       test
+    '{:>10}'.format('test')
+    # Align left
+    # test
+    '{:10}'.format('test')
+    # test______
+    '{:_<10}'.format('test')
+    #    test
+    '{:^10}'.format('test')
+    # Truncating long strings
+    # xylop
+    '{:.5}'.format('xylophone')
+    # xylop
+    '{:10.5}'.format('xylophone')
+    # Numbers
+    # 42
+    '{:d}'.format(42)
+    #   42
+    '{:4d}'.format(42)
+    # 003.14
+    '{:06.2f}'.format(3.141592653589793)
+    # 0042
+    '{:04d}'.format(42)
+    # +42
+    '{:+d}'.format(42)
+    # -23
+    '{: d}'.format((- 23))
+    #  42
+    '{: d}'.format(42)
+    # -  23
+    '{:=5d}'.format((- 23))
+
+    '{first} {last}'.format(**data)
+
+    # Getitem and Getattr
+    # Jean-Luc Picard
+    person = {'first': 'Jean-Luc', 'last': 'Picard'}
+    '{p[first]} {p[last]}'.format(p=person)
+    # 23 42
+    '{d[4]} {d[5]}'.format(d=data)
+
+    # datetime
+    '{:%Y-%m-%d %H:%M}'.format(datetime(2001, 2, 3, 4, 5))
+
+    #    test
+    '{:{align}{width}}'.format('test', align='^', width='10')
+    #  2.72
+    '{:{width}.{prec}f}'.format(2.7182, width=5, prec=2)
   #+END_SRC

@@ -74,3 +74,8 @@
   #+BEGIN_EXAMPLE
     DBQuery.shellBatchSize = 300
   #+END_EXAMPLE
+
+* connect to replica
+  #+BEGIN_SRC sh
+    mongo --host foba/196.168.100.63,192.168.100.64,192.168.100.67 --authenticationDatabase admin -u persistroot -p
+  #+END_SRC
