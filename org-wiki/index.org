@@ -7,6 +7,7 @@
   + [[http://everet.org/notes/quick-cocos2d-x/][quick-cocos2d-x api docs]]
   + [[file:quick-cocos2d-x.org][quick-cocos2d-x]]
   + [[file:python.org][Python]]
+  + [[file:conda.org][conda]]
   + [[file:gevent.org][gevent]]
   + [[file:shell.org][shell]]
   + [[file:coffeescript.org][Coffeescript]]
@@ -62,6 +63,8 @@
   + [[file:protocol.org][协议]]
   + [[file:command.org][各种有趣的命令]]
   + [[file:migrate.org][服务器迁移]]
+  + [[file:zsh.org][zsh]]
+  + [[file:tmux.org][tmux]]
 
 * 生活
   + [[file:joke.org][Joke]]

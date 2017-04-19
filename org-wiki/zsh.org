@@ -1,0 +1,9 @@
+#+TITLE: zsh
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
+* top commands
+  #+BEGIN_SRC sh
+    zsh_stats
+  #+END_SRC

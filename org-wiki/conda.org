@@ -1,0 +1,30 @@
+#+TITLE: conda
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
+* mirrors
+  #+BEGIN_SRC sh
+    conda config --add channels 'https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/'
+    conda config --set show_channel_urls yes
+  #+END_SRC
+
+* create
+  #+BEGIN_SRC sh
+    conda create -n rqdatad-16002 python=3.4 python
+    conda remove --name rqdatad-16002 --all
+  #+END_SRC
+
+* conda
+  #+BEGIN_SRC sh
+    # install
+    pip install conda
+
+    # install package
+    conda install numba
+
+    # env
+    conda env list
+    conda create --name quant python
+    source activate quant
+  #+END_SRC

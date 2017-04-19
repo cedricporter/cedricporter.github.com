@@ -1,0 +1,17 @@
+#+TITLE: tmux
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
+* plugins
+  https://github.com/tmux-plugins/tpm
+
+* Trick
+** detach other client
+   #+BEGIN_SRC sh
+     # a=attach
+     # d=detach other clinents (so only you can attach to this session)
+     # t=target
+
+     tmux a -dt <session-name>
+   #+END_SRC

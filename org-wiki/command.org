@@ -481,6 +481,11 @@
     rsync -rv --include '*/' --include '*.js' --exclude '*' --prune-empty-dirs Source/ Target/
   #+END_SRC
 
+* rsync via ssh tunnel
+  #+BEGIN_SRC sh
+    rsync -rav -e "ssh -A root@proxy ssh" ./src root@target:/dst
+  #+END_SRC
+
 * 查看登录数
   #+BEGIN_SRC sh
     grep "Sep 16" /var/log/auth.log |grep " Accepted publickey for root" |wc -l
