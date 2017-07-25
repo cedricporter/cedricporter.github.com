@@ -11,7 +11,7 @@ tags: quant
 
 上海证券交易所提供的 LDDS-VDE [^1] 是一个纯 Java 的服务，启动后，VDE[^2] 会和 DDS[^6] 服务器建立 TCP 连接，并且按需短连接 DRS[^7] 服务器。我们可以从它获取到上海证券交易所和深圳证券交易所的行情数据。按照文档启动 VDE 还是非常方便的。
 
-{% img /imgs/2017-07-23-16-36-38.png %}
+{% img /imgs/QQ20170725-102956.png %}
 
 对于上交所的行情，默认配置的 `com.sseinfo.lddsidc.thread.vss.RealTimeClientThread` 会将行情快照，约每隔3秒更新到文件中 `mktdt00.txt`（还有其他文件包含其他信息），我们可以通过读取文件，或者直接连接 VDE 的 9129 端口获取到上交所的行情。
 
