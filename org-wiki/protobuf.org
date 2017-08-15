@@ -1,0 +1,12 @@
+#+TITLE: protobuf
+#+LINK_UP: index.html
+#+LINK_HOME: index.html
+#+OPTIONS: H:3 num:t toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t <:t
+
+* python
+** protobuf 转成 json
+   #+BEGIN_SRC python
+     from google.protobuf.json_format import MessageToJson
+
+     jsonObj = MessageToJson(org)
+   #+END_SRC

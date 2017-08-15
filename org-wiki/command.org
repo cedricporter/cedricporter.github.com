@@ -227,11 +227,14 @@
     rehash   # zsh
 
     # date
+    # 打印昨日时间
+    date --date="yesterday" +"%Y%m%d"
     date "+%Y-%m-%d %H:%M:%S"
     docker tag research-hub-prototype docker-hub.docker.com/research-hub:`date "+%Y%m%d-%H%M%S"`
 
     # watch change
     watch -n 1 -d 'ps aux | grep kernel'
+
   #+END_SRC
 
   http://www.commandlinefu.com/commands/browse
@@ -509,4 +512,19 @@
 * pip install from github
   #+BEGIN_SRC sh
     pip install git+https://github.com/tangentlabs/django-oscar-paypal.git@issue/34/oscar-0.6
+  #+END_SRC
+
+* hardware info
+  #+BEGIN_SRC sh
+    # cpu
+    cat /proc/cpuinfo
+
+    # memory
+    cat /proc/meminfo
+  #+END_SRC
+
+* top
+  #+BEGIN_SRC sh
+    # 查看线程
+    top -H -p <pid>
   #+END_SRC

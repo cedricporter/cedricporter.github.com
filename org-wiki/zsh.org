@@ -9,6 +9,7 @@
   #+END_SRC
 
 * performance
-  #+BEGIN_SRC sh
-    for i in $(seq 1 10); do /usr/bin/time zsh -i -c exit; done
-  #+END_SRC
+** 显示zsh启动时间  
+   #+BEGIN_SRC sh
+     for i in $(seq 1 10); do /usr/bin/time zsh -i -c exit; done
+   #+END_SRC

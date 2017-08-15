@@ -17,6 +17,7 @@
   + [[file:jquery.org][jquery]]
   + [[file:lisp.org][Lisp]]
   + [[file:ansible.org][Ansible]]
+  + [[file:protobuf.org][protobuf]]
 
 * Web
   + [[./saltstack.org][SaltStack]]
