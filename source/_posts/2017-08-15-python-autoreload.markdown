@@ -4,7 +4,7 @@ title: "Python自动监控代码修改进行reload"
 date: 2017-08-15 21:20
 comments: true
 categories: IT
-tags: python
+tags: Python
 ---
 
 最近在用 grpc[^1] ，发现 grpc 的 Python server 目前还没有像 Flask 那样的修改后自动 reload ，开发不是很方便。
