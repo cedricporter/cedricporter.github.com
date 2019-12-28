@@ -22,7 +22,7 @@ subscribe_email:
 email:
 
 # static_file_prefix: http://everet.b0.upaiyun.com
-static_file_prefix: http://cdn2.everet.org
+static_file_prefix: https://cdn2.everet.org
 # static_file_prefix:
 
 # ----------------------- #
