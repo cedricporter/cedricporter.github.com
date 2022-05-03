@@ -18,4 +18,4 @@ group :development do
   gem 'gsl', '~> 2.1.0.1'
 end
 
-gem 'sinatra', '~> 1.4.2'
+gem 'sinatra', '~> 2.2.0'
